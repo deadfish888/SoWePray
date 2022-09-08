@@ -49,12 +49,12 @@ public class SignupController extends HttpServlet {
             request.setAttribute("in4", user);
             request.setAttribute("error", "Existed username!");
             request.setAttribute("origin",request.getParameter("origin"));
-            forward(request, response, "/views/auth/signup.jsp");
+            forward(request, response, "/views/auth/register.jsp");
         }else{
             ud.createNewUser(name, gender, dob, email, phone ,key, pass);
             request.setAttribute("error", "Sign up successfully!");
             request.setAttribute("origin",request.getParameter("origin"));
-            forward(request, response, "/views/auth/login.jsp");
+            forward(request, response, "/views/auth/register.jsp");
         }
     }
 

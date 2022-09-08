@@ -1,64 +1,58 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [IIBOOK] ******/
-IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'IIBOOK')
+/****** Object:  Database [BOOKIE] ******/
+IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'BOOKIE')
 BEGIN
-	ALTER DATABASE [IIBOOK] SET OFFLINE WITH ROLLBACK IMMEDIATE;
-	ALTER DATABASE [IIBOOK] SET ONLINE;
-	DROP DATABASE [IIBOOK];
+	ALTER DATABASE [BOOKIE] SET OFFLINE WITH ROLLBACK IMMEDIATE;
+	ALTER DATABASE [BOOKIE] SET ONLINE;
+	DROP DATABASE [BOOKIE];
 END
 GO
-CREATE DATABASE [IIBOOK]
+CREATE DATABASE [BOOKIE]
 
-ALTER DATABASE [IIBOOK] SET COMPATIBILITY_LEVEL = 150
+ALTER DATABASE [BOOKIE] SET COMPATIBILITY_LEVEL = 150
 GO
 IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
 begin
-EXEC [IIBOOK].[dbo].[sp_fulltext_database] @action = 'enable'
+EXEC [BOOKIE].[dbo].[sp_fulltext_database] @action = 'enable'
 end
 GO
-ALTER DATABASE [IIBOOK] SET ANSI_NULL_DEFAULT OFF 
-ALTER DATABASE [IIBOOK] SET ANSI_NULLS OFF 
-ALTER DATABASE [IIBOOK] SET ANSI_PADDING OFF 
-ALTER DATABASE [IIBOOK] SET ANSI_WARNINGS OFF 
-ALTER DATABASE [IIBOOK] SET ARITHABORT OFF 
-ALTER DATABASE [IIBOOK] SET AUTO_CLOSE OFF 
-ALTER DATABASE [IIBOOK] SET AUTO_SHRINK OFF 
-ALTER DATABASE [IIBOOK] SET AUTO_UPDATE_STATISTICS ON 
-ALTER DATABASE [IIBOOK] SET CURSOR_CLOSE_ON_COMMIT OFF 
-ALTER DATABASE [IIBOOK] SET CURSOR_DEFAULT  GLOBAL 
-ALTER DATABASE [IIBOOK] SET CONCAT_NULL_YIELDS_NULL OFF 
-ALTER DATABASE [IIBOOK] SET NUMERIC_ROUNDABORT OFF 
-ALTER DATABASE [IIBOOK] SET QUOTED_IDENTIFIER OFF 
-ALTER DATABASE [IIBOOK] SET RECURSIVE_TRIGGERS OFF 
-ALTER DATABASE [IIBOOK] SET  ENABLE_BROKER 
-ALTER DATABASE [IIBOOK] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
-ALTER DATABASE [IIBOOK] SET DATE_CORRELATION_OPTIMIZATION OFF 
-ALTER DATABASE [IIBOOK] SET TRUSTWORTHY OFF 
-ALTER DATABASE [IIBOOK] SET ALLOW_SNAPSHOT_ISOLATION OFF 
-ALTER DATABASE [IIBOOK] SET PARAMETERIZATION SIMPLE 
-ALTER DATABASE [IIBOOK] SET READ_COMMITTED_SNAPSHOT OFF 
-ALTER DATABASE [IIBOOK] SET HONOR_BROKER_PRIORITY OFF 
-ALTER DATABASE [IIBOOK] SET RECOVERY FULL 
-ALTER DATABASE [IIBOOK] SET  MULTI_USER 
-ALTER DATABASE [IIBOOK] SET PAGE_VERIFY CHECKSUM  
-ALTER DATABASE [IIBOOK] SET DB_CHAINING OFF 
+ALTER DATABASE [BOOKIE] SET ANSI_NULL_DEFAULT OFF 
+ALTER DATABASE [BOOKIE] SET ANSI_NULLS OFF 
+ALTER DATABASE [BOOKIE] SET ANSI_PADDING OFF 
+ALTER DATABASE [BOOKIE] SET ANSI_WARNINGS OFF 
+ALTER DATABASE [BOOKIE] SET ARITHABORT OFF 
+ALTER DATABASE [BOOKIE] SET AUTO_CLOSE OFF 
+ALTER DATABASE [BOOKIE] SET AUTO_SHRINK OFF 
+ALTER DATABASE [BOOKIE] SET AUTO_UPDATE_STATISTICS ON 
+ALTER DATABASE [BOOKIE] SET CURSOR_CLOSE_ON_COMMIT OFF 
+ALTER DATABASE [BOOKIE] SET CURSOR_DEFAULT  GLOBAL 
+ALTER DATABASE [BOOKIE] SET CONCAT_NULL_YIELDS_NULL OFF 
+ALTER DATABASE [BOOKIE] SET NUMERIC_ROUNDABORT OFF 
+ALTER DATABASE [BOOKIE] SET QUOTED_IDENTIFIER OFF 
+ALTER DATABASE [BOOKIE] SET RECURSIVE_TRIGGERS OFF 
+ALTER DATABASE [BOOKIE] SET  ENABLE_BROKER 
+ALTER DATABASE [BOOKIE] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+ALTER DATABASE [BOOKIE] SET DATE_CORRELATION_OPTIMIZATION OFF 
+ALTER DATABASE [BOOKIE] SET TRUSTWORTHY OFF 
+ALTER DATABASE [BOOKIE] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+ALTER DATABASE [BOOKIE] SET PARAMETERIZATION SIMPLE 
+ALTER DATABASE [BOOKIE] SET READ_COMMITTED_SNAPSHOT OFF 
+ALTER DATABASE [BOOKIE] SET HONOR_BROKER_PRIORITY OFF 
+ALTER DATABASE [BOOKIE] SET RECOVERY FULL 
+ALTER DATABASE [BOOKIE] SET  MULTI_USER 
+ALTER DATABASE [BOOKIE] SET PAGE_VERIFY CHECKSUM  
+ALTER DATABASE [BOOKIE] SET DB_CHAINING OFF 
+ALTER DATABASE [BOOKIE] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+ALTER DATABASE [BOOKIE] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+ALTER DATABASE [BOOKIE] SET DELAYED_DURABILITY = DISABLED 
+ALTER DATABASE [BOOKIE] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+ALTER DATABASE [BOOKIE] SET QUERY_STORE = OFF
+EXEC sys.sp_db_vardecimal_storage_format N'BOOKIE', N'ON'
 GO
-ALTER DATABASE [IIBOOK] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+USE [BOOKIE]
 GO
-ALTER DATABASE [IIBOOK] SET TARGET_RECOVERY_TIME = 60 SECONDS 
-GO
-ALTER DATABASE [IIBOOK] SET DELAYED_DURABILITY = DISABLED 
-GO
-ALTER DATABASE [IIBOOK] SET ACCELERATED_DATABASE_RECOVERY = OFF  
-GO
-EXEC sys.sp_db_vardecimal_storage_format N'IIBOOK', N'ON'
-GO
-ALTER DATABASE [IIBOOK] SET QUERY_STORE = OFF
-GO
-USE [IIBOOK]
-GO
-/****** Object:  Table [dbo].[book]    IIBOOK ******/
+/****** Object:  Table [dbo].[book]    BOOKIE ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -81,7 +75,7 @@ CREATE TABLE [dbo].[Book](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Category]    IIBOOK ******/
+/****** Object:  Table [dbo].[Category]    BOOKIE ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -111,67 +105,11 @@ CREATE TABLE [dbo].[User](
 	[username] [varchar](50) NOT NULL,
 	[password] [varchar](50) NOT NULL,
 	[is_super] [bit] NOT NULL
-CONSTRAINT [PK_customer] PRIMARY KEY NONCLUSTERED 
+CONSTRAINT [PK_user] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
-/****** Object:  Table [dbo].[order]    IIBOOK ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Order](
-	[id] int IDENTITY(1,1) NOT NULL,
-	[userid] int NOT NULL,
-	[orderdate] [date],
-	[subtotal] decimal(10,2) ,
-	[shipper] [nvarchar](50),
-	[total] decimal(10,2),
-	[status] [nvarchar](50)
- CONSTRAINT [PK_order] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[orderItem]    IIBOOK ******/
-SET ANSI_PADDING ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[OrderItem](
-	[orderid] int NOT NULL,
-	[bookid] int,
-	[itemname] [nvarchar](100),
-	quantity [smallint] ,
-	price decimal(10,2) ,
-)
-GO
-
-/****** Object:  Table [dbo].[Invoice] ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Customer](
-	[id] int IDENTITY(1,1) NOT NULL,
-	[orderid] int NOT NULL,
-	[userid] int NOT NULL,
-	[name] [nvarchar](50),
-	[email] [varchar](50) NULL,
-	[phone] [varchar](11) NULL,
-	[address] [nvarchar](200) NULL
-CONSTRAINT [PK_invoice] PRIMARY KEY NONCLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-ALter table [dbo].[Customer] with check add foreign key ([userid])
-REFERENCES [dbo].[User] ([id])
-GO
-ALter table [dbo].[Customer] with check add foreign key ([orderid])
-REFERENCES [dbo].[Order] ([id])
 GO
 ALTER TABLE [dbo].[Book] ADD  DEFAULT (0) FOR [views]
 GO
@@ -180,19 +118,7 @@ ALTER TABLE [dbo].[User] ADD  DEFAULT (0) FOR [is_super]
 GO
 --ALTER TABLE [dbo].[Book] ADD  DEFAULT ('UNDECIDED') FOR [type]
 GO
-ALTER TABLE [dbo].[Order]  WITH CHECK ADD FOREIGN KEY([userid])
-REFERENCES [dbo].[User] ([id])
-GO
-ALTER TABLE [dbo].[OrderItem]  WITH CHECK ADD FOREIGN KEY([orderid])
-REFERENCES [dbo].[Order] ([id])
-GO
-ALTER TABLE [dbo].[OrderItem]  WITH CHECK ADD FOREIGN KEY(bookid)
-REFERENCES [dbo].Book (id)
-GO
-ALTER TABLE [dbo].[Order] ADD  DEFAULT (0) FOR [subtotal]
-GO
-ALTER TABLE [dbo].[Order] ADD  DEFAULT (0) FOR [total]
-GO
+
 --ALTER TABLE [dbo].[Book]  WITH CHECK ADD FOREIGN KEY(did)
 --REFERENCES [dbo].[Discount] (id)
 GO
@@ -203,6 +129,7 @@ GO
 --ALTER TABLE [dbo].[user]  WITH CHECK ADD  CONSTRAINT [CK_user_id] CHECK  (([user_id] like '[A-Z][A-Z][A-Z][1-9][0-9][0-9][0-9][0-9][FM]' OR [user_id] like '[A-Z]-[A-Z][1-9][0-9][0-9][0-9][0-9][FM]'))
 GO
 INSERT [dbo].[User] ([fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super]) VALUES ( N'Vinh Nguyen', 1, CAST(N'2002-12-25' AS Date), N'vinhvn102@gmail.com', N'0382132025', N'FBT University ', N'admin', N'admin',1)
+go
 INSERT [dbo].[User] ([fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super]) VALUES ( N'Vinh Nguyen', 1, CAST(N'2002-12-25' AS Date), N'vinhvn102@gmail.com', N'0382132025', N'FBT University ', N'vinh', N'2002',0)
 GO
 Insert [dbo].[Category] ([name]) values (N'Crime, Thriller & Mystery'),(N'Fantasy, Horror'),(N'Science/Historical Fiction'),(N'Manga&LN')
@@ -259,56 +186,3 @@ INSERT [dbo].[Book] ( [title], [author], [categoryid], [quantity], [price], [is_
 GO
 INSERT [dbo].[Book] ( [title], [author], [categoryid], [quantity], [price], [is_sale], [discount], [image], [description]) VALUES ( N'Classroom of the Elite Vol. 1', N'Syougo Kinugasa', 4, 200, CAST(13.99 AS Decimal(10, 2)), 1, 10, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?')
 GO
-SET IDENTITY_INSERT [dbo].[Order] ON 
-GO
-INSERT [dbo].[Order] ([id], [userid], [orderdate], [subtotal], [shipper], [total], [status]) VALUES (1, 2, CAST(N'2022-07-12' AS Date), CAST(61.76 AS Decimal(10, 2)), N'Fast Delivery', CAST(63.26 AS Decimal(10, 2)), N'Wait')
-GO
-INSERT [dbo].[Order] ([id], [userid], [orderdate], [subtotal], [shipper], [total], [status]) VALUES (2, 2, CAST(N'2022-07-12' AS Date), CAST(81.53 AS Decimal(10, 2)), N'Free Delivery', CAST(81.53 AS Decimal(10, 2)), N'Done')
-GO
-SET IDENTITY_INSERT [dbo].[Order] OFF
-GO
-SET IDENTITY_INSERT [dbo].[Customer] ON 
-GO
-INSERT [dbo].[Customer] ([id], [orderid], [userid], [name], [email], [phone], [address]) VALUES (1, 1, 2, N'Thanh Vinh', N'vinhvn102@gmail.com', N'0382132025', N'Thach Hoa, Thach That')
-GO
-INSERT [dbo].[Customer] ([id], [orderid], [userid], [name], [email], [phone], [address]) VALUES (2, 2, 2, N'Vinh Nguyen', N'vinhvn102@gmail.com', N'0382132025', N'FBT University ')
-GO
-SET IDENTITY_INSERT [dbo].[Customer] OFF
-GO
-INSERT [dbo].[OrderItem] ([orderid], [bookid], [itemname], [quantity], [price]) VALUES (1, 2, N'And Then There Were None', 1, CAST(18.29 AS Decimal(10, 2)))
-GO
-INSERT [dbo].[OrderItem] ([orderid], [bookid], [itemname], [quantity], [price]) VALUES (1, 13, N'Fullmetal Alchemist, Vol. 1', 1, CAST(18.69 AS Decimal(10, 2)))
-GO
-INSERT [dbo].[OrderItem] ([orderid], [bookid], [itemname], [quantity], [price]) VALUES (1, 5, N'Lord of the Mysteries', 2, CAST(12.39 AS Decimal(10, 2)))
-GO
-INSERT [dbo].[OrderItem] ([orderid], [bookid], [itemname], [quantity], [price]) VALUES (2, 12, N'All the Light We Cannot See', 1, CAST(18.56 AS Decimal(10, 2)))
-GO
-INSERT [dbo].[OrderItem] ([orderid], [bookid], [itemname], [quantity], [price]) VALUES (2, 8, N'A Game Of Thrones: A Song of Ice and Fire', 3, CAST(20.99 AS Decimal(10, 2)))
-GO
-Create trigger CalcuSubtotal on [OrderItem] AFTER INSERT AS
-BEGIN
-	update [Order]
-	set [subtotal] = [subtotal] + (
-		Select i.price*i.quantity  from [inserted] i where i.orderid = [Order].id)
-	FROM [Order]
-	Join inserted on [Order].id = inserted.orderid
-	update [Order]
-	set [total] = [total] +(
-		Select i.price*i.quantity  from [inserted] i where i.orderid = [Order].id)
-	FROM [Order]
-	Join inserted on [Order].id = inserted.orderid
-	update [Book]
-	set [quantity] = [Book].[quantity] - (
-		select i.quantity from [inserted] i where i.bookid=[Book].id)
-	from [Book]
-	join inserted on [Book].id= inserted.bookid
-END
-go
-Create trigger Shipping on [Order] After INSERT AS
-BEGIN
-	update [Order]
-	set [total] = 1.5 
-	where id = (select id from inserted)
-	AND shipper = 'Fast Delivery'
-END
-go
