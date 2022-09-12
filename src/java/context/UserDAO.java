@@ -142,7 +142,7 @@ public class UserDAO {
                     + " [gender] = ? AND"
                     + " [dob] = ? AND"
                     + " [phone] = ? AND"
-                    + " [address] = ?"
+                    + " [address] = ? "
                     + "where [id] = ?";
             stm = cnn.prepareStatement(sql);
             stm.setString(1, name);
@@ -247,6 +247,30 @@ public class UserDAO {
             System.out.println("updateUser Error:" + e.getMessage());
         }
         return false;
+    }
+    
+    public void updateUser(User user) {
+        try {
+
+            String sql = "update [User] set "
+                    + "  [fullname] = ?"
+                    + ", [phone] = ?"
+                    + ", [address] = ?"
+                    + ", [gender] = ?"
+                    + ", [dob] = ? "
+                    + " where [id] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, user.getName());
+            stm.setString(2, user.getPhone());
+            stm.setString(3, user.getAddress());
+            stm.setBoolean(4, user.getGender().equals("Male"));
+            stm.setString(5, user.getDob());
+            stm.setInt(6, user.getId());
+            stm.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("updateUser Error:" + e.getMessage());
+        }
+        
     }
 
     public User getUser(int id) {
