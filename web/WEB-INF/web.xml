@@ -49,10 +49,6 @@
         <servlet-class>Controller.BookManager</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Dashboard</servlet-name>
-        <servlet-class>Controller.Dashboard</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>OrderManager</servlet-name>
         <servlet-class>Controller.OrderManager</servlet-class>
     </servlet>
@@ -67,6 +63,14 @@
     <servlet>
         <servlet-name>Home</servlet-name>
         <servlet-class>Controller.Home</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DashBoard</servlet-name>
+        <servlet-class>Controller.DashBoard</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>tesst</servlet-name>
+        <servlet-class>Controller.tesst</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -109,10 +113,6 @@
         <url-pattern>/BookManager</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Dashboard</servlet-name>
-        <url-pattern>/Dashboard</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>OrderManager</servlet-name>
         <url-pattern>/OrderManager</url-pattern>
     </servlet-mapping>
@@ -127,6 +127,14 @@
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/Home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DashBoard</servlet-name>
+        <url-pattern>/DashBoard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>tesst</servlet-name>
+        <url-pattern>/tesst</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
