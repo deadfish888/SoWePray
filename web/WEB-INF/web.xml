@@ -60,6 +60,7 @@
         <servlet-name>UserController</servlet-name>
         <servlet-class>Controller.UserController</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>Home</servlet-name>
         <servlet-class>Controller.Home</servlet-class>
@@ -72,6 +73,7 @@
         <servlet-name>tesst</servlet-name>
         <servlet-class>Controller.tesst</servlet-class>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -89,6 +91,7 @@
         <url-pattern>/Forgot</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+
         <servlet-name>LogoutController</servlet-name>
         <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
@@ -113,6 +116,7 @@
         <url-pattern>/BookManager</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+
         <servlet-name>OrderManager</servlet-name>
         <url-pattern>/OrderManager</url-pattern>
     </servlet-mapping>
@@ -124,6 +128,7 @@
         <servlet-name>UserController</servlet-name>
         <url-pattern>/User</url-pattern>
     </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/Home</url-pattern>
@@ -136,6 +141,7 @@
         <servlet-name>tesst</servlet-name>
         <url-pattern>/tesst</url-pattern>
     </servlet-mapping>
+
     <session-config>
         <session-timeout>
             30

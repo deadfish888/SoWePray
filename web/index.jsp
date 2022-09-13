@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <%@page import="Model.User"%>
 <%@page import="context.BookDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -14,6 +15,7 @@
     response.sendRedirect("./Home");
     }
 %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,6 +26,7 @@
         <link rel="stylesheet" href="assets/css/main.css" />
         <noscript><link rel="stylesheet" href="assets/css/noscript.css"/></noscript>
     </head>
+
     <body class="is-preload">
         <!-- Wrapper -->
         <div id="wrapper">
