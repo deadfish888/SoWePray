@@ -65,7 +65,7 @@ public class UserDAO {
         return null;
     }
 
-    public String generatePass() {
+    public String generateNewPass() {
         int data[] = IntStream.concat(IntStream.rangeClosed('0', '9'),
                 IntStream.concat(IntStream.rangeClosed('A', 'Z'),
                         IntStream.rangeClosed('a', 'z'))).toArray();
@@ -78,6 +78,37 @@ public class UserDAO {
         return new String(index);
     }
 
+    public boolean checkExistEmail(String email){
+        String sql = "select * from [User] where email= ? ";
+        try {
+            PreparedStatement ps = cnn.prepareStatement(sql);
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("checkExistEmail Error:" + e.getMessage());
+        }
+        return false;
+    }
+    
+    public String resetPassword(String email){
+        String newPassword = generateNewPass();
+        String sql = "update [User] set "
+                    + "  [password] = ?"
+                    + "where [email] = ? ";
+        try {
+            PreparedStatement ps = cnn.prepareStatement(sql);
+            ps.setString(1, newPassword);
+            ps.setString(2, email);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("resetPass Error:" + e.getMessage());
+        }
+        return newPassword;
+    }
+    
     public boolean checkDupEmail(String email) {
         try {
             stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);

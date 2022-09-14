@@ -68,14 +68,14 @@
 
 
 
-                    <li><a href="./Store">Store</a></li>
+                    <li><a href="./Library">Library</a></li>
 
                     <% 
                         if(session.getAttribute("user")!=null){ 
                     %>
-                    <li><a href="./Book?id=0">Bookshelf</a></li>
+                    <li><a href="">Bookshelf</a></li>
 
-                    <li><a href="./Favor">Favor</a></li>
+                    <li><a href="">My Favorite</a></li>
 
                     <li><a href="about.jsp">About</a></li>
 

@@ -10,7 +10,7 @@ Author     : ACER
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Welcome to Bookie</title>
+        <title>You lost?</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
@@ -35,41 +35,25 @@ Author     : ACER
                             <div class="login-wrap p-4 p-md-5">
                                 <div class="d-flex">
                                     <div class="w-100">
-                                        <h3 class="mb-4">Log In</h3>
+                                        <h3 class="mb-4">Take back your account</h3>
                                     </div>
                                 </div>
-                                <c:set var="cookie" value="${pageContext.request.cookies}"/>
-                                <form action="Login" method="POST" class="signin-form">
+                                <form action="Forgot" method="POST" class="signin-form">
                                     <input type="hidden" name="origin" value="${origin}">
                                     <div class="form-group mt-3">
-                                        <input type="text" name="username" class="form-control" required value="${cookie.name.value}">
-                                        <label class="form-control-placeholder" for="username" >Username</label>
+                                        <input type="text" name="email" class="form-control" required value="">
+                                        <label class="form-control-placeholder" for="email" >Email</label>
                                     </div>
-                                    <div class="form-group">
-                                        <input id="password-field" name="password" type="password" class="form-control" required value="${cookie.pass.value}">
-                                        <label class="form-control-placeholder" for="password" >Password</label>
-                                    </div>
-                                    <c:if test="${requestScope.error != null}">
+                                    <c:if test="${requestScope.Message != null}">
                                         <div class="w-100">
-                                            <c:out value="${requestScope.error}"/>
+                                            <c:out value="${requestScope.Message}"/>
                                         </div>
                                     </c:if>
                                     <div class="form-group">
-                                        <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>
-                                    </div>
-                                    <div class="form-group d-md-flex">
-                                        <div class="w-50 text-left">
-                                            <label class="checkbox-wrap checkbox-primary mb-0">Remember Me
-                                                <input type="checkbox" checked>
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                        <div class="w-50 text-md-right">
-                                            <a href="Forgot?origin=${origin}">Forgot Password</a>
-                                        </div>
+                                        <button type="submit" class="form-control btn btn-primary rounded submit px-3">Generate new Password</button>
                                     </div>
                                 </form>
-                                <p class="text-center">Not a member? <a href="Signup?origin=${origin}">Sign Up</a></p>
+                                <p class="text-center">Already have an account? <a href="Login?origin=${origin}">Sign in</a></p>
                             </div>
                         </div>
                     </div>
