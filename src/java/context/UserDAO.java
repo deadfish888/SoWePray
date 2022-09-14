@@ -117,10 +117,10 @@ public class UserDAO {
                     + "  values (?,"
                     + "?,"
                     + "CAST(? AS Date),"
-                    + "?"
-                    + "?"
-                    + "?"
-                    + "?')";
+                    + "?, "
+                    + "?, "
+                    + "?, "
+                    + "?)";
             stm = cnn.prepareStatement(sql);
             stm.setString(1, name);
             stm.setBoolean(2, gender == "Male");
@@ -161,7 +161,7 @@ public class UserDAO {
     public void changePassword(int userid, String newPassword) {
         try {
             String sql = "update [User] set "
-                    + "  [password] = ?"
+                    + "  [password] = ? "
                     + "where [id] = ?";
             stm = cnn.prepareStatement(sql);
             stm.setString(1, newPassword);
@@ -221,7 +221,7 @@ public class UserDAO {
             String sql = "update [User] set "
                     + "  [fullname] = ?"
                     + ", [phone] = ?"
-                    + ", [address] = ?"
+                    + ", [address] = ? "
                     + "where [id] = ?";
             stm = cnn.prepareStatement(sql);
             stm.setString(1, name);
