@@ -51,7 +51,7 @@ public class ForgotController extends HttpServlet {
         String recipient = request.getParameter("email");
         String subject = "New Pass";
         UserDAO ud = new UserDAO();
-        String generatedPass = ud.resetPassword(pass);
+        String generatedPass = ud.resetPassword(recipient);
         String content = "<i>Your brand new password:<i><br> "
                 + "<font color=red>"+generatedPass+"</font>";
         String Message = "";

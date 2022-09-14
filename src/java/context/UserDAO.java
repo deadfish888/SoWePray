@@ -95,16 +95,14 @@ public class UserDAO {
     
     public String resetPassword(String email){
         String newPassword = generateNewPass();
+         try {
+        stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         String sql = "update [User] set "
-                    + "  [password] = ?"
-                    + "where [email] = ? ";
-        try {
-            PreparedStatement ps = cnn.prepareStatement(sql);
-            ps.setString(1, newPassword);
-            ps.setString(2, email);
-            ps.executeUpdate();
+                    + "  [password] = N'" +newPassword + "'"
+                    + "where [email] = "+email;
+        stm.executeUpdate(sql);
         } catch (Exception e) {
-            System.out.println("resetPass Error:" + e.getMessage());
+            System.out.println("changePass Error:" + e.getMessage());
         }
         return newPassword;
     }

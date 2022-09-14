@@ -77,7 +77,7 @@
     </context-param>
     <context-param>
         <param-name>pass</param-name>
-        <param-value>m2bb/F/s7tn</param-value>
+        <param-value></param-value>
     </context-param>
     <servlet-mapping>
         <servlet-name>ForgotController</servlet-name>
