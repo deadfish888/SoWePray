@@ -22,7 +22,7 @@ public class SignupController extends HttpServlet {
             throws ServletException, IOException {
         String referer = request.getParameter("origin");
         request.setAttribute("origin", referer);
-        forward(request, response, "/views/auth/register.jsp");
+        forward(request, response, "/views/auth/signup.jsp");
     }
 
     @Override
@@ -54,7 +54,7 @@ public class SignupController extends HttpServlet {
             ud.createNewUser(name, gender, dob, email, phone ,key, pass);
             request.setAttribute("error", "Sign up successfully!");
             request.setAttribute("origin",request.getParameter("origin"));
-            forward(request, response, "/views/auth/register.jsp");
+            forward(request, response, "/views/auth/signup.jsp");
         }
     }
 
