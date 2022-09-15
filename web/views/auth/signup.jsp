@@ -88,11 +88,11 @@
                                                margin: 0 1em;
                                                " required>
                                     </div>
-                                    <% if (request.getAttribute("error") != null) {%>
-                                    <div class="w-100">
-                                        <%=request.getAttribute("error")%>
-                                    </div>
-                                    <%}%>
+                                    <c:if test="${requestScope.error != null}">
+                                        <div class="w-100">
+                                            <c:out value="${requestScope.error}"/>
+                                        </div>
+                                    </c:if>
                                     <div class="form-group">
                                         <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign Up</button>
                                     </div>

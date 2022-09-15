@@ -135,6 +135,7 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 CREATE TABLE [dbo].[Star](
 	[bid] int not null,
+	[uid] int not null,
 	[star] int not null,
 	 CONSTRAINT [PK_star] PRIMARY KEY CLUSTERED 
 (
@@ -144,6 +145,8 @@ CREATE TABLE [dbo].[Star](
 GO
 ALTER TABLE [dbo].[Star]  WITH CHECK ADD FOREIGN KEY([bid])
 REFERENCES [dbo].[Book] (id)
+ALTER TABLE [dbo].[Star]  WITH CHECK ADD FOREIGN KEY([uid])
+REFERENCES [dbo].[User] (id)
 ALTER TABLE [dbo].[Star]  WITH CHECK ADD constraint chk_star check (star between 1 and 5)
 ---------------------------------------------------
 ALTER TABLE [dbo].[Book] ADD  DEFAULT (0) FOR [views]
