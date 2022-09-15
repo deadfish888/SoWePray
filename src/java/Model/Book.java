@@ -9,49 +9,35 @@ public class Book {
     private int id;
     private String title, author;
     private int categoryid;
-    private int quantity;
+    private int favourite;
     private float price;
     private boolean issale;
-    private int discount;
     private String image;
     private String description;
     private int views;
 
-    public Book(int id, String title, String author,int categoryid, int quantity,float price, boolean issale, int discount, String image, String description) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.categoryid = categoryid;
-        this.quantity=quantity;
-        this.price = price;
-        this.issale = issale;
-        this.discount = discount;
-        this.image = image;
-        this.description = description;
-    }
 
-    public Book(int id, String title, String author, int categoryid, int quantity, float price, boolean issale, int discount, String image, String description, int views) {
+    public Book(int id, String title, String author, int categoryid, int favourite, float price, boolean issale, String image, String description, int views) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.categoryid = categoryid;
-        this.quantity = quantity;
+        this.favourite = favourite;
         this.price = price;
         this.issale = issale;
-        this.discount = discount;
         this.image = image;
         this.description = description;
         this.views = views;
     }
 
-    public Book(int id, String title, String author, int quantity, float price, boolean issale, int discount, String image) {
+    public Book(int id, String title, String author, int type, int favourite, float price, boolean issale, String image) {
         this.id = id;
         this.title = title;
         this.author = author;
-        this.quantity = quantity;
+        this.categoryid=type;
+        this.favourite = favourite;
         this.price = price;
         this.issale = issale;
-        this.discount = discount;
         this.image = image;
     }
 
@@ -105,14 +91,14 @@ public class Book {
         this.categoryid = categoryid;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getFavourite() {
+        return favourite;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setFavourite(int favourite) {
+        this.favourite = favourite;
     }
-
+    
     public float getPrice() {
         return price;
     }
@@ -129,24 +115,12 @@ public class Book {
         this.issale = issale;
     }
 
-    public int getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(int discount) {
-        this.discount = discount;
-    }
-
     public String getImage() {
         return image;
     }
 
     public void setImage(String image) {
         this.image = image;
-    }
-    
-    public Float getRealPrice(){
-        return (this.issale()?(this.price*(100-this.discount)/100) : this.price);
     }
     
 //    public String getCategory(){
