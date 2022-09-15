@@ -8,10 +8,13 @@ import Model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 /**
@@ -25,7 +28,7 @@ public class UserDAO {
     }
 
     Connection cnn; // ket noi db
-    Statement stm; // thuc thi cac cau lenh sql
+    PreparedStatement stm; // thuc thi cac cau lenh sql
     ResultSet rs; // luu tru va xu ly du lieu
 
     private void connectDB() {
@@ -111,8 +114,9 @@ public class UserDAO {
     
     public boolean checkDupEmail(String email) {
         try {
-            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql = "select * from [User] where email='" + email + "'";
+            String sql = "select * from [User] where email=?";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, email);
             rs = stm.executeQuery(sql);
             while (rs.next()) {
                 return false;
@@ -125,8 +129,9 @@ public class UserDAO {
 
     public boolean checkDupUsername(String key) {
         try {
-            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql = "select * from [User] where username='" + key + "'";
+            String sql = "select * from [User] where username=?";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, key);
             rs = stm.executeQuery(sql);
             while (rs.next()) {
                 return false;
@@ -139,68 +144,74 @@ public class UserDAO {
 
     public void createNewUser(String name, String gender, String dob, String email, String phone, String username, String password) {
         try {
-            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             String sql = "insert [User] ([fullname],[gender] ,[dob] , [email], [phone],[username], [password])"
-                    + "  values (N'" + name + "',"
-                    + "N'" + (gender.equals("Male") ? 1 : 0) + "',"
-                    + "CAST(N'" + dob+ "' AS Date),"
-                    + "N'" + email + "',"
-                    + "N'" + phone + "',"
-                    + "N'" + username + "',"
-                    + "N'" + password + "')";
+                    + "  values (?,"
+                    + "?,"
+                    + "CAST(? AS Date),"
+                    + "?, "
+                    + "?, "
+                    + "?, "
+                    + "?)";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, name);
+            stm.setBoolean(2, gender == "Male");
+            stm.setString(3, dob);
+            stm.setString(4, email);
+            stm.setString(5, phone);
+            stm.setString(6, username);
+            stm.setString(7, password);
             stm.executeUpdate(sql);
         } catch (Exception e) {
             System.out.println("updatePass Error:" + e.getMessage());
         }
     }
-    
-    public void editProfile(int userid, String name, String gender, String dob, String email, String phone, String address){
+
+    public void editProfile(int userid, String name, String gender, String dob, String phone, String address) {
         try {
-            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             String sql = "update [User] set "
-                    + "  [fullname] = N'" + name+ "' AND"
-                    + " [gender] = " + (gender.equals("male") ? 1 : 0) + " AND"
-                    + " [dob] = N'" + dob + "' AND"
-                    + " [phone] = N'" + phone + "' AND"
-                    + " [address] = N'"+ address+"'"
-                    + "where [id] = "+userid;
+                    + "  [fullname] = ? AND"
+                    + " [gender] = ? AND"
+                    + " [dob] = ? AND"
+                    + " [phone] = ? AND"
+                    + " [address] = ? "
+                    + "where [id] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, name);
+            stm.setString(2, gender);
+            stm.setString(3, dob);
+            stm.setString(4, phone);
+            stm.setString(5, address);
+            stm.setInt(6, userid);
+
             stm.executeUpdate(sql);
         } catch (Exception e) {
             System.out.println("editProfile Error:" + e.getMessage());
         }
     }
-    
-    public void changePassword(int userid, String newPassword){
+
+    public void changePassword(int userid, String newPassword) {
         try {
-            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             String sql = "update [User] set "
-                    + "  [password] = N'" +newPassword + "'"
-                    + "where [id] = "+userid;
+                    + "  [password] = ? "
+                    + "where [id] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, newPassword);
+            stm.setInt(2, userid);
             stm.executeUpdate(sql);
         } catch (Exception e) {
             System.out.println("changePass Error:" + e.getMessage());
         }
     }
 
-    public Object getNumberUser() {
-        try{
-            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql = "select count([id]) from [User] where [is_super] = 'False'";
-            rs = stm.executeQuery(sql);
-            if(rs.next()){
-                return rs.getInt(1);
-            }
-        }catch(Exception e){
-            System.out.println("getNumberUser Error");
-        }
-        return -1;
+    public int getNumberUser() {
+        return (getAllUsers().size());
     }
 
     public ArrayList<User> getAllUsers() {
         ArrayList<User> list = new ArrayList<>();
         try {
-            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             String sql = "Select * from [User] where [is_super] = 0";
+            stm = cnn.prepareStatement(sql);
             rs = stm.executeQuery(sql);
             while (rs.next()) {
                 int userid = rs.getInt(1);
@@ -212,7 +223,7 @@ public class UserDAO {
                 String phone = rs.getString(6);
                 String address = rs.getString(7);
                 String username = rs.getString(8);
-               list.add(new User(userid, name, username, gender, dob, email, phone, address));
+                list.add(new User(userid, name, username, gender, dob, email, phone, address));
             }
         } catch (Exception e) {
             System.out.println("getUser Error:" + e.getMessage());
@@ -221,14 +232,15 @@ public class UserDAO {
     }
 
     public String getUsername(int userid) {
-        try{
-            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql = "select [username] from [User] where [id] = "+userid;
+        try {
+            String sql = "select [username] from [User] where [id] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, userid);
             rs = stm.executeQuery(sql);
-            if(rs.next()){
+            if (rs.next()) {
                 return rs.getString(1);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("getNumberUser Error");
         }
         return null;
@@ -236,29 +248,86 @@ public class UserDAO {
 
     public void updateUser(int id, String name, String phone, String address) {
         try {
-            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
             String sql = "update [User] set "
-                    + "  [fullname] = N'" +name + "'"
-                    + ", [phone] = N'"+phone+"'"
-                    + ", [address] = N'"+address+"'"
-                    + "where [id] = "+id;
+                    + "  [fullname] = ?"
+                    + ", [phone] = ?"
+                    + ", [address] = ? "
+                    + "where [id] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, name);
+            stm.setString(2, phone);
+            stm.setString(3, address);
             stm.executeUpdate(sql);
         } catch (Exception e) {
             System.out.println("updateUser Error:" + e.getMessage());
         }
     }
 
-    public boolean checkOldPass(int id,String oldpass) {
+    public boolean checkOldPass(int id, String oldpass) {
         try {
-            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql = "select * from [User] where [id] = "+id+" AND [password]=N'"+oldpass+"'";
+            String sql = "select * from [User] where [id] = ? AND [password]=? ";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, id);
+            stm.setString(2, oldpass);
             rs = stm.executeQuery(sql);
-            if(rs.next()){
+            if (rs.next()) {
                 return true;
             }
         } catch (Exception e) {
             System.out.println("updateUser Error:" + e.getMessage());
         }
         return false;
+    }
+    
+    public void updateUser(User user) {
+        try {
+
+            String sql = "update [User] set "
+                    + "  [fullname] = ?"
+                    + ", [phone] = ?"
+                    + ", [address] = ?"
+                    + ", [gender] = ?"
+                    + ", [dob] = ? "
+                    + " where [id] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, user.getName());
+            stm.setString(2, user.getPhone());
+            stm.setString(3, user.getAddress());
+            stm.setBoolean(4, user.getGender().equals("Male"));
+            stm.setString(5, user.getDob());
+            stm.setInt(6, user.getId());
+            stm.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("updateUser Error:" + e.getMessage());
+        }
+        
+    }
+
+    public User getUser(int id) {
+        try {
+            String sql = "SELECT [fullname]\n"
+                    + "      ,[gender]\n"
+                    + "      ,[dob]\n"
+                    + "      ,[email]\n"
+                    + "      ,[phone]\n"
+                    + "      ,[address]\n"
+                    + "      ,[username]\n"
+                    + "      ,[password]\n"
+                    + "      ,[is_super]\n"
+                    + "  FROM [User] "
+                    + "where id = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, id);
+            rs = stm.executeQuery(sql);
+            if (rs.next()) {
+                return new User(id, rs.getString(1), rs.getBoolean(2)?"Male" : "Female", 
+                        rs.getString(3), rs.getString(4), rs.getString(5), 
+                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

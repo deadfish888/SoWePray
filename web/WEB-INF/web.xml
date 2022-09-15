@@ -20,6 +20,15 @@
         <servlet-class>Controller.auth.SignupController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <servlet-class>Controller.User.ChangePasswordController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfileController</servlet-name>
+        <servlet-class>Controller.User.ProfileController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+
         <servlet-name>LogoutController</servlet-name>
         <servlet-class>Controller.auth.LogoutController</servlet-class>
     </servlet>
@@ -48,6 +57,12 @@
         <url-pattern>/Signup</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <url-pattern>/User/ChangePassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileController</servlet-name>
+        <url-pattern>/User/Profile</url-pattern>
         <servlet-name>LogoutController</servlet-name>
         <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
@@ -88,4 +103,12 @@
             30
         </session-timeout>
     </session-config>
+     <filter>
+        <filter-name>UserAuthenticationFilter</filter-name>
+        <filter-class>filter.UserAuthenticationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>UserAuthenticationFilter</filter-name>
+        <url-pattern>/User/*</url-pattern>
+    </filter-mapping>
 </web-app>
