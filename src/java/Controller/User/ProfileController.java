@@ -10,6 +10,7 @@ import context.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,6 +19,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author Silver_000
  */
+@WebServlet(name="Profile", urlPatterns={"/User/Profile"})
+
 public class ProfileController extends HttpServlet {
    
     /** 
@@ -31,7 +34,7 @@ public class ProfileController extends HttpServlet {
     throws ServletException, IOException {
     } 
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -69,6 +72,7 @@ public class ProfileController extends HttpServlet {
         user.setAddress(address);
         UserDAO userDBC = new UserDAO();
         userDBC.updateUser(user);
+        request.getRequestDispatcher("../views/user/Profile.jsp").forward(request, response);
     }
 
     /** 

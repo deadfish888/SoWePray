@@ -16,6 +16,7 @@ import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -24,6 +25,7 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author fpt
  */
+@WebFilter("/User/*")
 public class UserAuthenticationFilter implements Filter {
 
     private static final boolean debug = true;
@@ -74,7 +76,7 @@ public class UserAuthenticationFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession httpSession = req.getSession(true);
 
-        if (httpSession != null || req.getSession().getAttribute("user") == null) {
+        if (httpSession != null && req.getSession().getAttribute("user") != null) {
             chain.doFilter(request, response);
         } else {
             res.sendRedirect(req.getContextPath() + "/Login");
