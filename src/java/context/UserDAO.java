@@ -64,6 +64,25 @@ public class UserDAO {
         }
         return null;
     }
+    public void editProfile(User us) {
+        String sql = "update[User] set\n"
+                + "                [email] = ?,\n"
+                + "                [fullname] = ?,\n"
+                + "                [phone] = ?,\n"
+                + "                [address] =  ? \n"
+                + "                where [id] = ?";
+        try {
+            PreparedStatement ps = cnn.prepareStatement(sql);
+            ps.setString(1, us.getEmail());
+            ps.setString(2, us.getName());
+            ps.setString(3, us.getPhone());
+            ps.setString(4, us.getAddress());
+            ps.setInt(5, us.getId());
+            rs = ps.executeQuery();
+        } catch (Exception e) {
+            System.out.println("editProfile Error:" + e.getMessage());
+        }
+    }
 
     public String generateNewPass() {
         int data[] = IntStream.concat(IntStream.rangeClosed('0', '9'),

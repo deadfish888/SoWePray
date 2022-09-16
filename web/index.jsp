@@ -58,7 +58,7 @@
                     <a href="">Welcome ${sessionScope.user.getName()}</a>
                     <% } else if (session.getAttribute("admin")!=null){ 
                     %>
-                    <a href="./manage/ADprofile.jsp">Welcome ${sessionScope.admin.getName()}</a>
+                    <a href="./Edit">Welcome ${sessionScope.admin.getName()}</a>
                     <% } else { %>
                     <a href="">Menu</a>
                     <% }%>
