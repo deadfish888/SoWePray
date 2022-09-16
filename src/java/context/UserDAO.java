@@ -4,12 +4,16 @@
  */
 package context;
 
+import Model.RandomEnglishNameGenerator;
 import Model.User;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Random;
@@ -81,7 +85,7 @@ public class UserDAO {
         return new String(index);
     }
 
-    public boolean checkExistEmail(String email){
+    public boolean checkExistEmail(String email) {
         String sql = "select * from [User] where email= ? ";
         try {
             PreparedStatement ps = cnn.prepareStatement(sql);
@@ -95,12 +99,12 @@ public class UserDAO {
         }
         return false;
     }
-    
-    public String resetPassword(String email){
+
+    public String resetPassword(String email) {
         String newPassword = generateNewPass();
         String sql = "update [User] set "
-                    + "  [password] = ? "
-                    + " where [email] = ?";
+                + "  [password] = ? "
+                + " where [email] = ?";
         try {
             PreparedStatement ps = cnn.prepareStatement(sql);
             ps.setString(1, newPassword);
@@ -111,7 +115,7 @@ public class UserDAO {
         }
         return newPassword;
     }
-    
+
     public boolean checkDupEmail(String email) {
         try {
             String sql = "select * from [User] where email=?";
@@ -154,15 +158,54 @@ public class UserDAO {
                     + "?)";
             stm = cnn.prepareStatement(sql);
             stm.setString(1, name);
-            stm.setBoolean(2, gender == "Male");
+            stm.setBoolean(2, gender.equals("Male"));
             stm.setString(3, dob);
             stm.setString(4, email);
             stm.setString(5, phone);
             stm.setString(6, username);
             stm.setString(7, password);
-            stm.executeUpdate(sql);
+            stm.executeUpdate();
         } catch (Exception e) {
             System.out.println("updatePass Error:" + e.getMessage());
+        }
+    }
+
+    public void addUser(User user) {
+        try {
+            String sql = "INSERT INTO [dbo].[User]\n"
+                    + "           ([fullname]\n"
+                    + "           ,[gender]\n"
+                    + "           ,[dob]\n"
+                    + "           ,[email]\n"
+                    + "           ,[phone]\n"
+                    + "           ,[address]\n"
+                    + "           ,[username]\n"
+                    + "           ,[password]\n"
+                    + "           ,[is_super])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?)";
+
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, user.getName());
+            stm.setBoolean(2, user.getGender().equals("Male"));
+            stm.setString(3, user.getDob());
+            stm.setString(4, user.getEmail());
+            stm.setString(5, user.getPhone());
+            stm.setString(6, user.getAddress());
+            stm.setString(7, user.getUsername());
+            stm.setString(8, user.getPassword());
+            stm.setBoolean(9, user.is_super());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -279,7 +322,7 @@ public class UserDAO {
         }
         return false;
     }
-    
+
     public void updateUser(User user) {
         try {
 
@@ -301,7 +344,7 @@ public class UserDAO {
         } catch (Exception e) {
             System.out.println("updateUser Error:" + e.getMessage());
         }
-        
+
     }
 
     public User getUser(int id) {
@@ -321,8 +364,8 @@ public class UserDAO {
             stm.setInt(1, id);
             rs = stm.executeQuery(sql);
             if (rs.next()) {
-                return new User(id, rs.getString(1), rs.getBoolean(2)?"Male" : "Female", 
-                        rs.getString(3), rs.getString(4), rs.getString(5), 
+                return new User(id, rs.getString(1), rs.getBoolean(2) ? "Male" : "Female",
+                        rs.getString(3), rs.getString(4), rs.getString(5),
                         rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9));
             }
         } catch (SQLException ex) {
@@ -330,4 +373,66 @@ public class UserDAO {
         }
         return null;
     }
+
+    void generateData() {
+        int[] roleSlots = {5, 15, 80, 500};
+        User newUser;
+        for (int i = 1; i <= 100; i++) {
+            boolean isSuper = (int) (Math.random() * 20) == 0;
+            String role = isSuper? "Admin" : "User";
+            String mail = "Bookie_" + role + i + "@qa.team";
+
+            String password = "";
+            //Loop until captcha have 5 character
+            while (password.length() != 10) {
+                int CharacterGroup = (int) (Math.random() * 3);
+                //If group is 0, get a digit
+                if (CharacterGroup == 0) {
+                    char AsciiCharacter = (char) (Math.random() * 10 + 48);
+                    password += Character.toString(AsciiCharacter);
+                } //If group is 1, get a upcase letter
+                else if (CharacterGroup == 1) {
+                    char AsciiCharacter = (char) (Math.random() * 24 + 65);
+                    password += Character.toString(AsciiCharacter);
+                } //If group is 2, get a lowcase letter
+                else {
+                    char AsciiCharacter = (char) (Math.random() * 24 + 97);
+                    password += Character.toString(AsciiCharacter);
+                }
+            }
+            String username = "user_no" + i;
+            String phone = "";
+            while (phone.length() != 10) {
+                char AsciiCharacter = (char) (Math.random() * 10 + 48);
+                phone += Character.toString(AsciiCharacter);
+            }
+
+//            String name = "";
+            RandomEnglishNameGenerator nameGenerator = new RandomEnglishNameGenerator();
+            String name = nameGenerator.generateName();
+            String gender = (int) (Math.random() * 2) == 0 ? "Male" : "Female";
+
+            String address = "";
+            address += Character.toString((char) (Math.random() * 6 + 65))
+                    + String.format("%03d%s", (int) (Math.random() * 600 + 1), (int) (Math.random() * 2) == 0 ? "L" : "R");
+
+            //Starting year of specified random date (including)
+            int startYear = 1960;
+            int endYear = 2004;
+            long start = Timestamp.valueOf(startYear + 1 + "-1-1 0:0:0").getTime();
+            long end = Timestamp.valueOf(endYear + "-1-1 0:0:0").getTime();
+            //The qualified number of 13-bit milliseconds is obtained.
+            long ms = (long) ((end - start) * Math.random() + start);
+            Date tempDob = new Date(ms);
+
+            DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+            String dob = f.format(tempDob);
+//            System.out.println(dob);
+
+            newUser = new User(i + 2, name, gender, dob, mail, phone, address, username, password, isSuper);
+            addUser(newUser);
+        }
+
+    }
+
 }

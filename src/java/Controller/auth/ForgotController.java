@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import javax.mail.MessagingException;
 import utils.EmailUtility;
 
 /* @author ACER */
+@WebServlet(name="ForgetPassword", urlPatterns={"/Forgot"})
 public class ForgotController extends HttpServlet {
 
     private String host;

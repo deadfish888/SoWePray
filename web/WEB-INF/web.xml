@@ -9,24 +9,8 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>-->
     <servlet>
-        <servlet-name>LoginController</servlet-name>
-        <servlet-class>Controller.LoginController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>LoginADController</servlet-name>
         <servlet-class>Controller.LoginADcontroller</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SignupController</servlet-name>
-        <servlet-class>Controller.SignupController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ForgotController</servlet-name>
-        <servlet-class>Controller.ForgotController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>LogoutController</servlet-name>
-        <servlet-class>Controller.LogoutController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>BookController</servlet-name>
@@ -75,25 +59,8 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>LoginController</servlet-name>
-        <url-pattern>/Login</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>LoginADController</servlet-name>
         <url-pattern>/LoginAD</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SignupController</servlet-name>
-        <url-pattern>/Signup</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ForgotController</servlet-name>
-        <url-pattern>/Forgot</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-
-        <servlet-name>LogoutController</servlet-name>
-        <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>BookController</servlet-name>
