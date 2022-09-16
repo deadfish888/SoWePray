@@ -38,21 +38,39 @@ Author     : ACER
                                         <h3 class="mb-4">Take back your account</h3>
                                     </div>
                                 </div>
-                                <form action="Forgot" method="POST" class="signin-form">
-                                    <input type="hidden" name="origin" value="${origin}">
-                                    <div class="form-group mt-3">
-                                        <input type="text" name="email" class="form-control" required value="">
-                                        <label class="form-control-placeholder" for="email" >Email</label>
-                                    </div>
-                                    <c:if test="${requestScope.Message != null}">
-                                        <div class="w-100">
-                                            <c:out value="${requestScope.Message}"/>
+                                <c:choose>
+                                    <c:when test="${requestScope.token != null}">
+                                        <div class="form-group mt-3">
+                                            <input type="text" name="newpass" id="myInput" class="form-control" required value="${requestScope.newpassword}">
+                                            <label class="form-control-placeholder" for="newpass" >Your new password</label>
                                         </div>
-                                    </c:if>
-                                    <div class="form-group">
-                                        <button type="submit" class="form-control btn btn-primary rounded submit px-3">Generate new Password</button>
-                                    </div>
-                                </form>
+                                            <c:if test="${requestScope.Message != null}">
+                                                <div class="w-100">
+                                                    <c:out value="${requestScope.Message}"/>
+                                                </div>
+                                            </c:if>
+                                        <div class="form-group">
+                                            <button type="submit" class="form-control btn btn-primary rounded submit px-3" onclick="copyToClipboard()"><span class="fa fa-copy"></span>Copy to Clipboard</button>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <form action="Forgot" method="POST" class="signin-form">
+                                            <input type="hidden" name="origin" value="${origin}">
+                                            <div class="form-group mt-3">
+                                                <input type="text" name="email" class="form-control" required value="">
+                                                <label class="form-control-placeholder" for="email" >Email</label>
+                                            </div>
+                                            <c:if test="${requestScope.Message != null}">
+                                                <div class="w-100">
+                                                    <c:out value="${requestScope.Message}"/>
+                                                </div>
+                                            </c:if>
+                                            <div class="form-group">
+                                                <button type="submit" class="form-control btn btn-primary rounded submit px-3">Reset Password</button>
+                                            </div>
+                                        </form>
+                                    </c:otherwise>
+                                </c:choose>
                                 <p class="text-center">Already have an account? <a href="Login?origin=${origin}">Sign in</a></p>
                             </div>
                         </div>
