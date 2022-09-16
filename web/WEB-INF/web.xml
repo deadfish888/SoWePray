@@ -39,6 +39,10 @@
         <servlet-name>EditController</servlet-name>
         <servlet-class>Controller.EditController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserManagement</servlet-name>
+        <servlet-class>Controller.UserManagement</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -82,6 +86,10 @@
     <servlet-mapping>
         <servlet-name>EditController</servlet-name>
         <url-pattern>/Edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserManagement</servlet-name>
+        <url-pattern>/User</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

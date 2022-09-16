@@ -155,13 +155,13 @@
                                                          href="index.html" aria-expanded="false"><i class="mdi me-2 mdi-gauge"></i><span
                                         class="hide-menu">Dashboard</span></a></li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                         href="/SWP/UserManage" aria-expanded="false"><i class="mdi me-2 mdi-table"></i><span
+                                                         href="../User" aria-expanded="false"><i class="mdi me-2 mdi-table"></i><span
                                         class="hide-menu">Users Management</span></a></li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                                          href="icon-material.html" aria-expanded="false"><i
                                         class="mdi me-2 mdi-emoticon"></i><span class="hide-menu">Icon</span></a></li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                         href="GGmap.jsp" aria-expanded="false"><i class="mdi me-2 mdi-earth"></i><span
+                                                         href="./GGmap.jsp" aria-expanded="false"><i class="mdi me-2 mdi-earth"></i><span
                                         class="hide-menu">Google Map</span></a></li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                                          href="pages-blank.html" aria-expanded="false"><i

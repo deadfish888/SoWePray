@@ -12,7 +12,7 @@
 <%         
         User us = (User) session.getAttribute("admin");
         if (session.getAttribute("admin")==null ) {
-            response.sendRedirect("/SWP/Home");
+            response.sendRedirect("/Bookie/Home");
         }
        
 %>
@@ -32,7 +32,7 @@
         <title>Users Management</title>
         <!-- Favicon icon -->
         <!-- Custom CSS -->
-        <link href="html/css/style.min.css" rel="stylesheet">
+        <link href="/Bookie/manage/html/css/style.min.css" rel="stylesheet">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -66,7 +66,7 @@
                         <!-- ============================================================== -->
                         <!-- Logo -->
                         <!-- ============================================================== -->
-                        <a class="navbar-brand ms-4" href="/SWP/Home">
+                        <a class="navbar-brand ms-4" href="/Bookie/Home">
                             <!-- Logo icon -->
                             <b class="logo-icon">
                                 <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -127,7 +127,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#"
                                    id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="assets/images/users/profile.png" alt="user" class="profile-pic me-2">${sessionScope.admin.getName()}
+                                    <img src="/Bookie/manage/assets/images/users/profile.png" alt="user" class="profile-pic me-2">${sessionScope.admin.getName()}
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul>
                             </li>
@@ -149,20 +149,20 @@
                         <ul id="sidebarnav">
                             <!-- User Profile-->
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                         href="ADprofile.jsp" aria-expanded="false">
+                                                         href="./Edit" aria-expanded="false">
                                     <i class="mdi me-2 mdi-account-check"></i><span class="hide-menu">Profile</span></a>
                             </li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                                          href="index.html" aria-expanded="false"><i class="mdi me-2 mdi-gauge"></i><span
                                         class="hide-menu">Dashboard</span></a></li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                         href="UserList.jsp" aria-expanded="false"><i class="mdi me-2 mdi-table"></i><span
+                                                         href="./User" aria-expanded="false"><i class="mdi me-2 mdi-table"></i><span
                                         class="hide-menu">Users Management</span></a></li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                                          href="icon-material.html" aria-expanded="false"><i
                                         class="mdi me-2 mdi-emoticon"></i><span class="hide-menu">Icon</span></a></li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                         href="GGmap.jsp" aria-expanded="false"><i class="mdi me-2 mdi-earth"></i><span
+                                                         href="./manage/GGmap.jsp" aria-expanded="false"><i class="mdi me-2 mdi-earth"></i><span
                                         class="hide-menu">Google Map</span></a></li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                                          href="pages-blank.html" aria-expanded="false"><i
@@ -192,7 +192,7 @@
                         </div>
                         <div class="col-4 link-wrap">
                             <!-- item-->
-                            <a href="/SWP/Logout" class="link" data-toggle="tooltip" title="" data-original-title="Logout"><i
+                            <a href="/Bookie/Logout" class="link" data-toggle="tooltip" title="" data-original-title="Logout"><i
                                     class="mdi mdi-power"></i></a>
                         </div>
                     </div>
@@ -215,7 +215,7 @@
                             <div class="d-flex align-items-center">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="/SWP/Home">Home</a></li>
+                                        <li class="breadcrumb-item"><a href="/Bookie/Home">Home</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">Users Management</li>
                                     </ol>
                                 </nav>
@@ -331,21 +331,21 @@
         <!-- ============================================================== -->
         <!-- All Jquery -->
         <!-- ============================================================== -->
-        <script src="assets/plugins/jquery/dist/jquery.min.js"></script>
+        <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
 
         <!-- Bootstrap tether Core JavaScript -->
-        <script src="assets/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/Bookie/manage/assets/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-        <script src="html/js/app-style-switcher.js"></script>
+        <script src="/Bookie/manage/html/js/app-style-switcher.js"></script>
 
         <!--Wave Effects -->
-        <script src="html/js/waves.js"></script>
+        <script src="/Bookie/manage/html/js/waves.js"></script>
 
         <!--Menu sidebar -->
-        <script src="html/js/sidebarmenu.js"></script>
+        <script src="/Bookie/manage/html/js/sidebarmenu.js"></script>
 
         <!--Custom JavaScript -->
-        <script src="html/js/custom.js"></script>
+        <script src="/Bookie/manage/html/js/custom.js"></script>
     </body>
 
 </html>
