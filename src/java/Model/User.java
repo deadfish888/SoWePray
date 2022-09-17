@@ -4,11 +4,15 @@
  */
 package Model;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  *
  * @author ACER
  */
 public class User {
+
     private int id;
     private String name, gender, dob, email, phone, address, username, password;
     private boolean is_super;
@@ -44,7 +48,7 @@ public class User {
     public User(int id, String name, String username, String gender, String dob, String email, String phone, String address) {
         this.id = id;
         this.name = name;
-        this.username= username;
+        this.username = username;
         this.gender = gender;
         this.dob = dob;
         this.email = email;
@@ -59,7 +63,7 @@ public class User {
     public void setIs_super(boolean is_super) {
         this.is_super = is_super;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -130,6 +134,32 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getPasswordLevel() {
+        String numberRegex = "[0-9]";
+        String characterRegex = "[a-zA-Z]";
+        String otherRegex = "[^a-zA-Z0-9]";
+
+        Pattern numberPattern = Pattern.compile(numberRegex,
+                Pattern.CASE_INSENSITIVE);
+        Matcher numberMatcher = numberPattern.matcher(password);
+
+        Pattern alphaPattern = Pattern.compile(characterRegex,
+                Pattern.CASE_INSENSITIVE);
+        Matcher alphaMatcher = alphaPattern.matcher(password);
+
+        Pattern specialPattern = Pattern.compile(otherRegex,
+                Pattern.CASE_INSENSITIVE);
+        Matcher specialMatcher = specialPattern.matcher(password);
+
+        if (numberMatcher.find() && alphaMatcher.find() && specialMatcher.find()) {
+            return 3;
+        } else if (numberMatcher.find() && alphaMatcher.find()) {
+            return 2;
+        } else {
+            return 1;
+        }
     }
 
 }

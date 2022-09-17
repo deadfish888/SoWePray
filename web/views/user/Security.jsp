@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Profile
-    Created on : Sep 12, 2022, 1:02:02 PM
+    Document   : Security
+    Created on : Sep 17, 2022, 10:05:17 PM
     Author     : fpt
 --%>
 
@@ -30,11 +30,11 @@
                 </div>
 
                 <ul class="list-unstyled components" style="padding: 0.5em; font-size: 1.4em">
-                    <li class="active sidebar-item">
-                        My profile
-                    </li>
                     <li class="sidebar-item">
-                        <a href="./Security">Security</a>
+                        <a href="./Profile">My Profile</a>
+                    </li>
+                    <li class="active">
+                        Security
                     </li>
                     <li class="sidebar-item">
                         <a href="#">Settings</a>
@@ -104,64 +104,85 @@
 
                 <div>
                     <div class="text-center">
-                        <h1>MY PROFILE</h1>
+                        <h1>SECURITY</h1>
 
                     </div>
-                    <form method="post" action="Profile" style="width: 90%; display: block; margin: auto">
+                    <form method="post" action="Security" style="width: 90%; display: block; margin: auto">
                         <table class="border-0">
                             <tr>
                                 <th>
-                                    Name
+                                    Linked email
                                 </th>
-                                <td colspan="3">
-                                    ${sessionScope.user.name}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Email
-                                </th>
-                                <td colspan="0">
+                                <td>
                                     ${sessionScope.user.email}
                                 </td>
+                                <td>
+                                    <button><a href="#change-mail">Change</a></button>
+                                </td>
                             </tr>
                             <tr>
                                 <th>
-                                    Birth
+                                    Password
                                 </th>
                                 <td>
-                                    ${sessionScope.user.dob}
-                                </td>
-                                <th>
-                                    Gender
-                                </th>
-                                <td>
-                                    ${sessionScope.user.gender}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Phone number
-                                </th>
-                                <td colspan="3">
-                                    ${sessionScope.user.phone}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Address
-                                </th>
-                                <td colspan="3">
-                                    ${sessionScope.user.address}
+                                    <c:if test="${sessionScope.user.getPasswordLevel() == 1}"><span style="color: red">Week</span></c:if>
+                                    <c:if test="${sessionScope.user.getPasswordLevel() == 2}"><span style="color: #ffbb00">Medium</span></c:if>
+                                    <c:if test="${sessionScope.user.getPasswordLevel() == 3}"><span style="color: green">Strong</span></c:if>
+                                    </td>
+                                    <td>
+                                        <button type="button" data-toggle="modal" data-target=".bd-example-modal-lg">Change</button>
+                                        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title">Change password</h3>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!--<div class="wrapper row">-->
+                                                        <table>
+                                                            <tr>
+                                                                <th>
+                                                                    Password
+                                                                </th>
+                                                                <td>
+                                                                    <input type="password" name="currentPassword"/>
+                                                                    <div style="color: red">${old_pass_noti}</div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                New password
+                                                            </th>
+                                                            <td>
+                                                                <input type="password" name="newPassword"/>
+                                                                <div style="color: red">${new_pass_noti}</div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                Confirm password
+                                                            </th>
+                                                            <td>
+                                                                <input type="password" name="confirmPassword"/>
+                                                                <div style="color: red">${confirm_pass_noti}</div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <!--</div>-->
+                                                </div>
+                                                <div class="modal-footer" style="text-align: center">
+                                                    <button type="button" data-dismiss="modal">Cancel</button>
+                                                    <button type="submit" name="action" value="changePassword">Confirm</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
-                        <div class="text-center">
-                            <!--<button class="" onclick="editProfile()">Edit</button>-->
-                        </div>
-                        <div style="text-align: center">
-                            <input type="submit" name="action" value="edit"/>
-                        </div>
+
+                        <p>${processMessage}</p>      
+
                     </form>
                 </div>
             </div>
@@ -170,6 +191,16 @@
         </div>
         <!-- Scripts -->
 
+        <script>
+            function changePassword() {
+                var element = document.getElementById("change-password");
+                if (element.style.display == 'none')
+                    element.style.display = "block";
+                else {
+                    element.style.display = 'none';
+                }
+            }
+        </script>
         <script src="../assets/js/jquery.min.js"></script>
         <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="../assets/js/jquery.scrolly.min.js"></script>

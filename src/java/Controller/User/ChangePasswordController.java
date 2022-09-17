@@ -5,6 +5,7 @@
 package Controller.User;
 
 import Model.User;
+import Model.Validator;
 import context.DBContext;
 import context.UserDAO;
 import java.io.IOException;
@@ -19,8 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author Silver_000
  */
-
-@WebServlet(name="ChangePassword", urlPatterns={"/User/ChangePassword"})
+@WebServlet(name = "ChangePassword", urlPatterns = {"/User/ChangePassword"})
 public class ChangePasswordController extends HttpServlet {
 
     /**
@@ -34,19 +34,6 @@ public class ChangePasswordController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ChangePasswordController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ChangePasswordController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -61,7 +48,7 @@ public class ChangePasswordController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("view/user/ChangePassword.jsp").forward(request, response);
+        request.getRequestDispatcher("../views/user/Security.jsp").forward(request, response);
     }
 
     /**
@@ -76,21 +63,31 @@ public class ChangePasswordController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        String old_password = request.getParameter("oldPassword");
-        String new_password = request.getParameter("newPassword");
-        String confirm_password = request.getParameter("confirmPassword");
+//        String new_password = request.getParameter("newPassword");
+//        String confirm_password = request.getParameter("confirmPassword");
 
         UserDAO userDBC = new UserDAO();
         User user = (User) request.getSession().getAttribute("user");
-        if (user.getPassword().equals(request.getParameter("oldPassword"))) {
-            if (request.getParameter("newPassword").equals(request.getParameter("confirmPassword")))  {
-                userDBC.changePassword(user.getId(), new_password);
+        if (user.getPassword().equals(request.getParameter("currentPassword"))) {
+            Validator validator = new Validator();
+            if (validator.getPassword(request.getParameter("newPassword"))) {
+                if (request.getParameter("newPassword").equals(request.getParameter("confirmPassword"))) {
+                    user.setPassword(request.getParameter("newPassword"));
+                    userDBC.changePassword(user.getId(), request.getParameter("newPassword"));
+            request.setAttribute("processMessage", "Change password successfully.");
+                } else {
+                    request.setAttribute("confirm_pass_noti", "Confirm password is not match with new password.");
+                    request.setAttribute("processMessage", "Change password fail.");
+                }
             } else {
-                request.setAttribute("confirm_pass_noti", "Confirm password is not match with new password.");
+                request.setAttribute("new_pass_noti", "New password is invalid.");
+                request.setAttribute("processMessage", "Change password fail.");
             }
         } else {
             request.setAttribute("old_pass_noti", "Old password is wrong.");
+            request.setAttribute("processMessage", "Change password fail.");
         }
-        request.getRequestDispatcher("view/user/ChangePassword.jsp").forward(request, response);
+        request.getRequestDispatcher("../views/user/Security.jsp").forward(request, response);
     }
 
     /**

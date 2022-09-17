@@ -14,7 +14,8 @@ import Model.User;
 public class TestDAO {
     public static void main(String[] args) {
     UserDAO userDBC = new UserDAO();
-    userDBC.generateData();
+    userDBC.changePassword(1, "admin1");
+//    userDBC.generateData();
 //    userDBC.updateUser(new User(1, "MrA", "Male", "2000-01-01", "abc@def", "0000000000", "asdfghj", "zxcvbnm", "123456", false));
         
     }

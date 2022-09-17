@@ -17,8 +17,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author Silver_000
  */
-@WebServlet(name="ViewSecurityController", urlPatterns={"/User/Security"})
-public class ViewSecurityController extends HttpServlet {
+@WebServlet(name="ChangeEmailController", urlPatterns={"/User/ChangeEmail"})
+public class ChangeEmailController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,10 +35,10 @@ public class ViewSecurityController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewSecurityController</title>");  
+            out.println("<title>Servlet ChangeEmailController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewSecurityController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ChangeEmailController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -55,7 +55,7 @@ public class ViewSecurityController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("../views/user/Security.jsp").forward(request, response);
+        processRequest(request, response);
     } 
 
     /** 
@@ -68,15 +68,7 @@ public class ViewSecurityController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String action = request.getParameter("action");
-        if(action.equals("changePassword")){
-            request.getRequestDispatcher("ChangePassword").forward(request, response);
-        } else if(action.equals("changeEmail")){
-            request.getRequestDispatcher("ChangeEmail").forward(request, response);
-            
-        }else{
-            response.sendRedirect(request.getContextPath());
-        }
+        processRequest(request, response);
     }
 
     /** 

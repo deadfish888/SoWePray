@@ -32,10 +32,10 @@ public class ForgotController extends HttpServlet {
     public void init() {
         // reads SMTP server setting from web.xml file
         ServletContext context = getServletContext();
-        host = "smtp.gmail.com";
-        port = "587";
-        user = "anhktmhe163997@fpt.edu.vn";
-        pass = "WhiteMoon";
+        host = context.getInitParameter("host");
+        port = context.getInitParameter("port");
+        user = context.getInitParameter("user");
+        pass = context.getInitParameter("pass");
     }
 
     @Override
@@ -66,7 +66,7 @@ public class ForgotController extends HttpServlet {
                 Message = "Email not match! Please try again!";
             }
         } catch (MessagingException ex) {
-            Message = "There were an error! ";
+            Message = "There were an error! " + ex.getMessage();
         } finally {
             request.setAttribute("Message", Message);
             forward(request, response, "/views/auth/forgot.jsp");

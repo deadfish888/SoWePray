@@ -56,7 +56,7 @@ public class UserDAO {
                 int userid = rs.getInt(1);
                 String name = rs.getString(2);
                 String gender = rs.getBoolean(3) ? "Male" : "Female";
-                SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
                 String dob = f.format(rs.getDate(4));
                 String email = rs.getString(5);
                 String phone = rs.getString(6);
@@ -240,7 +240,7 @@ public class UserDAO {
             stm = cnn.prepareStatement(sql);
             stm.setString(1, newPassword);
             stm.setInt(2, userid);
-            stm.executeUpdate(sql);
+            stm.executeUpdate();
         } catch (Exception e) {
             System.out.println("changePass Error:" + e.getMessage());
         }
@@ -260,7 +260,7 @@ public class UserDAO {
                 int userid = rs.getInt(1);
                 String name = rs.getString(2);
                 String gender = rs.getBoolean(3) ? "Male" : "Female";
-                SimpleDateFormat f = new SimpleDateFormat("dd/mm/yyyy");
+                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
                 String dob = f.format(rs.getDate(4));
                 String email = rs.getString(5);
                 String phone = rs.getString(6);
