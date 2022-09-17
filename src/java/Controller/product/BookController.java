@@ -11,6 +11,7 @@ import context.CategoryDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,13 +19,14 @@ import java.util.ArrayList;
 
 
 /* @author ACER */
+@WebServlet("/Book")
 public class BookController extends HttpServlet {
 
     // <editor-fold defaultstate="" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String cid = request.getParameter("type");
+        String cid = request.getParameter("category");
         ArrayList<Book> books;
         BookDAO bd = new BookDAO();
         CategoryDAO cd = new CategoryDAO();
@@ -34,9 +36,11 @@ public class BookController extends HttpServlet {
             if (!cid.equals("0")) {
                 books = bd.getBooksByCid(cid);
                 request.setAttribute("cate", cid);
+            //    request.getRequestDispatcher("/views/book/bookshelf.jsp").forward(request, response);
             } else {
                 books = bd.getBooks();
                 request.setAttribute("cate", 0);
+             //   request.getRequestDispatcher("/views/book/bookshelf.jsp").forward(request, response);
             }
             
             request.setAttribute("books", books);

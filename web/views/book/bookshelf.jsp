@@ -85,9 +85,9 @@
                             <h2>Category</h2>
                         </div>
                         <div class="home-filter">
-                            <button name="type"  type="submit" class="primary" value="0" style="overflow:initial;">All</button>
-                            <c:forEach items="${category}" var="type">
-                                <button name="type" type="submit" class="primary" value="${type.getId()}">${type.getName()}</button>
+                            <button name="category"  type="submit" class="primary" value="0" style="overflow:initial;">All</button>
+                            <c:forEach items="${category}" var="category">
+                                <button name="category" type="submit" class="primary" value="${category.getId()}">${category.getName()}</button>
                             </c:forEach>
                         </div>
                     </div>

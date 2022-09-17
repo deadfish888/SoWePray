@@ -63,22 +63,6 @@
         <servlet-name>tesst</servlet-name>
         <url-pattern>/tesst</url-pattern>
     </servlet-mapping>
-    <context-param>
-        <param-name>host</param-name>
-        <param-value>smtp.gmail.com</param-value>
-    </context-param>
-    <context-param>
-        <param-name>port</param-name>
-        <param-value>587</param-value>
-    </context-param>
-    <context-param>
-        <param-name>user</param-name>
-        <param-value>vinhnthe163219@fpt.edu.vn</param-value>
-    </context-param>
-    <context-param>
-        <param-name>pass</param-name>
-        <param-value>m2bb/F/s7tn</param-value>
-    </context-param>
     <servlet-mapping>
         <servlet-name>ForgotController</servlet-name>
         <url-pattern>/Forgot</url-pattern>

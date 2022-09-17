@@ -36,8 +36,8 @@ public class BookDetail extends HttpServlet {
         BookDAO b=new BookDAO();
         Book thisbook=b.getBookById(id);
         int cateid=thisbook.getCategoryid();
-            
-        
+        request.setAttribute("book", thisbook);
+        request.getRequestDispatcher("/views/book/book-details.jsp").forward(request, response);
     } 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

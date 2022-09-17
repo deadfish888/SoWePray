@@ -99,16 +99,7 @@
                                 <div class="row">        
                                     <form action="BookDetail" method="GET">
                                         <div class="col-sm-8">
-                                            <label class="control-label" >Quantity</label>
-
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <input type="number" name="quantity" min="1" max="${book.getQuantity()}" class="bg-transparent form-control" value="1" pattern="[0-9]+" required>
-                                                    </div>
-                                                </div>
-                                                <input type="hidden" name="id" value="${book.getId()}">
-                                            </div>
+                                            <input type="submit" name="addtocart" class="primary" value="Add to Cart">                                 
                                         </div>
                                     </form>
                                 </div>

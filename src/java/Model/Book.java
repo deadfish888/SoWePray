@@ -4,6 +4,8 @@
  */
 package Model;
 
+import context.CategoryDAO;
+
 
 public class Book {
     private int id;
@@ -123,8 +125,8 @@ public class Book {
         this.image = image;
     }
     
-//    public String getCategory(){
-//        CategoryDAO dao =new CategoryDAO();
-//        return (dao.getCategory(this.categoryid)==null?"Uncategorized":dao.getCategory(this.categoryid));
-//    }
+    public String getCategory(){
+        CategoryDAO dao =new CategoryDAO();
+        return (dao.getCategory(this.categoryid)==null?"Uncategorized":dao.getCategory(this.categoryid));
+    }
 }
