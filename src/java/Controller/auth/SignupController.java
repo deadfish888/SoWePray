@@ -37,7 +37,7 @@ public class SignupController extends HttpServlet {
        
         UserDAO ud = new UserDAO();
         User user = new User(name, gender, dob, email, phone ,key, pass);
-        if(!ud.checkDupEmail(email)){
+        if(!ud.checkEmailExisted(email)){
             request.setAttribute("in4", user);
             request.setAttribute("error", "The email had already been registered!");
             request.setAttribute("origin",request.getParameter("origin"));

@@ -2,6 +2,8 @@ package utils;
  
 import java.util.Date;
 import java.util.Properties;
+import java.util.Random;
+import java.util.stream.IntStream;
  
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -17,16 +19,28 @@ import javax.mail.internet.MimeMessage;
  * @author www.codejava.net
  *
  */
-public class EmailUtility {
-    public static void sendEmail(String host, String port,
-            final String userName, final String password, String toAddress,
-            String subject, String message) throws AddressException,
+public class MyUtil {
+    public static String randomString(int number) {
+        int data[] = IntStream.concat(IntStream.rangeClosed('0', '9'),
+                IntStream.concat(IntStream.rangeClosed('A', 'Z'),
+                        IntStream.rangeClosed('a', 'z'))).toArray();
+        char index[] = new char[number];
+
+        Random r = new Random();
+        for (int i = 0; i < 10; i++) {
+            index[i] = (char) data[r.nextInt(data.length)];
+        }
+        return new String(index);
+    }
+    
+    public static void sendEmail(final String userName, final String password, 
+            String toAddress, String subject, String message) throws AddressException,
             MessagingException {
  
         // sets SMTP server properties
         Properties properties = new Properties();
-        properties.put("mail.smtp.host", host);
-        properties.put("mail.smtp.port", port);
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
  
