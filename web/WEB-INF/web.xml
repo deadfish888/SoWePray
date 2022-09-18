@@ -32,12 +32,16 @@
         <servlet-class>Controller.DashBoard</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>tesst</servlet-name>
-        <servlet-class>Controller.tesst</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ForgotController</servlet-name>
         <servlet-class>Controller.auth.ForgotController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditController</servlet-name>
+        <servlet-class>Controller.EditController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserManagement</servlet-name>
+        <servlet-class>Controller.UserManagement</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -62,6 +66,14 @@
     <servlet-mapping>
         <servlet-name>ForgotController</servlet-name>
         <url-pattern>/Forgot</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditController</servlet-name>
+        <url-pattern>/Edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserManagement</servlet-name>
+        <url-pattern>/User</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : ADprofile
-    Created on : Sep 13, 2022, 10:52:12 AM
+    Document   : UserList
+    Created on : Sep 14, 2022, 1:48:48 PM
     Author     : duypham0705
 --%>
 
@@ -29,11 +29,10 @@
         <meta name="description"
               content="Material Pro Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
         <meta name="robots" content="noindex,nofollow">
-        <title>Admin Profile</title>
+        <title>Users Management</title>
         <!-- Favicon icon -->
         <!-- Custom CSS -->
-        <!--<link rel="stylesheet" href="html/css/style.min.css">-->
-        <link rel="stylesheet" href="/Bookie/manage/html/css/style.min.css">
+        <link href="/Bookie/manage/html/css/style.min.css" rel="stylesheet">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -77,7 +76,11 @@
                             </b>
                             <!--End Logo icon -->
                             <!-- Logo text -->
-                            <span class="logo-text" alt="homepage">Bookie</span>
+                            <span class="logo-text">
+                                <!-- dark Logo text -->
+                                 <span class="logo-text" alt="homepage">Bookie</span>
+
+                            </span>
                         </a>
                         <!-- ============================================================== -->
                         <!-- End Logo -->
@@ -110,8 +113,7 @@
                                 <a class="nav-link text-muted" href="javascript:void(0)"><i class="ti-search"></i></a>
                                 <form class="app-search" style="display: none;">
                                     <input type="text" class="form-control" placeholder="Search &amp; enter"> <a
-                                        class="srh-btn"><i class="ti-close"></i></a>
-                                </form>
+                                        class="srh-btn"><i class="ti-close"></i></a> </form>
                             </li>
                         </ul>
 
@@ -146,7 +148,6 @@
                     <nav class="sidebar-nav">
                         <ul id="sidebarnav">
                             <!-- User Profile-->
-
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                                          href="./Edit" aria-expanded="false">
                                     <i class="mdi me-2 mdi-account-check"></i><span class="hide-menu">Profile</span></a>
@@ -171,11 +172,6 @@
                                                          href="pages-error-404.html" aria-expanded="false"><i
                                         class="mdi me-2 mdi-help-circle"></i><span class="hide-menu">Error 404</span></a>
                             </li>
-                            <!--                            <li class="text-center p-20 upgrade-btn">
-                                                            <a href="https://www.wrappixel.com/templates/materialpro/"
-                                                               class="btn btn-warning text-white mt-4" target="_blank">Upgrade to
-                                                                Pro</a>
-                                                        </li>-->
                         </ul>
 
                     </nav>
@@ -215,23 +211,17 @@
                 <div class="page-breadcrumb">
                     <div class="row align-items-center">
                         <div class="col-md-6 col-8 align-self-center">
-                            <h3 class="page-title mb-0 p-0">Profile</h3>
+                            <h3 class="page-title mb-0 p-0">Users Management</h3>
                             <div class="d-flex align-items-center">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="/Bookie/Home">Home</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Profile</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Users Management</li>
                                     </ol>
                                 </nav>
                             </div>
                         </div>
-                        <!--                        <div class="col-md-6 col-4 align-self-center">
-                                                    <div class="text-end upgrade-btn">
-                                                        <a href="https://www.wrappixel.com/templates/materialpro/"
-                                                           class="btn btn-danger d-none d-md-inline-block text-white" target="_blank">Upgrade to
-                                                            Pro</a>
-                                                    </div>
-                                                </div>-->
+
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -244,148 +234,118 @@
                     <!-- ============================================================== -->
                     <!-- Start Page Content -->
                     <!-- ============================================================== -->
-                    <!-- Row -->
-                    <!--                    <div class="row">
-                                            <div class="col-lg-4 col-xlg-3 col-md-5">
-                                                <div class="card">
-                                                    <div class="card-body profile-card">
-                                                        <center class="mt-4"> <img src="assets/images/users/5.jpg"rounded-circle"
-                                                                                   width="150" />
-                                                            <h4 class="card-title mt-2">Hanna Gover</h4>
-                                                            <h6 class="card-subtitle">Accoubts Manager Amix corp</h6>
-                                                            <div class="row text-center justify-content-center">
-                                                                <div class="col-4">
-                                                                    <a href="javascript:void(0)" class="link">
-                                                                        <i class="icon-people" aria-hidden="true"></i>
-                                                                        <span class="value-digit">254</span>
-                                                                    </a>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                    <a href="javascript:void(0)" class="link">
-                                                                        <i class="icon-picture" aria-hidden="true"></i>
-                                                                        <span class="value-digit">54</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </center>
-                                                    </div>
-                                                </div>
-                                            </div>-->
-                    <!-- Column -->
-                    <div class="col-lg-8 col-xlg-9 col-md-7">
-                        <div class="card">
-                            <div class="card-body">
-                                <form action="./Edit" method="Post" class="form-horizontal form-material mx-2" >
-                                    <div class="form-group">
-                                        <label for="example-email" class="col-md-12">Email</label>
-                                        <div class="col-md-12">
-                                            <input type="email" placeholder="${sessionScope.admin.email}"
-                                                   class="form-control ps-0 form-control-line" name="email"
-                                                   id="example-email">
-                                        </div>
+                    <div class="row">
+                        <!-- column -->
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Users List</h4>
+                                    <h6 class="card-subtitle">Add class <code>.table</code></h6>
+                                    <div class="table-responsive">
+                                        <table class="table user-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-top-0">#</th>
+                                                    <th class="border-top-0">First Name</th>
+                                                    <th class="border-top-0">Last Name</th>
+                                                    <th class="border-top-0">Username</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Deshmukh</td>
+                                                    <td>Prohaska</td>
+                                                    <td>@Genelia</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Deshmukh</td>
+                                                    <td>Gaylord</td>
+                                                    <td>@Ritesh</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>Sanghani</td>
+                                                    <td>Gusikowski</td>
+                                                    <td>@Govinda</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>Roshan</td>
+                                                    <td>Rogahn</td>
+                                                    <td>@Hritik</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>5</td>
+                                                    <td>Joshi</td>
+                                                    <td>Hickle</td>
+                                                    <td>@Maruti</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>6</td>
+                                                    <td>Nigam</td>
+                                                    <td>Eichmann</td>
+                                                    <td>@Sonu</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12 mb-0">Username</label>
-                                        <div class="col-md-12">
-                                            <input type="text" placeholder="${sessionScope.admin.username}"
-                                                   class="form-control ps-0 form-control-line">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12 mb-0">Password 
-                                            <input type="checkbox" onclick="showPass()"> 
-                                        </label>
-                                        <div class="col-md-12">
-                                            <input type="password" value="${sessionScope.admin.password}" id="unsignPass"
-                                                   class="form-control ps-0 form-control-line" name="password">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12 mb-0">Full Name</label>
-                                        <div class="col-md-12">
-                                            <input type="text" placeholder="${sessionScope.admin.name}"
-                                                   class="form-control ps-0 form-control-line" name="fullname">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12 mb-0">Phone</label>
-                                        <div class="col-md-12">
-                                            <input type="text" placeholder="${sessionScope.admin.phone}"
-                                                   class="form-control ps-0 form-control-line" name="phone">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12 mb-0">Address</label>
-                                        <div class="col-md-12">
-                                            <input type="text" placeholder="${sessionScope.admin.address}"
-                                                   class="form-control ps-0 form-control-line" name="address">
-                                        </div>
-                                    </div>
-                                    
-                                    <br>
-                                    <c:if test="${notice!=null }">
-                                        <div class="form-group" ">
-                                            ${notice}
-                                        </div>
-                                    </c:if>
-                                    <div class="form-group">
-                                        <div class="col-sm-12 d-flex">
-                                            <button class="btn btn-success mx-auto mx-md-0 text-white" type="submit">Update
-                                                Profile</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Column -->
+                    <!-- ============================================================== -->
+                    <!-- End PAge Content -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Right sidebar -->
+                    <!-- ============================================================== -->
+                    <!-- .right-sidebar -->
+                    <!-- ============================================================== -->
+                    <!-- End Right sidebar -->
+                    <!-- ============================================================== -->
                 </div>
-                <!-- Row -->
                 <!-- ============================================================== -->
-                <!-- End PAge Content -->
+                <!-- End Container fluid  -->
                 <!-- ============================================================== -->
                 <!-- ============================================================== -->
-                <!-- Right sidebar -->
+                <!-- footer -->
                 <!-- ============================================================== -->
-                <!-- .right-sidebar -->
+                <footer class="footer">                                 
+                    <span class="fa fa-github"></span>
+                    <a href="https://github.com/nekon0/SoWePray">Our Project</a> 
+                </footer>
                 <!-- ============================================================== -->
-                <!-- End Right sidebar -->
+                <!-- End footer -->
                 <!-- ============================================================== -->
             </div>
             <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
-            <footer class="footer">                                 
-                <span class="fa fa-github"></span>
-                <a href="https://github.com/nekon0/SoWePray">Our Project</a> 
-            </footer>
-            <!-- ============================================================== -->
-            <!-- End footer -->
+            <!-- End Page wrapper  -->
             <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->
-        <!-- End Page wrapper  -->
+        <!-- End Wrapper -->
         <!-- ============================================================== -->
-    </div>
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- All Jquery -->
-    <!-- ============================================================== -->
-    <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="/Bookie/manage/assets/plugins/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    <script src="/Bookie/manage/html/js/app-style-switcher.js"></script>
-    <!--Wave Effects -->
-    <script src="/Bookie/manage/html/js/waves.js"></script>
-    <!--Menu sidebar -->
-    <script src="/Bookie/manage/html/js/sidebarmenu.js"></script>
-    <!--Custom JavaScript -->
-    <script src="/Bookie/manage/html/js/custom.js"></script>
-</body>
+        <!-- ============================================================== -->
+        <!-- All Jquery -->
+        <!-- ============================================================== -->
+        <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
+
+        <!-- Bootstrap tether Core JavaScript -->
+        <script src="/Bookie/manage/assets/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script src="/Bookie/manage/html/js/app-style-switcher.js"></script>
+
+        <!--Wave Effects -->
+        <script src="/Bookie/manage/html/js/waves.js"></script>
+
+        <!--Menu sidebar -->
+        <script src="/Bookie/manage/html/js/sidebarmenu.js"></script>
+
+        <!--Custom JavaScript -->
+        <script src="/Bookie/manage/html/js/custom.js"></script>
+    </body>
 
 </html>
