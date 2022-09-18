@@ -12,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Random;
 
-/* @author ACER */
+/* @author ttaad */
 public class BookDAO {
 
     public BookDAO() {
@@ -42,14 +42,15 @@ public class BookDAO {
                 int id = rs.getInt(1);
                 String title = rs.getString(2);
                 String author = rs.getString(3);
-                int type = rs.getInt(4);
-                int quantity = rs.getInt(5);
-                float price = rs.getFloat(6);
-                boolean issale = rs.getBoolean(7);
-                int discount = rs.getInt(8);
+                int category = rs.getInt(4);
+                int favourite = rs.getInt(6);
+                float price = rs.getFloat(7);
+                boolean issale = rs.getBoolean(8);
+                
                 String image = rs.getString(9);
                 String description = rs.getString(10);
-               // list.add(new Book(id, title, author, type, quantity, price, issale, discount, image, description));
+                int view=rs.getInt(11);
+                list.add(new Book(id, title, author, category, favourite, price, issale, image, description, view));
             }
         } catch (Exception e) {
             System.out.println("getlist Error:" + e.getMessage());
@@ -123,15 +124,15 @@ public class BookDAO {
                 int id = rs.getInt(1);
                 String title = rs.getString(2);
                 String author = rs.getString(3);
-                int type = rs.getInt(4);
-                int quantity = rs.getInt(5);
-                float price = rs.getFloat(6);
-                boolean issale = rs.getBoolean(7);
-                int discount = rs.getInt(8);
+                int category = rs.getInt(4);
+                int favourite = rs.getInt(6);
+                float price = rs.getFloat(7);
+                boolean issale = rs.getBoolean(8);
+               
                 String image = rs.getString(9);
                 String description = rs.getString(10);
                 int views = rs.getInt(11);
-               // return new Book(id, title, author, type, quantity, price, issale, discount, image, description, views);
+                return new Book(id, title, author, category, favourite, price, issale, image, description, views);
             }
         } catch (Exception e) {
             System.out.println("getBookbyID Error:" + e.getMessage());
@@ -149,14 +150,15 @@ public class BookDAO {
                 int id = rs.getInt(1);
                 String title = rs.getString(2);
                 String author = rs.getString(3);
-                int type = rs.getInt(4);
-                int quantity = rs.getInt(5);
-                float price = rs.getFloat(6);
-                boolean issale = rs.getBoolean(7);
-                int discount = rs.getInt(8);
+                int category = rs.getInt(4);
+                int favourite=rs.getInt(6);
+                float price = rs.getFloat(7);
+                boolean issale = rs.getBoolean(8);
+               
                 String image = rs.getString(9);
                 String description = rs.getString(10);
-              //  list.add(new Book(id, title, author, type, quantity, price, issale, discount, image, description));
+                int view=rs.getInt(11);
+                list.add(new Book(id, title, author, category, favourite,price, issale, image, description,view));
             }
         } catch (Exception e) {
             System.out.println("getSimilar Error:" + e.getMessage());
@@ -252,44 +254,14 @@ public class BookDAO {
                 int id = rs.getInt(1);
                 String title = rs.getString(2);
                 String author = rs.getString(3);
-                int type = rs.getInt(4);
-                int quantity = rs.getInt(5);
-                float price = rs.getFloat(6);
-                boolean issale = rs.getBoolean(7);
-                int discount = rs.getInt(8);
+                int cate = rs.getInt(4);
+                int favourite = rs.getInt(6);
+                float price = rs.getFloat(7);
+                boolean issale = rs.getBoolean(8);         
                 String image = rs.getString(9);
                 String description = rs.getString(10);
-               // list.add(new Book(id, title, author, type, quantity, price, issale, discount, image, description));
-            }
-        } catch (Exception e) {
-            System.out.println("getlist Error:" + e.getMessage());
-        }
-        return list;
-    }
-
-    public ArrayList<Book> searchBook(String search, int cid) {
-        ArrayList<Book> list = new ArrayList<>();
-        try {
-            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql;
-            if (cid != 0) {
-                sql = "select * from [Book] where [categoryid] = " + cid + " AND [title] like '%" + search + "%'";
-            } else {
-                sql = "select * from [Book] where [title] like '%" + search + "%'";
-            }
-            rs = stm.executeQuery(sql);
-            while (rs.next()) {
-                int id = rs.getInt(1);
-                String title = rs.getString(2);
-                String author = rs.getString(3);
-                int type = rs.getInt(4);
-                int quantity = rs.getInt(5);
-                float price = rs.getFloat(6);
-                boolean issale = rs.getBoolean(7);
-                int discount = rs.getInt(8);
-                String image = rs.getString(9);
-                String description = rs.getString(10);
-              //  list.add(new Book(id, title, author, type, quantity, price, issale, discount, image, description));
+                int view=rs.getInt(11);
+                list.add(new Book(id, title, author, cate, favourite, price, issale, image, description, view));
             }
         } catch (Exception e) {
             System.out.println("getlist Error:" + e.getMessage());

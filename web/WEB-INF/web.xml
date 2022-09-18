@@ -43,6 +43,14 @@
         <servlet-name>UserManagement</servlet-name>
         <servlet-class>Controller.UserManagement</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditController</servlet-name>
+        <servlet-class>Controller.EditController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserManagement</servlet-name>
+        <servlet-class>Controller.UserManagement</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/Login</url-pattern>
