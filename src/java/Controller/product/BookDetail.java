@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author ttaad
  */
-@WebServlet(name="BookDetail", urlPatterns={"/BookDetail"})
+@WebServlet("/BookDetail")
 public class BookDetail extends HttpServlet {
    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
