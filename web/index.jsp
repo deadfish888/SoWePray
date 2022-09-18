@@ -1,8 +1,4 @@
-<%-- 
-    Document   : index
-    Created on : Jun 7, 2022, 9:18:12 PM
-    Author     : ACER
---%>
+
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -26,7 +22,6 @@
         <link rel="stylesheet" href="assets/css/main.css" />
         <noscript><link rel="stylesheet" href="assets/css/noscript.css"/></noscript>
     </head>
-
     <body class="is-preload">
         <!-- Wrapper -->
         <div id="wrapper">
@@ -58,7 +53,7 @@
                     <a href="">Welcome ${sessionScope.user.getName()}</a>
                     <% } else if (session.getAttribute("admin")!=null){ 
                     %>
-                    <a href="./Edit">Welcome ${sessionScope.admin.getName()}</a>
+                    <a href="./manage/ADprofile.jsp">Welcome ${sessionScope.admin.getName()}</a>
                     <% } else { %>
                     <a href="">Menu</a>
                     <% }%>
@@ -68,14 +63,14 @@
 
 
 
-                    <li><a href="./Library">Library</a></li>
+                    <li><a href="./Store">Store</a></li>
 
                     <% 
                         if(session.getAttribute("user")!=null){ 
                     %>
-                    <li><a href="">Bookshelf</a></li>
+                    <li><a href="./Book?id=0">Bookshelf</a></li>
 
-                    <li><a href="">My Favorite</a></li>
+                    <li><a href="./Favor">Favor</a></li>
 
                     <li><a href="about.jsp">About</a></li>
 
@@ -180,10 +175,10 @@
 
                     <br />
 
-                    <h2 class="h2">Featured Products</h2>
+                    <h2 class="h2">Top Favourite</h2>
                     <!-- Products -->
-                    <section class="tiles">
-                        <c:forEach items="${books}" var="book">
+                    <section class="tiles" style="margin-left: 20px">>
+                        <c:forEach items="${favebooks}" var="book">
                             <article class="style1">
                                 <span class="image">
                                     <img src="${book.getImage()}" alt="" style="height: 391px;"/>
@@ -196,6 +191,47 @@
                             </article>
                         </c:forEach>
                     </section>
+                    
+                         <h2 class="h2">Weekly Sales </h2>
+                    <!-- Products -->
+                    <section class="tiles" style="margin-right: 30px">
+                        <div class= "" style = "display: flex ">
+                        <c:forEach items="${salebooks}" var="book">
+                            <article class="style1">
+                                <span class="image">
+                                    <img src="${book.getImage()}" alt="" style="max-height: 391px"/>
+                                </span>
+                                <a href="Book?id=${book.getId()}">
+                                    <h2>${book.getTitle()}</h2>
+                                    <h3 style="font-size: 0.85em;"><i>${book.getAuthor()}</i></h3>
+                                    <!--button class="btn-danger" href="Cart?service=addToCart&bookID=${book.getId()}">Add to Cart</button-->
+                                </a>
+                            </article>
+                        </c:forEach>
+                        </div> 
+                    </section>
+                    
+                    <h2 class="h2">All Product </h2>
+                    <!-- Products -->
+                    <section class="tiles" style="margin-left: 15px">
+                        
+                        <c:forEach items="${allbooks}" var="book">
+                            <article class="style1" style="width: calc(17% - 2.5em);
+                                     margin: 4em 0 0 4em;">
+                                <span class="image">
+                                    <img src="${book.getImage()}" alt="" style="height: 250px "/>
+                                </span>
+                                <a href="Book?id=${book.getId()}">
+                                    <h2>${book.getTitle()}</h2>
+                                    <h3 style="font-size: 0.85em;"><i>${book.getAuthor()}</i></h3>
+                                    <!--button class="btn-danger" href="Cart?service=addToCart&bookID=${book.getId()}">Add to Cart</button-->
+                                </a>
+                            </article>
+                        </c:forEach>
+                        
+                    </section>
+  
+
 
                     <p class="text-center">
                         <a href="./Book?id=0"

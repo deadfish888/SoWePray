@@ -1,4 +1,4 @@
-﻿USE [master]
+USE [master]
 GO
 /****** Object:  Database [BOOKIE] ******/
 IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'BOOKIE')

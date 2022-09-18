@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /* @author ACER */
 public class SignupController extends HttpServlet {
@@ -48,12 +49,17 @@ public class SignupController extends HttpServlet {
             request.setAttribute("in4", user);
             request.setAttribute("error", "Existed username!");
             request.setAttribute("origin",request.getParameter("origin"));
-            forward(request, response, "/views/auth/register.jsp");
+            forward(request, response, "/views/auth/signup.jsp");
         }else{
+            HttpSession session = request.getSession();
+            session.setAttribute("user", user);
+                String origin = request.getParameter("origin");
+                if(origin.equals("")) origin="./Home";
+                
             ud.createNewUser(name, gender, dob, email, phone ,key, pass);
             request.setAttribute("error", "Sign up successfully!");
             request.setAttribute("origin",request.getParameter("origin"));
-            forward(request, response, "/views/auth/signup.jsp");
+            response.sendRedirect(origin);
         }
     }
 
