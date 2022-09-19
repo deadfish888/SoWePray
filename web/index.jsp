@@ -6,11 +6,6 @@
 <%@page import="Model.User"%>
 <%@page import="context.BookDAO"%>
 <%@page import="java.util.ArrayList"%>
-<% 
-    if (request.getAttribute("books")==null){
-    response.sendRedirect("./Home");
-    }
-%>
 
 <!DOCTYPE html>
 <html>
@@ -45,56 +40,7 @@
             </header>
 
             <!-- Menu -->
-            <nav id="menu">
-                <h2>
-                    <% 
-                    if(session.getAttribute("user")!=null){ 
-                    %>
-                    <a href="">Welcome ${sessionScope.user.getName()}</a>
-                    <% } else if (session.getAttribute("admin")!=null){ 
-                    %>
-                    <a href="./manage/ADprofile.jsp">Welcome ${sessionScope.admin.getName()}</a>
-                    <% } else { %>
-                    <a href="">Menu</a>
-                    <% }%>
-                </h2>
-                <ul>
-                    <li><a href="./Home">Home</a></li>
-
-
-
-                    <li><a href="./Store">Store</a></li>
-
-                    <% 
-                        if(session.getAttribute("user")!=null){ 
-                    %>
-                    <li><a href="./Book?id=0">Bookshelf</a></li>
-
-                    <li><a href="./Favor">Favor</a></li>
-
-                    <li><a href="about.jsp">About</a></li>
-
-                    <li><a href="Logout"><i class="fa fa-sign-out"></i>Logout</a></li>
-
-                    <%  
-                        } else if(session.getAttribute("admin")!=null){ 
-                    %>
-                    <li><a href="about.jsp">About</a></li>
-
-                    <li><a href="Logout"><i class="fa fa-sign-out"></i>Logout</a></li>
-
-                    <% 
-                        } else { 
-                    %>
-                    <li><a href="about.jsp">About</a></li>
-
-                    <li><a href="Login?origin=./Home"><i class="fa fa-sign-in"></i>Login</a></li>
-                    
-                    <% }%>
-
-                    
-                </ul>
-            </nav>
+            <jsp:include page="/views/base/menu.jsp" />
             <!-- Main -->
             <div id="main">
                 <div
@@ -175,7 +121,7 @@
 
                     <br />
 
-                    <h2 class="h2">Top Favourite</h2>
+                    <h2 class="h2">Most Favorite</h2>
                     <!-- Products -->
                     <section class="tiles" style="margin-left: 20px">>
                         <c:forEach items="${favebooks}" var="book">
@@ -183,10 +129,18 @@
                                 <span class="image">
                                     <img src="${book.getImage()}" alt="" style="height: 391px;"/>
                                 </span>
-                                <a href="Book?id=${book.getId()}">
+                                <a href="BookDetail?id=${book.getId()}">
                                     <h2>${book.getTitle()}</h2>
                                     <h3 style="font-size: 0.85em;"><i>${book.getAuthor()}</i></h3>
-                                    <!--button class="btn-danger" href="Cart?service=addToCart&bookID=${book.getId()}">Add to Cart</button-->
+                                    <c:if test="${book.issale()}">
+                                        <p>
+                                            <del>$${book.getPrice()}</del> 
+                                            <strong>$${5.00}</strong>
+                                        </p>
+                                    </c:if>
+                                    <c:if test="${!book.issale()}">
+                                        <p><strong>$${book.getPrice()}</strong></p>
+                                    </c:if>
                                 </a>
                             </article>
                         </c:forEach>
@@ -201,11 +155,19 @@
                                 <span class="image">
                                     <img src="${book.getImage()}" alt="" style="max-height: 391px"/>
                                 </span>
-                                <a href="Book?id=${book.getId()}">
+                                <a href="BookDetail?id=${book.getId()}">
                                     <h2>${book.getTitle()}</h2>
                                     <h3 style="font-size: 0.85em;"><i>${book.getAuthor()}</i></h3>
-                                    <!--button class="btn-danger" href="Cart?service=addToCart&bookID=${book.getId()}">Add to Cart</button-->
                                 </a>
+                                <c:if test="${book.issale()}">
+                                        <p>
+                                            <del>$${book.getPrice()}</del> 
+                                            <strong>$${5.00}</strong>
+                                        </p>
+                                    </c:if>
+                                    <c:if test="${!book.issale()}">
+                                        <p><strong>$${book.getPrice()}</strong></p>
+                                    </c:if>
                             </article>
                         </c:forEach>
                         </div> 
@@ -221,65 +183,31 @@
                                 <span class="image">
                                     <img src="${book.getImage()}" alt="" style="height: 250px "/>
                                 </span>
-                                <a href="Book?id=${book.getId()}">
-                                    <h2>${book.getTitle()}</h2>
+                                <a href="BookDetail?id=${book.getId()}">
+                                    <h2 style="overflow: hidden;text-overflow: ellipsis;">${book.getTitle()}</h2>
                                     <h3 style="font-size: 0.85em;"><i>${book.getAuthor()}</i></h3>
-                                    <!--button class="btn-danger" href="Cart?service=addToCart&bookID=${book.getId()}">Add to Cart</button-->
+                                    <c:if test="${book.issale()}">
+                                        <p>
+                                            <del>$${book.getPrice()}</del> 
+                                            <strong>$${5.00}</strong>
+                                        </p>
+                                    </c:if>
+                                    <c:if test="${!book.issale()}">
+                                        <p><strong>$${book.getPrice()}</strong></p>
+                                    </c:if>
                                 </a>
                             </article>
                         </c:forEach>
-                        
                     </section>
-  
-
-
                     <p class="text-center">
-                        <a href="./Book?id=0"
+                        <a href="./Book"
                            >More Books &nbsp;<i class="fa fa-long-arrow-right"></i
                             ></a>
                     </p>
 
                     <br />
 
-                    <h2 class="h2">Blog</h2>
-
-                    <div class="row">
-                        <div class="col-sm-4 text-center">
-                            <img src="images/blog-1-720x480.jpg" class="img-fluid" alt="" />
-
-                            <h2 class="m-n">
-                                <a href="#"
-                                   >LEARN HOW TO HEAL YOURSELF</a
-                                >
-                            </h2>
-
-                            <p>Nekon &nbsp;|&nbsp; 08/06/2022</p>
-                        </div>
-
-                        <div class="col-sm-4 text-center">
-                            <img src="images/blog-4-720x480.jpg" class="img-fluid" alt="" />
-
-                            <h2 class="m-n">
-                                <a href="#"
-                                   >WHAT I READ IN THE FIRST 4 MONTHS OF THE YEAR</a
-                                >
-                            </h2>
-
-                            <p>mucmocmeo &nbsp;|&nbsp; 10/05/2022</p>
-                        </div>
-
-                        <div class="col-sm-4 text-center">
-                            <img src="images/blog-6-720x480.jpg" class="img-fluid" alt="" />
-
-                            <h2 class="m-n">
-                                <a href="#"
-                                   >\Novel Recommended/: Classroom of the Elite</a
-                                >
-                            </h2>
-
-                            <p>Nekon &nbsp;|&nbsp; 12/06/2020</p>
-                        </div>
-                    </div>
+                    <h2 class="h2">Original Work</h2>
 
                     <p class="text-center">
                         <a href="#"
@@ -293,57 +221,6 @@
             <footer id="footer">
                 <div class="inner">
                     <section>
-                        <h2>Contact Us</h2>
-                        <form method="get" action="#">
-                            <div class="fields">
-                                <div class="field half">
-                                    <input type="text" name="name" id="name" placeholder="Name" />
-                                </div>
-
-                                <div class="field half">
-                                    <input
-                                        type="text"
-                                        name="email"
-                                        id="email"
-                                        placeholder="Email"
-                                        />
-                                </div>
-
-                                <div class="field">
-                                    <input
-                                        type="text"
-                                        name="subject"
-                                        id="subject"
-                                        placeholder="Subject"
-                                        />
-                                </div>
-
-                                <div class="field">
-                                    <textarea
-                                        name="message"
-                                        id="message"
-                                        rows="3"
-                                        placeholder="Notes"
-                                        ></textarea>
-                                </div>
-
-                                <div class="field half text-right">
-                                    <label>&nbsp;</label>
-
-                                    <ul class="actions">
-                                        <li>
-                                            <input
-                                                type="submit"
-                                                value="Send Message"
-                                                class="primary"
-                                                />
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </form>
-                    </section>
-                    <section>
                         <h2>Contact Info</h2>
                         <ul class="alt">
                             <li>
@@ -353,14 +230,18 @@
                             <li>
                                 <span class="fa fa-map-pin"></span>
                                 <a href="https://goo.gl/maps/ojwCjTqRteiA4B9U7">
-                                    DE210, FBT University</a
-                                >
+                                    DE210, FBT University</a>
+                            </li>
+                            <li>
+                                <span class="fa fa-mail-forward"></span>
+                                <a href="mailto:vinhnthe163219@fpt.edu.vn">
+                                    Our mail</a>
                             </li>
                         </ul>
                     </section>
 
                     <ul class="copyright">
-                        <li>HLV</li>
+                        <li>Bookie</li>
                     </ul>
                 </div>
             </footer>

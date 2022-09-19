@@ -44,13 +44,13 @@ public class BookController extends HttpServlet {
             }
             
             request.setAttribute("books", books);
-            request.getRequestDispatcher("/views/book/bookshelf.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/book/library.jsp").forward(request, response);
             return;
         }
         
             books = bd.getBooks();
             request.setAttribute("books", books);
-            request.getRequestDispatcher("/views/book/bookshelf.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/book/library.jsp").forward(request, response);
     }
 
     @Override

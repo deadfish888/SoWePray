@@ -1,8 +1,3 @@
-<%-- 
-Document   : index
-Created on : Jun 7, 2022, 9:18:12 PM
-Author     : ACER
---%>
 <%@ page session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

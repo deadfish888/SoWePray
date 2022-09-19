@@ -20,7 +20,7 @@ public class BookDAO {
     }
 
     Connection cnn; // ket noi db
-    Statement stm; // thuc thi cac cau lenh sql
+    PreparedStatement stm; // thuc thi cac cau lenh sql
     ResultSet rs; // luu tru va xu ly du lieu
 
     private void connectDB() {
@@ -35,22 +35,22 @@ public class BookDAO {
     public ArrayList<Book> getBooks() {
         ArrayList<Book> list = new ArrayList<>();
         try {
-            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             String sql = "select * from [Book]";
-            rs = stm.executeQuery(sql);
+            stm= cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt(1);
                 String title = rs.getString(2);
                 String author = rs.getString(3);
                 int category = rs.getInt(4);
-                int favourite = rs.getInt(6);
+                float rating = rs.getFloat(5);
+                int favourite=rs.getInt(6);
                 float price = rs.getFloat(7);
                 boolean issale = rs.getBoolean(8);
-                
                 String image = rs.getString(9);
                 String description = rs.getString(10);
                 int view=rs.getInt(11);
-                list.add(new Book(id, title, author, category, favourite, price, issale, image, description, view));
+                list.add(new Book(id, title, author, category,rating, favourite,price, issale, image, description,view));
             }
         } catch (Exception e) {
             System.out.println("getlist Error:" + e.getMessage());
@@ -115,24 +115,27 @@ public class BookDAO {
 
     public Book getBookById(int bookid) {
         try {
-            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql = "update [Book] set [views] = [views]+1 where [id]=" + bookid;
-            stm.executeUpdate(sql);
-            sql = "select * from [Book] where [id] = " + bookid;
-            rs = stm.executeQuery(sql);
-            while (rs.next()) {
+//            String sql = "update [Book] set [views] = [views]+1 where [id]= ?";
+//            stm = cnn.prepareStatement(sql);
+//            stm.setInt(1, bookid);
+//            stm.executeUpdate();
+            String sql = "select * from [Book] where [id] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, bookid);
+            rs = stm.executeQuery();
+            if (rs.next()) {
                 int id = rs.getInt(1);
                 String title = rs.getString(2);
                 String author = rs.getString(3);
                 int category = rs.getInt(4);
-                int favourite = rs.getInt(6);
+                float rating = rs.getFloat(5);
+                int favourite=rs.getInt(6);
                 float price = rs.getFloat(7);
                 boolean issale = rs.getBoolean(8);
-               
                 String image = rs.getString(9);
                 String description = rs.getString(10);
-                int views = rs.getInt(11);
-                return new Book(id, title, author, category, favourite, price, issale, image, description, views);
+                int view=rs.getInt(11);
+                return (new Book(id, title, author, category,rating, favourite,price, issale, image, description,view));
             }
         } catch (Exception e) {
             System.out.println("getBookbyID Error:" + e.getMessage());
@@ -143,22 +146,26 @@ public class BookDAO {
     public ArrayList<Book> getSimilarBooks(int bookid, int categoryid) {
         ArrayList<Book> list = new ArrayList<>();
         try {
-            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql = "select top 3 * from [Book] where [categoryid] = " + categoryid + " AND [id] != " + bookid;
-            rs = stm.executeQuery(sql);
+            String sql = "select top 3 * from [Book] "
+                    + "where [categoryid] = ? "
+                    + "AND [id] != ?" ;
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, categoryid);
+            stm.setInt(2, bookid);
+            rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt(1);
                 String title = rs.getString(2);
                 String author = rs.getString(3);
                 int category = rs.getInt(4);
+                float rating = rs.getFloat(5);
                 int favourite=rs.getInt(6);
                 float price = rs.getFloat(7);
                 boolean issale = rs.getBoolean(8);
-               
                 String image = rs.getString(9);
                 String description = rs.getString(10);
                 int view=rs.getInt(11);
-                list.add(new Book(id, title, author, category, favourite,price, issale, image, description,view));
+                list.add(new Book(id, title, author, category,rating, favourite,price, issale, image, description,view));
             }
         } catch (Exception e) {
             System.out.println("getSimilar Error:" + e.getMessage());
@@ -168,9 +175,9 @@ public class BookDAO {
 
     public int getNumberBook() {
         try {
-            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             String sql = "select count([id]) from [Book]";
-            rs = stm.executeQuery(sql);
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);
             }
@@ -183,9 +190,9 @@ public class BookDAO {
     public ArrayList<Book> getFeaturedBooks() {
         ArrayList<Book> list = new ArrayList<>();
         try {
-            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql = "select * from [Book] where [is_sale] = 1";
-            rs = stm.executeQuery(sql);
+            String sql = "select * from [Book]";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt(1);
                 String title = rs.getString(2);
@@ -195,7 +202,6 @@ public class BookDAO {
                 float price = rs.getFloat(7);
                 boolean issale = rs.getBoolean(8);
                 String image = rs.getString(9);
-                String description = rs.getString(10);
                 list.add(new Book(id, title, author, type, favourite, price, issale, image));
             }
         } catch (Exception e) {
@@ -203,10 +209,10 @@ public class BookDAO {
         }
         ArrayList<Book> lists = new ArrayList<>();
         Random r = new Random();
-        int index[] = new int[3];
+        int index[] = new int[15];
         int i = 0, temp;
 
-        while (i < 3) {
+        while (i < 15) {
             boolean is = true;
             temp = r.nextInt(list.size());
             for (int j = 0; j < i; j++) {
@@ -232,40 +238,108 @@ public class BookDAO {
         return listpage;
     }
 
-    public void deleteBook(int id) {
-        try {
-            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql = "update [OrderItem] set [bookid] = NULL where [bookid]=" + id;
-            stm.executeUpdate(sql);
-            sql = "delete from [Book] where [id] = " + id;
-            stm.executeUpdate(sql);
-        } catch (Exception e) {
-            System.out.println("del Error:" + e.getMessage());
-        }
-    }
+//    public void deleteBook(int id) {
+//        try {
+//            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+//            String sql = "delete from [Book] where [id] = " + id;
+//            stm.executeUpdate(sql);
+//        } catch (Exception e) {
+//            System.out.println("del Error:" + e.getMessage());
+//        }
+//    }
 
     public ArrayList<Book> getBooksByCid(String cid) {
         ArrayList<Book> list = new ArrayList<>();
         try {
-            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql = "select * from [Book] where [categoryid] = " + cid;
-            rs = stm.executeQuery(sql);
+            String sql = "SELECT * FROM [Book] "
+                                + "WHERE [categoryid] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, Integer.parseInt(cid));
+            rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt(1);
                 String title = rs.getString(2);
                 String author = rs.getString(3);
-                int cate = rs.getInt(4);
-                int favourite = rs.getInt(6);
+                int category = rs.getInt(4);
+                float rating = rs.getFloat(5);
+                int favourite=rs.getInt(6);
                 float price = rs.getFloat(7);
-                boolean issale = rs.getBoolean(8);         
+                boolean issale = rs.getBoolean(8);
                 String image = rs.getString(9);
                 String description = rs.getString(10);
                 int view=rs.getInt(11);
-                list.add(new Book(id, title, author, cate, favourite, price, issale, image, description, view));
+                list.add(new Book(id, title, author, category,rating, favourite,price, issale, image, description,view));
             }
         } catch (Exception e) {
             System.out.println("getlist Error:" + e.getMessage());
         }
         return list;
     }
+    
+    public ArrayList<Book> getWeeklySaleBooks() {
+        ArrayList<Book> list = new ArrayList<>();
+        try {
+            String sql = "select * from [Book] where [is_sale] = 1";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+               int id = rs.getInt(1);
+                String title = rs.getString(2);
+                String author = rs.getString(3);
+                int type = rs.getInt(4);
+                int favourite = rs.getInt(6);
+                float price = rs.getFloat(7);
+                boolean issale = rs.getBoolean(8);
+                String image = rs.getString(9);
+                list.add(new Book(id, title, author, type, favourite, price, issale, image));
+            }
+        } catch (Exception e) {
+            System.out.println("getlist Error:" + e.getMessage());
+        }
+        ArrayList<Book> lists = new ArrayList<>();
+        Random r = new Random();
+        int index[] = new int[4];
+        int i = 0, temp;
+
+        while (i < 4) {
+            boolean is = true;
+            temp = r.nextInt(list.size());
+            for (int j = 0; j < i; j++) {
+                if (index[j] == temp) {
+                    is = false;
+                }
+            }
+            if (is) {
+                index[i] = temp;
+                lists.add(list.get(temp));
+                i++;
+            }
+        }
+        return lists;
+    }
+
+    public ArrayList<Book> getFavouriteBooks() {
+        ArrayList<Book> list = new ArrayList<>();
+        try {
+            String sql = "select top(3)* from BOOK order by favourite desc";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+               int id = rs.getInt(1);
+                String title = rs.getString(2);
+                String author = rs.getString(3);
+                int type = rs.getInt(4);
+                int favourite = rs.getInt(6);
+                float price = rs.getFloat(7);
+                boolean issale = rs.getBoolean(8);
+                String image = rs.getString(9);
+                list.add(new Book(id, title, author, type, favourite, price, issale, image));
+            }
+        } catch (Exception e) {
+            System.out.println("getlist Error:" + e.getMessage());
+        }
+        return list;
+    }
+    
+    
 }

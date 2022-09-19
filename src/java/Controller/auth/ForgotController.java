@@ -7,8 +7,8 @@ package Controller.auth;
 import context.UserDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,6 +16,7 @@ import javax.mail.MessagingException;
 import utils.MyUtil;
 
 /* @author ACER */
+@WebServlet("/Forgot")
 public class ForgotController extends HttpServlet {
 
     private final String user="";
