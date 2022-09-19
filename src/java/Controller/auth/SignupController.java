@@ -40,14 +40,14 @@ public class SignupController extends HttpServlet {
        
         UserDAO ud = new UserDAO();
         User user = new User(name, gender, dob, email, phone ,key, pass);
-        if(!ud.checkEmailExisted(email)){
+        if(ud.checkEmailExisted(email)!=0){
             request.setAttribute("in4", user);
             request.setAttribute("error", "The email had already been registered!");
             request.setAttribute("origin",request.getParameter("origin"));
             forward(request, response, "/views/auth/signup.jsp");
             return;
         }
-        if(!ud.checkDupUsername(key)){
+        if(ud.checkUsernameExisted(key)!=0){
             request.setAttribute("in4", user);
             request.setAttribute("error", "Existed username!");
             request.setAttribute("origin",request.getParameter("origin"));

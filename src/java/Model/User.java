@@ -4,6 +4,9 @@
  */
 package Model;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  *
  * @author ACER
@@ -130,6 +133,31 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    public int getPasswordLevel() {
+        String numberRegex = "[0-9]";
+        String characterRegex = "[a-zA-Z]";
+        String otherRegex = "[^a-zA-Z0-9]";
+
+        Pattern numberPattern = Pattern.compile(numberRegex,
+                Pattern.CASE_INSENSITIVE);
+        Matcher numberMatcher = numberPattern.matcher(password);
+
+        Pattern alphaPattern = Pattern.compile(characterRegex,
+                Pattern.CASE_INSENSITIVE);
+        Matcher alphaMatcher = alphaPattern.matcher(password);
+
+        Pattern specialPattern = Pattern.compile(otherRegex,
+                Pattern.CASE_INSENSITIVE);
+        Matcher specialMatcher = specialPattern.matcher(password);
+
+        if (numberMatcher.find() && alphaMatcher.find() && specialMatcher.find()) {
+            return 3;
+        } else if (numberMatcher.find() && alphaMatcher.find()) {
+            return 2;
+        } else {
+            return 1;
+        }
     }
 
 }

@@ -47,7 +47,7 @@ public class ForgotController extends HttpServlet {
         String Message = "";
         UserDAO ud = new UserDAO();
         try {
-            if (ud.checkEmailExisted(recipient)) {
+            if (ud.checkEmailExisted(recipient)!=0) {
                 String token = ud.createResetToken(recipient);
                 String content = "Hi there,<br>"
                         + "<br>"
