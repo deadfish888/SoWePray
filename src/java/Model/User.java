@@ -12,16 +12,19 @@ import java.util.regex.Pattern;
  * @author ACER
  */
 public class User {
-    private int id;
+
+    private int id, is_super;
     private String name, gender, dob, email, phone, address, username, password;
-    private boolean is_super;
+
+    public User() {
+    }
 
     public User(String account, String password) {
         this.username = account;
         this.password = password;
     }
 
-    public User(int id, String name, String gender, String dob, String email, String phone, String address, String username, String password, boolean is_super) {
+    public User(int id, String name, String gender, String dob, String email, String phone, String address, String username, String password, int is_super) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -47,7 +50,7 @@ public class User {
     public User(int id, String name, String username, String gender, String dob, String email, String phone, String address) {
         this.id = id;
         this.name = name;
-        this.username= username;
+        this.username = username;
         this.gender = gender;
         this.dob = dob;
         this.email = email;
@@ -55,14 +58,26 @@ public class User {
         this.address = address;
     }
 
-    public boolean is_super() {
+    public User(int id, String name, String gender, String dob, String email, String phone, String address, String username, int is_super) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+        this.dob = dob;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.username = username;
+        this.is_super = is_super;
+    }
+
+    public int is_super() {
         return is_super;
     }
 
-    public void setIs_super(boolean is_super) {
+    public void setIs_super(int is_super) {
         this.is_super = is_super;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -134,6 +149,7 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
     public int getPasswordLevel() {
         String numberRegex = "[0-9]";
         String characterRegex = "[a-zA-Z]";

@@ -39,7 +39,12 @@ public class LoginController extends HttpServlet {
         if (user != null) {
             HttpSession session = request.getSession();
 
-            if (user.is_super()) {
+//            if (user.is_super() == 5) {
+//                session.setAttribute("adminS", user);
+//                response.sendRedirect("./Edit");
+//                return;
+//            }
+            if (user.is_super() >= 4) {
                 session.setAttribute("admin", user);
                 response.sendRedirect("./Edit");
                 return;

@@ -9,13 +9,11 @@
 <%@page import="Model.*"%>
 <%@page import="context.*"%>
 <%@page import="java.util.ArrayList"%>
-<%         
-        User us = (User) session.getAttribute("admin");
-        if (session.getAttribute("admin")==null ) {
-            response.sendRedirect("/Bookie/Home");
-        }
-       
-%>
+<c:if test="${!empty sessionScope.admin && !empty sessionScope.adminS}">
+    <%         
+          response.sendRedirect("/Bookie/Home");
+    %>
+</c:if>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -33,6 +31,7 @@
         <!-- Favicon icon -->
         <!-- Custom CSS -->
         <link href="/Bookie/manage/html/css/style.min.css" rel="stylesheet">
+
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -78,7 +77,7 @@
                             <!-- Logo text -->
                             <span class="logo-text">
                                 <!-- dark Logo text -->
-                                 <span class="logo-text" alt="homepage">Bookie</span>
+                                <span class="logo-text" alt="homepage">Bookie</span>
 
                             </span>
                         </a>
@@ -127,7 +126,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#"
                                    id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="/Bookie/manage/assets/images/users/profile.png" alt="user" class="profile-pic me-2">${sessionScope.admin.getName()}
+                                    <img src="/Bookie/manage/assets/images/users/user.png" alt="user" class="profile-pic me-2">${sessionScope.admin.getName()}${sessionScope.adminS.getName()}
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul>
                             </li>
@@ -240,62 +239,66 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Users List</h4>
-                                    <h6 class="card-subtitle">Add class <code>.table</code></h6>
                                     <div class="table-responsive">
                                         <table class="table user-table">
                                             <thead>
                                                 <tr>
-                                                    <th class="border-top-0">#</th>
-                                                    <th class="border-top-0">First Name</th>
-                                                    <th class="border-top-0">Last Name</th>
+                                                    <th class="border-top-0"><i class="fa-solid fa-list-ol"></i></th>
+                                                    <th class="border-top-0">Full Name</th>
                                                     <th class="border-top-0">Username</th>
+                                                    <th class="border-top-0">Email</th>
+                                                    <th class="border-top-0">Phone</th>
+                                                    <th class="border-top-0">Address</th>                                                  
+                                                    <th class="border-top-0"><i class="fa-solid fa-ranking-star"></i></th>
+                                                    <th class="border-top-0"></th>
+                                                    <th class="border-top-0"></th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Deshmukh</td>
-                                                    <td>Prohaska</td>
-                                                    <td>@Genelia</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Deshmukh</td>
-                                                    <td>Gaylord</td>
-                                                    <td>@Ritesh</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>Sanghani</td>
-                                                    <td>Gusikowski</td>
-                                                    <td>@Govinda</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>Roshan</td>
-                                                    <td>Rogahn</td>
-                                                    <td>@Hritik</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td>Joshi</td>
-                                                    <td>Hickle</td>
-                                                    <td>@Maruti</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>6</td>
-                                                    <td>Nigam</td>
-                                                    <td>Eichmann</td>
-                                                    <td>@Sonu</td>
-                                                </tr>
+                                                <% int no=1;%>
+                                                <c:forEach var="s" items="${users}">
+                                                <form action="UserManager" method="Post">
+                                                    <tr>
+                                                        <td><%=no++%></td>
+                                                        <td width="15%">${s.name}</td>
+                                                        <td style="width: 200px;">${s.username}</td>
+                                                        <td>${s.email}</td>
+                                                        <td>${s.phone}</td>
+                                                        <td width="200px">${s.address}</td>
+                                                        <td>${s.is_super()}</td>
+
+                                                        <c:choose>
+                                                            <c:when test="${s.is_super()==0}">
+                                                                <td><button class="btn btn-primary" name="id_up" value="${s.getId()}" type="submit"><i class="fa-solid fa-up-long"></i></button></td>
+                                                                    </c:when>
+                                                                    <c:when test="${s.is_super()+1==sessionScope.admin.is_super()}">
+                                                                    <td></td>
+                                                                    <td><button class="btn btn-primary" name="id_down" value="${s.getId()}" type="submit"><i class="fa-solid fa-down-long"></i></button></td>
+                                                                    <td><button class="btn btn-primary" name="id_ban" value="${s.getId()}" type="submit"><i class="fa-solid fa-user-slash"></i></button></td>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                <td><button class="btn btn-primary" name="id_up" value="${s.getId()}" type="submit"><i class="fa-solid fa-up-long"></i></button></td>
+                                                                <td><button class="btn btn-primary" name="id_down" value="${s.getId()}" type="submit"><i class="fa-solid fa-down-long"></i></button></td>
+                                                                <td><button class="btn btn-primary" name="id_ban" value="${s.getId()}" type="submit"><i class="fa-solid fa-user-slash"></i></button></td>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                    </tr>
+                                                </form>
+
+                                                <!-- Show detail modal -->
+                                            </c:forEach>
                                             </tbody>
+
                                         </table>
-                                        
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                     <!-- ============================================================== -->
                     <!-- End PAge Content -->
                     <!-- ============================================================== -->
@@ -331,6 +334,7 @@
         <!-- ============================================================== -->
         <!-- All Jquery -->
         <!-- ============================================================== -->
+        <script src="https://kit.fontawesome.com/a65741f09b.js" crossorigin="anonymous"></script>
         <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
 
         <!-- Bootstrap tether Core JavaScript -->
