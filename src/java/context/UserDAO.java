@@ -332,6 +332,7 @@ public class UserDAO {
                     + ", [address] = ?"
                     + ", [gender] = ?"
                     + ", [dob] = ? "
+                    + ", [email] = ? "
                     + " where [id] = ?";
             stm = cnn.prepareStatement(sql);
             stm.setString(1, user.getName());
@@ -339,7 +340,8 @@ public class UserDAO {
             stm.setString(3, user.getAddress());
             stm.setBoolean(4, user.getGender().equals("Male"));
             stm.setString(5, user.getDob());
-            stm.setInt(6, user.getId());
+            stm.setString(6, user.getEmail());
+            stm.setInt(7, user.getId());
             stm.executeUpdate();
         } catch (Exception e) {
             System.out.println("updateUser Error:" + e.getMessage());

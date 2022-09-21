@@ -23,19 +23,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class ProfileController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-    }
-
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -89,6 +76,7 @@ public class ProfileController extends HttpServlet {
                 request.setAttribute("phoneMessage", "Phone number can not be empty.");
             }
             if (err) {
+                request.setAttribute("err", err);
                 request.getRequestDispatcher("../views/user/EditProfile.jsp").forward(request, response);
             } else {
                 User user = (User) request.getSession().getAttribute("user");
@@ -104,19 +92,8 @@ public class ProfileController extends HttpServlet {
 
         } else if (request.getParameter("action").equals("clear")) {
             request.getRequestDispatcher("../views/user/Profile.jsp").forward(request, response);
-        } else {
+        } else if (request.getParameter("action").equals("change email")){
             response.sendRedirect(request.getContextPath() + "/User/Security");
         }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

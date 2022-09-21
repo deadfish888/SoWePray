@@ -117,7 +117,51 @@
                                     ${sessionScope.user.email}
                                 </td>
                                 <td>
-                                    <button><a href="#change-mail">Change</a></button>
+                                        <button type="button" data-toggle="modal" data-target="#changeEmailModal">Change</button>
+                                        <div class="modal fade" id="changeEmailModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title">Change email</h3>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!--<div class="wrapper row">-->
+                                                        <table>
+                                                            <tr>
+                                                                <th>
+                                                                    Current email
+                                                                </th>
+                                                                <td>
+                                                                    ${sessionScope.user.email}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                New email
+                                                            </th>
+                                                            <td>
+                                                                <input type="email" name="newEmail"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                Password
+                                                            </th>
+                                                            <td>
+                                                                <input type="password" name="password"/>
+                                                                <div style="color: red">${old_pass_noti}</div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <!--</div>-->
+                                                </div>
+                                                <div class="modal-footer" style="text-align: center">
+                                                    <button type="button" data-dismiss="modal">Cancel</button>
+                                                    <button type="submit" name="action" value="changeEmail">Confirm</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -130,8 +174,8 @@
                                     <c:if test="${sessionScope.user.getPasswordLevel() == 3}"><span style="color: green">Strong</span></c:if>
                                     </td>
                                     <td>
-                                        <button type="button" data-toggle="modal" data-target=".bd-example-modal-lg">Change</button>
-                                        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <button type="button" data-toggle="modal" data-target="#changePasswordModal">Change</button>
+                                        <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">

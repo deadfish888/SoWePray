@@ -5,6 +5,8 @@
 
 package Controller.User;
 
+import Model.User;
+import context.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -68,7 +70,16 @@ public class ChangeEmailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        UserDAO userDBC = new UserDAO();
+        User user = (User) request.getSession().getAttribute("user");
+        if(user.getPassword().equals(request.getParameter("password"))){
+            user.setEmail(request.getParameter("newEmail"));
+            userDBC.updateUser(user);
+        } else {
+            request.setAttribute("old_pass_noti", "Old password is wrong.");
+            request.setAttribute("processMessage", "Change email fail.");
+        }
+        request.getRequestDispatcher("../views/user/Security.jsp").forward(request, response);
     }
 
     /** 

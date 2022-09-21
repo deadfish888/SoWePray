@@ -119,11 +119,11 @@
     </context-param>
     <context-param>
         <param-name>user</param-name>
-        <param-value>mail</param-value>
+        <param-value>anhktmhe163997@fpt.edu.vn</param-value>
     </context-param>
     <context-param>
         <param-name>pass</param-name>
-        <param-value>pass</param-value>
+        <param-value>WhiteMoon</param-value>
     </context-param>
     
     <session-config>

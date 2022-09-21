@@ -73,7 +73,6 @@ public class ViewSecurityController extends HttpServlet {
             request.getRequestDispatcher("ChangePassword").forward(request, response);
         } else if(action.equals("changeEmail")){
             request.getRequestDispatcher("ChangeEmail").forward(request, response);
-            
         }else{
             response.sendRedirect(request.getContextPath());
         }
