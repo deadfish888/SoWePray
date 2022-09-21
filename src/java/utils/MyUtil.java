@@ -27,7 +27,7 @@ public class MyUtil {
         char index[] = new char[number];
 
         Random r = new Random();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < number; i++) {
             index[i] = (char) data[r.nextInt(data.length)];
         }
         return new String(index);

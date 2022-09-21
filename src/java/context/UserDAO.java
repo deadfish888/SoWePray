@@ -91,35 +91,20 @@ public class UserDAO {
         }
     }
 
-    public String createResetToken(String recipient) {
-        Timestamp expired_date = new Timestamp(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5));
-        String token = MyUtil.randomString(20);
-        String sql = "insert [ResetToken] "
-                + "  values ( (select [id] from [User] where [email] = ?),"
-                + "  ?, ?)";
-        try {
-            stm = cnn.prepareStatement(sql);
-            stm.setString(1, recipient);
-            stm.setString(2, token);
-            stm.setTimestamp(3, expired_date);
-            stm.executeUpdate();
-            return token;
-        } catch (Exception e) {
-            System.out.println("sendToken Error:" + e.getMessage());
-        }
-        return null;
-    }
+    
     
     public String resetPassword(String token) {
-        if (checkToken(token)) {
+        TokenDAO td = new TokenDAO();
+        int userId = td.checkTokenExpired(token);
+        if (userId != 0) {
             String newPassword = MyUtil.randomString(10);
-            String sql = "update [User] set "
-                    + "  [password] = ? "
-                    + " where [id] = (select [uid] from [ResetToken] where [token] = ? )";
+            String sql = "UPDATE [User] "
+                    + "     SET [password] = ? "
+                    + "     WHERE [id] = ? ";
             try {
                 stm = cnn.prepareStatement(sql);
                 stm.setString(1, newPassword);
-                stm.setString(2, token);
+                stm.setInt(2, userId);
                 stm.executeUpdate();
                 return newPassword;
             } catch (Exception e) {
@@ -129,20 +114,7 @@ public class UserDAO {
         return null;
     }
 
-    private boolean checkToken(String token) {
-        String sql = "select * from [ResetToken] "
-                    + " where [token] = ? AND [expired_date] > ?";
-            try {
-                stm = cnn.prepareStatement(sql);
-                stm.setString(1, token);
-                stm.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
-                rs=stm.executeQuery();
-                if(rs.next()) return true;
-            } catch (Exception e) {
-                System.out.println("checkToken Error:" + e.getMessage());
-            }
-        return false;
-    }
+    
 
     public int checkEmailExisted(String email) {
         String sql = "SELECT [id] FROM [User] "

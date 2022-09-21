@@ -4,6 +4,7 @@
  */
 package Controller.auth;
 
+import context.TokenDAO;
 import context.UserDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -46,9 +47,11 @@ public class ForgotController extends HttpServlet {
         String subject = "Password Reset request for your Bookie account";
         String Message = "";
         UserDAO ud = new UserDAO();
+        TokenDAO td = new TokenDAO();
         try {
-            if (ud.checkEmailExisted(recipient)!=0) {
-                String token = ud.createResetToken(recipient);
+            int userId = ud.checkEmailExisted(recipient);
+            if (userId != 0) {
+                String token = td.createResetToken(userId);
                 String content = "Hi there,<br>"
                         + "<br>"
                         + "There was a request to change your password!<br>"
