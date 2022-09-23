@@ -1,8 +1,3 @@
-<%-- 
-    Document   : product-details
-    Created on : Jun 15, 2022, 10:59:59 AM
-    Author     : ACER
---%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -22,48 +17,25 @@
 
             <!-- Header -->
             <header id="header">
-    <div class="inner">
-        <!-- Logo -->
-        <a href="./Home" class="logo">
-            <span class="fa fa-book"></span>
-            <span class="title">BOOKIE</span>
-        </a>
+                <div class="inner">
+                    <!-- Logo -->
+                    <a href="./Home" class="logo">
+                        <span class="fa fa-book"></span>
+                        <span class="title">BOOKIE</span>
+                    </a>
 
 
-        <!-- Nav -->
-        <nav>
-            <ul>
-                <li><a href="#menu">Menu</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
+                    <!-- Nav -->
+                    <nav>
+                        <ul>
+                            <li><a href="#menu">Menu</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
 
-<!-- Menu -->
-<nav id="menu">
-    <h2><a href="./User" >${sessionScope.user==null? "Menu": ("Welcome ")}${sessionScope.user.getName()}</a></h2>
-    <ul>
-        <li><a href="./Home">Home</a></li>
-        
-        <li><a href="./Book?id=0">Bookshelf</a></li>
-
-        <li><a href="./Cart">Cart</a></li>
-
-            <% 
-                if(session.getAttribute("user")==null){ 
-            %>
-            <li><a href="about.jsp">About</a></li>
-            
-        <li><a href="Login?origin=./Book?id=${book.getId()}"><i class="fa fa-sign-in"></i>Login</a></li>
-            <% } else{ %>
-        <li><a href="./Order">Order History</a></li>
-        
-        <li><a href="about.jsp">About</a></li>
-        
-        <li><a href="Logout"><i class="fa fa-sign-out"></i>Logout</a></li>
-            <% }%>
-    </ul>
-</nav>
+            <!-- Menu -->
+            <jsp:include page="/views/base/menu.jsp" />
 
             <!-- Main -->
             <div id="main">
@@ -92,14 +64,17 @@
                             </div>
 
                             <div class="col-md-7">
-                                <h2 style="margin: 0 0 0.8em 0;"><i>Category: ${book.getCategory()}</i></h2>
+                                <h2 style="margin: 0 0 0.8em 0;"><i>Category: ${category}</i></h2>
                                 <p>
                                     ${book.getDescription()}
                                 </p>
                                 <div class="row">        
-                                    <form action="BookDetail" method="GET">
-                                        <div class="col-sm-8">
-                                            <input type="submit" name="addtocart" class="primary" value="Add to Cart">                                 
+                                    <form action="BookDetail" method="POST">
+                                        <div class="col-sm-6">
+                                            <input type="submit" name="changeView" class="primary" value="GET">                                 
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="submit" name="changeView" class="primary" value="Add to Favorite">                                 
                                         </div>
                                     </form>
                                 </div>
@@ -115,22 +90,22 @@
 
                         <!-- Products -->
                         <section class="tiles">
-                            <c:forEach items="${likes}" var="like">
+                            <c:forEach items="${requestScope.sames}" var="same">
                                 <article class="style1">
                                     <span class="image">
-                                        <img src="${like.getImage()}" alt="${like.getImage()}" style="height: 391px;" />
+                                        <img src="${same.getImage()}" alt="${same.getImage()}" style="height: 391px;" />
                                     </span>
-                                    <a href="Book?id=${like.getId()}">
-                                        <h2>${like.getTitle()}</h2>
+                                    <a href="BookDetail?id=${same.getId()}">
+                                        <h2>${same.getTitle()}</h2>
 
-                                        <c:if test="${like.issale()}">
+                                        <c:if test="${same.issale()}">
                                             <p>
-                                                <del>$${like.getPrice()}</del> 
-                                                <strong>$${Math.round(like.getPrice())/100}</strong>
+                                                <del>$${same.getPrice()}</del> 
+                                                <strong>$5.00</strong>
                                             </p>
                                         </c:if>
-                                        <c:if test="${!like.issale()}">
-                                            <p><strong>$${like.getPrice()}</strong></p>
+                                        <c:if test="${!same.issale()}">
+                                            <p><strong>$${same.getPrice()}</strong></p>
                                         </c:if>
                                     </a>
                                 </article>
@@ -146,7 +121,7 @@
                     <section>
                         <h2>Contact Info</h2>
                         <ul class="alt">
-                            <li><span class="fa fa-github"></span> <a href="https://github.com/nekon0/IIBOOK">Our Project</a></li>
+                            <li><span class="fa fa-github"></span> <a href="https://github.com/nekon0/SoWePray">Our Project</a></li>
                             <li><span class="fa fa-map-pin"></span> <a href="https://goo.gl/maps/ojwCjTqRteiA4B9U7"> DE336, FBT University</a></li>
                         </ul>
                     </section>

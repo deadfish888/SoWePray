@@ -1,4 +1,4 @@
-﻿USE [master]
+USE [master]
 GO
 /****** Object:  Database [BOOKIE] ******/
 IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'BOOKIE')
@@ -99,7 +99,7 @@ CREATE TABLE [dbo].[User](
 	[fullname] [nvarchar](50),
 	[gender] [bit],
 	[dob] [date],
-	[email] [varchar](50) NULL,
+	[email] [varchar](50) not NULL,
 	[phone] [varchar](11) NULL,
 	[address] [nvarchar](200) NULL,
 	[username] [varchar](50) NOT NULL,
@@ -121,7 +121,7 @@ CREATE TABLE [dbo].[Favourite](
 	[bid] int not null,
 	 CONSTRAINT [PK_favourite] PRIMARY KEY CLUSTERED 
 (
-	uid ASC
+	[uid],bid ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -129,22 +129,68 @@ ALTER TABLE [dbo].[Favourite]  WITH CHECK ADD FOREIGN KEY([uid])
 REFERENCES [dbo].[User] (id)
 ALTER TABLE [dbo].[Favourite]  WITH CHECK ADD FOREIGN KEY([bid])
 REFERENCES [dbo].[Book] (id)
----------------------------------------------------
 /****** Object:  Table [dbo].[Star]    BOOKIE ******/
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 CREATE TABLE [dbo].[Star](
 	[bid] int not null,
+	[uid] int not null,
 	[star] int not null,
-	 CONSTRAINT [PK_star] PRIMARY KEY CLUSTERED 
+	CONSTRAINT [PK_star] PRIMARY KEY CLUSTERED 
 (
-	bid ASC
+	[uid],bid ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+GO
 ALTER TABLE [dbo].[Star]  WITH CHECK ADD FOREIGN KEY([bid])
 REFERENCES [dbo].[Book] (id)
+ALTER TABLE [dbo].[Star]  WITH CHECK ADD FOREIGN KEY([uid])
+REFERENCES [dbo].[User] (id)
 ALTER TABLE [dbo].[Star]  WITH CHECK ADD constraint chk_star check (star between 1 and 5)
+/****** Object:  Table [dbo].[Star]    BOOKIE ******/
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[ResetToken](
+	[uid] int not null,
+	[token] [varchar](20) not null,
+	[expired_date] datetime not null
+	)
+GO
+ALTER TABLE [dbo].[ResetToken]  WITH CHECK ADD FOREIGN KEY([uid])
+REFERENCES [dbo].[User] (id)
+/****** Object:  Table [dbo].[Index]    BOOKIE ******/
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[Volume](
+	[bid] int not null,
+	[vol] int not null,
+	[vol_name] nvarchar(100),
+	CONSTRAINT [PK_vol] PRIMARY KEY CLUSTERED 
+(
+	[bid],[vol] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Volume]  WITH CHECK ADD FOREIGN KEY([bid])
+REFERENCES [dbo].[Book] (id)
+/****** Object:  Table [dbo].[Chapter]    BOOKIE ******/
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[Chapter](
+	[bid] int not null,
+	[vol] int not null,
+	[chapter] int not null,
+	[chapter_name] nvarchar(100),
+	content ntext not null,
+	CONSTRAINT [PK_chapter] PRIMARY KEY CLUSTERED 
+(
+	[bid],[vol],[chapter] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+Go
+ALTER TABLE [dbo].[Chapter]  WITH CHECK ADD FOREIGN KEY([bid],[vol])
+REFERENCES [dbo].[Volume] ([bid],[vol])
 ---------------------------------------------------
 ALTER TABLE [dbo].[Book] ADD  DEFAULT (0) FOR [views]
 
@@ -162,7 +208,7 @@ GO
 
 --ALTER TABLE [dbo].[user]  WITH CHECK ADD  CONSTRAINT [CK_user_id] CHECK  (([user_id] like '[A-Z][A-Z][A-Z][1-9][0-9][0-9][0-9][0-9][FM]' OR [user_id] like '[A-Z]-[A-Z][1-9][0-9][0-9][0-9][0-9][FM]'))
 GO
-INSERT [dbo].[User] ([fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super]) VALUES ( N'Vinh Nguyen', 1, CAST(N'2002-12-25' AS Date), N'vinhvn102@gmail.com', N'0382132025', N'FBT University ', N'admin', N'admin',1)
+INSERT [dbo].[User] ([fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super]) VALUES ( N'Vinh Nguyen', 1, CAST(N'2002-12-25' AS Date), N'vinhnthe163219@fpt.edu.vn', N'0382132025', N'FBT University ', N'admin', N'admin',1)
 go
 INSERT [dbo].[User] ([fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super]) VALUES ( N'Vinh Nguyen', 1, CAST(N'2002-12-25' AS Date), N'vinhvn102@gmail.com', N'0382132025', N'FBT University ', N'vinh', N'2002',0)
 GO

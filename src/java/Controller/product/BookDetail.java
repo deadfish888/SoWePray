@@ -6,13 +6,16 @@
 package Controller.product;
 
 import Model.Book;
+import Model.Category;
 import context.BookDAO;
+import context.CategoryDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,7 +24,6 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/BookDetail")
 public class BookDetail extends HttpServlet {
    
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -33,16 +35,32 @@ public class BookDetail extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         int id=Integer.parseInt(request.getParameter("id"));
+
         BookDAO b=new BookDAO();
+        CategoryDAO cd = new CategoryDAO();
         Book thisbook=b.getBookById(id);
-        int cateid=thisbook.getCategoryid();
+        String category = cd.getCategory(thisbook.getCategoryid());
+        request.setAttribute("category", category);
+        ArrayList<Book> sames = b.getSimilarBooks(id, thisbook.getCategoryid());
+        request.setAttribute("sames", sames);
         request.setAttribute("book", thisbook);
         request.getRequestDispatcher("/views/book/book-details.jsp").forward(request, response);
+        
+        
     } 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        
+            String getFav=request.getParameter("changeView");
+            int id=Integer.parseInt(request.getParameter("id"));
+            if(getFav.equalsIgnoreCase("Add to favourite")){
+                
+                request.getRequestDispatcher("/views/book/Favourite.jsp").forward(request, response);
+                        
+            }
+            if(getFav.equalsIgnoreCase("GET")){
+                
+            }   
     }
 
     @Override

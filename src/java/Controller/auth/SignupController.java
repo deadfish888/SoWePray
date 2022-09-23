@@ -9,14 +9,16 @@ import context.UserDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /* @author ACER */
+@WebServlet("/Signup")
 public class SignupController extends HttpServlet {
     
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -38,23 +40,28 @@ public class SignupController extends HttpServlet {
        
         UserDAO ud = new UserDAO();
         User user = new User(name, gender, dob, email, phone ,key, pass);
-        if(!ud.checkDupEmail(email)){
+        if(ud.checkEmailExisted(email)!=0){
             request.setAttribute("in4", user);
             request.setAttribute("error", "The email had already been registered!");
             request.setAttribute("origin",request.getParameter("origin"));
             forward(request, response, "/views/auth/signup.jsp");
             return;
         }
-        if(!ud.checkDupUsername(key)){
+        if(ud.checkUsernameExisted(key)!=0){
             request.setAttribute("in4", user);
             request.setAttribute("error", "Existed username!");
             request.setAttribute("origin",request.getParameter("origin"));
-            forward(request, response, "/views/auth/register.jsp");
+            forward(request, response, "/views/auth/signup.jsp");
         }else{
+            HttpSession session = request.getSession();
+            session.setAttribute("user", user);
+                String origin = request.getParameter("origin");
+                if(origin.equals("")) origin="./Home";
+                
             ud.createNewUser(name, gender, dob, email, phone ,key, pass);
             request.setAttribute("error", "Sign up successfully!");
             request.setAttribute("origin",request.getParameter("origin"));
-            forward(request, response, "/views/auth/signup.jsp");
+            response.sendRedirect(origin);
         }
     }
 

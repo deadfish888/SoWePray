@@ -5,18 +5,23 @@
 
 package Controller;
 
-import Model.Book;
-import context.BookDAO;
+import Model.User;
+import context.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
-
-public class Home extends HttpServlet {
+/**
+ *
+ * @author duypham0705
+ */
+@WebServlet("/UserManager")
+public class UserManagement extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -27,14 +32,11 @@ public class Home extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        BookDAO ud = new BookDAO();
-        ArrayList<Book> allbooks = ud.getFeaturedBooks();
-        ArrayList<Book> salebooks = ud.getWeeklySaleBooks();
-        ArrayList<Book> favebooks = ud.getFavouriteBooks();
-        request.setAttribute("allbooks", allbooks);
-        request.setAttribute("salebooks", salebooks);
-        request.setAttribute("favebooks", favebooks);
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        UserDAO dao = new UserDAO();
+        ArrayList<User> users = dao.getAllUsers();
+        request.setAttribute("users", users);
+        request.getRequestDispatcher("./manage/UserList.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -63,14 +65,4 @@ public class Home extends HttpServlet {
     throws ServletException, IOException {
         processRequest(request, response);
     }
-
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }
