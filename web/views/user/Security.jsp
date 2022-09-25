@@ -37,7 +37,7 @@
                         Security
                     </li>
                     <li class="sidebar-item">
-                        <a href="#">Settings</a>
+                        <a href="#">Payment</a>
                     </li>
                     <li class="sidebar-item">
                         <a href="#">Support</a>

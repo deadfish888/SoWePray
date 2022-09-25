@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Profile
-    Created on : Sep 12, 2022, 1:02:02 PM
+    Document   : Payment
+    Created on : Sep 26, 2022, 12:49:58 AM
     Author     : fpt
 --%>
 
@@ -104,65 +104,9 @@
 
                 <div>
                     <div class="text-center">
-                        <h1>MY PROFILE</h1>
+                        <h1>PAYMENT</h1>
 
                     </div>
-                    <form method="post" action="Profile" style="width: 90%; display: block; margin: auto">
-                        <table class="border-0">
-                            <tr>
-                                <th>
-                                    Name
-                                </th>
-                                <td colspan="3">
-                                    ${sessionScope.user.name}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Email
-                                </th>
-                                <td colspan="0">
-                                    ${sessionScope.user.email}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Birth
-                                </th>
-                                <td>
-                                    ${sessionScope.user.dob}
-                                </td>
-                                <th>
-                                    Gender
-                                </th>
-                                <td>
-                                    ${sessionScope.user.gender}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Phone number
-                                </th>
-                                <td colspan="3">
-                                    ${sessionScope.user.phone}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Address
-                                </th>
-                                <td colspan="3">
-                                    ${sessionScope.user.address}
-                                </td>
-                            </tr>
-                        </table>
-                        <div class="text-center">
-                            <!--<button class="" onclick="editProfile()">Edit</button>-->
-                        </div>
-                        <div style="text-align: center">
-                            <input type="submit" name="action" value="edit"/>
-                        </div>
-                    </form>
                 </div>
             </div>
 
