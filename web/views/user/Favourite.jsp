@@ -66,7 +66,7 @@
             <!-- Main -->
             <div id="main">
                 <div class="inner">
-                    <h1>Bookshelf</h1>
+                    <h1>Favourite</h1>
                     <div class="image main">
                         <img
                             src="images/banner-image-6-1920x500.jpg"
@@ -74,7 +74,7 @@
                             alt=""
                             />
                     </div>
-                    <form action="Book" method="get">
+                    <form action="Favourite" method="GET">
                         <input type="hidden" name="cate" value="${cate!=null?cate:"0"}"> 
                     <div class="md-form active-pink active-pink-2 mb-3 mt-0 col-md-10" style="margin:0 auto;">
                         <input name="search" class="form-control" type="text" placeholder="Search by Title" aria-label="Search">

@@ -35,7 +35,6 @@ public class BookDetail extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         int id=Integer.parseInt(request.getParameter("id"));
-
         BookDAO b=new BookDAO();
         CategoryDAO cd = new CategoryDAO();
         Book thisbook=b.getBookById(id);
