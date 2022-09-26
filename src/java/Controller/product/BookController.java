@@ -30,7 +30,7 @@ public class BookController extends HttpServlet {
         ArrayList<Book> books;
         BookDAO bd = new BookDAO();
         CategoryDAO cd = new CategoryDAO();
-        ArrayList<Category> category = cd.getCategories();
+        ArrayList<Category> category = cd.getAllCategory();
         request.setAttribute("category", category);
         if (cid != null) {
             if (!cid.equals("0")) {

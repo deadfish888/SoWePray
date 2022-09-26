@@ -4,9 +4,6 @@
  */
 package Model;
 
-import context.CategoryDAO;
-
-
 public class Book {
     private int id;
     private String title, author;
@@ -18,6 +15,15 @@ public class Book {
     private String image;
     private String description;
     private int views;
+    private boolean status;
+
+    public boolean status() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
     public Book(int id, String title, String author, int categoryid, float rating, 
             int favourite, float price, boolean issale, String image, String description, int views) {
