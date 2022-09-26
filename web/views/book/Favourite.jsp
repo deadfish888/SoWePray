@@ -75,7 +75,7 @@
                             />
                     </div>
                     <form action="Favourite" method="GET">
-                        <input type="hidden" name="cate" value="${cate!=null?cate:"0"}"> 
+                        <input type="hidden" name="category" value="${category!=null?category:"0"}"> 
                     <div class="md-form active-pink active-pink-2 mb-3 mt-0 col-md-10" style="margin:0 auto;">
                         <input name="search" class="form-control" type="text" placeholder="Search by Title" aria-label="Search">
                     </div>

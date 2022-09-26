@@ -158,8 +158,7 @@
                                 <a href="BookDetail?id=${book.getId()}">
                                     <h2>${book.getTitle()}</h2>
                                     <h3 style="font-size: 0.85em;"><i>${book.getAuthor()}</i></h3>
-                                </a>
-                                <c:if test="${book.issale()}">
+                                    <c:if test="${book.issale()}">
                                         <p>
                                             <del>$${book.getPrice()}</del> 
                                             <strong>$${5.00}</strong>
@@ -168,6 +167,8 @@
                                     <c:if test="${!book.issale()}">
                                         <p><strong>$${book.getPrice()}</strong></p>
                                     </c:if>
+                                </a>
+                                
                             </article>
                         </c:forEach>
                         </div> 

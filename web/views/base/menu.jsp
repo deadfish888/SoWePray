@@ -22,7 +22,7 @@
         <c:if test="${!empty sessionScope.user}">
             <li><a href="<%=request.getContextPath()%>/User/Profile">My profile</a></li>
             <li><a href="<%=request.getContextPath()%>/Bookshelf">Bookshelf</a></li>
-            <li><a href="<%=request.getContextPath()%>/Favor">Favor</a></li>
+            <li><a href="<%=request.getContextPath()%>/Favourite">Favourite</a></li>
             <li><a href="<%=request.getContextPath()%>/Logout"><i class="fa fa-sign-out"></i>Logout</a></li>
         </c:if>
         <li><a href="<%=request.getContextPath()%>/about.jsp">About</a></li>

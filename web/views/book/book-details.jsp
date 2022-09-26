@@ -70,12 +70,17 @@
                                 </p>
                                 <div class="row">        
                                     <form action="BookDetail" method="POST">
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-6"> 
                                             <input type="submit" name="changeView" class="primary" value="GET">                                 
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input type="submit" name="changeView" class="primary" value="Add to Favorite">                                 
-                                        </div>
+                                        </div>         
+                                    </form>    
+                                    <form action="Favourite" method="POST">
+                                         <div class="col-sm-6">
+                                             
+                                             <input type="submit" class="primary" value="Add to Favorite">                                 
+                                            <input type="hidden" name="bId" value="${book.getId()}">
+                                         </div>
+                                         
                                     </form>
                                 </div>
                             </div>

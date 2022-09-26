@@ -44,22 +44,11 @@ public class BookDetail extends HttpServlet {
         request.setAttribute("sames", sames);
         request.setAttribute("book", thisbook);
         request.getRequestDispatcher("/views/book/book-details.jsp").forward(request, response);
-        
-        
     } 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-            String getFav=request.getParameter("changeView");
-            int id=Integer.parseInt(request.getParameter("id"));
-            if(getFav.equalsIgnoreCase("Add to favourite")){
-                
-                request.getRequestDispatcher("/views/book/Favourite.jsp").forward(request, response);
-                        
-            }
-            if(getFav.equalsIgnoreCase("GET")){
-                
-            }   
+        
     }
 
     @Override
