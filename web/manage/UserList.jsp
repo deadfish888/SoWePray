@@ -241,10 +241,14 @@
                                     <h4 class="card-title">Users List</h4>
                                     <div class="table-responsive">
                                         <table class="table user-table">
+                                            <div class="form-outline">
+                                                <input type="search" id="form1" class="form-control" placeholder="Search . . . ." aria-label="Search" style="width: 200px"
+                                                       oninput="searchByName(this)" value="${txtS}" name="txt" type="text"/>
+                                            </div>
                                             <thead>
-                                                <tr>
+                                                <tr style="cursor: pointer; font-size: 15px;">
                                                     <th class="border-top-0"><i class="fa-solid fa-list-ol"></i></th>
-                                                    <th class="border-top-0">Full Name</th>
+                                                    <th class="border-top-0" onclick="load()" name="tp">Full Name</th>
                                                     <th class="border-top-0">Username</th>
                                                     <th class="border-top-0">Email</th>
                                                     <th class="border-top-0">Phone</th>
@@ -252,10 +256,9 @@
                                                     <th class="border-top-0"><i class="fa-solid fa-ranking-star"></i></th>
                                                     <th class="border-top-0"></th>
                                                     <th class="border-top-0"></th>
-
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="contentList">
                                                 <% int no=1;%>
                                                 <c:forEach var="s" items="${users}">
                                                 <form action="UserManager" method="Post">
@@ -273,9 +276,9 @@
                                                                 <td><button class="btn btn-primary" name="id_up" value="${s.getId()}" type="submit"><i class="fa-solid fa-up-long"></i></button></td>
                                                                     </c:when>
                                                                     <c:when test="${s.is_super()+1==sessionScope.admin.is_super()}">
-                                                                    <td></td>
-                                                                    <td><button class="btn btn-primary" name="id_down" value="${s.getId()}" type="submit"><i class="fa-solid fa-down-long"></i></button></td>
-                                                                    <td><button class="btn btn-primary" name="id_ban" value="${s.getId()}" type="submit"><i class="fa-solid fa-user-slash"></i></button></td>
+                                                                <td></td>
+                                                                <td><button class="btn btn-primary" name="id_down" value="${s.getId()}" type="submit"><i class="fa-solid fa-down-long"></i></button></td>
+                                                                <td><button class="btn btn-primary" name="id_ban" value="${s.getId()}" type="submit"><i class="fa-solid fa-user-slash"></i></button></td>
                                                                     </c:when>
                                                                     <c:otherwise>
                                                                 <td><button class="btn btn-primary" name="id_up" value="${s.getId()}" type="submit"><i class="fa-solid fa-up-long"></i></button></td>
@@ -334,6 +337,35 @@
         <!-- ============================================================== -->
         <!-- All Jquery -->
         <!-- ============================================================== -->
+
+        <script>
+            function load(param) {
+                $.ajax({
+                    url: "/Bookie/LoadUser",
+                    type: "post", //send it through get method
+                    success: function (responseData) {
+                        document.getElementById("contentList").innerHTML = responseData;
+                    }
+                });
+            }
+            function searchByName(param) {
+                var txtSearch = param.value;
+                $.ajax({
+                    url: "/Bookie/LoadUser",
+                    type: "get", //send it through get method
+                    data: {
+                        txt: txtSearch
+                    },
+                    success: function (data) {
+                        var row = document.getElementById("contentList");
+                        row.innerHTML = data;
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
+                    }
+                });
+            }
+        </script>
         <script src="https://kit.fontawesome.com/a65741f09b.js" crossorigin="anonymous"></script>
         <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
 
