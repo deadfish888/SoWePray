@@ -10,19 +10,39 @@ package Model;
  */
 public class Chapter {
     private int id;
+    private int bookID;
     private int volumeID;
     private int chapter;
     private String chapterName;
+    private String status;
 
     public Chapter() {
     }
 
-    public Chapter(int id, int volumeID, int chapter, String chapterName) {
+    public Chapter(int id, int bookID, int volumeID, int chapter, String chapterName, String status) {
         this.id = id;
+        this.bookID = bookID;
         this.volumeID = volumeID;
         this.chapter = chapter;
         this.chapterName = chapterName;
+        this.status = status;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getBookID() {
+        return bookID;
+    }
+
+    public void setBookID(int bookID) {
+        this.bookID = bookID;
+    }    
 
     public int getId() {
         return id;
