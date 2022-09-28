@@ -229,6 +229,10 @@ REFERENCES [dbo].[User] ([id])
 ---------------------------------------------------
 ALTER TABLE [dbo].[Book] ADD  DEFAULT (0) FOR [views]
 
+ALTER TABLE [dbo].[Book] ADD  DEFAULT (0) FOR [favourite]
+
+ALTER TABLE [dbo].[Book] ADD  DEFAULT (1) FOR [status]
+
 ALTER TABLE [dbo].[User] ADD  DEFAULT (0) FOR [is_super]
 
 --ALTER TABLE [dbo].[Book] ADD  DEFAULT ('UNDECIDED') FOR [type]

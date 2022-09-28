@@ -17,6 +17,9 @@ public class Book {
     private int views;
     private boolean status;
 
+    public Book() {
+    }
+
     public boolean status() {
         return status;
     }

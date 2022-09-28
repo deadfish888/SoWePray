@@ -86,10 +86,10 @@ public class Validator {
         return number;
     }
 
-    public double fieldDouble(String value, String message) throws Exception {
-        double number = 0;
+    public float fieldFloat(String value, String message) throws Exception {
+        float number = 0;
         try {
-            number = Double.parseDouble(value);
+            number = Float.parseFloat(value);
         } catch (NumberFormatException e) {
             throw new Exception(message);
         }

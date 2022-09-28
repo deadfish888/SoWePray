@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
@@ -38,7 +39,19 @@ public class BookDAO {
     public ArrayList<Book> getBooks() {
         ArrayList<Book> list = new ArrayList<>();
         try {
-            String sql = "select * from [Book]";
+            String sql = "SELECT [id]\n"
+                    + "      ,[title]\n"
+                    + "      ,[author]\n"
+                    + "      ,[categoryid]\n"
+                    + "      ,[rating]\n"
+                    + "      ,[favourite]\n"
+                    + "      ,[price]\n"
+                    + "      ,[is_sale]\n"
+                    + "      ,[image]\n"
+                    + "      ,[description]\n"
+                    + "      ,[views]\n"
+                    + "      ,[status]\n"
+                    + "  FROM [dbo].[Book]";
             stm = cnn.prepareStatement(sql);
             rs = stm.executeQuery();
             while (rs.next()) {
@@ -63,59 +76,67 @@ public class BookDAO {
         return list;
     }
 
-    public void editBook(int id, String title, String author, int categoryid, int quantity, float price, boolean issale, int discount, String image, String description) {
-        String sql = "update [Book] set [title]= ?"
+    public int editBook(Book book) {
+        String sql = "UPDATE [Book] "
+                + "SET [title]= ?"
                 + ", [author] = ? "
                 + ", [categoryid] = ?"
-                + ", [quantity] = ?"
                 + ", [price] = ?"
                 + ", [is_sale] = ?"
-                + ", [discount] = ?"
                 + ", [image] = ?"
                 + ", [description] = ?"
-                + " where [id] = ? ";
+                + " WHERE [id] = ? ";
         try {
             PreparedStatement pre = cnn.prepareStatement(sql);
-            pre.setString(1, title);
-            pre.setString(2, author);
-            pre.setString(3, (categoryid == 0 ? "NULL" : categoryid + ""));
-            pre.setInt(4, quantity);
-            pre.setFloat(5, price);
-            pre.setBoolean(6, issale);
-            pre.setInt(7, discount);
-            pre.setString(8, image);
-            pre.setString(9, description);
-            pre.setInt(10, id);
-            pre.executeUpdate();
+            pre.setString(1, book.getTitle());
+            pre.setString(2, book.getAuthor());
+            if(book.getCategoryid()!=0){
+                pre.setInt(3, book.getCategoryid());
+            }else pre.setNull(3, Types.INTEGER);
+            pre.setFloat(4, book.getPrice());
+            pre.setBoolean(5, book.issale());
+            pre.setString(6, book.getImage());
+            pre.setString(7, book.getDescription());
+            pre.setInt(8, book.getId());
+            return pre.executeUpdate();
         } catch (Exception e) {
             System.out.println("edit Error:" + e.getMessage());
         }
+        return 0;
     }
 
-    public int addBook(String title, String author, int categoryid, int quantity, float price, boolean issale, int discount, String image, String description) {
-        int n = 0;
-//        try {
-//            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        String sql = "insert [Book] ( [title], [author], [categoryid], [quantity], [price], [is_sale], [discount], [image], [description])"
-                + " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-//            n = stm.executeUpdate(sql);
+    public int addBook(Book book) {
+        String sql = "INSERT INTO [dbo].[Book]\n"
+                + "           ([title]\n"
+                + "           ,[author]\n"
+                + "           ,[categoryid]\n"
+                + "           ,[price]\n"
+                + "           ,[is_sale]\n"
+                + "           ,[image]\n"
+                + "           ,[description])\n"
+                + "     VALUES ( ? "
+                + "             , ? "
+                + "             , ? "
+                + "             , ? "
+                + "             , ? "
+                + "             , ? "
+                + "             , ? )";
         try {
             PreparedStatement pre = cnn.prepareStatement(sql);
-            pre.setString(1, title);
-            pre.setString(2, author);
-            pre.setString(3, (categoryid == 0 ? "NULL" : categoryid + ""));
-            pre.setInt(4, quantity);
-            pre.setFloat(5, price);
-            pre.setBoolean(6, issale);
-            pre.setInt(7, discount);
-            pre.setString(8, image);
-            pre.setString(9, description);
-            n = pre.executeUpdate();
-            return n;
+            pre.setString(1, book.getTitle());
+            pre.setString(2, book.getAuthor());
+            if(book.getCategoryid()!=0){
+                pre.setInt(3, book.getCategoryid());
+            }else pre.setNull(3, Types.INTEGER);
+            pre.setFloat(4, book.getPrice());
+            pre.setBoolean(5, book.issale());
+            pre.setString(6, book.getImage());
+            pre.setString(7, book.getDescription());
+            return pre.executeUpdate();
         } catch (Exception e) {
-            System.out.println("add Error:" + e.getMessage());
+            System.out.println("addBook Error:" + e.getMessage());
         }
-        return n;
+        return 0;
     }
 
     public Book getBookById(int bookId) {

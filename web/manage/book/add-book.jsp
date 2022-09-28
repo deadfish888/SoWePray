@@ -18,19 +18,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- Tell the browser to be responsive to screen width -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="keywords"
-              content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, materialpro admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, materialpro admin lite design, materialpro admin lite dashboard bootstrap 5 dashboard template">
-        <meta name="description"
-              content="Material Pro Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
-        <meta name="robots" content="noindex,nofollow">
         <title>Book Management</title>
-        <!--<link rel="stylesheet" href="html/css/style.min.css">-->
         <link rel="stylesheet" href="/Bookie/manage/html/css/style.min.css">
 
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+        
     </head>
 
     <body>
@@ -101,10 +96,10 @@
                                 <h4 class="card-title">${service} Book</h4>
                                 <div class="panel-body table-responsive">
                                     <div class="sliderList">
-                                        <form action="/Admin/${service}Book" method="post">
+                                        <form action="./${service}Book" method="post">
                                             <div class="form-group">
                                                 <label class="control-label" style="display: inline-block; margin-right: 20px;">ID</label>
-                                                <input class="form-control" style="width: auto;display: inline-block;" type="text"  name="bid" readonly value="${(book.getId()!=null)?book.getId(): newId}">
+                                                <input class="form-control" style="width: auto;display: inline-block;" type="text"  name="id" readonly value="${(book.getId()!=null)?book.getId(): newId}">
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleSelect1" class="control-label">Title</label>
@@ -116,11 +111,11 @@
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label class="control-label">Category</label>
-                                                <select class="form-control" name="categoryId">
+                                                <select class="form-select" name="categoryId">
                                                     <c:forEach var="cate" items="${cates}">
                                                         <option value="${cate.getId()}" ${cate.getId()==book.getCategoryid()?"selected":""}>${cate.getName()}</option>
                                                     </c:forEach>
-                                                        <option value="0" ${book.getCategoryid()==null?"selected":""}>Uncategorized</option>
+                                                    <option value="0" ${book.getCategoryid()==null?"selected":""}>Uncategorized</option>
                                                 </select>
                                             </div>
 
@@ -140,7 +135,7 @@
                                             <div class="form-group">
                                                 <label class="control-label" >Image (Enter Link)</label>
                                                 <input class="form-control" type="text" name="image" required value="${book.getImage()}">
-<!--                                                <input class="form-control" id="img" onchange="changeimg()" name="image" type="file" -->
+                                                <!--                                                <input class="form-control" id="img" onchange="changeimg()" name="image" type="file" -->
                                                 <input name="proimage" id="image" value="${book.getImage()}" type="hidden" >
                                                 <img  src="${book.getImage()}" id="demoimg${book.getId()}" style="margin-top: 5px;" height="100">
                                             </div>
@@ -184,6 +179,12 @@
     <script src="/Bookie/manage/html/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="/Bookie/manage/html/js/custom.js"></script>
+    <script>
+        var element = document.getElementById("book-management");
+        element.classList.add("selected");
+        element = document.getElementById("book-management-a");
+        element.classList.add("active");
+    </script>
 </body>
 
 </html>

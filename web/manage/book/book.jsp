@@ -127,16 +127,16 @@
                                                     </td>
                                                     <td>$${book.getPrice()}</td>
                                                     <td><input class="checkbox-inline" type="checkbox" ${book.issale()?"checked":""} disabled></td>
-                                                    <td><a class="btn btn-primary" href="./EditBook?id=${book.getId()}"><i class="fa fa-pen-square" aria-hidden="true"></i></a></td>
+                                                    <td><a class="btn btn-primary" href="./UpdateBook?id=${book.getId()}"><i class="fa fa-pen-square" aria-hidden="true"></i></a></td>
                                                     <td><a class="btn btn-secondary" href="./TOC?id=${book.getId()}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
                                                     <td>
                                                         <form action="Disable" method="get">
-                                                        <label class="switch">
-                                                            <a href="./ChangeStatus?id=${book.getId()}">
-                                                            <input id="myButton" type="checkbox" name="status" ${book.status() ? "checked": null}>
-                                                            <span class="slider"></span>
-                                                            </a>
-                                                        </label>
+                                                            <label class="switch">
+                                                                <a href="./ChangeStatus?id=${book.getId()}&xpage=${xpage}">
+                                                                    <input id="myButton" type="checkbox" name="status" ${book.status() ? "checked": null}>
+                                                                    <span class="slider"></span>
+                                                                </a>
+                                                            </label>
                                                         </form>
                                                     </td>
                                                 </tr>
@@ -144,7 +144,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="pagination-arena " style="margin-left: 40%">
+                                <div id="sp" class="pagination-arena " style="margin-left: 40%">
                                     <ul class="pagination">
                                         <li class="page-item" >
                                             <a href="Book?xpage=${xpage-1}" class="page-link" style="${xpage<3?"display:none":""}">
