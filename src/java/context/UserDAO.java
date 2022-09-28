@@ -145,12 +145,18 @@ public class UserDAO {
         return list;
     }
 
-    public ArrayList<User> sortUser(int us, String att) {
+    public ArrayList<User> sortUser(int us, String att, int way) {
+        String order = "";
+        if (way == 0) {
+            order = "ASC";
+        } else {
+            order = "DESC";
+        }
         ArrayList<User> list = new ArrayList<>();
         try {
             String sql = "select * from [User]\n"
                     + "where is_super < ? \n"
-                    + "order by is_super DESC";
+                    + "order by " + att + " " + order + "";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, us);
             rs = stm.executeQuery();

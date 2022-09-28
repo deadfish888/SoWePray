@@ -99,10 +99,41 @@ public class LoadUser extends HttpServlet {
 
         HttpSession session = request.getSession();
         User us = (User) session.getAttribute("admin");
-        String txtSearch = request.getParameter("tp");
-        System.out.println(txtSearch);
+        String order = (String) session.getAttribute("order");
+        String txtSearch = request.getParameter("type");
         UserDAO dao = new UserDAO();
-        ArrayList<User> users = dao.sortUser(us.is_super(), "fullname");
+        ArrayList<User> users = new ArrayList<>();
+        if (order == null) {
+            order = "0";
+        }
+        int run_way = Integer.parseInt(order);
+        if (txtSearch.equals("1")) {
+            users = dao.sortUser(us.is_super(), "fullname", Integer.parseInt(order));
+        }
+        if (txtSearch.equals("2")) {
+            users = dao.sortUser(us.is_super(), "username", Integer.parseInt(order));
+
+        }
+        if (txtSearch.equals("3")) {
+            users = dao.sortUser(us.is_super(), "email", Integer.parseInt(order));
+
+        }
+        if (txtSearch.equals("4")) {
+            users = dao.sortUser(us.is_super(), "phone", Integer.parseInt(order));
+
+        }
+        if (txtSearch.equals("5")) {
+            users = dao.sortUser(us.is_super(), "address", Integer.parseInt(order));
+
+        }
+        if (txtSearch.equals("6")) {
+            users = dao.sortUser(us.is_super(), "is_super", Integer.parseInt(order));
+
+        }
+        run_way=(run_way+1)%2;
+        
+        session.setAttribute("order", Integer.toString(run_way));
+
         PrintWriter out = response.getWriter();
         int i = 0;
         for (User u : users) {

@@ -248,12 +248,12 @@
                                             <thead>
                                                 <tr style="cursor: pointer; font-size: 15px;">
                                                     <th class="border-top-0"><i class="fa-solid fa-list-ol"></i></th>
-                                                    <th class="border-top-0" onclick="load()" name="tp">Full Name</th>
-                                                    <th class="border-top-0">Username</th>
-                                                    <th class="border-top-0">Email</th>
-                                                    <th class="border-top-0">Phone</th>
-                                                    <th class="border-top-0">Address</th>                                                  
-                                                    <th class="border-top-0"><i class="fa-solid fa-ranking-star"></i></th>
+                                                    <th class="border-top-0" onclick="load(1)" >Full Name</th>
+                                                    <th class="border-top-0" onclick="load(2)">Username</th>
+                                                    <th class="border-top-0" onclick="load(3)">Email</th>
+                                                    <th class="border-top-0" onclick="load(4)">Phone</th>
+                                                    <th class="border-top-0" onclick="load(5)">Address</th>                                                  
+                                                    <th class="border-top-0" onclick="load(6)"><i class="fa-solid fa-ranking-star"></i></th>
                                                     <th class="border-top-0"></th>
                                                     <th class="border-top-0"></th>
                                                 </tr>
@@ -343,8 +343,15 @@
                 $.ajax({
                     url: "/Bookie/LoadUser",
                     type: "post", //send it through get method
-                    success: function (responseData) {
-                        document.getElementById("contentList").innerHTML = responseData;
+                    data: {
+                        type: param
+                    },
+                    success: function (data) {
+                        var row = document.getElementById("contentList");
+                        row.innerHTML = data;
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
                     }
                 });
             }
