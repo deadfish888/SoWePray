@@ -141,6 +141,7 @@
                                                             </th>
                                                             <td>
                                                                 <input type="email" name="newEmail"/>
+                                                                <div style="color: red">${new_email_noti}</div>
                                                             </td>
                                                         </tr>
                                                         <tr>

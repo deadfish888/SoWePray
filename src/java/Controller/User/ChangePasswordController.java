@@ -74,13 +74,13 @@ public class ChangePasswordController extends HttpServlet {
                 if (request.getParameter("newPassword").equals(request.getParameter("confirmPassword"))) {
                     user.setPassword(request.getParameter("newPassword"));
                     userDBC.changePassword(user.getId(), request.getParameter("newPassword"));
-            request.setAttribute("processMessage", "Change password successfully.");
+                    request.setAttribute("processMessage", "Change password successfully.");
                 } else {
                     request.setAttribute("confirm_pass_noti", "Confirm password is not match with new password.");
                     request.setAttribute("processMessage", "Change password fail.");
                 }
             } else {
-                request.setAttribute("new_pass_noti", "New password is invalid.");
+                request.setAttribute("new_pass_noti", "New password must have between 6 and 32 characters.");
                 request.setAttribute("processMessage", "Change password fail.");
             }
         } else {

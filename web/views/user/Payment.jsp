@@ -105,7 +105,15 @@
                 <div>
                     <div class="text-center">
                         <h1>PAYMENT</h1>
-
+                    </div>
+                    <div>
+                        <h2>My wallet</h2>
+                        <!-- An so du tai khoan, khi click vao icon hinh con mat se hien ra -->
+                    </div>
+                    <div>
+                        <h2>History</h2>
+                        <!-- Hien thi danh sach transaction cua user nay -->
+                        <!-- Click vao nut view ben canh transaction -> Xem bill -->
                     </div>
                 </div>
             </div>
