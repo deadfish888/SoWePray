@@ -34,24 +34,43 @@ public class RatingDAO {
         }
     }
     
-    public int getAverageStar(int bid){
+    public float getAverageStar(int bid){
         
         ArrayList<Rating> list = getStarList(bid);
         int sum=0;
         for(int i=0;i<list.size();i++){
             sum+=list.get(i).getStar();
         }
-        int star=sum/list.size();       
+        float star=sum/list.size();       
         return star;
     }
     
-    public void addStar(int bid,int uid){
+    public void sendRatetoBook(int bid, float star){
         try {
-            String sql = "SELECT COUNT(uid) FROM [Star] WHERE bid='"+bid+"'";
+            String sql = "UPDATE [Book] SET rate='"+star+"' WHERE bid='"+bid+"'";           
             stm= cnn.prepareStatement(sql);
-             rs = stm.executeQuery();
-             
-            
+            stm.executeUpdate(sql);
+        } catch (Exception e) {
+           System.out.println("Connect error:" + e.getMessage());
+        }
+    }
+    
+    public void addStar(int bid,int uid, int star){
+        try {
+            String sql = "INSERT INTO [Star] VALUES (bid='"+bid+"',uid='"+uid+"',star='"+star+"')";
+            stm= cnn.prepareStatement(sql);
+            stm.executeUpdate(sql);
+            System.out.println("Add Success!!");
+        } catch (Exception e) {
+           System.out.println("Connect error:" + e.getMessage());
+        }
+    }
+    
+    public void updateStar(int bid, int uid, int star){
+        try {
+            String sql = "UPDATE [Star] SET star='"+star+"' WHERE bid='"+bid+"' and uid='"+uid+"'";
+            stm= cnn.prepareStatement(sql);
+            stm.executeUpdate(sql);
         } catch (Exception e) {
            System.out.println("Connect error:" + e.getMessage());
         }

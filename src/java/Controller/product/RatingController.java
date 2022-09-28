@@ -5,6 +5,7 @@
 
 package Controller.product;
 
+import Model.User;
 import context.RatingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,17 +20,6 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class RatingController extends HttpServlet {
    
-
-    
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
@@ -38,28 +28,23 @@ public class RatingController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        int bid=Integer.parseInt(request.getParameter("bId"));
-        String rate=request.getParameter("rate");
-        int star=0;
-        if(rate=="star1"){
-            star=1;
-        }
-        if(rate=="star2"){
-            star=2;
-        }
-        if(rate=="star3"){
-            star=3;
-        }
-        if(rate=="star4"){
-            star=4;
-        }
-        if(rate=="star5"){
-            star=5;
-        }
-        
+    throws ServletException, IOException { 
         RatingDAO rdao=new RatingDAO();
-        
+        int bid=Integer.parseInt(request.getParameter("bId"));
+        String getRate=request.getParameter("getRate");
+        int rate=0;
+        if(getRate.equalsIgnoreCase("1")) rate=1;      
+        if(getRate.equalsIgnoreCase("2")) rate=2;        
+        if(getRate.equalsIgnoreCase("3")) rate=3;
+        if(getRate.equalsIgnoreCase("4")) rate=4;
+        if(getRate.equalsIgnoreCase("5")) rate=5;
+        User user=(User)request.getSession().getAttribute("user");
+        int uid=user.getId();
+        if(rdao.checkExist(bid, uid)==false)rdao.addStar(bid, uid, rate);
+        if(rdao.checkExist(bid, uid)==true)rdao.updateStar(bid, uid, rate);
+        float aveRate=rdao.getAverageStar(bid);
+        rdao.sendRatetoBook(bid, aveRate);
+        request.setAttribute("star", aveRate);   
     }
 
     @Override

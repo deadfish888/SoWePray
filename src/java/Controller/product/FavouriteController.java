@@ -13,14 +13,12 @@ import context.BookDAO;
 import context.CategoryDAO;
 import context.FavouriteDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import javax.mail.Session;
 @WebServlet("/Favourite")
 public class FavouriteController extends HttpServlet {
 
