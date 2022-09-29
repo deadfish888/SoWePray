@@ -40,11 +40,16 @@ public class RatingController extends HttpServlet {
         if(getRate.equalsIgnoreCase("5")) rate=5;
         User user=(User)request.getSession().getAttribute("user");
         int uid=user.getId();
-        if(rdao.checkExist(bid, uid)==false)rdao.addStar(bid, uid, rate);
-        if(rdao.checkExist(bid, uid)==true)rdao.updateStar(bid, uid, rate);
+        if(request.getParameter("gRate")!=null){
+            if(rdao.checkExist(bid, uid)==false)rdao.addStar(bid, uid, rate);
+            if(rdao.checkExist(bid, uid)==true)rdao.updateStar(bid, uid, rate);
+            response.sendRedirect("/book-details.jsp");
+            response.setHeader("REFRESH", "0");
+        }
         float aveRate=rdao.getAverageStar(bid);
         rdao.sendRatetoBook(bid, aveRate);
         request.setAttribute("star", aveRate);   
+         
     }
 
     @Override
