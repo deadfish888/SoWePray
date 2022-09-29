@@ -279,20 +279,11 @@ public class BookDAO {
         return listpage;
     }
 
-//    public void deleteBook(int id) {
-//        try {
-//            stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-//            String sql = "delete from [Book] where [id] = " + id;
-//            stm.executeUpdate(sql);
-//        } catch (Exception e) {
-//            System.out.println("del Error:" + e.getMessage());
-//        }
-//    }
     public ArrayList<Book> getBooksByCid(String cid) {
         ArrayList<Book> list = new ArrayList<>();
         try {
             String sql = "SELECT * FROM [Book] "
-                    + "WHERE [categoryid] = ?";
+                                + "WHERE [categoryid] = ?";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, Integer.parseInt(cid));
             rs = stm.executeQuery();
@@ -315,7 +306,7 @@ public class BookDAO {
         }
         return list;
     }
-
+    
     public ArrayList<Book> getWeeklySaleBooks() {
         ArrayList<Book> list = new ArrayList<>();
         try {

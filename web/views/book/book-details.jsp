@@ -9,6 +9,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="assets/css/StarRating.css" />
+        <link rel="stylesheet" href="assets/css/rateButton.css" />
         <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     </head>
     <body class="is-preload">
@@ -69,22 +71,57 @@
                                     ${book.getDescription()}
                                 </p>
                                 <div class="row">        
-                                    <form action="BookDetail" method="GET">
-                                        <div class="col-sm-6">
-                                            <input type="submit" name="addtocart" class="primary" value="GET">                                 
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input type="submit" name="addtocart" class="primary" value="Add to Favorite">                                 
-                                        </div>
+                                    <form action="BookDetail" method="POST">
+                                        <div class="col-sm-6"> 
+                                            <input type="submit" name="changeView" class="primary" value="GET">                                 
+                                        </div>         
+                                    </form>    
+                                    <form action="Favourite" method="POST">
+                                         <div class="col-sm-6">
+                                             
+                                             <input type="submit" class="primary" value="Add to Favorite">                                 
+                                            <input type="hidden" name="bId" value="${book.getId()}">
+                                         </div>
                                     </form>
                                 </div>
+                                            <c:choose >
+                                                <c:when test="${sessionScope.user!=null}" > 
+                                                <form action="Rating" method="POST">        
+                                                    <div class="rate">
+                                                        <input type="radio" id="star5" name="getRate" value="5" />
+                                                        <label for="star5" title="text">5</label>
+                                                        <input type="radio" id="star4" name="getRate" value="4" />
+                                                        <label for="star4" title="text">4</label>
+                                                        <input type="radio" id="star3" name="getRate" value="3" />
+                                                        <label for="star3" title="text">3</label>
+                                                        <input type="radio" id="star2" name="getRate" value="2" />
+                                                        <label for="star2" title="text">2</label>
+                                                        <input type="radio" id="star1" name="getRate" value="1" />
+                                                        <label for="star1" title="text">1</label>
+                                                    </div>
+                                                    <div><button type="submit" class="submitRate" name="gRate">Rate</button></div>
+                                                </form>   
+                                                </c:when>
+                                            </c:choose>    
+                                            <div><input type="hidden" name="bId" value="${book.getId()}"></div>    
+                                            <div>Book rating: ${book.getRating()} </div>
                             </div>
-                        </div>
+                            <div class="well">
+                                <h4>Write your comment here...<span class="glyphicon glyphicon-pencil">
+                                </span>
+                                </h4>
+                                <form role="form">
+                                    <div class="form-group">
+                                        <textarea class="form-control" rows="3"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Send</button>
+                                </form>    
+                            </div>
+                            <br>
+                        </div>           
                     </div>
-
                     <br>
                     <br>
-
                     <div class="container-fluid">
                         <h2 class="h2">Similar Products</h2>
 

@@ -160,6 +160,7 @@ CREATE TABLE [dbo].[Token](
 GO
 ALTER TABLE [dbo].[Token]  WITH CHECK ADD FOREIGN KEY([userId])
 REFERENCES [dbo].[User] (id)
+
 /****** Object:  Table [dbo].[Volume]    BOOKIE ******/
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON

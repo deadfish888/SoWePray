@@ -64,6 +64,7 @@
             <!-- Left Sidebar - style you can find in sidebar.scss  -->
             <jsp:include page="/manage/base/sidebar.jsp"/>
             
+
             <!-- Page wrapper  -->
             <!-- ============================================================== -->
             <div class="page-wrapper">
