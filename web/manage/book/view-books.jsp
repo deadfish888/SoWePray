@@ -18,13 +18,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Book Management</title>
-        <!--<link rel="stylesheet" href="html/css/style.min.css">-->
         <link rel="stylesheet" href="/Bookie/manage/html/css/style.min.css">
-
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
     </head>
 
@@ -128,7 +122,7 @@
                                                     <td>$${book.getPrice()}</td>
                                                     <td><input class="checkbox-inline" type="checkbox" ${book.issale()?"checked":""} disabled></td>
                                                     <td><a class="btn btn-primary" href="./UpdateBook?id=${book.getId()}"><i class="fa fa-pen-square" aria-hidden="true"></i></a></td>
-                                                    <td><a class="btn btn-secondary" href="./TOC?id=${book.getId()}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
+                                                    <td><a class="btn btn-secondary" href="./Book/TOC?id=${book.getId()}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
                                                     <td>
                                                         <form action="Disable" method="get">
                                                             <label class="switch">

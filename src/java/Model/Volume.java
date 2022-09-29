@@ -13,6 +13,7 @@ public class Volume {
     private int bookId;
     private int volume;
     private String volumeName;
+    private String summary;
 
     public Volume() {
     }
@@ -57,4 +58,11 @@ public class Volume {
     }
     
     
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 }

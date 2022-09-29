@@ -14,12 +14,12 @@ public class Chapter {
     private int volumeID;
     private int chapter;
     private String chapterName;
-    private String status;
+    private boolean status;
 
     public Chapter() {
     }
 
-    public Chapter(int id, int bookID, int volumeID, int chapter, String chapterName, String status) {
+    public Chapter(int id, int bookID, int volumeID, int chapter, String chapterName, boolean status) {
         this.id = id;
         this.bookID = bookID;
         this.volumeID = volumeID;
@@ -28,11 +28,11 @@ public class Chapter {
         this.status = status;
     }
 
-    public String getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

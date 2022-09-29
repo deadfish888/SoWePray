@@ -33,7 +33,7 @@ public class AddBookController extends HttpServlet {
         request.setAttribute("service", "Add");
         BookDAO bd = new BookDAO();
         request.setAttribute("newId", bd.getNumberBook() + 1);
-        request.getRequestDispatcher("/manage/book/add-book.jsp").forward(request, response);
+        request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class AddBookController extends HttpServlet {
             request.setAttribute("message", "Add Successfully!");
         }
         request.setAttribute("newId", bd.getNumberBook() + 1);
-        request.getRequestDispatcher("/manage/book/add-book.jsp").forward(request, response);
+        request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
 
     }
 

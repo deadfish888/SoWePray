@@ -44,7 +44,7 @@ public class ADBookController extends HttpServlet {
         request.setAttribute("xpage", page);
         request.setAttribute("numPage", numPage);
         request.setAttribute("books", listpage);
-        request.getRequestDispatcher("/manage/book/book.jsp").forward(request, response);
+        request.getRequestDispatcher("/manage/book/view-books.jsp").forward(request, response);
     }
 
     @Override

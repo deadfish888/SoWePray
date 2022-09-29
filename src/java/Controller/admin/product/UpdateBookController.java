@@ -36,7 +36,7 @@ public class UpdateBookController extends HttpServlet {
             request.setAttribute("service", "Update");
             BookDAO bd = new BookDAO();
             request.setAttribute("book", bd.getBookById(bookId));
-            request.getRequestDispatcher("/manage/book/add-book.jsp").forward(request, response);
+            request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(UpdateBookController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -77,7 +77,7 @@ public class UpdateBookController extends HttpServlet {
             request.setAttribute("message", "Update Successfully!");
         }
         request.setAttribute("book", book);
-        request.getRequestDispatcher("/manage/book/add-book.jsp").forward(request, response);
+        request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
     }
 
     @Override

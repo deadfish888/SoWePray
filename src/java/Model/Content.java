@@ -22,11 +22,6 @@ public class Content {
         this.content = content;
     }
 
-   
-
-
-    
-    
     public int getChapterID() {
         return chapterID;
     }
