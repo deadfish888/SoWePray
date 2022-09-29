@@ -4,6 +4,7 @@
  */
 package context;
 
+import Model.PaymentAccount;
 import Model.RandomEnglishNameGenerator;
 import Model.User;
 import java.sql.Connection;
@@ -266,8 +267,7 @@ public class UserDAO {
                 String phone = rs.getString(6);
                 String address = rs.getString(7);
                 String username = rs.getString(8);
-                float balance = rs.getFloat("balance");
-                list.add(new User(userid, name, username, gender, dob, email, phone, address, balance));
+                list.add(new User(userid, name, username, gender, dob, email, phone, address));
             }
         } catch (Exception e) {
             System.out.println("getUser Error:" + e.getMessage());
@@ -291,8 +291,10 @@ public class UserDAO {
                 String phone = rs.getString(6);
                 String address = rs.getString(7);
                 String username = rs.getString(8);
-                float balance = rs.getFloat("balance");
-                list.add(new User(userid, name, username, gender, dob, email, phone, address, balance));
+                boolean isSuper = rs.getBoolean("is_super");
+                PaymentAccount paymentAccount = new PaymentAccount();
+                paymentAccount.setAccountNumber(rs.getLong("walletNumber"));
+                list.add(new User(userid, name, gender, dob, email, phone, address, username, phone, isSuper, paymentAccount));
             }
         } catch (Exception e) {
             System.out.println("getUser Error:" + e.getMessage());
@@ -386,6 +388,7 @@ public class UserDAO {
                     + "      ,[username]\n"
                     + "      ,[password]\n"
                     + "      ,[is_super]\n"
+                    + "      ,[walletNumber]\n"
                     + "  FROM [User] "
                     + "where id = ?";
             stm = cnn.prepareStatement(sql);
@@ -394,7 +397,8 @@ public class UserDAO {
             if (rs.next()) {
                 return new User(id, rs.getString(1), rs.getBoolean(2) ? "Male" : "Female",
                         rs.getString(3), rs.getString(4), rs.getString(5),
-                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9));
+                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9), 
+                new PaymentAccount(rs.getLong("walletNumber")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -402,7 +406,7 @@ public class UserDAO {
         return null;
     }
 
-    void generateData() {
+//    void generateData() {
 //        int[] roleSlots = {5, 15, 80, 500};
 //        User newUser;
 //        for (int i = 1; i <= 100; i++) {
@@ -459,10 +463,10 @@ public class UserDAO {
 //
 //            newUser = new User(i + 2, name, gender, dob, mail, phone, address, username, password, isSuper);
 //            addUser(newUser);
-        for (User user : getAll()) {
-            float balance = (float) (Math.random() * 30);
-            
-        }
-    }
+//        for (User user : getAll()) {
+//            float balance = (float) (Math.random() * 30);
+//            
+//        }
+//    }
 
 }

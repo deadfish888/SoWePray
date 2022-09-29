@@ -115,4 +115,16 @@ public class Transaction {
         this.description = description;
     }
 
+    /**
+     * Compare if 2 transaction id is equal
+    **/
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Transaction){
+            return this.transactionId == ((Transaction) obj).getTransactionId();
+        }
+        return false;
+    }
+
+    
 }

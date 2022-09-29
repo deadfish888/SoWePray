@@ -109,7 +109,7 @@
         <url-pattern>/tesst</url-pattern>
     </servlet-mapping>
 
-<context-param>
+    <context-param>
         <param-name>host</param-name>
         <param-value>smtp.gmail.com</param-value>
     </context-param>
@@ -125,6 +125,21 @@
         <param-name>pass</param-name>
         <param-value>WhiteMoon</param-value>
     </context-param>
+    
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.google.zxing/core -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.zxing/javase -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+    </dependencies>	
     
     <session-config>
         <session-timeout>

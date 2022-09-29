@@ -57,7 +57,6 @@
                                 <span class="title">BOOKIE</span>
                             </a>
 
-
                             <!-- Nav -->
                             <nav>
                                 <ul>
@@ -109,6 +108,10 @@
                     <div>
                         <h2>My wallet</h2>
                         <!-- An so du tai khoan, khi click vao icon hinh con mat se hien ra -->
+                        <a onclick="changeIcon(this)" id="myBtn">
+                            <i id="faPlus" class='bx bx-show'></i>
+                            <span class="SPN">Balance: $56,756.00</span>
+                        </a>
                     </div>
                     <div>
                         <h2>History</h2>

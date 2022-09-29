@@ -15,7 +15,7 @@ public class User {
 
     private int id;
     private String name, gender, dob, email, phone, address, username, password;
-    private float balance;
+    private PaymentAccount paymentAccount;
     private boolean is_super;
 
     public User(String account, String password) {
@@ -45,28 +45,30 @@ public class User {
         this.username = username;
         this.password = password;
     }
+    
+    public User(int id, String name, String username, String gender, String dob, String email, String phone, String address) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.gender = gender;
+        this.dob = dob;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+    }
 
-//    public User(int id, String name, String username, String gender, String dob, String email, String phone, String address) {
-//        this.id = id;
-//        this.name = name;
-//        this.username = username;
-//        this.gender = gender;
-//        this.dob = dob;
-//        this.email = email;
-//        this.phone = phone;
-//        this.address = address;
-//    }
-
-    public User(int id, String name, String username, String gender, String dob, String email, String phone, String address, float balance) {
+    public User(int id, String name, String gender, String dob, String email, String phone, String address, String username, String password, boolean is_super, PaymentAccount paymentAccount) {
         this.id = id;
         this.name = name;
         this.gender = gender;
         this.dob = dob;
+        this.email = email;
         this.phone = phone;
         this.address = address;
         this.username = username;
-        this.balance = balance;
-        this.email = email;
+        this.password = password;
+        this.is_super = is_super;
+        this.paymentAccount = paymentAccount;
     }
 
     
@@ -150,6 +152,18 @@ public class User {
         this.password = password;
     }
 
+    public PaymentAccount getPaymentAccount() {
+        return paymentAccount;
+    }
+
+    public void setPaymentAccount(PaymentAccount paymentAccount) {
+        this.paymentAccount = paymentAccount;
+    }
+
+    public void createWallet(){
+        paymentAccount = new PaymentAccount(this);
+    }
+    
     public int getPasswordLevel() {
         String numberRegex = "[0-9]";
         String characterRegex = "[a-zA-Z]";
