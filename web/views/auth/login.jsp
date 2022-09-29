@@ -1,8 +1,3 @@
-<%-- 
-Document   : index
-Created on : Jun 7, 2022, 9:18:12 PM
-Author     : ACER
---%>
 <%@ page session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -10,7 +5,7 @@ Author     : ACER
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Welcome to IIBOOK</title>
+        <title>Welcome to Bookie</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
@@ -24,7 +19,7 @@ Author     : ACER
         <section class="ftco-section">
             <div class="row justify-content-center">
                 <div class="col-md-6 text-center mb-5">
-                    <h2 class="heading-section"><span class="fa fa-book"></span>IIBOOK</h2>
+                    <h2 class="heading-section"><a href="/Bookie/Home"><span class="fa fa-book"></span>Bookie</a></h2>
                 </div>
             </div>
             <div class="container">
@@ -38,26 +33,31 @@ Author     : ACER
                                         <h3 class="mb-4">Log In</h3>
                                     </div>
                                 </div>
+                                <c:set var="cookie" value="${pageContext.request.cookies}"/>
                                 <form action="Login" method="POST" class="signin-form">
                                     <input type="hidden" name="origin" value="${origin}">
                                     <div class="form-group mt-3">
-                                        <input type="text" name="username" class="form-control" required>
-                                        <label class="form-control-placeholder" for="username">Username</label>
+                                        <input type="text" name="username" class="form-control" required value="${cookie.name.value}">
+                                        <label class="form-control-placeholder" for="username" >Username</label>
                                     </div>
                                     <div class="form-group">
-                                        <input id="password-field" name="password" type="password" class="form-control" required>
-                                        <label class="form-control-placeholder" for="password">Password</label>
+                                        <input id="password-field" name="password" type="password" class="form-control" required value="${cookie.pass.value}">
+                                        <label class="form-control-placeholder" for="password" >Password</label>
                                     </div>
-                                    <% if (request.getAttribute("error") != null) {%>
-                                    <div class="w-100">
-                                        <%=request.getAttribute("error")%>
-                                    </div>
-                                    <%}%>
+                                    <c:if test="${requestScope.error != null}">
+                                        <div class="w-100">
+                                            <c:out value="${requestScope.error}"/>
+                                        </div>
+                                    </c:if>
                                     <div class="form-group">
                                         <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>
                                     </div>
                                     <div class="form-group d-md-flex">
-                                        
+                                        <div class="w-50 text-left">
+                                            <label class="checkbox-wrap checkbox-primary mb-0">Remember Me
+                                                <input type="checkbox" checked>
+                                                <span class="checkmark"></span>
+                                            </label>
                                         </div>
                                         <div class="w-50 text-md-right">
                                             <a href="Forgot?origin=${origin}">Forgot Password</a>

@@ -1,0 +1,34 @@
+
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+.wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    height: 100vh;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+table th{
+    padding-left: 5%;
+}
+
+.popup{
+    padding: 20px 40px;
+    position: fixed;
+    margin: auto;
+    /*margin-top: 50px;*/
+    width: 40%;
+    box-shadow: 3px 3px 3px 3px rgba(150, 150, 150, 0.8);
+    border-radius: 7px;
+}
