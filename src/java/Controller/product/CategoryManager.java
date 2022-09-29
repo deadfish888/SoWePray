@@ -40,7 +40,7 @@ public class CategoryManager extends HttpServlet {
                 response.sendRedirect("Category");
                 break;
             default:
-                ArrayList<Category> cates = dao.getAllCategories();
+                ArrayList<Category> cates = dao.getAllCategory();
                 request.setAttribute("cates", cates);
                 request.getRequestDispatcher("/admin/categorymanager.jsp").forward(request, response);
         }
