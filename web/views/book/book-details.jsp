@@ -72,17 +72,24 @@
                                 </p>
                                 <div class="row">        
                                     <form action="BookDetail" method="POST">
-                                        <div class="col-sm-6"> 
+                                        <div class="col-sm-4"> 
                                             <input type="submit" name="changeView" class="primary" value="GET">                                 
                                         </div>         
                                     </form>    
                                     <form action="Favourite" method="POST">
-                                         <div class="col-sm-6">
+                                         <div class="col-sm-4">
                                              
                                              <input type="submit" class="primary" value="Add to Favorite">                                 
                                             <input type="hidden" name="bId" value="${book.getId()}">
                                          </div>
                                     </form>
+                                    <form action="Report" method="POST">
+                                          <div class="col-sm-4"> 
+                                              <input type="submit" class="primary" value="Report">                                 
+                                            <input type="hidden" name="bId" value="${book.getId()}">
+                                          </div>   
+                                    </form>      
+                                         
                                 </div>
                                             <c:choose >
                                                 <c:when test="${sessionScope.user!=null}" > 
