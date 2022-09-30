@@ -18,6 +18,9 @@ public class User {
     private PaymentAccount paymentAccount;
     private boolean is_super;
 
+    public User() {
+    }
+
     public User(String account, String password) {
         this.username = account;
         this.password = password;

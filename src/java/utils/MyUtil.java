@@ -33,6 +33,16 @@ public class MyUtil {
         return new String(index);
     }
     
+    public static String randomNumberString(int number) {
+        int data[] = IntStream.rangeClosed('0', '9').toArray();
+        char index[] = new char[number];
+
+        Random r = new Random();
+        for (int i = 0; i < number; i++) {
+            index[i] = (char) data[r.nextInt(data.length)];
+        }
+        return new String(index);
+    }
     public static void sendEmail(final String userName, final String password, 
             String toAddress, String subject, String message) throws AddressException,
             MessagingException {

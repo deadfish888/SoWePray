@@ -11,14 +11,14 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.DateFormat;
+//import java.sql.Timestamp;
+//import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import utils.MyUtil;
-import utils.RandomEnglishNameGenerator;
+//import utils.RandomEnglishNameGenerator;
 
 /**
  *
@@ -62,7 +62,13 @@ public class UserDAO {
                 String address = rs.getString(7);
                 String username = rs.getString(8);
                 boolean is_super = rs.getBoolean(10);
+                PaymentAccount payAcc = new PaymentAccount();
+                payAcc.setAccountNumber(rs.getLong("walletNumber"));
+                PaymentAccountDAO payDAO = new PaymentAccountDAO();
+                payAcc = payDAO.get(payAcc);
+
                 User u = new User(userid, name, gender, dob, email, phone, address, username, pass, is_super);
+                u.setPaymentAccount(payAcc);
                 return u;
             }
         } catch (Exception e) {
@@ -70,7 +76,7 @@ public class UserDAO {
         }
         return null;
     }
-    
+
     public void editProfile(User us) {
         String sql = "update[User] set\n"
                 + "                [email] = ?,\n"
@@ -95,8 +101,7 @@ public class UserDAO {
         String sql = "select * from [User] where email= ? ";
         return false;
     }
-    
-    
+
     public String resetPassword(String token) {
         TokenDAO td = new TokenDAO();
         int userId = td.checkTokenExpired(token);
@@ -118,11 +123,9 @@ public class UserDAO {
         return null;
     }
 
-    
-
     public int checkEmailExisted(String email) {
         String sql = "SELECT [id] FROM [User] "
-                                + "WHERE email= ? ";
+                + "WHERE email= ? ";
         try {
             stm = cnn.prepareStatement(sql);
             stm.setString(1, email);
@@ -432,14 +435,28 @@ public class UserDAO {
             if (rs.next()) {
                 return new User(id, rs.getString(1), rs.getBoolean(2) ? "Male" : "Female",
                         rs.getString(3), rs.getString(4), rs.getString(5),
-                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9), 
-                new PaymentAccount(rs.getLong("walletNumber")));
+                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9),
+                        new PaymentAccount(rs.getLong("walletNumber")));
 //                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public void setWalletNumber(PaymentAccount paymentAccount, User user) {
+        try {
+            String sql = "UPDATE [User]\n"
+                    + "   SET [walletNumber] = ?\n"
+                    + " WHERE [id] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setLong(1, paymentAccount.getAccountNumber());
+            stm.setInt(2, user.getId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 //    void generateData() {
@@ -504,7 +521,6 @@ public class UserDAO {
 //            
 //        }
 //    }
-
     public int checkUsernameExisted(String key) {
         try {
             String sql = "SELECT [id] FROM [User] "

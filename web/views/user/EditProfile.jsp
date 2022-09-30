@@ -10,11 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<<<<<<< HEAD
-        <script src="../javascripts/ProfileScript.js" type="text/javascript"></script>
-=======
         <script src="../assets/js/ProfileScript.js" type="text/javascript"></script>
->>>>>>> main
         <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="../assets/css/main.css" />
         <link href="../assets/css/style-profile.css" rel="stylesheet" type="text/css"/>

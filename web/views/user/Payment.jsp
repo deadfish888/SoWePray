@@ -110,7 +110,7 @@
                         <!-- An so du tai khoan, khi click vao icon hinh con mat se hien ra -->
                         <a onclick="changeIcon(this)" id="myBtn">
                             <i id="faPlus" class='bx bx-show'></i>
-                            <span class="SPN">Balance: $56,756.00</span>
+                            <span class="SPN">Balance: ${sessionScope.user.paymentAccount.balance}</span>
                         </a>
                     </div>
                     <div>
