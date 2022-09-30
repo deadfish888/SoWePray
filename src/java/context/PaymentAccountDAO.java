@@ -78,24 +78,24 @@ public class PaymentAccountDAO {
         }
 
     }
-//
-//    public void generateData() {
-//        UserDAO userDAO = new UserDAO();
-//        ArrayList<User> userList = userDAO.getAllUsers();
-//
-//        for (User user : userList) {
-//            if (user.getPaymentAccount() == null) {
-//                user.createWallet();
-//                PaymentAccount paymentAccount = user.getPaymentAccount();
-//                float balance = (float) Math.random() * 8888;
-//                paymentAccount.setBalance(balance);
-//                this.insert(paymentAccount);
-//                userDAO.setWalletNumber(paymentAccount, user);
-//
-//            }
-//        }
-//    }
-//}
+
+    public void generateData() {
+        UserDAO userDAO = new UserDAO();
+        ArrayList<User> userList = userDAO.getAll();
+
+        for (User user : userList) {
+            if (user.getPaymentAccount() == null) {
+                user.createWallet();
+                PaymentAccount paymentAccount = user.getPaymentAccount();
+                float balance = (float) Math.random() * 8888;
+                paymentAccount.setBalance(balance);
+                this.insert(paymentAccount);
+                userDAO.setWalletNumber(paymentAccount, user);
+
+            }
+        }
+    }
+}
 
 /**
  * SQL template

@@ -2,10 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package Model;
 
-import java.math.BigInteger;
 import java.sql.Timestamp;
 
 /**
@@ -13,26 +11,28 @@ import java.sql.Timestamp;
  * @author Khuat Thi Minh Anh
  */
 public class Transaction {
+
     long transactionId;
+    float amount;
     User user;
-    int balanceAfter, amount;
+    float balanceAfter;
     PaymentMethod payment;
-    int type; 
-        //1. Recharge
-        //2. Withdraw
-        //3. Buy
-        //4. Sell
+    int type;
+    //1. Recharge
+    //2. Withdraw
+    //3. Buy
+    //4. Sell
     int status;
-        //0. Fail
-        //1. Pending
-        //2. Successful
+    //0. Fail
+    //1. Pending
+    //2. Successful
     Timestamp transactionTime;
     String description;
 
     public Transaction() {
     }
 
-    public Transaction(long transactionId, User user, int balanceAfter, int amount, PaymentMethod payment, int type, int status, Timestamp transactionTime, String description) {
+    public Transaction(long transactionId, User user, float balanceAfter, float amount, PaymentMethod payment, int type, int status, Timestamp transactionTime, String description) {
         this.transactionId = transactionId;
         this.user = user;
         this.balanceAfter = balanceAfter;
@@ -60,19 +60,19 @@ public class Transaction {
         this.user = user;
     }
 
-    public int getBalanceAfter() {
+    public float getBalanceAfter() {
         return balanceAfter;
     }
 
-    public void setBalanceAfter(int balanceAfter) {
+    public void setBalanceAfter(float balanceAfter) {
         this.balanceAfter = balanceAfter;
     }
 
-    public int getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
@@ -115,18 +115,17 @@ public class Transaction {
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    
 
     /**
      * Compare if 2 transaction id is equal
-    **/
+    *
+     */
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Transaction){
+        if (obj instanceof Transaction) {
             return this.transactionId == ((Transaction) obj).getTransactionId();
         }
         return false;
     }
-    
+
 }

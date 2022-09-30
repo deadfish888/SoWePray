@@ -318,7 +318,7 @@ public class UserDAO {
         try {
             String sql = "Select * from [User]";
             stm = cnn.prepareStatement(sql);
-            rs = stm.executeQuery(sql);
+            rs = stm.executeQuery();
             while (rs.next()) {
                 int userid = rs.getInt(1);
                 String name = rs.getString(2);
@@ -332,6 +332,8 @@ public class UserDAO {
                 boolean isSuper = rs.getBoolean("is_super");
                 PaymentAccount paymentAccount = new PaymentAccount();
                 paymentAccount.setAccountNumber(rs.getLong("walletNumber"));
+                PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
+                paymentAccount = payAccDAO.get(paymentAccount);
                 list.add(new User(userid, name, gender, dob, email, phone, address, username, phone, isSuper, paymentAccount));
             }
         } catch (Exception e) {

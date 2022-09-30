@@ -10,7 +10,7 @@ package Model;
  * @author Khuat Thi Minh Anh
  */
 public class PaymentMethod {
-    int payment_id;
+    int paymentId;
     User user;
     PaymentAccount paymentAccount;
     String name;
@@ -18,19 +18,19 @@ public class PaymentMethod {
     public PaymentMethod() {
     }
 
-    public PaymentMethod(int payment_id, User user, PaymentAccount paymentAccount, String name) {
-        this.payment_id = payment_id;
+    public PaymentMethod(int paymentId, User user, PaymentAccount paymentAccount, String name) {
+        this.paymentId = paymentId;
         this.user = user;
         this.paymentAccount = paymentAccount;
         this.name = name;
     }
 
-    public int getPayment_id() {
-        return payment_id;
+    public int getPaymentId() {
+        return paymentId;
     }
 
-    public void setPayment_id(int payment_id) {
-        this.payment_id = payment_id;
+    public void setPaymentId(int paymentId) {
+        this.paymentId = paymentId;
     }
 
     public User getUser() {

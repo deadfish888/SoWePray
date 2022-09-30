@@ -39,29 +39,30 @@ public class PaymentMethodDAO {
         }
     }
 
-    public PaymentMethod checkDuplicate(PaymentMethod paymentMethod) {
+    public PaymentMethod get(PaymentMethod paymentMethod) {
         try {
             String sql = "SELECT [paymentId]\n"
                     + "      ,[userId]\n"
                     + "      ,[accountNumber]\n"
                     + "      ,[name]\n"
                     + "  FROM [Payment_Method]";
-            if(paymentMethod.getPayment_id() == 0) {
+            if (paymentMethod.getPaymentId() == 0) {
                 sql += "  WHERE [userId] = ?"
                         + " and accountNumber = ?";
+                stm = cnn.prepareStatement(sql);
                 stm.setInt(1, paymentMethod.getUser().getId());
                 stm.setLong(2, paymentMethod.getPaymentAccount().getAccountNumber());
-            }else {
+            } else {
                 sql += "  WHERE [paymentId] = ?";
-                stm.setInt(1, paymentMethod.getPayment_id());
+                stm = cnn.prepareStatement(sql);
+                stm.setInt(1, paymentMethod.getPaymentId());
             }
-            stm = cnn.prepareStatement(sql);
             rs = stm.executeQuery();
             if (rs.next()) {
-                paymentMethod.setPayment_id(rs.getInt("paymentId"));
+                paymentMethod.setPaymentId(rs.getInt("paymentId"));
                 UserDAO userDAO = new UserDAO();
                 paymentMethod.setUser(userDAO.getUser(rs.getInt("userId")));
-                
+
                 PaymentAccountDAO paymentAccountDAO = new PaymentAccountDAO();
                 paymentMethod.setPaymentAccount(paymentAccountDAO.get(new PaymentAccount(rs.getLong("accountNumber"))));
                 paymentMethod.setName(rs.getString("name"));
@@ -72,22 +73,67 @@ public class PaymentMethodDAO {
         }
         return null;
     }
-    
-    public void insert(PaymentMethod paymentMethod){
-        
+
+    public void insert(PaymentMethod paymentMethod) {
+        try {
+            String sql = "INSERT INTO [Payment_Method]\n"
+                    + "           ([userId]\n"
+                    + "           ,[accountNumber]\n"
+                    + "           ,[name])\n"
+                    + "     VALUES\n"
+                    + "           (?, ?, ?)";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, paymentMethod.getUser().getId());
+            stm.setLong(2, paymentMethod.getPaymentAccount().getAccountNumber());
+            stm.setString(3, paymentMethod.getName());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(PaymentMethodDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    public void generateData(){
+    public void delete(PaymentMethod paymentMethod) {
+        try {
+            String sql = "DELETE FROM [Payment_Method]\n"
+                    + "      WHERE paymentId = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, paymentMethod.getPaymentId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(PaymentMethodDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void generateData() {
         UserDAO userDAO = new UserDAO();
-        ArrayList<User> userList = userDAO.getAllUsers();
-        for(User user : userList){
-            long accountNumber = Long.parseLong(MyUtil.randomNumberString(10));
-            float balance = (float) Math.random() * 8888;
-            PaymentAccount paymentAccount = new PaymentAccount(accountNumber, balance);
+        ArrayList<User> userList = userDAO.getAll();
+        PaymentAccountDAO paymentAccountDAO = new PaymentAccountDAO();
+        for (User user : userList) {
+            PaymentAccount paymentAccount;
+            long accountNumber;
+            do {
+                accountNumber = Long.parseLong(MyUtil.randomNumberString(10));
+                paymentAccount = new PaymentAccount(accountNumber);
+
+            } while (paymentAccountDAO.get(paymentAccount) != null);
+            float balance = (float) Math.random() * 5000 + 100;
+            paymentAccount.setAccountNumber(accountNumber);
+            paymentAccount.setBalance(balance);
+
             PaymentMethod paymentMethod = new PaymentMethod();
             paymentMethod.setUser(user);
+            paymentMethod.setPaymentAccount(user.getPaymentAccount());
+            paymentMethod.setName("Wallet of " + user.getUsername());
+            insert(paymentMethod);
+
+            paymentAccountDAO.insert(paymentAccount);
+            paymentMethod = new PaymentMethod();
             paymentMethod.setPaymentAccount(paymentAccount);
+            paymentMethod.setUser(user);
+            paymentMethod.setName("Linked Bank");
+            insert(paymentMethod);
         }
-        
+
     }
 }
