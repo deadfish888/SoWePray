@@ -7,7 +7,6 @@ package context;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 /**
  *
  * @author Khuat Thi Minh Anh
@@ -56,3 +55,28 @@ public class TransactionDAO {
  
  
  **/
+    
+
+/*
+
+USE [BOOKIE]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Transaction](
+	[userId] [int] NOT NULL,
+	[balanceBefore] [bigint] NOT NULL,
+	[amount] [bigint] NOT NULL,
+	[balanceAfter] [bigint] NOT NULL,
+	[transactionTime] [datetime] NOT NULL,
+	[type] [int] NOT NULL,
+	[status] [int] NOT NULL
+) ON [PRIMARY]
+GO
+
+*/

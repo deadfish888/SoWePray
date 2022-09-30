@@ -17,16 +17,6 @@ public class PaymentAccount {
     public PaymentAccount() {
     }
 
-    public PaymentAccount(User user){
-        long tempNumber = user.getId();
-        PaymentAccountDAO paymentAccDAO = new PaymentAccountDAO();
-        while(paymentAccDAO.get(new PaymentAccount(tempNumber)) != null){
-            tempNumber++;
-        }
-        accountNumber = tempNumber;
-        balance = 0f;
-    }
-
     public PaymentAccount(long accountNumber) {
         this.accountNumber = accountNumber;
     }
@@ -52,6 +42,17 @@ public class PaymentAccount {
         this.balance = balance;
     }
 
+    public void createWallet(User user){
+        long tempNumber = user.getId();
+        PaymentAccountDAO paymentAccDAO = new PaymentAccountDAO();
+        while(paymentAccDAO.get(new PaymentAccount(tempNumber)) != null){
+            tempNumber++;
+        }
+        accountNumber = tempNumber;
+        balance = 0f;
+        
+    }   
+    
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof PaymentAccount){

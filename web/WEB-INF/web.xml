@@ -1,114 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    <!--    <filter>
-        <filter-name>filter</filter-name>
-        <filter-class>Controller.filter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>filter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>-->
-    <servlet>
-        <servlet-name>LoginADController</servlet-name>
-        <servlet-class>Controller.LoginADcontroller</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>BookController</servlet-name>
-        <servlet-class>Controller.BookController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CartController</servlet-name>
-        <servlet-class>Controller.CartController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>OrderController</servlet-name>
-        <servlet-class>Controller.OrderController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CategoryController</servlet-name>
-        <servlet-class>Controller.CategoryManager</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>BookManager</servlet-name>
-        <servlet-class>Controller.BookManager</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>OrderManager</servlet-name>
-        <servlet-class>Controller.OrderManager</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>UserManager</servlet-name>
-        <servlet-class>Controller.UserManager</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>UserController</servlet-name>
-        <servlet-class>Controller.UserController</servlet-class>
-    </servlet>
 
+   <welcome-file-list>
+        <welcome-file>Home</welcome-file>
+    </welcome-file-list>
     <servlet>
         <servlet-name>Home</servlet-name>
         <servlet-class>Controller.Home</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>DashBoard</servlet-name>
-        <servlet-class>Controller.DashBoard</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>tesst</servlet-name>
-        <servlet-class>Controller.tesst</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>LoginADController</servlet-name>
-        <url-pattern>/LoginAD</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>BookController</servlet-name>
-        <url-pattern>/Book</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CartController</servlet-name>
-        <url-pattern>/Cart</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>OrderController</servlet-name>
-        <url-pattern>/Order</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CategoryController</servlet-name>
-        <url-pattern>/Category</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>BookManager</servlet-name>
-        <url-pattern>/BookManager</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-
-        <servlet-name>OrderManager</servlet-name>
-        <url-pattern>/OrderManager</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>UserManager</servlet-name>
-        <url-pattern>/UserManager</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>UserController</servlet-name>
-        <url-pattern>/User</url-pattern>
-    </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/Home</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DashBoard</servlet-name>
-        <url-pattern>/DashBoard</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>tesst</servlet-name>
-        <url-pattern>/tesst</url-pattern>
-    </servlet-mapping>
-
+    
     <context-param>
         <param-name>host</param-name>
         <param-value>smtp.gmail.com</param-value>

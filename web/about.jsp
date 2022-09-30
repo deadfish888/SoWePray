@@ -39,53 +39,7 @@
             </header>
 
             <!-- Menu -->
-            <nav id="menu">
-                <h2>
-                    <% 
-                    if(session.getAttribute("user")!=null){ 
-                    %>
-                    <a href="">Welcome ${sessionScope.user.getName()}</a>
-                    <% } else if (session.getAttribute("admin")!=null){ 
-                    %>
-                    <a href="./manage/ADprofile.jsp">Welcome ${sessionScope.admin.getName()}</a>
-                    <% } else { %>
-                    <a href="">Menu</a>
-                    <% }%>
-                </h2>
-                <ul>
-                    <li><a href="./Home">Home</a></li>
-
-                    <li><a href="./Book?id=0">Bookshelf</a></li>
-
-
-                    <% 
-                        if(session.getAttribute("user")!=null){ 
-                    %>
-                    <li><a href="./Book?id=0">Bookshelf</a></li>
-
-                    <li><a href="./Favor">Favor</a></li>
-
-                    <li><a href="about.jsp">About</a></li>
-
-                    <li><a href="Logout"><i class="fa fa-sign-out"></i>Logout</a></li>
-
-                    <%  
-                        } else if(session.getAttribute("admin")!=null){ 
-                    %>
-                    <li><a href="about.jsp">About</a></li>
-
-                    <li><a href="Logout"><i class="fa fa-sign-out"></i>Logout</a></li>
-
-                    <% 
-                        } else { 
-                    %>
-                    <li><a href="about.jsp">About</a></li>
-
-                    <li><a href="Login?origin=./Home"><i class="fa fa-sign-in"></i>Login</a></li>
-                    
-                    <% }%>
-                </ul>
-            </nav>
+            <jsp:include page="/views/base/menu.jsp" />
 
             <!-- Main -->
             <div id="main">
@@ -117,10 +71,15 @@
                         <ul class="alt">
                             <li><span class="fa fa-github"></span> <a href="https://github.com/nekon0/SoWePray">Our Project</a></li>
                             <li><span class="fa fa-map-pin"></span> <a href="https://goo.gl/maps/ojwCjTqRteiA4B9U7"> DE210, FBT University</a></li>
+                            <li>
+                                <span class="fa fa-mail-forward"></span>
+                                <a href="mailto:vinhnthe163219@fpt.edu.vn">
+                                    Our mail</a>
+                            </li>
                         </ul>
                     </section>
                     <ul class="copyright">
-                        <li> HLV </li>
+                        <li> Bookie </li>
                     </ul>
                 </div>
             </footer>

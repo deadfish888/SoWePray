@@ -151,19 +151,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public PaymentAccount getPaymentAccount() {
-        return paymentAccount;
-    }
-
-    public void setPaymentAccount(PaymentAccount paymentAccount) {
-        this.paymentAccount = paymentAccount;
-    }
-
-    public void createWallet(){
-        paymentAccount = new PaymentAccount(this);
-    }
-    
     public int getPasswordLevel() {
         String numberRegex = "[0-9]";
         String characterRegex = "[a-zA-Z]";
@@ -189,5 +176,19 @@ public class User {
             return 1;
         }
     }
+
+    public PaymentAccount getPaymentAccount() {
+        return paymentAccount;
+    }
+
+    public void setPaymentAccount(PaymentAccount paymentAccount) {
+        this.paymentAccount = paymentAccount;
+    }
+
+    public void createWallet(){
+        paymentAccount = new PaymentAccount();
+        paymentAccount.createWallet(this);
+    }
+    
 
 }

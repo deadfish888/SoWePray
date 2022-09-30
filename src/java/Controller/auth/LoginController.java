@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 /* @author ACER */
-@WebServlet(name="Login", urlPatterns={"/Login"})
+@WebServlet("/Login")
 public class LoginController extends HttpServlet {
 
     @Override
@@ -41,7 +41,7 @@ public class LoginController extends HttpServlet {
 
             if (user.is_super()) {
                 session.setAttribute("admin", user);
-                response.sendRedirect("./manage/ADprofile.jsp");
+                response.sendRedirect("./Edit");
                 return;
             }
             session.setAttribute("user", user);

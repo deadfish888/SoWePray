@@ -1,8 +1,4 @@
-<%-- 
-    Document   : signup
-    Created on : Jun 30, 2022, 5:15:57 PM
-    Author     : ACER
---%>
+
 <%@ page session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -10,7 +6,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Join us · IIBOOK </title>
+        <title>Join us · Bookie </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
@@ -24,7 +20,7 @@
         <section class="ftco-section">
             <div class="row justify-content-center">
                 <div class="col-md-6 text-center mb-5">
-                    <h2 class="heading-section"><span class="fa fa-book"></span>IIBOOK</h2>
+                    <h2 class="heading-section"><a href="/Bookie/Home"><span class="fa fa-book"></span>Bookie</a></h2>
                 </div>
             </div>
             <div class="container">
@@ -51,14 +47,14 @@
                                     <div class="form-group">
                                         <input id="password-field" id="password" name="password" type="password" class="form-control" required>
                                         <label class="form-control-placeholder" for="password">Password</label>
-                                        <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                        
                                     </div>
                                     <!--                                    <div class="form-group">
                                                                             <input id="password-field" id="confirm_password" type="password" class="form-control" required>
                                                                             <label class="form-control-placeholder" for="re_password">Confirm Password</label>
                                                                         </div>-->
                                     <div class="form-group">
-                                        <input type="text" name="phone" class="form-control" value="${in4.getPhone()}" required>
+                                        <input type="text" name="phone" class="form-control" value="${in4.getPhone()}" pattern="^0[0-9]{9}$" required>
                                         <label class="form-control-placeholder" for="phone">Phone</label>
                                     </div>
                                     <div class="form-group mt-3">
@@ -81,18 +77,18 @@
                                     </div>
                                     <div class="form-group" style="margin-left: 16px;">
                                         <label for="birthday" class="text-left">Birthday</label>
-                                        <input type="date" name="birthday" class="text-right" style="
+                                        <input type="date" name="birthday" id ="datePickerId" class="text-right" style="
                                                border: 1px solid gray;
                                                border-radius: 6px;
                                                width: 130px;
                                                margin: 0 1em;
                                                " required>
                                     </div>
-                                    <c:if test="${requestScope.error != null}">
-                                        <div class="w-100">
-                                            <c:out value="${requestScope.error}"/>
-                                        </div>
-                                    </c:if>
+                                    <% if (request.getAttribute("error") != null) {%>
+                                    <div class="w-100">
+                                        <%=request.getAttribute("error")%>
+                                    </div>
+                                    <%}%>
                                     <div class="form-group">
                                         <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign Up</button>
                                     </div>
@@ -118,6 +114,9 @@
                     $('#confirm_password').setCustomValidity('');
                 ;
             });
+        </script>
+        <script>
+            datePickerId.max = new Date().toISOString().split("T")[0];
         </script>
     </body>
 </html>

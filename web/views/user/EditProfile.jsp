@@ -10,7 +10,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<<<<<<< HEAD
         <script src="../javascripts/ProfileScript.js" type="text/javascript"></script>
+=======
+        <script src="../assets/js/ProfileScript.js" type="text/javascript"></script>
+>>>>>>> main
         <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="../assets/css/main.css" />
         <link href="../assets/css/style-profile.css" rel="stylesheet" type="text/css"/>
@@ -38,7 +42,7 @@
                         <a href="./Security">Security</a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#">Payment</a>
+                        <a href="./Payment">Payment</a>
                     </li>
                     <li class="sidebar-item">
                         <a href="#">Support</a>
@@ -68,38 +72,7 @@
                         </div>
                     </header>
 
-                    <!-- Menu -->
-                    <nav id="menu">
-                        <h2>
-                            <c:if test="${!empty sessionScope.user}">
-                                Welcome ${sessionScope.user.name}
-                            </c:if>
-                            <c:if test="${!empty sessionScope.admin}">
-                                Welcome ${sessionScope.admin.name}
-                            </c:if>
-                        </h2>
-                        <ul>
-                            <li><a href="<%=request.getContextPath()%>/Home">Home</a></li>
-                            <li><a href="<%=request.getContextPath()%>/Store">Store</a></li>
-
-                            <c:if test="${!empty sessionScope.user}">
-                                <li class="active" style="color: #5cabff; pointer-events: none; border-left: 5px groove #5cabff; padding-left: 10px"><a href="<%=request.getContextPath()%>/User/Profile">My profile</a></li>
-                                <li><a href="<%=request.getContextPath()%>/Book?id=0">Bookshelf</a></li>
-                                <li><a href="<%=request.getContextPath()%>/Favor">Favor</a></li>
-                                <li><a href="<%=request.getContextPath()%>/Logout"><i class="fa fa-sign-out"></i>Logout</a></li>
-                                </c:if>
-
-                            <c:if test="${!empty sessionScope.admin}">
-                                <li class="nav-item"><a href="<%=request.getContextPath()%>/Logout"><i class="fa fa-sign-out"></i>Logout</a></li>
-                                </c:if>                
-
-                            <li><a href="<%=request.getContextPath()%>/about.jsp">About</a></li>
-                                <c:if test="${empty sessionScope.user and empty sessionScope.admin}">
-                                <li class="nav-item"><a href="Login?origin=./Home"><i class="fa fa-sign-in"></i>Login</a></li>
-                                </c:if>
-                        </ul>
-                    </nav>
-
+                    <jsp:include page="/views/base/menu.jsp" />
                 </div>
                 <!--            </div>-->
 

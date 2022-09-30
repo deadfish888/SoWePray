@@ -1,6 +1,6 @@
 <%-- 
     Document   : ADprofile
-    Created on : Sep 12, 2022, 1:58:04 PM
+    Created on : Sep 13, 2022, 10:52:12 AM
     Author     : duypham0705
 --%>
 
@@ -11,9 +11,10 @@
 <%@page import="java.util.ArrayList"%>
 <%         
         User us = (User) session.getAttribute("admin");
-        if (session.getAttribute("admin")==null || !us.is_super() ) {
+        if (session.getAttribute("admin")==null ) {
             response.sendRedirect("/Bookie/Home");
         }
+       
 %>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
@@ -29,11 +30,11 @@
               content="Material Pro Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
         <meta name="robots" content="noindex,nofollow">
         <title>Admin Profile</title>
-        <link rel="canonical" href="https://www.wrappixel.com/templates/materialpro-lite/" />
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
         <!-- Custom CSS -->
-        <link rel="stylesheet" href="html/css/style.min.css">
+        <!--<link rel="stylesheet" href="html/css/style.min.css">-->
+        <link rel="stylesheet" href="/Bookie/manage/html/css/style.min.css">
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -59,152 +60,11 @@
              data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
             <!-- ============================================================== -->
             <!-- Topbar header - style you can find in pages.scss -->
-            <!-- ============================================================== -->
-            <header class="topbar" data-navbarbg="skin6">
-                <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-                    <div class="navbar-header" data-logobg="skin6">
-                        <!-- ============================================================== -->
-                        <!-- Logo -->
-                        <!-- ============================================================== -->
-                        <a class="navbar-brand ms-4" href="/Bookie/Home">
-                            <!-- Logo icon -->
-                            <b class="logo-icon">
-                                <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                                <!-- Dark Logo icon -->
-                                <span class="fa fa-book" alt="homepage" class="dark-logo"></span>
-
-                            </b>
-                            <!--End Logo icon -->
-                            <!-- Logo text -->
-                            <span class="logo-text" alt="homepage">Bookie</span>
-                        </a>
-                        <!-- ============================================================== -->
-                        <!-- End Logo -->
-                        <!-- ============================================================== -->
-                        <!-- ============================================================== -->
-                        <!-- toggle and nav items -->
-                        <!-- ============================================================== -->
-                        <a class="nav-toggler waves-effect waves-light text-white d-block d-md-none"
-                           href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
-                    </div>
-                    <!-- ============================================================== -->
-                    <!-- End Logo -->
-                    <!-- ============================================================== -->
-                    <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
-                        <ul class="navbar-nav d-lg-none d-md-block ">
-                            <li class="nav-item">
-                                <a class="nav-toggler nav-link waves-effect waves-light text-white "
-                                   href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
-                            </li>
-                        </ul>
-                        <!-- ============================================================== -->
-                        <!-- toggle and nav items -->
-                        <!-- ============================================================== -->
-                        <ul class="navbar-nav me-auto mt-md-0 ">
-                            <!-- ============================================================== -->
-                            <!-- Search -->
-                            <!-- ============================================================== -->
-
-                            <li class="nav-item search-box">
-                                <a class="nav-link text-muted" href="javascript:void(0)"><i class="ti-search"></i></a>
-                                <form class="app-search" style="display: none;">
-                                    <input type="text" class="form-control" placeholder="Search &amp; enter"> <a
-                                        class="srh-btn"><i class="ti-close"></i></a>
-                                </form>
-                            </li>
-                        </ul>
-
-                        <!-- ============================================================== -->
-                        <!-- Right side toggle and nav items -->
-                        <!-- ============================================================== -->
-                        <ul class="navbar-nav">
-                            <!-- ============================================================== -->
-                            <!-- User profile and search -->
-                            <!-- ============================================================== -->
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#"
-                                   id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="assets/images/users/profile.png" alt="user" class="profile-pic me-2">${sessionScope.admin.getName()}
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </header>
-            <!-- ============================================================== -->
-            <!-- End Topbar header -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
+            <jsp:include page="/manage/base/header.jsp"/>
             <!-- Left Sidebar - style you can find in sidebar.scss  -->
-            <!-- ============================================================== -->
-            <aside class="left-sidebar" data-sidebarbg="skin6">
-                <!-- Sidebar scroll-->
-                <div class="scroll-sidebar">
-                    <!-- Sidebar navigation-->
-                    <nav class="sidebar-nav">
-                        <ul id="sidebarnav">
-                            <!-- User Profile-->
+            <jsp:include page="/manage/base/sidebar.jsp"/>
+            
 
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                         href="ADprofile.jsp" aria-expanded="false">
-                                    <i class="mdi me-2 mdi-account-check"></i><span class="hide-menu">Profile</span></a>
-                            </li>
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                         href="index.html" aria-expanded="false"><i class="mdi me-2 mdi-gauge"></i><span
-                                        class="hide-menu">Dashboard</span></a></li>
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                         href="table-basic.html" aria-expanded="false"><i class="mdi me-2 mdi-table"></i><span
-                                        class="hide-menu">Table</span></a></li>
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                         href="icon-material.html" aria-expanded="false"><i
-                                        class="mdi me-2 mdi-emoticon"></i><span class="hide-menu">Icon</span></a></li>
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                         href="map-google.html" aria-expanded="false"><i class="mdi me-2 mdi-earth"></i><span
-                                        class="hide-menu">Google Map</span></a></li>
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                         href="pages-blank.html" aria-expanded="false"><i
-                                        class="mdi me-2 mdi-book-open-variant"></i><span class="hide-menu">Blank</span></a>
-                            </li>
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                         href="pages-error-404.html" aria-expanded="false"><i
-                                        class="mdi me-2 mdi-help-circle"></i><span class="hide-menu">Error 404</span></a>
-                            </li>
-                            <li class="text-center p-20 upgrade-btn">
-                                <a href="https://www.wrappixel.com/templates/materialpro/"
-                                   class="btn btn-warning text-white mt-4" target="_blank">Upgrade to
-                                    Pro</a>
-                            </li>
-                        </ul>
-
-                    </nav>
-                    <!-- End Sidebar navigation -->
-                </div>
-                <!-- End Sidebar scroll-->
-                <div class="sidebar-footer">
-                    <div class="row">
-                        <div class="col-4 link-wrap">
-                            <!-- item-->
-                            <a href="" class="link" data-toggle="tooltip" title="" data-original-title="Settings"><i
-                                    class="ti-settings"></i></a>
-                        </div>
-                        <div class="col-4 link-wrap">
-                            <!-- item-->
-                            <a href="" class="link" data-toggle="tooltip" title="" data-original-title="Email"><i
-                                    class="mdi mdi-gmail"></i></a>
-                        </div>
-                        <div class="col-4 link-wrap">
-                            <!-- item-->
-                            <a href="/Bookie/Logout" class="link" data-toggle="tooltip" title="" data-original-title="Logout"><i
-                                    class="mdi mdi-power"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-            <!-- ============================================================== -->
-            <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
             <!-- Page wrapper  -->
             <!-- ============================================================== -->
             <div class="page-wrapper">
@@ -224,13 +84,13 @@
                                 </nav>
                             </div>
                         </div>
-                        <div class="col-md-6 col-4 align-self-center">
-                            <div class="text-end upgrade-btn">
-                                <a href="https://www.wrappixel.com/templates/materialpro/"
-                                   class="btn btn-danger d-none d-md-inline-block text-white" target="_blank">Upgrade to
-                                    Pro</a>
-                            </div>
-                        </div>
+                        <!--                        <div class="col-md-6 col-4 align-self-center">
+                                                    <div class="text-end upgrade-btn">
+                                                        <a href="https://www.wrappixel.com/templates/materialpro/"
+                                                           class="btn btn-danger d-none d-md-inline-block text-white" target="_blank">Upgrade to
+                                                            Pro</a>
+                                                    </div>
+                                                </div>-->
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -274,7 +134,7 @@
                     <div class="col-lg-8 col-xlg-9 col-md-7">
                         <div class="card">
                             <div class="card-body">
-                                <form class="form-horizontal form-material mx-2">
+                                <form action="./Edit" method="Post" class="form-horizontal form-material mx-2" >
                                     <div class="form-group">
                                         <label for="example-email" class="col-md-12">Email</label>
                                         <div class="col-md-12">
@@ -292,38 +152,44 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12 mb-0">Password 
-                                            <input type="checkbox" onclick="showPass()"> show 
+                                            <input type="checkbox" onclick="showPass()"> 
                                         </label>
                                         <div class="col-md-12">
                                             <input type="password" value="${sessionScope.admin.password}" id="unsignPass"
-                                                   class="form-control ps-0 form-control-line" name="">
+                                                   class="form-control ps-0 form-control-line" name="password">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12 mb-0">Full Name</label>
                                         <div class="col-md-12">
                                             <input type="text" placeholder="${sessionScope.admin.name}"
-                                                   class="form-control ps-0 form-control-line" name="">
+                                                   class="form-control ps-0 form-control-line" name="fullname">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12 mb-0">Phone</label>
                                         <div class="col-md-12">
                                             <input type="text" placeholder="${sessionScope.admin.phone}"
-                                                   class="form-control ps-0 form-control-line" name="">
+                                                   class="form-control ps-0 form-control-line" name="phone">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12 mb-0">Address</label>
                                         <div class="col-md-12">
                                             <input type="text" placeholder="${sessionScope.admin.address}"
-                                                   class="form-control ps-0 form-control-line" name="">
+                                                   class="form-control ps-0 form-control-line" name="address">
                                         </div>
                                     </div>
+                                    
                                     <br>
+                                    <c:if test="${notice!=null }">
+                                        <div class="form-group" ">
+                                            ${notice}
+                                        </div>
+                                    </c:if>
                                     <div class="form-group">
                                         <div class="col-sm-12 d-flex">
-                                            <button class="btn btn-success mx-auto mx-md-0 text-white">Update
+                                            <button class="btn btn-success mx-auto mx-md-0 text-white" type="submit">Update
                                                 Profile</button>
                                         </div>
                                     </div>
@@ -369,16 +235,16 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="assets/plugins/jquery/dist/jquery.min.js"></script>
+    <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="assets/plugins/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    <script src="html/js/app-style-switcher.js"></script>
+    <script src="/Bookie/manage/assets/plugins/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="/Bookie/manage/html/js/app-style-switcher.js"></script>
     <!--Wave Effects -->
-    <script src="html/js/waves.js"></script>
+    <script src="/Bookie/manage/html/js/waves.js"></script>
     <!--Menu sidebar -->
-    <script src="html/js/sidebarmenu.js"></script>
+    <script src="/Bookie/manage/html/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
-    <script src="html/js/custom.js"></script>
+    <script src="/Bookie/manage/html/js/custom.js"></script>
 </body>
 
 </html>

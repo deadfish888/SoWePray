@@ -1,8 +1,4 @@
-<%-- 
-    Document   : index
-    Created on : Jun 7, 2022, 9:18:12 PM
-    Author     : ACER
---%>
+
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -10,11 +6,6 @@
 <%@page import="Model.User"%>
 <%@page import="context.BookDAO"%>
 <%@page import="java.util.ArrayList"%>
-<% 
-    if (request.getAttribute("books")==null){
-    response.sendRedirect("./Home");
-    }
-%>
 
 <!DOCTYPE html>
 <html>
@@ -26,7 +17,6 @@
         <link rel="stylesheet" href="assets/css/main.css" />
         <noscript><link rel="stylesheet" href="assets/css/noscript.css"/></noscript>
     </head>
-
     <body class="is-preload">
         <!-- Wrapper -->
         <div id="wrapper">
@@ -93,6 +83,7 @@
                     
                 </ul>
             </nav>
+            <jsp:include page="/views/base/menu.jsp" />
             <!-- Main -->
             <div id="main">
                 <div
@@ -173,70 +164,94 @@
 
                     <br />
 
-                    <h2 class="h2">Featured Products</h2>
+                    <h2 class="h2">Most Favorite</h2>
                     <!-- Products -->
-                    <section class="tiles">
-                        <c:forEach items="${books}" var="book">
+                    <section class="tiles" style="margin-left: 20px">>
+                        <c:forEach items="${favebooks}" var="book">
                             <article class="style1">
                                 <span class="image">
                                     <img src="${book.getImage()}" alt="" style="height: 391px;"/>
                                 </span>
-                                <a href="Book?id=${book.getId()}">
+                                <a href="BookDetail?id=${book.getId()}">
                                     <h2>${book.getTitle()}</h2>
                                     <h3 style="font-size: 0.85em;"><i>${book.getAuthor()}</i></h3>
-                                    <!--button class="btn-danger" href="Cart?service=addToCart&bookID=${book.getId()}">Add to Cart</button-->
+                                    <c:if test="${book.issale()}">
+                                        <p>
+                                            <del>$${book.getPrice()}</del> 
+                                            <strong>$${5.00}</strong>
+                                        </p>
+                                    </c:if>
+                                    <c:if test="${!book.issale()}">
+                                        <p><strong>$${book.getPrice()}</strong></p>
+                                    </c:if>
                                 </a>
                             </article>
                         </c:forEach>
                     </section>
-
+                    
+                         <h2 class="h2">Weekly Sales </h2>
+                    <!-- Products -->
+                    <section class="tiles" style="margin-right: 30px">
+                        <div class= "" style = "display: flex ">
+                        <c:forEach items="${salebooks}" var="book">
+                            <article class="style1">
+                                <span class="image">
+                                    <img src="${book.getImage()}" alt="" style="max-height: 391px"/>
+                                </span>
+                                <a href="BookDetail?id=${book.getId()}">
+                                    <h2>${book.getTitle()}</h2>
+                                    <h3 style="font-size: 0.85em;"><i>${book.getAuthor()}</i></h3>
+                                    <c:if test="${book.issale()}">
+                                        <p>
+                                            <del>$${book.getPrice()}</del> 
+                                            <strong>$${5.00}</strong>
+                                        </p>
+                                    </c:if>
+                                    <c:if test="${!book.issale()}">
+                                        <p><strong>$${book.getPrice()}</strong></p>
+                                    </c:if>
+                                </a>
+                                
+                            </article>
+                        </c:forEach>
+                        </div> 
+                    </section>
+                    
+                    <h2 class="h2">All Product </h2>
+                    <!-- Products -->
+                    <section class="tiles" style="margin-left: 15px">
+                        
+                        <c:forEach items="${allbooks}" var="book">
+                            <article class="style1" style="width: calc(17% - 2.5em);
+                                     margin: 4em 0 0 4em;">
+                                <span class="image">
+                                    <img src="${book.getImage()}" alt="" style="height: 250px "/>
+                                </span>
+                                <a href="BookDetail?id=${book.getId()}">
+                                    <h2 style="overflow: hidden;text-overflow: ellipsis;">${book.getTitle()}</h2>
+                                    <h3 style="font-size: 0.85em;"><i>${book.getAuthor()}</i></h3>
+                                    <c:if test="${book.issale()}">
+                                        <p>
+                                            <del>$${book.getPrice()}</del> 
+                                            <strong>$${5.00}</strong>
+                                        </p>
+                                    </c:if>
+                                    <c:if test="${!book.issale()}">
+                                        <p><strong>$${book.getPrice()}</strong></p>
+                                    </c:if>
+                                </a>
+                            </article>
+                        </c:forEach>
+                    </section>
                     <p class="text-center">
-                        <a href="./Book?id=0"
+                        <a href="./Book"
                            >More Books &nbsp;<i class="fa fa-long-arrow-right"></i
                             ></a>
                     </p>
 
                     <br />
 
-                    <h2 class="h2">Blog</h2>
-
-                    <div class="row">
-                        <div class="col-sm-4 text-center">
-                            <img src="images/blog-1-720x480.jpg" class="img-fluid" alt="" />
-
-                            <h2 class="m-n">
-                                <a href="#"
-                                   >LEARN HOW TO HEAL YOURSELF</a
-                                >
-                            </h2>
-
-                            <p>Nekon &nbsp;|&nbsp; 08/06/2022</p>
-                        </div>
-
-                        <div class="col-sm-4 text-center">
-                            <img src="images/blog-4-720x480.jpg" class="img-fluid" alt="" />
-
-                            <h2 class="m-n">
-                                <a href="#"
-                                   >WHAT I READ IN THE FIRST 4 MONTHS OF THE YEAR</a
-                                >
-                            </h2>
-
-                            <p>mucmocmeo &nbsp;|&nbsp; 10/05/2022</p>
-                        </div>
-
-                        <div class="col-sm-4 text-center">
-                            <img src="images/blog-6-720x480.jpg" class="img-fluid" alt="" />
-
-                            <h2 class="m-n">
-                                <a href="#"
-                                   >\Novel Recommended/: Classroom of the Elite</a
-                                >
-                            </h2>
-
-                            <p>Nekon &nbsp;|&nbsp; 12/06/2020</p>
-                        </div>
-                    </div>
+                    <h2 class="h2">Original Work</h2>
 
                     <p class="text-center">
                         <a href="#"
@@ -250,57 +265,6 @@
             <footer id="footer">
                 <div class="inner">
                     <section>
-                        <h2>Contact Us</h2>
-                        <form method="get" action="#">
-                            <div class="fields">
-                                <div class="field half">
-                                    <input type="text" name="name" id="name" placeholder="Name" />
-                                </div>
-
-                                <div class="field half">
-                                    <input
-                                        type="text"
-                                        name="email"
-                                        id="email"
-                                        placeholder="Email"
-                                        />
-                                </div>
-
-                                <div class="field">
-                                    <input
-                                        type="text"
-                                        name="subject"
-                                        id="subject"
-                                        placeholder="Subject"
-                                        />
-                                </div>
-
-                                <div class="field">
-                                    <textarea
-                                        name="message"
-                                        id="message"
-                                        rows="3"
-                                        placeholder="Notes"
-                                        ></textarea>
-                                </div>
-
-                                <div class="field half text-right">
-                                    <label>&nbsp;</label>
-
-                                    <ul class="actions">
-                                        <li>
-                                            <input
-                                                type="submit"
-                                                value="Send Message"
-                                                class="primary"
-                                                />
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </form>
-                    </section>
-                    <section>
                         <h2>Contact Info</h2>
                         <ul class="alt">
                             <li>
@@ -310,14 +274,18 @@
                             <li>
                                 <span class="fa fa-map-pin"></span>
                                 <a href="https://goo.gl/maps/ojwCjTqRteiA4B9U7">
-                                    DE210, FBT University</a
-                                >
+                                    DE210, FBT University</a>
+                            </li>
+                            <li>
+                                <span class="fa fa-mail-forward"></span>
+                                <a href="mailto:vinhnthe163219@fpt.edu.vn">
+                                    Our mail</a>
                             </li>
                         </ul>
                     </section>
 
                     <ul class="copyright">
-                        <li>HLV</li>
+                        <li>Bookie</li>
                     </ul>
                 </div>
             </footer>

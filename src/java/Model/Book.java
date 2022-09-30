@@ -4,24 +4,37 @@
  */
 package Model;
 
-
 public class Book {
     private int id;
     private String title, author;
     private int categoryid;
+    private float rating;
     private int favourite;
     private float price;
     private boolean issale;
     private String image;
     private String description;
     private int views;
+    private boolean status;
 
+    public Book() {
+    }
 
-    public Book(int id, String title, String author, int categoryid, int favourite, float price, boolean issale, String image, String description, int views) {
+    public boolean status() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public Book(int id, String title, String author, int categoryid, float rating, 
+            int favourite, float price, boolean issale, String image, String description, int views) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.categoryid = categoryid;
+        this.rating = rating;
         this.favourite = favourite;
         this.price = price;
         this.issale = issale;
@@ -30,26 +43,17 @@ public class Book {
         this.views = views;
     }
 
-    public Book(int id, String title, String author, int type, int favourite, float price, boolean issale, String image) {
+
+    public Book(int id, String title, String author, int categoryid, int favourite, float price, boolean issale, String image) {
         this.id = id;
         this.title = title;
         this.author = author;
-        this.categoryid=type;
-        this.favourite = favourite;
+        this.categoryid=categoryid;
         this.price = price;
         this.issale = issale;
+        this.favourite = favourite;
         this.image = image;
     }
-
-    public int getViews() {
-        return views;
-    }
-
-    public void setViews(int views) {
-        this.views = views;
-    }
-
-    
 
     public int getId() {
         return id;
@@ -71,14 +75,6 @@ public class Book {
         return author;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public void setAuthor(String author) {
         this.author = author;
     }
@@ -91,6 +87,14 @@ public class Book {
         this.categoryid = categoryid;
     }
 
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
     public int getFavourite() {
         return favourite;
     }
@@ -98,7 +102,7 @@ public class Book {
     public void setFavourite(int favourite) {
         this.favourite = favourite;
     }
-    
+
     public float getPrice() {
         return price;
     }
@@ -122,9 +126,22 @@ public class Book {
     public void setImage(String image) {
         this.image = image;
     }
-    
-//    public String getCategory(){
-//        CategoryDAO dao =new CategoryDAO();
-//        return (dao.getCategory(this.categoryid)==null?"Uncategorized":dao.getCategory(this.categoryid));
-//    }
+
+    public String getDescription() {
+        return description;
+
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
+
 }

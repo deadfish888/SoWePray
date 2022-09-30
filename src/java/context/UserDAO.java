@@ -5,22 +5,20 @@
 package context;
 
 import Model.PaymentAccount;
-import Model.RandomEnglishNameGenerator;
 import Model.User;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.IntStream;
+import utils.MyUtil;
+import utils.RandomEnglishNameGenerator;
 
 /**
  *
@@ -48,11 +46,11 @@ public class UserDAO {
     public User getUser(String key, String pass) {
         String sql = "Select * from [User] where (username=? OR email=?) AND password=?";
         try {
-            PreparedStatement ps = cnn.prepareStatement(sql);
-            ps.setString(1, key);
-            ps.setString(2, key);
-            ps.setString(3, pass);
-            rs = ps.executeQuery();
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, key);
+            stm.setString(2, key);
+            stm.setString(3, pass);
+            rs = stm.executeQuery();
             while (rs.next()) {
                 int userid = rs.getInt(1);
                 String name = rs.getString(2);
@@ -72,50 +70,87 @@ public class UserDAO {
         }
         return null;
     }
-
-    public String generateNewPass() {
-        int data[] = IntStream.concat(IntStream.rangeClosed('0', '9'),
-                IntStream.concat(IntStream.rangeClosed('A', 'Z'),
-                        IntStream.rangeClosed('a', 'z'))).toArray();
-        char index[] = new char[10];
-
-        Random r = new Random();
-        for (int i = 0; i < 10; i++) {
-            index[i] = (char) data[r.nextInt(data.length)];
+    
+    public void editProfile(User us) {
+        String sql = "update[User] set\n"
+                + "                [email] = ?,\n"
+                + "                [fullname] = ?,\n"
+                + "                [phone] = ?,\n"
+                + "                [address] =  ? \n"
+                + "                where [id] = ?";
+        try {
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, us.getEmail());
+            stm.setString(2, us.getName());
+            stm.setString(3, us.getPhone());
+            stm.setString(4, us.getAddress());
+            stm.setInt(5, us.getId());
+            rs = stm.executeQuery();
+        } catch (Exception e) {
+            System.out.println("editProfile Error:" + e.getMessage());
         }
-        return new String(index);
     }
 
     public boolean checkExistEmail(String email) {
         String sql = "select * from [User] where email= ? ";
+        return false;
+    }
+    
+    
+    public String resetPassword(String token) {
+        TokenDAO td = new TokenDAO();
+        int userId = td.checkTokenExpired(token);
+        if (userId != 0) {
+            String newPassword = MyUtil.randomString(10);
+            String sql = "UPDATE [User] "
+                    + "     SET [password] = ? "
+                    + "     WHERE [id] = ? ";
+            try {
+                stm = cnn.prepareStatement(sql);
+                stm.setString(1, newPassword);
+                stm.setInt(2, userId);
+                stm.executeUpdate();
+                return newPassword;
+            } catch (Exception e) {
+                System.out.println("resetPassword Error:" + e.getMessage());
+            }
+        }
+        return null;
+    }
+
+    
+
+    public int checkEmailExisted(String email) {
+        String sql = "SELECT [id] FROM [User] "
+                                + "WHERE email= ? ";
         try {
-            PreparedStatement ps = cnn.prepareStatement(sql);
-            ps.setString(1, email);
-            rs = ps.executeQuery();
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, email);
+            rs = stm.executeQuery();
             if (rs.next()) {
-                return true;
+                return rs.getInt(1);
             }
         } catch (Exception e) {
             System.out.println("checkExistEmail Error:" + e.getMessage());
         }
-        return false;
+        return 0;
     }
-
-    public String resetPassword(String email) {
-        String newPassword = generateNewPass();
-        String sql = "update [User] set "
-                + "  [password] = ? "
-                + " where [email] = ?";
-        try {
-            PreparedStatement ps = cnn.prepareStatement(sql);
-            ps.setString(1, newPassword);
-            ps.setString(2, email);
-            ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("resetPassword Error:" + e.getMessage());
-        }
-        return newPassword;
-    }
+//
+//    public String resetPassword(String email) {
+//        String newPassword = generateNewPass();
+//        String sql = "update [User] set "
+//                + "  [password] = ? "
+//                + " where [email] = ?";
+//        try {
+//            PreparedStatement ps = cnn.prepareStatement(sql);
+//            ps.setString(1, newPassword);
+//            ps.setString(2, email);
+//            ps.executeUpdate();
+//        } catch (Exception e) {
+//            System.out.println("resetPassword Error:" + e.getMessage());
+//        }
+//        return newPassword;
+//    }
 
     public boolean checkDupEmail(String email) {
         try {
@@ -227,7 +262,7 @@ public class UserDAO {
             stm.setString(5, address);
             stm.setInt(6, userid);
 
-            stm.executeUpdate(sql);
+            stm.executeUpdate();
         } catch (Exception e) {
             System.out.println("editProfile Error:" + e.getMessage());
         }
@@ -256,7 +291,7 @@ public class UserDAO {
         try {
             String sql = "Select * from [User] where [is_super] = 0";
             stm = cnn.prepareStatement(sql);
-            rs = stm.executeQuery(sql);
+            rs = stm.executeQuery();
             while (rs.next()) {
                 int userid = rs.getInt(1);
                 String name = rs.getString(2);
@@ -307,7 +342,7 @@ public class UserDAO {
             String sql = "select [username] from [User] where [id] = ?";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, userid);
-            rs = stm.executeQuery(sql);
+            rs = stm.executeQuery();
             if (rs.next()) {
                 return rs.getString(1);
             }
@@ -329,7 +364,7 @@ public class UserDAO {
             stm.setString(1, name);
             stm.setString(2, phone);
             stm.setString(3, address);
-            stm.executeUpdate(sql);
+            stm.executeUpdate();
         } catch (Exception e) {
             System.out.println("updateUser Error:" + e.getMessage());
         }
@@ -341,7 +376,7 @@ public class UserDAO {
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, id);
             stm.setString(2, oldpass);
-            rs = stm.executeQuery(sql);
+            rs = stm.executeQuery();
             if (rs.next()) {
                 return true;
             }
@@ -393,12 +428,13 @@ public class UserDAO {
                     + "where id = ?";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, id);
-            rs = stm.executeQuery(sql);
+            rs = stm.executeQuery();
             if (rs.next()) {
                 return new User(id, rs.getString(1), rs.getBoolean(2) ? "Male" : "Female",
                         rs.getString(3), rs.getString(4), rs.getString(5),
                         rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9), 
                 new PaymentAccount(rs.getLong("walletNumber")));
+//                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -468,5 +504,21 @@ public class UserDAO {
 //            
 //        }
 //    }
+
+    public int checkUsernameExisted(String key) {
+        try {
+            String sql = "SELECT [id] FROM [User] "
+                    + "             WHERE username = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, key);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("checkAccDOB Error:" + e.getMessage());
+        }
+        return 0;
+    }
 
 }

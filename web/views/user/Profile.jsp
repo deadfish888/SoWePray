@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script src="../javascripts/ProfileScript.js" type="text/javascript"></script>
+        <script src="../assets/js/ProfileScript.js" type="text/javascript"></script>
         <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="../assets/css/main.css" />
         <link href="../assets/css/style-profile.css" rel="stylesheet" type="text/css"/>
@@ -37,7 +37,7 @@
                         <a href="./Security">Security</a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#">Payment</a>
+                        <a href="./Payment">Payment</a>
                     </li>
                     <li class="sidebar-item">
                         <a href="#">Support</a>
@@ -67,7 +67,6 @@
                         </div>
                     </header>
 
-                    <!-- Menu -->
                     <nav id="menu">
                         <h2>
                             <c:if test="${!empty sessionScope.user}">

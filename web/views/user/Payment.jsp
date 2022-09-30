@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="../assets/css/main.css" />
         <link href="../assets/css/style-profile.css" rel="stylesheet" type="text/css"/>
-        <title>Profile</title>
+        <title>Payment</title>
     </head>
     <body>
         <div class="wrapper">
@@ -30,14 +30,14 @@
                 </div>
 
                 <ul class="list-unstyled components" style="padding: 0.5em; font-size: 1.4em">
-                    <li class="active sidebar-item">
-                        My profile
+                    <li class="sidebar-item">
+                        <a href="./Profile">Security</a>
                     </li>
                     <li class="sidebar-item">
                         <a href="./Security">Security</a>
                     </li>
-                    <li class="sidebar-item">
-                        <a href="#">Payment</a>
+                    <li class="active sidebar-item">
+                        Payment
                     </li>
                     <li class="sidebar-item">
                         <a href="#">Support</a>

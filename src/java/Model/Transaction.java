@@ -5,6 +5,7 @@
 
 package Model;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 
 /**
@@ -114,6 +115,8 @@ public class Transaction {
     public void setDescription(String description) {
         this.description = description;
     }
+    
+    
 
     /**
      * Compare if 2 transaction id is equal
@@ -125,6 +128,5 @@ public class Transaction {
         }
         return false;
     }
-
     
 }
