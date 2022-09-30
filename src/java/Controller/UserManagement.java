@@ -39,6 +39,7 @@ public class UserManagement extends HttpServlet {
         User us = (User) session.getAttribute("admin");
         UserDAO dao = new UserDAO();
         ArrayList<User> users = dao.getByAccess(us.is_super());
+
         request.setAttribute("users", users);
         request.getRequestDispatcher("./manage/UserList.jsp").forward(request, response);
     }
@@ -82,6 +83,11 @@ public class UserManagement extends HttpServlet {
             dao.editRank(Integer.parseInt(request.getParameter("id_down")), -1);
         }
         ArrayList<User> users = dao.getByAccess(us.is_super());
+
+        if (request.getParameter("txt") != null) {
+            users = dao.searchByUname(us.is_super(), "%" + request.getParameter("txt") + "%");
+            request.setAttribute("txt", request.getParameter("txt"));
+        }
         request.setAttribute("users", users);
         request.getRequestDispatcher("./manage/UserList.jsp").forward(request, response);
     }

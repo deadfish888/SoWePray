@@ -245,6 +245,12 @@
                                                 <input type="search" id="form1" class="form-control" placeholder="Search . . . ." aria-label="Search" style="width: 200px"
                                                        oninput="searchByName(this)" value="${txtS}" name="txt" type="text"/>
                                             </div>
+                                            <div class="form-outline">
+                                                <form action="UserManager" method="Post">
+                                                <input type="search" id="form1" class="form-control" placeholder="Search . . . ." aria-label="Search" style="width: 200px"
+                                                       name="txt" type="text" value="${txt}" >
+                                                </form>
+                                            </div>
                                             <thead>
                                                 <tr style="cursor: pointer; font-size: 15px;">
                                                     <th class="border-top-0"><i class="fa-solid fa-list-ol"></i></th>
