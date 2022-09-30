@@ -68,24 +68,20 @@
                                 
                                 <ul class="ks-cboxtags">
                                     <form action="Report" method="GET">
-    <li><input type="checkbox" id="checkboxOne" value="Rainbow Dash"><label for="checkboxOne">Rainbow Dash</label></li>
-    <li><input type="checkbox" id="checkboxTwo" value="Cotton Candy" checked><label for="checkboxTwo">Cotton Candy</label></li>
-    <li><input type="checkbox" id="checkboxThree" value="Rarity" checked><label for="checkboxThree">Rarity</label></li>
-    <li><input type="checkbox" id="checkboxFour" value="Moondancer"><label for="checkboxFour">Moondancer</label></li>
-    <li><input type="checkbox" id="checkboxFive" value="Surprise"><label for="checkboxFive">Surprise</label></li>
-    <li><input type="checkbox" id="checkboxSix" value="Twilight Sparkle" checked><label for="checkboxSix">Twilight
+    <li><input type="checkbox" id="checkboxOne" value="report1"><label for="checkboxOne">Rainbow Dash</label></li>
+    <li><input type="checkbox" id="checkboxTwo" value="report2" checked><label for="checkboxTwo">Cotton Candy</label></li>
+    <li><input type="checkbox" id="checkboxThree" value="report3" checked><label for="checkboxThree">Rarity</label></li>
+    <li><input type="checkbox" id="checkboxFour" value="report4"><label for="checkboxFour">Moondancer</label></li>
+    <li><input type="checkbox" id="checkboxFive" value="report5"><label for="checkboxFive">Surprise</label></li>
+    <li><input type="checkbox" id="checkboxSix" value="report6" checked><label for="checkboxSix">Twilight
                     Sparkle</label></li>
-    <li><input type="checkbox" id="checkboxSeven" value="Fluttershy"><label for="checkboxSeven">Fluttershy</label></li>
+    <li><input type="checkbox" id="checkboxSeven" value="report7"><label for="checkboxSeven">Fluttershy</label></li>
     <li><input type="checkbox" id="checkboxEight" value="Derpy Hooves"><label for="checkboxEight">Derpy Hooves</label></li>
     <li><input type="checkbox" id="checkboxNine" value="Princess Celestia"><label for="checkboxNine">Princess
                     Celestia</label></li>
     <li><input type="checkbox" id="checkboxTen" value="Gusty"><label for="checkboxTen">Gusty</label></li>
-    <li class="ks-selected"><input type="checkbox" id="checkboxEleven" value="Discord"><label for="checkboxEleven">Discord</label></li>
-    <li><input type="checkbox" id="checkboxTwelve" value="Clover"><label for="checkboxTwelve">Clover</label></li>
-    <li><input type="checkbox" id="checkboxThirteen" value="Baby Moondancer"><label for="checkboxThirteen">Baby
-                    Moondancer</label></li>
-    <li><input type="checkbox" id="checkboxFourteen" value="Medley"><label for="checkboxFourteen">Medley</label></li>
-    <li><input type="checkbox" id="checkboxFifteen" value="Firefly"><label for="checkboxFifteen">Firefly</label></li>
+    <li><input type="submit" /></li>
+    <li><button type="submit" class="btn btn-primary">Send Report</button></li>
                                     </form>
                                 </ul>
                             </div>
