@@ -41,7 +41,7 @@ public class ContentDAO {
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, bid);
             rs = stm.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 int chapterID = rs.getInt(1);
                 int paragraph = rs.getInt(2);
                 String content = rs.getString(3);
@@ -77,7 +77,7 @@ public class ContentDAO {
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, bid);
             rs = stm.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 int chapterID = rs.getInt(1);
                 int paragraph = rs.getInt(2);
                 String content = rs.getString(3);
