@@ -42,7 +42,7 @@ public class PaymentAccount {
         this.balance = balance;
     }
 
-    public void createWallet(User user){
+    public PaymentAccount createWallet(User user){
         long tempNumber = user.getId();
         PaymentAccountDAO paymentAccDAO = new PaymentAccountDAO();
         while(paymentAccDAO.get(new PaymentAccount(tempNumber)) != null){
@@ -50,7 +50,8 @@ public class PaymentAccount {
         }
         accountNumber = tempNumber;
         balance = 0f;
-        
+        paymentAccDAO.insert(this);
+        return this;
     }   
     
     @Override

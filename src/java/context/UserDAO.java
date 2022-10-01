@@ -211,7 +211,7 @@ public class UserDAO {
 
     public void addUser(User user) {
         try {
-            String sql = "INSERT INTO [dbo].[User]\n"
+            String sql = "INSERT INTO [User]\n"
                     + "           ([fullname]\n"
                     + "           ,[gender]\n"
                     + "           ,[dob]\n"
@@ -444,6 +444,38 @@ public class UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
+    }
+    
+    public User getByUsername(String username) {
+        try {
+            String sql = "SELECT [fullname]\n"
+                    + "      ,[gender]\n"
+                    + "      ,[dob]\n"
+                    + "      ,[email]\n"
+                    + "      ,[phone]\n"
+                    + "      ,[address]\n"
+                    + "      ,[username]\n"
+                    + "      ,[password]\n"
+                    + "      ,[is_super]\n"
+                    + "      ,[walletNumber]\n"
+                    + "      ,[id]\n"
+                    + "  FROM [User] "
+                    + "where username = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, username);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return new User(rs.getInt("id"), rs.getString(1), rs.getBoolean(2) ? "Male" : "Female",
+                        rs.getString(3), rs.getString(4), rs.getString(5),
+                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9),
+                        new PaymentAccount(rs.getLong("walletNumber")));
+//                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return null;
     }
 

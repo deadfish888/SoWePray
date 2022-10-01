@@ -39,8 +39,8 @@ public class WithdrawController extends HttpServlet {
     throws ServletException, IOException {
         PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
         PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
-        float amount = Float.parseFloat(request.getParameter("amount"));
         TransactionDAO transDAO = new TransactionDAO();
+        float amount = Float.parseFloat(request.getParameter("amount"));
         
         User user = (User) request.getSession().getAttribute("user");
 

@@ -47,8 +47,8 @@ function validatePassword() {
         document.getElementById("pass-noti").innerHTML = "Wrong password";
         return false;
     }
-
 }
+
 function validateAddPassword() {
     let pass = document.forms["addForm"]["pass"].value;
     let x = document.forms["addForm"]["password"].value;

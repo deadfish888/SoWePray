@@ -5,6 +5,7 @@
 package context;
 
 import Model.Book;
+import Model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -90,9 +91,11 @@ public class BookDAO {
             PreparedStatement pre = cnn.prepareStatement(sql);
             pre.setString(1, book.getTitle());
             pre.setString(2, book.getAuthor());
-            if(book.getCategoryid()!=0){
+            if (book.getCategoryid() != 0) {
                 pre.setInt(3, book.getCategoryid());
-            }else pre.setNull(3, Types.INTEGER);
+            } else {
+                pre.setNull(3, Types.INTEGER);
+            }
             pre.setFloat(4, book.getPrice());
             pre.setBoolean(5, book.issale());
             pre.setString(6, book.getImage());
@@ -125,9 +128,11 @@ public class BookDAO {
             PreparedStatement pre = cnn.prepareStatement(sql);
             pre.setString(1, book.getTitle());
             pre.setString(2, book.getAuthor());
-            if(book.getCategoryid()!=0){
+            if (book.getCategoryid() != 0) {
                 pre.setInt(3, book.getCategoryid());
-            }else pre.setNull(3, Types.INTEGER);
+            } else {
+                pre.setNull(3, Types.INTEGER);
+            }
             pre.setFloat(4, book.getPrice());
             pre.setBoolean(5, book.issale());
             pre.setString(6, book.getImage());
@@ -139,7 +144,8 @@ public class BookDAO {
         return 0;
     }
 
-    public Book getBookById(int bookId) {try {
+    public Book getBookById(int bookId) {
+        try {
 //            String sql = "update [Book] set [views] = [views]+1 where [id]= ?";
 //            stm = cnn.prepareStatement(sql);
 //            stm.setInt(1, bookid);
@@ -154,13 +160,13 @@ public class BookDAO {
                 String author = rs.getString(3);
                 int category = rs.getInt(4);
                 float rating = rs.getFloat(5);
-                int favourite=rs.getInt(6);
+                int favourite = rs.getInt(6);
                 float price = rs.getFloat(7);
                 boolean issale = rs.getBoolean(8);
                 String image = rs.getString(9);
                 String description = rs.getString(10);
-                int view=rs.getInt(11);
-                return (new Book(id, title, author, category,rating, favourite,price, issale, image, description,view));
+                int view = rs.getInt(11);
+                return (new Book(id, title, author, category, rating, favourite, price, issale, image, description, view));
             }
         } catch (Exception e) {
             System.out.println("getBookbyID Error:" + e.getMessage());
@@ -267,7 +273,7 @@ public class BookDAO {
         ArrayList<Book> list = new ArrayList<>();
         try {
             String sql = "SELECT * FROM [Book] "
-                                + "WHERE [categoryid] = ?";
+                    + "WHERE [categoryid] = ?";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, Integer.parseInt(cid));
             rs = stm.executeQuery();
@@ -290,7 +296,7 @@ public class BookDAO {
         }
         return list;
     }
-    
+
     public ArrayList<Book> getWeeklySaleBooks() {
         ArrayList<Book> list = new ArrayList<>();
         try {
@@ -354,6 +360,33 @@ public class BookDAO {
             System.out.println("getlist Error:" + e.getMessage());
         }
         return list;
+    }
+
+    public ArrayList<Book> getOwnBooks(User user) {
+        ArrayList<Book> list = new ArrayList<>();
+        try {
+            String sql = "  select bo.bookId from [User] u \n"
+                    + "  inner join [Book_Own] bo \n"
+                    + "  on bo.userId = u.id\n"
+                    + "  inner join Book b\n"
+                    + "  on bo.bookId = b.id"
+                    + "  where u.id = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, user.getId());
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("bookId");
+                Book book = getBookById(id);
+                list.add(book);
+            }
+        } catch (Exception e) {
+            System.out.println("getOwn Error:" + e.getMessage());
+        }
+        return list;
+    }
+    
+    public boolean isOwn(User user, Book book) {
+        return getOwnBooks(user).contains(book);
     }
 
     public void changeStatus(int bookId) {

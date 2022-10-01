@@ -4,6 +4,8 @@
  */
 package Model;
 
+import context.BookDAO;
+import context.PaymentMethodDAO;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -190,8 +192,21 @@ public class User {
 
     public void createWallet(){
         paymentAccount = new PaymentAccount();
-        paymentAccount.createWallet(this);
+        paymentAccount = paymentAccount.createWallet(this);
+        PaymentMethod paymentMethod = new PaymentMethod();
+        paymentMethod.setActive(true);
+        paymentMethod.setPaymentAccount(paymentAccount);
+        paymentMethod.setUser(this);
+        paymentMethod.setName("Wallet of " + username);
+        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
+        payMedDAO.insert(paymentMethod);
     }
-    
+
+    public boolean isOwnBook(int bookId){
+        BookDAO bookDAO = new BookDAO();
+        Book book = new Book();
+        book.setId(bookId);
+        return bookDAO.isOwn(this, book);
+    }
 
 }

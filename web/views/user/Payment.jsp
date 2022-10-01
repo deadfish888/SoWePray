@@ -110,13 +110,15 @@
                                         ${paymentMethod.paymentAccount.accountNumber}
                                     </td>
                                     <td>
-                                        <a data-toggle="modal" 
-                                           data-target="#removePaymentMethod" 
-                                           title="Remove this payment method"
-                                           href="#removePaymentMethod"
-                                           onclick="setRemovePaymentId(${paymentMethod.paymentId})">
-                                            <i id="garbage-can" class='fa fa-trash-o'></i> 
-                                        </a>
+                                        <c:if test="${paymentMethod.paymentAccount.accountNumber ne sessionScope.user.paymentAccount.accountNumber}">
+                                            <a data-toggle="modal" 
+                                               data-target="#removePaymentMethod" 
+                                               title="Remove this payment method"
+                                               href="#removePaymentMethod"
+                                               onclick="setRemovePaymentId(${paymentMethod.paymentId})">
+                                                <i id="garbage-can" class='fa fa-trash-o'></i> 
+                                            </a>
+                                        </c:if>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -311,7 +313,7 @@
                             </div>
                         </div>
                     </div>
-                                            
+
                     <div style="margin-bottom: 5em">
                         <h2>Transaction history</h2>
                         <!-- Hien thi danh sach transaction cua user nay -->
