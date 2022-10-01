@@ -183,11 +183,20 @@ public class UserDAO {
         ArrayList<User> list = new ArrayList<>();
         try {
             String sql = "select * from [User]\n"
-                    + "where [is_super] <? and \n"
-                    + "[fullname] like ?";
+                    + "where [is_super] <?\n"
+                    + "and [fullname] like ?\n"
+                    + "or [username] like ?\n"
+                    + "or [email] like ?\n"
+                    + "or [phone] like ?\n"
+                    + "or [address] like ?";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, us);
             stm.setString(2, att);
+            stm.setString(3, att);
+            stm.setString(4, att);
+            stm.setString(5, att);
+            stm.setString(6, att);
+
             rs = stm.executeQuery();
             while (rs.next()) {
                 int userid = rs.getInt(1);
