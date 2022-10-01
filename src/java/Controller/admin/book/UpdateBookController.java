@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.admin.product;
+package Controller.admin.book;
 
 import Model.Book;
 import Model.Category;

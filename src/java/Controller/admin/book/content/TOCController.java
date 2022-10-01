@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.admin.product.content;
+package Controller.admin.book.content;
 
-import Controller.admin.product.UpdateBookController;
+import Controller.admin.book.UpdateBookController;
+import Model.Chapter;
 import Model.Content;
 import context.BookDAO;
 import context.ChapterDAO;
@@ -45,10 +46,10 @@ public class TOCController extends HttpServlet {
                 request.setAttribute("vol", vd.getVolume(vid));
             } else if (schapterId != null) {
                 int cid = Integer.parseInt(schapterId);
-                request.setAttribute("chap", cd.getChapter(cid));
-
-                ContentDAO pd = new ContentDAO();
-                ArrayList<Content> content = pd.getContents(cid);
+                Chapter chapter = cd.getChapter(cid);
+                request.setAttribute("chap", chapter);
+                String[] content = chapter.getContent().split("\n");
+                
                 request.setAttribute("content", content);
             }
 

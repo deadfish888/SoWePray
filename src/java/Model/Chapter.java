@@ -15,6 +15,15 @@ public class Chapter {
     private int chapter;
     private String chapterName;
     private boolean status;
+    private String content;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public Chapter() {
     }

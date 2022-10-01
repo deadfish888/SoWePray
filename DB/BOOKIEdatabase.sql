@@ -188,6 +188,7 @@ CREATE TABLE [dbo].[Chapter](
 	[chapter] int not null,
 	[chapterName] nvarchar(100),
 	[status] bit not null,
+	[content] ntext not null
 	CONSTRAINT [PK_chapter] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -195,7 +196,7 @@ CREATE TABLE [dbo].[Chapter](
 ) ON [PRIMARY]
 Go
 ALTER TABLE [dbo].[Chapter]  WITH CHECK ADD FOREIGN KEY([volumeId])
-REFERENCES [dbo].[Volume] ([id])
+REFERENCES [dbo].[Volume] ([id]) ON DELETE CASCADE ON UPDATE CASCADE
 ALTER TABLE [dbo].[Chapter]  WITH CHECK ADD FOREIGN KEY([bookId])
 REFERENCES [dbo].[Book] ([id])
 /****** Object:  Table [dbo].[Content]    BOOKIE ******/
@@ -209,7 +210,52 @@ CREATE TABLE [dbo].[Content](
 Go
 ALTER TABLE [dbo].[Content]  WITH CHECK ADD FOREIGN KEY([chapterId])
 REFERENCES [dbo].[Chapter] ([id])
-
+/****** Object:  Table [dbo].[Comment]    BOOKIE ******/
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[Comment](
+	[bookId] int not null,
+	[userId] int not null,
+	comment nvarchar(2000)
+	)
+Go
+ALTER TABLE [dbo].[Comment]  WITH CHECK ADD FOREIGN KEY([bookId])
+REFERENCES [dbo].[Book] ([id])
+ALTER TABLE [dbo].[Comment]  WITH CHECK ADD FOREIGN KEY([userId])
+REFERENCES [dbo].[User] ([id])
+/****** Object:  Table [dbo].[ReportTitle]    BOOKIE ******/
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[Report](
+	[id] int IDENTITY(1,1) not null,
+	[title] nvarchar(100) not null
+	CONSTRAINT [PK_report] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+Go
+/****** Object:  Table [dbo].[ReportDetail]    BOOKIE ******/
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[ReportDetail](
+	[id] int IDENTITY(1,1) not null,
+	[reportId] int not null,
+	[bookId] int not null,
+	[userId] int not null,
+	note nvarchar(2000)
+	CONSTRAINT [PK_reportdetail] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+Go
+ALTER TABLE [dbo].[ReportDetail]  WITH CHECK ADD FOREIGN KEY([reportId])
+REFERENCES [dbo].[Report] ([id])
+ALTER TABLE [dbo].[ReportDetail]  WITH CHECK ADD FOREIGN KEY([bookId])
+REFERENCES [dbo].[Book] ([id])
+ALTER TABLE [dbo].[ReportDetail]  WITH CHECK ADD FOREIGN KEY([userId])
+REFERENCES [dbo].[User] ([id])
 /****** Object:  Table [dbo].[Transaction]    BOOKIE ******/
 SET ANSI_NULLS ON
 GO
@@ -513,3 +559,26 @@ INSERT [dbo].[Book] ([id], [title], [author], [categoryid], [rating], [favourite
 GO
 SET IDENTITY_INSERT [dbo].[Book] OFF
 GO
+SET IDENTITY_INSERT [dbo].[Report] ON 
+GO
+INSERT [dbo].[Report] ([id], [title]) VALUES (1, N'Sexual Content')
+GO
+INSERT [dbo].[Report] ([id], [title]) VALUES (2, N'Violent or repulsive content')
+GO
+INSERT [dbo].[Report] ([id], [title]) VALUES (3, N'Hateful or abusive content')
+GO
+INSERT [dbo].[Report] ([id], [title]) VALUES (4, N'Harassment or bullying')
+GO
+INSERT [dbo].[Report] ([id], [title]) VALUES (5, N'Harmful or dangerous acts')
+GO
+INSERT [dbo].[Report] ([id], [title]) VALUES (6, N'Child abuse')
+GO
+INSERT [dbo].[Report] ([id], [title]) VALUES (7, N'Promotes terrorism')
+GO
+INSERT [dbo].[Report] ([id], [title]) VALUES (8, N'Spam or misleading')
+GO
+INSERT [dbo].[Report] ([id], [title]) VALUES (9, N'Infringes my rights')
+GO
+INSERT [dbo].[Report] ([id], [title]) VALUES (10, N'Caption issue')
+GO
+SET IDENTITY_INSERT [dbo].[Report] OFF
