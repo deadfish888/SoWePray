@@ -7,8 +7,12 @@ package Controller.product;
 
 import Model.Book;
 import Model.Category;
+import Model.Chapter;
+import Model.Volume;
 import context.BookDAO;
 import context.CategoryDAO;
+import context.ChapterDAO;
+import context.VolumeDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -35,14 +39,22 @@ public class BookDetail extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         int id=Integer.parseInt(request.getParameter("id"));
-        BookDAO b=new BookDAO();
+
+        BookDAO b = new BookDAO();
         CategoryDAO cd = new CategoryDAO();
+        ChapterDAO chd = new ChapterDAO();
+        VolumeDAO vd = new VolumeDAO();
         Book thisbook=b.getBookById(id);
         String category = cd.getCategory(thisbook.getCategoryid());
         request.setAttribute("category", category);
         ArrayList<Book> sames = b.getSimilarBooks(id, thisbook.getCategoryid());
+        ArrayList<Volume> vols = vd.getVolumeByBookID(id);
+        ArrayList<Chapter> chaps = chd.getChapterByBookID(id);
+        request.setAttribute("chaps", chaps);
         request.setAttribute("sames", sames);
         request.setAttribute("book", thisbook);
+        request.setAttribute("vols", vols);
+
         request.getRequestDispatcher("/views/book/book-details.jsp").forward(request, response);
     } 
     @Override
