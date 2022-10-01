@@ -5,6 +5,12 @@
 
 package Controller.payment;
 
+import Model.PaymentMethod;
+import Model.Transaction;
+import Model.User;
+import context.PaymentAccountDAO;
+import context.PaymentMethodDAO;
+import context.TransactionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +18,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 /**
  *
@@ -29,19 +37,41 @@ public class WithdrawController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet WithdrawController</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet WithdrawController at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
+        PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
+        float amount = Float.parseFloat(request.getParameter("amount"));
+        TransactionDAO transDAO = new TransactionDAO();
+        
+        User user = (User) request.getSession().getAttribute("user");
+
+        PaymentMethod paymentMethod = new PaymentMethod();
+        paymentMethod.setPaymentId(Integer.parseInt(request.getParameter("payment")));
+        paymentMethod = payMedDAO.get(paymentMethod);
+        if (amount > user.getPaymentAccount().getBalance()) {
+            request.setAttribute("walletNoti", "Balance in wallet is not enough to recharge.");
+                    request.getRequestDispatcher("/User/Payment").forward(request, response);
+        } else {
+            float bankBalance = paymentMethod.getPaymentAccount().getBalance() + amount;
+            paymentMethod.getPaymentAccount().setBalance(bankBalance);
+            float walletBalance = user.getPaymentAccount().getBalance() - amount;
+            user.getPaymentAccount().setBalance(walletBalance);
+            
+            Transaction transaction = new Transaction();
+            transaction.setUser(user);
+            transaction.setAmount(amount);
+            transaction.setBalanceAfter(walletBalance);
+            transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+            transaction.setType(2);
+            transaction.setStatus(2);
+            transaction.setDescription("Withdraw from wallet to " + paymentMethod.getName() + ".");
+            transaction.setPayment(paymentMethod);
+            transDAO.insert(transaction);
+            
+            payAccDAO.update(paymentMethod.getPaymentAccount());
+            payAccDAO.update(user.getPaymentAccount());
+            response.sendRedirect(request.getContextPath() + "/User/Payment");
         }
+
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

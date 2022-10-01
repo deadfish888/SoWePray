@@ -77,17 +77,24 @@
                     <div class="text-center">
                         <h1>PAYMENT</h1>
                     </div>
-                    <div>
+                    <div style="margin-bottom: 5em">
                         <h2>My wallet</h2>
                         <!-- An so du tai khoan, khi click vao icon hinh con mat se hien ra -->
-                        <a onclick="changeIcon(this)" id="myBtn">
-                            <span class="SPN" data-text="Balance: $${sessionScope.user.paymentAccount.balance}">Balance: ****.**</span>
-                            <i id="faPlus" class='bx bx-hide'></i> 
-                        </a>
+                        <div style="width: 90%; margin: auto">
+                            <a onclick="changeIcon(this)" id="myBtn">
+                                <span class="SPN" data-text="Balance: $${sessionScope.user.paymentAccount.balance}">Balance: ****.**</span>
+                                <i id="faPlus" class='bx bx-hide'></i> 
+                            </a>
+                            <button style="margin-left: 1em; float: right"  data-toggle="modal" 
+                                    data-target="#recharge">Recharge</button>
+                            <button style="margin-left: 1em; float: right" data-toggle="modal" 
+                                    data-target="#withdraw">Withdraw</button> <br/>
+                            <span style="color: red">${requestScope.walletNoti}</span>
+
+                        </div>
                     </div>
-                    <div>
+                    <div style="margin-bottom: 5em">
                         <h2>Payment method</h2>
-                        <!-- Hien thi danh sach transaction cua user nay -->
                         <table class="text-center" style="width: 90%; margin: auto">
                             <tr>
                                 <th style="padding: 0" class="text-center">Name</th>
@@ -148,8 +155,61 @@
                         </div>
 
                         <br/><button class="text-center" value="addMethod" style="display: block;margin: auto" data-toggle="modal" 
-                                     data-target="#addPaymentMethod" >Add payment</button>
-                        <span style="color: red">${requestScope.addErrorNoti}</span>
+                                     data-target="#addPaymentMethod">Add payment</button>
+
+                        <span class="text-center" style="color: red; display: block;margin: auto">${requestScope.addErrorNoti}</span>
+
+                        <div class="modal fade" id="recharge" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <form action="Recharge" method="post" id="rechargeForm" name="rechargeForm" onsubmit="return validateRechargePassword()">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title">Recharge</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="wrapper row">
+                                                <table>
+                                                    <tr>
+                                                        <th>
+                                                            Amount
+                                                        </th>
+                                                        <td>
+                                                            <input type="number" step="0.01" name="amount" required/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>
+                                                            Payment
+                                                        </th>
+                                                        <td>
+                                                            <select name="payment">
+                                                                <c:forEach var="paymentMethod" items="${requestScope.bankList}">
+                                                                    <option value="${paymentMethod.paymentId}">${paymentMethod.name}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>
+                                                            Password
+                                                        </th>
+                                                        <td>
+                                                            <input type="password" name="password"/>
+                                                            <div style="color: red" id="recharge-pass-noti"></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer" style="text-align: center">
+                                            <button type="button" data-dismiss="modal">Cancel</button>
+                                            <input type="hidden" id="pass" value="${sessionScope.user.password}"/>
+                                            <input type="submit" value="Confirm"/>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="modal fade" id="addPaymentMethod" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
@@ -198,8 +258,61 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="modal fade" id="withdraw" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <form action="Withdraw" method="post" id="withdrawForm" name="withdrawForm" onsubmit="return validateWithdrawPassword()">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title">Withdraw</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="wrapper row">
+                                                <table>
+                                                    <tr>
+                                                        <th>
+                                                            Amount
+                                                        </th>
+                                                        <td>
+                                                            <input type="number" step="0.01" name="amount" required/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>
+                                                            Payment
+                                                        </th>
+                                                        <td>
+                                                            <select name="payment">
+                                                                <c:forEach var="paymentMethod" items="${requestScope.bankList}">
+                                                                    <option value="${paymentMethod.paymentId}">${paymentMethod.name}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>
+                                                            Password
+                                                        </th>
+                                                        <td>
+                                                            <input type="password" name="password"/>
+                                                            <div style="color: red" id="withdraw-pass-noti"></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer" style="text-align: center">
+                                            <button type="button" data-dismiss="modal">Cancel</button>
+                                            <input type="hidden" id="pass" value="${sessionScope.user.password}"/>
+                                            <input type="submit" value="Confirm"/>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div>
+                                            
+                    <div style="margin-bottom: 5em">
                         <h2>Transaction history</h2>
                         <!-- Hien thi danh sach transaction cua user nay -->
 

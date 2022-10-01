@@ -85,7 +85,7 @@ public class PaymentMethodDAO {
                 String sql = "INSERT INTO [Payment_Method]\n"
                         + "           ([userId]\n"
                         + "           ,[accountNumber]\n"
-                        + "           ,[name])\n"
+                        + "           ,[name]\n"
                         + "           ,[active])\n"
                         + "     VALUES\n"
                         + "           (?, ?, ?, ?)";

@@ -6,6 +6,7 @@
 package context;
 
 import Model.PaymentAccount;
+import Model.PaymentMethod;
 import Model.User;
 
 /**
@@ -20,7 +21,10 @@ public class TestDAO {
     PaymentAccountDAO payAccDBC = new PaymentAccountDAO();
     PaymentMethodDAO payMedDBC = new PaymentMethodDAO();
     TransactionDAO transactionDAO = new TransactionDAO();
-        System.out.println(transactionDAO.getTransactionList(user).size());
+    
+    PaymentMethod paymentMethod = new PaymentMethod(0, user, new PaymentAccount(10028714113l), "Bank 3", true);
+    payMedDBC.insert(paymentMethod);
+//        System.out.println(transactionDAO.getTransactionList(user).size());
 //    transactionDAO.generateData();
 //    payAccDBC.generateData();
 //    payMedDBC.generateData();

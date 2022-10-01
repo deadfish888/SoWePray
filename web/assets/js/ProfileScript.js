@@ -57,3 +57,21 @@ function validateAddPassword() {
         return false;
     }
 }
+
+function validateRechargePassword() {
+    let pass = document.forms["rechargeForm"]["pass"].value;
+    let x = document.forms["rechargeForm"]["password"].value;
+    if (pass !== x) {
+        document.getElementById("recharge-pass-noti").innerHTML = "Wrong password";
+        return false;
+    }
+}
+
+function validateWithdrawPassword() {
+    let pass = document.forms["withdrawForm"]["pass"].value;
+    let x = document.forms["withdrawForm"]["password"].value;
+    if (pass !== x) {
+        document.getElementById("withdraw-pass-noti").innerHTML = "Wrong password";
+        return false;
+    }
+}

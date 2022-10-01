@@ -80,28 +80,42 @@ public class PaymentAccountDAO {
 
     }
 
-    public void generateData() {
-//        UserDAO userDAO = new UserDAO();
-//        ArrayList<User> userList = userDAO.getAll();
-//
-//        for (User user : userList) {
-//            if (user.getPaymentAccount() == null) {
-//                user.createWallet();
-//                PaymentAccount paymentAccount = user.getPaymentAccount();
-//                float balance = (float) Math.random() * 8888;
-//                paymentAccount.setBalance(balance);
-//                this.insert(paymentAccount);
-//                userDAO.setWalletNumber(paymentAccount, user);
-//
-//            }
-//        }
-        for (int i = 0; i < 100; i++) {
-            PaymentAccount paymentAccount = new PaymentAccount();
-            paymentAccount.setAccountNumber(Long.parseLong(MyUtil.randomNumberString(12)));
-            paymentAccount.setBalance((float) Math.random() * 4000);
-            insert(paymentAccount);
+    public void update(PaymentAccount paymentAccount) {
+        try {
+            String sql = "UPDATE [Payment_Account]\n"
+                    + "   SET [balance] = ?\n"
+                    + " WHERE [accountNumber] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setFloat(1, paymentAccount.getBalance());
+            stm.setLong(2, paymentAccount.getAccountNumber());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(PaymentAccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+//    public void generateData() {
+////        UserDAO userDAO = new UserDAO();
+////        ArrayList<User> userList = userDAO.getAll();
+////
+////        for (User user : userList) {
+////            if (user.getPaymentAccount() == null) {
+////                user.createWallet();
+////                PaymentAccount paymentAccount = user.getPaymentAccount();
+////                float balance = (float) Math.random() * 8888;
+////                paymentAccount.setBalance(balance);
+////                this.insert(paymentAccount);
+////                userDAO.setWalletNumber(paymentAccount, user);
+////
+////            }
+////        }
+//        for (int i = 0; i < 100; i++) {
+//            PaymentAccount paymentAccount = new PaymentAccount();
+//            paymentAccount.setAccountNumber(Long.parseLong(MyUtil.randomNumberString(12)));
+//            paymentAccount.setBalance((float) Math.random() * 4000);
+//            insert(paymentAccount);
+//        }
+//    }
 }
 
 /**

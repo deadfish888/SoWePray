@@ -40,7 +40,9 @@ public class AddPaymentController extends HttpServlet {
         PaymentAccount paymentAccount = payAccDAO.get(new PaymentAccount(acccountNumer));
         if (paymentAccount == null) {
             request.setAttribute("addErrorNoti", "Payment account is invalid");
-            response.sendRedirect(request.getContextPath() + "/User/Payment");
+
+        request.getRequestDispatcher("/User/Payment").forward(request, response);
+//            response.sendRedirect(request.getContextPath() + "/User/Payment");
         } else {
             PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
             PaymentMethod paymentMethod = new PaymentMethod();
