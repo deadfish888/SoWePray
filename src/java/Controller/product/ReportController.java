@@ -8,6 +8,7 @@ package Controller.product;
 import Model.Book;
 import Model.User;
 import context.BookDAO;
+import context.ReportDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -34,7 +35,7 @@ public class ReportController extends HttpServlet {
         int[] r_id=new int[report.length];
         int j=0;
         for(String s : report){
-           if(s.equals("1")) r_id[j++]=1;
+           if(s.trim().equals("1")) r_id[j++]=1;
            if(s.equals("2")) r_id[j++]=2;
            if(s.equals("3")) r_id[j++]=3;
            if(s.equals("4")) r_id[j++]=4;
@@ -45,8 +46,9 @@ public class ReportController extends HttpServlet {
            if(s.equals("9")) r_id[j++]=9;
            if(s.equals("10")) r_id[j++]=10;
         }
-        
-        
+        String note=request.getParameter("note");
+        ReportDAO redao=new ReportDAO();
+        redao.addReport(bid, bid, uId, note);
         response.sendRedirect("./Home");
     } 
 

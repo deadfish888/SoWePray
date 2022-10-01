@@ -113,17 +113,18 @@
                                             <div><input type="hidden" name="bId" value="${book.getId()}"></div>    
                                             <div>Book rating: ${book.getRating()} </div>
                             </div>
-                            <div class="well">
-                                <h4>Write your comment here...<span class="glyphicon glyphicon-pencil">
-                                </span>
-                                </h4>
-                                <form role="form">
+                            
+                            <div class="col-md-3">
+                                <form role="form" action="Comment" method="GET">
                                     <div class="form-group">
-                                        <textarea class="form-control" rows="3"></textarea>
+                                        <textarea class="form-control" name="comment" placeholder="Write your comment here..."></textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Send</button>
-                                </form>    
+                                </form> 
                             </div>
+<!--                            <div class="col-md-7">
+                                <%--<c:forEach var=></c:forEach>--%>
+                            </div>   -->
                             <br>
                         </div>           
                     </div>

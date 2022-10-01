@@ -78,6 +78,7 @@
                                         <li><input type="checkbox" id="checkboxEight" name="report" value="8"><label for="checkboxEight">Spam or misleading</label></li>
                                         <li><input type="checkbox" id="checkboxNine" name="report" value="9"><label for="checkboxNine">Infringes my rights</label></li>
                                         <li><input type="checkbox" id="checkboxTen" name="report" value="10"><label for="checkboxTen">Captions issue</label></li>
+                                        <li><textarea id="id" name="name" rows="5" cols="10" placeholder="Give some information" required="true"></textarea></li>
                                         <li><button type="submit" class="btn btn-primary">Send Report</button></li>
                                     </form>
                                 </ul>
