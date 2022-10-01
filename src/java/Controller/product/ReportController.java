@@ -15,6 +15,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
@@ -29,7 +30,24 @@ public class ReportController extends HttpServlet {
         User user=(User)request.getSession().getAttribute("user");
         int uId=user.getId();
         int bid=Integer.parseInt(request.getParameter("bId"));
+        String[] report=request.getParameterValues("report");
+        int[] r_id=new int[report.length];
+        int j=0;
+        for(String s : report){
+           if(s.equals("1")) r_id[j++]=1;
+           if(s.equals("2")) r_id[j++]=2;
+           if(s.equals("3")) r_id[j++]=3;
+           if(s.equals("4")) r_id[j++]=4;
+           if(s.equals("5")) r_id[j++]=5;
+           if(s.equals("6")) r_id[j++]=6;
+           if(s.equals("7")) r_id[j++]=7;
+           if(s.equals("8")) r_id[j++]=8;
+           if(s.equals("9")) r_id[j++]=9;
+           if(s.equals("10")) r_id[j++]=10;
+        }
         
+        
+        response.sendRedirect("./Home");
     } 
 
     @Override

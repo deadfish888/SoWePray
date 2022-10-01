@@ -21,8 +21,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 @WebServlet("/Favourite")
 public class FavouriteController extends HttpServlet {
-
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {   

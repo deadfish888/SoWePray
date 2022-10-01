@@ -28,7 +28,7 @@ public class AddBookController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CategoryDAO cd = new CategoryDAO();
-        ArrayList<Category> cates = cd.getAllCategory();
+        ArrayList<Category> cates = cd.getAllCategories();
         request.setAttribute("cates", cates);
         request.setAttribute("service", "Add");
         BookDAO bd = new BookDAO();
@@ -59,7 +59,7 @@ public class AddBookController extends HttpServlet {
         book.setDescription(description);
 
         CategoryDAO cd = new CategoryDAO();
-        ArrayList<Category> cates = cd.getAllCategory();
+        ArrayList<Category> cates = cd.getAllCategories();
         request.setAttribute("cates", cates);
 
         request.setAttribute("service", "Add");

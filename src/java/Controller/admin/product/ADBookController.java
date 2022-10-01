@@ -25,7 +25,7 @@ public class ADBookController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CategoryDAO cd = new CategoryDAO();
-        ArrayList<Category> cates = cd.getAllCategory();
+        ArrayList<Category> cates = cd.getAllCategories();
         request.setAttribute("categories", cates);
         BookDAO bd = new BookDAO();
         ArrayList<Book> books = bd.getBooks();

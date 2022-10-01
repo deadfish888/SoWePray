@@ -36,12 +36,7 @@ public class FavouriteDAO {
 
     public void addFavourite(int uID, int bID) {
         try {
-            String sql = "INSERT INTO [Favourite]\n"
-                    + "           ([uid]\n"
-                    + "           ,[bid])\n"
-                    + "     VALUES\n"
-                    + "           ("+ uID +",\n" +
-            "           " + bID + ")";
+            String sql = "INSERT INTO [Favourite]\n"+"([uid]\n"+",[bid])\n"+ "VALUES\n"+ "("+ uID +",\n" +""+ bID + ")";
             stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             stm.executeUpdate(sql);
         } catch (Exception e) {

@@ -68,20 +68,17 @@
                                 
                                 <ul class="ks-cboxtags">
                                     <form action="Report" method="GET">
-    <li><input type="checkbox" id="checkboxOne" value="report1"><label for="checkboxOne">Rainbow Dash</label></li>
-    <li><input type="checkbox" id="checkboxTwo" value="report2" checked><label for="checkboxTwo">Cotton Candy</label></li>
-    <li><input type="checkbox" id="checkboxThree" value="report3" checked><label for="checkboxThree">Rarity</label></li>
-    <li><input type="checkbox" id="checkboxFour" value="report4"><label for="checkboxFour">Moondancer</label></li>
-    <li><input type="checkbox" id="checkboxFive" value="report5"><label for="checkboxFive">Surprise</label></li>
-    <li><input type="checkbox" id="checkboxSix" value="report6" checked><label for="checkboxSix">Twilight
-                    Sparkle</label></li>
-    <li><input type="checkbox" id="checkboxSeven" value="report7"><label for="checkboxSeven">Fluttershy</label></li>
-    <li><input type="checkbox" id="checkboxEight" value="Derpy Hooves"><label for="checkboxEight">Derpy Hooves</label></li>
-    <li><input type="checkbox" id="checkboxNine" value="Princess Celestia"><label for="checkboxNine">Princess
-                    Celestia</label></li>
-    <li><input type="checkbox" id="checkboxTen" value="Gusty"><label for="checkboxTen">Gusty</label></li>
-    <li><input type="submit" /></li>
-    <li><button type="submit" class="btn btn-primary">Send Report</button></li>
+                                        <li><input type="checkbox" id="checkboxOne" name="report" value="1"><label for="checkboxOne">Sexual Content</label></li>
+                                        <li><input type="checkbox" id="checkboxTwo" name="report" value="2" ><label for="checkboxTwo">Violent or repulsive content</label></li>
+                                        <li><input type="checkbox" id="checkboxThree" name="report" value="3" ><label for="checkboxThree">Hateful or abusive content</label></li>
+                                        <li><input type="checkbox" id="checkboxFour" name="report" value="4"><label for="checkboxFour">Harassment or bullying</label></li>
+                                        <li><input type="checkbox" id="checkboxFive" name="report" value="5"><label for="checkboxFive">Harmful or dangerous acts</label></li>
+                                        <li><input type="checkbox" id="checkboxSix" name="report" value="6"><label for="checkboxSix">Child abuse</label></li>
+                                        <li><input type="checkbox" id="checkboxSeven" name="report" value="7"><label for="checkboxSeven">Promotes terrorism</label></li>
+                                        <li><input type="checkbox" id="checkboxEight" name="report" value="8"><label for="checkboxEight">Spam or misleading</label></li>
+                                        <li><input type="checkbox" id="checkboxNine" name="report" value="9"><label for="checkboxNine">Infringes my rights</label></li>
+                                        <li><input type="checkbox" id="checkboxTen" name="report" value="10"><label for="checkboxTen">Captions issue</label></li>
+                                        <li><button type="submit" class="btn btn-primary">Send Report</button></li>
                                     </form>
                                 </ul>
                             </div>
