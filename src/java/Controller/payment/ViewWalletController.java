@@ -5,6 +5,10 @@
 
 package Controller.User.payment;
 
+import Model.Transaction;
+import Model.User;
+import context.PaymentMethodDAO;
+import context.TransactionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
@@ -29,6 +34,13 @@ public class ViewWalletController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
+        request.setAttribute("payMedList", payMedDAO.getActivePayment(
+                        (User) request.getSession().getAttribute("user")));
+        TransactionDAO transDAO = new TransactionDAO();
+        ArrayList<Transaction> transactionList = transDAO.getTransactionList((User) request.getSession().getAttribute("user"));
+        request.setAttribute("transList", transactionList);
+        System.out.println(transactionList.size());
         request.getRequestDispatcher("../views/user/Payment.jsp").forward(request, response);
     } 
 

@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import utils.MyUtil;
 
 /**
  *
@@ -80,19 +81,25 @@ public class PaymentAccountDAO {
     }
 
     public void generateData() {
-        UserDAO userDAO = new UserDAO();
-        ArrayList<User> userList = userDAO.getAll();
-
-        for (User user : userList) {
-            if (user.getPaymentAccount() == null) {
-                user.createWallet();
-                PaymentAccount paymentAccount = user.getPaymentAccount();
-                float balance = (float) Math.random() * 8888;
-                paymentAccount.setBalance(balance);
-                this.insert(paymentAccount);
-                userDAO.setWalletNumber(paymentAccount, user);
-
-            }
+//        UserDAO userDAO = new UserDAO();
+//        ArrayList<User> userList = userDAO.getAll();
+//
+//        for (User user : userList) {
+//            if (user.getPaymentAccount() == null) {
+//                user.createWallet();
+//                PaymentAccount paymentAccount = user.getPaymentAccount();
+//                float balance = (float) Math.random() * 8888;
+//                paymentAccount.setBalance(balance);
+//                this.insert(paymentAccount);
+//                userDAO.setWalletNumber(paymentAccount, user);
+//
+//            }
+//        }
+        for (int i = 0; i < 100; i++) {
+            PaymentAccount paymentAccount = new PaymentAccount();
+            paymentAccount.setAccountNumber(Long.parseLong(MyUtil.randomNumberString(12)));
+            paymentAccount.setBalance((float) Math.random() * 4000);
+            insert(paymentAccount);
         }
     }
 }

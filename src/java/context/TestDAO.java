@@ -15,14 +15,15 @@ import Model.User;
 public class TestDAO {
     public static void main(String[] args) {
     UserDAO userDBC = new UserDAO();
+    User user = new User();
+    user.setId(2);
     PaymentAccountDAO payAccDBC = new PaymentAccountDAO();
     PaymentMethodDAO payMedDBC = new PaymentMethodDAO();
     TransactionDAO transactionDAO = new TransactionDAO();
-    transactionDAO.generateData();
+        System.out.println(transactionDAO.getTransactionList(user).size());
+//    transactionDAO.generateData();
 //    payAccDBC.generateData();
 //    payMedDBC.generateData();
-//    User user = new User();
-//    user.setId(1);
 //    user.createWallet();
 //    PaymentAccount paymentAccount = user.getPaymentAccount();
 //    payAccDBC.insert(paymentAccount);

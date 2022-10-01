@@ -77,52 +77,65 @@ public class TransactionDAO {
 
     }
 
-    public ArrayList<PaymentMethod> getBankList(User user) {
-        ArrayList<PaymentMethod> bankList = new ArrayList<>();
-        PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
-        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
+    public ArrayList<Transaction> getTransactionList(User user) {
+        ArrayList<Transaction> transactionList = new ArrayList<>();
         try {
-            String sql = "select pa.accountNumber, balance, paymentId, userId, pm.[name] from Payment_Account pa\n"
-                    + "  inner join Payment_Method pm\n"
-                    + "  on pa.accountNumber = pm.accountNumber\n"
-                    + "  where pa.accountNumber not in \n"
-                    + "  (\n"
-                    + "  select walletNumber from [User]\n"
-                    + "  inner join Payment_Account\n"
-                    + "  on [User].walletNumber = Payment_Account.accountNumber\n"
-                    + "  ) and userId = ?";
+            String sql = "SELECT [transactionId]\n"
+                    + "      ,[userId]\n"
+                    + "      ,[amount]\n"
+                    + "      ,[balanceAfter]\n"
+                    + "      ,[transactionTime]\n"
+                    + "      ,[type]\n"
+                    + "      ,[status]\n"
+                    + "      ,[description]\n"
+                    + "      ,[paymentId]\n"
+                    + "  FROM [Transaction]"
+                    + "  WHERE userId = ?"
+                    + "  ORDER BY transactionTime desc";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, user.getId());
             rs = stm.executeQuery();
-            while (rs.next()) {
+            while(rs.next()){
+                Transaction transaction = new Transaction();
+                transaction.setTransactionId(rs.getLong("transactionId"));
+                transaction.setUser(user);
+                transaction.setAmount(rs.getFloat("amount"));
+                transaction.setBalanceAfter(rs.getFloat("balanceAfter"));
+                transaction.setTransactionTime(rs.getTimestamp("transactionTime"));
+                transaction.setType(rs.getInt("type"));
+                transaction.setStatus(rs.getInt("status"));
+                transaction.setDescription(rs.getString("description"));
+                PaymentMethodDAO paymentMethodDAO = new PaymentMethodDAO();
                 PaymentMethod paymentMethod = new PaymentMethod();
                 paymentMethod.setPaymentId(rs.getInt("paymentId"));
-                bankList.add(payMedDAO.get(paymentMethod));
+                paymentMethod = paymentMethodDAO.get(paymentMethod);
+                transaction.setPayment(paymentMethod);
+                transactionList.add(transaction);
             }
-            return bankList;
+            return transactionList;
         } catch (SQLException ex) {
             Logger.getLogger(TransactionDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    public void generateData() {
-        UserDAO userDAO = new UserDAO();
-        PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
-        ArrayList<User> userList = userDAO.getAll();
-        for (User user : userList) {
-            Transaction transaction = new Transaction();
-            transaction.setUser(user);
-            transaction.setAmount(user.getPaymentAccount().getBalance());
-            transaction.setBalanceAfter(user.getPaymentAccount().getBalance());
-            transaction.setType(1);
-            transaction.setStatus(2);
-            transaction.setPayment(getBankList(user).get(0));
-            transaction.setDescription("Recharge money from " + transaction.getPayment().getName());
-            transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-            insert(transaction);
-        }
-    }
+//    public void generateData() {
+//        UserDAO userDAO = new UserDAO();
+//        PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
+//        ArrayList<User> userList = userDAO.getAll();
+//        for (User user : userList) {
+//            Transaction transaction = new Transaction();
+//            transaction.setUser(user);
+//            transaction.setAmount(user.getPaymentAccount().getBalance());
+//            transaction.setBalanceAfter(user.getPaymentAccount().getBalance());
+//            transaction.setType(1);
+//            transaction.setStatus(2);
+//            transaction.setPayment(getBankList(user).get(0));
+//            transaction.setDescription("Recharge money from " + transaction.getPayment().getName());
+//            transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+//            insert(transaction);
+//        }
+//    }
 }
 
 /**

@@ -14,15 +14,17 @@ public class PaymentMethod {
     User user;
     PaymentAccount paymentAccount;
     String name;
+    boolean active;
 
     public PaymentMethod() {
     }
 
-    public PaymentMethod(int paymentId, User user, PaymentAccount paymentAccount, String name) {
+    public PaymentMethod(int paymentId, User user, PaymentAccount paymentAccount, String name, boolean active) {
         this.paymentId = paymentId;
         this.user = user;
         this.paymentAccount = paymentAccount;
         this.name = name;
+        this.active = active;
     }
 
     public int getPaymentId() {
@@ -56,5 +58,13 @@ public class PaymentMethod {
     public void setName(String name) {
         this.name = name;
     }
-    
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
 }
