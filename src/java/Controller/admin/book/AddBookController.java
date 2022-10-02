@@ -9,16 +9,12 @@ import Model.Category;
 import context.BookDAO;
 import context.CategoryDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import utils.Validator;
 
 /* @author ACER */
 @WebServlet(name = "AddBookController", urlPatterns = {"/Admin/AddBook"})
@@ -32,7 +28,7 @@ public class AddBookController extends HttpServlet {
         request.setAttribute("cates", cates);
         request.setAttribute("service", "Add");
         BookDAO bd = new BookDAO();
-        request.setAttribute("newId", bd.getNumberBook() + 1);
+        request.setAttribute("newId", bd.countBookNumber() + 1);
         request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
     }
 
@@ -71,7 +67,7 @@ public class AddBookController extends HttpServlet {
         } else {
             request.setAttribute("message", "Add Successfully!");
         }
-        request.setAttribute("newId", bd.getNumberBook() + 1);
+        request.setAttribute("newId", bd.countBookNumber() + 1);
         request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
 
     }

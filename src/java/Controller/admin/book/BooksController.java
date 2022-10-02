@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 /* @author ACER */
 @WebServlet(name = "ADBookController", urlPatterns = {"/Admin/Book"})
-public class ADBookController extends HttpServlet {
+public class BooksController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

@@ -4,12 +4,9 @@
  */
 package Controller.admin.book.content;
 
-import Controller.admin.book.UpdateBookController;
 import Model.Chapter;
-import Model.Content;
 import context.BookDAO;
 import context.ChapterDAO;
-import context.ContentDAO;
 import context.VolumeDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -17,7 +14,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,7 +39,7 @@ public class TOCController extends HttpServlet {
             String schapterId = request.getParameter("cid");
             if (svolumeId != null) {
                 int vid = Integer.parseInt(svolumeId);
-                request.setAttribute("vol", vd.getVolume(vid));
+                request.setAttribute("vol", vd.getVolumeById(vid));
             } else if (schapterId != null) {
                 int cid = Integer.parseInt(schapterId);
                 Chapter chapter = cd.getChapter(cid);

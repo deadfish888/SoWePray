@@ -33,7 +33,7 @@ public class DashBoard extends HttpServlet {
     throws ServletException, IOException {
         BookDAO bd = new BookDAO();
         UserDAO ud = new UserDAO();
-        request.setAttribute("numBook", bd.getNumberBook());
+        request.setAttribute("numBook", bd.countBookNumber());
         request.setAttribute("numUser", ud.getNumberUser());
         request.getRequestDispatcher("/admin/dashboard.jsp").forward(request, response);
     } 

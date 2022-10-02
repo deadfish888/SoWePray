@@ -67,7 +67,7 @@ public class VolumeDAO {
         return null;
     }
 
-    public Volume getVolume(int vid) {
+    public Volume getVolumeById(int vid) {
         try {
             String sql = "SELECT [id]\n"
                     + "      ,[bookId]\n"
@@ -183,7 +183,7 @@ public class VolumeDAO {
         return 0;
     }
 
-    public int deleteVolume(int volumeId) {
+    public int deleteVolumeAndItsChapter(int volumeId) {
         try {
             String sql = "DELETE FROM [dbo].[Volume]\n"
                     + "      WHERE [id] = ? ";

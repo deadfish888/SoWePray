@@ -5,10 +5,8 @@
 
 package Controller.admin.book.content;
 
-import context.ChapterDAO;
 import context.VolumeDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -26,7 +24,7 @@ public class DeleteVolumeController extends HttpServlet {
             int volumeId =  Integer.parseInt(request.getParameter("id"));
             int bookId = Integer.parseInt(request.getParameter("bid"));
             VolumeDAO cd = new VolumeDAO();
-            cd.deleteVolume(volumeId);
+            cd.deleteVolumeAndItsChapter(volumeId);
             response.sendRedirect("./TOC?id="+bookId);
         } catch (Exception ex) {
             Logger.getLogger(DeleteVolumeController.class.getName()).log(Level.SEVERE, null, ex);

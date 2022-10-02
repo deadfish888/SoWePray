@@ -38,7 +38,7 @@ public class EditChapterController extends HttpServlet {
             request.setAttribute("volumes", vd.getAllVolume(bookId));
             request.setAttribute("chapters", cd.getAllChapter(bookId));
 
-            request.setAttribute("vol", vd.getVolume(chapter.getVolumeID()));
+            request.setAttribute("vol", vd.getVolumeById(chapter.getVolumeID()));
             request.setAttribute("chap", chapter);
             request.setAttribute("service", "Edit");
 
@@ -74,7 +74,7 @@ public class EditChapterController extends HttpServlet {
             request.setAttribute("volumes", vd.getAllVolume(bookId));
             request.setAttribute("chapters", cd.getAllChapter(bookId));
             request.setAttribute("message", "Edit Failed! Please try again!");
-            request.setAttribute("vol", vd.getVolume(volId));
+            request.setAttribute("vol", vd.getVolumeById(volId));
             request.setAttribute("chap", chapter);
             request.setAttribute("service", "Edit");
 

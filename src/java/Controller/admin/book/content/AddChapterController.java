@@ -36,7 +36,7 @@ public class AddChapterController extends HttpServlet {
             VolumeDAO vd = new VolumeDAO();
             ChapterDAO cd = new ChapterDAO();
 
-            request.setAttribute("vol", vd.getVolume(volId));
+            request.setAttribute("vol", vd.getVolumeById(volId));
             request.setAttribute("volumes", vd.getAllVolume(bookId));
             request.setAttribute("chapters", cd.getAllChapter(bookId));
             request.setAttribute("service", "Add");
@@ -71,7 +71,7 @@ public class AddChapterController extends HttpServlet {
             ChapterDAO cd = new ChapterDAO();
 
             if (cd.addChapter(chapter) == 0) {
-                request.setAttribute("vol", vd.getVolume(volId));
+                request.setAttribute("vol", vd.getVolumeById(volId));
                 request.setAttribute("volumes", vd.getAllVolume(bookId));
                 request.setAttribute("chapters", cd.getAllChapter(bookId));
                 request.setAttribute("message", "Add Failed! Please try again!");

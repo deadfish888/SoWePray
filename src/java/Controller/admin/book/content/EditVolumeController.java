@@ -31,7 +31,7 @@ public class EditVolumeController extends HttpServlet {
             VolumeDAO vd = new VolumeDAO();
             ChapterDAO cd = new ChapterDAO();
 
-            Volume vol = vd.getVolume(volumeId);
+            Volume vol = vd.getVolumeById(volumeId);
             request.setAttribute("vol", vol);
             request.setAttribute("book", bd.getBookById(vol.getBookId()));
             request.setAttribute("volumes", vd.getAllVolume(vol.getBookId()));
