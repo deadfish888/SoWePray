@@ -76,7 +76,7 @@ public class ChangeEmailController extends HttpServlet {
         UserDAO userDBC = new UserDAO();
         User user = (User) request.getSession().getAttribute("user");
         if (user.getPassword().equals(request.getParameter("password"))) {
-            if (userDBC.checkEmailExisted(request.getParameter("newEmail"))==0) {
+            if (!userDBC.checkDupEmail(request.getParameter("newEmail"))) {
                 user.setEmail(request.getParameter("newEmail"));
                 userDBC.updateUser(user);
             } else {

@@ -39,13 +39,7 @@ public class LoginController extends HttpServlet {
         if (user != null) {
             HttpSession session = request.getSession();
 
-            if (user.is_super()==0) {
-                request.setAttribute("origin", request.getParameter("origin"));
-                request.setAttribute("error", "Account has been disable !");
-                forward(request, response, "/views/auth/login.jsp");
-                return;
-            }
-            if (user.is_super() >= 4) {
+            if (user.is_super()) {
                 session.setAttribute("admin", user);
                 response.sendRedirect("./Edit");
                 return;

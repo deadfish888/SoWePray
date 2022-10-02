@@ -61,14 +61,13 @@ public class UserDAO {
                 String phone = rs.getString(6);
                 String address = rs.getString(7);
                 String username = rs.getString(8);
-                int is_super = rs.getInt(10);
+                boolean is_super = rs.getBoolean(10);
                 PaymentAccount payAcc = new PaymentAccount();
                 payAcc.setAccountNumber(rs.getLong("walletNumber"));
                 PaymentAccountDAO payDAO = new PaymentAccountDAO();
                 payAcc = payDAO.get(payAcc);
 
-                User u = new User(userid, name, gender, dob, email, phone, address, username, is_super);
-                u.setPassword(pass);
+                User u = new User(userid, name, gender, dob, email, phone, address, username, pass, is_super);
                 u.setPaymentAccount(payAcc);
                 return u;
             }
@@ -92,140 +91,17 @@ public class UserDAO {
             stm.setString(3, us.getPhone());
             stm.setString(4, us.getAddress());
             stm.setInt(5, us.getId());
-            stm.executeUpdate();
+            rs = stm.executeQuery();
         } catch (Exception e) {
             System.out.println("editProfile Error:" + e.getMessage());
         }
     }
 
-    public void disableUser(int id) {
-        String sql = "update [User] set\n"
-                + "	[is_super] = 0\n"
-                + "	where [id] = ?";
-        try {
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, id);
-            stm.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("editProfile Error:" + e.getMessage());
-        }
+    public boolean checkExistEmail(String email) {
+        String sql = "select * from [User] where email= ? ";
+        return false;
     }
 
-    public void editRank(int id, int set) {
-        User us = getUser(id);
-        String sql = "update [User] set\n"
-                + "	[is_super] = ?\n"
-                + "	where [id] = ?";
-        try {
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, us.is_super() + set);
-            stm.setInt(2, id);
-            stm.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("editProfile Error:" + e.getMessage());
-        }
-    }
-
-    public ArrayList<User> getByAccess(int us) {
-        ArrayList<User> list = new ArrayList<>();
-        try {
-            String sql = "Select * from [User] where [is_super] < ?";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, us);
-            rs = stm.executeQuery();
-            while (rs.next()) {
-                int userid = rs.getInt(1);
-                String name = rs.getString(2);
-                String gender = rs.getBoolean(3) ? "Male" : "Female";
-                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-                String dob = f.format(rs.getDate(4));
-                String email = rs.getString(5);
-                String phone = rs.getString(6);
-                String address = rs.getString(7);
-                String username = rs.getString(8);
-                int is_super = rs.getInt(10);
-                list.add(new User(userid, name, gender, dob, email, phone, address, username, is_super));
-            }
-        } catch (Exception e) {
-            System.out.println("getUser Error:" + e.getMessage());
-        }
-        return list;
-    }
-
-    public ArrayList<User> sortUser(int us, String att, int way) {
-        String order = "";
-        if (way == 0) {
-            order = "ASC";
-        } else {
-            order = "DESC";
-        }
-        ArrayList<User> list = new ArrayList<>();
-        try {
-            String sql = "select * from [User]\n"
-                    + "where is_super < ? \n"
-                    + "order by " + att + " " + order + "";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, us);
-            rs = stm.executeQuery();
-            while (rs.next()) {
-                int userid = rs.getInt(1);
-                String name = rs.getString(2);
-                String gender = rs.getBoolean(3) ? "Male" : "Female";
-                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-                String dob = f.format(rs.getDate(4));
-                String email = rs.getString(5);
-                String phone = rs.getString(6);
-                String address = rs.getString(7);
-                String username = rs.getString(8);
-                int is_super = rs.getInt(10);
-                list.add(new User(userid, name, gender, dob, email, phone, address, username, is_super));
-            }
-        } catch (Exception e) {
-            System.out.println("getUser Error:" + e.getMessage());
-        }
-        return list;
-    }
-
-    public ArrayList<User> searchByUname(int us, String att) {
-        ArrayList<User> list = new ArrayList<>();
-        try {
-            String sql = "select * from [User]\n"
-                    + "where [is_super] <?\n"
-                    + "and [fullname] like ?\n"
-                    + "or [username] like ?\n"
-                    + "or [email] like ?\n"
-                    + "or [phone] like ?\n"
-                    + "or [address] like ?";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, us);
-            stm.setString(2, att);
-            stm.setString(3, att);
-            stm.setString(4, att);
-            stm.setString(5, att);
-            stm.setString(6, att);
-
-            rs = stm.executeQuery();
-            while (rs.next()) {
-                int userid = rs.getInt(1);
-                String name = rs.getString(2);
-                String gender = rs.getBoolean(3) ? "Male" : "Female";
-                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-                String dob = f.format(rs.getDate(4));
-                String email = rs.getString(5);
-                String phone = rs.getString(6);
-                String address = rs.getString(7);
-                String username = rs.getString(8);
-                int is_super = rs.getInt(10);
-                list.add(new User(userid, name, gender, dob, email, phone, address, username, is_super));
-            }
-        } catch (Exception e) {
-            System.out.println("getUser Error:" + e.getMessage());
-        }
-        return list;
-    }
-
-    
-    
     public String resetPassword(String token) {
         TokenDAO td = new TokenDAO();
         int userId = td.checkTokenExpired(token);
@@ -261,6 +137,52 @@ public class UserDAO {
             System.out.println("checkExistEmail Error:" + e.getMessage());
         }
         return 0;
+    }
+//
+//    public String resetPassword(String email) {
+//        String newPassword = generateNewPass();
+//        String sql = "update [User] set "
+//                + "  [password] = ? "
+//                + " where [email] = ?";
+//        try {
+//            PreparedStatement ps = cnn.prepareStatement(sql);
+//            ps.setString(1, newPassword);
+//            ps.setString(2, email);
+//            ps.executeUpdate();
+//        } catch (Exception e) {
+//            System.out.println("resetPassword Error:" + e.getMessage());
+//        }
+//        return newPassword;
+//    }
+
+    public boolean checkDupEmail(String email) {
+        try {
+            String sql = "select * from [User] where email=?";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, email);
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("checkAccDOB Error:" + e.getMessage());
+        }
+        return true;
+    }
+
+    public boolean checkDupUsername(String key) {
+        try {
+            String sql = "select * from [User] where username=?";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, key);
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("checkAccDOB Error:" + e.getMessage());
+        }
+        return true;
     }
 
     public void createNewUser(String name, String gender, String dob, String email, String phone, String username, String password) {
@@ -319,7 +241,7 @@ public class UserDAO {
             stm.setString(6, user.getAddress());
             stm.setString(7, user.getUsername());
             stm.setString(8, user.getPassword());
-            stm.setInt(9, user.is_super());
+            stm.setBoolean(9, user.is_super());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -370,7 +292,7 @@ public class UserDAO {
     public ArrayList<User> getAllUsers() {
         ArrayList<User> list = new ArrayList<>();
         try {
-            String sql = "Select * from [User] where [is_super] < 5";
+            String sql = "Select * from [User] where [is_super] = 0";
             stm = cnn.prepareStatement(sql);
             rs = stm.executeQuery();
             while (rs.next()) {
@@ -407,7 +329,7 @@ public class UserDAO {
                 String phone = rs.getString(6);
                 String address = rs.getString(7);
                 String username = rs.getString(8);
-                int isSuper = rs.getInt(9);
+                boolean isSuper = rs.getBoolean("is_super");
                 PaymentAccount paymentAccount = new PaymentAccount();
                 paymentAccount.setAccountNumber(rs.getLong("walletNumber"));
                 PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
@@ -515,7 +437,7 @@ public class UserDAO {
             if (rs.next()) {
                 return new User(id, rs.getString(1), rs.getBoolean(2) ? "Male" : "Female",
                         rs.getString(3), rs.getString(4), rs.getString(5),
-                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9),
+                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9),
                         new PaymentAccount(rs.getLong("walletNumber")));
 //                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9));
             }
@@ -546,7 +468,7 @@ public class UserDAO {
             if (rs.next()) {
                 return new User(rs.getInt("id"), rs.getString(1), rs.getBoolean(2) ? "Male" : "Female",
                         rs.getString(3), rs.getString(4), rs.getString(5),
-                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9),
+                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9),
                         new PaymentAccount(rs.getLong("walletNumber")));
 //                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9));
             }
@@ -569,7 +491,6 @@ public class UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
 //    void generateData() {

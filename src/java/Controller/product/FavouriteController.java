@@ -21,6 +21,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 @WebServlet("/Favourite")
 public class FavouriteController extends HttpServlet {
+
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {   
@@ -32,9 +34,10 @@ public class FavouriteController extends HttpServlet {
        }else{
            User user=(User)request.getSession().getAttribute("user");
            int uId=user.getId();
+           
            ArrayList<Favourite> list_f= fdao.getAllBook(uId);
            ArrayList<Book> list_b=new ArrayList<>();
-           ArrayList<Category> list_c=cdao.getAllCategories();
+           ArrayList<Category> list_c=cdao.getAllCategory();
            for(int i=0;i<list_f.size();i++){
                int bID=list_f.get(i).getbID();
                Book b=bdao.getBookById(bID);

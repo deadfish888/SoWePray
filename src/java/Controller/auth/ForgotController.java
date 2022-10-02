@@ -7,7 +7,6 @@ package Controller.auth;
 import context.TokenDAO;
 import context.UserDAO;
 import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,8 +20,8 @@ import utils.MyUtil;
 @WebServlet("/Forgot")
 public class ForgotController extends HttpServlet {
 
-    private String user="";
-    private String pass="";
+    private final String user="";
+    private final String pass="";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -75,12 +74,14 @@ public class ForgotController extends HttpServlet {
     }
 
     //    @Override
-    public void init() {
-        // reads SMTP server setting from web.xml file
-        ServletContext context = getServletContext();
-        user = context.getInitParameter("user");
-        pass = context.getInitParameter("pass");
-    }
+//    public void init() {
+//        // reads SMTP server setting from web.xml file
+//        ServletContext context = getServletContext();
+//        host = context.getInitParameter("host");
+//        port = context.getInitParameter("port");
+//        user = context.getInitParameter("user");
+//        pass = context.getInitParameter("pass");
+//    }
     
     private void forward(HttpServletRequest request, HttpServletResponse response, String path) throws ServletException, IOException {
         RequestDispatcher rd = request.getRequestDispatcher(path);

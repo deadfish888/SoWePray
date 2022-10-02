@@ -146,20 +146,11 @@ public class BookDAO {
 
     public Book getBookById(int bookId) {
         try {
-            String sql = "SELECT [id]\n"
-                    + "      ,[title]\n"
-                    + "      ,[author]\n"
-                    + "      ,[categoryid]\n"
-                    + "      ,[rating]\n"
-                    + "      ,[favourite]\n"
-                    + "      ,[price]\n"
-                    + "      ,[is_sale]\n"
-                    + "      ,[image]\n"
-                    + "      ,[description]\n"
-                    + "      ,[views]\n"
-                    + "      ,[status]\n"
-                    + "  FROM [dbo].[Book]"
-                    + "WHERE [id] = ?";
+//            String sql = "update [Book] set [views] = [views]+1 where [id]= ?";
+//            stm = cnn.prepareStatement(sql);
+//            stm.setInt(1, bookid);
+//            stm.executeUpdate();
+            String sql = "select * from [Book] where [id] = ?";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, bookId);
             rs = stm.executeQuery();
@@ -213,7 +204,7 @@ public class BookDAO {
         return list;
     }
 
-    public int countBookNumber() {
+    public int getNumberBook() {
         try {
             String sql = "select count([id]) from [Book]";
             stm = cnn.prepareStatement(sql);

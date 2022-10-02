@@ -9,12 +9,13 @@
 <%@page import="Model.*"%>
 <%@page import="context.*"%>
 <%@page import="java.util.ArrayList"%>
-
-<c:if test="${!empty sessionScope.admin && !empty sessionScope.adminS}">
-    <%         
-          response.sendRedirect("/Bookie/Home");
-    %>
-</c:if>
+<%         
+        User us = (User) session.getAttribute("admin");
+        if (session.getAttribute("admin")==null ) {
+            response.sendRedirect("/Bookie/Home");
+        }
+       
+%>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -135,60 +136,54 @@
                             <div class="card-body">
                                 <form action="./Edit" method="Post" class="form-horizontal form-material mx-2" >
                                     <div class="form-group">
-                                        <label for="example-email" class="col-md-12"><i class="fa-solid fa-envelope"></i> Email</label>
+                                        <label for="example-email" class="col-md-12">Email</label>
                                         <div class="col-md-12">
-                                            <input type="email" placeholder="${sessionScope.admin.email}${sessionScope.adminS.email}"
+                                            <input type="email" placeholder="${sessionScope.admin.email}"
                                                    class="form-control ps-0 form-control-line" name="email"
                                                    id="example-email">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-12 mb-0"><i class="fa-solid fa-user"></i>  Username</label>
+                                        <label class="col-md-12 mb-0">Username</label>
                                         <div class="col-md-12">
-                                            <input type="text" placeholder="${sessionScope.admin.username}${sessionScope.adminS.username}"
+                                            <input type="text" placeholder="${sessionScope.admin.username}"
                                                    class="form-control ps-0 form-control-line">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-12 mb-0"> <i class="fa-solid fa-lock"></i>   Password</label>         
-                                            <span style="position: absolute" onclick="showPass()">
-                                                <i id="hide1" class="fa-solid fa-eye" ></i>
-                                                <i id="hide2" style="display: none" class="fa-sharp fa-solid fa-eye-slash"></i>
-                                            </span>
-
-
+                                        <label class="col-md-12 mb-0">Password 
+                                            <input type="checkbox" onclick="showPass()"> 
+                                        </label>
                                         <div class="col-md-12">
-                                            <input type="password" value="${sessionScope.admin.password}${sessionScope.adminS.password}" id="unsignPass"
-                                                   class="form-control ps-0 form-control-line" name="password"> 
+                                            <input type="password" value="${sessionScope.admin.password}" id="unsignPass"
+                                                   class="form-control ps-0 form-control-line" name="password">
                                         </div>
-
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-12 mb-0"><i class="fa-solid fa-address-book"></i> Full Name</label>
+                                        <label class="col-md-12 mb-0">Full Name</label>
                                         <div class="col-md-12">
-                                            <input type="text" placeholder="${sessionScope.admin.name}${sessionScope.adminS.name}"
+                                            <input type="text" placeholder="${sessionScope.admin.name}"
                                                    class="form-control ps-0 form-control-line" name="fullname">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-12 mb-0"><i class="fa-solid fa-phone"></i>  Phone</label>
+                                        <label class="col-md-12 mb-0">Phone</label>
                                         <div class="col-md-12">
-                                            <input type="text" placeholder="${sessionScope.admin.phone}${sessionScope.adminS.phone}"
+                                            <input type="text" placeholder="${sessionScope.admin.phone}"
                                                    class="form-control ps-0 form-control-line" name="phone">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-12 mb-0"><i class="fa-sharp fa-solid fa-location-pin"></i>  Address</label>
+                                        <label class="col-md-12 mb-0">Address</label>
                                         <div class="col-md-12">
-                                            <input type="text" placeholder="${sessionScope.admin.address}${sessionScope.adminS.address}"
+                                            <input type="text" placeholder="${sessionScope.admin.address}"
                                                    class="form-control ps-0 form-control-line" name="address">
                                         </div>
                                     </div>
-
+                                    
                                     <br>
                                     <c:if test="${notice!=null }">
-                                        <div class="form-group" style="color : red" ">
-                                            <i class="fa-solid fa-check"></i>
+                                        <div class="form-group" ">
                                             ${notice}
                                         </div>
                                     </c:if>
@@ -240,8 +235,6 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="https://kit.fontawesome.com/a65741f09b.js" crossorigin="anonymous"></script>
-
     <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="/Bookie/manage/assets/plugins/bootstrap/dist/js/bootstrap.bundle.js"></script>

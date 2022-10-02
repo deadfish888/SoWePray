@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.admin.book;
+package Controller.admin.product;
 
 import Model.Book;
 import Model.Category;
@@ -31,7 +31,7 @@ public class UpdateBookController extends HttpServlet {
         try {
             int bookId = (new Validator()).fieldInt(request.getParameter("id"), "No Information");
             CategoryDAO cd = new CategoryDAO();
-            ArrayList<Category> cates = cd.getAllCategories();
+            ArrayList<Category> cates = cd.getAllCategory();
             request.setAttribute("cates", cates);
             request.setAttribute("service", "Update");
             BookDAO bd = new BookDAO();
@@ -65,7 +65,7 @@ public class UpdateBookController extends HttpServlet {
         book.setDescription(description);
         
         CategoryDAO cd = new CategoryDAO();
-        ArrayList<Category> cates = cd.getAllCategories();
+        ArrayList<Category> cates = cd.getAllCategory();
         request.setAttribute("cates", cates);
 
         request.setAttribute("service", "Update");

@@ -15,9 +15,10 @@ import java.util.regex.Pattern;
  */
 public class User {
 
-    private int id, is_super;
+    private int id;
     private String name, gender, dob, email, phone, address, username, password;
     private PaymentAccount paymentAccount;
+    private boolean is_super;
 
     public User() {
     }
@@ -27,7 +28,7 @@ public class User {
         this.password = password;
     }
 
-    public User(int id, String name, String gender, String dob, String email, String phone, String address, String username, int is_super) {
+    public User(int id, String name, String gender, String dob, String email, String phone, String address, String username, String password, boolean is_super) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -36,6 +37,7 @@ public class User {
         this.phone = phone;
         this.address = address;
         this.username = username;
+        this.password = password;
         this.is_super = is_super;
     }
 
@@ -60,7 +62,7 @@ public class User {
         this.address = address;
     }
 
-    public User(int id, String name, String gender, String dob, String email, String phone, String address, String username, String password, int is_super, PaymentAccount paymentAccount) {
+    public User(int id, String name, String gender, String dob, String email, String phone, String address, String username, String password, boolean is_super, PaymentAccount paymentAccount) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -74,11 +76,12 @@ public class User {
         this.paymentAccount = paymentAccount;
     }
 
-    public int is_super() {
+    
+    public boolean is_super() {
         return is_super;
     }
 
-    public void setIs_super(int is_super) {
+    public void setIs_super(boolean is_super) {
         this.is_super = is_super;
     }
 
@@ -153,7 +156,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
     public int getPasswordLevel() {
         String numberRegex = "[0-9]";
         String characterRegex = "[a-zA-Z]";

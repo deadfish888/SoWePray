@@ -17,7 +17,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Table of Contents</title>
+        <title>Book Management</title>
         <link rel="stylesheet" href="/Bookie/manage/html/css/style.min.css">
         <style>
             #contextMenu {
@@ -77,7 +77,40 @@
 
                     <div class="row">
 
-                        <jsp:include page="/manage/book/toc/toc.jsp"/>
+                        <div class="col-lg-4 col-xlg-3 col-md-4">
+                            <div class="card">
+                                <div class="card-body profile-card">
+                                    <h4 class="card-title mt-2"> 
+                                        <a target="_blank" href="../../BookDetail?id=${book.getId()}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
+                                            ${book.title}
+                                        <a href="./AddVolume?id=${book.id}"><i class="fa fa-plus-square" aria-hidden="true"></i></a>
+                                        <a href="./ArrangeVolume?id=${book.id}"><i class="fa fa-random" aria-hidden="true"></i></a>
+                                    </h4>
+
+                                    <c:forEach items="${requestScope.volumes}" var="volume">
+                                        <h5 class="card-subtitle">
+                                            <a href="./TOC?id=${book.id}&vid=${volume.id}">${volume.volumeName}</a>
+                                            <a href="./AddChapter?id=${volume.id}"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                                            <a href="./ArrangeChapter?id=${volume.id}"><i class="fa fa-random" aria-hidden="true"></i></a>
+                                        </h5>
+                                        <h5 class="card-subtitle">
+                                            <ul class="list-group list-group-flush">
+                                                <c:forEach items="${requestScope.chapters}" var="chapter">
+                                                    <c:if test="${chapter.volumeID==volume.id}">
+                                                        <li class="list-group-item">
+                                                            <a target="_blank" href="../../BookDetail?id=${book.getId()}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
+                                                            <a href="./TOC?id=${book.id}&cid=${chapter.id}">   ${chapter.chapterName}</a>
+                                                        </li>
+                                                    </c:if>
+
+                                                </c:forEach>
+                                            </ul>
+                                        </h5>
+                                    </c:forEach>
+
+                                </div>
+                            </div>
+                        </div>
                         <c:choose>
                             <c:when test="${requestScope.vol != null}">
                                 <div class="col-lg-8 col-xlg-9 col-md-7">
@@ -86,79 +119,34 @@
                                             <h5 class="card-title mt-2"> 
                                                 Volume
                                             </h5>
-
-                                            <table class="table">
-                                                <tr>
-                                                    <th scope="row">
-                                                        Name
-                                                    </th>
-                                                    <td>
-                                                        ${vol.volumeName}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">
-                                                        Summary
-                                                    </th>
-                                                    <td rowspan="5" style="white-space: pre-line">${(vol.summary == null) ? "No summary" : vol.summary}</td>
-                                                </tr>
-                                            </table>
-                                            <div class="row mt-3">
-
-                                                <div class="col-md-1">
-                                                    <form method="get" action="./EditVolume" >
-                                                        <input type="hidden" name="id" value="${vol.id}">
+                                            <form method="get" action="./Volume" style="width: 90%; display: block; margin: auto">
+                                                <table class="table">
+                                                    <tr>
+                                                        <th scope="row">
+                                                            Name
+                                                        </th>
+                                                        <td>
+                                                            ${vol.volumeName}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">
+                                                            Summary
+                                                        </th>
+                                                        <td rowspan="5">
+                                                            ${(vol.summary == null) ? "No summary" : vol.summary}
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <div class="row mt-3">
+                                                    <div class="col-md-1">
                                                         <button type="submit" name="service" value="edit" class="btn btn-primary">Edit</button>
-                                                    </form>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <!-- Button trigger modal -->
-                                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                                        Delete
-                                                    </button>
-                                                </div>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="staticBackdropLabel">ALERT</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <h6>Are you sure to delete the volume - <i>${vol.volumeName}</i> and its chapters: </h6>
-                                                                <c:forEach items="${requestScope.chapters}" var="chapter">
-                                                                    <c:if test="${chapter.volumeID==vol.id}">
-                                                                        <li class="list-group-item">
-                                                                            <a target="_blank" href="#"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
-                                                                            <a href="./TOC?id=${book.id}&cid=${chapter.id}">   ${chapter.chapterName}</a>
-                                                                        </li>
-                                                                    </c:if>
-
-                                                                </c:forEach>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <form method="get" action="./DeleteVolume">
-                                                                    <input type="hidden" name="id" value="${vol.id}">
-                                                                    <input type="hidden" name="bid" value="${book.id}">
-                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                    <button type="submit" class="btn btn-danger">YES, DELETE</button>
-                                                                </form>
-
-                                                            </div>
-                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <button type="submit" name="service" value="delete" class="btn btn-danger">Delete</button>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-md-4">
-                                                    <h6 class="text-center">
-                                                        <c:if test="${message !=null}">
-                                                            ${message}
-                                                        </c:if>
-                                                    </h6>
-                                                </div>
-                                            </div>
-
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -170,144 +158,110 @@
                                             <h5 class="card-title mt-2"> 
                                                 Chapter
                                             </h5>
-                                            <h6>
-                                                <c:if test="${message !=null}">
-                                                    ${message}
-                                                </c:if>
-                                            </h6>
-                                            <table class="table">
-                                                <tr>
-                                                    <th scope="row">
-                                                        Name
-                                                    </th>
-                                                    <td>
-                                                        ${chap.chapterName}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">
-                                                        Status
-                                                    </th>
-                                                    <td>
-                                                        ${chap.status ? "Done" : "Not Done"}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="2">
-                                                        <p><strong>Content</strong></p>
-                                                        <c:forEach items="${requestScope.content}" var="para">
-                                                            <p>${para}</p>
-                                                        </c:forEach>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                            <div class="row mt-3">
-                                                <div class="col-md-1">
-                                                    <form method="get" action="./EditChapter" >
-                                                        <input type="hidden" name="id" value="${chap.id}">
+                                            <form method="get" action="./Chapter" style="width: 90%; display: block; margin: auto">
+                                                <table class="table">
+                                                    <tr>
+                                                        <th scope="row">
+                                                            Name
+                                                        </th>
+                                                        <td>
+                                                            ${chap.chapterName}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">
+                                                            Status
+                                                        </th>
+                                                        <td>
+                                                            ${chap.status ? "Done" : "Not Done"}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <p><strong>Content</strong></p>
+                                                            <c:forEach items="${requestScope.content}" var="para">
+                                                                <p>${para.content}</p>
+                                                            </c:forEach>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <div class="row mt-3">
+                                                    <div class="col-md-1">
                                                         <button type="submit" name="service" value="edit" class="btn btn-primary">Edit</button>
-                                                    </form>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <!-- Button trigger modal -->
-                                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                                        Delete
-                                                    </button>
-
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="staticBackdropLabel">Confirm</h5>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    Delete this chapter?
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <form method="get" action="./DeleteChapter">
-                                                                        <input type="hidden" name="id" value="${book.id}">
-
-                                                                        <input type="hidden" name="cid" value="${chap.id}">
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                        <button type="submit" class="btn btn-danger">YES</button>
-                                                                    </form>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                     </div>
-
+                                                    <div class="col-md-1">
+                                                        <button type="submit" name="service" value="delete" class="btn btn-danger">Delete</button>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
-                                </c:when>
-                            </c:choose>
+                                </div>
+                            </c:when>
+                        </c:choose>
 
 
-                        </div>
-                        <div id="contextMenu" class="dropdown clearfix">
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;margin-bottom:5px;">
-                                <li>    <a tabindex="-1" href="#">Action 1</a>  </li>
-                                <li>    <a tabindex="-1" href="#">Action 2</a>  </li>
-                            </ul>
-                        </div>
+                    </div>
+                    <div id="contextMenu" class="dropdown clearfix">
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;margin-bottom:5px;">
+                            <li>    <a tabindex="-1" href="#">Action 1</a>  </li>
+                            <li>    <a tabindex="-1" href="#">Action 2</a>  </li>
+                        </ul>
                     </div>
                 </div>
-                <!-- End Container fluid  -->
-                <!-- footer -->
-                <footer class="footer">                                 
-                    <span class="fa fa-github"></span>
-                    <a href="https://github.com/nekon0/SoWePray">Our Project</a> 
-                </footer>
-                <!-- End footer -->
             </div>
-            <!-- End Page wrapper  -->
+            <!-- End Container fluid  -->
+            <!-- footer -->
+            <footer class="footer">                                 
+                <span class="fa fa-github"></span>
+                <a href="https://github.com/nekon0/SoWePray">Our Project</a> 
+            </footer>
+            <!-- End footer -->
         </div>
-        <!-- End Wrapper -->
-        <!-- All Jquery -->
-        <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
-        <!-- Bootstrap tether Core JavaScript -->
-        <script src="/Bookie/manage/assets/plugins/bootstrap/dist/js/bootstrap.bundle.js"></script>
-        <script src="/Bookie/manage/html/js/app-style-switcher.js"></script>
-        <!--Wave Effects -->
-        <script src="/Bookie/manage/html/js/waves.js"></script>
-        <!--Menu sidebar -->
-        <script src="/Bookie/manage/html/js/sidebarmenu.js"></script>
-        <!--Custom JavaScript -->
-        <script src="/Bookie/manage/html/js/custom.js"></script>
-        <script>
-            var element = document.getElementById("book-management");
-            element.classList.add("selected");
-            element = document.getElementById("book-management-a");
-            element.classList.add("active");
-            $(function () {
+        <!-- End Page wrapper  -->
+    </div>
+    <!-- End Wrapper -->
+    <!-- All Jquery -->
+    <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="/Bookie/manage/assets/plugins/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="/Bookie/manage/html/js/app-style-switcher.js"></script>
+    <!--Wave Effects -->
+    <script src="/Bookie/manage/html/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="/Bookie/manage/html/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="/Bookie/manage/html/js/custom.js"></script>
+    <script>
+        var element = document.getElementById("book-management");
+        element.classList.add("selected");
+        element = document.getElementById("book-management-a");
+        element.classList.add("active");
+        $(function () {
 
-                var $contextMenu = $("#contextMenu");
+            var $contextMenu = $("#contextMenu");
 
-                $("body").on("contextmenu", "div h4", function (e) {
-                    $contextMenu.css({
-                        display: "block",
-                        position: "fixed",
-                        left: e.pageX,
-                        top: e.pageY
-                    });
-                    return false;
+            $("body").on("contextmenu", "div h4", function (e) {
+                $contextMenu.css({
+                    display: "block",
+                    position: "fixed",
+                    left: e.pageX,
+                    top: e.pageY
                 });
-
-                $('html').click(function () {
-                    $contextMenu.hide();
-                });
-
-                $("#contextMenu li a").click(function (e) {
-                    var f = $(this);
-                    debugger;
-                });
-
+                return false;
             });
-        </script>
-    </body>
+
+            $('html').click(function () {
+                $contextMenu.hide();
+            });
+
+            $("#contextMenu li a").click(function (e) {
+                var f = $(this);
+                debugger;
+            });
+
+        });
+    </script>
+</body>
 
 </html>                

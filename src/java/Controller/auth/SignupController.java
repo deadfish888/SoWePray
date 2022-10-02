@@ -58,7 +58,7 @@ public class SignupController extends HttpServlet {
                 if(origin.equals("")) origin="./Home";
                 
 //            ud.createNewUser(name, gender, dob, email, phone ,key, pass);
-            user.setIs_super(1);
+            user.setIs_super(false);
             ud.addUser(user);
             
             user = ud.getByUsername(key);

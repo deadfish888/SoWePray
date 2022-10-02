@@ -45,13 +45,13 @@ public class RatingController extends HttpServlet {
         if(request.getParameter("gRate")!=null){
             if(rdao.checkExist(bid, uid)==false)rdao.addStar(bid, uid, rate);
             if(rdao.checkExist(bid, uid)==true)rdao.updateStar(bid, uid, rate);
-            response.sendRedirect("./BookDetail?id="+bid);
+            response.sendRedirect("/book-details.jsp");
             response.setHeader("REFRESH", "0");
         }
         float aveRate=rdao.getAverageStar(bid);
         rdao.sendRatetoBook(bid, aveRate);
         request.setAttribute("star", aveRate);   
-        response.setHeader("REFRESH", "0");
+         
     }
 
     @Override

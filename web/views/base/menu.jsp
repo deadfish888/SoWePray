@@ -4,19 +4,16 @@
     <h2>
         <c:choose>
             <c:when test="${!empty sessionScope.user}">
-                Welcome ${sessionScope.user.name}
-            </c:when>
-            <c:when test="${!empty sessionScope.admin}">
-                <a href="./Edit">Welcome ${sessionScope.admin.name}</a>
-            </c:when>
-            <c:when test="${!empty sessionScope.adminS}">
-                <a href="./Edit">Welcome ${sessionScope.adminS.name}</a>
-            </c:when>    
-            <c:otherwise>
-                Welcome to BOOKIE
-            </c:otherwise>
+            Welcome ${sessionScope.user.name}
+        </c:when>
+        <c:when test="${!empty sessionScope.admin}">
+            Welcome ${sessionScope.admin.name}
+        </c:when>
+        <c:otherwise>
+            Welcome to BOOKIE
+        </c:otherwise>
         </c:choose>
-
+        
     </h2>
     <ul>
         <li><a href="${context}/Home">Home</a></li>

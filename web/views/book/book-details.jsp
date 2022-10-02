@@ -71,7 +71,17 @@
                                     ${book.getDescription()}
                                 </p>
                                 <div class="row">        
-                                    
+                                    <form action="BookDetail" method="POST">
+                                        <div class="col-sm-6"> 
+                                            <input type="submit" name="changeView" class="primary" value="GET">                                 
+                                        </div>         
+                                    </form>
+                                    <form action="Favourite" method="POST">
+                                        <div class="col-sm-6">
+                                            <input type="submit" class="primary" value="Add to Favorite">                                 
+                                            <input type="hidden" name="bId" value="${book.getId()}">
+                                        </div>
+                                    </form>
                                     <c:if test="${sessionScope.user != null}">
                                         <c:if test="${requestScope.own}">
                                         <form>
@@ -99,36 +109,6 @@
                                                 <form action="User/Purchase" method="post" id="purchaseForm" name="purchaseForm" onsubmit="return validatePassword()">
                                                     <div class="modal-header">
                                                         <h3 class="modal-title">Purchase</h3>
-                                    </form>    
-                                    <form action="Favourite" method="POST">
-                                         <div class="col-sm-4">
-                                             
-                                             <input type="submit" class="primary" value="Add to Favorite">                                 
-                                            <input type="hidden" name="bId" value="${book.getId()}">
-                                         </div>
-                                    </form>
-                                    <form action="Report" method="POST">
-                                          <div class="col-sm-4"> 
-                                              <input type="submit" class="primary" value="Report">                                 
-                                            <input type="hidden" name="bId" value="${book.getId()}">
-                                          </div>   
-                                    </form>      
-                                         
-                                </div>
-                                            <c:choose >
-                                                <c:when test="${sessionScope.user!=null}" > 
-                                                <form action="Rating" method="POST">        
-                                                    <div class="rate">
-                                                        <input type="radio" id="star5" name="getRate" value="5" />
-                                                        <label for="star5" title="text">5</label>
-                                                        <input type="radio" id="star4" name="getRate" value="4" />
-                                                        <label for="star4" title="text">4</label>
-                                                        <input type="radio" id="star3" name="getRate" value="3" />
-                                                        <label for="star3" title="text">3</label>
-                                                        <input type="radio" id="star2" name="getRate" value="2" />
-                                                        <label for="star2" title="text">2</label>
-                                                        <input type="radio" id="star1" name="getRate" value="1" />
-                                                        <label for="star1" title="text">1</label>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="wrapper row">
@@ -202,18 +182,17 @@
                                 <div><input type="hidden" name="bId" value="${book.getId()}"></div>    
                                 <div>Book rating: ${book.getRating()} </div>
                             </div>
-                            
-                            <div class="col-md-3">
-                                <form role="form" action="Comment" method="GET">
+                            <div class="well">
+                                <h4>Write your comment here...<span class="glyphicon glyphicon-pencil">
+                                    </span>
+                                </h4>
+                                <form role="form">
                                     <div class="form-group">
-                                        <textarea class="form-control" name="comment" placeholder="Write your comment here..."></textarea>
+                                        <textarea class="form-control" rows="3"></textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Send</button>
-                                </form> 
+                                </form>    
                             </div>
-<!--                            <div class="col-md-7">
-                                <%--<c:forEach var=></c:forEach>--%>
-                            </div>   -->
                             <br>
                         </div>           
                     </div>
