@@ -2,10 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package Model;
 
-import java.math.BigInteger;
 import java.sql.Timestamp;
 
 /**
@@ -13,59 +11,77 @@ import java.sql.Timestamp;
  * @author Khuat Thi Minh Anh
  */
 public class Transaction {
-    int user_id;
-    long balance_before, balance_after, amount;
-    int type; 
-        //1. Recharge
-        //2. Withdraw
-        //3. Transfer
-        //4. Receive
+
+    long transactionId;
+    float amount;
+    User user;
+    float balanceAfter;
+    PaymentMethod payment;
+    int type;
+    //1. Recharge
+    //2. Withdraw
+    //3. Buy
+    //4. Sell
     int status;
-    Timestamp transaction_time;
+    //0. Fail
+    //1. Pending
+    //2. Successful
+    Timestamp transactionTime;
+    String description;
 
     public Transaction() {
     }
 
-    public Transaction(int user_id, long balance_before, long balance_after, long amount, int type, int status, Timestamp transaction_time) {
-        this.user_id = user_id;
-        this.balance_before = balance_before;
-        this.balance_after = balance_after;
+    public Transaction(long transactionId, User user, float balanceAfter, float amount, PaymentMethod payment, int type, int status, Timestamp transactionTime, String description) {
+        this.transactionId = transactionId;
+        this.user = user;
+        this.balanceAfter = balanceAfter;
         this.amount = amount;
+        this.payment = payment;
         this.type = type;
         this.status = status;
-        this.transaction_time = transaction_time;
+        this.transactionTime = transactionTime;
+        this.description = description;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public long getTransactionId() {
+        return transactionId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setTransactionId(long transactionId) {
+        this.transactionId = transactionId;
     }
 
-    public long getBalance_before() {
-        return balance_before;
+    public User getUser() {
+        return user;
     }
 
-    public void setBalance_before(long balance_before) {
-        this.balance_before = balance_before;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public long getBalance_after() {
-        return balance_after;
+    public float getBalanceAfter() {
+        return balanceAfter;
     }
 
-    public void setBalance_after(long balance_after) {
-        this.balance_after = balance_after;
+    public void setBalanceAfter(float balanceAfter) {
+        this.balanceAfter = balanceAfter;
     }
 
-    public long getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
+    }
+
+    public PaymentMethod getPayment() {
+        return payment;
+    }
+
+    public void setPayment(PaymentMethod payment) {
+        this.payment = payment;
     }
 
     public int getType() {
@@ -84,13 +100,32 @@ public class Transaction {
         this.status = status;
     }
 
-    public Timestamp getTransaction_time() {
-        return transaction_time;
+    public Timestamp getTransactionTime() {
+        return transactionTime;
     }
 
-    public void setTransaction_time(Timestamp transaction_time) {
-        this.transaction_time = transaction_time;
+    public void setTransactionTime(Timestamp transactionTime) {
+        this.transactionTime = transactionTime;
     }
-    
-    
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * Compare if 2 transaction id is equal
+    *
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Transaction) {
+            return this.transactionId == ((Transaction) obj).getTransactionId();
+        }
+        return false;
+    }
+
 }

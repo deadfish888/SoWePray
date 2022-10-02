@@ -75,40 +75,116 @@
                                         <div class="col-sm-6"> 
                                             <input type="submit" name="changeView" class="primary" value="GET">                                 
                                         </div>         
-                                    </form>    
-                                    <form action="Favourite" method="POST">
-                                         <div class="col-sm-6">
-                                             
-                                             <input type="submit" class="primary" value="Add to Favorite">                                 
-                                            <input type="hidden" name="bId" value="${book.getId()}">
-                                         </div>
                                     </form>
-                                </div>
-                                            <c:choose >
-                                                <c:when test="${sessionScope.user!=null}" > 
-                                                <form action="Rating" method="POST">        
-                                                    <div class="rate">
-                                                        <input type="radio" id="star5" name="getRate" value="5" />
-                                                        <label for="star5" title="text">5</label>
-                                                        <input type="radio" id="star4" name="getRate" value="4" />
-                                                        <label for="star4" title="text">4</label>
-                                                        <input type="radio" id="star3" name="getRate" value="3" />
-                                                        <label for="star3" title="text">3</label>
-                                                        <input type="radio" id="star2" name="getRate" value="2" />
-                                                        <label for="star2" title="text">2</label>
-                                                        <input type="radio" id="star1" name="getRate" value="1" />
-                                                        <label for="star1" title="text">1</label>
+                                    <form action="Favourite" method="POST">
+                                        <div class="col-sm-6">
+                                            <input type="submit" class="primary" value="Add to Favorite">                                 
+                                            <input type="hidden" name="bId" value="${book.getId()}">
+                                        </div>
+                                    </form>
+                                    <c:if test="${sessionScope.user != null}">
+                                        <c:if test="${requestScope.own}">
+                                        <form>
+                                            <div class="col-sm-6">
+                                                <input type="button" class="primary" value="Read">
+                                            </div>
+                                        </form>
+                                        </c:if>
+                                        <c:if test="${!own}">
+                                        <input type="button" class="primary btn-primary" data-toggle="modal" data-target="#purchase" value="Buy"/>
+                                        <span style="color: red"></span>
+                                        </c:if>
+                                    </c:if>
+                                    <c:if test="${sessionScope.user == null}">
+                                        <form action="Login" method="GET">
+                                            <div class="col-sm-6">
+                                                <input type="submit" class="primary" value="Buy">
+                                            </div>
+                                        </form>
+                                    </c:if>
+
+                                    <div class="modal fade" id="purchase" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <form action="User/Purchase" method="post" id="purchaseForm" name="purchaseForm" onsubmit="return validatePassword()">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title">Purchase</h3>
                                                     </div>
-                                                    <div><button type="submit" class="submitRate" name="gRate">Rate</button></div>
-                                                </form>   
-                                                </c:when>
-                                            </c:choose>    
-                                            <div><input type="hidden" name="bId" value="${book.getId()}"></div>    
-                                            <div>Book rating: ${book.getRating()} </div>
+                                                    <div class="modal-body">
+                                                        <div class="wrapper row">
+                                                            <table style="width: 80%; margin: auto">
+                                                                <tr>
+                                                                    <th>
+                                                                        Book
+                                                                    </th>
+                                                                    <td>
+                                                                        ${book.title}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        Price
+                                                                    </th>
+                                                                    <td>
+                                                                        ${book.price}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        Password
+                                                                    </th>
+                                                                    <td>
+                                                                        <input type="password" name="password"/>
+                                                                        <div style="color: red" id="purchase-pass-noti"></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer" style="text-align: center">
+                                                        <button type="button" class="primary btn-primary text-center" data-dismiss="modal" style="width: auto; padding: 0 1em">Cancel</button>
+                                                        <input type="hidden" id="pass" value="${sessionScope.user.password}"/>
+                                                        <input type="hidden" name="amount" value="${book.price}"/>
+                                                        <input type="hidden" name="bookId" value="${book.id}"/>
+                                                        <input type="hidden" name="bookTitle" value="${book.title}"/>
+                                                        <input type="submit" class="primary text-center" value="Confirm"/>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--                                    <form action="User/Purchase" method="POST">
+                                                                             <div class="col-sm-6">
+                                                                                <input type="hidden" name="bookId" value="${book.getId()}">
+                                                                                 <input type="submit" class="primary" value="Buy">          
+                                                                             </div>
+                                                                        </form>-->
+                                </div>
+                                <c:choose >
+                                    <c:when test="${sessionScope.user!=null}" > 
+                                        <form action="Rating" method="POST">        
+                                            <div class="rate">
+                                                <input type="radio" id="star5" name="getRate" value="5" />
+                                                <label for="star5" title="text">5</label>
+                                                <input type="radio" id="star4" name="getRate" value="4" />
+                                                <label for="star4" title="text">4</label>
+                                                <input type="radio" id="star3" name="getRate" value="3" />
+                                                <label for="star3" title="text">3</label>
+                                                <input type="radio" id="star2" name="getRate" value="2" />
+                                                <label for="star2" title="text">2</label>
+                                                <input type="radio" id="star1" name="getRate" value="1" />
+                                                <label for="star1" title="text">1</label>
+                                            </div>
+                                            <div><button type="submit" class="submitRate" name="gRate">Rate</button></div>
+                                        </form>   
+                                    </c:when>
+                                </c:choose>    
+                                <div><input type="hidden" name="bId" value="${book.getId()}"></div>    
+                                <div>Book rating: ${book.getRating()} </div>
                             </div>
                             <div class="well">
                                 <h4>Write your comment here...<span class="glyphicon glyphicon-pencil">
-                                </span>
+                                    </span>
                                 </h4>
                                 <form role="form">
                                     <div class="form-group">
@@ -172,6 +248,18 @@
         </div>
 
         <!-- Scripts -->
+        <script>
+
+            function validatePassword() {
+                let pass = document.forms["purchaseForm"]["pass"].value;
+                let x = document.forms["purchaseForm"]["password"].value;
+                if (pass !== x) {
+                    document.getElementById("purchase-pass-noti").innerHTML = "Wrong password";
+                    return false;
+                }
+            }
+
+        </script>
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="assets/js/jquery.scrolly.min.js"></script>

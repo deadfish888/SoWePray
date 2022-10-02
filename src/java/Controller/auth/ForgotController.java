@@ -67,7 +67,7 @@ public class ForgotController extends HttpServlet {
                 Message = "Email is not registered! Please try again!";
             }
         } catch (MessagingException ex) {
-            Message = "Connection error! ";
+            Message = "There were an error! " + ex.getMessage();
         } finally {
             request.setAttribute("Message", Message);
             forward(request, response, "/views/auth/forgot.jsp");
