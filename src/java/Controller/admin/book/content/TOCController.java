@@ -2,13 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.admin.product.content;
+package Controller.admin.book.content;
 
-import Controller.admin.product.UpdateBookController;
-import Model.Content;
+import Model.Chapter;
 import context.BookDAO;
 import context.ChapterDAO;
-import context.ContentDAO;
 import context.VolumeDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -16,7 +14,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,13 +39,13 @@ public class TOCController extends HttpServlet {
             String schapterId = request.getParameter("cid");
             if (svolumeId != null) {
                 int vid = Integer.parseInt(svolumeId);
-                request.setAttribute("vol", vd.getVolume(vid));
+                request.setAttribute("vol", vd.getVolumeById(vid));
             } else if (schapterId != null) {
                 int cid = Integer.parseInt(schapterId);
-                request.setAttribute("chap", cd.getChapter(cid));
-
-                ContentDAO pd = new ContentDAO();
-                ArrayList<Content> content = pd.getContents(cid);
+                Chapter chapter = cd.getChapter(cid);
+                request.setAttribute("chap", chapter);
+                String[] content = chapter.getContent().split("\n");
+                
                 request.setAttribute("content", content);
             }
 
