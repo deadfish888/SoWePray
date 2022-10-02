@@ -58,9 +58,9 @@ public class PaymentAccountDAO {
         return paymentAccount;
     }
 
-    public PaymentAccount getWallet(User user) {
-        return user.getPaymentAccount();
-    }
+    //public PaymentAccount getWallet(User user) {
+       // return user.getPaymentAccount();
+    //}
 
     public void insert(PaymentAccount paymentAccount) {
         try {

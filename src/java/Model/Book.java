@@ -144,15 +144,4 @@ public class Book {
         this.views = views;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof Book) {
-            Book book = (Book)obj;
-            return book.getId() == this.id;
-        }
-        return false;
-    }
-    
-    
-
 }

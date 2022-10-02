@@ -37,7 +37,7 @@
                         <a href="./Security">Security</a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="./Payment">Payment</a>
+                        <a href="#">Settings</a>
                     </li>
                     <li class="sidebar-item">
                         <a href="#">Support</a>
@@ -69,6 +69,7 @@
 
                     <!-- Menu -->
                     <jsp:include page="/views/base/menu.jsp" />
+                    <!--class="active" style="color: #F2849E; pointer-events: none; border-left: 5px groove #F2849E; padding-left: 10px"-->
 
                 </div>
                 <!--            </div>-->

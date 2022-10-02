@@ -38,7 +38,7 @@
                         <a href="./Security">Security</a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="./Payment">Payment</a>
+                        <a href="#">Settings</a>
                     </li>
                     <li class="sidebar-item">
                         <a href="#">Support</a>
@@ -68,7 +68,9 @@
                         </div>
                     </header>
 
+                    <!-- Menu -->
                     <jsp:include page="/views/base/menu.jsp" />
+
                 </div>
                 <!--            </div>-->
 

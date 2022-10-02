@@ -92,11 +92,11 @@ public final class TransactionToken {
     public String generateToken() {
         String finalToken = "";
         try {
-            String transId = Long.toString(transaction.getTransactionId());
+            //String transId = Long.toString(transaction.getTransactionId());
             String time = createdTime.toString();
-            String rawToken = transId + time;
+            //String rawToken = transId + time;
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-            messageDigest.update(rawToken.getBytes());
+            //messageDigest.update(rawToken.getBytes());
             finalToken = new String(messageDigest.digest());
         } catch (NoSuchAlgorithmException ex) {
             System.err.println(ex.getMessage());

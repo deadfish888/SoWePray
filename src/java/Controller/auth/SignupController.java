@@ -54,18 +54,11 @@ public class SignupController extends HttpServlet {
             forward(request, response, "/views/auth/signup.jsp");
         }else{
             HttpSession session = request.getSession();
+            session.setAttribute("user", user);
                 String origin = request.getParameter("origin");
                 if(origin.equals("")) origin="./Home";
                 
-//            ud.createNewUser(name, gender, dob, email, phone ,key, pass);
-            user.setIs_super(1);
-            ud.addUser(user);
-            
-            user = ud.getByUsername(key);
-            user.createWallet();
-            ud.setWalletNumber(user.getPaymentAccount(), user);
-            session.setAttribute("user", user);
-            
+            ud.createNewUser(name, gender, dob, email, phone ,key, pass);
             request.setAttribute("error", "Sign up successfully!");
             request.setAttribute("origin",request.getParameter("origin"));
             response.sendRedirect(origin);

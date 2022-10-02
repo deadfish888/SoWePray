@@ -4,8 +4,6 @@
  */
 package Model;
 
-import context.BookDAO;
-import context.PaymentMethodDAO;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,7 +15,6 @@ public class User {
 
     private int id, is_super;
     private String name, gender, dob, email, phone, address, username, password;
-    private PaymentAccount paymentAccount;
 
     public User() {
     }
@@ -27,7 +24,7 @@ public class User {
         this.password = password;
     }
 
-    public User(int id, String name, String gender, String dob, String email, String phone, String address, String username, int is_super) {
+    public User(int id, String name, String gender, String dob, String email, String phone, String address, String username, String password, int is_super) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -36,6 +33,7 @@ public class User {
         this.phone = phone;
         this.address = address;
         this.username = username;
+        this.password = password;
         this.is_super = is_super;
     }
 
@@ -48,7 +46,7 @@ public class User {
         this.username = username;
         this.password = password;
     }
-    
+
     public User(int id, String name, String username, String gender, String dob, String email, String phone, String address) {
         this.id = id;
         this.name = name;
@@ -60,7 +58,7 @@ public class User {
         this.address = address;
     }
 
-    public User(int id, String name, String gender, String dob, String email, String phone, String address, String username, String password, int is_super, PaymentAccount paymentAccount) {
+    public User(int id, String name, String gender, String dob, String email, String phone, String address, String username, int is_super) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -69,9 +67,7 @@ public class User {
         this.phone = phone;
         this.address = address;
         this.username = username;
-        this.password = password;
         this.is_super = is_super;
-        this.paymentAccount = paymentAccount;
     }
 
     public int is_super() {
@@ -178,33 +174,6 @@ public class User {
         } else {
             return 1;
         }
-    }
-
-    public PaymentAccount getPaymentAccount() {
-        return paymentAccount;
-    }
-
-    public void setPaymentAccount(PaymentAccount paymentAccount) {
-        this.paymentAccount = paymentAccount;
-    }
-
-    public void createWallet(){
-        paymentAccount = new PaymentAccount();
-        paymentAccount = paymentAccount.createWallet(this);
-        PaymentMethod paymentMethod = new PaymentMethod();
-        paymentMethod.setActive(true);
-        paymentMethod.setPaymentAccount(paymentAccount);
-        paymentMethod.setUser(this);
-        paymentMethod.setName("Wallet of " + username);
-        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
-        payMedDAO.insert(paymentMethod);
-    }
-
-    public boolean isOwnBook(int bookId){
-        BookDAO bookDAO = new BookDAO();
-        Book book = new Book();
-        book.setId(bookId);
-        return bookDAO.isOwn(this, book);
     }
 
 }

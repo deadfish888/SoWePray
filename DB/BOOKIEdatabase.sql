@@ -76,47 +76,6 @@ CREATE TABLE [dbo].[Book](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Book_Own]    Script Date: 10/2/2022 1:53:23 AM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Book_Own](
-	[userId] [int] NOT NULL,
-	[bookId] [int] NOT NULL
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Payment_Account]    Script Date: 10/2/2022 1:53:23 AM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Payment_Account](
-	[accountNumber] [bigint] NOT NULL,
-	[balance] [decimal](10, 2) NOT NULL,
- CONSTRAINT [PK_Payment_Account] PRIMARY KEY CLUSTERED 
-(
-	[accountNumber] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Payment_Method]    Script Date: 10/2/2022 1:53:23 AM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Payment_Method](
-	[paymentId] [int] IDENTITY(45678,3) NOT NULL,
-	[userId] [int] NOT NULL,
-	[accountNumber] [bigint] NOT NULL,
-	[name] [nvarchar](50) NOT NULL,
-	[active] [bit] NULL,
- CONSTRAINT [PK_Payment_Method] PRIMARY KEY CLUSTERED 
-(
-	[paymentId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
 /****** Object:  Table [dbo].[Category]    BOOKIE ******/
 SET ANSI_NULLS ON
 GO
@@ -146,7 +105,7 @@ CREATE TABLE [dbo].[User](
 	[address] [nvarchar](200) NULL,
 	[username] [varchar](50) NOT NULL,
 	[password] [varchar](50) NOT NULL,
-	[is_super] [int] NOT NULL
+	[is_super] [bit] NOT NULL
 CONSTRAINT [PK_user] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -189,6 +148,7 @@ ALTER TABLE [dbo].[Star]  WITH CHECK ADD FOREIGN KEY([bid])
 REFERENCES [dbo].[Book] (id)
 ALTER TABLE [dbo].[Star]  WITH CHECK ADD FOREIGN KEY([uid])
 REFERENCES [dbo].[User] (id)
+ALTER TABLE [dbo].[Star]  WITH CHECK ADD constraint chk_star check (star between 1 and 5)
 /****** Object:  Table [dbo].[Star]    BOOKIE ******/
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
@@ -296,131 +256,43 @@ ALTER TABLE [dbo].[ReportDetail]  WITH CHECK ADD FOREIGN KEY([bookId])
 REFERENCES [dbo].[Book] ([id])
 ALTER TABLE [dbo].[ReportDetail]  WITH CHECK ADD FOREIGN KEY([userId])
 REFERENCES [dbo].[User] ([id])
-/****** Object:  Table [dbo].[Transaction]    Script Date: 10/2/2022 1:53:23 AM ******/
+/****** Object:  Table [dbo].[Transaction]    BOOKIE ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Transaction](
-	[transactionId] [bigint] IDENTITY(3000000,1) NOT NULL,
 	[userId] [int] NOT NULL,
-	[amount] [decimal](10, 2) NOT NULL,
-	[balanceAfter] [decimal](10, 2) NOT NULL,
-	[transactionTime] [datetime] NULL,
+	[balanceBefore] [bigint] NOT NULL,
+	[amount] [bigint] NOT NULL,
+	[balanceAfter] [bigint] NOT NULL,
+	[transactionTime] [datetime] NOT NULL,
 	[type] [int] NOT NULL,
-	[status] [int] NOT NULL,
-	[description] [nvarchar](500) NULL,
-	[paymentId] [int] NOT NULL,
- CONSTRAINT [PK_Transaction] PRIMARY KEY CLUSTERED 
-(
-	[transactionId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+	[status] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Transaction_Token]    Script Date: 10/2/2022 1:53:23 AM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Transaction_Token](
-	[transactionId] [bigint] NOT NULL,
-	[token] [nvarchar](50) NOT NULL,
-	[status] [bit] NOT NULL,
-	[createdTime] [datetime] NOT NULL,
- CONSTRAINT [PK_Transaction_Token] PRIMARY KEY CLUSTERED 
-(
-	[token] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
+ALTER TABLE [dbo].[Transaction]  WITH CHECK ADD FOREIGN KEY([userId])
+REFERENCES [dbo].[User] ([id])
 ---------------------------------------------------
+ALTER TABLE [dbo].[Book] ADD  DEFAULT (0) FOR [views]
 
 ALTER TABLE [dbo].[Book] ADD  DEFAULT (0) FOR [favourite]
 
 ALTER TABLE [dbo].[Book] ADD  DEFAULT (1) FOR [status]
+
+ALTER TABLE [dbo].[User] ADD  DEFAULT (0) FOR [is_super]
+
 --ALTER TABLE [dbo].[Book] ADD  DEFAULT ('UNDECIDED') FOR [type]
---ALTER TABLE [dbo].[Book]  WITH CHECK ADD FOREIGN KEY(did) REFERENCES [dbo].[Discount] (id)
+
+
+--ALTER TABLE [dbo].[Book]  WITH CHECK ADD FOREIGN KEY(did)
+--REFERENCES [dbo].[Discount] (id)
 GO
-ALTER TABLE [dbo].[Book]  WITH CHECK ADD FOREIGN KEY(categoryid) REFERENCES [dbo].[Category] (id)
+ALTER TABLE [dbo].[Book]  WITH CHECK ADD FOREIGN KEY(categoryid)
+REFERENCES [dbo].[Category] (id)
 GO
+
 --ALTER TABLE [dbo].[user]  WITH CHECK ADD  CONSTRAINT [CK_user_id] CHECK  (([user_id] like '[A-Z][A-Z][A-Z][1-9][0-9][0-9][0-9][0-9][FM]' OR [user_id] like '[A-Z]-[A-Z][1-9][0-9][0-9][0-9][0-9][FM]'))
-
-ALTER TABLE [dbo].[Book] ADD  CONSTRAINT [DF__Book__views__30F848ED]  DEFAULT ((0)) FOR [views]
-GO
-ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF__User__is_super__31EC6D26]  DEFAULT ((1)) FOR [is_super]
-GO
---ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF_User_balance]  DEFAULT ((0)) FOR [walletNumber]
---GO
-ALTER TABLE [dbo].[Book]  WITH CHECK ADD  CONSTRAINT [FK__Book__categoryid__32E0915F] FOREIGN KEY([categoryid])
-REFERENCES [dbo].[Category] ([id])
-GO
-ALTER TABLE [dbo].[Book] CHECK CONSTRAINT [FK__Book__categoryid__32E0915F]
-GO
-ALTER TABLE [dbo].[Book_Own]  WITH CHECK ADD  CONSTRAINT [FK_Book_Own_Book] FOREIGN KEY([bookId])
-REFERENCES [dbo].[Book] ([id])
-GO
-ALTER TABLE [dbo].[Book_Own] CHECK CONSTRAINT [FK_Book_Own_Book]
-GO
-ALTER TABLE [dbo].[Book_Own]  WITH CHECK ADD  CONSTRAINT [FK_Book_Own_User] FOREIGN KEY([userId])
-REFERENCES [dbo].[User] ([id])
-GO
-ALTER TABLE [dbo].[Book_Own] CHECK CONSTRAINT [FK_Book_Own_User]
-GO
-ALTER TABLE [dbo].[Favourite]  WITH CHECK ADD  CONSTRAINT [FK__Favourite__bid__2B3F6F97] FOREIGN KEY([bid])
-REFERENCES [dbo].[Book] ([id])
-GO
-ALTER TABLE [dbo].[Favourite] CHECK CONSTRAINT [FK__Favourite__bid__2B3F6F97]
-GO
-ALTER TABLE [dbo].[Favourite]  WITH CHECK ADD  CONSTRAINT [FK__Favourite__uid__2A4B4B5E] FOREIGN KEY([uid])
-REFERENCES [dbo].[User] ([id])
-GO
-ALTER TABLE [dbo].[Favourite] CHECK CONSTRAINT [FK__Favourite__uid__2A4B4B5E]
-GO
-ALTER TABLE [dbo].[Payment_Method]  WITH CHECK ADD  CONSTRAINT [FK_Payment_Method_Payment_Account] FOREIGN KEY([accountNumber])
-REFERENCES [dbo].[Payment_Account] ([accountNumber])
-GO
-ALTER TABLE [dbo].[Payment_Method] CHECK CONSTRAINT [FK_Payment_Method_Payment_Account]
-GO
-ALTER TABLE [dbo].[Payment_Method]  WITH CHECK ADD  CONSTRAINT [FK_Payment_Method_User] FOREIGN KEY([userId])
-REFERENCES [dbo].[User] ([id])
-GO
-ALTER TABLE [dbo].[Payment_Method] CHECK CONSTRAINT [FK_Payment_Method_User]
-GO
-ALTER TABLE [dbo].[Star]  WITH CHECK ADD  CONSTRAINT [FK__Star__bid__2E1BDC42] FOREIGN KEY([bid])
-REFERENCES [dbo].[Book] ([id])
-GO
-ALTER TABLE [dbo].[Star] CHECK CONSTRAINT [FK__Star__bid__2E1BDC42]
-GO
-ALTER TABLE [dbo].[Star]  WITH CHECK ADD  CONSTRAINT [FK__Star__uid__2F10007B] FOREIGN KEY([uid])
-REFERENCES [dbo].[User] ([id])
-GO
-ALTER TABLE [dbo].[Star] CHECK CONSTRAINT [FK__Star__uid__2F10007B]
-GO
-ALTER TABLE [dbo].[Transaction]  WITH CHECK ADD  CONSTRAINT [FK_Transaction_Payment_Method] FOREIGN KEY([paymentId])
-REFERENCES [dbo].[Payment_Method] ([paymentId])
-GO
-ALTER TABLE [dbo].[Transaction] CHECK CONSTRAINT [FK_Transaction_Payment_Method]
-GO
-ALTER TABLE [dbo].[Transaction]  WITH CHECK ADD  CONSTRAINT [FK_Transaction_User] FOREIGN KEY([userId])
-REFERENCES [dbo].[User] ([id])
-GO
-ALTER TABLE [dbo].[Transaction] CHECK CONSTRAINT [FK_Transaction_User]
-GO
-ALTER TABLE [dbo].[Transaction_Token]  WITH CHECK ADD  CONSTRAINT [FK_Transaction_Token_Transaction] FOREIGN KEY([transactionId])
-REFERENCES [dbo].[Transaction] ([transactionId])
-GO
-ALTER TABLE [dbo].[Transaction_Token] CHECK CONSTRAINT [FK_Transaction_Token_Transaction]
-GO
-
-ALTER TABLE [dbo].[Star]  WITH CHECK ADD  CONSTRAINT [chk_star] CHECK  (([star]>=(1) AND [star]<=(5)))
-GO
-ALTER TABLE [dbo].[Star] CHECK CONSTRAINT [chk_star]
-GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'0 mean Fail, 1 mean Pending, 2 mean Successful' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Transaction', @level2type=N'COLUMN',@level2name=N'status'
-GO
-USE [BOOKIE]
-GO
-
 Insert [dbo].[Category] ([name]) values (N'Crime, Thriller & Mystery'),(N'Fantasy, Horror'),(N'Science/Historical Fiction'),(N'Manga&LN')
 GO
 SET IDENTITY_INSERT [dbo].[User] ON 

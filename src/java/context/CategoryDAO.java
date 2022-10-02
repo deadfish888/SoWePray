@@ -45,7 +45,7 @@ public class CategoryDAO {
     public void editCategory(int id, String editName) {
         try {
             stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql = "update [Category] set [name]=N'" + editName + "' where [id]=" + id;
+            String sql = "update [Category] set [name]=N'"+editName+"' where [id]="+id;
             stm.executeUpdate(sql);
         } catch (Exception e) {
             System.out.println("edit Error:" + e.getMessage());
@@ -84,11 +84,10 @@ public class CategoryDAO {
     public String getCategory(int id) {
         try {
             stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql = "select [name] from [Category] where [id] =" + id;
+            String sql = "select [name] from [Category] where [id] ="+id;
             rs = stm.executeQuery(sql);
-            if (rs.next()) {
-                return rs.getString(1);
-            }
+            if(rs.next()){
+            return rs.getString(1);}
         } catch (Exception e) {
             System.out.println("getCategories Error:" + e.getMessage());
             return null;
