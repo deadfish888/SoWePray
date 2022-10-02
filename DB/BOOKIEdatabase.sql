@@ -146,8 +146,7 @@ CREATE TABLE [dbo].[User](
 	[address] [nvarchar](200) NULL,
 	[username] [varchar](50) NOT NULL,
 	[password] [varchar](50) NOT NULL,
-	[is_super] int NOT NULL,
-	[walletNumber] [bigint] NULL,
+	[is_super] [int] NOT NULL
 CONSTRAINT [PK_user] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -412,11 +411,7 @@ REFERENCES [dbo].[Transaction] ([transactionId])
 GO
 ALTER TABLE [dbo].[Transaction_Token] CHECK CONSTRAINT [FK_Transaction_Token_Transaction]
 GO
-ALTER TABLE [dbo].[User]  WITH CHECK ADD  CONSTRAINT [FK_User_Payment_Account] FOREIGN KEY([walletNumber])
-REFERENCES [dbo].[Payment_Account] ([accountNumber])
-GO
-ALTER TABLE [dbo].[User] CHECK CONSTRAINT [FK_User_Payment_Account]
-GO
+
 ALTER TABLE [dbo].[Star]  WITH CHECK ADD  CONSTRAINT [chk_star] CHECK  (([star]>=(1) AND [star]<=(5)))
 GO
 ALTER TABLE [dbo].[Star] CHECK CONSTRAINT [chk_star]
