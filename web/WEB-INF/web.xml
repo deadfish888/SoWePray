@@ -28,37 +28,20 @@
         <url-pattern>/Home</url-pattern>
     </servlet-mapping>
     
-    <context-param>
-        <param-name>host</param-name>
-        <param-value>smtp.gmail.com</param-value>
-    </context-param>
-    <context-param>
-        <param-name>port</param-name>
-        <param-value>587</param-value>
-    </context-param>
-    <context-param>
-        <param-name>user</param-name>
-        <param-value>anhktmhe163997@fpt.edu.vn</param-value>
-    </context-param>
-    <context-param>
-        <param-name>pass</param-name>
-        <param-value>WhiteMoon</param-value>
-    </context-param>
-    
-    <dependencies>
-        <!-- https://mvnrepository.com/artifact/com.google.zxing/core -->
+<!--    <dependencies>
+         https://mvnrepository.com/artifact/com.google.zxing/core 
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>core</artifactId>
             <version>3.3.1</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.google.zxing/javase -->
+         https://mvnrepository.com/artifact/com.google.zxing/javase 
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>javase</artifactId>
             <version>3.3.1</version>
         </dependency>
-    </dependencies>	
+    </dependencies>	-->
     
     <servlet-mapping>
         <servlet-name>RatingController</servlet-name>

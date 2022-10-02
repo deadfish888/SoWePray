@@ -146,11 +146,7 @@ CREATE TABLE [dbo].[User](
 	[address] [nvarchar](200) NULL,
 	[username] [varchar](50) NOT NULL,
 	[password] [varchar](50) NOT NULL,
-<<<<<<< HEAD
 	[is_super] [int] NOT NULL
-=======
-	[is_super] [bit] NOT NULL
->>>>>>> parent of 54cd467 (DB)
 CONSTRAINT [PK_user] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -353,8 +349,8 @@ ALTER TABLE [dbo].[Book] ADD  CONSTRAINT [DF__Book__views__30F848ED]  DEFAULT ((
 GO
 ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF__User__is_super__31EC6D26]  DEFAULT ((1)) FOR [is_super]
 GO
-ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF_User_balance]  DEFAULT ((0)) FOR [walletNumber]
-GO
+--ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF_User_balance]  DEFAULT ((0)) FOR [walletNumber]
+--GO
 ALTER TABLE [dbo].[Book]  WITH CHECK ADD  CONSTRAINT [FK__Book__categoryid__32E0915F] FOREIGN KEY([categoryid])
 REFERENCES [dbo].[Category] ([id])
 GO
@@ -427,10 +423,6 @@ GO
 
 Insert [dbo].[Category] ([name]) values (N'Crime, Thriller & Mystery'),(N'Fantasy, Horror'),(N'Science/Historical Fiction'),(N'Manga&LN')
 GO
-<<<<<<< HEAD
-
-
-=======
 SET IDENTITY_INSERT [dbo].[User] ON 
 GO
 INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super]) VALUES (1, N'Vinh Nguyen', 1, CAST(N'2002-12-25' AS Date), N'vinhnthe163219@fpt.edu.vn', N'0382132025', N'FBT University ', N'admin', N'admin', 1)
@@ -718,7 +710,6 @@ INSERT [dbo].[Report] ([id], [title]) VALUES (9, N'Infringes my rights')
 GO
 INSERT [dbo].[Report] ([id], [title]) VALUES (10, N'Caption issue')
 GO
-<<<<<<< HEAD
 SET IDENTITY_INSERT [dbo].[Report] OFF
 GO
 GO
@@ -1008,6 +999,3 @@ It was my fifth lie to the police. I was just starting.')
 GO
 SET IDENTITY_INSERT [dbo].[Chapter] OFF
 GO
-=======
-SET IDENTITY_INSERT [dbo].[Report] OFF
->>>>>>> parent of 54cd467 (DB)
