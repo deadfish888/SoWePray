@@ -16,10 +16,6 @@
         <servlet-class>Controller.Home</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>RatingController</servlet-name>
-        <servlet-class>Controller.product.RatingController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>CommentDAO</servlet-name>
         <servlet-class>Controller.product.CommentController</servlet-class>
     </servlet>
@@ -60,10 +56,6 @@
         </dependency>
     </dependencies>	
     
-    <servlet-mapping>
-        <servlet-name>RatingController</servlet-name>
-        <url-pattern>/Rating</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CommentDAO</servlet-name>
         <url-pattern>/Comment</url-pattern>
