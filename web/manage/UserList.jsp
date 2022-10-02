@@ -9,13 +9,11 @@
 <%@page import="Model.*"%>
 <%@page import="context.*"%>
 <%@page import="java.util.ArrayList"%>
-<%         
-        User us = (User) session.getAttribute("admin");
-        if (session.getAttribute("admin")==null ) {
-            response.sendRedirect("/Bookie/Home");
-        }
-       
-%>
+<c:if test="${!empty sessionScope.admin && !empty sessionScope.adminS}">
+    <%         
+          response.sendRedirect("/Bookie/Home");
+    %>
+</c:if>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -33,6 +31,7 @@
         <!-- Favicon icon -->
         <!-- Custom CSS -->
         <link href="/Bookie/manage/html/css/style.min.css" rel="stylesheet">
+
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -97,62 +96,75 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Users List</h4>
-                                    <h6 class="card-subtitle">Add class <code>.table</code></h6>
                                     <div class="table-responsive">
                                         <table class="table user-table">
+                                            <div class="form-outline">
+                                                <input type="search" id="form1" class="form-control" placeholder="Search . . . ." aria-label="Search" style="width: 200px"
+                                                       oninput="searchByName(this)" value="${txtS}" name="txt" type="text"/>
+                                            </div>
+                                            <div class="form-outline">
+                                                <form action="UserManager" method="Post">
+                                                <input type="search" id="form1" class="form-control" placeholder="Search . . . ." aria-label="Search" style="width: 200px"
+                                                       name="txt" type="text" value="${txt}" >
+                                                </form>
+                                            </div>
                                             <thead>
-                                                <tr>
-                                                    <th class="border-top-0">#</th>
-                                                    <th class="border-top-0">First Name</th>
-                                                    <th class="border-top-0">Last Name</th>
-                                                    <th class="border-top-0">Username</th>
+                                                <tr style="cursor: pointer; font-size: 15px;">
+                                                    <th class="border-top-0"><i class="fa-solid fa-list-ol"></i></th>
+                                                    <th class="border-top-0" onclick="load(1)" >Full Name</th>
+                                                    <th class="border-top-0" onclick="load(2)">Username</th>
+                                                    <th class="border-top-0" onclick="load(3)">Email</th>
+                                                    <th class="border-top-0" onclick="load(4)">Phone</th>
+                                                    <th class="border-top-0" onclick="load(5)">Address</th>                                                  
+                                                    <th class="border-top-0" onclick="load(6)"><i class="fa-solid fa-ranking-star"></i></th>
+                                                    <th class="border-top-0"></th>
+                                                    <th class="border-top-0"></th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Deshmukh</td>
-                                                    <td>Prohaska</td>
-                                                    <td>@Genelia</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Deshmukh</td>
-                                                    <td>Gaylord</td>
-                                                    <td>@Ritesh</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>Sanghani</td>
-                                                    <td>Gusikowski</td>
-                                                    <td>@Govinda</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>Roshan</td>
-                                                    <td>Rogahn</td>
-                                                    <td>@Hritik</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td>Joshi</td>
-                                                    <td>Hickle</td>
-                                                    <td>@Maruti</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>6</td>
-                                                    <td>Nigam</td>
-                                                    <td>Eichmann</td>
-                                                    <td>@Sonu</td>
-                                                </tr>
+                                            <tbody id="contentList">
+                                                <% int no=1;%>
+                                                <c:forEach var="s" items="${users}">
+                                                <form action="UserManager" method="Post">
+                                                    <tr>
+                                                        <td><%=no++%></td>
+                                                        <td width="15%">${s.name}</td>
+                                                        <td style="width: 200px;">${s.username}</td>
+                                                        <td>${s.email}</td>
+                                                        <td>${s.phone}</td>
+                                                        <td width="200px">${s.address}</td>
+                                                        <td>${s.is_super()}</td>
+
+                                                        <c:choose>
+                                                            <c:when test="${s.is_super()==0}">
+                                                                <td><button class="btn btn-primary" name="id_up" value="${s.getId()}" type="submit"><i class="fa-solid fa-up-long"></i></button></td>
+                                                                    </c:when>
+                                                                    <c:when test="${s.is_super()+1==sessionScope.admin.is_super()}">
+                                                                <td></td>
+                                                                <td><button class="btn btn-primary" name="id_down" value="${s.getId()}" type="submit"><i class="fa-solid fa-down-long"></i></button></td>
+                                                                <td><button class="btn btn-primary" name="id_ban" value="${s.getId()}" type="submit"><i class="fa-solid fa-user-slash"></i></button></td>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                <td><button class="btn btn-primary" name="id_up" value="${s.getId()}" type="submit"><i class="fa-solid fa-up-long"></i></button></td>
+                                                                <td><button class="btn btn-primary" name="id_down" value="${s.getId()}" type="submit"><i class="fa-solid fa-down-long"></i></button></td>
+                                                                <td><button class="btn btn-primary" name="id_ban" value="${s.getId()}" type="submit"><i class="fa-solid fa-user-slash"></i></button></td>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                    </tr>
+                                                </form>
+
+                                                <!-- Show detail modal -->
+                                            </c:forEach>
                                             </tbody>
+
                                         </table>
-                                        
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                     <!-- ============================================================== -->
                     <!-- End PAge Content -->
                     <!-- ============================================================== -->
@@ -188,6 +200,43 @@
         <!-- ============================================================== -->
         <!-- All Jquery -->
         <!-- ============================================================== -->
+
+        <script>
+            function load(param) {
+                $.ajax({
+                    url: "/Bookie/LoadUser",
+                    type: "post", //send it through get method
+                    data: {
+                        type: param
+                    },
+                    success: function (data) {
+                        var row = document.getElementById("contentList");
+                        row.innerHTML = data;
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
+                    }
+                });
+            }
+            function searchByName(param) {
+                var txtSearch = param.value;
+                $.ajax({
+                    url: "/Bookie/LoadUser",
+                    type: "get", //send it through get method
+                    data: {
+                        txt: txtSearch
+                    },
+                    success: function (data) {
+                        var row = document.getElementById("contentList");
+                        row.innerHTML = data;
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
+                    }
+                });
+            }
+        </script>
+        <script src="https://kit.fontawesome.com/a65741f09b.js" crossorigin="anonymous"></script>
         <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
 
         <!-- Bootstrap tether Core JavaScript -->

@@ -9,13 +9,11 @@
 <%@page import="Model.*"%>
 <%@page import="context.*"%>
 <%@page import="java.util.ArrayList"%>
-<%         
-        User us = (User) session.getAttribute("admin");
-        if (session.getAttribute("admin")==null ) {
-            response.sendRedirect("/Bookie/Home");
-        }
-       
-%>
+<c:if test="${!empty sessionScope.admin && !empty sessionScope.adminS}">
+    <%         
+          response.sendRedirect("/Bookie/Home");
+    %>
+</c:if>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -126,7 +124,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#"
                                    id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="assets/images/users/profile.png" alt="user" class="profile-pic me-2">${sessionScope.admin.getName()}
+                                    <img src="assets/images/users/user.png" alt="user" class="profile-pic me-2">${sessionScope.admin.getName()}${sessionScope.adminS.getName()}
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul>
                             </li>

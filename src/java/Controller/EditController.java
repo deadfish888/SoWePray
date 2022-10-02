@@ -49,7 +49,14 @@ public class EditController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
-        User us = (User) session.getAttribute("admin");
+        User us = new User();
+        if (session.getAttribute("admin")!=null) {
+            us = (User) session.getAttribute("admin");
+        }
+        if (session.getAttribute("adminS")!=null) {
+            us = (User) session.getAttribute("adminS");
+        }
+        
         Boolean check = false;
         if (!request.getParameter("email").isEmpty()) {
             us.setEmail(request.getParameter("email"));

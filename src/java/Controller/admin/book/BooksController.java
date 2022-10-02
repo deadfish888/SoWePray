@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.admin.product;
+package Controller.admin.book;
 
 import Model.Book;
 import Model.Category;
@@ -19,13 +19,13 @@ import java.util.ArrayList;
 
 /* @author ACER */
 @WebServlet(name = "ADBookController", urlPatterns = {"/Admin/Book"})
-public class ADBookController extends HttpServlet {
+public class BooksController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CategoryDAO cd = new CategoryDAO();
-        ArrayList<Category> cates = cd.getAllCategory();
+        ArrayList<Category> cates = cd.getAllCategories();
         request.setAttribute("categories", cates);
         BookDAO bd = new BookDAO();
         ArrayList<Book> books = bd.getBooks();

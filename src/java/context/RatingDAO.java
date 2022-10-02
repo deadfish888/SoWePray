@@ -47,7 +47,7 @@ public class RatingDAO {
     
     public void sendRatetoBook(int bid, float star){
         try {
-            String sql = "UPDATE [Book] SET rate='"+star+"' WHERE bid='"+bid+"'";           
+            String sql = "UPDATE [Book] SET [rate]='"+star+"' WHERE [bid]='"+bid+"'";           
             stm= cnn.prepareStatement(sql);
             stm.executeUpdate(sql);
         } catch (Exception e) {
@@ -57,7 +57,7 @@ public class RatingDAO {
     
     public void addStar(int bid,int uid, int star){
         try {
-            String sql = "INSERT INTO [Star] VALUES (bid='"+bid+"',uid='"+uid+"',star='"+star+"')";
+            String sql = "INSERT INTO [Star] VALUES ([bid]='"+bid+"',[uid]='"+uid+"',[star]='"+star+"')";
             stm= cnn.prepareStatement(sql);
             stm.executeUpdate(sql);
             System.out.println("Add Success!!");
@@ -68,7 +68,7 @@ public class RatingDAO {
     
     public void updateStar(int bid, int uid, int star){
         try {
-            String sql = "UPDATE [Star] SET star='"+star+"' WHERE bid='"+bid+"' and uid='"+uid+"'";
+            String sql = "UPDATE [Star] SET [star]='"+star+"' WHERE [bid]='"+bid+"' and [uid]='"+uid+"'";
             stm= cnn.prepareStatement(sql);
             stm.executeUpdate(sql);
         } catch (Exception e) {
@@ -78,7 +78,7 @@ public class RatingDAO {
     
     public boolean checkExist(int bid,int uid){
         try {
-            String sql = "SELECT * FROM [Star] WHERE bid='"+bid+"',uid='"+uid+"'";
+            String sql = "SELECT * FROM [Star] WHERE [bid]='"+bid+"',uid='"+uid+"'";
             stm= cnn.prepareStatement(sql);
              rs = stm.executeQuery();
              if(rs.next()){
@@ -94,7 +94,7 @@ public class RatingDAO {
     public ArrayList<Rating> getStarList(int bid){
         ArrayList<Rating> list_r=new ArrayList<>();
         try {
-            String sql = "SELECT * FROM [Star] WHERE bid='"+bid+"'";
+            String sql = "SELECT * FROM [Star] WHERE [bid]='"+bid+"'";
             stm= cnn.prepareStatement(sql);
              rs = stm.executeQuery();
              if(rs.next()){
