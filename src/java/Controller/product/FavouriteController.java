@@ -32,7 +32,6 @@ public class FavouriteController extends HttpServlet {
        }else{
            User user=(User)request.getSession().getAttribute("user");
            int uId=user.getId();
-           
            ArrayList<Favourite> list_f= fdao.getAllBook(uId);
            ArrayList<Book> list_b=new ArrayList<>();
            ArrayList<Category> list_c=cdao.getAllCategories();
