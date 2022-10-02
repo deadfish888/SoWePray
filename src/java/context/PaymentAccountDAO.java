@@ -59,7 +59,7 @@ public class PaymentAccountDAO {
     }
 
     public PaymentAccount getWallet(User user) {
-        return user.getPaymentAccount();
+        return get(user.getPaymentAccount());
     }
 
     public void insert(PaymentAccount paymentAccount) {

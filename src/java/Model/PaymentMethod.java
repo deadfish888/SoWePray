@@ -10,11 +10,11 @@ package Model;
  * @author Khuat Thi Minh Anh
  */
 public class PaymentMethod {
-    int paymentId;
-    User user;
-    PaymentAccount paymentAccount;
-    String name;
-    boolean active;
+    private int paymentId;
+    private User user;
+    private PaymentAccount paymentAccount;
+    private String name;
+    private boolean active;
 
     public PaymentMethod() {
     }
@@ -66,5 +66,18 @@ public class PaymentMethod {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof PaymentMethod) {
+            PaymentMethod paymentMethod = (PaymentMethod) obj;
+            return (paymentMethod.getPaymentId() == paymentId) 
+                    || (paymentMethod.getPaymentAccount().equals(paymentAccount) 
+                    && paymentMethod.getUser().equals(user));
+        }
+        return false;
+    }
+    
+    
 
 }

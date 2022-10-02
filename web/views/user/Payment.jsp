@@ -184,7 +184,7 @@
                                                             Payment
                                                         </th>
                                                         <td>
-                                                            <select name="payment">
+                                                            <select name="payment" required="true">
                                                                 <c:forEach var="paymentMethod" items="${requestScope.bankList}">
                                                                     <option value="${paymentMethod.paymentId}">${paymentMethod.name}</option>
                                                                 </c:forEach>
@@ -284,7 +284,7 @@
                                                             Payment
                                                         </th>
                                                         <td>
-                                                            <select name="payment">
+                                                            <select name="payment" required>
                                                                 <c:forEach var="paymentMethod" items="${requestScope.bankList}">
                                                                     <option value="${paymentMethod.paymentId}">${paymentMethod.name}</option>
                                                                 </c:forEach>

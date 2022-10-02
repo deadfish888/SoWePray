@@ -41,14 +41,18 @@ public class RechargeController extends HttpServlet {
         PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
         PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
         TransactionDAO transDAO = new TransactionDAO();
-        
+
         float amount = Float.parseFloat(request.getParameter("amount"));
         User user = (User) request.getSession().getAttribute("user");
 
         PaymentMethod paymentMethod = new PaymentMethod();
         paymentMethod.setPaymentId(Integer.parseInt(request.getParameter("payment")));
         paymentMethod = payMedDAO.get(paymentMethod);
-        if (amount > paymentMethod.getPaymentAccount().getBalance()) {
+        if (!paymentMethod.isActive()) {
+            request.setAttribute("walletNoti", "This payment method is deactive.");
+            request.getRequestDispatcher("/User/Payment").forward(request, response);
+
+        } else if (amount > paymentMethod.getPaymentAccount().getBalance()) {
             request.setAttribute("walletNoti", "Balance of " + paymentMethod.getName() + " is not enough to recharge.");
             request.getRequestDispatcher("/User/Payment").forward(request, response);
         } else {
@@ -57,9 +61,7 @@ public class RechargeController extends HttpServlet {
             float walletBalance = user.getPaymentAccount().getBalance() + amount;
             user.getPaymentAccount().setBalance(walletBalance);
 
-            payAccDAO.update(paymentMethod.getPaymentAccount());
-            payAccDAO.update(user.getPaymentAccount());
-            
+
             Transaction transaction = new Transaction();
             transaction.setUser(user);
             transaction.setAmount(amount);
@@ -69,8 +71,10 @@ public class RechargeController extends HttpServlet {
             transaction.setStatus(2);
             transaction.setDescription("Recharge from " + paymentMethod.getName() + " into wallet.");
             transaction.setPayment(paymentMethod);
+            payAccDAO.update(paymentMethod.getPaymentAccount());
+            payAccDAO.update(user.getPaymentAccount());
             transDAO.insert(transaction);
-            
+
             response.sendRedirect(request.getContextPath() + "/User/Payment");
         }
 
