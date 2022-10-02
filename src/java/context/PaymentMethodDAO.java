@@ -145,6 +145,7 @@ public class PaymentMethodDAO {
 
     public ArrayList<PaymentMethod> getBankList(User user) {
         ArrayList<PaymentMethod> bankList = new ArrayList<>();
+        PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
         PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
         try {
             String sql = "select pa.accountNumber, balance, paymentId, userId, pm.[name] from Payment_Account pa\n"
@@ -162,10 +163,7 @@ public class PaymentMethodDAO {
             while (rs.next()) {
                 PaymentMethod paymentMethod = new PaymentMethod();
                 paymentMethod.setPaymentId(rs.getInt("paymentId"));
-                paymentMethod = payMedDAO.get(paymentMethod);
-                if (paymentMethod.isActive()) {
-                    bankList.add(paymentMethod);
-                }
+                bankList.add(payMedDAO.get(paymentMethod));
             }
             return bankList;
         } catch (SQLException ex) {
