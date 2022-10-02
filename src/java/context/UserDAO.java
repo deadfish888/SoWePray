@@ -67,7 +67,8 @@ public class UserDAO {
                 PaymentAccountDAO payDAO = new PaymentAccountDAO();
                 payAcc = payDAO.get(payAcc);
 
-                User u = new User(userid, name, gender, dob, email, phone, address, username, pass, is_super);
+                User u = new User(userid, name, gender, dob, email, phone, address, username, is_super);
+                u.setPassword(pass);
                 u.setPaymentAccount(payAcc);
                 return u;
             }
@@ -406,7 +407,7 @@ public class UserDAO {
                 String phone = rs.getString(6);
                 String address = rs.getString(7);
                 String username = rs.getString(8);
-                boolean isSuper = rs.getBoolean("is_super");
+                int isSuper = rs.getInt(9);
                 PaymentAccount paymentAccount = new PaymentAccount();
                 paymentAccount.setAccountNumber(rs.getLong("walletNumber"));
                 PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
