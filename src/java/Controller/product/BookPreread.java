@@ -8,11 +8,12 @@ package Controller.product;
 import Model.Book;
 import Model.Category;
 import Model.Chapter;
+import Model.Content;
 import Model.Volume;
-import Model.User;
 import context.BookDAO;
 import context.CategoryDAO;
 import context.ChapterDAO;
+import context.ContentDAO;
 import context.VolumeDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -24,10 +25,10 @@ import java.util.ArrayList;
 
 /**
  *
- * @author ttaad
+ * @author thanhienee
  */
-@WebServlet("/BookDetail")
-public class BookDetail extends HttpServlet {
+@WebServlet("/BookPreread")
+public class BookPreread extends HttpServlet {
    
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -40,27 +41,17 @@ public class BookDetail extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         int id=Integer.parseInt(request.getParameter("id"));
-
         BookDAO b = new BookDAO();
-        CategoryDAO cd = new CategoryDAO();
+        ContentDAO cd = new ContentDAO();
         ChapterDAO chd = new ChapterDAO();
-        VolumeDAO vd = new VolumeDAO();
-        Book thisbook=b.getBookById(id);
-        String category = cd.getCategory(thisbook.getCategoryid());
-        request.setAttribute("category", category);
-        User user = (User) request.getSession().getAttribute("user");
-        if (user != null) {
-            request.setAttribute("own", user.isOwnBook(id));
-        }
-        ArrayList<Book> sames = b.getSimilarBooks(id, thisbook.getCategoryid());
-        ArrayList<Volume> vols = vd.getVolumeByBookID(id);
-        ArrayList<Chapter> chaps = chd.getChapterByBookID(id);
-        request.setAttribute("chaps", chaps);
-        request.setAttribute("sames", sames);
+        Book thisbook = b.getBookById(id);
+        int thischapter = chd.getChapterIDbyChapterAndBookID(1, id);
+        request.setAttribute("thischapter", thischapter);
+        ArrayList<Content> list = cd.getContentByChapterID(thischapter);
+//      ArrayList<Chapter> chap = chd.getChapterByVolumeIDandBookID(id, thisbook.getId());
+        request.setAttribute("list", list);
         request.setAttribute("book", thisbook);
-        request.setAttribute("vols", vols);
-
-        request.getRequestDispatcher("/views/book/book-details.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/book/book-preread.jsp").forward(request, response);
     } 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

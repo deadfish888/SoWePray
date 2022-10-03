@@ -58,11 +58,18 @@
                         <div class="row" style="width: 1200px; text-align: justify;">
                             <div class="col-md-3">
                                 <img src="${book.getImage()}" class="img-fluid" alt="${book.getImage()}">
+                                <form action="BookPreread" method="GET">
+                                        <div style ="text-align: center ">
+                                            <input type="hidden" name="id" value="${book.getId()}">
+                                            <input type="submit" class="primary" value="Preread">                                 
+                                        </div>
+                                    </form>
                                 <div style="text-align: center;">
                                     <span class="fa fa-eye"></span>
                                     <span class="title">${book.getViews()}</span><br><!-- comment -->
                                     <span class="fa fa-star"></span><span class="title"> ${book.getRating()}</span>
                                 </div>
+                                
                             </div>
 
                             <div class="col-md-7">
@@ -194,6 +201,19 @@
                     </div>
                     <br>
                     <br>
+
+                    <div class="container-fluid">
+                    <h2 class="h2">Table of Contents</h2>
+                        <c:forEach items="${requestScope.vols}" var="vols">
+                                <h3>${vols.getVolumeName()}</h3>
+                                <c:forEach items="${requestScope.chaps}" var="chaps">
+                                    <c:if test="${chaps.getVolumeID() == vols.getId()}">
+                                        <a href="BookReading?id=${book.getId()}&cid=${chaps.getId()}"><p>${chaps.getChapterName()}</p></a>
+                                    </c:if>
+                                </c:forEach>
+                        </c:forEach>
+                    </div>
+                    
                     <div class="container-fluid">
                         <h2 class="h2">Similar Products</h2>
 

@@ -24,7 +24,7 @@ public class CategoryDAO {
     private void connectDB() {
         try {
             cnn = (new DBContext().getConnection());
-            System.out.println("Connect successfully!");
+            System.out.println("Connect successfully CategoryDAO!");
         } catch (Exception e) {
             System.out.println("Connect error:" + e.getMessage());
         }
@@ -64,7 +64,7 @@ public class CategoryDAO {
         }
     }
 
-    public ArrayList<Category> getAllCategory() {
+    public ArrayList<Category> getCategories() {
         ArrayList<Category> list = new ArrayList<>();
         try {
             stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
