@@ -7,6 +7,7 @@ package Controller.product;
 
 import Model.Book;
 import Model.Category;
+import Model.User;
 import context.BookDAO;
 import context.CategoryDAO;
 import java.io.IOException;
@@ -40,6 +41,10 @@ public class BookDetail extends HttpServlet {
         Book thisbook=b.getBookById(id);
         String category = cd.getCategory(thisbook.getCategoryid());
         request.setAttribute("category", category);
+        User user = (User) request.getSession().getAttribute("user");
+        if (user != null) {
+            request.setAttribute("own", user.isOwnBook(id));
+        }
         ArrayList<Book> sames = b.getSimilarBooks(id, thisbook.getCategoryid());
         request.setAttribute("sames", sames);
         request.setAttribute("book", thisbook);
