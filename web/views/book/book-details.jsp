@@ -61,7 +61,10 @@
                                 <form action="BookPreread" method="GET">
                                         <div style ="text-align: center ">
                                             <input type="hidden" name="id" value="${book.getId()}">
-                                            <input type="submit" class="primary" value="Preread">                                 
+                                            <c:if test="${! empty requestScope.chaps }">
+                                                <input type="submit" class="primary" value="Preread"> 
+                                            </c:if>
+                                                                            
                                         </div>
                                     </form>
                                 <div style="text-align: center;">
@@ -204,11 +207,11 @@
 
                     <div class="container-fluid">
                     <h2 class="h2">Table of Contents</h2>
-                        <c:forEach items="${requestScope.vols}" var="vols">
-                                <h3>${vols.getVolumeName()}</h3>
-                                <c:forEach items="${requestScope.chaps}" var="chaps">
-                                    <c:if test="${chaps.getVolumeID() == vols.getId()}">
-                                        <a href="BookReading?id=${book.getId()}&cid=${chaps.getId()}"><p>${chaps.getChapterName()}</p></a>
+                        <c:forEach items="${requestScope.vols}" var="vol">
+                                <h3>${vol.getVolumeName()}</h3>
+                                <c:forEach items="${requestScope.chaps}" var="chap">
+                                    <c:if test="${chap.getVolumeID() == vol.getId()}">
+                                        <a href="BookReading?id=${book.getId()}&cid=${chap.getId()}"><p>${chap.getChapterName()}</p></a>
                                     </c:if>
                                 </c:forEach>
                         </c:forEach>

@@ -6,22 +6,15 @@
 package Controller.product;
 
 import Model.Book;
-import Model.Category;
 import Model.Chapter;
-import Model.Content;
-import Model.Volume;
 import context.BookDAO;
-import context.CategoryDAO;
 import context.ChapterDAO;
-import context.ContentDAO;
-import context.VolumeDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 
 /**
  *
@@ -42,12 +35,12 @@ public class BookPreread extends HttpServlet {
     throws ServletException, IOException {
         int id=Integer.parseInt(request.getParameter("id"));
         BookDAO b = new BookDAO();
-        ContentDAO cd = new ContentDAO();
         ChapterDAO chd = new ChapterDAO();
+        
         Book thisbook = b.getBookById(id);
-        int thischapter = chd.getChapterIDbyChapterAndBookID(1, id);
+        Chapter thischapter = chd.getFirstChapterId(id);
         request.setAttribute("thischapter", thischapter);
-        ArrayList<Content> list = cd.getContentByChapterID(thischapter);
+        String[] list = thischapter.getContent().split("\n");
 //      ArrayList<Chapter> chap = chd.getChapterByVolumeIDandBookID(id, thisbook.getId());
         request.setAttribute("list", list);
         request.setAttribute("book", thisbook);

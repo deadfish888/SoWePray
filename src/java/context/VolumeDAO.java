@@ -58,6 +58,7 @@ public class VolumeDAO {
                 volume.setVolume(no);
                 volume.setVolumeName(volumeName);
                 volume.setSummary(summary);
+                volume.setBookId(bookId);
                 vols.add(volume);
             }
             return vols;

@@ -64,7 +64,7 @@ public class CategoryDAO {
         }
     }
 
-    public ArrayList<Category> getCategories() {
+    public ArrayList<Category> getAllCategory() {
         ArrayList<Category> list = new ArrayList<>();
         try {
             stm = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);

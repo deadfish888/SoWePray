@@ -7,22 +7,17 @@ package Controller.product;
 
 import Model.Book;
 import Model.Chapter;
-import Model.Content;
 import context.BookDAO;
 import context.ChapterDAO;
-import context.ContentDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
-/**
- *
- * @author thanhienee
- */
+@WebServlet("/BookReading")
 public class BookReading extends HttpServlet {
    
     /** 
@@ -48,16 +43,16 @@ public class BookReading extends HttpServlet {
         int id=Integer.parseInt(request.getParameter("id"));
         int cid = Integer.parseInt(request.getParameter("cid"));
         BookDAO b = new BookDAO();
-        ContentDAO cd = new ContentDAO();
         ChapterDAO chd = new ChapterDAO();
         Book thisbook = b.getBookById(id);
-        ArrayList<Content> listr = cd.getContentByChapterID(cid);
-        ArrayList<Chapter> listc = chd.getChapterByBookID(id);
-        
+        ArrayList<Chapter> listc = chd.getAllChapter(id);
+        Chapter chapter = chd.getChapter(cid);
+        String[] listr = chapter.getContent().split("\n");
+
 //        ArrayList<Chapter> chap = chd.getChapterByVolumeIDandBookID(id, thisbook.getId());
         request.setAttribute("listr", listr);
         request.setAttribute("book", thisbook);
-        request.setAttribute("cid", cid);
+        request.setAttribute("chapter", chapter);
         request.getRequestDispatcher("/views/book/book-reading.jsp").forward(request, response);
     } 
 

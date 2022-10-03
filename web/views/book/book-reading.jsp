@@ -44,7 +44,9 @@
 
             <!-- SideOption -->
             <section class="side_option">
-                <a href="#"><i class='bx bu bx-chevrons-left bx-sm btm '></i></a>
+                <c:if test="${(chapter.chapter-1)>0}">
+                    <a href="#"><i class='bx bu bx-chevrons-left bx-sm btm '></i></a>
+                </c:if>
                 <br><a href="BookDetail?id=${book.getId()}"><i class='bx bu bxs-home bx-sm'></i></a>
                 <br><a data-affect="#"><i class='bx bu bx-font-family bx-sm' onClick="Show()"></i></a>
                 <br><a href="#"><i class='bx bu bx-info-circle bx-sm'></i></a>
@@ -54,10 +56,10 @@
             <!-- Main -->
             <div id="main">
                 <h1 style="text-align: center">${book.getTitle()}</h1>
-                <h2 style="text-align: center">Chapter: ${cid}</h2>
+                <h2 style="text-align: center">${chapter.chapterName}</h2>
                 <h3 style="text-align: center"></h3>
                 <c:forEach items="${listr}" var="listr">
-                    <p style="margin-left: 80px; margin-right: 100px; text-align: justify">${listr.getContent()}</p>
+                    <p style="margin-left: 80px; margin-right: 100px; text-align: justify">${listr}</p>
                 </c:forEach>
             </div>
 

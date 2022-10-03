@@ -62,6 +62,7 @@ public class ChapterDAO {
                 chap.setChapter(no);
                 chap.setChapterName(chapterName);
                 chap.setStatus(status);
+                chap.setBookID(bookId);
                 chaps.add(chap);
             }
             return chaps;
@@ -211,4 +212,41 @@ public class ChapterDAO {
         }
         return 0;
     }
+
+    public Chapter getFirstChapterId(int bookId) {
+        try {
+            String sql = "SELECT TOP 1 [id]\n"
+                    + "      ,[volumeId]\n"
+                    + "      ,[chapter]\n"
+                    + "      ,[chapterName]\n"
+                    + "      ,[status]\n"
+                    + "      ,[content]\n"
+                    + "  FROM [dbo].[Chapter]"
+                    + "WHERE [bookId] = ? "
+                    + "ORDER BY [chapter] ASC ";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, bookId);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt(1);
+                int no = rs.getInt(3);
+                String chapterName = rs.getString(4);
+                boolean status = rs.getBoolean(5);
+                String content = rs.getString(6);
+
+                Chapter chapter = new Chapter();
+                chapter.setId(id);
+                chapter.setBookID(bookId);
+                chapter.setChapterName(chapterName);
+                chapter.setChapter(no);
+                chapter.setStatus(status);
+                chapter.setContent(content);
+                return chapter;
+            }
+        } catch (Exception e) {
+            System.out.println("getChapterIDbyChapterAndBookID: " + e.getMessage());
+        }
+        return null;
+    }
+
 }
