@@ -10,7 +10,6 @@ import Model.Category;
 import context.BookDAO;
 import context.CategoryDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,7 +18,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import utils.Validator;
 
 /* @author ACER */
 @WebServlet(name="UpdateBookController", urlPatterns={"/Admin/UpdateBook"})
@@ -29,7 +27,7 @@ public class UpdateBookController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         try {
-            int bookId = (new Validator()).fieldInt(request.getParameter("id"), "No Information");
+            int bookId = Integer.parseInt(request.getParameter("id"));
             CategoryDAO cd = new CategoryDAO();
             ArrayList<Category> cates = cd.getAllCategory();
             request.setAttribute("cates", cates);

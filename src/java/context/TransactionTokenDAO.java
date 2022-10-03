@@ -36,28 +36,28 @@ public class TransactionTokenDAO {
         }
     }
 
-//    public TransactionToken get(Transaction trans) {
-//        TransactionToken transToken = new TransactionToken();
-//        try {
-//            String sql = "SELECT [transactionId]\n"
-//                    + "      ,[token]\n"
-//                    + "      ,[status]\n"
-//                    + "      ,[createdTime]\n"
-//                    + "  FROM [Transaction_Token]"
-//                    + "  WHERE [transationId] = ?";
-//            stm = cnn.prepareStatement(sql);
-//            stm.setLong(1, trans.getTransactionId());
-//            rs = stm.executeQuery();
-//            if(rs.next()){
-//                transToken = new TransactionToken();
-//                transToken.setToken(rs.getString("token"));
-//                transToken.setTransaction(trans);
-//                transToken.setCreatedTime(rs.getTimestamp("createdTime"));
-//                transToken.setActive(rs.getBoolean("status"));
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(TransactionTokenDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return transToken;
-//    }
+    public TransactionToken get(Transaction trans) {
+        TransactionToken transToken = new TransactionToken();
+        try {
+            String sql = "SELECT [transactionId]\n"
+                    + "      ,[token]\n"
+                    + "      ,[status]\n"
+                    + "      ,[createdTime]\n"
+                    + "  FROM [Transaction_Token]"
+                    + "  WHERE [transationId] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setLong(1, trans.getTransactionId());
+            rs = stm.executeQuery();
+            if(rs.next()){
+                transToken = new TransactionToken();
+                transToken.setToken(rs.getString("token"));
+                transToken.setTransaction(trans);
+                transToken.setCreatedTime(rs.getTimestamp("createdTime"));
+                transToken.setActive(rs.getBoolean("status"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TransactionTokenDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return transToken;
+    }
 }

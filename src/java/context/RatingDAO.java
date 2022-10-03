@@ -8,15 +8,19 @@ import Model.Rating;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author ttaad
  */
 public class RatingDAO {
+
     public RatingDAO() {
         connectDB();
     }
@@ -33,77 +37,105 @@ public class RatingDAO {
             System.out.println("Connect error:" + e.getMessage());
         }
     }
-    
-    public float getAverageStar(int bid){
-        
-        ArrayList<Rating> list = getStarList(bid);
-        int sum=0;
-        for(int i=0;i<list.size();i++){
-            sum+=list.get(i).getStar();
-        }
-        float star=sum/list.size();       
-        return star;
-    }
-    
-    public void sendRatetoBook(int bid, float star){
+
+    public float getAverageStar(int bid) {
+
         try {
-            String sql = "UPDATE [Book] SET rate='"+star+"' WHERE bid='"+bid+"'";           
-            stm= cnn.prepareStatement(sql);
-            stm.executeUpdate(sql);
-        } catch (Exception e) {
-           System.out.println("Connect error:" + e.getMessage());
+            String sql = "SELECT AVG([star]) "
+                    + "     FROM [dbo].[Star] "
+                    + "     WHERE [bid] = ? ";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, bid);
+            rs = stm.executeQuery();
+            if(rs.next()) return rs.getFloat(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(RatingDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return 0;
     }
-    
-    public void addStar(int bid,int uid, int star){
+
+    public void sendRatetoBook(int bid, float star) {
         try {
-            String sql = "INSERT INTO [Star] VALUES (bid='"+bid+"',uid='"+uid+"',star='"+star+"')";
-            stm= cnn.prepareStatement(sql);
-            stm.executeUpdate(sql);
-            System.out.println("Add Success!!");
+            String sql = "UPDATE [Book] SET [rating]=? WHERE id=?";
+            stm = cnn.prepareStatement(sql);
+            stm.setFloat(1, star);
+            stm.setInt(2, bid);
+            stm.executeUpdate();
         } catch (Exception e) {
-           System.out.println("Connect error:" + e.getMessage());
+            System.out.println("updateBook error:" + e.getMessage());
         }
     }
-    
-    public void updateStar(int bid, int uid, int star){
+
+    public void addStar(int bid, int uid, int star) {
         try {
-            String sql = "UPDATE [Star] SET star='"+star+"' WHERE bid='"+bid+"' and uid='"+uid+"'";
-            stm= cnn.prepareStatement(sql);
-            stm.executeUpdate(sql);
+            String sql = "INSERT INTO [dbo].[Star]\n"
+                    + "           ([bid]\n"
+                    + "           ,[uid]\n"
+                    + "           ,[star])\n"
+                    + "     VALUES\n"
+                    + "           ( ? "
+                    + "           , ? "
+                    + "           , ? )";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, bid);
+            stm.setInt(2, uid);
+            stm.setInt(3, star);
+            stm.executeUpdate();
         } catch (Exception e) {
-           System.out.println("Connect error:" + e.getMessage());
+            System.out.println("AddStar error:" + e.getMessage());
         }
     }
-    
-    public boolean checkExist(int bid,int uid){
+
+    public void updateStar(int bid, int uid, int star) {
         try {
-            String sql = "SELECT * FROM [Star] WHERE bid='"+bid+"',uid='"+uid+"'";
-            stm= cnn.prepareStatement(sql);
-             rs = stm.executeQuery();
-             if(rs.next()){
-                 return true;
-             }    
+            String sql = "UPDATE [dbo].[Star]\n"
+                    + "   SET [star] = ? \n"
+                    + " WHERE [bid] = ? "
+                    + "     AND [uid] = ? ";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, star);
+            stm.setInt(2, bid);
+            stm.setInt(3, uid);
+            stm.executeUpdate();
         } catch (Exception e) {
-           System.out.println("Connect error:" + e.getMessage());
+            System.out.println("updateStar error:" + e.getMessage());
+        }
+    }
+
+    public boolean checkExist(int bid, int uid) {
+        try {
+            String sql = "SELECT [bid]\n"
+                    + "      ,[uid]\n"
+                    + "      ,[star]\n"
+                    + "  FROM [dbo].[Star]"
+                    + "WHERE [bid] = ? "
+                    + "  AND [uid] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, bid);
+            stm.setInt(2, uid);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("checkExist error:" + e.getMessage());
         }
         return false;
     }
-    
-    
-    public ArrayList<Rating> getStarList(int bid){
-        ArrayList<Rating> list_r=new ArrayList<>();
+
+    public ArrayList<Rating> getStarList(int bid) {
+        ArrayList<Rating> list_r = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM [Star] WHERE bid='"+bid+"'";
-            stm= cnn.prepareStatement(sql);
-             rs = stm.executeQuery();
-             if(rs.next()){
-                 int uid=rs.getInt(2);
-                 int star=rs.getInt(3);
-                 list_r.add(new Rating(bid, uid, star));
-             }    
+            String sql = "SELECT * FROM [Star] WHERE bid='" + bid + "'";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                int uid = rs.getInt(2);
+                int star = rs.getInt(3);
+                list_r.add(new Rating(bid, uid, star));
+            }
         } catch (Exception e) {
-           System.out.println("Connect error:" + e.getMessage());
+            System.out.println("Connect error:" + e.getMessage());
         }
         return list_r;
     }

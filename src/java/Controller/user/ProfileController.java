@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.user;
+package Controller.User;
 
 import Model.User;
 import context.UserDAO;
@@ -54,7 +54,7 @@ public class ProfileController extends HttpServlet {
 //                request.getRequestDispatcher("../views/user/EditProfile.jsp").forward(request, response);
                }  if (!validator.getName(name)) {
                    err = true;
-                   request.setAttribute("nameMessage2", "Name have to have less than 40 alphabetic characters or space characters.");
+                   request.setAttribute("nameMessage2", "Name should have at least 1 character and less than 40 alphabetic characters or space characters.");
 //                request.getRequestDispatcher("../views/user/EditProfile.jsp").forward(request, response);
                }  if (!validator.getString(phoneNumber)) {
                    err = true;

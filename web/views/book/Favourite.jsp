@@ -38,35 +38,12 @@
             </header>
 
             <!-- Menu -->
-            <nav id="menu">
-                <h2><a href="./User" >${sessionScope.user==null? "Menu": ("Welcome ")}${sessionScope.user.getName()}</a></h2>
-                <ul>
-                    <li><a href="./Home">Home</a></li>
-
-                    <li><a href="./Book?id=0">Bookshelf</a></li>
-
-                    <li><a href="./Cart">Cart</a></li>
-
-                    <% 
-                        if(session.getAttribute("user")==null){ 
-                    %>
-                    <li><a href="about.jsp">About</a></li>
-
-                    <li><a href="Login?origin=./Book?id=0"><i class="fa fa-sign-in"></i>Login</a></li>
-                        <% } else{ %>
-                    <li><a href="./Order">Order History</a></li>
-
-                    <li><a href="about.jsp">About</a></li>
-
-                    <li><a href="Logout"><i class="fa fa-sign-out"></i>Logout</a></li>
-                        <% }%>
-                </ul>
-            </nav>
+            <jsp:include page="/views/base/menu.jsp" />
 
             <!-- Main -->
             <div id="main">
                 <div class="inner">
-                    <h1>Favourite</h1>
+                    <h1>My Favourite</h1>
                     <div class="image main">
                         <img
                             src="images/banner-image-6-1920x500.jpg"

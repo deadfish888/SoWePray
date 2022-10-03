@@ -4,6 +4,7 @@
  */
 package context;
 
+import Model.PaymentAccount;
 import Model.User;
 import java.sql.Connection;
 import java.sql.Date;
@@ -137,7 +138,9 @@ public class UserDAO {
                 String address = rs.getString(7);
                 String username = rs.getString(8);
                 int is_super = rs.getInt(10);
-                list.add(new User(userid, name, gender, dob, email, phone, address, username, is_super));
+                 User u = new User(userid, name,username, gender, dob, email, phone, address);
+                u.setIs_super(is_super);
+                list.add(u);
             }
         } catch (Exception e) {
             System.out.println("getUser Error:" + e.getMessage());
@@ -171,7 +174,9 @@ public class UserDAO {
                 String address = rs.getString(7);
                 String username = rs.getString(8);
                 int is_super = rs.getInt(10);
-                list.add(new User(userid, name, gender, dob, email, phone, address, username, is_super));
+                 User u = new User(userid, name,username, gender, dob, email, phone, address);
+                u.setIs_super(is_super);
+                list.add(u);
             }
         } catch (Exception e) {
             System.out.println("getUser Error:" + e.getMessage());
@@ -209,7 +214,9 @@ public class UserDAO {
                 String address = rs.getString(7);
                 String username = rs.getString(8);
                 int is_super = rs.getInt(10);
-                list.add(new User(userid, name, gender, dob, email, phone, address, username, is_super));
+                User u = new User(userid, name,username, gender, dob, email, phone, address);
+                u.setIs_super(is_super);
+                list.add(u);
             }
         } catch (Exception e) {
             System.out.println("getUser Error:" + e.getMessage());
@@ -258,30 +265,6 @@ public class UserDAO {
         return 0;
     }
 
-    public void createNewUser(String name, String gender, String dob, String email, String phone, String username, String password) {
-        try {
-            String sql = "insert [User] ([fullname],[gender] ,[dob] , [email], [phone],[username], [password])"
-                    + "  values (?,"
-                    + "?,"
-                    + "CAST(? AS Date),"
-                    + "?, "
-                    + "?, "
-                    + "?, "
-                    + "?)";
-            stm = cnn.prepareStatement(sql);
-            stm.setString(1, name);
-            stm.setBoolean(2, gender.equals("Male"));
-            stm.setString(3, dob);
-            stm.setString(4, email);
-            stm.setString(5, phone);
-            stm.setString(6, username);
-            stm.setString(7, password);
-            stm.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("updatePass Error:" + e.getMessage());
-        }
-    }
-
     public void addUser(User user) {
         try {
             String sql = "INSERT INTO [dbo].[User]\n"
@@ -290,15 +273,13 @@ public class UserDAO {
                     + "           ,[dob]\n"
                     + "           ,[email]\n"
                     + "           ,[phone]\n"
-                    + "           ,[address]\n"
                     + "           ,[username]\n"
                     + "           ,[password]\n"
                     + "           ,[is_super])\n"
                     + "     VALUES\n"
                     + "           (?\n"
                     + "           ,?\n"
-                    + "           ,?\n"
-                    + "           ,?\n"
+                    + "           ,(CAST ? AS Date)\n"
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
@@ -311,10 +292,9 @@ public class UserDAO {
             stm.setString(3, user.getDob());
             stm.setString(4, user.getEmail());
             stm.setString(5, user.getPhone());
-            stm.setString(6, user.getAddress());
-            stm.setString(7, user.getUsername());
-            stm.setString(8, user.getPassword());
-            stm.setInt(9, user.is_super());
+            stm.setString(6, user.getUsername());
+            stm.setString(7, user.getPassword());
+            stm.setInt(8, user.is_super());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -563,4 +543,49 @@ public class UserDAO {
         return 0;
     }
 
+    public User getByUsername(String username) {
+        try {
+            String sql = "SELECT [fullname]\n"
+                    + "      ,[gender]\n"
+                    + "      ,[dob]\n"
+                    + "      ,[email]\n"
+                    + "      ,[phone]\n"
+                    + "      ,[address]\n"
+                    + "      ,[username]\n"
+                    + "      ,[password]\n"
+                    + "      ,[is_super]\n"
+                    + "      ,[walletNumber]\n"
+                    + "      ,[id]\n"
+                    + "  FROM [User] "
+                    + "where username = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, username);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return new User(rs.getInt("id"), rs.getString(1), rs.getBoolean(2) ? "Male" : "Female",
+                        rs.getString(3), rs.getString(4), rs.getString(5),
+                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9),
+                        new PaymentAccount(rs.getLong("walletNumber")));
+//                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+    }
+    
+    public void setWalletNumber(PaymentAccount paymentAccount, User user) {
+        try {
+            String sql = "UPDATE [User]\n"
+                    + "   SET [walletNumber] = ?\n"
+                    + " WHERE [id] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setLong(1, paymentAccount.getAccountNumber());
+            stm.setInt(2, user.getId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

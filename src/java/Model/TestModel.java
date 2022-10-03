@@ -20,8 +20,8 @@ public class TestModel {
         user.setId(106);
         Book book1 = new Book();
         book1.setId(4);
-        //user.isOwnBook(4);
-        //System.out.println(user.isOwnBook(4));
+        user.isOwnBook(4);
+        System.out.println(user.isOwnBook(4));
 //        Book book2 = new Book();
 //        book2.setId(1);
 //        System.out.println(book1.equals(book2));

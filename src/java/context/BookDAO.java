@@ -5,6 +5,7 @@
 package context;
 
 import Model.Book;
+import Model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -381,4 +382,30 @@ public class BookDAO {
         }
     }
 
+    public ArrayList<Book> getOwnBooks(User user) {
+        ArrayList<Book> list = new ArrayList<>();
+        try {
+            String sql = "  select bo.bookId from [User] u \n"
+                    + "  inner join [Book_Own] bo \n"
+                    + "  on bo.userId = u.id\n"
+                    + "  inner join Book b\n"
+                    + "  on bo.bookId = b.id"
+                    + "  where u.id = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, user.getId());
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("bookId");
+                Book book = getBookById(id);
+                list.add(book);
+            }
+        } catch (Exception e) {
+            System.out.println("getOwn Error:" + e.getMessage());
+        }
+        return list;
+    }
+    
+    public boolean isOwn(User user, Book book) {
+        return getOwnBooks(user).contains(book);
+    }
 }

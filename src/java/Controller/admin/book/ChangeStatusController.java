@@ -14,7 +14,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import utils.Validator;
 
 /* @author ACER */
 @WebServlet(name="ChangeStatusController", urlPatterns={"/Admin/ChangeStatus"})
@@ -23,7 +22,6 @@ public class ChangeStatusController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        Validator validate = new Validator();
         String xpage = request.getParameter("xpage");
         int page;
         if (xpage==null) {
@@ -32,8 +30,7 @@ public class ChangeStatusController extends HttpServlet {
             page = Integer.parseInt(xpage);
         }
         try {
-            String idString = validate.getField(request, "id", true);
-            int bookId = validate.fieldInt(idString, "Error get field id");
+            int bookId = Integer.parseInt(request.getParameter("id"));
             BookDAO bd = new BookDAO();
             bd.changeStatus(bookId);
             request.getRequestDispatcher("./Book?xpage="+page).forward(request, response);
