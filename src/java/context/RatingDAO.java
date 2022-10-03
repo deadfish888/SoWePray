@@ -39,19 +39,12 @@ public class RatingDAO {
     }
 
     public float getAverageStar(int bid) {
-
-        try {
-            String sql = "SELECT AVG([star]) "
-                    + "     FROM [dbo].[Star] "
-                    + "     WHERE [bid] = ? ";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, bid);
-            rs = stm.executeQuery();
-            if(rs.next()) return rs.getFloat(1);
-        } catch (SQLException ex) {
-            Logger.getLogger(RatingDAO.class.getName()).log(Level.SEVERE, null, ex);
+        ArrayList<Rating> stars = getStarList(bid);
+        float sum=0;
+        for (int i=0;i<stars.size();i++){
+            sum+=stars.get(i).getStar();
         }
-        return 0;
+        return sum/stars.size();
     }
 
     public void sendRatetoBook(int bid, float star) {
@@ -126,10 +119,11 @@ public class RatingDAO {
     public ArrayList<Rating> getStarList(int bid) {
         ArrayList<Rating> list_r = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM [Star] WHERE bid='" + bid + "'";
+            String sql = "SELECT * FROM [Star] WHERE bid= ? ";
             stm = cnn.prepareStatement(sql);
+            stm.setInt(1, bid);
             rs = stm.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 int uid = rs.getInt(2);
                 int star = rs.getInt(3);
                 list_r.add(new Rating(bid, uid, star));

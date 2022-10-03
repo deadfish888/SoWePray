@@ -29,16 +29,28 @@ public class ReportDAO {
             System.out.println("Connect error:" + e.getMessage());
         }
     }
-    
-    public void addReport(int rid,int bid, int uid, String note){
+
+    public void addReport(int rid, int bid, int uid, String note) {
         try {
-            String sql="INSERT INTO [ReportDetail] (reportId,bookId,userId,note) "
-                    + "VALUES ('"+rid+"','"+bid+"','"+uid+"','"+note+"') ";
-            stm=cnn.prepareStatement(sql);
-            rs=stm.executeQuery(); 
+            String sql = "INSERT INTO [dbo].[ReportDetail]\n"
+                    + "           ([reportId]\n"
+                    + "           ,[bookId]\n"
+                    + "           ,[userId]\n"
+                    + "           ,[note])\n"
+                    + "     VALUES\n"
+                    + "           ( ?"
+                    + "           , ?"
+                    + "           , ?"
+                    + "           , ? ) ";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, rid);
+            stm.setInt(2, bid);
+            stm.setInt(3, uid);
+            stm.setString(4, note);
+            stm.executeUpdate();
         } catch (Exception e) {
-            System.out.println("Connect error:" + e.getMessage());
+            System.out.println("add error:" + e.getMessage());
         }
     }
-    
+
 }

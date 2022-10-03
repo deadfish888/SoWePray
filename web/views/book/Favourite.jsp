@@ -5,6 +5,11 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<c:if test="${!empty sessionScope.user}">
+    <%         
+          response.sendRedirect("/Bookie/Home");
+    %>
+</c:if>
 <!DOCTYPE html>
 <html>
     <head>
@@ -83,17 +88,17 @@
                     <!-- Products -->
                     <section class="tiles">
                         <c:forEach items="${books}" var="book">
-                            <article class="style1">
+                            <article id="bootstrap-overrides" class="style1" style="">
                                 <span class="image">
-                                    <img src="${book.getImage()}" alt="" style="height: 391px;"/>
+                                    <img src="${book.getImage()}" alt="" style="height: 250px;"/>
                                 </span>
-                                <a href="Book?id=${book.getId()}">
-                                    <h2>${book.getTitle()}</h2>
+                                <a href="BookDetail?id=${book.getId()}" alt="${book.getTitle()}">
+                                    <h2 style="overflow: hidden;text-overflow: ellipsis;">${book.getTitle()}</h2>
                                     <h3 style="font-size: 0.85em;"><i>${book.getAuthor()}</i></h3>
                                             <c:if test="${book.issale()}">
                                         <p>
                                             <del>$${book.getPrice()}</del> 
-                                            <strong>$${Math.round(book.getPrice())/100}</strong>
+                                            <strong>$${5.00}</strong>
                                         </p>
                                     </c:if>
                                     <c:if test="${!book.issale()}">

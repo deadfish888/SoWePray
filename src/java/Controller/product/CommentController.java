@@ -11,29 +11,26 @@ import context.CommentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
-/**
- *
- * @author ttaad
- */
+@WebServlet("/Comment")
 public class CommentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-    int bId=Integer.parseInt(request.getParameter("bId"));    
+    int bId=Integer.parseInt(request.getParameter("bookId"));    
     if(request.getSession() == null || request.getSession().getAttribute("user") == null){
-           response.sendRedirect("./Login");
+           response.sendRedirect("./Login?origin=./BookDetail?id="+bId);
     }else{ 
         User user=(User)request.getSession().getAttribute("user");
         int uId=user.getId();
         String comment=request.getParameter("comment");
         CommentDAO cdao=new CommentDAO();
         cdao.addComment(bId, uId, comment);
-        response.sendRedirect("./Home");
         response.sendRedirect("./BookDetail?id="+bId);
     }  
     } 

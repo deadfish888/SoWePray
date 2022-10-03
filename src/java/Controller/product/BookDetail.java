@@ -5,13 +5,14 @@
 package Controller.product;
 
 import Model.Book;
-import Model.Category;
 import Model.Chapter;
+import Model.Comment;
 import Model.Volume;
 import Model.User;
 import context.BookDAO;
 import context.CategoryDAO;
 import context.ChapterDAO;
+import context.CommentDAO;
 import context.VolumeDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -45,6 +46,7 @@ public class BookDetail extends HttpServlet {
         CategoryDAO cd = new CategoryDAO();
         ChapterDAO chd = new ChapterDAO();
         VolumeDAO vd = new VolumeDAO();
+        CommentDAO cmd = new CommentDAO();
         Book thisbook=b.getBookById(id);
         String category = cd.getCategory(thisbook.getCategoryid());
         request.setAttribute("category", category);
@@ -55,10 +57,12 @@ public class BookDetail extends HttpServlet {
         ArrayList<Book> sames = b.getSimilarBooks(id, thisbook.getCategoryid());
         ArrayList<Volume> vols = vd.getAllVolume(id);
         ArrayList<Chapter> chaps = chd.getAllChapter(id);
+        ArrayList<Comment> coms = cmd.loadComment(id);
         request.setAttribute("chaps", chaps);
         request.setAttribute("sames", sames);
         request.setAttribute("book", thisbook);
         request.setAttribute("vols", vols);
+        request.setAttribute("comments", coms);
 
         request.getRequestDispatcher("/views/book/book-details.jsp").forward(request, response);
     }

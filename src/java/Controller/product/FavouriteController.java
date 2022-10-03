@@ -54,7 +54,7 @@ public class FavouriteController extends HttpServlet {
        int bId=Integer.parseInt(request.getParameter("bId"));
        FavouriteDAO fdao=new FavouriteDAO();
        if(request.getSession() == null || request.getSession().getAttribute("user") == null){
-           response.sendRedirect("./Login");
+           response.sendRedirect("./Login?origin=./BookDetail?id="+bId);
        }else{
            User user=(User)request.getSession().getAttribute("user");
            int uId=user.getId();

@@ -19,8 +19,7 @@ public class CommentDAO {
     public CommentDAO() {
         connectDB();
     }
-    
-    
+
     Connection cnn; // ket noi db
     PreparedStatement stm; // thuc thi cac cau lenh sql
     ResultSet rs; // luu tru va xu ly du lieu
@@ -33,33 +32,48 @@ public class CommentDAO {
             System.out.println("Connect error:" + e.getMessage());
         }
     }
-    
-    public void addComment(int bid, int uid, String comment){
+
+    public void addComment(int bid, int uid, String comment) {
         try {
-            String sql ="INSERT [Comment] VALUES ([bid]='"+bid+"',[uid]='"+uid+"',[comment]='"+comment+"');";
-            stm=cnn.prepareStatement(sql);
-            rs=stm.executeQuery();
-            
+            String sql = "INSERT INTO [dbo].[Comment]\n"
+                    + "           ([bookId]\n"
+                    + "           ,[userId]\n"
+                    + "           ,[comment])\n"
+                    + "     VALUES\n"
+                    + "           ( ?"
+                    + "           , ?"
+                    + "           , ? )";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, bid);
+            stm.setInt(2, uid);
+            stm.setString(3, comment);
+            stm.executeUpdate();
         } catch (Exception e) {
-            System.out.println("Connect error:" + e.getMessage());
+            System.out.println("add error:" + e.getMessage());
         }
     }
-    
-    public ArrayList<Comment> loadComment(int bid){
-        ArrayList<Comment> list=new ArrayList<>();
+
+    public ArrayList<Comment> loadComment(int bid) {
+        ArrayList<Comment> list = new ArrayList<>();
         try {
-            String sql ="SELECT * FROM [Comment] WHERE [bid]='"+bid+"'";
-            stm=cnn.prepareStatement(sql);
-            rs=stm.executeQuery();
-            if(rs.next()){
-                int uid=rs.getInt(2);
-                String cmt=rs.getString(3);
-                list.add(new Comment(bid,uid,cmt));
+            String sql = "SELECT [bookId]\n"
+                    + "      ,[userId]\n"
+                    + "      ,[comment]\n"
+                    + "  FROM [dbo].[Comment]"
+                    + " WHERE [bookId]= ? ";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, bid);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int uid = rs.getInt(2);
+                String cmt = rs.getString(3);
+                list.add(0,new Comment(bid, uid, cmt));
             }
+            return list;
         } catch (Exception e) {
-            System.out.println("Connect error:" + e.getMessage());
+            System.out.println("load error:" + e.getMessage());
         }
-        return list;
+        return null;
     }
-    
+
 }

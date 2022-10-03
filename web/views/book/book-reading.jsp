@@ -5,6 +5,11 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<c:if test="${empty sessionScope.user || !sessionScope.user.isOwnBook(book.id)}">
+    <%         
+          response.sendRedirect("./Login");
+    %>
+</c:if>
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <!DOCTYPE html>
 <html>
@@ -62,23 +67,6 @@
                     <p style="margin-left: 80px; margin-right: 100px; text-align: justify">${listr}</p>
                 </c:forEach>
             </div>
-
-            <!-- Footer -->
-            <footer id="footer">
-                <div class="inner">
-                    <section>
-                        <h2>Contact Info</h2>
-                        <ul class="alt">
-                            <li><span class="fa fa-github"></span> <a href="https://github.com/nekon0/SoWePray">Our Project</a></li>
-                            <li><span class="fa fa-map-pin"></span> <a href="https://goo.gl/maps/ojwCjTqRteiA4B9U7"> DE210, FBT University</a></li>
-                        </ul>
-                    </section>
-
-                    <ul class="copyright">
-                        <li> HLV </li>
-                    </ul>
-                </div>
-            </footer>
 
         </div>
         <style>

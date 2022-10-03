@@ -9,7 +9,7 @@
 <%@page import="Model.*"%>
 <%@page import="context.*"%>
 <%@page import="java.util.ArrayList"%>
-<c:if test="${!empty sessionScope.admin && !empty sessionScope.adminS}">
+<c:if test="${empty sessionScope.admin}">
     <%         
           response.sendRedirect("/Bookie/Home");
     %>

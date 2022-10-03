@@ -282,7 +282,7 @@ public class UserDAO {
                     + "     VALUES\n"
                     + "           (?\n"
                     + "           ,?\n"
-                    + "           ,(CAST ? AS Date)\n"
+                    + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
@@ -482,6 +482,7 @@ public class UserDAO {
                     + "      ,[username]\n"
                     + "      ,[password]\n"
                     + "      ,[is_super]\n"
+                    + "      ,[walletNumber]"
                     + "  FROM [User] "
                     + "where id = ?";
             stm = cnn.prepareStatement(sql);
@@ -620,5 +621,9 @@ public class UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public Object countUser() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
