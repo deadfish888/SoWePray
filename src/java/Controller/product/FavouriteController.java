@@ -37,7 +37,7 @@ public class FavouriteController extends HttpServlet {
            
            ArrayList<Favourite> list_f= fdao.getAllBook(uId);
            ArrayList<Book> list_b=new ArrayList<>();
-           ArrayList<Category> list_c=cdao.getAllCategory();
+           ArrayList<Category> list_c=cdao.getAllCategories();
            for(int i=0;i<list_f.size();i++){
                int bID=list_f.get(i).getbID();
                Book b=bdao.getBookById(bID);

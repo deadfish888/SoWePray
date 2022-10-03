@@ -66,7 +66,7 @@ public class PurchaseController extends HttpServlet {
             transaction.setAmount(amount);
             transaction.setBalanceAfter(walletBalance);
             transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-            transaction.setType(2);
+            transaction.setType(3);
             transaction.setStatus(2);
             transaction.setDescription("Buy " + request.getParameter("bookTitle") + ".");
             transaction.setPayment(payMedDAO.get(paymentMethod));

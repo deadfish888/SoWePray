@@ -207,4 +207,13 @@ public class User {
         return bookDAO.isOwn(this, book);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof User) {
+            User user = (User) obj;
+            return user.getId() == this.id;
+        }
+        return false;
+    }
+    
 }
