@@ -43,7 +43,7 @@ public class UserDAO {
             System.out.println("Connect error:" + e.getMessage());
         }
     }
-
+    
     public User getUser(String key, String pass) {
         String sql = "Select * from [User] where (username=? OR email=?) AND password=?";
         try {
@@ -56,14 +56,21 @@ public class UserDAO {
                 int userid = rs.getInt(1);
                 String name = rs.getString(2);
                 String gender = rs.getBoolean(3) ? "Male" : "Female";
-                SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
                 String dob = f.format(rs.getDate(4));
                 String email = rs.getString(5);
                 String phone = rs.getString(6);
                 String address = rs.getString(7);
                 String username = rs.getString(8);
                 int is_super = rs.getInt(10);
+                PaymentAccount payAcc = new PaymentAccount();
+                payAcc.setAccountNumber(rs.getLong("walletNumber"));
+                PaymentAccountDAO payDAO = new PaymentAccountDAO();
+                payAcc = payDAO.get(payAcc);
+
                 User u = new User(userid, name, gender, dob, email, phone, address, username, pass, is_super);
+                u.setPassword(pass);
+                u.setPaymentAccount(payAcc);
                 return u;
             }
         } catch (Exception e) {
