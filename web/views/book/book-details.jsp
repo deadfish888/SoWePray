@@ -70,6 +70,29 @@
                                 <p>
                                     ${book.getDescription()}
                                 </p>
+                                <div class="row">        
+                                    <c:if test="${sessionScope.user != null}">
+                                        <c:if test="${requestScope.own}">
+                                            <form>
+                                                <div class="col-sm-4">
+                                                    <input type="button" class="primary" value="Read">
+                                                </div>
+                                            </form>
+                                        </c:if>
+                                        <c:if test="${!own}">
+                                            <div class="col-sm-2">
+                                                <input type="button" class="primary btn-primary" data-toggle="modal" data-target="#purchase" value="Buy"/>
+                                            </div>
+                                        </c:if>
+                                    </c:if>
+                                    <c:if test="${sessionScope.user == null}">
+                                        <form action="Login" method="GET">
+                                            <div class="col-sm-4">
+                                                <input type="submit" class="primary" value="Buy">
+                                            </div>
+                                        </form>
+                                    </c:if>
+
                                 <div class="modal fade" id="purchase" tabindex="-1" role="dialog" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
@@ -120,29 +143,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">        
-                                    <c:if test="${sessionScope.user != null}">
-                                        <c:if test="${requestScope.own}">
-                                            <form>
-                                                <div class="col-sm-4">
-                                                    <input type="button" class="primary" value="Read">
-                                                </div>
-                                            </form>
-                                        </c:if>
-                                        <c:if test="${!own}">
-                                            <div class="col-sm-2">
-                                                <input type="button" class="primary btn-primary" data-toggle="modal" data-target="#purchase" value="Buy"/>
-                                            </div>
-                                        </c:if>
-                                    </c:if>
-                                    <c:if test="${sessionScope.user == null}">
-                                        <form action="Login" method="GET">
-                                            <div class="col-sm-4">
-                                                <input type="submit" class="primary" value="Buy">
-                                            </div>
-                                        </form>
-                                    </c:if>
-
 
                                     <form action="Favourite" method="POST">
                                         <div class="col-sm-4">
