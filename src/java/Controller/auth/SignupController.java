@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpSession;
 /* @author ACER */
 @WebServlet("/Signup")
 public class SignupController extends HttpServlet {
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -37,37 +37,36 @@ public class SignupController extends HttpServlet {
         String phone = request.getParameter("phone");
         String dob = request.getParameter("birthday");
         String gender = request.getParameter("gender");
-       
+
         UserDAO ud = new UserDAO();
-        User user = new User(name, gender, dob, email, phone ,key, pass);
-        if(ud.checkEmailExisted(email)!=0){
+        User user = new User(name, gender, dob, email, phone, key, pass);
+        if (ud.checkEmailExisted(email) != 0) {
             request.setAttribute("in4", user);
             request.setAttribute("error", "The email had already been registered!");
-            request.setAttribute("origin",request.getParameter("origin"));
+            request.setAttribute("origin", request.getParameter("origin"));
             forward(request, response, "/views/auth/signup.jsp");
             return;
         }
-        if(ud.checkUsernameExisted(key)!=0){
+        if (ud.checkUsernameExisted(key) != 0) {
             request.setAttribute("in4", user);
             request.setAttribute("error", "Existed username!");
-            request.setAttribute("origin",request.getParameter("origin"));
+            request.setAttribute("origin", request.getParameter("origin"));
             forward(request, response, "/views/auth/signup.jsp");
-        }else{
+        } else {
             HttpSession session = request.getSession();
-                String origin = request.getParameter("origin");
-                if(origin.equals("")) origin="./Home";
-                
-//            ud.createNewUser(name, gender, dob, email, phone ,key, pass);
+            String origin = request.getParameter("origin");
+            if (origin.equals("")) {
+                origin = "./Home";
+            }
             user.setIs_super(1);
             ud.addUser(user);
-            
+
             user = ud.getByUsername(key);
             user.createWallet();
             ud.setWalletNumber(user.getPaymentAccount(), user);
             session.setAttribute("user", user);
-            
             request.setAttribute("error", "Sign up successfully!");
-            request.setAttribute("origin",request.getParameter("origin"));
+            request.setAttribute("origin", request.getParameter("origin"));
             response.sendRedirect(origin);
         }
     }
@@ -76,9 +75,10 @@ public class SignupController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
     private void forward(HttpServletRequest request, HttpServletResponse response, String path) throws ServletException, IOException {
         RequestDispatcher rd = request.getRequestDispatcher(path);
         rd.forward(request, response);
     }
-    
+
 }

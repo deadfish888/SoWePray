@@ -91,11 +91,9 @@ public class BookDAO {
             PreparedStatement pre = cnn.prepareStatement(sql);
             pre.setString(1, book.getTitle());
             pre.setString(2, book.getAuthor());
-            if (book.getCategoryid() != 0) {
+            if(book.getCategoryid()!=0){
                 pre.setInt(3, book.getCategoryid());
-            } else {
-                pre.setNull(3, Types.INTEGER);
-            }
+            }else pre.setNull(3, Types.INTEGER);
             pre.setFloat(4, book.getPrice());
             pre.setBoolean(5, book.issale());
             pre.setString(6, book.getImage());
@@ -128,11 +126,9 @@ public class BookDAO {
             PreparedStatement pre = cnn.prepareStatement(sql);
             pre.setString(1, book.getTitle());
             pre.setString(2, book.getAuthor());
-            if (book.getCategoryid() != 0) {
+            if(book.getCategoryid()!=0){
                 pre.setInt(3, book.getCategoryid());
-            } else {
-                pre.setNull(3, Types.INTEGER);
-            }
+            }else pre.setNull(3, Types.INTEGER);
             pre.setFloat(4, book.getPrice());
             pre.setBoolean(5, book.issale());
             pre.setString(6, book.getImage());
@@ -175,7 +171,9 @@ public class BookDAO {
                 String image = rs.getString(9);
                 String description = rs.getString(10);
                 int view = rs.getInt(11);
-                return (new Book(id, title, author, category, rating, favourite, price, issale, image, description, view));
+                Book book = new Book(id, title, author, category, rating, favourite, price, issale, image, description, view);
+                book.setStatus(rs.getBoolean(12));
+                return book;
             }
         } catch (Exception e) {
             System.out.println("getBookbyID Error:" + e.getMessage());
@@ -282,7 +280,7 @@ public class BookDAO {
         ArrayList<Book> list = new ArrayList<>();
         try {
             String sql = "SELECT * FROM [Book] "
-                    + "WHERE [categoryid] = ?";
+                                + "WHERE [categoryid] = ?";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, Integer.parseInt(cid));
             rs = stm.executeQuery();
@@ -305,7 +303,7 @@ public class BookDAO {
         }
         return list;
     }
-
+    
     public ArrayList<Book> getWeeklySaleBooks() {
         ArrayList<Book> list = new ArrayList<>();
         try {
@@ -371,6 +369,19 @@ public class BookDAO {
         return list;
     }
 
+    public void changeStatus(int bookId) {
+        try {
+            String sql = "UPDATE [Book]"
+                    + "      SET [status] = 1 ^ [status] "
+                    + "    WHERE [id] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, bookId);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public ArrayList<Book> getOwnBooks(User user) {
         ArrayList<Book> list = new ArrayList<>();
         try {
@@ -397,18 +408,4 @@ public class BookDAO {
     public boolean isOwn(User user, Book book) {
         return getOwnBooks(user).contains(book);
     }
-
-    public void changeStatus(int bookId) {
-        try {
-            String sql = "UPDATE [Book]"
-                    + "      SET [status] = 1 ^ [status] "
-                    + "    WHERE [id] = ?";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, bookId);
-            stm.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }

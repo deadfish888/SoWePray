@@ -5,7 +5,6 @@
 package Controller;
 
 import Model.User;
-import Model.Validator;
 import context.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -49,7 +48,6 @@ public class UserManagement extends HttpServlet {
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -63,7 +61,6 @@ public class UserManagement extends HttpServlet {
 
     /**
      * Handles the HTTP <code>POST</code> method.
-     *
      *
      * @param request servlet request
      * @param response servlet response
@@ -95,4 +92,3 @@ public class UserManagement extends HttpServlet {
         request.getRequestDispatcher("./manage/UserList.jsp").forward(request, response);
     }
 }
-

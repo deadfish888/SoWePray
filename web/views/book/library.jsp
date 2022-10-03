@@ -57,7 +57,7 @@
             <!-- Main -->
             <div id="main">
                 <div class="inner">
-                    <h1>Bookshelf</h1>
+                    <h1>Library</h1>
                     <div class="image main">
                         <img
                             src="images/banner-image-6-1920x500.jpg"
