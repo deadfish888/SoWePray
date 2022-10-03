@@ -94,28 +94,30 @@ public class PaymentAccountDAO {
         }
     }
 
-//    public void generateData() {
-////        UserDAO userDAO = new UserDAO();
-////        ArrayList<User> userList = userDAO.getAll();
-////
-////        for (User user : userList) {
-////            if (user.getPaymentAccount() == null) {
-////                user.createWallet();
-////                PaymentAccount paymentAccount = user.getPaymentAccount();
-////                float balance = (float) Math.random() * 8888;
-////                paymentAccount.setBalance(balance);
-////                this.insert(paymentAccount);
-////                userDAO.setWalletNumber(paymentAccount, user);
-////
-////            }
-////        }
+    public void generateData() {
+        UserDAO userDAO = new UserDAO();
+        ArrayList<User> userList = userDAO.getAllUsers();
+        System.out.println(userList.size());
+
+        for (User user : userList) {
+            if (user.getPaymentAccount() == null) {
+                user.createWallet();
+                System.out.println("null");
+            }
+            PaymentAccount paymentAccount = user.getPaymentAccount();
+            float balance = (float) Math.random() * 888;
+            paymentAccount.setBalance(balance);
+//            System.out.println(paymentAccount.getAccountNumber() + "   " + paymentAccount.getBalance());
+            update(paymentAccount);
+//            userDAO.setWalletNumber(paymentAccount, user);
+        }
 //        for (int i = 0; i < 100; i++) {
 //            PaymentAccount paymentAccount = new PaymentAccount();
 //            paymentAccount.setAccountNumber(Long.parseLong(MyUtil.randomNumberString(12)));
 //            paymentAccount.setBalance((float) Math.random() * 4000);
 //            insert(paymentAccount);
 //        }
-//    }
+    }
 }
 
 /**

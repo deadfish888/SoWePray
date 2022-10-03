@@ -122,7 +122,8 @@ public class TransactionDAO {
 //    public void generateData() {
 //        UserDAO userDAO = new UserDAO();
 //        PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
-//        ArrayList<User> userList = userDAO.getAll();
+//        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
+//        ArrayList<User> userList = userDAO.getAllUsers();
 //        for (User user : userList) {
 //            Transaction transaction = new Transaction();
 //            transaction.setUser(user);
@@ -130,7 +131,7 @@ public class TransactionDAO {
 //            transaction.setBalanceAfter(user.getPaymentAccount().getBalance());
 //            transaction.setType(1);
 //            transaction.setStatus(2);
-//            transaction.setPayment(getBankList(user).get(0));
+//            transaction.setPayment(payMedDAO.getBankList(user).get(0));
 //            transaction.setDescription("Recharge money from " + transaction.getPayment().getName());
 //            transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 //            insert(transaction);

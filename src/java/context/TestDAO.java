@@ -24,11 +24,11 @@ public class TestDAO {
         PaymentMethodDAO payMedDBC = new PaymentMethodDAO();
         TransactionDAO transactionDAO = new TransactionDAO();
         BookOwnDAO bookOwnDAO = new BookOwnDAO();
-        BookDAO bookDAO = new BookDAO();
-        Book book = new Book();
-        book.setId(4);
-        System.out.println(bookDAO.isOwn(user, book));
-        System.out.println(user.isOwnBook(book.getId()));
+//        BookDAO bookDAO = new BookDAO();
+//        Book book = new Book();
+//        book.setId(4);
+//        System.out.println(bookDAO.isOwn(user, book));
+//        System.out.println(user.isOwnBook(book.getId()));
 
 //    PaymentMethod paymentMethod = new PaymentMethod(0, user, new PaymentAccount(10028714113l), "Bank 3", true);
 //    payMedDBC.insert(paymentMethod);
@@ -42,6 +42,11 @@ public class TestDAO {
 //    userDBC.setWalletNumber(user.getPaymentAccount(), user);
 //    userDBC.changePassword(1, "admin1");
 //    userDBC.generateData();
-//    userDBC.updateUser(new User(1, "MrA", "Male", "2000-01-01", "abc@def", "0000000000", "asdfghj", "zxcvbnm", "123456", false));
+//        user = new User("MrA", "Male", "2000-01-01", "abc@def", "0000000000", "username", "123456");
+//user = userDBC.getUser(101);
+//        System.out.println(user.getDob());
+//        user.setEmail("Bookie_User101@qa.team");
+//        user.setIs_super(1);
+//        userDBC.addUser(user);
     }
 }

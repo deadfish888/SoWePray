@@ -224,10 +224,10 @@ public class PaymentMethodDAO {
         return null;
 
     }
-//
+
 //    public void generateData() {
 //        UserDAO userDAO = new UserDAO();
-//        ArrayList<User> userList = userDAO.getAll();
+//        ArrayList<User> userList = userDAO.getAllUsers();
 //        PaymentAccountDAO paymentAccountDAO = new PaymentAccountDAO();
 //        for (User user : userList) {
 //            PaymentAccount paymentAccount;
@@ -237,22 +237,23 @@ public class PaymentMethodDAO {
 //                paymentAccount = new PaymentAccount(accountNumber);
 //
 //            } while (paymentAccountDAO.get(paymentAccount) != null);
-//            float balance = (float) Math.random() * 5000 + 100;
+//            float balance = (float) Math.random() * 888 + 100;
 //            paymentAccount.setAccountNumber(accountNumber);
 //            paymentAccount.setBalance(balance);
 //
-//            PaymentMethod paymentMethod = new PaymentMethod();
-//            paymentMethod.setUser(user);
-//            paymentMethod.setPaymentAccount(user.getPaymentAccount());
-//            paymentMethod.setName("Wallet of " + user.getUsername());
-//            insert(paymentMethod);
-//
 //            paymentAccountDAO.insert(paymentAccount);
-//            paymentMethod = new PaymentMethod();
+//            PaymentMethod paymentMethod = new PaymentMethod();
 //            paymentMethod.setPaymentAccount(paymentAccount);
 //            paymentMethod.setUser(user);
 //            paymentMethod.setName("Linked Bank");
 //            insert(paymentMethod);
+//            
+////            paymentMethod = new PaymentMethod();
+////            paymentMethod.setUser(user);
+////            paymentMethod.setPaymentAccount(user.getPaymentAccount());
+////            paymentMethod.setName("Wallet of " + user.getUsername());
+////            insert(paymentMethod);
+//
 //        }
 //
 //    }
