@@ -5,10 +5,10 @@
 
 package Controller.User.payment;
 
-import Model.Transaction;
-import Model.User;
-import context.PaymentMethodDAO;
-import context.TransactionDAO;
+import Model.payment.Transaction;
+import Model.auth.User;
+import context.payment.PaymentMethodDAO;
+import context.payment.TransactionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;

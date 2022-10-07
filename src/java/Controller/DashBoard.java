@@ -5,8 +5,8 @@
 
 package Controller;
 
-import context.BookDAO;
-import context.UserDAO;
+import context.product.BookDAO;
+import context.auth.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -34,7 +34,7 @@ public class DashBoard extends HttpServlet {
         BookDAO bd = new BookDAO();
         UserDAO ud = new UserDAO();
         request.setAttribute("numBook", bd.countBookNumber());
-//        request.setAttribute("numUser", ud.getNumberUser());
+        request.setAttribute("numUser", ud.countUser());
         request.getRequestDispatcher("/admin/dashboard.jsp").forward(request, response);
     } 
 

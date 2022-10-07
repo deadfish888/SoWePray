@@ -4,10 +4,10 @@
  */
 package Controller.product;
 
-import Model.Book;
-import Model.Category;
-import context.BookDAO;
-import context.CategoryDAO;
+import Model.product.Book;
+import Model.product.Category;
+import context.product.BookDAO;
+import context.product.CategoryDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -34,11 +34,11 @@ public class BookController extends HttpServlet {
         request.setAttribute("category", category);
         if (cid != null) {
             if (!cid.equals("0")) {
-                books = bd.getBooksByCid(cid);
+                books = bd.getBooksByCategoryId(cid);
                 request.setAttribute("cate", cid);
             //    request.getRequestDispatcher("/views/book/bookshelf.jsp").forward(request, response);
             } else {
-                books = bd.getBooks();
+                books = bd.getAllBook();
                 request.setAttribute("cate", 0);
              //   request.getRequestDispatcher("/views/book/bookshelf.jsp").forward(request, response);
             }
@@ -48,7 +48,7 @@ public class BookController extends HttpServlet {
             return;
         }
         
-            books = bd.getBooks();
+            books = bd.getAllBook();
             request.setAttribute("books", books);
             request.getRequestDispatcher("/views/book/library.jsp").forward(request, response);
     }

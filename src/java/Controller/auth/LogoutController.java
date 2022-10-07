@@ -4,7 +4,7 @@
  */
 package Controller.auth;
 
-import Model.User;
+import Model.auth.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;

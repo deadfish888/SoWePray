@@ -9,7 +9,11 @@
 <%@page import="Model.*"%>
 <%@page import="context.*"%>
 <%@page import="java.util.ArrayList"%>
-
+<c:if test="${empty sessionScope.admin}">
+    <%         
+          response.sendRedirect("/Bookie/Home");
+    %>
+</c:if>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -110,15 +114,11 @@
 
                                             <c:forEach var="book" items="${books}">
                                                 <tr>
-                                                    <td >${book.getId()}</td>
-                                                    <td>${book.getTitle()}</td>
-                                                    <td>${book.getAuthor()}</td>
-                                                    <td style="width: 150px;"><img  src="${book.getImage()}" width="100px"></td>
-                                                    <td>
-                                                        <c:forEach var="category" items="${categories}">
-                                                            ${category.getId()==book.getCategoryid()?category.getName():null}
-                                                        </c:forEach>
-                                                    </td>
+                                                    <td >${book.id}</td>
+                                                    <td>${book.title}</td>
+                                                    <td>${book.author.name}</td>
+                                                    <td style="width: 150px;"><img  src="${book.image}" width="100px"></td>
+                                                    <td>${book.category.name}</td>
                                                     <td>$${book.getPrice()}</td>
                                                     <td><input class="checkbox-inline" type="checkbox" ${book.issale()?"checked":""} disabled></td>
                                                     <td><a class="btn btn-primary" href="./UpdateBook?id=${book.getId()}"><i class="fa fa-pen-square" aria-hidden="true"></i></a></td>

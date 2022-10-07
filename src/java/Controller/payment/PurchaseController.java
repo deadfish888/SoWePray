@@ -4,15 +4,15 @@
  */
 package Controller.payment;
 
-import Model.Book;
-import Model.PaymentAccount;
-import Model.PaymentMethod;
-import Model.Transaction;
-import Model.User;
-import context.BookOwnDAO;
-import context.PaymentAccountDAO;
-import context.PaymentMethodDAO;
-import context.TransactionDAO;
+import Model.product.Book;
+import Model.payment.PaymentAccount;
+import Model.payment.PaymentMethod;
+import Model.payment.Transaction;
+import Model.auth.User;
+import context.product.BookOwnDAO;
+import context.payment.PaymentAccountDAO;
+import context.payment.PaymentMethodDAO;
+import context.payment.TransactionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -79,6 +79,9 @@ public class PurchaseController extends HttpServlet {
             Book book = new Book();
             book.setId(Integer.parseInt(request.getParameter("bookId")));
             bookOwnDAO.insert(book, user);
+            System.out.println(book.getId());
+            System.out.println(user.getId());
+            
             response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("bookId"));
         }
     }

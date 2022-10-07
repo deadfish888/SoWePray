@@ -4,8 +4,8 @@
  */
 package Controller.auth;
 
-import Model.User;
-import context.UserDAO;
+import Model.auth.User;
+import context.auth.UserDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;

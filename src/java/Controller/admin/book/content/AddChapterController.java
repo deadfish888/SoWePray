@@ -4,11 +4,11 @@
  */
 package Controller.admin.book.content;
 
-import Model.Chapter;
-import Model.Volume;
-import context.BookDAO;
-import context.ChapterDAO;
-import context.VolumeDAO;
+import Model.product.content.Chapter;
+import Model.product.content.Volume;
+import context.product.BookDAO;
+import context.product.content.ChapterDAO;
+import context.product.content.VolumeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -37,8 +37,8 @@ public class AddChapterController extends HttpServlet {
             ChapterDAO cd = new ChapterDAO();
 
             request.setAttribute("vol", vd.getVolumeById(volId));
-            request.setAttribute("volumes", vd.getAllVolume(bookId));
-            request.setAttribute("chapters", cd.getAllChapter(bookId));
+            request.setAttribute("volumes", vd.getVolumesByBookId(bookId));
+            request.setAttribute("chapters", cd.getChaptersByBookId(bookId));
             request.setAttribute("service", "Add");
 
             request.getRequestDispatcher("/manage/book/toc/chapter-detail.jsp").forward(request, response);
@@ -58,9 +58,8 @@ public class AddChapterController extends HttpServlet {
             String content = request.getParameter("content");
 
             Chapter chapter = new Chapter();
-            chapter.setBookID(bookId);
-            chapter.setVolumeID(volId);
-            chapter.setChapterName(name);
+            chapter.setVolumeId(volId);
+            chapter.setTitle(name);
             chapter.setStatus(status);
             chapter.setContent(content);
 
@@ -72,8 +71,8 @@ public class AddChapterController extends HttpServlet {
 
             if (cd.addChapter(chapter) == 0) {
                 request.setAttribute("vol", vd.getVolumeById(volId));
-                request.setAttribute("volumes", vd.getAllVolume(bookId));
-                request.setAttribute("chapters", cd.getAllChapter(bookId));
+                request.setAttribute("volumes", vd.getVolumesByBookId(bookId));
+                request.setAttribute("chapters", cd.getChaptersByBookId(bookId));
                 request.setAttribute("message", "Add Failed! Please try again!");
                 request.setAttribute("chap", chapter);
                 request.setAttribute("service", "Add");

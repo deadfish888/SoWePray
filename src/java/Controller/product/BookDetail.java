@@ -4,11 +4,16 @@
  */
 package Controller.product;
 
-import Model.Book;
-import Model.Category;
-import Model.User;
-import context.BookDAO;
-import context.CategoryDAO;
+import Model.product.Book;
+import Model.product.content.Chapter;
+import Model.action.Comment;
+import Model.product.content.Volume;
+import Model.auth.User;
+import context.product.BookDAO;
+import context.product.CategoryDAO;
+import context.product.content.ChapterDAO;
+import context.action.CommentDAO;
+import context.product.content.VolumeDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -36,18 +41,26 @@ public class BookDetail extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
+
         BookDAO b = new BookDAO();
-        CategoryDAO cd = new CategoryDAO();
+        ChapterDAO chd = new ChapterDAO();
+        VolumeDAO vd = new VolumeDAO();
+        CommentDAO cmd = new CommentDAO();
         Book thisbook = b.getBookById(id);
-        String category = cd.getCategory(thisbook.getCategoryid());
-        request.setAttribute("category", category);
-        ArrayList<Book> sames = b.getSimilarBooks(id, thisbook.getCategoryid());
         User user = (User) request.getSession().getAttribute("user");
         if (user != null) {
             request.setAttribute("own", user.isOwnBook(id));
         }
+        ArrayList<Book> sames = b.getSimilarBooks(id, thisbook.getCategoryId());
+        ArrayList<Volume> vols = vd.getVolumesByBookId(id);
+        ArrayList<Chapter> chaps = chd.getChaptersByBookId(id);
+        ArrayList<Comment> coms = cmd.loadComment(id);
+        request.setAttribute("chaps", chaps);
         request.setAttribute("sames", sames);
         request.setAttribute("book", thisbook);
+        request.setAttribute("vols", vols);
+        request.setAttribute("comments", coms);
+
         request.getRequestDispatcher("/views/book/book-details.jsp").forward(request, response);
     }
 
