@@ -47,7 +47,7 @@ public class AddBookController extends HttpServlet {
         Book book = new Book();
         book.setId(id);
         book.setTitle(title);
-        book.setAuthor(author);
+//        book.setAuthorId(author);
         book.setCategoryid(categoryId);
         book.setPrice(price);
         book.setIssale(issale);

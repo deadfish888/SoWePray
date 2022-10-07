@@ -43,7 +43,7 @@ public class UserDAO {
             System.out.println("Connect error:" + e.getMessage());
         }
     }
-
+    
     public User getUser(String key, String pass) {
         String sql = "Select * from [User] where (username=? OR email=?) AND password=?";
         try {
@@ -56,14 +56,21 @@ public class UserDAO {
                 int userid = rs.getInt(1);
                 String name = rs.getString(2);
                 String gender = rs.getBoolean(3) ? "Male" : "Female";
-                SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
                 String dob = f.format(rs.getDate(4));
                 String email = rs.getString(5);
                 String phone = rs.getString(6);
                 String address = rs.getString(7);
                 String username = rs.getString(8);
                 int is_super = rs.getInt(10);
+                PaymentAccount payAcc = new PaymentAccount();
+                payAcc.setAccountNumber(rs.getLong("walletNumber"));
+                PaymentAccountDAO payDAO = new PaymentAccountDAO();
+                payAcc = payDAO.get(payAcc);
+
                 User u = new User(userid, name, gender, dob, email, phone, address, username, pass, is_super);
+                u.setPassword(pass);
+                u.setPaymentAccount(payAcc);
                 return u;
             }
         } catch (Exception e) {
@@ -138,7 +145,7 @@ public class UserDAO {
                 String address = rs.getString(7);
                 String username = rs.getString(8);
                 int is_super = rs.getInt(10);
-                 User u = new User(userid, name,username, gender, dob, email, phone, address);
+                User u = new User(userid, name, username, gender, dob, email, phone, address);
                 u.setIs_super(is_super);
                 list.add(u);
             }
@@ -174,7 +181,7 @@ public class UserDAO {
                 String address = rs.getString(7);
                 String username = rs.getString(8);
                 int is_super = rs.getInt(10);
-                 User u = new User(userid, name,username, gender, dob, email, phone, address);
+                User u = new User(userid, name, username, gender, dob, email, phone, address);
                 u.setIs_super(is_super);
                 list.add(u);
             }
@@ -214,7 +221,7 @@ public class UserDAO {
                 String address = rs.getString(7);
                 String username = rs.getString(8);
                 int is_super = rs.getInt(10);
-                User u = new User(userid, name,username, gender, dob, email, phone, address);
+                User u = new User(userid, name, username, gender, dob, email, phone, address);
                 u.setIs_super(is_super);
                 list.add(u);
             }
@@ -224,8 +231,6 @@ public class UserDAO {
         return list;
     }
 
-    
-    
     public String resetPassword(String token) {
         TokenDAO td = new TokenDAO();
         int userId = td.checkTokenExpired(token);
@@ -246,8 +251,6 @@ public class UserDAO {
         }
         return null;
     }
-
-    
 
     public int checkEmailExisted(String email) {
         String sql = "SELECT [id] FROM [User] "
@@ -279,7 +282,7 @@ public class UserDAO {
                     + "     VALUES\n"
                     + "           (?\n"
                     + "           ,?\n"
-                    + "           ,(CAST ? AS Date)\n"
+                    + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
@@ -338,9 +341,9 @@ public class UserDAO {
         }
     }
 
-    public int getNumberUser() {
-        return (getAllUsers().size());
-    }
+//    public int getNumberUser() {
+//        return (getAllUsers().size());
+//    }
 
     public ArrayList<User> getAllUsers() {
         ArrayList<User> list = new ArrayList<>();
@@ -359,6 +362,35 @@ public class UserDAO {
                 String address = rs.getString(7);
                 String username = rs.getString(8);
                 list.add(new User(userid, name, username, gender, dob, email, phone, address));
+            }
+        } catch (Exception e) {
+            System.out.println("getUser Error:" + e.getMessage());
+        }
+        return list;
+    }
+    
+    public ArrayList<User> getAll() {
+        ArrayList<User> list = new ArrayList<>();
+        try {
+            String sql = "Select * from [User]";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int userid = rs.getInt(1);
+                String name = rs.getString(2);
+                String gender = rs.getBoolean(3) ? "Male" : "Female";
+                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+                String dob = f.format(rs.getDate(4));
+                String email = rs.getString(5);
+                String phone = rs.getString(6);
+                String address = rs.getString(7);
+                String username = rs.getString(8);
+                int isSuper = rs.getInt(9);
+                PaymentAccount paymentAccount = new PaymentAccount();
+                paymentAccount.setAccountNumber(rs.getLong("walletNumber"));
+                PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
+                paymentAccount = payAccDAO.get(paymentAccount);
+                list.add(new User(userid, name, gender, dob, email, phone, address, username, phone, isSuper, paymentAccount));
             }
         } catch (Exception e) {
             System.out.println("getUser Error:" + e.getMessage());
@@ -450,6 +482,7 @@ public class UserDAO {
                     + "      ,[username]\n"
                     + "      ,[password]\n"
                     + "      ,[is_super]\n"
+                    + "      ,[walletNumber]"
                     + "  FROM [User] "
                     + "where id = ?";
             stm = cnn.prepareStatement(sql);
@@ -458,7 +491,8 @@ public class UserDAO {
             if (rs.next()) {
                 return new User(id, rs.getString(1), rs.getBoolean(2) ? "Male" : "Female",
                         rs.getString(3), rs.getString(4), rs.getString(5),
-                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9));
+                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9),
+                new PaymentAccount(rs.getLong("walletNumber")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -571,10 +605,10 @@ public class UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return null;
     }
-    
+
     public void setWalletNumber(PaymentAccount paymentAccount, User user) {
         try {
             String sql = "UPDATE [User]\n"
@@ -587,5 +621,9 @@ public class UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public Object countUser() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

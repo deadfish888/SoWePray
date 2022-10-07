@@ -79,6 +79,9 @@ public class PurchaseController extends HttpServlet {
             Book book = new Book();
             book.setId(Integer.parseInt(request.getParameter("bookId")));
             bookOwnDAO.insert(book, user);
+            System.out.println(book.getId());
+            System.out.println(user.getId());
+            
             response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("bookId"));
         }
     }

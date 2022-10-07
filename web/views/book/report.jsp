@@ -54,9 +54,7 @@
                         <div class="row" style="width: 1200px; text-align: justify;">
                             <div class="col-md-3">
                                 <img src="${book.getImage()}" class="img-fluid" alt="${book.getImage()}">
-                                <div style="text-align: center;">
-                                    <span class="fa fa-eye"></span>
-                                </div>
+                                
                             </div>
                             <div class="col-md-7">
                                 <p>
@@ -68,6 +66,7 @@
                                 
                                 <ul class="ks-cboxtags">
                                     <form action="Report" method="GET">
+                                        <input type="hidden" name="bookId" value="${book.id}">
                                         <li><input type="checkbox" id="checkboxOne" name="report" value="1"><label for="checkboxOne">Sexual Content</label></li>
                                         <li><input type="checkbox" id="checkboxTwo" name="report" value="2" ><label for="checkboxTwo">Violent or repulsive content</label></li>
                                         <li><input type="checkbox" id="checkboxThree" name="report" value="3" ><label for="checkboxThree">Hateful or abusive content</label></li>
@@ -78,8 +77,8 @@
                                         <li><input type="checkbox" id="checkboxEight" name="report" value="8"><label for="checkboxEight">Spam or misleading</label></li>
                                         <li><input type="checkbox" id="checkboxNine" name="report" value="9"><label for="checkboxNine">Infringes my rights</label></li>
                                         <li><input type="checkbox" id="checkboxTen" name="report" value="10"><label for="checkboxTen">Captions issue</label></li>
-                                        <li><textarea id="id" name="name" rows="5" cols="10" placeholder="Give some information" required="true"></textarea></li>
-                                        <li><button type="submit" class="btn btn-primary">Send Report</button></li>
+                                        <li><textarea id="id" name="note" rows="5" cols="10" placeholder="Issue details..." required="true"></textarea></li>
+                                        <li><input type="submit" class="primary" value="Send Report"></li>
                                     </form>
                                 </ul>
                             </div>

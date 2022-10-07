@@ -4,19 +4,21 @@
  */
 package context;
 
+import Model.Author;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author ttaad
- */
-public class ReportDAO {
+/* @author ACER */
+public class AuthorDAO {
 
-    public ReportDAO() {
+    public AuthorDAO() {
         connectDB();
     }
+
     Connection cnn; // ket noi db
     PreparedStatement stm; // thuc thi cac cau lenh sql
     ResultSet rs; // luu tru va xu ly du lieu
@@ -30,27 +32,21 @@ public class ReportDAO {
         }
     }
 
-    public void addReport(int rid, int bid, int uid, String note) {
+    public void add(Author author) {
         try {
-            String sql = "INSERT INTO [dbo].[ReportDetail]\n"
-                    + "           ([reportId]\n"
-                    + "           ,[bookId]\n"
-                    + "           ,[userId]\n"
-                    + "           ,[note])\n"
+            String sql = "INSERT INTO [dbo].[Author]\n"
+                    + "           ([userId]\n"
+                    + "           ,[authorName])\n"
                     + "     VALUES\n"
-                    + "           ( ?"
-                    + "           , ?"
-                    + "           , ?"
-                    + "           , ? ) ";
+                    + "           ( ? "
+                    + "           , ? )";
             stm = cnn.prepareStatement(sql);
-            stm.setInt(1, rid);
-            stm.setInt(2, bid);
-            stm.setInt(3, uid);
-            stm.setString(4, note);
+            stm.setInt(1, author.getUserId());
+            stm.setString(2, author.getAuthorName());
             stm.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("add error:" + e.getMessage());
+        } catch (SQLException ex) {
+            Logger.getLogger(AuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
 
+    }
 }

@@ -127,14 +127,14 @@
                         <c:forEach items="${favebooks}" var="book">
                             <article class="style1">
                                 <span class="image">
-                                    <img src="${book.getImage()}" alt="" style="height: 391px;"/>
+                                    <img src="${book.image}" alt="" style="height: 391px;"/>
                                 </span>
-                                <a href="BookDetail?id=${book.getId()}">
-                                    <h2>${book.getTitle()}</h2>
-                                    <h3 style="font-size: 0.85em;"><i>${book.getAuthor()}</i></h3>
+                                <a href="BookDetail?id=${book.id}">
+                                    <h2>${book.title}</h2>
+                                    <h3 style="font-size: 0.85em;"><i>${book.author.authorName}</i></h3>
                                     <c:if test="${book.issale()}">
                                         <p>
-                                            <del>$${book.getPrice()}</del> 
+                                            <del>$${book.price}</del> 
                                             <strong>$${5.00}</strong>
                                         </p>
                                     </c:if>
@@ -153,11 +153,11 @@
                         <c:forEach items="${salebooks}" var="book">
                             <article class="style1">
                                 <span class="image">
-                                    <img src="${book.getImage()}" alt="" style="max-height: 391px"/>
+                                    <img src="${book.image}" alt="" style="max-height: 391px"/>
                                 </span>
                                 <a href="BookDetail?id=${book.getId()}">
                                     <h2>${book.getTitle()}</h2>
-                                    <h3 style="font-size: 0.85em;"><i>${book.getAuthor()}</i></h3>
+                                    <h3 style="font-size: 0.85em;"><i>${book.author.authorName}</i></h3>
                                     <c:if test="${book.issale()}">
                                         <p>
                                             <del>$${book.getPrice()}</del> 
@@ -186,7 +186,7 @@
                                 </span>
                                 <a href="BookDetail?id=${book.getId()}">
                                     <h2 style="overflow: hidden;text-overflow: ellipsis;">${book.getTitle()}</h2>
-                                    <h3 style="font-size: 0.85em;"><i>${book.getAuthor()}</i></h3>
+                                    <h3 style="font-size: 0.85em;"><i>${book.author.authorName}</i></h3>
                                     <c:if test="${book.issale()}">
                                         <p>
                                             <del>$${book.getPrice()}</del> 

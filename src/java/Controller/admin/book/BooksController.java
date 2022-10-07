@@ -28,7 +28,7 @@ public class BooksController extends HttpServlet {
         ArrayList<Category> cates = cd.getAllCategory();
         request.setAttribute("categories", cates);
         BookDAO bd = new BookDAO();
-        ArrayList<Book> books = bd.getBooks();
+        ArrayList<Book> books = bd.getAllBook();
         String xpage = request.getParameter("xpage");
         int page;
         if (xpage == null) {

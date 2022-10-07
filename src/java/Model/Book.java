@@ -6,8 +6,11 @@ package Model;
 
 public class Book {
     private int id;
-    private String title, author;
+    private String title; 
+    private int authorId;
+    private Author author;
     private int categoryid;
+    private Category Category;
     private float rating;
     private int favourite;
     private float price;
@@ -28,11 +31,11 @@ public class Book {
         this.status = status;
     }
 
-    public Book(int id, String title, String author, int categoryid, float rating, 
+    public Book(int id, String title, int author, int categoryid, float rating, 
             int favourite, float price, boolean issale, String image, String description, int views) {
         this.id = id;
         this.title = title;
-        this.author = author;
+        this.authorId = author;
         this.categoryid = categoryid;
         this.rating = rating;
         this.favourite = favourite;
@@ -44,10 +47,10 @@ public class Book {
     }
 
 
-    public Book(int id, String title, String author, int categoryid, int favourite, float price, boolean issale, String image) {
+    public Book(int id, String title, int author, int categoryid, int favourite, float price, boolean issale, String image) {
         this.id = id;
         this.title = title;
-        this.author = author;
+        this.authorId = author;
         this.categoryid=categoryid;
         this.price = price;
         this.issale = issale;
@@ -71,12 +74,12 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
     public int getCategoryid() {
@@ -144,6 +147,22 @@ public class Book {
         this.views = views;
     }
 
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public Category getCategory() {
+        return Category;
+    }
+
+    public void setCategory(Category Category) {
+        this.Category = Category;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Book) {

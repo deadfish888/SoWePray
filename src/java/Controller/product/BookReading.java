@@ -2,45 +2,36 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+package Controller.product;
 
-package Controller;
-
+import Model.Book;
+import Model.Chapter;
 import context.BookDAO;
-import context.UserDAO;
+import context.ChapterDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
-/**
- *
- * @author duypham0705
- */
-@WebServlet("/DashBoard")
-public class DashBoard extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+@WebServlet("/BookReading")
+public class BookReading extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        BookDAO bd = new BookDAO();
-        UserDAO ud = new UserDAO();
-        request.setAttribute("numBook", bd.countBookNumber());
-        request.setAttribute("numUser", ud.countUser());
-        request.getRequestDispatcher("/admin/dashboard.jsp").forward(request, response);
-    } 
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -48,12 +39,31 @@ public class DashBoard extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
-    } 
+            throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String cid = request.getParameter("cid");
+        BookDAO b = new BookDAO();
+        ChapterDAO chd = new ChapterDAO();
+        Book thisbook = b.getBookById(id);
+        ArrayList<Chapter> listc = chd.getAllChapter(id);
+        Chapter chapter;
+        if (cid == null) {
+            chapter = chd.getFirstChapterId(id);
+        } else {
+            chapter = chd.getChapter(Integer.parseInt(cid));
+        }
+        String[] listr = chapter.getContent().split("\n");
 
-    /** 
+//        ArrayList<Chapter> chap = chd.getChapterByVolumeIDandBookID(id, thisbook.getId());
+        request.setAttribute("book", thisbook);
+        request.setAttribute("listr", listr);
+        request.setAttribute("chapter", chapter);
+        request.getRequestDispatcher("/views/book/book-reading.jsp").forward(request, response);
+    }
+
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -61,12 +71,12 @@ public class DashBoard extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException {
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

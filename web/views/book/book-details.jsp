@@ -45,87 +45,49 @@
                         <c:if test="${book.issale()}">
                             <span class="pull-right">
                                 <del>$${book.getPrice()}</del> 
-                                $${Math.round(book.getPrice())/100}
+                                $5.00
                             </span>
                         </c:if> 
                         <c:if test="${!book.issale()}">
                             <span class="pull-right">$${book.getPrice()}</span>
                         </c:if>
                     </h1>
+                    <h4 style="margin: 0 0 0 0;"><a href="./Book?category=${book.categoryid}"><span class="badge badge-pill badge-secondary">${category}</span></a></h4>
+
                     <h2> ${book.getAuthor()} </h2>
 
                     <div class="container-fluid">
                         <div class="row" style="width: 1200px; text-align: justify;">
                             <div class="col-md-3">
                                 <img src="${book.getImage()}" class="img-fluid" alt="${book.getImage()}">
+                                <form action="BookPreread" method="GET">
+                                    <div style ="text-align: center ">
+                                        <input type="hidden" name="id" value="${book.getId()}">
+                                        <c:if test="${! empty requestScope.chaps && !requestScope.own}">
+                                            <input type="submit" class="primary" value="Preread"> 
+                                        </c:if>
+
+                                    </div>
+                                </form>
                                 <div style="text-align: center;">
                                     <span class="fa fa-eye"></span>
                                     <span class="title">${book.getViews()}</span><br><!-- comment -->
                                     <span class="fa fa-star"></span><span class="title"> ${book.getRating()}</span>
                                 </div>
+
                             </div>
 
                             <div class="col-md-7">
-                                <h2 style="margin: 0 0 0.8em 0;"><i>Category: ${category}</i></h2>
                                 <p>
                                     ${book.getDescription()}
                                 </p>
-                                <div class="modal fade" id="purchase" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <form action="User/Purchase" method="post" id="purchaseForm" name="purchaseForm" onsubmit="return validatePassword()">
-                                                <div class="modal-header">
-                                                    <h3 class="modal-title">Purchase</h3>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="wrapper row">
-                                                        <table style="width: 80%; margin: auto">
-                                                            <tr>
-                                                                <th>
-                                                                    Book
-                                                                </th>
-                                                                <td>
-                                                                    ${book.title}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>
-                                                                    Price
-                                                                </th>
-                                                                <td>
-                                                                    ${book.price}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>
-                                                                    Password
-                                                                </th>
-                                                                <td>
-                                                                    <input type="password" name="password"/>
-                                                                    <div style="color: red" id="purchase-pass-noti"></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer" style="text-align: center">
-                                                    <button type="button" class="primary btn-primary text-center" data-dismiss="modal" style="width: auto; padding: 0 1em">Cancel</button>
-                                                    <input type="hidden" id="pass" value="${sessionScope.user.password}"/>
-                                                    <input type="hidden" name="amount" value="${book.price}"/>
-                                                    <input type="hidden" name="bookId" value="${book.id}"/>
-                                                    <input type="hidden" name="bookTitle" value="${book.title}"/>
-                                                    <input type="submit" class="primary text-center" value="Confirm"/>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="row">        
                                     <c:if test="${sessionScope.user != null}">
                                         <c:if test="${requestScope.own}">
-                                            <form>
+                                            <form action="BookReading" method="get">
                                                 <div class="col-sm-4">
-                                                    <input type="button" class="primary" value="Read">
+                                                    <input type="hidden" name="id" value="${book.id}">
+                                                    <input type="submit" class="primary" value="Read">
                                                 </div>
                                             </form>
                                         </c:if>
@@ -138,11 +100,62 @@
                                     <c:if test="${sessionScope.user == null}">
                                         <form action="Login" method="GET">
                                             <div class="col-sm-4">
+                                                <input type="hidden" name="origin" value="./BookDetail?id=${book.id}">
                                                 <input type="submit" class="primary" value="Buy">
                                             </div>
                                         </form>
                                     </c:if>
 
+                                    <div class="modal fade" id="purchase" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <form action="User/Purchase" method="post" id="purchaseForm" name="purchaseForm" onsubmit="return validatePassword()">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title">Purchase</h3>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="wrapper row">
+                                                            <table style="width: 80%; margin: auto">
+                                                                <tr>
+                                                                    <th>
+                                                                        Book
+                                                                    </th>
+                                                                    <td>
+                                                                        ${book.title}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        Price
+                                                                    </th>
+                                                                    <td>
+                                                                        ${book.price}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        Password
+                                                                    </th>
+                                                                    <td>
+                                                                        <input type="password" name="password"/>
+                                                                        <div style="color: red" id="purchase-pass-noti"></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer" style="text-align: center">
+                                                        <button type="button" class="primary btn-primary text-center" data-dismiss="modal" style="width: auto; padding: 0 1em">Cancel</button>
+                                                        <input type="hidden" id="pass" value="${sessionScope.user.password}"/>
+                                                        <input type="hidden" name="amount" value="${book.price}"/>
+                                                        <input type="hidden" name="bookId" value="${book.id}"/>
+                                                        <input type="hidden" name="bookTitle" value="${book.title}"/>
+                                                        <input type="submit" class="primary text-center" value="Confirm"/>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <form action="Favourite" method="POST">
                                         <div class="col-sm-4">
@@ -176,24 +189,79 @@
                                                     <input type="radio" id="star1" name="getRate" value="1" />
                                                     <label for="star1" title="text">1</label>
                                                 </div>
-                                                <div><button type="submit" class="submitRate" >Rate</button></div>
-                                            </form>   </div>
-                                        </c:when>
-                                    </c:choose>    
+                                                <div class="col-md-3">
+                                                    <input type="submit" class="primary" value="Rate"></div>
+                                            </form>   
+                                        </div>
+                                    </c:when>
+                                </c:choose>    
                             </div>
 
-                            <div class="col-md-7">
-                                <form role="form" action="Comment" method="GET">
-                                    <div class="form-group">
-                                        <textarea class="form-control" name="comment" placeholder="Write your comment here..."></textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Send</button>
-                                </form> 
-                            </div>
                         </div>           
                     </div>
                     <br>
                     <br>
+
+                    <div class="container-fluid">
+                        <h2 class="h2">Table of Contents</h2>
+                        <div class="accordion col-md-7" id="accordionExample">
+                            <c:forEach items="${requestScope.vols}" var="vol">
+                                <div class="card">
+                                    <div class="card-header" id="heading${vol.id}">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link" type="button" 
+                                                    data-toggle="collapse" data-target="#collapse${vol.id}" 
+                                                    aria-expanded="true" aria-controls="collapse${vol.id}">
+                                                ${vol.getVolumeName()}
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="collapse${vol.id}" class="collapse" aria-labelledby="heading${vol.id}" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <c:forEach items="${requestScope.chaps}" var="chap">
+                                                <c:if test="${chap.getVolumeID() == vol.getId()}">
+                                                    <c:choose>
+                                                        <c:when test="${! empty sessionScope.user && requestScope.own}">
+                                                            <a href="BookReading?id=${book.getId()}&cid=${chap.getId()}"><p>${chap.getChapterName()}</p></a>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                            <a href="BookPreread?id=${book.getId()}"><p>${chap.getChapterName()}</p></a>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:if>
+                                                    </c:forEach>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </div>  
+                        <div> </div>
+                    </div>
+                    <div class="container-fluid">
+                        <h4>${(! empty requestScope.comments)? requestScope.comments.size() : "0"} comment(s)</h4>
+                        <div class="col-md-7">
+                            <form role="form" action="Comment" method="get">
+                                <input type="hidden" name="bookId" value="${book.id}"> 
+                                <div class="form-group">
+                                    <textarea class="form-control" name="comment" placeholder="Add a comment..."></textarea>
+                                </div>
+                                <input type="submit" value="Post">
+                            </form> 
+                            <table class="table">
+                                <c:forEach items="${requestScope.comments}" var="comment">
+
+                                    <tr>
+                                        <th style="width: 100px" scope="row">
+                                            No.${comment.uid}
+                                        </th>
+                                        <td style="white-space: pre-line">${comment.comment}</td>
+                                    </tr>
+
+                                </c:forEach>
+                            </table>
+                        </div>
+                    </div>
+
                     <div class="container-fluid">
                         <h2 class="h2">Similar Products</h2>
 
@@ -249,6 +317,17 @@
         <script src="assets/js/jquery.scrolly.min.js"></script>
         <script src="assets/js/jquery.scrollex.min.js"></script>
         <script src="assets/js/main.js"></script>
+        <script>
 
+                                                    function validatePassword() {
+                                                        let pass = document.forms["purchaseForm"]["pass"].value;
+                                                        let x = document.forms["purchaseForm"]["password"].value;
+                                                        if (pass !== x) {
+                                                            document.getElementById("purchase-pass-noti").innerHTML = "Wrong password";
+                                                            return false;
+                                                        }
+                                                    }
+
+        </script>
     </body>
 </html>
