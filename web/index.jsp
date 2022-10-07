@@ -3,10 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%@page import="Model.User"%>
-<%@page import="context.BookDAO"%>
-<%@page import="java.util.ArrayList"%>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -131,7 +127,7 @@
                                 </span>
                                 <a href="BookDetail?id=${book.id}">
                                     <h2>${book.title}</h2>
-                                    <h3 style="font-size: 0.85em;"><i>${book.author.authorName}</i></h3>
+                                    <h3 style="font-size: 0.85em;"><i>${book.author.name}</i></h3>
                                     <c:if test="${book.issale()}">
                                         <p>
                                             <del>$${book.price}</del> 
@@ -157,7 +153,7 @@
                                 </span>
                                 <a href="BookDetail?id=${book.getId()}">
                                     <h2>${book.getTitle()}</h2>
-                                    <h3 style="font-size: 0.85em;"><i>${book.author.authorName}</i></h3>
+                                    <h3 style="font-size: 0.85em;"><i>${book.author.name}</i></h3>
                                     <c:if test="${book.issale()}">
                                         <p>
                                             <del>$${book.getPrice()}</del> 
@@ -186,7 +182,7 @@
                                 </span>
                                 <a href="BookDetail?id=${book.getId()}">
                                     <h2 style="overflow: hidden;text-overflow: ellipsis;">${book.getTitle()}</h2>
-                                    <h3 style="font-size: 0.85em;"><i>${book.author.authorName}</i></h3>
+                                    <h3 style="font-size: 0.85em;"><i>${book.author.name}</i></h3>
                                     <c:if test="${book.issale()}">
                                         <p>
                                             <del>$${book.getPrice()}</del> 

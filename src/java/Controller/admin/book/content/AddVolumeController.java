@@ -4,10 +4,10 @@
  */
 package Controller.admin.book.content;
 
-import Model.Volume;
-import context.BookDAO;
-import context.ChapterDAO;
-import context.VolumeDAO;
+import Model.product.content.Volume;
+import context.product.BookDAO;
+import context.product.content.ChapterDAO;
+import context.product.content.VolumeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -33,8 +33,8 @@ public class AddVolumeController extends HttpServlet {
             VolumeDAO vd = new VolumeDAO();
             ChapterDAO cd = new ChapterDAO();
 
-            request.setAttribute("volumes", vd.getAllVolume(bookId));
-            request.setAttribute("chapters", cd.getAllChapter(bookId));
+            request.setAttribute("volumes", vd.getVolumesByBookId(bookId));
+            request.setAttribute("chapters", cd.getChaptersByBookId(bookId));
             request.setAttribute("service", "Add");
 
             request.getRequestDispatcher("/manage/book/toc/volume-detail.jsp").forward(request, response);
@@ -52,7 +52,7 @@ public class AddVolumeController extends HttpServlet {
 
         Volume volume = new Volume();
         volume.setBookId(bookId);
-        volume.setVolumeName(name);
+        volume.setTitle(name);
         volume.setSummary(summary);
 
         BookDAO bd = new BookDAO();
@@ -62,8 +62,8 @@ public class AddVolumeController extends HttpServlet {
 
         if (vd.addVolume(volume) == 0) {
             ChapterDAO cd = new ChapterDAO();
-            request.setAttribute("volumes", vd.getAllVolume(bookId));
-            request.setAttribute("chapters", cd.getAllChapter(bookId));
+            request.setAttribute("volumes", vd.getVolumesByBookId(bookId));
+            request.setAttribute("chapters", cd.getChaptersByBookId(bookId));
             request.setAttribute("message", "Add Failed! Please try again!");
             request.setAttribute("vol", volume);
             request.setAttribute("service", "Add");

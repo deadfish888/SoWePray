@@ -52,7 +52,7 @@
                             <span class="pull-right">$${book.getPrice()}</span>
                         </c:if>
                     </h1>
-                    <h4 style="margin: 0 0 0 0;"><a href="./Book?category=${book.categoryid}"><span class="badge badge-pill badge-secondary">${category}</span></a></h4>
+                    <h4 style="margin: 0 0 0 0;"><a href="./Book?category=${book.categoryId}"><span class="badge badge-pill badge-secondary">${category}</span></a></h4>
 
                     <h2> ${book.getAuthor()} </h2>
 
@@ -212,20 +212,20 @@
                                             <button class="btn btn-link" type="button" 
                                                     data-toggle="collapse" data-target="#collapse${vol.id}" 
                                                     aria-expanded="true" aria-controls="collapse${vol.id}">
-                                                ${vol.getVolumeName()}
+                                                ${vol.title}
                                             </button>
                                         </h5>
                                     </div>
                                     <div id="collapse${vol.id}" class="collapse" aria-labelledby="heading${vol.id}" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <c:forEach items="${requestScope.chaps}" var="chap">
-                                                <c:if test="${chap.getVolumeID() == vol.getId()}">
+                                                <c:if test="${chap.volumeId == vol.id}">
                                                     <c:choose>
                                                         <c:when test="${! empty sessionScope.user && requestScope.own}">
-                                                            <a href="BookReading?id=${book.getId()}&cid=${chap.getId()}"><p>${chap.getChapterName()}</p></a>
+                                                            <a href="BookReading?id=${book.getId()}&cid=${chap.getId()}"><p>${chap.title}</p></a>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                            <a href="BookPreread?id=${book.getId()}"><p>${chap.getChapterName()}</p></a>
+                                                            <a href="BookPreread?id=${book.getId()}"><p>${chap.title}</p></a>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </c:if>

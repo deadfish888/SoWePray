@@ -4,6 +4,10 @@
  */
 package Model;
 
+import context.auth.UserDAO;
+import context.product.AuthorDAO;
+import context.product.BookDAO;
+import Model.product.Book;
 import context.*;
 import java.util.ArrayList;
 

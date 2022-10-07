@@ -4,10 +4,10 @@
  */
 package Controller.admin.book.content;
 
-import Model.Volume;
-import context.BookDAO;
-import context.ChapterDAO;
-import context.VolumeDAO;
+import Model.product.content.Volume;
+import context.product.BookDAO;
+import context.product.content.ChapterDAO;
+import context.product.content.VolumeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -34,8 +34,8 @@ public class EditVolumeController extends HttpServlet {
             Volume vol = vd.getVolumeById(volumeId);
             request.setAttribute("vol", vol);
             request.setAttribute("book", bd.getBookById(vol.getBookId()));
-            request.setAttribute("volumes", vd.getAllVolume(vol.getBookId()));
-            request.setAttribute("chapters", cd.getAllChapter(vol.getBookId()));
+            request.setAttribute("volumes", vd.getVolumesByBookId(vol.getBookId()));
+            request.setAttribute("chapters", cd.getChaptersByBookId(vol.getBookId()));
             request.setAttribute("service", "Edit");
 
             request.getRequestDispatcher("/manage/book/toc/volume-detail.jsp").forward(request, response);
@@ -54,7 +54,7 @@ public class EditVolumeController extends HttpServlet {
 
         Volume volume = new Volume();
         volume.setId(id);
-        volume.setVolumeName(name);
+        volume.setTitle(name);
         volume.setSummary(summary);
 
         VolumeDAO vd = new VolumeDAO();
@@ -63,8 +63,8 @@ public class EditVolumeController extends HttpServlet {
             ChapterDAO cd = new ChapterDAO();
             BookDAO bd = new BookDAO();
             request.setAttribute("book", bd.getBookById(bookId));
-            request.setAttribute("volumes", vd.getAllVolume(bookId));
-            request.setAttribute("chapters", cd.getAllChapter(bookId));
+            request.setAttribute("volumes", vd.getVolumesByBookId(bookId));
+            request.setAttribute("chapters", cd.getChaptersByBookId(bookId));
             request.setAttribute("message", "Edit Failed! Please try again!");
             request.setAttribute("vol", volume);
             request.setAttribute("service", "Edit");

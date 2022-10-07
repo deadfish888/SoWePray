@@ -4,10 +4,10 @@
  */
 package Controller.product;
 
-import Model.Book;
-import Model.Category;
-import context.BookDAO;
-import context.CategoryDAO;
+import Model.product.Book;
+import Model.product.Category;
+import context.product.BookDAO;
+import context.product.CategoryDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;

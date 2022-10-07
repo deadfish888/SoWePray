@@ -88,16 +88,16 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <h5 class="card-title mt-2"> 
-                                                Volume
+                                                ${vol.book.title} - Volume ${vol.no}
                                             </h5>
 
                                             <table class="table">
                                                 <tr>
                                                     <th scope="row">
-                                                        Name
+                                                        Title
                                                     </th>
                                                     <td>
-                                                        ${vol.volumeName}
+                                                        ${vol.title}
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -130,12 +130,11 @@
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <h6>Are you sure to delete the volume - <i>${vol.volumeName}</i> and its chapters: </h6>
+                                                                <h6>Are you sure to delete the volume - <i>${vol.title}</i> and all of its chapters: </h6>
                                                                 <c:forEach items="${requestScope.chapters}" var="chapter">
-                                                                    <c:if test="${chapter.volumeID==vol.id}">
+                                                                    <c:if test="${chapter.volumeId==vol.id}">
                                                                         <li class="list-group-item">
-                                                                            <a target="_blank" href="#"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
-                                                                            <a href="./TOC?id=${book.id}&cid=${chapter.id}">   ${chapter.chapterName}</a>
+                                                                            <a href="./TOC?id=${book.id}&cid=${chapter.id}">   ${chapter.title}</a>
                                                                         </li>
                                                                     </c:if>
 
@@ -144,7 +143,6 @@
                                                             <div class="modal-footer">
                                                                 <form method="get" action="./DeleteVolume">
                                                                     <input type="hidden" name="id" value="${vol.id}">
-                                                                    <input type="hidden" name="bid" value="${book.id}">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                     <button type="submit" class="btn btn-danger">YES, DELETE</button>
                                                                 </form>
@@ -172,7 +170,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <h5 class="card-title mt-2"> 
-                                                Chapter
+                                                ${chap.volume.title} - Chapter ${chap.no}
                                             </h5>
                                             <h6>
                                                 <c:if test="${message !=null}">
@@ -185,7 +183,7 @@
                                                         Name
                                                     </th>
                                                     <td>
-                                                        ${chap.chapterName}
+                                                        ${chap.title}
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -231,8 +229,6 @@
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <form method="get" action="./DeleteChapter">
-                                                                        <input type="hidden" name="id" value="${book.id}">
-
                                                                         <input type="hidden" name="cid" value="${chap.id}">
                                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                         <button type="submit" class="btn btn-danger">YES</button>

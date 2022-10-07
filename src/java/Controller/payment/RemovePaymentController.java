@@ -5,8 +5,8 @@
 
 package Controller.payment;
 
-import Model.PaymentMethod;
-import context.PaymentMethodDAO;
+import Model.payment.PaymentMethod;
+import context.payment.PaymentMethodDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
