@@ -5,7 +5,7 @@
  */
 package filter;
 
-import Model.User;
+import Model.auth.User;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;

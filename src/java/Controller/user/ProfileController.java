@@ -5,8 +5,8 @@
 
 package Controller.User;
 
-import Model.User;
-import context.UserDAO;
+import Model.auth.User;
+import context.auth.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;

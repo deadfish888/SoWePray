@@ -4,10 +4,10 @@
  */
 package Controller.admin.book.content;
 
-import Model.Chapter;
-import context.BookDAO;
-import context.ChapterDAO;
-import context.VolumeDAO;
+import Model.product.content.Chapter;
+import context.product.BookDAO;
+import context.product.content.ChapterDAO;
+import context.product.content.VolumeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -31,14 +31,13 @@ public class EditChapterController extends HttpServlet {
             ChapterDAO cd = new ChapterDAO();
             VolumeDAO vd = new VolumeDAO();
 
-            Chapter chapter = cd.getChapter(chapterId);
-            int bookId = chapter.getBookID();
+            Chapter chapter = cd.getChapterById(chapterId);
 
-            request.setAttribute("book", bd.getBookById(bookId));
-            request.setAttribute("volumes", vd.getAllVolume(bookId));
-            request.setAttribute("chapters", cd.getAllChapter(bookId));
+            request.setAttribute("book", bd.getBookById(1));
+            request.setAttribute("volumes", vd.getVolumesByBookId(1));
+            request.setAttribute("chapters", cd.getChaptersByBookId(1));
 
-            request.setAttribute("vol", vd.getVolumeById(chapter.getVolumeID()));
+            request.setAttribute("vol", vd.getVolumeById(chapter.getVolumeId()));
             request.setAttribute("chap", chapter);
             request.setAttribute("service", "Edit");
 
@@ -60,7 +59,7 @@ public class EditChapterController extends HttpServlet {
 
         Chapter chapter = new Chapter();
         chapter.setId(id);
-        chapter.setChapterName(name);
+        chapter.setTitle(name);
         chapter.setStatus(status);
         chapter.setContent(content);
 
@@ -71,8 +70,8 @@ public class EditChapterController extends HttpServlet {
             VolumeDAO vd = new VolumeDAO();
 
             request.setAttribute("book", bd.getBookById(bookId));
-            request.setAttribute("volumes", vd.getAllVolume(bookId));
-            request.setAttribute("chapters", cd.getAllChapter(bookId));
+            request.setAttribute("volumes", vd.getVolumesByBookId(bookId));
+            request.setAttribute("chapters", cd.getChaptersByBookId(bookId));
             request.setAttribute("message", "Edit Failed! Please try again!");
             request.setAttribute("vol", vd.getVolumeById(volId));
             request.setAttribute("chap", chapter);

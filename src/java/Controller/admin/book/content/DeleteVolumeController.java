@@ -5,7 +5,7 @@
 
 package Controller.admin.book.content;
 
-import context.VolumeDAO;
+import context.product.content.VolumeDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

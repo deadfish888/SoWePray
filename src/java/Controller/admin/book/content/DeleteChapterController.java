@@ -5,7 +5,7 @@
 
 package Controller.admin.book.content;
 
-import context.ChapterDAO;
+import context.product.content.ChapterDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;

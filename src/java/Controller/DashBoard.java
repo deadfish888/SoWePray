@@ -5,8 +5,8 @@
 
 package Controller;
 
-import context.BookDAO;
-import context.UserDAO;
+import context.product.BookDAO;
+import context.auth.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;

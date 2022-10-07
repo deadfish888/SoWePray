@@ -4,10 +4,10 @@
  */
 package Controller.admin.book.content;
 
-import Model.Chapter;
-import context.BookDAO;
-import context.ChapterDAO;
-import context.VolumeDAO;
+import Model.product.content.Chapter;
+import context.product.BookDAO;
+import context.product.content.ChapterDAO;
+import context.product.content.VolumeDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -32,8 +32,8 @@ public class TOCController extends HttpServlet {
             VolumeDAO vd = new VolumeDAO();
             ChapterDAO cd = new ChapterDAO();
 
-            request.setAttribute("volumes", vd.getAllVolume(bookId));
-            request.setAttribute("chapters", cd.getAllChapter(bookId));
+            request.setAttribute("volumes", vd.getVolumesByBookId(bookId));
+            request.setAttribute("chapters", cd.getChaptersByBookId(bookId));
 
             String svolumeId = request.getParameter("vid");
             String schapterId = request.getParameter("cid");
@@ -42,7 +42,7 @@ public class TOCController extends HttpServlet {
                 request.setAttribute("vol", vd.getVolumeById(vid));
             } else if (schapterId != null) {
                 int cid = Integer.parseInt(schapterId);
-                Chapter chapter = cd.getChapter(cid);
+                Chapter chapter = cd.getChapterById(cid);
                 request.setAttribute("chap", chapter);
                 String[] content = chapter.getContent().split("\n");
                 
