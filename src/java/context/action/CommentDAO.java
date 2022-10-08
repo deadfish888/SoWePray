@@ -68,7 +68,7 @@ public class CommentDAO {
             while (rs.next()) {
                 int uid = rs.getInt(2);
                 String cmt = rs.getString(3);
-                list.add(0,new Comment(bid, uid, cmt));
+                //list.add(0,new Comment(bid, uid, cmt));
             }
             return list;
         } catch (Exception e) {

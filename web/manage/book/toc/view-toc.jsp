@@ -143,6 +143,7 @@
                                                             <div class="modal-footer">
                                                                 <form method="get" action="./DeleteVolume">
                                                                     <input type="hidden" name="id" value="${vol.id}">
+                                                                    <input type="hidden" name="bid" value="${book.id}">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                     <button type="submit" class="btn btn-danger">YES, DELETE</button>
                                                                 </form>
@@ -230,6 +231,7 @@
                                                                 <div class="modal-footer">
                                                                     <form method="get" action="./DeleteChapter">
                                                                         <input type="hidden" name="cid" value="${chap.id}">
+                                                                        <input type="hidden" name="id" value="${book.id}">
                                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                         <button type="submit" class="btn btn-danger">YES</button>
                                                                     </form>

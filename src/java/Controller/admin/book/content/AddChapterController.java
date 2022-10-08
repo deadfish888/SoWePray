@@ -5,12 +5,10 @@
 package Controller.admin.book.content;
 
 import Model.product.content.Chapter;
-import Model.product.content.Volume;
 import context.product.BookDAO;
 import context.product.content.ChapterDAO;
 import context.product.content.VolumeDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -54,7 +52,7 @@ public class AddChapterController extends HttpServlet {
             int bookId = Integer.parseInt(request.getParameter("bookId"));
             int volId = Integer.parseInt(request.getParameter("volumeId"));
             boolean status = (request.getParameter("status").equals("finished"));
-            String name = request.getParameter("chapterName");
+            String name = request.getParameter("title");
             String content = request.getParameter("content");
 
             Chapter chapter = new Chapter();
@@ -79,7 +77,7 @@ public class AddChapterController extends HttpServlet {
 
                 request.getRequestDispatcher("/manage/book/toc/volume-detail.jsp").forward(request, response);
             } else {
-                response.sendRedirect("./TOC?id=" + bookId + "&cid=" + cd.getNewChapter(bookId).getId());
+                response.sendRedirect("./TOC?id=" + bookId + "&cid=" + cd.getLatestChapter(bookId).getId());
             }
         } catch (Exception ex) {
             Logger.getLogger(AddVolumeController.class.getName()).log(Level.SEVERE, null, ex);

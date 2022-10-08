@@ -84,7 +84,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title mt-2"> 
-                                        Volume
+                                        ${book.title} - Volume
                                     </h5>
                                     <form action="./${service}Volume" method="post">
                                         <input type="hidden" name="id" value="${requestScope.vol.id}">
@@ -92,7 +92,7 @@
                                         <div class="row mb-3">
                                             <label for="title" class="col-sm-2 col-form-label">Title <span style="color:red">*</span></label>
                                             <div class="col-sm-10">
-                                                <input name="volumeName" type="text" class="form-control" id="title" required value="${requestScope.vol.volumeName}">
+                                                <input name="volumeTitle" type="text" class="form-control" id="title" required value="${requestScope.vol.title}">
                                             </div>
                                         </div>
                                         <div class="row mb-3">

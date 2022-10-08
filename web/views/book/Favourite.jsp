@@ -5,7 +5,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<c:if test="${!empty sessionScope.user}">
+<c:if test="${empty sessionScope.user}">
     <%         
           response.sendRedirect("/Bookie/Home");
     %>
@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="assets/css/main.css" />
         <noscript><link rel="stylesheet" href="assets/css/noscript.css"/></noscript>
+        
     </head>
     <body class="is-preload">
         <!-- Wrapper -->
@@ -69,7 +70,7 @@
                         <div class="home-filter">
                             <button name="category"  type="submit" class="primary" value="0" style="overflow:initial;">All</button>
                             <c:forEach items="${category}" var="category">
-                                <button name="category" type="submit" class="primary" value="${category.getId()}">${category.getName()}</button>
+                                <button name="category" type="submit" class="primary" value="${category.id}">${category.getName()}</button>
                             </c:forEach>
                         </div>
                     </div>
@@ -83,6 +84,11 @@
                         button{
                             margin: 0 10px;
                         }
+                        section #bootstrap-overrides{
+                            width: calc(17% - 2.5em);
+                                     margin: 4em 0 0 4em;
+                        }
+
                     </style>
 
                     <!-- Products -->
@@ -92,9 +98,9 @@
                                 <span class="image">
                                     <img src="${book.getImage()}" alt="" style="height: 250px;"/>
                                 </span>
-                                <a href="BookDetail?id=${book.getId()}" alt="${book.getTitle()}">
-                                    <h2 style="overflow: hidden;text-overflow: ellipsis;">${book.getTitle()}</h2>
-                                    <h3 style="font-size: 0.85em;"><i>${book.getAuthor()}</i></h3>
+                                <a href="BookDetail?id=${book.id}" alt="${book.title}">
+                                    <h2 style="overflow: hidden;text-overflow: ellipsis;">${book.title}</h2>
+                                    <h3 style="font-size: 0.85em;"><i>${book.author.name}</i></h3>
                                             <c:if test="${book.issale()}">
                                         <p>
                                             <del>$${book.getPrice()}</del> 

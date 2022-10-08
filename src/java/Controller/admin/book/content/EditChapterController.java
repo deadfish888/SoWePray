@@ -54,7 +54,7 @@ public class EditChapterController extends HttpServlet {
         int bookId = Integer.parseInt(request.getParameter("bookId"));
         int volId = Integer.parseInt(request.getParameter("volumeId"));
         boolean status = (request.getParameter("status").equals("finished"));
-        String name = request.getParameter("chapterName");
+        String name = request.getParameter("title");
         String content = request.getParameter("content");
 
         Chapter chapter = new Chapter();

@@ -41,28 +41,28 @@
             <!-- Main -->
             <div id="main">
                 <div class="inner">
-                    <h1 style="margin: 0 0 0 0;">${book.getTitle()}
+                    <h1 style="margin: 0 0 0 0;">${book.title}
                         <c:if test="${book.issale()}">
                             <span class="pull-right">
-                                <del>$${book.getPrice()}</del> 
+                                <del>$${book.price}</del> 
                                 $5.00
                             </span>
                         </c:if> 
                         <c:if test="${!book.issale()}">
-                            <span class="pull-right">$${book.getPrice()}</span>
+                            <span class="pull-right">$${book.price}</span>
                         </c:if>
                     </h1>
-                    <h4 style="margin: 0 0 0 0;"><a href="./Book?category=${book.categoryId}"><span class="badge badge-pill badge-secondary">${category}</span></a></h4>
+                    <h4 style="margin: 0 0 0 0;"><a href="./Book?category=${book.categoryId}"><span class="badge badge-pill badge-secondary">${book.category.name}</span></a></h4>
 
-                    <h2> ${book.getAuthor()} </h2>
+                    <h2> ${book.author.name} </h2>
 
                     <div class="container-fluid">
                         <div class="row" style="width: 1200px; text-align: justify;">
                             <div class="col-md-3">
-                                <img src="${book.getImage()}" class="img-fluid" alt="${book.getImage()}">
+                                <img src="${book.image}" class="img-fluid" alt="${book.image}">
                                 <form action="BookPreread" method="GET">
                                     <div style ="text-align: center ">
-                                        <input type="hidden" name="id" value="${book.getId()}">
+                                        <input type="hidden" name="id" value="${book.id}">
                                         <c:if test="${! empty requestScope.chaps && !requestScope.own}">
                                             <input type="submit" class="primary" value="Preread"> 
                                         </c:if>
@@ -71,15 +71,15 @@
                                 </form>
                                 <div style="text-align: center;">
                                     <span class="fa fa-eye"></span>
-                                    <span class="title">${book.getViews()}</span><br><!-- comment -->
-                                    <span class="fa fa-star"></span><span class="title"> ${book.getRating()}</span>
+                                    <span class="title">${book.views}</span><br><!-- comment -->
+                                    <span class="fa fa-star"></span><span class="title"> ${book.rating}</span>
                                 </div>
 
                             </div>
 
                             <div class="col-md-7">
                                 <p>
-                                    ${book.getDescription()}
+                                    ${book.description}
                                 </p>
                                 <div class="row">        
                                     <c:if test="${sessionScope.user != null}">
@@ -167,7 +167,7 @@
                                     <form action="Report" method="POST">
                                         <div class="col-sm-4"> 
                                             <input type="submit" class="primary" value="Report">                                 
-                                            <input type="hidden" name="bId" value="${book.getId()}">
+                                            <input type="hidden" name="bId" value="${book.id}">
                                         </div>   
                                     </form>      
                                 </div>
@@ -177,7 +177,7 @@
                                         <div class="row">
                                             <form action="Rating" method="POST">        
                                                 <div class="rate">
-                                                    <input type="hidden" name="bId" value="${book.getId()}">
+                                                    <input type="hidden" name="bId" value="${book.id}">
                                                     <input type="radio" id="star5" name="getRate" value="5" />
                                                     <label for="star5" title="text">5</label>
                                                     <input type="radio" id="star4" name="getRate" value="4" />
@@ -221,11 +221,11 @@
                                             <c:forEach items="${requestScope.chaps}" var="chap">
                                                 <c:if test="${chap.volumeId == vol.id}">
                                                     <c:choose>
-                                                        <c:when test="${! empty sessionScope.user && requestScope.own}">
-                                                            <a href="BookReading?id=${book.getId()}&cid=${chap.getId()}"><p>${chap.title}</p></a>
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                            <a href="BookPreread?id=${book.getId()}"><p>${chap.title}</p></a>
+                                                        <c:when test="${(! empty sessionScope.user && requestScope.own) || !empty sessionScope.admin}">
+                                                            <a href="BookReading?id=${book.id}&cid=${chap.id}"><p><i class="fa fa-unlock"></i> ${chap.title}</p></a>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                            <a href="BookPreread?id=${book.id}"><p><i class="fa fa-lock"></i> ${chap.title}</p></a>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </c:if>
@@ -234,6 +234,7 @@
                                     </div>
                                 </div>
                             </c:forEach>
+
                         </div>  
                         <div> </div>
                     </div>
@@ -270,19 +271,19 @@
                             <c:forEach items="${requestScope.sames}" var="same">
                                 <article class="style1">
                                     <span class="image">
-                                        <img src="${same.getImage()}" alt="${same.getImage()}" style="height: 391px;" />
+                                        <img src="${same.image}" alt="${same.image}" style="height: 391px;" />
                                     </span>
-                                    <a href="BookDetail?id=${same.getId()}">
-                                        <h2>${same.getTitle()}</h2>
+                                    <a href="BookDetail?id=${same.id}">
+                                        <h2>${same.title}</h2>
 
                                         <c:if test="${same.issale()}">
                                             <p>
-                                                <del>$${same.getPrice()}</del> 
+                                                <del>$${same.price}</del> 
                                                 <strong>$5.00</strong>
                                             </p>
                                         </c:if>
                                         <c:if test="${!same.issale()}">
-                                            <p><strong>$${same.getPrice()}</strong></p>
+                                            <p><strong>$${same.price}</strong></p>
                                         </c:if>
                                     </a>
                                 </article>

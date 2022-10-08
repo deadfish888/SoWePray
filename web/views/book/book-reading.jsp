@@ -5,7 +5,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<c:if test="${empty sessionScope.user || !sessionScope.user.isOwnBook(book.id)}">
+<c:if test="${(empty sessionScope.user || !sessionScope.user.isOwnBook(book.id)) && empty sessionScope.admin}">
     <%         
           response.sendRedirect("./Login");
     %>
@@ -15,7 +15,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>${book.getTitle()}</title>
+        <title>${book.title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="assets/css/main.css" />
@@ -49,19 +49,19 @@
 
             <!-- SideOption -->
             <section class="side_option">
-                <c:if test="${(chapter.chapter-1)>0}">
-                    <a href="#"><i class='bx bu bx-chevrons-left bx-sm btm '></i></a>
+                <c:if test="${(chapter.no-1 > 0) || (chapter.volume.no > 1)}">
+                    <a href="#"><i class='bx bu bx-chevrons-left bx-sm btm '></i></a><br>
                 </c:if>
-                <br><a href="BookDetail?id=${book.getId()}"><i class='bx bu bxs-home bx-sm'></i></a>
-                <br><a data-affect="#"><i class='bx bu bx-font-family bx-sm' onClick="Show()"></i></a>
-                <br><a href="#"><i class='bx bu bx-info-circle bx-sm'></i></a>
-                <br><a href="#"><i class='bx  bx-chevrons-right bx-sm'></i></a>
+                <a href="BookDetail?id=${book.id}"><i class='bx bu bxs-home bx-sm btm'></i></a><br>
+                <a data-affect="#"><i class='bx bu bx-font-family bx-sm' onClick="Show()"></i></a><br>
+                <a href="#"><i class='bx bu bx-info-circle bx-sm'></i></a><br>
+                <a href="#"><i class='bx  bx-chevrons-right bx-sm'></i></a>
             </section>
 
             <!-- Main -->
             <div id="main">
-                <h1 style="text-align: center">${book.getTitle()}</h1>
-                <h2 style="text-align: center">${chapter.chapterName}</h2>
+                <h1 style="text-align: center">${book.title}</h1>
+                <h2 style="text-align: center">${chapter.title}</h2>
                 <h3 style="text-align: center"></h3>
                 <c:forEach items="${listr}" var="listr">
                     <p style="margin-left: 80px; margin-right: 100px; text-align: justify">${listr}</p>

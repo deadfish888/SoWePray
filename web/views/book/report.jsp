@@ -48,7 +48,7 @@
             <!-- Main -->
             <div id="main">
                 <div class="inner">
-                    <h1> ${book.getTitle()} </h1>
+                    <h1> ${book.title} </h1>
                     <h2> ${book.getAuthor()} </h2>
                     <div class="container-fluid">
                         <div class="row" style="width: 1200px; text-align: justify;">
