@@ -207,7 +207,7 @@ public class User {
         BookDAO bookDAO = new BookDAO();
         Book book = new Book();
         book.setId(bookId);
-        return bookDAO.isOwn(this, book);
+        return bookDAO.getOwnBooks(this).contains(book);
     }
 
     @Override
