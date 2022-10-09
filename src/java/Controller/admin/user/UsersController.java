@@ -38,8 +38,23 @@ public class UsersController extends HttpServlet {
         HttpSession session = request.getSession();
         User us = (User) session.getAttribute("admin");
         UserDAO dao = new UserDAO();
-        ArrayList<User> users = dao.getByAccess(us.is_super());
 
+        ArrayList<User> users = dao.getByAccess(us.is_super());
+        String xpage = (String) session.getAttribute("whichpage");
+        int page;
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int size = users.size();
+        int numPage = (size % 10 == 0) ? (size / 10) : (size / 10 + 1);
+        int start = (page - 1) * 10;
+        int end = Math.min(size, start + 10);
+        users = dao.getByPage(users, start, end);
+        System.out.println(page);
+        session.setAttribute("xpage", page);
+        request.setAttribute("numPage", numPage);
         request.setAttribute("users", users);
         request.getRequestDispatcher("../manage/user/users.jsp").forward(request, response);
     }
@@ -83,11 +98,24 @@ public class UsersController extends HttpServlet {
             dao.editRank(Integer.parseInt(request.getParameter("id_down")), -1);
         }
         ArrayList<User> users = dao.getByAccess(us.is_super());
-
         if (request.getParameter("txt") != null) {
             users = dao.searchByUname(us.is_super(), "%" + request.getParameter("txt") + "%");
             request.setAttribute("txt", request.getParameter("txt"));
         }
+        String xpage = (String) session.getAttribute("whichpage");
+        int page;
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int size = users.size();
+        int numPage = (size % 10 == 0) ? (size / 10) : (size / 10 + 1);
+        int start = (page - 1) * 10;
+        int end = Math.min(size, start + 10);
+        users = dao.getByPage(users, start, end);
+        session.setAttribute("xpage", page);
+        request.setAttribute("numPage", numPage);
         request.setAttribute("users", users);
         request.getRequestDispatcher("../manage/user/users.jsp").forward(request, response);
     }

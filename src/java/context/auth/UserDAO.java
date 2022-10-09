@@ -45,7 +45,7 @@ public class UserDAO {
             System.out.println("Connect error:" + e.getMessage());
         }
     }
-    
+
     public User getUser(String key, String pass) {
         String sql = "Select * from [User] where (username=? OR email=?) AND password=?";
         try {
@@ -79,6 +79,17 @@ public class UserDAO {
             System.out.println("getUser Error:" + e.getMessage());
         }
         return null;
+    }
+
+    public ArrayList<User> getByPage(ArrayList<User> users, int start, int end) {
+        ArrayList<User> listpage = new ArrayList<>();
+        if (users.size() < end) {
+            end = users.size();
+        }
+        for (int i = start; i < end; i++) {
+            listpage.add(users.get(i));
+        }
+        return listpage;
     }
 
     public void editProfile(User us) {
@@ -196,13 +207,21 @@ public class UserDAO {
     public ArrayList<User> searchByUname(int us, String att) {
         ArrayList<User> list = new ArrayList<>();
         try {
-            String sql = "select * from [User]\n"
-                    + "where [is_super] <?\n"
-                    + "and [fullname] like ?\n"
-                    + "or [username] like ?\n"
-                    + "or [email] like ?\n"
-                    + "or [phone] like ?\n"
-                    + "or [address] like ?";
+            String sql = "SELECT * FROM\n"
+                    + "	(\n"
+                    + "	SELECT * FROM [dbo].[User]\n"
+                    + "	WHERE [is_super] <?\n"
+                    + "	) as n1\n"
+                    + "	INTERSECT\n"
+                    + "SELECT * FROM\n"
+                    + "	(\n"
+                    + "	SELECT * FROM [dbo].[User]\n"
+                    + "	WHERE [fullname] LIKE ?\n"
+                    + "	or [username] LIKE ?\n"
+                    + "	or [email] LIKE ?\n"
+                    + "	or [phone] LIKE ?\n"
+                    + "	or [address] LIKE ?\n"
+                    + "	) as n2      ";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, us);
             stm.setString(2, att);
@@ -347,7 +366,6 @@ public class UserDAO {
 //    public int getNumberUser() {
 //        return (getAllUsers().size());
 //    }
-
     public ArrayList<User> getAllUsers() {
         ArrayList<User> list = new ArrayList<>();
         try {
@@ -374,7 +392,7 @@ public class UserDAO {
         }
         return list;
     }
-    
+
     public ArrayList<User> getAll() {
         ArrayList<User> list = new ArrayList<>();
         try {
@@ -498,7 +516,7 @@ public class UserDAO {
                 return new User(id, rs.getString(1), rs.getBoolean(2) ? "Male" : "Female",
                         rs.getString(3), rs.getString(4), rs.getString(5),
                         rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9),
-                new PaymentAccount(rs.getLong("walletNumber")));
+                        new PaymentAccount(rs.getLong("walletNumber")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -566,7 +584,6 @@ public class UserDAO {
 //        }
 //
 //    }
-
     public int checkUsernameExisted(String key) {
         try {
             String sql = "SELECT [id] FROM [User] "
