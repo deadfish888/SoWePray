@@ -78,7 +78,7 @@
                         <div class="home-filter">
                             <button name="category"  type="submit" class="primary" value="0" style="overflow:initial;">All</button>
                             <c:forEach items="${category}" var="category">
-                                <button name="category" type="submit" class="primary" value="${category.getId()}">${category.getName()}</button>
+                                <button name="category" type="submit" class="primary" value="${category.id}">${category.getName()}</button>
                             </c:forEach>
                         </div>
                     </div>
@@ -90,9 +90,9 @@
                                 <span class="image">
                                     <img src="${book.getImage()}" alt="" style="height: 250px;"/>
                                 </span>
-                                <a href="BookDetail?id=${book.getId()}" alt="${book.getTitle()}">
-                                    <h2 style="overflow: hidden;text-overflow: ellipsis;">${book.getTitle()}</h2>
-                                    <h3 style="font-size: 0.85em;"><i>${book.getAuthor()}</i></h3>
+                                <a href="BookDetail?id=${book.id}" alt="${book.title}">
+                                    <h2 style="overflow: hidden;text-overflow: ellipsis;">${book.title}</h2>
+                                    <h3 style="font-size: 0.85em;"><i>${book.author.name}</i></h3>
                                             <c:if test="${book.issale()}">
                                         <p>
                                             <del>$${book.getPrice()}</del> 

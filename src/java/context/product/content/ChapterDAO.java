@@ -66,24 +66,24 @@ public class ChapterDAO {
                 chap.setNo(rs.getInt(3));
                 chap.setTitle(rs.getString(4));
                 chap.setStatus(rs.getBoolean(5));
-                
+
                 Volume volume = new Volume();
                 volume.setId(rs.getInt(2));
                 volume.setNo(rs.getInt(6));
                 volume.setTitle(rs.getString(7));
                 volume.setBookId(bookId);
-                
+
                 Book book = new Book();
                 book.setId(bookId);
                 book.setTitle(rs.getString(8));
-                
+
                 Author author = new Author();
                 author.setName(rs.getString(9));
-                
+
                 book.setAuthor(author);
-                
+
                 volume.setBook(book);
-                
+
                 chap.setVolume(volume);
                 chaps.add(chap);
             }
@@ -124,26 +124,26 @@ public class ChapterDAO {
                 chap.setTitle(rs.getString(4));
                 chap.setStatus(rs.getBoolean(5));
                 chap.setContent(rs.getString(6));
-                
+
                 Volume volume = new Volume();
                 volume.setId(rs.getInt(2));
                 volume.setNo(rs.getInt(7));
                 volume.setTitle(rs.getString(8));
                 volume.setBookId(rs.getInt(9));
-                
+
                 Book book = new Book();
                 book.setId(rs.getInt(9));
                 book.setTitle(rs.getString(10));
-                
+
                 Author author = new Author();
                 author.setName(rs.getString(11));
-                
+
                 book.setAuthor(author);
-                
+
                 volume.setBook(book);
-                
+
                 chap.setVolume(volume);
-                
+
                 return chap;
             }
         } catch (SQLException ex) {
@@ -155,25 +155,23 @@ public class ChapterDAO {
     public int addChapter(Chapter chapter) {
         try {
             String sql = "INSERT INTO [dbo].[Chapter]\n"
-                    + "           ([bookId]\n"
-                    + "           ,[volumeId]\n"
-                    + "           ,[chapter]\n"
-                    + "           ,[chapterName]\n"
+                    + "           ([volumeId]"
+                    + "           ,[no]\n"
+                    + "           ,[title]\n"
                     + "           ,[status]\n"
                     + "           ,[content])\n"
                     + "     VALUES\n"
                     + "           ( ? "
-                    + "           , ? "
-                    + "           , (SELECT COUNT([chapter]) FROM [dbo].[Chapter] WHERE [volumeId] = ?)+1 "
+                    + "           , (SELECT COUNT([no]) FROM [dbo].[Chapter] WHERE [volumeId] = ?)+1 "
                     + "           , ? "
                     + "           , ? "
                     + "           , ? )";
             stm = cnn.prepareStatement(sql);
+            stm.setInt(1, chapter.getVolumeId());
             stm.setInt(2, chapter.getVolumeId());
-            stm.setInt(3, chapter.getVolumeId());
-            stm.setString(4, chapter.getTitle());
-            stm.setBoolean(5, chapter.isStatus());
-            stm.setString(6, chapter.getContent());
+            stm.setString(3, chapter.getTitle());
+            stm.setBoolean(4, chapter.isStatus());
+            stm.setString(5, chapter.getContent());
             return stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -181,34 +179,57 @@ public class ChapterDAO {
         return 0;
     }
 
-    public Chapter getNewChapter(int bookId) {
+    public Chapter getLatestChapter(int bookId) {
         try {
-            String sql = "SELECT TOP 1 [id]\n"
+            String sql = "SELECT TOP 1 c.[id]\n"
                     + "      ,[volumeId]\n"
-                    + "      ,[chapter]\n"
-                    + "      ,[chapterName]\n"
-                    + "      ,[status]\n"
-                    + "      ,[content]\n"
-                    + "  FROM [dbo].[Chapter]"
-                    + "WHERE [bookId] = ? "
-                    + "ORDER BY [chapter] DESC ";
+                    + "      ,c.[no] as [chapterNo]\n"
+                    + "      ,c.[title] as [chapterTitle]\n"
+                    + "      ,c.[status]\n"
+                    + "      ,c.[content]\n"
+                    + "      ,v.[no] as [volumeNo]\n"
+                    + "      ,v.[title] as [volumeTitle]\n"
+                    + "      ,b.[id] as [bookId]"
+                    + "      ,b.[title] as [bookTitle] "
+                    + "      ,a.[name] as [author]"
+                    + "  FROM [Chapter] c "
+                    + " INNER JOIN [Volume] v ON c.[volumeId] = v.[id] "
+                    + " INNER JOIN [Book] b ON v.[bookId] = b.[id]"
+                    + " INNER JOIN [Author] a ON b.[authorId] = a.[id] "
+                    + " WHERE b.[id] = ?"
+                    + " ORDER BY c.[id] DESC";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, bookId);
             rs = stm.executeQuery();
-            if (rs.next()) {
-                int id = rs.getInt(1);
-                int no = rs.getInt(3);
-                String chapterName = rs.getString(4);
-                boolean status = rs.getBoolean(5);
-                String content = rs.getString(6);
+            while (rs.next()) {
+                Chapter chap = new Chapter();
+                chap.setId(rs.getInt(1));
+                chap.setVolumeId(rs.getInt(2));
+                chap.setNo(rs.getInt(3));
+                chap.setTitle(rs.getString(4));
+                chap.setStatus(rs.getBoolean(5));
+                chap.setContent(rs.getString(6));
 
-                Chapter chapter = new Chapter();
-                chapter.setId(id);
-                chapter.setTitle(chapterName);
-                chapter.setNo(no);
-                chapter.setStatus(status);
-                chapter.setContent(content);
-                return chapter;
+                Volume volume = new Volume();
+                volume.setId(rs.getInt(2));
+                volume.setNo(rs.getInt(7));
+                volume.setTitle(rs.getString(8));
+                volume.setBookId(rs.getInt(9));
+
+                Book book = new Book();
+                book.setId(rs.getInt(9));
+                book.setTitle(rs.getString(10));
+
+                Author author = new Author();
+                author.setName(rs.getString(11));
+
+                book.setAuthor(author);
+
+                volume.setBook(book);
+
+                chap.setVolume(volume);
+
+                return chap;
             }
         } catch (SQLException ex) {
             Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -219,18 +240,14 @@ public class ChapterDAO {
     public int editChapter(Chapter chapter) {
         try {
             String sql = "UPDATE [dbo].[Chapter]\n"
-                    + "   SET [chapterName] = ? "
+                    + "   SET [title] = ? "
                     + "      ,[status] = ?"
                     + "      ,[content] = ? "
                     + " WHERE [id] = ? ";
             stm = cnn.prepareStatement(sql);
             stm.setString(1, chapter.getTitle());
             stm.setBoolean(2, chapter.isStatus());
-            if (!chapter.getContent().equals("")) {
-                stm.setString(3, chapter.getContent());
-            } else {
-                stm.setNull(3, Types.NVARCHAR);
-            }
+            stm.setString(3, chapter.getContent());
             stm.setInt(4, chapter.getId());
             return stm.executeUpdate();
         } catch (SQLException ex) {
@@ -252,37 +269,58 @@ public class ChapterDAO {
         return 0;
     }
 
-    public Chapter getFirstChapterId(int bookId) {
+    public Chapter getFirstChapter(int bookId) {
         try {
-            String sql = "SELECT TOP 1 [id]\n"
+            String sql = "SELECT TOP 1 c.[id]\n"
                     + "      ,[volumeId]\n"
-                    + "      ,[chapter]\n"
-                    + "      ,[chapterName]\n"
-                    + "      ,[status]\n"
-                    + "      ,[content]\n"
-                    + "  FROM [dbo].[Chapter]"
-                    + "WHERE [bookId] = ? "
-                    + "ORDER BY [chapter] ASC ";
+                    + "      ,c.[no] as [chapterNo]\n"
+                    + "      ,c.[title] as [chapterTitle]\n"
+                    + "      ,c.[status]\n"
+                    + "      ,[content]"
+                    + "      ,v.[no] as [volumeNo]\n"
+                    + "      ,v.[title] as [volumeTitle]\n"
+                    + "      ,b.[title] as [bookTitle] "
+                    + "      ,a.[name] as [author]"
+                    + "  FROM [Chapter] c "
+                    + " INNER JOIN [Volume] v ON c.[volumeId] = v.[id] "
+                    + " INNER JOIN [Book] b ON v.[bookId] = b.[id]"
+                    + " INNER JOIN [Author] a ON b.[authorId] = a.[id] "
+                    + " WHERE [bookId] = ?"
+                    + " ORDER BY v.[no], c.[no] ASC";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, bookId);
             rs = stm.executeQuery();
             if (rs.next()) {
-                int id = rs.getInt(1);
-                int no = rs.getInt(3);
-                String chapterName = rs.getString(4);
-                boolean status = rs.getBoolean(5);
-                String content = rs.getString(6);
+                Chapter chap = new Chapter();
+                chap.setId(rs.getInt(1));
+                chap.setVolumeId(rs.getInt(2));
+                chap.setNo(rs.getInt(3));
+                chap.setTitle(rs.getString(4));
+                chap.setStatus(rs.getBoolean(5));
+                chap.setContent(rs.getString(6));
 
-                Chapter chapter = new Chapter();
-                chapter.setId(id);
-                chapter.setTitle(chapterName);
-                chapter.setNo(no);
-                chapter.setStatus(status);
-                chapter.setContent(content);
-                return chapter;
+                Volume volume = new Volume();
+                volume.setId(rs.getInt(2));
+                volume.setNo(rs.getInt(7));
+                volume.setTitle(rs.getString(8));
+                volume.setBookId(bookId);
+
+                Book book = new Book();
+                book.setId(bookId);
+                book.setTitle(rs.getString(9));
+
+                Author author = new Author();
+                author.setName(rs.getString(10));
+
+                book.setAuthor(author);
+
+                volume.setBook(book);
+
+                chap.setVolume(volume);
+                return chap;
             }
         } catch (Exception e) {
-            System.out.println("getChapterIDbyChapterAndBookID: " + e.getMessage());
+            System.out.println("getFirstChapter " + e.getMessage());
         }
         return null;
     }

@@ -10,7 +10,6 @@ import Model.action.Comment;
 import Model.product.content.Volume;
 import Model.auth.User;
 import context.product.BookDAO;
-import context.product.CategoryDAO;
 import context.product.content.ChapterDAO;
 import context.action.CommentDAO;
 import context.product.content.VolumeDAO;

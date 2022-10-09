@@ -49,7 +49,7 @@ public class EditVolumeController extends HttpServlet {
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         int bookId = Integer.parseInt(request.getParameter("bookId"));
-        String name = request.getParameter("volumeName");
+        String name = request.getParameter("volumeTitle");
         String summary = request.getParameter("summary");
 
         Volume volume = new Volume();

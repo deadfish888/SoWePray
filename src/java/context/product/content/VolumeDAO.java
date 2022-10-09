@@ -154,14 +154,14 @@ public class VolumeDAO {
         return 0;
     }
 
-    public Volume getNewVolume(int bookId) {
+    public Volume getLatestVolume(int bookId) {
         try {
             String sql = "SELECT TOP 1 [id]\n"
                     + "      ,[bookId]\n"
                     + "      ,[no]\n"
                     + "      ,[title]\n"
                     + "      ,[summary]\n"
-                    + "  FROM [dbo].[Volume]"
+                    + "  FROM [Volume]"
                     + " WHERE [bookId] = ? "
                     + " ORDER BY [no] DESC";
             stm = cnn.prepareStatement(sql);

@@ -47,7 +47,7 @@ public class AddVolumeController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int bookId = Integer.parseInt(request.getParameter("bookId"));
-        String name = request.getParameter("volumeName");
+        String name = request.getParameter("volumeTitle");
         String summary = request.getParameter("summary");
 
         Volume volume = new Volume();
@@ -71,8 +71,7 @@ public class AddVolumeController extends HttpServlet {
             request.getRequestDispatcher("/manage/book/toc/volume-detail.jsp").forward(request, response);
         } else {
             request.setAttribute("message", "Add Successfully!");
-            //request.getRequestDispatcher("/manage/book/toc/view-toc.jsp").forward(request, response);
-            response.sendRedirect("./TOC?id=" + bookId + "&vid=" + vd.getNewVolume(bookId).getId());
+            response.sendRedirect("./TOC?id=" + bookId + "&vid=" + vd.getLatestVolume(bookId).getId());
         }
 
     }

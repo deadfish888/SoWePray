@@ -151,8 +151,8 @@
                                 <span class="image">
                                     <img src="${book.image}" alt="" style="max-height: 391px"/>
                                 </span>
-                                <a href="BookDetail?id=${book.getId()}">
-                                    <h2>${book.getTitle()}</h2>
+                                <a href="BookDetail?id=${book.id}">
+                                    <h2>${book.title}</h2>
                                     <h3 style="font-size: 0.85em;"><i>${book.author.name}</i></h3>
                                     <c:if test="${book.issale()}">
                                         <p>
@@ -180,8 +180,8 @@
                                 <span class="image">
                                     <img src="${book.getImage()}" alt="" style="height: 250px "/>
                                 </span>
-                                <a href="BookDetail?id=${book.getId()}">
-                                    <h2 style="overflow: hidden;text-overflow: ellipsis;">${book.getTitle()}</h2>
+                                <a href="BookDetail?id=${book.id}">
+                                    <h2 style="overflow: hidden;text-overflow: ellipsis;">${book.title}</h2>
                                     <h3 style="font-size: 0.85em;"><i>${book.author.name}</i></h3>
                                     <c:if test="${book.issale()}">
                                         <p>

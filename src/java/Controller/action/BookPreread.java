@@ -38,11 +38,11 @@ public class BookPreread extends HttpServlet {
         ChapterDAO chd = new ChapterDAO();
         
         Book thisbook = b.getBookById(id);
-        Chapter thischapter = chd.getFirstChapterId(id);
+        Chapter thischapter = chd.getFirstChapter(id);
         request.setAttribute("thischapter", thischapter);
         String[] list = thischapter.getContent().split("\n");
 //      ArrayList<Chapter> chap = chd.getChapterByVolumeIDandBookID(id, thisbook.getId());
-        request.setAttribute("list", list);
+        request.setAttribute("content", list);
         request.setAttribute("book", thisbook);
         request.getRequestDispatcher("/views/book/book-preread.jsp").forward(request, response);
     } 

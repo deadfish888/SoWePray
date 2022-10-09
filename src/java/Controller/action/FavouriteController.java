@@ -29,7 +29,7 @@ public class FavouriteController extends HttpServlet {
        FavouriteDAO fdao=new FavouriteDAO();
        BookDAO bdao=new BookDAO();
        CategoryDAO cdao=new CategoryDAO();
-       if(request.getSession() == null || request.getSession().getAttribute("user") == null){
+       if(request.getSession().getAttribute("user") == null){
            response.sendRedirect("./Login");
        }else{
            User user=(User)request.getSession().getAttribute("user");

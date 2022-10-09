@@ -124,7 +124,7 @@
                                             <tbody id="contentList">
                                                 <% int no=1;%>
                                                 <c:forEach var="s" items="${users}">
-                                                <form action="UserManager" method="Post">
+                                                <form action="./Users" method="Post">
                                                     <tr>
                                                         <td><%=no++%></td>
                                                         <td width="15%">${s.name}</td>
@@ -136,17 +136,17 @@
 
                                                         <c:choose>
                                                             <c:when test="${s.is_super()==0}">
-                                                                <td><button class="btn btn-primary" name="id_up" value="${s.getId()}" type="submit"><i class="fa-solid fa-up-long"></i></button></td>
+                                                                <td><button class="btn btn-primary" name="id_up" value="${s.id}" type="submit"><i class="fa-solid fa-up-long"></i></button></td>
                                                                     </c:when>
                                                                     <c:when test="${s.is_super()+1==sessionScope.admin.is_super()}">
                                                                 <td></td>
-                                                                <td><button class="btn btn-primary" name="id_down" value="${s.getId()}" type="submit"><i class="fa-solid fa-down-long"></i></button></td>
-                                                                <td><button class="btn btn-primary" name="id_ban" value="${s.getId()}" type="submit"><i class="fa-solid fa-user-slash"></i></button></td>
+                                                                <td><button class="btn btn-primary" name="id_down" value="${s.id}" type="submit"><i class="fa-solid fa-down-long"></i></button></td>
+                                                                <td><button class="btn btn-primary" name="id_ban" value="${s.id}" type="submit"><i class="fa-solid fa-user-slash"></i></button></td>
                                                                     </c:when>
                                                                     <c:otherwise>
-                                                                <td><button class="btn btn-primary" name="id_up" value="${s.getId()}" type="submit"><i class="fa-solid fa-up-long"></i></button></td>
-                                                                <td><button class="btn btn-primary" name="id_down" value="${s.getId()}" type="submit"><i class="fa-solid fa-down-long"></i></button></td>
-                                                                <td><button class="btn btn-primary" name="id_ban" value="${s.getId()}" type="submit"><i class="fa-solid fa-user-slash"></i></button></td>
+                                                                <td><button class="btn btn-primary" name="id_up" value="${s.id}" type="submit"><i class="fa-solid fa-up-long"></i></button></td>
+                                                                <td><button class="btn btn-primary" name="id_down" value="${s.id}" type="submit"><i class="fa-solid fa-down-long"></i></button></td>
+                                                                <td><button class="btn btn-primary" name="id_ban" value="${s.id}" type="submit"><i class="fa-solid fa-user-slash"></i></button></td>
                                                                     </c:otherwise>
                                                                 </c:choose>
                                                     </tr>

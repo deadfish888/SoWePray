@@ -272,7 +272,7 @@ public class UserDAO {
 
     public void addUser(User user) {
         try {
-            String sql = "INSERT INTO [dbo].[User]\n"
+            String sql = "INSERT INTO [User]\n"
                     + "           ([fullname]\n"
                     + "           ,[gender]\n"
                     + "           ,[dob]\n"
@@ -302,6 +302,7 @@ public class UserDAO {
             stm.setInt(8, user.is_super());
             stm.executeUpdate();
         } catch (SQLException ex) {
+            System.out.println("addProfile Error:" + ex.getMessage());
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -363,7 +364,10 @@ public class UserDAO {
                 String phone = rs.getString(6);
                 String address = rs.getString(7);
                 String username = rs.getString(8);
-                list.add(new User(userid, name, username, gender, dob, email, phone, address));
+                User user = new User(userid, name, username, gender, dob, email, phone, address);
+                PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
+                user.setPaymentAccount(payAccDAO.get(new PaymentAccount(rs.getLong("walletNumber"))));
+                list.add(user);
             }
         } catch (Exception e) {
             System.out.println("getUser Error:" + e.getMessage());
@@ -502,66 +506,66 @@ public class UserDAO {
         return null;
     }
 
-    void generateData() {
-        int[] roleSlots = {5, 15, 80, 500};
-        User newUser;
-        for (int i = 1; i <= 100; i++) {
-            boolean isSuper = (int) (Math.random() * 20) == 0;
-            String role = isSuper ? "Admin" : "User";
-            String mail = "Bookie_" + role + i + "@qa.team";
-
-            String password = "";
-            //Loop until captcha have 5 character
-            while (password.length() != 10) {
-                int CharacterGroup = (int) (Math.random() * 3);
-                //If group is 0, get a digit
-                if (CharacterGroup == 0) {
-                    char AsciiCharacter = (char) (Math.random() * 10 + 48);
-                    password += Character.toString(AsciiCharacter);
-                } //If group is 1, get a upcase letter
-                else if (CharacterGroup == 1) {
-                    char AsciiCharacter = (char) (Math.random() * 24 + 65);
-                    password += Character.toString(AsciiCharacter);
-                } //If group is 2, get a lowcase letter
-                else {
-                    char AsciiCharacter = (char) (Math.random() * 24 + 97);
-                    password += Character.toString(AsciiCharacter);
-                }
-            }
-            String username = "user_no" + i;
-            String phone = "";
-            while (phone.length() != 10) {
-                char AsciiCharacter = (char) (Math.random() * 10 + 48);
-                phone += Character.toString(AsciiCharacter);
-            }
-
-//            String name = "";
-            RandomEnglishNameGenerator nameGenerator = new RandomEnglishNameGenerator();
-            String name = nameGenerator.generateName();
-            String gender = (int) (Math.random() * 2) == 0 ? "Male" : "Female";
-
-            String address = "";
-            address += Character.toString((char) (Math.random() * 6 + 65))
-                    + String.format("%03d%s", (int) (Math.random() * 600 + 1), (int) (Math.random() * 2) == 0 ? "L" : "R");
-
-            //Starting year of specified random date (including)
-            int startYear = 1960;
-            int endYear = 2004;
-            long start = Timestamp.valueOf(startYear + 1 + "-1-1 0:0:0").getTime();
-            long end = Timestamp.valueOf(endYear + "-1-1 0:0:0").getTime();
-            //The qualified number of 13-bit milliseconds is obtained.
-            long ms = (long) ((end - start) * Math.random() + start);
-            Date tempDob = new Date(ms);
-
-            DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-            String dob = f.format(tempDob);
-//            System.out.println(dob);
-
-            newUser = new User(i + 2, name, gender, dob, mail, phone, address, username, password, 1);
-            addUser(newUser);
-        }
-
-    }
+//    void generateData() {
+//        int[] roleSlots = {5, 15, 80, 500};
+//        User newUser;
+//        for (int i = 1; i <= 100; i++) {
+//            boolean isSuper = (int) (Math.random() * 20) == 0;
+//            String role = isSuper ? "Admin" : "User";
+//            String mail = "Bookie_" + role + i + "@qa.team";
+//
+//            String password = "";
+//            //Loop until captcha have 5 character
+//            while (password.length() != 10) {
+//                int CharacterGroup = (int) (Math.random() * 3);
+//                //If group is 0, get a digit
+//                if (CharacterGroup == 0) {
+//                    char AsciiCharacter = (char) (Math.random() * 10 + 48);
+//                    password += Character.toString(AsciiCharacter);
+//                } //If group is 1, get a upcase letter
+//                else if (CharacterGroup == 1) {
+//                    char AsciiCharacter = (char) (Math.random() * 24 + 65);
+//                    password += Character.toString(AsciiCharacter);
+//                } //If group is 2, get a lowcase letter
+//                else {
+//                    char AsciiCharacter = (char) (Math.random() * 24 + 97);
+//                    password += Character.toString(AsciiCharacter);
+//                }
+//            }
+//            String username = "user_no" + i;
+//            String phone = "";
+//            while (phone.length() != 10) {
+//                char AsciiCharacter = (char) (Math.random() * 10 + 48);
+//                phone += Character.toString(AsciiCharacter);
+//            }
+//
+////            String name = "";
+//            RandomEnglishNameGenerator nameGenerator = new RandomEnglishNameGenerator();
+//            String name = nameGenerator.generateName();
+//            String gender = (int) (Math.random() * 2) == 0 ? "Male" : "Female";
+//
+//            String address = "";
+//            address += Character.toString((char) (Math.random() * 6 + 65))
+//                    + String.format("%03d%s", (int) (Math.random() * 600 + 1), (int) (Math.random() * 2) == 0 ? "L" : "R");
+//
+//            //Starting year of specified random date (including)
+//            int startYear = 1960;
+//            int endYear = 2004;
+//            long start = Timestamp.valueOf(startYear + 1 + "-1-1 0:0:0").getTime();
+//            long end = Timestamp.valueOf(endYear + "-1-1 0:0:0").getTime();
+//            //The qualified number of 13-bit milliseconds is obtained.
+//            long ms = (long) ((end - start) * Math.random() + start);
+//            Date tempDob = new Date(ms);
+//
+//            DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+//            String dob = f.format(tempDob);
+////            System.out.println(dob);
+//
+//            newUser = new User(i + 2, name, gender, dob, mail, phone, address, username, password, 1);
+//            addUser(newUser);
+//        }
+//
+//    }
 
     public int checkUsernameExisted(String key) {
         try {

@@ -36,11 +36,9 @@ public class BookController extends HttpServlet {
             if (!cid.equals("0")) {
                 books = bd.getBooksByCategoryId(cid);
                 request.setAttribute("cate", cid);
-            //    request.getRequestDispatcher("/views/book/bookshelf.jsp").forward(request, response);
             } else {
                 books = bd.getAllBook();
                 request.setAttribute("cate", 0);
-             //   request.getRequestDispatcher("/views/book/bookshelf.jsp").forward(request, response);
             }
             
             request.setAttribute("books", books);

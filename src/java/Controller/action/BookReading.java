@@ -48,7 +48,7 @@ public class BookReading extends HttpServlet {
         ArrayList<Chapter> listc = chd.getChaptersByBookId(id);
         Chapter chapter;
         if (cid == null) {
-            chapter = chd.getFirstChapterId(id);
+            chapter = chd.getFirstChapter(id);
         } else {
             chapter = chd.getChapterById(Integer.parseInt(cid));
         }
