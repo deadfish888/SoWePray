@@ -106,56 +106,67 @@
                                         </form>
                                     </c:if>
 
-                                <div class="modal fade" id="purchase" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <form action="User/Purchase" method="post" id="purchaseForm" name="purchaseForm" onsubmit="return validatePassword()">
-                                                <div class="modal-header">
-                                                    <h3 class="modal-title">Purchase</h3>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="wrapper row">
-                                                        <table style="width: 80%; margin: auto">
-                                                            <tr>
-                                                                <th>
-                                                                    Book
-                                                                </th>
-                                                                <td>
-                                                                    ${book.title}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>
-                                                                    Price
-                                                                </th>
-                                                                <td>
-                                                                    ${book.price}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>
-                                                                    Password
-                                                                </th>
-                                                                <td>
-                                                                    <input type="password" name="password"/>
-                                                                    <div style="color: red" id="purchase-pass-noti"></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
+                                    <div class="modal fade" id="purchase" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <form action="User/Purchase" method="post" id="purchaseForm" name="purchaseForm" onsubmit="return validatePassword()">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title">Purchase</h3>
                                                     </div>
-                                                </div>
-                                                <div class="modal-footer" style="text-align: center">
-                                                    <button type="button" class="primary btn-primary text-center" data-dismiss="modal" style="width: auto; padding: 0 1em">Cancel</button>
-                                                    <input type="hidden" id="pass" value="${sessionScope.user.password}"/>
-                                                    <input type="hidden" name="amount" value="${book.price}"/>
-                                                    <input type="hidden" name="bookId" value="${book.id}"/>
-                                                    <input type="hidden" name="bookTitle" value="${book.title}"/>
-                                                    <input type="submit" class="primary text-center" value="Confirm"/>
-                                                </div>
-                                            </form>
+                                                    <div class="modal-body">
+                                                        <div class="wrapper row">
+                                                            <table style="width: 80%; margin: auto">
+                                                                <tr>
+                                                                    <th>
+                                                                        Book
+                                                                    </th>
+                                                                    <td>
+                                                                        ${book.title}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        Price
+                                                                    </th>
+                                                                    <td>
+                                                                        <c:if test="${book.issale()}">
+                                                                            $5.00
+                                                                        </c:if>
+                                                                        <c:if test="${!book.issale()}">
+                                                                            ${book.price}
+                                                                        </c:if>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        Password
+                                                                    </th>
+                                                                    <td>
+                                                                        <input type="password" name="password"/>
+                                                                        <div style="color: red" id="purchase-pass-noti"></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer" style="text-align: center">
+                                                        <button type="button" class="primary btn-primary text-center" data-dismiss="modal" style="width: auto; padding: 0 1em">Cancel</button>
+                                                        <input type="hidden" id="pass" value="${sessionScope.user.password}"/>
+                                                        <c:if test="${book.issale()}">
+                                                            <input type="hidden" name="amount" value="5"/>
+                                                        </c:if>
+                                                        <c:if test="${!book.issale()}">
+                                                            <input type="hidden" name="amount" value="${book.price}"/>
+
+                                                        </c:if>
+                                                        <input type="hidden" name="bookId" value="${book.id}"/>
+                                                        <input type="hidden" name="bookTitle" value="${book.title}"/>
+                                                        <input type="submit" class="primary text-center" value="Confirm"/>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
                                     <form action="Favourite" method="POST">
                                         <div class="col-sm-4">
@@ -226,10 +237,10 @@
                                                                     </c:when>
                                                                     <c:otherwise>
                                                             <a href="BookPreread?id=${book.id}"><p><i class="fa fa-lock"></i> ${chap.title}</p></a>
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </c:if>
-                                                    </c:forEach>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:if>
+                                                        </c:forEach>
                                         </div>
                                     </div>
                                 </div>
@@ -319,7 +330,6 @@
         <script src="assets/js/jquery.scrollex.min.js"></script>
         <script src="assets/js/main.js"></script>
         <script>
-
                                                     function validatePassword() {
                                                         let pass = document.forms["purchaseForm"]["pass"].value;
                                                         let x = document.forms["purchaseForm"]["password"].value;
@@ -328,7 +338,6 @@
                                                             return false;
                                                         }
                                                     }
-
         </script>
     </body>
 </html>
