@@ -558,7 +558,19 @@ public class BookDAO {
     public ArrayList<Book> getOwnBooks(User user) {
         ArrayList<Book> list = new ArrayList<>();
         try {
-            String sql = "  select bo.bookId from [User] u \n"
+            String sql = "  select bo.bookId"
+                    + "      ,b.[title]\n"
+                    + "      ,b.[authorId]\n"
+                    + "      ,b.[categoryId]\n"
+                    + "      ,b.[rating]\n"
+                    + "      ,b.[favourite]\n"
+                    + "      ,b.[price]\n"
+                    + "      ,b.[is_sale]\n"
+                    + "      ,b.[image]\n"
+                    + "      ,b.[description]\n"
+                    + "      ,b.[views]\n"
+                    + "      ,b.[status] "
+                    + "  from [User] u \n"
                     + "  inner join [Book_Own] bo \n"
                     + "  on bo.userId = u.id\n"
                     + "  inner join Book b\n"
@@ -567,9 +579,25 @@ public class BookDAO {
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, user.getId());
             rs = stm.executeQuery();
+            CategoryDAO categoryDAO = new CategoryDAO();
             while (rs.next()) {
                 int id = rs.getInt("bookId");
-                Book book = getBookById(id);
+                Book book = new Book();
+                Author author = new Author();
+                author.setId(rs.getInt("authorId"));
+                book.setAuthor(author);
+                book.setId(rs.getInt("bookId"));
+                book.setTitle(rs.getString("title"));
+                book.setCategory(categoryDAO.get(rs.getInt("categoryId")));
+                book.setRating(rs.getFloat("rating"));
+                book.setFavourite(rs.getInt("favourite"));
+                book.setPrice( rs.getFloat("price"));
+                book.setIssale(rs.getBoolean("is_sale"));
+                book.setImage( rs.getString("image"));
+                book.setDescription(rs.getString("description"));
+                book.setViews(rs.getInt("views"));
+                book.setStatus(rs.getBoolean("status"));
+//                Book book = getBookById(id);
                 list.add(book);
             }
         } catch (Exception e) {

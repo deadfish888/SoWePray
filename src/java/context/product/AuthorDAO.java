@@ -48,6 +48,21 @@ public class AuthorDAO {
         } catch (SQLException ex) {
             Logger.getLogger(AuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
+    public Author get(Author author) {
+        String sql = "SELECT [id]\n"
+                + "      ,[userId]\n"
+                + "      ,[name]\n"
+                + "  FROM [Author]"
+                + "  WHERE [id] = ?";
+        try {
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, author.getId());
+            rs = stm.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(AuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return author;
     }
 }
