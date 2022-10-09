@@ -173,7 +173,8 @@ public class BookDAO {
                     + "      ,[status]\n"
                     + "  FROM [Book]"
                     + " INNER JOIN [Author] ON [Book].[authorId] = [Author].[id]"
-                    + " LEFT JOIN [Category] ON [Book].[categoryId] = [Category].[id]";
+                    + " LEFT JOIN [Category] ON [Book].[categoryId] = [Category].[id]"
+                    + " WHERE [Book].[id] = ?";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, bookId);
             rs = stm.executeQuery();
@@ -228,8 +229,10 @@ public class BookDAO {
                     + " INNER JOIN [Author] ON [Book].[authorId] = [Author].[id]"
                     + " LEFT JOIN [Category] ON [Book].[categoryId] = [Category].[id]"
                     + " WHERE [categoryId] = ?\n"
-                    + "   AND [Book].[id] = ?";
+                    + "   AND [Book].[id] != ?";
             stm = cnn.prepareStatement(sql);
+            stm.setInt(1, categoryid);
+            stm.setInt(2, bookid);
             rs = stm.executeQuery();
             while (rs.next()) {
                 Book book = new Book();
@@ -378,9 +381,10 @@ public class BookDAO {
                     + "      ,[status]\n"
                     + "  FROM [Book]"
                     + " INNER JOIN [Author] ON [Book].[authorId] = [Author].[id]"
-                    + " LEFT JOIN [Category] ON [Book].[categoryId] = [Category].[id]"
+                    + "  LEFT JOIN [Category] ON [Book].[categoryId] = [Category].[id]"
                     + " WHERE [categoryId] = ?";
             stm = cnn.prepareStatement(sql);
+            stm.setInt(1, Integer.parseInt(cid));
             rs = stm.executeQuery();
             while (rs.next()) {
                 Book book = new Book();
@@ -406,10 +410,11 @@ public class BookDAO {
                 book.setStatus(rs.getBoolean(14));
                 list.add(book);
             }
+            return list;
         } catch (Exception e) {
             System.out.println("getlist Error:" + e.getMessage());
         }
-        return list;
+        return null;
     }
     
     public ArrayList<Book> getWeeklySaleBooks() {
@@ -432,7 +437,7 @@ public class BookDAO {
                     + "  FROM [Book]"
                     + " INNER JOIN [Author] ON [Book].[authorId] = [Author].[id]"
                     + " LEFT JOIN [Category] ON [Book].[categoryId] = [Category].[id]"
-                    + " WHERE [is_sale] = 1";
+                    + " WHERE [is_sale] = 1 AND [Author].[userId] is NULL";
             stm = cnn.prepareStatement(sql);
             rs = stm.executeQuery();
             while (rs.next()) {

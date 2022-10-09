@@ -103,11 +103,11 @@
                                         <form action="./${service}Book" method="post">
                                             <div class="form-group">
                                                 <label class="control-label" style="display: inline-block; margin-right: 20px;">ID</label>
-                                                <input class="form-control" style="width: auto;display: inline-block;" type="text"  name="id" readonly value="${(book.getId()!=null)?book.getId(): newId}">
+                                                <input class="form-control" style="width: auto;display: inline-block;" type="text"  name="id" readonly value="${(book.id!=null)?book.id: newId}">
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleSelect1" class="control-label">Title</label>
-                                                <input class="form-control" type="text" name="title" required value="${book.getTitle()}">
+                                                <input class="form-control" type="text" name="title" required value="${book.title}">
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleSelect1" class="control-label">Author</label>
@@ -117,7 +117,7 @@
                                                 <label class="control-label">Category</label>
                                                 <select class="form-select" name="categoryId">
                                                     <c:forEach var="cate" items="${cates}">
-                                                        <option value="${cate.getId()}" ${cate.getId()==book.getCategoryid()?"selected":""}>${cate.getName()}</option>
+                                                        <option value="${cate.id}" ${cate.id==book.getCategoryid()?"selected":""}>${cate.getName()}</option>
                                                     </c:forEach>
                                                     <option value="0" ${book.getCategoryid()==null?"selected":""}>Uncategorized</option>
                                                 </select>
@@ -141,7 +141,7 @@
                                                 <input class="form-control" type="text" name="image" required value="${book.getImage()}">
                                                 <!--                                                <input class="form-control" id="img" onchange="changeimg()" name="image" type="file" -->
                                                 <input name="proimage" id="image" value="${book.getImage()}" type="hidden" >
-                                                <img  src="${book.getImage()}" id="demoimg${book.getId()}" style="margin-top: 5px;" height="100">
+                                                <img  src="${book.getImage()}" id="demoimg${book.id}" style="margin-top: 5px;" height="100">
                                             </div>
                                             <div class="col-md-10">
                                                 <div class="left-filter"> 
