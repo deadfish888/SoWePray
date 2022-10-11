@@ -1,5 +1,4 @@
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -165,8 +164,6 @@
     </body>
 </html>
 =======
-=======
->>>>>>> Stashed changes
 -<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -461,8 +458,8 @@
                             </c:forEach>
                         </section>
                     </div>
-                                
 <<<<<<< Updated upstream
+                                
                     <div class="container-fluid">
                         <h2 class="h2">From this Author</h2>
                     <!-- Products -->
@@ -498,8 +495,6 @@
                     </div>     
                                 
 =======
-                         
-
                     <div class="container-fluid">
                         <h2 class="h2">More from this author</h2>
 
@@ -557,6 +552,7 @@
         <script src="assets/js/jquery.scrollex.min.js"></script>
         <script src="assets/js/main.js"></script>
         <script>
+
                                                     function validatePassword() {
                                                         let pass = document.forms["purchaseForm"]["pass"].value;
                                                         let x = document.forms["purchaseForm"]["password"].value;
@@ -565,6 +561,7 @@
                                                             return false;
                                                         }
                                                     }
+
         </script>
     </body>
 </html>
