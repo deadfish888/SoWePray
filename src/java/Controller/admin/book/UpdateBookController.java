@@ -56,7 +56,7 @@ public class UpdateBookController extends HttpServlet {
         book.setId(id);
         book.setTitle(title);
 //        book.setAuthorId(author);
-        book.setCategoryId(categoryId);
+      //  book.setCategoryId(categoryId);
         book.setPrice(price);
         book.setIssale(issale);
         book.setImage(img);
