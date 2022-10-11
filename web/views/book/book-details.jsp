@@ -1,4 +1,5 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -164,6 +165,8 @@
     </body>
 </html>
 =======
+=======
+>>>>>>> Stashed changes
 -<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -459,6 +462,7 @@
                         </section>
                     </div>
                                 
+<<<<<<< Updated upstream
                     <div class="container-fluid">
                         <h2 class="h2">From this Author</h2>
                     <!-- Products -->
@@ -493,6 +497,37 @@
                     </p>
                     </div>     
                                 
+=======
+                         
+
+                    <div class="container-fluid">
+                        <h2 class="h2">More from this author</h2>
+
+                        <!-- Products -->
+                        <section class="tiles">
+                            <c:forEach items="${requestScope.bookauthor}" var="bookau">
+                                <article class="style1">
+                                    <span class="image">
+                                        <img src="${bookau.image}" alt="${bookau.image}" style="height: 391px;" />
+                                    </span>
+                                    <a href="BookDetail?id=${bookau.id}">
+                                        <h2>${bookau.title}</h2>
+
+                                        <c:if test="${bookau.issale()}">
+                                            <p>
+                                                <del>$${bookau.price}</del> 
+                                                <strong>$5.00</strong>
+                                            </p>
+                                        </c:if>
+                                        <c:if test="${!bookau.issale()}">
+                                            <p><strong>$${bookau.price}</strong></p>
+                                        </c:if>
+                                    </a>
+                                </article>
+                            </c:forEach>
+                        </section>
+                    </div>
+>>>>>>> Stashed changes
                 </div>
             </div>
 
@@ -522,7 +557,6 @@
         <script src="assets/js/jquery.scrollex.min.js"></script>
         <script src="assets/js/main.js"></script>
         <script>
-
                                                     function validatePassword() {
                                                         let pass = document.forms["purchaseForm"]["pass"].value;
                                                         let x = document.forms["purchaseForm"]["password"].value;
@@ -531,7 +565,6 @@
                                                             return false;
                                                         }
                                                     }
-
         </script>
     </body>
 </html>
