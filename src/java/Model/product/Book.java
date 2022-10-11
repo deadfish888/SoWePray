@@ -4,13 +4,14 @@
  */
 package Model.product;
 
+import java.util.ArrayList;
+
 public class Book {
     private int id;
     private String title; 
     private int authorId;
     private Author author;
-    private int categoryId;
-    private Category category;
+    private ArrayList<Category> category;
     private float rating;
     private int favourite;
     private float price;
@@ -31,12 +32,10 @@ public class Book {
         this.status = status;
     }
 
-    public Book(int id, String title, int author, int categoryid, float rating, 
-            int favourite, float price, boolean issale, String image, String description, int views) {
+    public Book(int id, String title, int authorId, float rating, int favourite, float price, boolean issale, String image, String description, int views, boolean status) {
         this.id = id;
         this.title = title;
-        this.authorId = author;
-        this.categoryId = categoryid;
+        this.authorId = authorId;
         this.rating = rating;
         this.favourite = favourite;
         this.price = price;
@@ -44,19 +43,9 @@ public class Book {
         this.image = image;
         this.description = description;
         this.views = views;
+        this.status = status;
     }
 
-
-    public Book(int id, String title, int author, int categoryid, int favourite, float price, boolean issale, String image) {
-        this.id = id;
-        this.title = title;
-        this.authorId = author;
-        this.categoryId=categoryid;
-        this.price = price;
-        this.issale = issale;
-        this.favourite = favourite;
-        this.image = image;
-    }
 
     public int getId() {
         return id;
@@ -80,14 +69,6 @@ public class Book {
 
     public void setAuthorId(int authorId) {
         this.authorId = authorId;
-    }
-
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
     }
 
     public float getRating() {
@@ -155,11 +136,11 @@ public class Book {
         this.author = author;
     }
 
-    public Category getCategory() {
+    public ArrayList<Category> getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(ArrayList<Category> category) {
         this.category = category;
     }
     
