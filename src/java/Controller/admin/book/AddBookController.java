@@ -4,8 +4,10 @@
  */
 package Controller.admin.book;
 
+import Model.product.Author;
 import Model.product.Book;
 import Model.product.Category;
+import context.product.AuthorDAO;
 import context.product.BookDAO;
 import context.product.CategoryDAO;
 import java.io.IOException;
@@ -25,7 +27,10 @@ public class AddBookController extends HttpServlet {
             throws ServletException, IOException {
         CategoryDAO cd = new CategoryDAO();
         ArrayList<Category> cates = cd.getAllCategory();
-        request.setAttribute("cates", cates);
+        AuthorDAO ad = new AuthorDAO();
+        ArrayList<Author> authors = ad.getAllAuthor();
+        request.setAttribute("authors", authors);
+        request.setAttribute("categories", cates);
         request.setAttribute("service", "Add");
         BookDAO bd = new BookDAO();
         request.setAttribute("newId", bd.countBookNumber() + 1);
@@ -48,7 +53,7 @@ public class AddBookController extends HttpServlet {
         book.setId(id);
         book.setTitle(title);
 //        book.setAuthorId(author);
-        book.setCategoryId(categoryId);
+       // book.setCategoryId(categoryId);
         book.setPrice(price);
         book.setIssale(issale);
         book.setImage(img);
@@ -56,14 +61,17 @@ public class AddBookController extends HttpServlet {
 
         CategoryDAO cd = new CategoryDAO();
         ArrayList<Category> cates = cd.getAllCategory();
-        request.setAttribute("cates", cates);
-
+        request.setAttribute("categories", cates);
+AuthorDAO ad = new AuthorDAO();
+        ArrayList<Author> authors = ad.getAllAuthor();
+        request.setAttribute("authors", authors);
         request.setAttribute("service", "Add");
 
         BookDAO bd = new BookDAO();
         if (bd.addBook(book) == 0) {
             request.setAttribute("message", "Add Failed! Please try again!");
             request.setAttribute("book", book);
+            
         } else {
             request.setAttribute("message", "Add Successfully!");
         }

@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controller.admin.book;
 
+import Model.product.Author;
 import Model.product.Book;
 import Model.product.Category;
+import context.product.AuthorDAO;
 import context.product.BookDAO;
 import context.product.CategoryDAO;
 import java.io.IOException;
@@ -20,17 +21,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /* @author ACER */
-@WebServlet(name="UpdateBookController", urlPatterns={"/Admin/UpdateBook"})
+@WebServlet(name = "UpdateBookController", urlPatterns = {"/Admin/UpdateBook"})
 public class UpdateBookController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         try {
             int bookId = Integer.parseInt(request.getParameter("id"));
             CategoryDAO cd = new CategoryDAO();
             ArrayList<Category> cates = cd.getAllCategory();
-            request.setAttribute("cates", cates);
+            AuthorDAO ad = new AuthorDAO();
+            ArrayList<Author> authors = ad.getAllAuthor();
+            request.setAttribute("authors", authors);
+            request.setAttribute("categories", cates);
             request.setAttribute("service", "Update");
             BookDAO bd = new BookDAO();
             request.setAttribute("book", bd.getBookById(bookId));
@@ -38,11 +42,11 @@ public class UpdateBookController extends HttpServlet {
         } catch (Exception ex) {
             Logger.getLogger(UpdateBookController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    } 
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         String title = request.getParameter("title");
         String author = request.getParameter("author");
@@ -56,15 +60,18 @@ public class UpdateBookController extends HttpServlet {
         book.setId(id);
         book.setTitle(title);
 //        book.setAuthorId(author);
-        book.setCategoryId(categoryId);
+        //  book.setCategoryId(categoryId);
         book.setPrice(price);
         book.setIssale(issale);
         book.setImage(img);
         book.setDescription(description);
-        
+
         CategoryDAO cd = new CategoryDAO();
         ArrayList<Category> cates = cd.getAllCategory();
-        request.setAttribute("cates", cates);
+        AuthorDAO ad = new AuthorDAO();
+        ArrayList<Author> authors = ad.getAllAuthor();
+        request.setAttribute("authors", authors);
+        request.setAttribute("categories", cates);
 
         request.setAttribute("service", "Update");
 
