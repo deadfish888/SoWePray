@@ -5,7 +5,9 @@
 package Controller.admin.user;
 
 import Model.auth.User;
+import Model.product.Author;
 import context.auth.UserDAO;
+import context.product.AuthorDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -52,7 +54,6 @@ public class UsersController extends HttpServlet {
         int start = (page - 1) * 10;
         int end = Math.min(size, start + 10);
         users = dao.getByPage(users, start, end);
-        System.out.println(page);
         session.setAttribute("xpage", page);
         request.setAttribute("numPage", numPage);
         request.setAttribute("users", users);
@@ -88,14 +89,23 @@ public class UsersController extends HttpServlet {
         HttpSession session = request.getSession();
         User us = (User) session.getAttribute("admin");
         UserDAO dao = new UserDAO();
+        AuthorDAO authorDao = new AuthorDAO();
+        User searchUser = new User();
         if (request.getParameter("id_ban") != null) {
-            dao.disableUser(Integer.parseInt(request.getParameter("id_ban")));
+            searchUser = dao.getUser(Integer.parseInt(request.getParameter("id_ban")));
+            dao.disableUser(searchUser.getId());
+            authorDao.delAuthor(searchUser.getId());
         }
         if (request.getParameter("id_up") != null) {
-            dao.editRank(Integer.parseInt(request.getParameter("id_up")), 1);
+            searchUser = dao.getUser(Integer.parseInt(request.getParameter("id_up")));
+            dao.editRank(searchUser.getId(), 1);
         }
         if (request.getParameter("id_down") != null) {
-            dao.editRank(Integer.parseInt(request.getParameter("id_down")), -1);
+            searchUser = dao.getUser(Integer.parseInt(request.getParameter("id_down")));
+            if (searchUser.is_super() == 1) {
+                authorDao.delAuthor(searchUser.getId());
+            }
+            dao.editRank(searchUser.getId(), -1);
         }
         ArrayList<User> users = dao.getByAccess(us.is_super());
         if (request.getParameter("txt") != null) {

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : UserList
-    Created on : Sep 14, 2022, 1:48:48 PM
+    Document   : author
+    Created on : Oct 10, 2022, 11:06:12 PM
     Author     : duypham0705
 --%>
 
@@ -27,7 +27,7 @@
         <meta name="description"
               content="Material Pro Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
         <meta name="robots" content="noindex,nofollow">
-        <title>Users Management</title>
+        <title>Authors Management</title>
         <!-- Favicon icon -->
         <!-- Custom CSS -->
         <link href="/Bookie/manage/html/css/style.min.css" rel="stylesheet">
@@ -90,15 +90,158 @@
                     <!-- ============================================================== -->
                     <!-- Start Page Content -->
                     <!-- ============================================================== -->
+                    <div class="col-md-6" style="width: 100% ; display: flex ; flex-direction: row">
+                        <div class="card" style="flex: 1">
+                            <div class="card-header">
+                                <div class="card-title">Basic Table</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-sub">									
+                                    This is the basic table view of the ready dashboard :
+                                </div>
+                                <table class="table mt-3">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">First</th>
+                                            <th scope="col">Last</th>
+                                            <th scope="col">Handle</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Jacob</td>
+                                            <td>Thornton</td>
+                                            <td>@fat</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td colspan="2">Larry the Bird</td>
+                                            <td>@twitter</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card" style="flex: 1">
+                            <div class="card-header">
+                                <div class="card-title">Striped Rows</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-sub">											
+                                    Add <code class="highlighter-rouge">.table-striped</code> to rows the striped table
+                                </div>
+                                <table class="table table-striped mt-3">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">First</th>
+                                            <th scope="col">Last</th>
+                                            <th scope="col">Handle</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Jacob</td>
+                                            <td>Thornton</td>
+                                            <td>@fat</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td colspan="2">Larry the Bird</td>
+                                            <td>@twitter</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="card-sub">
+                                    Add <code class="#highlighter-rouge">.table-striped-bg-*states</code> to change background from striped rows
+                                </div>
+                                <table class="table table-striped table-striped-bg-default mt-3">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">First</th>
+                                            <th scope="col">Last</th>
+                                            <th scope="col">Handle</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Jacob</td>
+                                            <td>Thornton</td>
+                                            <td>@fat</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td colspan="2">Larry the Bird</td>
+                                            <td>@twitter</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-striped table-striped-bg-danger mt-4">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">First</th>
+                                            <th scope="col">Last</th>
+                                            <th scope="col">Handle</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Jacob</td>
+                                            <td>Thornton</td>
+                                            <td>@fat</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td colspan="2">Larry the Bird</td>
+                                            <td>@twitter</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div class="row">
                         <!-- column -->
                         <div class="col-sm-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Users List</h4>
+                            <div class="card" style="display: flex; flex-wrap: wrap">
+                                <div class="card-body" style="flex-basis: 30%">
+                                    <h4 class="card-title">Author List</h4>
                                     <div class="table-responsive">
                                         <table class="table user-table">
-                                            
+
                                             <div class="form-outline">
                                                 <form action="Users" method="Post">
                                                     <input type="search" id="form1" class="form-control" placeholder="Search . . . ." aria-label="Search" style="width: 200px"
@@ -109,46 +252,21 @@
                                                 <tr style="cursor: pointer; font-size: 15px;">
                                                     <th class="border-top-0"><i class="fa-solid fa-list-ol"></i></th>
                                                     <th class="border-top-0" onclick="load(1)" >Full Name</th>
-                                                    <th class="border-top-0" onclick="load(2)">Username</th>
-                                                    <th class="border-top-0" onclick="load(3)">Email</th>
-                                                    <th class="border-top-0" onclick="load(4)">Phone</th>
-                                                    <th class="border-top-0" onclick="load(5)">Address</th>                                                  
-                                                    <th class="border-top-0" onclick="load(6)"><i class="fa-solid fa-ranking-star"></i></th>
-                                                    <th class="border-top-0"></th>
-                                                    <th class="border-top-0"></th>
+                                                    <th class="border-top-0">Full Name</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="contentList">
                                                 <% int no=1;%>
-                                                <c:forEach var="s" items="${users}">
+                                                <c:forEach var="s" items="${listA}">
                                                 <form action="./Users" method="Post">
                                                     <tr>
                                                         <td><%=no++%></td>
                                                         <td width="15%">${s.name}</td>
-                                                        <td style="width: 200px;">${s.username}</td>
-                                                        <td>${s.email}</td>
-                                                        <td>${s.phone}</td>
-                                                        <td width="200px">${s.address}</td>
-                                                        <td>${s.is_super()}</td>
-
                                                         <td>  
                                                             <div class="dropdown">
                                                                 <button class="btn btn-primary"><i class="fa fa-chevron-down"></i></button>
                                                                 <div class="noidung_dropdown">
-                                                                    <c:choose>
-                                                                        <c:when test="${s.is_super()==0}">
-                                                                            <a><button class="btn btn-primary" name="id_up" value="${s.getId()}" type="submit">Up<i class="fa-solid fa-up-long"></i></button></a>
-                                                                                </c:when>
-                                                                                <c:when test="${s.is_super()+1==sessionScope.admin.is_super()}">
-                                                                            <a><button class="btn btn-primary" name="id_down" value="${s.getId()}" type="submit">Down<i class="fa-solid fa-down-long"></i></button></a>
-                                                                            <a><button class="btn btn-primary" name="id_ban" value="${s.getId()}" type="submit">Disable<i class="fa-solid fa-user-slash"></i></button></a>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                            <a><button class="btn btn-primary" name="id_up" value="${s.getId()}" type="submit">Up<i class="fa-solid fa-up-long"></i></button></a>
-                                                                            <a><button class="btn btn-primary" name="id_down" value="${s.getId()}" type="submit">Down<i class="fa-solid fa-down-long"></i></button></a>
-                                                                            <a><button class="btn btn-primary" name="id_ban" value="${s.getId()}" type="submit">Disable<i class="fa-solid fa-user-slash"></i></button></a>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
+
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -160,32 +278,58 @@
                                             </tbody>
 
                                         </table>
-                                        <div id="sp" class="pagination-arena " style="margin-left: 40%">
-                                            <ul class="pagination">
-                                                <li class="page-item" >
-                                                    <a href="LoadUser?xpage=${xpage-1}" class="page-link" style="${xpage<3?"display:none":""}">
-                                                        <i class="fa fa-angle-left" aria-hidden="true" ></i>
-                                                    </a>
-                                                </li>
-                                                <c:forEach begin="${1}" end="${numPage}" var="item">
-                                                    <li class="page-item ${item==xpage?"active":""}">
-                                                        <a href="LoadUser?xpage=${item}"  
-
-                                                           class="page-link " style="${(xpage-1>item || xpage+1<item ) ?"display:none;":""}"
-                                                           >${item}</a></li>
-                                                    </c:forEach>
-                                                <li >
-                                                    <a href="LoadUser?xpage=${xpage+1}" class="page-link" style="${xpage+2>numPage?"display:none":""}">
-                                                        <i class="fa fa-angle-right" aria-hidden="true"  ></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>                 
                                     </div>
                                 </div>
+                                <div class="card-body" style="flex-basis: 30%">
+                                    <h4 class="card-title">Author List</h4>
+                                    <div class="table-responsive">
+                                        <table class="table user-table">
+
+                                            <div class="form-outline">
+                                                <form action="Users" method="Post">
+                                                    <input type="search" id="form1" class="form-control" placeholder="Search . . . ." aria-label="Search" style="width: 200px"
+                                                           name="txt" type="text" value="${txt}" >
+                                                </form>
+                                            </div>
+                                            <thead>
+                                                <tr style="cursor: pointer; font-size: 15px;">
+                                                    <th class="border-top-0"><i class="fa-solid fa-list-ol"></i></th>
+                                                    <th class="border-top-0" onclick="load(1)" >Full Name</th>
+                                                    <th class="border-top-0">Full Name</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="contentList">
+                                                <% int no1=1;%>
+                                                <c:forEach var="he" items="${listU}">
+                                                <form action="./Users" method="Post">
+                                                    <tr>
+                                                        <td><%=no1++%></td>
+                                                        <td width="15%">${he.name}</td>
+                                                        <td>  
+                                                            <div class="dropdown">
+                                                                <button class="btn btn-primary"><i class="fa fa-chevron-down"></i></button>
+                                                                <div class="noidung_dropdown">
+
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </form>
+
+                                                <!-- Show detail modal -->
+                                            </c:forEach>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>     
                             </div>
                         </div>
                     </div>
+                    <!-- column -->
+
+
+
 
 
                     <!-- ============================================================== -->

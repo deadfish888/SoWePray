@@ -6,8 +6,10 @@ package context.auth;
 
 import Model.payment.PaymentAccount;
 import Model.auth.User;
+import Model.product.Author;
 import context.DBContext;
 import context.payment.PaymentAccountDAO;
+import context.product.AuthorDAO;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
