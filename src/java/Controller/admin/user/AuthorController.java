@@ -22,6 +22,8 @@ import java.util.ArrayList;
 @WebServlet(name = "Author", urlPatterns = {"/Admin/Author"})
 public class AuthorController extends HttpServlet {
 
+    AuthorDAO author = new AuthorDAO();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,13 +36,11 @@ public class AuthorController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        AuthorDAO author = new AuthorDAO();
-        ArrayList<Author> listAuthor = author.getAllAuthor();
-        ArrayList<Author> listUser = author.getAllUser();
-        System.out.println(listAuthor.size());
+        ArrayList<Author> listAuthor = resize(author.getAllAuthor());
+        ArrayList<Author> listUser = resize(author.getAllUser());
+
         request.setAttribute("listA", listAuthor);
         request.setAttribute("listU", listUser);
-
         request.getRequestDispatcher("../manage/user/author.jsp").forward(request, response);
     }
 
@@ -70,7 +70,26 @@ public class AuthorController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        if (request.getParameter("fullname")!=null) {
+             int id = Integer.parseInt(request.getParameter("id_au"));
+        String name = request.getParameter("fullname");
+        author.updateAu(id, name);
+        }
+        
+        ArrayList<Author> listAuthor = resize(author.getAllAuthor());
+        ArrayList<Author> listUser = resize(author.getAllUser());
+        if (request.getParameter("txt") != null) {
+            listAuthor = resize(author.searchByUAname("%" + request.getParameter("txt") + "%")) ;
+            request.setAttribute("txt", request.getParameter("txt"));
+        }
+        if (request.getParameter("stxt") != null) {
+            listUser = resize(author.searchByUname("%" + request.getParameter("stxt") + "%")) ;
+            request.setAttribute("stxt", request.getParameter("stxt"));
+        }
+        
+        request.setAttribute("listA", listAuthor);
+        request.setAttribute("listU", listUser);
+        request.getRequestDispatcher("../manage/user/author.jsp").forward(request, response);
     }
 
     /**
@@ -82,5 +101,21 @@ public class AuthorController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private ArrayList<Author> resize(ArrayList<Author> allAuthor) {
+        ArrayList<Author> ret = new ArrayList<>();
+        String xpage = null;
+        int page;
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int size = allAuthor.size();
+        int numPage = (size % 10 == 0) ? (size / 10) : (size / 10 + 1);
+        int start = (page - 1) * 10;
+        int end = Math.min(size, start + 10);
+        return author.getByPage(allAuthor, start, end);
+    }
 
 }

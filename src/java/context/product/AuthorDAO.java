@@ -127,4 +127,79 @@ public class AuthorDAO {
         return list;
     }
 
+    public void updateAu(int id, String name) {
+        try {
+            String sql = "UPDATE [dbo].[Author]\n"
+                    + "   SET       [name] = ?\n"
+                    + " WHERE [Author].[id] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(2, id);
+            stm.setString(1, name);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public ArrayList<Author> getByPage(ArrayList<Author> allAuthor, int start, int end) {
+       ArrayList<Author> listpage = new ArrayList<>();
+        if (allAuthor.size() < end) {
+            end = allAuthor.size();
+        }
+        for (int i = start; i < end; i++) {
+            listpage.add(allAuthor.get(i));
+        }
+        return listpage;
+    }
+
+    public ArrayList<Author> searchByUAname(String txt) {
+        ArrayList<Author> list = new ArrayList<>();
+        try {
+            String sql = "SELECT [id]\n"
+                    + "      ,[userId]\n"
+                    + "      ,[name]\n"
+                    + "  FROM [dbo].[Author]\n"
+                    + "  WHERE [name] LIKE ? \n"
+                    + " AND [userId] IS NULL";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, txt);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                int userid = rs.getInt(2);
+                String name = rs.getString(3);
+                Author u = new Author(id, userid, name);
+                list.add(u);
+            }
+        } catch (Exception e) {
+            System.out.println("getUser Error:" + e.getMessage());
+        }
+        return list;
+    }
+
+    public ArrayList<Author> searchByUname(String txt) {
+        ArrayList<Author> list = new ArrayList<>();
+        try {
+            String sql = "SELECT [id]\n"
+                    + "      ,[userId]\n"
+                    + "      ,[name]\n"
+                    + "  FROM [dbo].[Author]\n"
+                    + "  WHERE [name] LIKE ? \n"
+                    + " AND [userId] IS NOT NULL";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, txt);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                int userid = rs.getInt(2);
+                String name = rs.getString(3);
+                Author u = new Author(id, userid, name);
+                list.add(u);
+            }
+        } catch (Exception e) {
+            System.out.println("getUser Error:" + e.getMessage());
+        }
+        return list;
+    }
+
 }

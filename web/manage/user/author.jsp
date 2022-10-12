@@ -67,7 +67,7 @@
                 <div class="page-breadcrumb">
                     <div class="row align-items-center">
                         <div class="col-md-6 col-8 align-self-center">
-                            <h3 class="page-title mb-0 p-0">Users Management</h3>
+                            <h3 class="page-title mb-0 p-0">Authors Management</h3>
                             <div class="d-flex align-items-center">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
@@ -91,141 +91,95 @@
                     <!-- Start Page Content -->
                     <!-- ============================================================== -->
                     <div class="col-md-6" style="width: 100% ; display: flex ; flex-direction: row">
-                        <div class="card" style="flex: 1">
+                        <div class="card" style="flex-basis:  50%">
                             <div class="card-header">
-                                <div class="card-title">Basic Table</div>
+                                <div class="card-title">Authors</div>
                             </div>
                             <div class="card-body">
-                                <div class="card-sub">									
-                                    This is the basic table view of the ready dashboard :
-                                </div>
-                                <table class="table mt-3">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">First</th>
-                                            <th scope="col">Last</th>
-                                            <th scope="col">Handle</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td colspan="2">Larry the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="card" style="flex: 1">
-                            <div class="card-header">
-                                <div class="card-title">Striped Rows</div>
-                            </div>
-                            <div class="card-body">
+
                                 <div class="card-sub">											
-                                    Add <code class="highlighter-rouge">.table-striped</code> to rows the striped table
+                                    <div class="form-outline">
+                                        <form action="Author" method="Post">
+                                            <input type="search" id="form1" class="form-control" placeholder="Search . . . ." aria-label="Search" style="width: 200px"
+                                                   name="txt" type="text" value="${txt}" >
+                                        </form>
+                                    </div>
                                 </div>
                                 <table class="table table-striped mt-3">
                                     <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">First</th>
-                                            <th scope="col">Last</th>
-                                            <th scope="col">Handle</th>
+                                        <tr style="cursor: pointer; font-size: 15px;">
+                                            <th class="border-top-0"><i class="fa-solid fa-list-ol"></i></th>
+                                            <th class="border-top-0" style="padding-left: 100px">Full Name</th>
+                                            <th class="border-top-0"></th>
+
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td colspan="2">Larry the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
+                                    <tbody id="contentList">
+                                        <% int no=1;%>
+                                        <c:forEach var="s" items="${listA}">
+                                        <form action="./Author" method="Post">
+                                            <tr>
+                                                <td><%=no++%></td>
+                                                <td style="padding-left: 100px">
+                                                    <div class="form-group">
+                                                        <div class="col-md-12">
+                                                            <input type="text" placeholder="${s.name}"
+                                                                   class="form-control ps-0 form-control-line" name="fullname" style="border: none;background-color:  inherit">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>  
+                                                    <button class="btn btn-primary" name="id_au" value="${s.id}"><i class="mdi mdi-update"></i></button>
+                                                </td>
+                                            </tr>
+                                        </form>
+
+                                        <!-- Show detail modal -->
+                                    </c:forEach>
                                     </tbody>
                                 </table>
-                                <div class="card-sub">
-                                    Add <code class="#highlighter-rouge">.table-striped-bg-*states</code> to change background from striped rows
+                            </div>
+                        </div>
+                        <div class="card" style="flex-basis:  30%;margin-left: 100px">
+                            <div class="card-header">
+                                <div class="card-title">Users - Authors</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-sub">											
+                                   <div class="form-outline">
+                                        <form action="Author" method="Post">
+                                            <input type="search" id="form1" class="form-control" placeholder="Search . . . ." aria-label="Search" style="width: 200px"
+                                                   name="stxt" type="text" value="${stxt}" >
+                                        </form>
+                                    </div>
                                 </div>
-                                <table class="table table-striped table-striped-bg-default mt-3">
+                                <table class="table table-striped mt-3">
                                     <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">First</th>
-                                            <th scope="col">Last</th>
-                                            <th scope="col">Handle</th>
+                                        <tr style="cursor: pointer; font-size: 15px;">
+                                            <th class="border-top-0"><i class="fa-solid fa-list-ol"></i></th>
+                                            <th class="border-top-0" style="padding-left: 100px">Full Name</th>
+
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td colspan="2">Larry the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <table class="table table-striped table-striped-bg-danger mt-4">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">First</th>
-                                            <th scope="col">Last</th>
-                                            <th scope="col">Handle</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td colspan="2">Larry the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
+                                    <tbody id="contentList">
+                                        <% int no1=1;%>
+                                        <c:forEach var="se" items="${listU}">
+                                        <form action="./Users" method="Post">
+                                            <tr>
+                                                <td><%=no1++%></td>
+                                                <td style="padding-left: 100px">
+                                                    <div class="form-group">
+                                                        <div class="col-md-12">
+                                                            <input type="text" placeholder="${se.name}"
+                                                                   class="form-control ps-0 form-control-line" name="fullname" style="border: none;background-color:  inherit">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </form>
+
+                                        <!-- Show detail modal -->
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -233,100 +187,7 @@
                     </div>
 
 
-                    <div class="row">
-                        <!-- column -->
-                        <div class="col-sm-12">
-                            <div class="card" style="display: flex; flex-wrap: wrap">
-                                <div class="card-body" style="flex-basis: 30%">
-                                    <h4 class="card-title">Author List</h4>
-                                    <div class="table-responsive">
-                                        <table class="table user-table">
 
-                                            <div class="form-outline">
-                                                <form action="Users" method="Post">
-                                                    <input type="search" id="form1" class="form-control" placeholder="Search . . . ." aria-label="Search" style="width: 200px"
-                                                           name="txt" type="text" value="${txt}" >
-                                                </form>
-                                            </div>
-                                            <thead>
-                                                <tr style="cursor: pointer; font-size: 15px;">
-                                                    <th class="border-top-0"><i class="fa-solid fa-list-ol"></i></th>
-                                                    <th class="border-top-0" onclick="load(1)" >Full Name</th>
-                                                    <th class="border-top-0">Full Name</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="contentList">
-                                                <% int no=1;%>
-                                                <c:forEach var="s" items="${listA}">
-                                                <form action="./Users" method="Post">
-                                                    <tr>
-                                                        <td><%=no++%></td>
-                                                        <td width="15%">${s.name}</td>
-                                                        <td>  
-                                                            <div class="dropdown">
-                                                                <button class="btn btn-primary"><i class="fa fa-chevron-down"></i></button>
-                                                                <div class="noidung_dropdown">
-
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </form>
-
-                                                <!-- Show detail modal -->
-                                            </c:forEach>
-                                            </tbody>
-
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="card-body" style="flex-basis: 30%">
-                                    <h4 class="card-title">Author List</h4>
-                                    <div class="table-responsive">
-                                        <table class="table user-table">
-
-                                            <div class="form-outline">
-                                                <form action="Users" method="Post">
-                                                    <input type="search" id="form1" class="form-control" placeholder="Search . . . ." aria-label="Search" style="width: 200px"
-                                                           name="txt" type="text" value="${txt}" >
-                                                </form>
-                                            </div>
-                                            <thead>
-                                                <tr style="cursor: pointer; font-size: 15px;">
-                                                    <th class="border-top-0"><i class="fa-solid fa-list-ol"></i></th>
-                                                    <th class="border-top-0" onclick="load(1)" >Full Name</th>
-                                                    <th class="border-top-0">Full Name</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="contentList">
-                                                <% int no1=1;%>
-                                                <c:forEach var="he" items="${listU}">
-                                                <form action="./Users" method="Post">
-                                                    <tr>
-                                                        <td><%=no1++%></td>
-                                                        <td width="15%">${he.name}</td>
-                                                        <td>  
-                                                            <div class="dropdown">
-                                                                <button class="btn btn-primary"><i class="fa fa-chevron-down"></i></button>
-                                                                <div class="noidung_dropdown">
-
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </form>
-
-                                                <!-- Show detail modal -->
-                                            </c:forEach>
-                                            </tbody>
-
-                                        </table>
-                                    </div>
-                                </div>     
-                            </div>
-                        </div>
-                    </div>
-                    <!-- column -->
 
 
 

@@ -98,6 +98,9 @@ public class UsersController extends HttpServlet {
         }
         if (request.getParameter("id_up") != null) {
             searchUser = dao.getUser(Integer.parseInt(request.getParameter("id_up")));
+             if (searchUser.is_super() == 0) {
+                authorDao.addAuthor(searchUser.getId(),searchUser.getName());
+            }
             dao.editRank(searchUser.getId(), 1);
         }
         if (request.getParameter("id_down") != null) {
