@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,5 +50,27 @@ public class AuthorDAO {
             Logger.getLogger(AuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public ArrayList<Author> getAllAuthor() {
+        ArrayList<Author> list = new ArrayList<>();
+        try {
+            String sql = "SELECT [id]\n"
+                    + "      ,[name]\n"
+                    + "  FROM [Author]"
+                    + " WHERE [userId] IS NULL"
+                    + " ORDER BY [name] ASC";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Author author = new Author();
+                author.setId(rs.getInt(1));
+                author.setName(rs.getString(2));
+                list.add(author);
+            }
+        } catch (Exception e) {
+            System.out.println("getAuthor Error:" + e.getMessage());
+        }
+        return list;
     }
 }

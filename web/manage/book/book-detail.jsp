@@ -29,7 +29,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-        
+
     </head>
 
     <body>
@@ -109,18 +109,37 @@
                                                 <label for="exampleSelect1" class="control-label">Title</label>
                                                 <input class="form-control" type="text" name="title" required value="${book.title}">
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group col-3">
                                                 <label for="exampleSelect1" class="control-label">Author</label>
-                                                <input class="form-control" type="text" name="author" required value="${book.getAuthor()}">
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label class="control-label">Category</label>
-                                                <select class="form-select" name="categoryId">
-                                                    <c:forEach var="cate" items="${cates}">
-                                                        <option value="${cate.id}" ${cate.id==book.getCategoryid()?"selected":""}>${cate.getName()}</option>
+                                                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                                                <select class="form-select" name="authorId" onchange="if ($(this).val() == '0') {
+                                                                $(this).hide().prop('disabled', true);
+                                                                $('input[name=author]').show().prop('disabled', false).focus();
+                                                                $(this).val(null);
+                                                            }" style="margin-left:10px">
+                                                    <option value="-1"></option>
+                                                    <option value="0">[New Author]</option>
+                                                    <c:forEach items="${authors}" var="author">
+                                                        <option value="${author.id}" ${author.id==book.authorId?"selected":""}>${author.name}</option>
                                                     </c:forEach>
-                                                    <option value="0" ${book.getCategoryid()==null?"selected":""}>Uncategorized</option>
                                                 </select>
+                                                <input class="form-control" type="text" name="author" style="display:none;" disabled="disabled" onblur="if ($(this).val() == '') {
+                                                            $(this).hide().prop('disabled', true);$('select[name=authorId]').show().prop('disabled', false).focus();
+                                                        }">
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="control-label">Category</label>
+                                                <div class="row col-11" style="margin-left:0px">
+                                                    <c:forEach items="${categories}" var="category">
+                                                        <div class="form-check form-check-inline col-3 mx-0" >
+                                                            <input name="categoryId" class="form-check-input" type="checkbox" id="inlineCheckbox${category.id}" value="${category.id}"
+                                                                   <c:forEach items="${book.category}" var="cateBook">
+                                                                       ${cateBook.id==category.id ? "checked" :""}
+                                                                   </c:forEach>   >
+                                                            <label class="form-check-label" for="inlineCheckbox${category.id}">${category.name}</label>
+                                                        </div>
+                                                    </c:forEach> 
+                                                </div>
                                             </div>
 
                                             <div class="form-group col-md-4">
@@ -184,10 +203,11 @@
     <!--Custom JavaScript -->
     <script src="/Bookie/manage/html/js/custom.js"></script>
     <script>
-        var element = document.getElementById("book-management");
-        element.classList.add("selected");
-        element = document.getElementById("book-management-a");
-        element.classList.add("active");
+                                                    var element = document.getElementById("book-management");
+                                                    element.classList.add("selected");
+                                                    element = document.getElementById("book-management-a");
+                                                    element.classList.add("active");
+                                                    
     </script>
 </body>
 

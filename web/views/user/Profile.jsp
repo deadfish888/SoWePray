@@ -20,8 +20,7 @@
         <div class="wrapper">
             <nav id="sidebar" class="bg-dark col-md-2 text-light" style="display: block; float: left; padding: 5px">
                 <div style="display: block; margin: auto; text-align: center; margin-top: 2em">
-                    <canvas id="myCanvas" width="100em" height="100em" style="border:2px solid #fff; display: block; margin: auto">
-                        Your browser does not support the HTML5 canvas tag.</canvas>
+                    <img src="../images/default.png" width="100em" height="100em" class="rounded mx-auto d-block" alt="..." style="border:2px solid #fff; display: block; margin: auto">
                     <div class="sidebar-header">
                         <h3 class="" style="margin-bottom: 0">Hi, ${sessionScope.user.username}</h3>
                         <p>UserID: ${sessionScope.user.id}</p>
@@ -35,6 +34,9 @@
                     </li>
                     <li class="sidebar-item">
                         <a href="./Security">Security</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="./Novels">My Novels</a>
                     </li>
                     <li class="sidebar-item">
                         <a href="./Payment">Payment</a>
