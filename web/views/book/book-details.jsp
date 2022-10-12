@@ -52,7 +52,9 @@
                             <span class="pull-right">$${book.price}</span>
                         </c:if>
                     </h1>
-                    <h4 style="margin: 0 0 0 0;"><a href="./Book?category=${book.categoryId}"><span class="badge badge-pill badge-secondary">${book.category.name}</span></a></h4>
+                    <c:forEach items="${book.category}" var="category">
+                        <h4 style="margin: 0 0 0 0; display: inline-block;"><a href="./Book?categoryId=${category.id}"><span class="badge badge-pill badge-secondary">${category.name}</span></a></h4>
+                    </c:forEach>
 
                     <h2> ${book.author.name} </h2>
 
