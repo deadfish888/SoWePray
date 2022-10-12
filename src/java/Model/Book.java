@@ -2,12 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Model;
+//package Model.product;
+
+import Model.Author;
+import Model.product.Category;
+//import Model.Category;
+import java.util.ArrayList;
 
 public class Book {
     private int id;
-    private String title, author;
-    private int categoryid;
+    private String title; 
+    private int authorId;
+    private Author author;
+    private ArrayList<Category> category;
     private float rating;
     private int favourite;
     private float price;
@@ -28,12 +35,10 @@ public class Book {
         this.status = status;
     }
 
-    public Book(int id, String title, String author, int categoryid, float rating, 
-            int favourite, float price, boolean issale, String image, String description, int views) {
+    public Book(int id, String title, int authorId, float rating, int favourite, float price, boolean issale, String image, String description, int views, boolean status) {
         this.id = id;
         this.title = title;
-        this.author = author;
-        this.categoryid = categoryid;
+        this.authorId = authorId;
         this.rating = rating;
         this.favourite = favourite;
         this.price = price;
@@ -41,19 +46,9 @@ public class Book {
         this.image = image;
         this.description = description;
         this.views = views;
+        this.status = status;
     }
 
-
-    public Book(int id, String title, String author, int categoryid, int favourite, float price, boolean issale, String image) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.categoryid=categoryid;
-        this.price = price;
-        this.issale = issale;
-        this.favourite = favourite;
-        this.image = image;
-    }
 
     public int getId() {
         return id;
@@ -71,20 +66,12 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public int getCategoryid() {
-        return categoryid;
-    }
-
-    public void setCategoryid(int categoryid) {
-        this.categoryid = categoryid;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
     public float getRating() {
@@ -144,6 +131,22 @@ public class Book {
         this.views = views;
     }
 
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public ArrayList<Category> getCategory() {
+        return category;
+    }
+
+    public void setCategory(ArrayList<Category> category) {
+        this.category = category;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Book) {

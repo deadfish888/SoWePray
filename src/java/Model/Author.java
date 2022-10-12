@@ -1,22 +1,16 @@
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package Model.product;
+package Model;
 
 /* @author ACER */
-public class Category {
-    private int id;
+public class Author {
+    private int id, userId;
     private String name;
 
-    public Category(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Category() {
+    public Author() {
     }
 
     public int getId() {
@@ -25,6 +19,14 @@ public class Category {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -37,4 +39,3 @@ public class Category {
     
     
 }
-
