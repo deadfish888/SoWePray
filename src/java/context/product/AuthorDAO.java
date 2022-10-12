@@ -5,11 +5,14 @@
 package context.product;
 
 import Model.product.Author;
+import Model.product.Book;
+import Model.product.Category;
 import context.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,6 +51,40 @@ public class AuthorDAO {
         } catch (SQLException ex) {
             Logger.getLogger(AuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
+    
+    public Author getAuthorById(int aid) {
+        try {
+            String sql = "SELECT * from Author where aid = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, aid);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Author author = new Author();
+                author.setId(rs.getInt(1));
+                author.setUserId(rs.getInt(2));
+                author.setName(rs.getString(3));
+                return author;
+            }
+        } catch (Exception e) {
+            System.out.println("getAuthorById Error:" + e.getMessage());
+        }
+        return null;
+    }
+    
+    public int getAuthorByBookId(int bid) {
+        try {
+            String sql = "select authorId from dbo.Book where id = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, bid);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("getAuthorByBookId Error:" + e.getMessage());
+        }
+        return -1;
+    }
+    
 }
