@@ -190,7 +190,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Chapter_Payment](
 	[chapterId] [int] NOT NULL,
-	[isPaid] [bit] NOT NULL,
 	[price] [decimal](10, 2) NOT NULL
 ) ON [PRIMARY]
 GO

@@ -102,7 +102,7 @@
                                                 <th>Title</th>
                                                 <th>Author</th>
                                                 <th style="width: 150px;">Image</th>
-                                                <th>Category</th>
+                                                <th>Categories</th>
                                                 <th>Price</th>
                                                 <th>Sale</th>
                                                 <th>Update</th>
@@ -118,7 +118,11 @@
                                                     <td>${book.title}</td>
                                                     <td>${book.author.name}</td>
                                                     <td style="width: 150px;"><img  src="${book.image}" width="100px"></td>
-                                                    <td>${book.category.name}</td>
+                                                    <td>
+                                                        <c:forEach items="${book.category}" var="category">
+                                                            <span class="badge rounded-pill bg-secondary" style="font-size: 80%;font-weight: 400;">${category.name}</span>
+                                                        </c:forEach>
+                                                    </td>
                                                     <td>$${book.getPrice()}</td>
                                                     <td><input class="checkbox-inline" type="checkbox" ${book.issale()?"checked":""} disabled></td>
                                                     <td><a class="btn btn-primary" href="./UpdateBook?id=${book.id}"><i class="fa fa-pen-square" aria-hidden="true"></i></a></td>

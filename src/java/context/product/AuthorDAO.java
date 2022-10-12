@@ -5,8 +5,6 @@
 package context.product;
 
 import Model.product.Author;
-import Model.product.Book;
-import Model.product.Category;
 import context.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -51,40 +49,28 @@ public class AuthorDAO {
         } catch (SQLException ex) {
             Logger.getLogger(AuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
-    
-    public Author getAuthorById(int aid) {
+
+    public ArrayList<Author> getAllAuthor() {
+        ArrayList<Author> list = new ArrayList<>();
         try {
-            String sql = "SELECT * from Author where aid = ?";
+            String sql = "SELECT [id]\n"
+                    + "      ,[name]\n"
+                    + "  FROM [Author]"
+                    + " WHERE [userId] IS NULL"
+                    + " ORDER BY [name] ASC";
             stm = cnn.prepareStatement(sql);
-            stm.setInt(1, aid);
             rs = stm.executeQuery();
             while (rs.next()) {
                 Author author = new Author();
                 author.setId(rs.getInt(1));
-                author.setUserId(rs.getInt(2));
-                author.setName(rs.getString(3));
-                return author;
+                author.setName(rs.getString(2));
+                list.add(author);
             }
         } catch (Exception e) {
-            System.out.println("getAuthorById Error:" + e.getMessage());
+            System.out.println("getAuthor Error:" + e.getMessage());
         }
-        return null;
+        return list;
     }
-    
-    public int getAuthorByBookId(int bid) {
-        try {
-            String sql = "select authorId from dbo.Book where id = ?";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, bid);
-            rs = stm.executeQuery();
-            while (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (Exception e) {
-            System.out.println("getAuthorByBookId Error:" + e.getMessage());
-        }
-        return -1;
-    }
-    
 }

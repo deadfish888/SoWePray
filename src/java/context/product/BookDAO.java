@@ -67,6 +67,9 @@ public class BookDAO {
                 author.setId(rs.getInt(3));
                 author.setName(rs.getString(4));
                 book.setAuthor(author);
+                
+                CategoryDAO cd = new CategoryDAO();
+                book.setCategory(cd.getCategoriesByBookId(rs.getInt(1)));
 
                 book.setRating(rs.getFloat(5));
                 book.setFavourite(rs.getInt(6));
@@ -79,7 +82,7 @@ public class BookDAO {
                 list.add(book);
             }
         } catch (Exception e) {
-            System.out.println("getAllBook Error:" + e.getMessage());
+            System.out.println("getlist Error:" + e.getMessage());
         }
         return list;
     }
@@ -241,121 +244,6 @@ public class BookDAO {
         }
         return list;
     }
-    
-    public ArrayList<Book> getFeaturedBooksByAuthorId(int aid, int bid) {
-        ArrayList<Book> list = new ArrayList<>();
-        try {
-            String sql = "SELECT TOP 3 [Book].[id]\n"
-                    + "      ,[title]\n"
-                    + "      ,[authorId]\n"
-                    + "      ,[Author].[name]\n"
-                    + "      ,[rating]\n"
-                    + "      ,[favourite]\n"
-                    + "      ,[price]\n"
-                    + "      ,[is_sale]\n"
-                    + "      ,[image]\n"
-                    + "      ,[description]\n"
-                    + "      ,[views]\n"
-                    + "      ,[status]\n"
-                    + "  FROM [Book]"
-                    + " INNER JOIN [Author] ON [Book].[authorId] = [Author].[id]"
-                    + " WHERE [authorId] = ?\n"
-                    + "   AND [Book].[id] != ?"
-                    + "   AND [status] != 0 ";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, aid);
-            stm.setInt(2, bid);
-            rs = stm.executeQuery();
-            while (rs.next()) {
-                Book book = new Book();
-                book.setId(rs.getInt(1));
-                book.setTitle(rs.getString(2));
-                book.setAuthorId(rs.getInt(3));
-
-                Author author = new Author();
-                author.setId(rs.getInt(3));
-                author.setName(rs.getString(4));
-                book.setAuthor(author);
-
-                book.setRating(rs.getFloat(5));
-                book.setFavourite(rs.getInt(6));
-                book.setPrice(rs.getFloat(7));
-                book.setIssale(rs.getBoolean(8));
-                book.setImage(rs.getString(9));
-                book.setDescription(rs.getString(10));
-                book.setViews(rs.getInt(11));
-                book.setStatus(rs.getBoolean(12));
-                list.add(book);
-            }
-        } catch (Exception e) {
-            System.out.println("getFeaturedBooksByAuthorId Error: " + e.getMessage());
-        }
-        return list;
-    }
-    
-    public ArrayList<Book> getAllBooksByAuthorId(int aid) {
-        ArrayList<Book> list = new ArrayList<>();
-        try {
-            String sql = "SELECT [Book].[id]\n"
-                    + "      ,[title]\n"
-                    + "      ,[authorId]\n"
-                    + "      ,[Author].[name]\n"
-                    + "      ,[rating]\n"
-                    + "      ,[favourite]\n"
-                    + "      ,[price]\n"
-                    + "      ,[is_sale]\n"
-                    + "      ,[image]\n"
-                    + "      ,[description]\n"
-                    + "      ,[views]\n"
-                    + "      ,[status]\n"
-                    + "  FROM [Book]"
-                    + " INNER JOIN [Author] ON [Book].[authorId] = [Author].[id]"
-                    + " WHERE [authorId] = ?\n"
-                    + "   AND [status] != 0 ";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, aid);
-            rs = stm.executeQuery();
-            while (rs.next()) {
-                Book book = new Book();
-                book.setId(rs.getInt(1));
-                book.setTitle(rs.getString(2));
-                book.setAuthorId(rs.getInt(3));
-
-                Author author = new Author();
-                author.setId(rs.getInt(3));
-                author.setName(rs.getString(4));
-                book.setAuthor(author);
-
-                book.setRating(rs.getFloat(5));
-                book.setFavourite(rs.getInt(6));
-                book.setPrice(rs.getFloat(7));
-                book.setIssale(rs.getBoolean(8));
-                book.setImage(rs.getString(9));
-                book.setDescription(rs.getString(10));
-                book.setViews(rs.getInt(11));
-                book.setStatus(rs.getBoolean(12));
-                list.add(book);
-            }
-        } catch (Exception e) {
-            System.out.println("getAllBooksByAuthorId Error: " + e.getMessage());
-        }
-        return list;
-    }
-     
-     public int getAuthorIdByBookId(int bid) {
-        try {
-            String sql = "select authorId from Book where id = ?";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, bid);
-            rs = stm.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (Exception e) {
-            System.out.println("getAuthorIdByBookId Error: ");
-        }
-        return -1;
-    }
 
     public int countBookNumber() {
         try {
@@ -413,7 +301,7 @@ public class BookDAO {
                 list.add(book);
             }
         } catch (Exception e) {
-            System.out.println("getBooksByNewest Error:" + e.getMessage());
+            System.out.println("getlist Error:" + e.getMessage());
         }
         ArrayList<Book> lists = new ArrayList<>();
 
@@ -480,7 +368,7 @@ public class BookDAO {
             }
             return list;
         } catch (Exception e) {
-            System.out.println("getBooksByCategoryId Error:" + e.getMessage());
+            System.out.println("getlist Error:" + e.getMessage());
         }
         return null;
     }
@@ -527,7 +415,7 @@ public class BookDAO {
                 list.add(book);
             }
         } catch (Exception e) {
-            System.out.println("getWeeklySaleBooks Error:" + e.getMessage());
+            System.out.println("getlist Error:" + e.getMessage());
         }
         ArrayList<Book> lists = new ArrayList<>();
         Random r = new Random();
@@ -593,7 +481,7 @@ public class BookDAO {
                 list.add(book);
             }
         } catch (Exception e) {
-            System.out.println("getFavouriteBooks Error:" + e.getMessage());
+            System.out.println("getlist Error:" + e.getMessage());
         }
         return list;
     }
@@ -724,10 +612,58 @@ public class BookDAO {
                 list.add(book);
             }
         } catch (Exception e) {
-            System.out.println("getBooks Error:" + e.getMessage());
+            System.out.println("getlist Error:" + e.getMessage());
         }
         return list;
     }
-    
-    
+
+    public ArrayList<Book> getUsersOW(int userId) {
+        ArrayList<Book> list = new ArrayList<>();
+        try {
+            String sql = "SELECT [Book].[id]\n"
+                    + "      ,[title]\n"
+                    + "      ,[authorId]\n"
+                    + "      ,[Author].[name]\n"
+                    + "      ,[rating]\n"
+                    + "      ,[favourite]\n"
+                    + "      ,[price]\n"
+                    + "      ,[is_sale]\n"
+                    + "      ,[image]\n"
+                    + "      ,[description]\n"
+                    + "      ,[views]\n"
+                    + "      ,[status]\n"
+                    + "  FROM [Book]"
+                    + " INNER JOIN [Author] ON [Book].[authorId] = [Author].[id]"
+                    + " WHERE [Author].[userId] = ? ";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, userId);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Book book = new Book();
+                book.setId(rs.getInt(1));
+                book.setTitle(rs.getString(2));
+                book.setAuthorId(rs.getInt(3));
+                Author author = new Author();
+                author.setId(rs.getInt(3));
+                author.setName(rs.getString(4));
+                book.setAuthor(author);
+                
+                CategoryDAO cd = new CategoryDAO();
+                book.setCategory(cd.getCategoriesByBookId(rs.getInt(1)));
+
+                book.setRating(rs.getFloat(5));
+                book.setFavourite(rs.getInt(6));
+                book.setPrice(rs.getFloat(7));
+                book.setIssale(rs.getBoolean(8));
+                book.setImage(rs.getString(9));
+                book.setDescription(rs.getString(10));
+                book.setViews(rs.getInt(11));
+                book.setStatus(rs.getBoolean(12));
+                list.add(book);
+            }
+        } catch (Exception e) {
+            System.out.println("getlist Error:" + e.getMessage());
+        }
+        return list;
+    }
 }
