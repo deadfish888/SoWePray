@@ -5,9 +5,13 @@
 
 package Controller.User;
 
+import Model.action.Favourite;
 import Model.auth.User;
 import Model.product.Book;
+import Model.product.Category;
+import context.action.FavouriteDAO;
 import context.product.BookDAO;
+import context.product.CategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,7 +25,7 @@ import java.util.ArrayList;
  *
  * @author Silver_000
  */
-@WebServlet(name="BookshelfController", urlPatterns={"/Bookshelf"})
+@WebServlet(name="BookshelfController", urlPatterns={"/User/Bookshelf"})
 public class BookshelfController extends HttpServlet {
    
     /** 
@@ -34,10 +38,23 @@ public class BookshelfController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         BookDAO bookDAO = new BookDAO();
-        ArrayList<Book> bookList = bookDAO.getOwnBooks((User) request.getSession().getAttribute("user"));
-        
+        FavouriteDAO favouriteDAO = new FavouriteDAO();
+        CategoryDAO categoryDAO = new CategoryDAO();
+        User user = (User) request.getSession().getAttribute("user");
+        if(request.getParameter("categoryId") != null) {
+            
+        }
+        ArrayList<Book> bookList = bookDAO.getOwnBooks(user);
+        ArrayList<Book> novelList = bookDAO.getNovels(user);
+        ArrayList<Favourite> favorList = favouriteDAO.getAllBook(user.getId());
+        ArrayList<Category> categoryList = categoryDAO.getAllCategory();
+//        bookList.size();
+        request.setAttribute("categoryList", categoryList);
         request.setAttribute("bookList", bookList);
-        request.getRequestDispatcher("views/user/Bookshelf.jsp").forward(request, response);
+        request.setAttribute("novelList", novelList);
+        request.setAttribute("favorCount", favorList.size());
+//        request.removeAttribute("");
+        request.getRequestDispatcher("../views/book/Bookshelf.jsp").forward(request, response);
         bookDAO.close();
     } 
 

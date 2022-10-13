@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.User.payment;
+package Controller.payment;
 
 import Model.payment.Transaction;
 import Model.auth.User;

@@ -25,7 +25,7 @@
 
         <c:if test="${!empty sessionScope.user}">
             <li><a href="${context}/User/Profile">My profile</a></li>
-            <li><a href="${context}/Bookshelf">Bookshelf</a></li>
+            <li><a href="${context}/User/Bookshelf">Bookshelf</a></li>
             <li><a href="${context}/Favourite">Favor</a></li>
         </c:if>
             
