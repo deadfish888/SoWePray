@@ -225,8 +225,10 @@
                     params.page = page;
                     const href = new URLSearchParams(params).toString();
                     item.setAttribute("href", "?" + href);
-                })
+                });
             }
+            const params1 = new URLSearchParams('abc=foo&def=%5Basf%5D&xyz=5&def=dude');
+            console.log(params1.toString());
         </script>
     </body>
 </html>
