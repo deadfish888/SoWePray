@@ -5,11 +5,13 @@
 
 package Model.product;
 
+import java.sql.Date;
+
 /* @author ACER */
 public class Author {
     private int id, userId;
     private String name;
-
+    private Date date;
     public Author() {
     }
 
@@ -17,6 +19,21 @@ public class Author {
         this.id = id;
         this.userId = userId;
         this.name = name;
+    }
+
+    public Author(int id, int userId, String name, Date date) {
+        this.id = id;
+        this.userId = userId;
+        this.name = name;
+        this.date = date;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
     
 

@@ -28,7 +28,6 @@ public class AuthorDAO {
     private void connectDB() {
         try {
             cnn = (new DBContext().getConnection());
-            System.out.println("Connect successfully!");
         } catch (Exception e) {
             System.out.println("Connect error:" + e.getMessage());
         }
@@ -63,17 +62,19 @@ public class AuthorDAO {
         }
     }
 
-    public void addAuthor(int id, String name) {
-        try {
+    public void addAuthor(int userid, String name) {
+       try {
             String sql = "INSERT INTO [dbo].[Author]\n"
-                    + "           ([userId]\n"
-                    + "           ,[name])\n"
+                    + "           (\n"
+                    + "           [name]\n"
+                    + "           ,[date])\n"
                     + "     VALUES\n"
-                    + "           (? \n"
-                    + "           ,?)";
+                    + "           (  \n"
+                    + "            ? \n"
+                    + "           , ? )";
             stm = cnn.prepareStatement(sql);
-            stm.setInt(1, id);
-            stm.setString(2, name);
+            stm.setString(1, name);
+            stm.setString(2, java.time.LocalDate.now().toString());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(AuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -142,7 +143,7 @@ public class AuthorDAO {
     }
 
     public ArrayList<Author> getByPage(ArrayList<Author> allAuthor, int start, int end) {
-       ArrayList<Author> listpage = new ArrayList<>();
+        ArrayList<Author> listpage = new ArrayList<>();
         if (allAuthor.size() < end) {
             end = allAuthor.size();
         }
@@ -172,7 +173,7 @@ public class AuthorDAO {
                 list.add(u);
             }
         } catch (Exception e) {
-            System.out.println("getUser Error:" + e.getMessage());
+            System.out.println("search Error:" + e.getMessage());
         }
         return list;
     }
@@ -197,9 +198,39 @@ public class AuthorDAO {
                 list.add(u);
             }
         } catch (Exception e) {
-            System.out.println("getUser Error:" + e.getMessage());
+            System.out.println("search Error:" + e.getMessage());
         }
         return list;
+    }
+
+    public int getPercent() {
+        ArrayList<Author> listAuthor = getAllAuthor();
+        ArrayList<Author> listUser = getAllUser();
+        int a = listAuthor.size();
+        int b = listUser.size();
+        double ret = (double) a / (a + b);
+        ret *= 100;
+        return (int) ret;
+    }
+
+    public void addSignup(int id, String name) {
+        try {
+            String sql = "INSERT INTO [dbo].[Author]\n"
+                    + "           ([userId]\n"
+                    + "           ,[name]\n"
+                    + "           ,[date])\n"
+                    + "     VALUES\n"
+                    + "           ( ? \n"
+                    + "           , ? \n"
+                    + "           , ? )";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, id);
+            stm.setString(2, name);
+            stm.setString(3, java.time.LocalDate.now().toString());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

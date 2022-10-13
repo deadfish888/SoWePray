@@ -53,7 +53,7 @@ public class AddBookController extends HttpServlet {
         book.setId(id);
         book.setTitle(title);
 //        book.setAuthorId(author);
-       // book.setCategoryId(categoryId);
+        // book.setCategoryId(categoryId);
         book.setPrice(price);
         book.setIssale(issale);
         book.setImage(img);
@@ -62,7 +62,7 @@ public class AddBookController extends HttpServlet {
         CategoryDAO cd = new CategoryDAO();
         ArrayList<Category> cates = cd.getAllCategory();
         request.setAttribute("categories", cates);
-AuthorDAO ad = new AuthorDAO();
+        AuthorDAO ad = new AuthorDAO();
         ArrayList<Author> authors = ad.getAllAuthor();
         request.setAttribute("authors", authors);
         request.setAttribute("service", "Add");
@@ -71,9 +71,9 @@ AuthorDAO ad = new AuthorDAO();
         if (bd.addBook(book) == 0) {
             request.setAttribute("message", "Add Failed! Please try again!");
             request.setAttribute("book", book);
-            
+
         } else {
-            request.setAttribute("message", "Add Successfully!");
+            response.sendRedirect("./Book");
         }
         request.setAttribute("newId", bd.countBookNumber() + 1);
         request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);

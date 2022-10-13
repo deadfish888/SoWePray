@@ -47,7 +47,7 @@ public class LoginController extends HttpServlet {
             }
             if (user.is_super() >= 4) {
                 session.setAttribute("admin", user);
-                response.sendRedirect("./Edit");
+                response.sendRedirect("Admin/DashBoard");
                 return;
             }
             session.setAttribute("user", user);

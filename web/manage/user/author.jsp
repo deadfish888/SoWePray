@@ -72,7 +72,7 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="/Bookie/Home">Home</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Users Management</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Authors Management</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -97,12 +97,14 @@
                             </div>
                             <div class="card-body">
 
-                                <div class="card-sub">											
+                                <div class="card-sub">	
+
                                     <div class="form-outline">
                                         <form action="Author" method="Post">
                                             <input type="search" id="form1" class="form-control" placeholder="Search . . . ." aria-label="Search" style="width: 200px"
                                                    name="txt" type="text" value="${txt}" >
                                         </form>
+
                                     </div>
                                 </div>
                                 <table class="table table-striped mt-3">
@@ -138,6 +140,9 @@
                                     </c:forEach>
                                     </tbody>
                                 </table>
+                                <div class="left-filter">
+                                    <a class="btn btn-purple" href="./AddBook">Add Author</a>
+                                </div>
                             </div>
                         </div>
                         <div class="card" style="flex-basis:  30%;margin-left: 100px">
@@ -146,7 +151,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="card-sub">											
-                                   <div class="form-outline">
+                                    <div class="form-outline">
                                         <form action="Author" method="Post">
                                             <input type="search" id="form1" class="form-control" placeholder="Search . . . ." aria-label="Search" style="width: 200px"
                                                    name="stxt" type="text" value="${stxt}" >
