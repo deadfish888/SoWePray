@@ -38,6 +38,14 @@ public class BookDAO {
             System.out.println("Connect error:" + e.getMessage());
         }
     }
+    
+    public void close() {
+        try {
+            cnn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public ArrayList<Book> getAllBook() {
         ArrayList<Book> list = new ArrayList<>();
