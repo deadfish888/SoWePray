@@ -2030,6 +2030,8 @@ Put her in one of her boxes.')
 GO
 INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (21, 4, 1, N'Mất trí nhớ', 0, N'12/10/2022, Lạc desu.')
 GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (22, 4, 2, N'Nhật ký 2020', 0, N'Đó là một cuốn nhật ký nhàu nát và bám đầy bụi.')
+GO
 SET IDENTITY_INSERT [dbo].[Chapter] OFF
 GO
 INSERT [dbo].[Payment_Account] ([accountNumber], [balance]) VALUES (0, CAST(0.00 AS Decimal(10, 2)))

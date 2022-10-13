@@ -33,3 +33,6 @@ table th{
     border-radius: 7px;
 }
 
+textarea{
+    white-space: pre-line;min-height: 10em;resize: vertical;
+}

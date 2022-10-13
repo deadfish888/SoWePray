@@ -5,19 +5,51 @@
     </welcome-file-list>
     <context-param>
         <param-name>user</param-name>
-        <param-value></param-value>
+        <param-value/>
     </context-param>
     <context-param>
         <param-name>pass</param-name>
-        <param-value></param-value>
+        <param-value/>
     </context-param>
     <servlet>
         <servlet-name>Home</servlet-name>
         <servlet-class>Controller.Home</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TOCController</servlet-name>
+        <servlet-class>Controller.product.content.TOCController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddChapterController</servlet-name>
+        <servlet-class>Controller.product.content.AddChapterController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditChapterController</servlet-name>
+        <servlet-class>Controller.product.content.EditChapterController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteChapterController</servlet-name>
+        <servlet-class>Controller.product.content.DeleteChapterController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/Home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TOCController</servlet-name>
+        <url-pattern>/User/Novels/TOC</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddChapterController</servlet-name>
+        <url-pattern>/User/Novels/AddChapter</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditChapterController</servlet-name>
+        <url-pattern>/User/Novels/EditChapter</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteChapterController</servlet-name>
+        <url-pattern>/User/Novels/DeleteChapter</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -6,10 +6,8 @@ package Controller.product;
 
 import Model.product.Author;
 import Model.product.Book;
-import Model.product.Category;
 import context.product.AuthorDAO;
 import context.product.BookDAO;
-import context.product.CategoryDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -18,7 +16,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 /* @author ACER */
