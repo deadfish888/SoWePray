@@ -13,7 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
+//import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
@@ -526,7 +526,7 @@ public class BookDAO {
             rs = stm.executeQuery();
             CategoryDAO categoryDAO = new CategoryDAO();
             while (rs.next()) {
-                int id = rs.getInt("bookId");
+//                int id = rs.getInt("bookId");
                 Book book = new Book();
                 Author author = new Author();
                 author.setId(rs.getInt("authorId"));
