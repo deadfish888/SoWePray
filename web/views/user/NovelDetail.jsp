@@ -15,6 +15,29 @@
         <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="../assets/css/main.css" />
         <link href="../assets/css/style-profile.css" rel="stylesheet" type="text/css"/>
+        <style>
+            .section-title{
+                background-color: #f5f5f5;
+                border: 1px solid #d4dae2;
+                border-radius: 4px;
+                display: inline-block;
+                padding: 4px 10px;
+            }
+            #bootstrap-overrides{
+                font-size: 0.8em;
+                font-weight: 900;
+                height: 3.5em;
+                letter-spacing: 0.35em;
+                line-height: 3.45em;
+                overflow: hidden;
+                padding: 0 1.25em 0 1.6em;
+                text-align: center;
+                text-decoration: none;
+                text-overflow: ellipsis;
+                text-transform: uppercase;
+                white-space: nowrap;
+            }
+        </style>
         <title>Create Your Novel</title>
     </head>
     <body>
@@ -81,57 +104,97 @@
                         <h2>Series of ${sessionScope.user.name}</h2>
                     </div>
                     <div class="container border rounded py-3">
-                        <h2 class="card-title">Series ${book.title}</h2>
+                        <h3 class="section-title">Series ${book.title}</h3>
                         <div class="table-responsive">
                             <form action="./${service}Novel" method="post">
                                 <input type="hidden"  name="id" value="${(book.id!=null)?book.id: ""}">
-                                <div class="form-group">
-                                    <label for="exampleSelect1" class="control-label">Title</label>
-                                    <input class="form-control" type="text" name="title" required value="${book.title}">
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="control-label">Category</label>
-                                    <div class="row">
-                                        <c:forEach items="${categories}" var="category">
-                                            <div class="form-check form-check-inline col-3 mx-0" >
-                                                <input name="categoryId" class="form-check-input" type="checkbox" id="inlineCheckbox${category.id}" value="${category.id}"
-                                                       <c:forEach items="${book.category}" var="cateBook">
-                                                           ${cateBook.id==category.id ? "checked" :""}
-                                                       </c:forEach>   >
-                                                <label class="form-check-label" for="inlineCheckbox${category.id}">${category.name}</label>
-                                            </div>
-                                        </c:forEach> 
+                                <div class="form-group row col-12">
+                                    <label for="exampleSelect1" class="col-sm-2 col-form-label">Title</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="text" name="title" required value="${book.title}">
                                     </div>
                                 </div>
-                                <c:if test="${sessionScope.user.is_super() == 3}">
-                                    <div class="form-group col-md-4">
-                                        <label class="control-label ">Price (per chapter)</label>
-                                        $<input class="form-control" type="text" name="price" pattern="[+-]?([0-9]*[.])?[0-9]+" required value="${book.getPrice()}">
 
+                                <div class="form-group row col-12">
+                                    <label class="col-sm-2 col-form-label">Category</label>
+                                    <div class="col-sm-10">
+                                        <div class="row">
+                                            <c:forEach items="${categories}" var="category">
+                                                <div class="browsers form-check form-check-inline col-4 mx-0" >
+                                                    <input name="categoryId" class="form-check-input" type="checkbox" id="inlineCheckbox${category.id}" value="${category.id}" required=""
+                                                           <c:forEach items="${book.category}" var="cateBook">
+                                                               ${cateBook.id==category.id ? "checked" :""}
+                                                           </c:forEach>   >
+                                                    <label class="form-check-label" for="inlineCheckbox${category.id}">${category.name}</label>
+                                                </div>
+                                            </c:forEach> 
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Sale</label>
-                                        <input type="checkbox" name="issale" value="true" ${book.issale()?"checked":""}>
+                                </div>
+                                <c:if test="${sessionScope.user.is_super() >= 3}">
+                                    <div class="form-group row col-12">
+                                        <label class="col-sm-2 col-form-label">Price ($/thousand words)</label>
+                                        <div class="col-sm-4">
+                                            <input class="form-control" type="text" name="price" pattern="[+-]?([0-9]*[.])?[0-9]+" required value="${! empty book.getPrice() ? book.price : 0}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row col-12">
+                                        <label class="col-sm-2 col-form-label" for="sale">Paid</label>
+                                        <div class="col-sm-2">
+                                            <input class="form-check-input" id="sale" type="checkbox" name="issale" value="true" ${book.issale()?"checked":""}>
+                                            <label class="form-check-label" for="sale">.</label>
+                                        </div>
                                     </div>
                                 </c:if>
-                                <div class="form-group">
-                                    <label class="control-label">Summary</label>
-                                    <textarea class="form-control" name="description" style="white-space: pre-line;" rows="5">${book.getDescription()}</textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label" >Image (Enter Link)</label>
-                                    <input class="form-control" type="text" name="image" required value="${book.getImage()}">
-                                    <input name="proimage" id="image" value="${book.getImage()}" type="hidden" >
-                                    <img  src="${book.getImage()}" id="demoimg${book.id}" style="margin-top: 5px;" height="100">
-                                </div>
-                                <div class="col-md-10">
-                                    <div class="left-filter"> 
-                                        <input class="btn ${service=="Create"?"btn-primary":"btn-outline-danger"}" name="in" type="submit" value="${service}">
+                                <div class="form-group row col-12">
+                                    <label class="col-sm-2 col-form-label">Summary</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" name="description" style="white-space: pre-line;min-height: 10em" rows="5">${book.getDescription()}</textarea>
                                     </div>
+                                </div>
+                                <div class="form-group row col-12">
+                                    <label class="col-sm-2 col-form-label" >Image</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="text" name="image" value="${book.getImage()}">
+                                        <input name="proimage" id="image" value="${book.getImage()}" type="hidden" >
+                                        <img  src="${book.getImage()}" id="demoimg${book.id}" style="margin-top: 5px;" height="100">
+                                    </div>
+                                </div>
+                                <div class="row col-12">
+                                    <div class="col-2"> 
+                                        <input class="btn ${service=="Create"?"btn-primary":"btn-success"}" name="in" type="submit" value="${service}">
+                                    </div>
+
                                     <c:if test="${message !=null}">
                                         ${message}
                                     </c:if>
+                                    <c:if test="${!empty issold && !issold}">
+                                        <div class="col-2"> 
+                                            <button type="button" data-toggle="modal" data-target="#exampleModalCenter">Delete</button>
+                                            <!--<a id="bootstrap-overrides" class="btn btn-danger" href="./Status?id=${book.id}&service=Delete" >Delete</a>-->
+                                        </div>
+
+                                    </c:if>
+                                </div>
+                            </form>
+                            <form action="./Status" method="get">
+                                <input type="hidden" name="id" value="${book.id}">
+                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalCenterTitle">Alert</h5>
+                                            </div>
+                                            <div class="modal-body">
+                                                All information of series ${book.title} will be deleted forever!
+                                                Are you sure want to delete series ${book.title} ?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" data-dismiss="modal">Close</button>
+                                                <input id="bootstrap-overrides" type="submit" class="btn btn-danger" name="service" value="Delete">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -149,5 +212,17 @@
         <script src="../assets/js/jquery.scrolly.min.js"></script>
         <script src="../assets/js/jquery.scrollex.min.js"></script>
         <script src="../assets/js/main.js"></script>
+        <script>
+            $(function () {
+                var requiredCheckboxes = $('.browsers :checkbox[required]');
+                requiredCheckboxes.change(function () {
+                    if (requiredCheckboxes.is(':checked')) {
+                        requiredCheckboxes.removeAttr('required');
+                    } else {
+                        requiredCheckboxes.attr('required', 'required');
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

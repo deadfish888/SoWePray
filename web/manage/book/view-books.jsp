@@ -102,7 +102,7 @@
                                                 <th>Title</th>
                                                 <th>Author</th>
                                                 <th style="width: 150px;">Image</th>
-                                                <th>Categories</th>
+                                                <th>Genre</th>
                                                 <th>Price</th>
                                                 <th>Sale</th>
                                                 <th>Update</th>
