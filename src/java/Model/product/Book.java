@@ -152,6 +152,15 @@ public class Book {
         }
         return false;
     }
+
+    public void setCategory(String[] category) {
+        this.category = new ArrayList<>();
+        for (String category1 : category) {
+            Category c = new Category();
+            c.setId(Integer.parseInt(category1));
+            this.category.add(c);
+        }
+    }
     
     
 

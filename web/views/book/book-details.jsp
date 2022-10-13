@@ -292,6 +292,40 @@
                             </c:forEach>
                         </section>
                     </div>
+                                
+                     <div class="container-fluid">
+                        <h2 class="h2">Also from this author</h2>
+
+                        <!-- Products -->
+                        <section class="tiles">
+                            <c:forEach items="${requestScope.bookauthor}" var="bookau">
+                                <article class="style1">
+                                    <span class="image">
+                                        <img src="${bookau.image}" alt="${bookau.image}" style="height: 391px;" />
+                                    </span>
+                                    <a href="BookDetail?id=${bookau.id}">
+                                        <h2>${bookau.title}</h2>
+
+                                        <c:if test="${bookau.issale()}">
+                                            <p>
+                                                <del>$${bookau.price}</del> 
+                                                <strong>$5.00</strong>
+                                            </p>
+                                        </c:if>
+                                        <c:if test="${!bookau.issale()}">
+                                            <p><strong>$${bookau.price}</strong></p>
+                                        </c:if>
+                                    </a>
+                                </article>
+                            </c:forEach>
+                        </section>
+                        <p class="text-center">
+                        <a href="BookAuthor?aid=${requestScope.aid}">More Books &nbsp;<i class="fa fa-long-arrow-right"></i>
+                        </a>
+                    </p>
+
+                    </div>
+                                
                 </div>
             </div>
 

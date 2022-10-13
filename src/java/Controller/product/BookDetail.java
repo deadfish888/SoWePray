@@ -51,15 +51,17 @@ public class BookDetail extends HttpServlet {
             request.setAttribute("own", user.isOwnBook(id));
         }
         ArrayList<Book> sames = null; //b.getSimilarBooks(id, thisbook.getCategoryId());
+        ArrayList<Book> bookauthor = b.getFeaturedBooksByAuthorId(b.getAuthorIdByBookId(id), id);
         ArrayList<Volume> vols = vd.getVolumesByBookId(id);
         ArrayList<Chapter> chaps = chd.getChaptersByBookId(id);
         ArrayList<Comment> coms = cmd.loadComment(id);
+        request.setAttribute("bookauthor", bookauthor);
         request.setAttribute("chaps", chaps);
         request.setAttribute("sames", sames);
         request.setAttribute("book", thisbook);
         request.setAttribute("vols", vols);
         request.setAttribute("comments", coms);
-
+        request.setAttribute("aid", b.getAuthorIdByBookId(id));
         request.getRequestDispatcher("/views/book/book-details.jsp").forward(request, response);
     }
 

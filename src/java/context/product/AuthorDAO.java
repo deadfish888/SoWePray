@@ -63,7 +63,7 @@ public class AuthorDAO {
     }
 
     public void addAuthor(int userid, String name) {
-       try {
+        try {
             String sql = "INSERT INTO [dbo].[Author]\n"
                     + "           (\n"
                     + "           [name]\n"

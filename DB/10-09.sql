@@ -2651,6 +2651,7 @@ ALTER TABLE [dbo].[User] CHECK CONSTRAINT [FK_User_Payment_Account]
 GO
 ALTER TABLE [dbo].[Volume]  WITH CHECK ADD FOREIGN KEY([bookId])
 REFERENCES [dbo].[Book] ([id])
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Star]  WITH CHECK ADD  CONSTRAINT [chk_star] CHECK  (([star]>=(1) AND [star]<=(5)))
 GO
