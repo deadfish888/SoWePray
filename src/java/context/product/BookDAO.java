@@ -505,7 +505,6 @@ public class BookDAO {
             String sql = "  select bo.bookId"
                     + "      ,b.[title]\n"
                     + "      ,b.[authorId]\n"
-                    + "      ,b.[categoryId]\n"
                     + "      ,b.[rating]\n"
                     + "      ,b.[favourite]\n"
                     + "      ,b.[price]\n"
@@ -532,7 +531,6 @@ public class BookDAO {
                 book.setAuthor(author);
                 book.setId(rs.getInt("bookId"));
                 book.setTitle(rs.getString("title"));
-                book.setCategory(categoryDAO.get(rs.getInt("categoryId")));
                 book.setRating(rs.getFloat("rating"));
                 book.setFavourite(rs.getInt("favourite"));
                 book.setPrice( rs.getFloat("price"));
