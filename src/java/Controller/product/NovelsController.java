@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controller.product;
 
 import Model.auth.User;
@@ -20,43 +19,57 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
 /* @author ACER */
-@WebServlet(name="NovelsController", urlPatterns={"/User/Novels"})
-public class WorksController extends HttpServlet {
-   
+@WebServlet(name = "NovelsController", urlPatterns = {"/User/Novels"})
+public class NovelsController extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             response.sendRedirect("./Login");
             return;
-        } 
+        }
+        String page = request.getParameter("page");
+        String search = request.getParameter("search");
+        if (search == null) {
+            search = "";
+        }
+        if (page == null || page.trim().length() == 0) {
+            page = "1";
+        }
+        int pageIndex, pageSize = 12;
+        try {
+            pageIndex = Integer.parseInt(page);
+            if (pageIndex <= 0) {
+                pageIndex = 1;
+            }
+        } catch (NumberFormatException e) {
+            pageIndex = 1;
+        }
         CategoryDAO cd = new CategoryDAO();
-        ArrayList<Category> cates = cd.getAllCategory();
-        request.setAttribute("categories", cates);
         BookDAO bd = new BookDAO();
-        ArrayList<Book> books = bd.getUsersOW(user.getId());
-//        String xpage = request.getParameter("xpage");
-//        int page;
-//        if (xpage == null) {
-//            page = 1;
-//        } else {
-//            page = Integer.parseInt(xpage);
-//        }
-//        int size = books.size();
-//        int numPage = (int) Math.ceil((double)size/10);
-//        int start = (page - 1) * 10;
-//        int end = Math.min(size, start + 10);
-//        ArrayList<Book> listpage = bd.getByPage(books, start, end);
-//        request.setAttribute("xpage", page);
-//        request.setAttribute("numPage", numPage);
+        ArrayList<Category> cates = cd.getAllCategory();
+        ArrayList<Book> books = bd.getUserNovels(user.getId(), search);
+
+        int size = books.size();
+        int numPage = (int) Math.ceil((double) size / pageSize);
+        int start = (pageIndex - 1) * pageSize;
+        int end = Math.min(size, start + pageSize);
+
+        books = bd.getByPage(books, start, end);
+        request.setAttribute("page", pageIndex);
+        request.setAttribute("numPage", numPage);
+
+        request.setAttribute("categories", cates);
         request.setAttribute("books", books);
         request.getRequestDispatcher("../views/user/Novels.jsp").forward(request, response);
-    } 
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
+
     }
 
     @Override

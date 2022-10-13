@@ -136,4 +136,56 @@ public class CategoryDAO {
         return null;
     }
 
+
+    public int addCategoryBook(int bookId, ArrayList<Category> category) {
+        try {
+            String sql = "INSERT INTO [CategoryBook] ([bookId], [CategoryId])"
+                    + " VALUES ( ? ,? ) ";
+            for (int i=1;i<category.size();i++) {
+                sql += ", (?, ?)";
+            }
+            stm = cnn.prepareStatement(sql);
+            for (int i=0;i<category.size();i++) {
+                stm.setInt(2*i+1, bookId);
+                stm.setInt(2*i+2, category.get(i).getId());
+            }
+            return stm.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("addCategoryBook Error:" + e.getMessage());
+        }
+        return 0;
+    }
+
+    public int editCategoryBook(int bookId, ArrayList<Category> category) {
+        try {
+            deleteCategoryBook(bookId);
+            String sql = "INSERT INTO [CategoryBook] ([bookId], [CategoryId])"
+                    + " VALUES ( ? ,? ) ";
+            for (int i=1;i<category.size();i++) {
+                sql += ", (?, ?)";
+            }
+            stm = cnn.prepareStatement(sql);
+            for (int i=0;i<category.size();i++) {
+                stm.setInt(2*i+1, bookId);
+                stm.setInt(2*i+2, category.get(i).getId());
+            }
+            return stm.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("addCategoryBook Error:" + e.getMessage());
+        }
+        return 0;
+    }
+
+    private void deleteCategoryBook(int bookId) {
+        try {
+            String sql = "DELETE FROM [CategoryBook]"
+                    + " WHERE [bookId] = ? ";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, bookId);
+            stm.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("addCategoryBook Error:" + e.getMessage());
+        }
+    }
+
 }
