@@ -550,7 +550,8 @@ public class BookDAO {
                     + " INNER JOIN [CategoryBook] cb ON [Book].[id] = cb.[bookId]"
                     + " WHERE [Book].[title] LIKE ? "
                     + "   AND [Author].[name] LIKE ? "
-                    + "   AND [status] != 0 ";
+                    + "   AND [status] != 0 "
+                    + "   AND [Author].[userId] IS NULL";
             int idCateLength = idCategory.length;
             if (idCategory[0] != -1) {
                 sql += "AND cb.[categoryId] in (? ";

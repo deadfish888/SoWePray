@@ -212,9 +212,6 @@
         <script src="assets/js/jquery.scrollex.min.js"></script>
         <script src="assets/js/main.js"></script>
         <script>
-            const url_string = window.location.href;
-            const url = new URL(url_string);
-            const search = url.searchParams.get("search");
             const paginationLinks = document.querySelectorAll(".page-link");
             if (paginationLinks) {
                 paginationLinks.forEach(item => {
@@ -227,8 +224,6 @@
                     item.setAttribute("href", "?" + href);
                 });
             }
-            const params1 = new URLSearchParams('abc=foo&def=%5Basf%5D&xyz=5&def=dude');
-            console.log(params1.toString());
         </script>
     </body>
 </html>
