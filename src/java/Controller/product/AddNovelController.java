@@ -42,7 +42,6 @@ public class AddNovelController extends HttpServlet {
         String title = request.getParameter("title");
         String[] category = request.getParameterValues("categoryId");
         User user = (User) request.getSession().getAttribute("user");
-        
         String description = request.getParameter("description");
         String img = request.getParameter("image");
         
