@@ -38,7 +38,7 @@ public class DeleteChapterController extends HttpServlet {
                 return;
             }
             cd.deleteChapter(chapterId);
-            response.sendRedirect("./TOC?id="+bookId);
+            response.sendRedirect("./TOC?id="+bookId) ;
         } catch (Exception ex) {
             Logger.getLogger(DeleteChapterController.class.getName()).log(Level.SEVERE, null, ex);
         }

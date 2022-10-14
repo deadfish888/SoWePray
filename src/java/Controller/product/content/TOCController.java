@@ -50,7 +50,7 @@ public class TOCController extends HttpServlet {
                 int cid = Integer.parseInt(schapterId);
                 Chapter chapter = cd.getChapterById(cid);
                 request.setAttribute("chap", chapter);
-                String[] content = chapter.getContent().split("\n");
+                String[] content = chapter.getContent().split("\n") ;
                 request.setAttribute("content", content);
                 boolean issold = bd.checkNovelSold(bookId);
                 request.setAttribute("issold", issold);
