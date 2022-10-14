@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 /**
@@ -36,9 +37,41 @@ public class AuthorController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        ArrayList<Author> listAuthor = resize(author.getAllAuthor());
-        ArrayList<Author> listUser = resize(author.getAllUser());
+        HttpSession session = request.getSession();
+        ArrayList<Author> listAuthor = (author.getAllAuthor());
+        ArrayList<Author> listUser = (author.getAllUser());
 
+        String xpage1 = (String) session.getAttribute("whichpage1");
+        int page1;
+        if (xpage1 == null) {
+            page1 = 1;
+        } else {
+            page1 = Integer.parseInt(xpage1);
+        }
+        int size1 = listAuthor.size();
+        int numPage1 = (size1 % 10 == 0) ? (size1 / 10) : (size1 / 10 + 1);
+        int start1 = (page1 - 1) * 10;
+        int end1 = Math.min(size1, start1 + 10);
+
+        String xpage2 = (String) session.getAttribute("whichpage2");
+        int page2;
+        if (xpage2 == null) {
+            page2 = 1;
+        } else {
+            page2 = Integer.parseInt(xpage2);
+        }
+        int size2 = listUser.size();
+        int numPage2 = (size2 % 10 == 0) ? (size2 / 10) : (size2 / 10 + 1);
+        int start2 = (page2 - 1) * 10;
+        int end2 = Math.min(size2, start2 + 10);
+
+        listAuthor = author.getByPage(listAuthor, start1, end1);
+        listUser = author.getByPage(listUser, start2, end2);
+
+        session.setAttribute("xpage1", page1);
+        request.setAttribute("numPage1", numPage1);
+        session.setAttribute("xpage2", page2);
+        request.setAttribute("numPage2", numPage2);
         request.setAttribute("listA", listAuthor);
         request.setAttribute("listU", listUser);
         request.getRequestDispatcher("../manage/user/author.jsp").forward(request, response);
@@ -70,23 +103,61 @@ public class AuthorController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("fullname")!=null) {
-             int id = Integer.parseInt(request.getParameter("id_au"));
-        String name = request.getParameter("fullname");
-        author.updateAu(id, name);
+        if (request.getParameter("fullname") != null) {
+            int id = Integer.parseInt(request.getParameter("id_au"));
+            String name = request.getParameter("fullname");
+            author.updateAu(id, name);
         }
-        
-        ArrayList<Author> listAuthor = resize(author.getAllAuthor());
-        ArrayList<Author> listUser = resize(author.getAllUser());
+
+        HttpSession session = request.getSession();
+        ArrayList<Author> listAuthor = (author.getAllAuthor());
+        ArrayList<Author> listUser = (author.getAllUser());
+
+        String xpage1 = (String) session.getAttribute("whichpage1");
+        int page1;
+        if (xpage1 == null) {
+            page1 = 1;
+        } else {
+            page1 = Integer.parseInt(xpage1);
+        }
+
+        String xpage2 = (String) session.getAttribute("whichpage2");
+        int page2;
+        if (xpage2 == null) {
+            page2 = 1;
+        } else {
+            page2 = Integer.parseInt(xpage2);
+        }
+
         if (request.getParameter("txt") != null) {
-            listAuthor = resize(author.searchByUAname("%" + request.getParameter("txt") + "%")) ;
+            listAuthor = (author.searchByUAname("%" + request.getParameter("txt") + "%"));
             request.setAttribute("txt", request.getParameter("txt"));
+            page1 = 1;
+            page2 = 1;
         }
         if (request.getParameter("stxt") != null) {
-            listUser = resize(author.searchByUname("%" + request.getParameter("stxt") + "%")) ;
+            listUser = (author.searchByUname("%" + request.getParameter("stxt") + "%"));
             request.setAttribute("stxt", request.getParameter("stxt"));
+            page1 = 1;
+            page2 = 1;
         }
-        
+        int size1 = listAuthor.size();
+        int numPage1 = (size1 % 10 == 0) ? (size1 / 10) : (size1 / 10 + 1);
+        int start1 = (page1 - 1) * 10;
+        int end1 = Math.min(size1, start1 + 10);
+
+        int size2 = listUser.size();
+        int numPage2 = (size2 % 10 == 0) ? (size2 / 10) : (size2 / 10 + 1);
+        int start2 = (page2 - 1) * 10;
+        int end2 = Math.min(size2, start2 + 10);
+
+        listAuthor = author.getByPage(listAuthor, start1, end1);
+        listUser = author.getByPage(listUser, start2, end2);
+
+        session.setAttribute("xpage1", page1);
+        request.setAttribute("numPage1", numPage1);
+        session.setAttribute("xpage2", page2);
+        request.setAttribute("numPage2", numPage2);
         request.setAttribute("listA", listAuthor);
         request.setAttribute("listU", listUser);
         request.getRequestDispatcher("../manage/user/author.jsp").forward(request, response);
@@ -101,21 +172,5 @@ public class AuthorController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private ArrayList<Author> resize(ArrayList<Author> allAuthor) {
-        ArrayList<Author> ret = new ArrayList<>();
-        String xpage = null;
-        int page;
-        if (xpage == null) {
-            page = 1;
-        } else {
-            page = Integer.parseInt(xpage);
-        }
-        int size = allAuthor.size();
-        int numPage = (size % 10 == 0) ? (size / 10) : (size / 10 + 1);
-        int start = (page - 1) * 10;
-        int end = Math.min(size, start + 10);
-        return author.getByPage(allAuthor, start, end);
-    }
 
 }

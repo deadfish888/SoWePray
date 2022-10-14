@@ -121,9 +121,10 @@
                                         <c:forEach var="s" items="${listA}">
                                         <form action="./Author" method="Post">
                                             <tr>
-                                                <td><%=no++%></td>
+                                                <td><a href="LoadAuthor?aid=${s.id}" style="text-decoration: none"><%=no++%></a></td>
                                                 <td style="padding-left: 100px">
                                                     <div class="form-group">
+                                                        
                                                         <div class="col-md-12">
                                                             <input type="text" placeholder="${s.name}"
                                                                    class="form-control ps-0 form-control-line" name="fullname" style="border: none;background-color:  inherit">
@@ -140,6 +141,27 @@
                                     </c:forEach>
                                     </tbody>
                                 </table>
+                                <div id="sp" class="pagination-arena " style="margin-left: 40%">
+                                    <ul class="pagination">
+                                        <li class="page-item" >
+                                            <a href="LoadAuthor?xpage1=${xpage1-1}" class="page-link" style="${xpage1<3?"display:none":""}">
+                                                <i class="fa fa-angle-left" aria-hidden="true" ></i>
+                                            </a>
+                                        </li>
+                                        <c:forEach begin="${1}" end="${numPage1}" var="item">
+                                            <li class="page-item ${item==xpage1?"active":""}">
+                                                <a href="LoadAuthor?xpage1=${item}"  
+
+                                                   class="page-link " style="${(xpage1-1>item || xpage1+1<item ) ?"display:none;":""}"
+                                                   >${item}</a></li>
+                                            </c:forEach>
+                                        <li >
+                                            <a href="LoadAuthor?xpage1=${xpage1+1}" class="page-link" style="${xpage1+2>numPage1?"display:none":""}">
+                                                <i class="fa fa-angle-right" aria-hidden="true"  ></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                                 <div class="left-filter">
                                     <a class="btn btn-purple" href="./AddBook">Add Author</a>
                                 </div>
@@ -171,7 +193,7 @@
                                         <c:forEach var="se" items="${listU}">
                                         <form action="./Users" method="Post">
                                             <tr>
-                                                <td><%=no1++%></td>
+                                                <td><a href="LoadAuthor?aid=${se.id}" style="text-decoration: none"><%=no1++%></a></td>
                                                 <td style="padding-left: 100px">
                                                     <div class="form-group">
                                                         <div class="col-md-12">
@@ -187,6 +209,27 @@
                                     </c:forEach>
                                     </tbody>
                                 </table>
+                                <div id="sp" class="pagination-arena " style="margin-left: 40%">
+                                    <ul class="pagination">
+                                        <li class="page-item" >
+                                            <a href="LoadAuthor?xpage2=${xpage2-1}" class="page-link" style="${xpage2<3?"display:none":""}">
+                                                <i class="fa fa-angle-left" aria-hidden="true" ></i>
+                                            </a>
+                                        </li>
+                                        <c:forEach begin="${1}" end="${numPage2}" var="item">
+                                            <li class="page-item ${item==xpage2?"active":""}">
+                                                <a href="LoadAuthor?xpage2=${item}"  
+
+                                                   class="page-link " style="${(xpage2-1>item || xpage2+1<item ) ?"display:none;":""}"
+                                                   >${item}</a></li>
+                                            </c:forEach>
+                                        <li >
+                                            <a href="LoadAuthor?xpage2=${xpage2+1}" class="page-link" style="${xpage2+2>numPage2?"display:none":""}">
+                                                <i class="fa fa-angle-right" aria-hidden="true"  ></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>

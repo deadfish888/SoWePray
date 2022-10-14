@@ -54,8 +54,8 @@ public class UsersController extends HttpServlet {
         int start = (page - 1) * 10;
         int end = Math.min(size, start + 10);
         users = dao.getByPage(users, start, end);
-        session.setAttribute("xpage", page);
-        request.setAttribute("numPage", numPage);
+        session.setAttribute("xpage3", page);
+        request.setAttribute("numPage3", numPage);
         request.setAttribute("users", users);
         request.getRequestDispatcher("../manage/user/users.jsp").forward(request, response);
     }
@@ -94,26 +94,14 @@ public class UsersController extends HttpServlet {
         if (request.getParameter("id_ban") != null) {
             searchUser = dao.getUser(Integer.parseInt(request.getParameter("id_ban")));
             dao.disableUser(searchUser.getId());
-            authorDao.delAuthor(searchUser.getId());
         }
         if (request.getParameter("id_up") != null) {
             searchUser = dao.getUser(Integer.parseInt(request.getParameter("id_up")));
-             if (searchUser.is_super() == 0) {
-                authorDao.addAuthor(searchUser.getId(),searchUser.getName());
-            }
             dao.editRank(searchUser.getId(), 1);
         }
         if (request.getParameter("id_down") != null) {
             searchUser = dao.getUser(Integer.parseInt(request.getParameter("id_down")));
-            if (searchUser.is_super() == 1) {
-                authorDao.delAuthor(searchUser.getId());
-            }
             dao.editRank(searchUser.getId(), -1);
-        }
-        ArrayList<User> users = dao.getByAccess(us.is_super());
-        if (request.getParameter("txt") != null) {
-            users = dao.searchByUname(us.is_super(), "%" + request.getParameter("txt") + "%");
-            request.setAttribute("txt", request.getParameter("txt"));
         }
         String xpage = (String) session.getAttribute("whichpage");
         int page;
@@ -122,13 +110,20 @@ public class UsersController extends HttpServlet {
         } else {
             page = Integer.parseInt(xpage);
         }
+        ArrayList<User> users = dao.getByAccess(us.is_super());
+        if (request.getParameter("txt") != null) {
+            users = dao.searchByUname(us.is_super(), "%" + request.getParameter("txt") + "%");
+            request.setAttribute("txt", request.getParameter("txt"));
+            page = 1;
+        }
+        
         int size = users.size();
         int numPage = (size % 10 == 0) ? (size / 10) : (size / 10 + 1);
         int start = (page - 1) * 10;
         int end = Math.min(size, start + 10);
         users = dao.getByPage(users, start, end);
-        session.setAttribute("xpage", page);
-        request.setAttribute("numPage", numPage);
+        session.setAttribute("xpage3", page);
+        request.setAttribute("numPage3", numPage);
         request.setAttribute("users", users);
         request.getRequestDispatcher("../manage/user/users.jsp").forward(request, response);
     }

@@ -51,7 +51,7 @@ public class LoadUser extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String xpage = request.getParameter("xpage");
+        String xpage = request.getParameter("xpage3");
         session.setAttribute("whichpage", xpage);
         response.sendRedirect("Users");
     }
