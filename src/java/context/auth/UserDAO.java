@@ -398,9 +398,8 @@ public class UserDAO {
         }
     }
 
-//    public int getNumberUser() {
-//        return (getAllUsers().size());
-//    }
+    
+
     public ArrayList<User> getAllUsers() {
         ArrayList<User> list = new ArrayList<>();
         try {
@@ -684,4 +683,5 @@ public class UserDAO {
     public Object countUser() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
 }
