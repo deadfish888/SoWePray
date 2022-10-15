@@ -38,7 +38,7 @@ public class BookDAO {
             System.out.println("Connect error:" + e.getMessage());
         }
     }
-    
+
     public void close() {
         try {
             cnn.close();
@@ -509,59 +509,6 @@ public class BookDAO {
         }
     }
 
-    public ArrayList<Book> getOwnBooks(User user) {
-        ArrayList<Book> list = new ArrayList<>();
-        try {
-            String sql = "  select bo.bookId"
-                    + "      ,b.[title]\n"
-                    + "      ,b.[authorId]\n"
-                    + "      ,b.[rating]\n"
-                    + "      ,b.[favourite]\n"
-                    + "      ,b.[price]\n"
-                    + "      ,b.[is_sale]\n"
-                    + "      ,b.[image]\n"
-                    + "      ,b.[description]\n"
-                    + "      ,b.[views]\n"
-                    + "      ,b.[status] "
-                    + "  from [User] u \n"
-                    + "  inner join [Book_Own] bo \n"
-                    + "  on bo.userId = u.id\n"
-                    + "  inner join Book b\n"
-                    + "  on bo.bookId = b.id"
-                    + "  where u.id = ?";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, user.getId());
-            rs = stm.executeQuery();
-            CategoryDAO categoryDAO = new CategoryDAO();
-            while (rs.next()) {
-//                int id = rs.getInt("bookId");
-                Book book = new Book();
-                Author author = new Author();
-                author.setId(rs.getInt("authorId"));
-                book.setAuthor(author);
-                book.setId(rs.getInt("bookId"));
-                book.setTitle(rs.getString("title"));
-                book.setRating(rs.getFloat("rating"));
-                book.setFavourite(rs.getInt("favourite"));
-                book.setPrice( rs.getFloat("price"));
-                book.setIssale(rs.getBoolean("is_sale"));
-                book.setImage( rs.getString("image"));
-                book.setDescription(rs.getString("description"));
-                book.setViews(rs.getInt("views"));
-                book.setStatus(rs.getBoolean("status"));
-//                Book book = getBookById(id);
-                list.add(book);
-            }
-        } catch (Exception e) {
-            System.out.println("getOwn Error:" + e.getMessage());
-        }
-        return list;
-    }
-
-    public boolean isOwn(User user, Book book) {
-        return getOwnBooks(user).contains(book);
-    }
-
     public ArrayList<Book> getBooks(String search, String authorname, int[] idCategory) {
         ArrayList<Book> list = new ArrayList<>();
         try {
@@ -674,7 +621,7 @@ public class BookDAO {
                     + " AND [Book].[title] LIKE ? ";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, userId);
-            stm.setString(2, "%"+search+"%");
+            stm.setString(2, "%" + search + "%");
             rs = stm.executeQuery();
             while (rs.next()) {
                 Book book = new Book();
@@ -768,9 +715,9 @@ public class BookDAO {
         }
         return 0;
     }
-    
+
     //Get all novels that this user is their author
-    public ArrayList<Book> getNovels(User user){
+    public ArrayList<Book> getNovels(User user) {
         ArrayList<Book> bookList = new ArrayList<>();
         try {
             String sql = "SELECT [Book].[id]\n"
@@ -791,8 +738,66 @@ public class BookDAO {
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, user.getId());
             rs = stm.executeQuery();
-            while(rs.next()){
-                
+            while (rs.next()) {
+
+                Book book = new Book();
+                book.setId(rs.getInt(1));
+                book.setTitle(rs.getString(2));
+                book.setAuthorId(rs.getInt(3));
+                Author author = new Author();
+                author.setId(rs.getInt(3));
+                author.setName(rs.getString(4));
+                book.setAuthor(author);
+
+                CategoryDAO cd = new CategoryDAO();
+                book.setCategory(cd.getCategoriesByBookId(rs.getInt(1)));
+
+                book.setRating(rs.getFloat(5));
+                book.setFavourite(rs.getInt(6));
+                book.setPrice(rs.getFloat(7));
+                book.setIssale(rs.getBoolean(8));
+                book.setImage(rs.getString(9));
+                book.setDescription(rs.getString(10));
+                book.setViews(rs.getInt(11));
+                book.setStatus(rs.getBoolean(12));
+                bookList.add(book);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return bookList;
+    }
+
+    //Get all novels that this user is their author
+    public ArrayList<Book> getNovelsPagging(User user, int pageSize, int pageIndex) {
+        ArrayList<Book> bookList = new ArrayList<>();
+        try {
+            String sql = "SELECT [Book].[id]\n"
+                    + "      ,[title]\n"
+                    + "      ,[authorId]\n"
+                    + "      ,[Author].[name]\n"
+                    + "      ,[rating]\n"
+                    + "      ,[favourite]\n"
+                    + "      ,[price]\n"
+                    + "      ,[is_sale]\n"
+                    + "      ,[image]\n"
+                    + "      ,[description]\n"
+                    + "      ,[views]\n"
+                    + "      ,[status]\n"
+                    + "  FROM [Book]"
+                    + " INNER JOIN [Author] ON [Book].[authorId] = [Author].[id]"
+                    + " WHERE [Author].[userId] = ?"
+                    + " ORDER BY [Book].id ASC \n"
+                    + " OFFSET ? * (?-1) ROWS  FETCH NEXT ?\n"
+                    + " ROWS ONLY";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, user.getId());
+            stm.setInt(2, pageSize);
+            stm.setInt(3, pageIndex);
+            stm.setInt(4, pageSize);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+
                 Book book = new Book();
                 book.setId(rs.getInt(1));
                 book.setTitle(rs.getString(2));
@@ -851,6 +856,24 @@ public class BookDAO {
         } catch (SQLException ex) {
             Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    
+    public int countNovel(User user) {
+        try {
+            String sql = "SELECT COUNT(*) as total FROM [Book]"
+                    + "  INNER JOIN [Author] on [Book].authorId = [Author].id"
+                    + "  WHERE [Author].userId = " + user.getId();
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+
     }
 
 }

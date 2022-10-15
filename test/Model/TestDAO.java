@@ -14,6 +14,7 @@ import Model.product.Book;
 import Model.payment.PaymentAccount;
 import Model.payment.PaymentMethod;
 import Model.auth.User;
+import context.action.FavouriteDAO;
 
 /**
  *
@@ -24,19 +25,21 @@ public class TestDAO {
     public static void main(String[] args) {
         UserDAO userDBC = new UserDAO();
         User user = new User();
-        user.setId(109);
+        user.setId(111);
 
         PaymentAccountDAO payAccDBC = new PaymentAccountDAO();
         PaymentMethodDAO payMedDBC = new PaymentMethodDAO();
         TransactionDAO transactionDAO = new TransactionDAO();
-        BookOwnDAO bookOwnDAO = new BookOwnDAO();
-        BookDAO bookDAO = new BookDAO();
-        Book book = new Book();
-        book.setId(3);
-//        bookDAO.getOwnBooks(user);
-//        System.out.println(bookDAO.getOwnBooks(user).size());
-//        System.out.println(bookDAO.isOwn(user, book));
-        System.out.println(user.isOwnBook(book.getId()));
+        FavouriteDAO favouriteDAO = new FavouriteDAO();
+        System.out.println(favouriteDAO.getFavorBooksPagging(user, 10, 1).size());
+//        BookOwnDAO bookOwnDAO = new BookOwnDAO();
+//        BookDAO bookDAO = new BookDAO();
+//        Book book = new Book();
+//        book.setId(3);
+////        bookDAO.getOwnBooks(user);
+////        System.out.println(bookDAO.getOwnBooks(user).size());
+////        System.out.println(bookDAO.isOwn(user, book));
+//        System.out.println(user.isOwnBook(book.getId()));
 
 //    PaymentMethod paymentMethod = new PaymentMethod(0, user, new PaymentAccount(10028714113l), "Bank 3", true);
 //    payMedDBC.insert(paymentMethod);

@@ -7,8 +7,8 @@ package Model.auth;
 import Model.payment.PaymentAccount;
 import Model.payment.PaymentMethod;
 import Model.product.Book;
-import context.product.BookDAO;
 import context.payment.PaymentMethodDAO;
+import context.product.BookOwnDAO;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -204,10 +204,10 @@ public class User {
     }
 
     public boolean isOwnBook(int bookId){
-        BookDAO bookDAO = new BookDAO();
+        BookOwnDAO bookOwnDAO = new BookOwnDAO();
         Book book = new Book();
         book.setId(bookId);
-        return bookDAO.getOwnBooks(this).contains(book);
+        return bookOwnDAO.getOwnBooks(this).contains(book);
     }
 
     @Override
