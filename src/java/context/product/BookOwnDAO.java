@@ -7,7 +7,9 @@ package context.product;
 import Model.product.Book;
 import Model.auth.User;
 import Model.product.Author;
+import Model.product.BookOwn;
 import context.DBContext;
+import context.product.content.ChapterDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -174,4 +176,34 @@ public class BookOwnDAO {
 
     }
 
+    public BookOwn get(User user, Book book) {
+        BookOwn bookOwn = new BookOwn();
+        ChapterDAO chapterDAO = new ChapterDAO();
+        try {
+            String sql = "SELECT [userId]\n"
+                    + "      ,[bookId]\n"
+                    + "      ,[recentTime]\n"
+                    + "      ,[recentChapterId]\n"
+                    + "  FROM [Book_Own]"
+                    + "  WHERE [userId] = ?"
+                    + "  AND [bookId] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, user.getId());
+            stm.setInt(2, book.getId());
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                bookOwn.setBook(book);
+                bookOwn.setUser(user);
+                if (rs.getTimestamp("recentTime") != null && rs.getObject("recentChapterId") != null) {
+                    bookOwn.setRecentTime(rs.getTimestamp("recentTime"));
+                    bookOwn.setRecentChapter(chapterDAO.getChapterById(rs.getInt("recentChapterId")));
+                }
+                return bookOwn;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookOwnDAO.class.getName()).log(Level.SEVERE, null, ex);
+            bookOwn = null;
+        }
+        return bookOwn;
+    }
 }

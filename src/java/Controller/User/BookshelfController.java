@@ -7,6 +7,7 @@ package Controller.User;
 import Model.action.Favourite;
 import Model.auth.User;
 import Model.product.Book;
+import Model.product.BookOwn;
 import Model.product.Category;
 import context.action.FavouriteDAO;
 import context.product.BookDAO;
@@ -74,7 +75,11 @@ public class BookshelfController extends HttpServlet {
         int novelPageIndex = Integer.parseInt(novelPage);
         System.out.println(novelPageIndex);
         
-        ArrayList<Book> bookOwnList = bookOwnDAO.getOwnBooksPagging(user, pageSize, bookPageIndex);
+        ArrayList<Book> bookList = bookOwnDAO.getOwnBooksPagging(user, pageSize, bookPageIndex);
+//        ArrayList<BookOwn> bookOwnList = new ArrayList<>();
+//        for (Book book : bookList) {
+//            bookOwnList.add(bookOwnDAO.get(user, book));
+//        }
         int bookCount = bookOwnDAO.count(user);
         int bookTotalPage = (bookCount % pageSize == 0) ? (bookCount / pageSize) : (bookCount / pageSize) + 1;
         System.out.println("TotalPage: " + bookTotalPage);
@@ -96,7 +101,7 @@ public class BookshelfController extends HttpServlet {
         request.setAttribute("favorCount", favorCount);
         request.setAttribute("novelCount", novelCount);
         
-        request.setAttribute("bookList", bookOwnList);
+        request.setAttribute("bookList", bookList);
         request.setAttribute("favorList", favorList);
         request.setAttribute("novelList", novelList);
         

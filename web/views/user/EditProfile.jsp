@@ -108,19 +108,20 @@
                                     Gender
                                 </th>
                                 <td style="width: auto">
-                                    <span><input type="radio" name="gender" value="Male" <c:if test="${sessionScope.user.gender eq 'Male'}"> checked="checked" </c:if>/></span>
-                                        <span>Male</span>
-                                    </td>
-                                    <td style="width: auto">
-                                        <input type="radio" name="gender" value="Female" <c:if test="${sessionScope.user.gender ne 'Male'}"> checked="checked"</c:if>/>Female
-                                    </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Phone number<span style="color: red">*</span>
-                                </th>
-                                <td colspan="4">
-                                    <input type="tel" name="phone" value="${sessionScope.user.phone}"/>
+                                    <input type="radio" name="gender" value="Male" id="male" <c:if test="${sessionScope.user.gender eq 'Male'}"> checked="checked" </c:if>/>
+                                    <label for="male">Male</label>
+                                </td>
+                                <td style="width: auto">
+                                    <input type="radio" name="gender" value="Female" id="female" <c:if test="${sessionScope.user.gender ne 'Male'}"> checked="checked"</c:if>/>
+                                <label for="female">Female</label>
+                                </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Phone number<span style="color: red">*</span>
+                                    </th>
+                                    <td colspan="4">
+                                        <input type="tel" name="phone" value="${sessionScope.user.phone}"/>
                                     <div style="color: red">${requestScope.phoneMessage}</div>
                                 </td>
                             </tr>

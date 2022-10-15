@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="../assets/css/main.css" />
         <link href="../assets/css/style-profile.css" rel="stylesheet" type="text/css"/>
-        <title>JSP Page</title>
+        <title>Bookshelf</title>
     </head>
     <body>
         <div class = "wrapper">
