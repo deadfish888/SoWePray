@@ -46,7 +46,7 @@ public class EditChapterController extends HttpServlet {
                 return;
             }
             
-            request.setAttribute("book", book);
+            request.setAttribute("book", book) ;
             request.setAttribute("volumes", vd.getVolumesByBookId(chapter.getVolume().getBookId()));
             request.setAttribute("chapters", cd.getChaptersByBookId(chapter.getVolume().getBookId()));
 

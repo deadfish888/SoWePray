@@ -41,7 +41,7 @@ public class AddChapterController extends HttpServlet {
             BookDAO bd = new BookDAO();
             Book book = bd.getBookById(bookId);
             if (book.getAuthor().getUserId() != user.getId()) {
-                response.sendRedirect("../Login");
+                response.sendRedirect("../Login"); 
                 return;
             }
             request.setAttribute("book", book);
