@@ -130,7 +130,7 @@ public class AuthorController extends HttpServlet {
         }
 
         if (request.getParameter("txt") != null) {
-            listAuthor = (author.searchByUAname("%" + request.getParameter("txt") + "%"));
+            listAuthor = (author.searchByAname("%" + request.getParameter("txt") + "%"));
             request.setAttribute("txt", request.getParameter("txt"));
             page1 = 1;
             page2 = 1;

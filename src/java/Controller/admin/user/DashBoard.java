@@ -6,6 +6,8 @@ package Controller.admin.user;
 
 import Model.product.Author;
 import Model.auth.User;
+import context.action.CommentDAO;
+import context.action.ReportDAO;
 import context.product.BookDAO;
 import context.auth.UserDAO;
 import context.product.AuthorDAO;
@@ -38,6 +40,9 @@ public class DashBoard extends HttpServlet {
      */
     AuthorDAO aDao = new AuthorDAO();
     UserDAO uDao = new UserDAO();
+    BookDAO bDao = new BookDAO();
+    CommentDAO cDao = new CommentDAO();
+    ReportDAO rDao = new ReportDAO();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -64,15 +69,19 @@ public class DashBoard extends HttpServlet {
             request.setAttribute("m" + i, listYear.get(i));
             sum += listYear.get(i);
         }
+        request.setAttribute("sum", sum);
+        request.setAttribute("thisYear", date.getYear() + 1900);
+        request.setAttribute("forYear", date.getYear() + 1899);
+
+        request.setAttribute("books", bDao.count());
+        request.setAttribute("cmt", cDao.count());
+        request.setAttribute("rp", rDao.count());
 
         request.setAttribute("listQuater", listQuater);
         request.setAttribute("max", getMax(listQuater));
-        request.setAttribute("sum", sum);
-        request.setAttribute("thisYear", date.getYear()+1900);
-
-        request.setAttribute("totalA", a + b);
         request.setAttribute("totalU", listUser.size());
 
+        request.setAttribute("totalA", a + b);
         request.setAttribute("per1", per);
         request.setAttribute("per2", 100 - per);
         request.getRequestDispatcher("../manage/dashboard.jsp").forward(request, response);

@@ -153,7 +153,7 @@ public class AuthorDAO {
         return listpage;
     }
 
-    public ArrayList<Author> searchByUAname(String txt) {
+    public ArrayList<Author> searchByAname(String txt) {
         ArrayList<Author> list = new ArrayList<>();
         try {
             String sql = "SELECT [id]\n"

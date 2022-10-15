@@ -105,7 +105,7 @@
                                         <div class="col-12">
                                             <div class="d-flex flex-wrap align-items-center">
                                                 <div>
-                                                    <h3 class="card-title">User</h3>
+                                                    <h3 class="card-title">By Month</h3>
                                                     <h6 class="card-subtitle">User Sign up in ${requestScope.thisYear}</h6>
                                                 </div>
                                                 <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
@@ -176,9 +176,13 @@
                         <div class="col-lg-4">
                             <div class="card">
                                 <div class="card-body">
-                                    <h3 class="card-title">Authors</h3>
-                                    <h6 class="card-subtitle">Piechart </h6>
-
+                                    <h3 class="card-title">Total Book</h3>
+                                    <h6 class="card-subtitle">Amount ${requestScope.books} </h6>
+                                    
+                                    <h3 class="card-title">Total Comment</h3>
+                                    <h6 class="card-subtitle">Amount ${requestScope.cmt}</h6>
+                                    <h3 class="card-title">Total Report</h3>
+                                    <h6 class="card-subtitle">Amount ${requestScope.rp}</h6>
 
                                 </div>
                                 <div>
@@ -188,7 +192,7 @@
                                     <ul class="list-inline d-flex justify-content-center align-items-center mb-0">
                                         <li class="me-4">
                                             <h6 class="text-info">
-                                                <i class="mdi mdi-account-edit"></i>Total Authors ${totalA}</h6>
+                                                </h6>
                                         </li>
 
                                     </ul>
@@ -205,47 +209,52 @@
                                         <div class="col-12">
                                             <div class="d-flex flex-wrap align-items-center">
                                                 <div>
-                                                    <h3 class="card-title">User</h3>
+                                                    <h3 class="card-title">By Quaters</h3>
                                                     <h6 class="card-subtitle">Line Chart about Users Sign up from 2021</h6>
                                                 </div>
 
                                                 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
                                                 <canvas id="myChart" style="width:100%;max-width:700px;margin-left: 70px"></canvas>
                                                 <script>
-                                            function chart() {
-                                                var xValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-                                                var yValues = ${requestScope.listQuater };
-                                                new Chart("myChart", {
-                                                    type: "line",
-                                                    data: {
-                                                        labels: xValues,
-                                                        datasets: [{
-                                                                fill: false,
-                                                                lineTension: 0,
-                                                                backgroundColor: "rgba(0,0,255,1.0)",
-                                                                borderColor: "rgba(0,0,255,0.1)",
-                                                                data: yValues
-                                                            }]
-                                                    },
-                                                    options: {
-                                                        legend: {display: false},
-                                                        scales: {
-                                                            yAxes: [{ticks: {min: 0, max: ${requestScope.max+5}}
-                                                                }],
+                                                        function chart() {
+                                                            var xValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+                                                            var yValues = ${requestScope.listQuater };
+                                                            new Chart("myChart", {
+                                                                type: "line",
+                                                                data: {
+                                                                    labels: xValues,
+                                                                    datasets: [{
+                                                                            fill: false,
+                                                                            lineTension: 0,
+                                                                            backgroundColor: "rgba(0,0,255,1.0)",
+                                                                            borderColor: "rgba(0,0,255,0.1)",
+                                                                            data: yValues
+                                                                        }]
+                                                                },
+                                                                options: {
+                                                                    legend: {display: false},
+                                                                    scales: {
+                                                                        yAxes: [{ticks: {min: 0, max: ${requestScope.max+5}}
+                                                                            }],
+                                                                    }
+                                                                }
+                                                            });
                                                         }
-                                                    }
-                                                });
-                                            }
-                                            document.getElementById("myChart").innerHTML = chart();
+                                                        document.getElementById("myChart").innerHTML = chart();
                                                 </script>
                                             </div>
 
                                             <div class="card-body text-center ">
-                                                <div>
+                                                <div style="margin-bottom: 10px">
                                                     <hr class="mt-0 mb-0">
                                                 </div>
                                                 <h8 class="text-info">
                                                     <i class="mdi mdi-account">Total Users ${totalU}</i></h8>
+                                                <br>
+                                                <h10 class="text-info"><i class="mdi mdi-calendar-text"> 1 : before ${requestScope.forYear}</i></h10><br>
+                                                <h10 class="text-info"><i class="mdi mdi-calendar-text"> 2-5 : quater in ${requestScope.forYear}</i></h10><br>
+                                                <h10 class="text-info"><i class="mdi mdi-calendar-text"> 6-9 : quater in ${requestScope.thisYear}</i></h10>
+
                                             </div>
                                         </div>
                                         <div class="col-12">

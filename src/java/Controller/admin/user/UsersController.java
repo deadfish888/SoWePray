@@ -7,7 +7,6 @@ package Controller.admin.user;
 import Model.auth.User;
 import Model.product.Author;
 import context.auth.UserDAO;
-import context.product.AuthorDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -89,19 +88,14 @@ public class UsersController extends HttpServlet {
         HttpSession session = request.getSession();
         User us = (User) session.getAttribute("admin");
         UserDAO dao = new UserDAO();
-        AuthorDAO authorDao = new AuthorDAO();
-        User searchUser = new User();
         if (request.getParameter("id_ban") != null) {
-            searchUser = dao.getUser(Integer.parseInt(request.getParameter("id_ban")));
-            dao.disableUser(searchUser.getId());
+            dao.disableUser(Integer.parseInt(request.getParameter("id_ban")));
         }
         if (request.getParameter("id_up") != null) {
-            searchUser = dao.getUser(Integer.parseInt(request.getParameter("id_up")));
-            dao.editRank(searchUser.getId(), 1);
+            dao.editRank(Integer.parseInt(request.getParameter("id_up")), 1);
         }
         if (request.getParameter("id_down") != null) {
-            searchUser = dao.getUser(Integer.parseInt(request.getParameter("id_down")));
-            dao.editRank(searchUser.getId(), -1);
+            dao.editRank(Integer.parseInt(request.getParameter("id_down")), -1);
         }
         String xpage = (String) session.getAttribute("whichpage");
         int page;

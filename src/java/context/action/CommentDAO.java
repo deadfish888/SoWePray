@@ -28,7 +28,6 @@ public class CommentDAO {
     private void connectDB() {
         try {
             cnn = (new DBContext().getConnection());
-            System.out.println("Connect successfully!");
         } catch (Exception e) {
             System.out.println("Connect error:" + e.getMessage());
         }
@@ -75,6 +74,22 @@ public class CommentDAO {
             System.out.println("load error:" + e.getMessage());
         }
         return null;
+    }
+
+    public int count() {
+        int ret = 0;
+        try {
+            String sql = "SELECT COUNT([id])\n"
+                    + "  FROM [dbo].[Comment]";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                ret = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("getAuthorIdByBookId Error: ");
+        }
+        return ret;
     }
 
 }

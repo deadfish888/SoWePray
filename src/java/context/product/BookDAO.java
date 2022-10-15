@@ -35,7 +35,6 @@ public class BookDAO {
     private void connectDB() {
         try {
             cnn = (new DBContext().getConnection());
-            System.out.println("Connect successfully!");
         } catch (Exception e) {
             System.out.println("Connect error:" + e.getMessage());
         }
@@ -642,7 +641,7 @@ public class BookDAO {
                     + " AND [Book].[title] LIKE ? ";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, userId);
-            stm.setString(2, "%"+search+"%");
+            stm.setString(2, "%" + search + "%");
             rs = stm.executeQuery();
             while (rs.next()) {
                 Book book = new Book();
@@ -774,7 +773,7 @@ public class BookDAO {
             Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public ArrayList<Book> getFeaturedBooksByAuthorId(int aid, int bid) {
         ArrayList<Book> list = new ArrayList<>();
         try {
@@ -875,7 +874,7 @@ public class BookDAO {
         return list;
     }
 
-     public int getAuthorIdByBookId(int bid) {
+    public int getAuthorIdByBookId(int bid) {
         try {
             String sql = "select authorId from Book where id = ?";
             stm = cnn.prepareStatement(sql);
@@ -888,5 +887,21 @@ public class BookDAO {
             System.out.println("getAuthorIdByBookId Error: ");
         }
         return -1;
+    }
+
+    public int count() {
+        int ret = 0;
+        try {
+            String sql = "SELECT COUNT([id])\n"
+                    + "  FROM [dbo].[Book]";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                ret = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("getAuthorIdByBookId Error: ");
+        }
+        return ret;
     }
 }
