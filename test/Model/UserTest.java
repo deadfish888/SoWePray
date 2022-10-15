@@ -4,6 +4,7 @@
  */
 package Model;
 
+import Model.auth.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;

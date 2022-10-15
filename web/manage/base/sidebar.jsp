@@ -15,7 +15,7 @@
                                              href="index.html" aria-expanded="false"><i class="mdi me-2 mdi-gauge"></i><span
                             class="hide-menu">Dashboard</span></a></li>
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                             href="${context}/UserManager" aria-expanded="false"><i class="mdi me-2 mdi-table"></i><span
+                                             href="${context}/Admin/Users" aria-expanded="false"><i class="mdi me-2 mdi-table"></i><span
                             class="hide-menu">Users Management</span></a></li>
                 <li id="book-management" class="sidebar-item" > <a id="book-management-a" class="sidebar-link waves-effect waves-dark sidebar-link"
                                              href="${context}/Admin/Book" aria-expanded="false"><i

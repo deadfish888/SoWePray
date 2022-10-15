@@ -4,10 +4,10 @@
  */
 package Controller.admin.book;
 
-import Model.Book;
-import Model.Category;
-import context.BookDAO;
-import context.CategoryDAO;
+import Model.product.Book;
+import Model.product.Category;
+import context.product.BookDAO;
+import context.product.CategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -28,7 +28,7 @@ public class BooksController extends HttpServlet {
         ArrayList<Category> cates = cd.getAllCategory();
         request.setAttribute("categories", cates);
         BookDAO bd = new BookDAO();
-        ArrayList<Book> books = bd.getBooks();
+        ArrayList<Book> books = bd.getAllBook();
         String xpage = request.getParameter("xpage");
         int page;
         if (xpage == null) {
@@ -37,7 +37,7 @@ public class BooksController extends HttpServlet {
             page = Integer.parseInt(xpage);
         }
         int size = books.size();
-        int numPage = (size % 10 == 0) ? (size / 10) : (size / 10 + 1);
+        int numPage = (int) Math.ceil((double)size/10);
         int start = (page - 1) * 10;
         int end = Math.min(size, start + 10);
         ArrayList<Book> listpage = bd.getByPage(books, start, end);

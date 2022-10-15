@@ -4,11 +4,11 @@
  */
 package Controller.payment;
 
-import Model.PaymentAccount;
-import Model.PaymentMethod;
-import Model.User;
-import context.PaymentAccountDAO;
-import context.PaymentMethodDAO;
+import Model.payment.PaymentAccount;
+import Model.payment.PaymentMethod;
+import Model.auth.User;
+import context.payment.PaymentAccountDAO;
+import context.payment.PaymentMethodDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;

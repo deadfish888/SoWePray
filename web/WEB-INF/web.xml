@@ -6,11 +6,11 @@
     </welcome-file-list>
     <context-param>
         <param-name>user</param-name>
-        <param-value>vinhnthe163219@fpt.edu.vn</param-value>
+        <param-value></param-value>
     </context-param>
     <context-param>
         <param-name>pass</param-name>
-        <param-value>asdfghjklQ3</param-value>
+        <param-value></param-value>
     </context-param>
     <servlet>
         <servlet-name>Home</servlet-name>

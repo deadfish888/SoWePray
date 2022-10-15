@@ -114,23 +114,19 @@
 
                                             <c:forEach var="book" items="${books}">
                                                 <tr>
-                                                    <td >${book.getId()}</td>
-                                                    <td>${book.getTitle()}</td>
-                                                    <td>${book.getAuthor()}</td>
-                                                    <td style="width: 150px;"><img  src="${book.getImage()}" width="100px"></td>
-                                                    <td>
-                                                        <c:forEach var="category" items="${categories}">
-                                                            ${category.getId()==book.getCategoryid()?category.getName():null}
-                                                        </c:forEach>
-                                                    </td>
+                                                    <td >${book.id}</td>
+                                                    <td>${book.title}</td>
+                                                    <td>${book.author.name}</td>
+                                                    <td style="width: 150px;"><img  src="${book.image}" width="100px"></td>
+                                                    <td>${book.category.name}</td>
                                                     <td>$${book.getPrice()}</td>
                                                     <td><input class="checkbox-inline" type="checkbox" ${book.issale()?"checked":""} disabled></td>
-                                                    <td><a class="btn btn-primary" href="./UpdateBook?id=${book.getId()}"><i class="fa fa-pen-square" aria-hidden="true"></i></a></td>
-                                                    <td><a class="btn btn-secondary" href="./Book/TOC?id=${book.getId()}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
+                                                    <td><a class="btn btn-primary" href="./UpdateBook?id=${book.id}"><i class="fa fa-pen-square" aria-hidden="true"></i></a></td>
+                                                    <td><a class="btn btn-secondary" href="./Book/TOC?id=${book.id}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
                                                     <td>
                                                         <form action="Disable" method="get">
                                                             <label class="switch">
-                                                                <a href="./ChangeStatus?id=${book.getId()}&xpage=${xpage}">
+                                                                <a href="./ChangeStatus?id=${book.id}&xpage=${xpage}">
                                                                     <input id="myButton" type="checkbox" name="status" ${book.status() ? "checked": null}>
                                                                     <span class="slider"></span>
                                                                 </a>

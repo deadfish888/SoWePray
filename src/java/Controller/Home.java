@@ -5,8 +5,8 @@
 
 package Controller;
 
-import Model.Book;
-import context.BookDAO;
+import Model.product.Book;
+import context.product.BookDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -28,7 +28,7 @@ public class Home extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         BookDAO ud = new BookDAO();
-        ArrayList<Book> allbooks = ud.getFeaturedBooks();
+        ArrayList<Book> allbooks = ud.getBooksByNewest();
         ArrayList<Book> salebooks = ud.getWeeklySaleBooks();
         ArrayList<Book> favebooks = ud.getFavouriteBooks();
         request.setAttribute("allbooks", allbooks);

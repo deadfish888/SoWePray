@@ -5,10 +5,10 @@
 
 package Controller.admin.book;
 
-import Model.Book;
-import Model.Category;
-import context.BookDAO;
-import context.CategoryDAO;
+import Model.product.Book;
+import Model.product.Category;
+import context.product.BookDAO;
+import context.product.CategoryDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -55,8 +55,8 @@ public class UpdateBookController extends HttpServlet {
         Book book = new Book();
         book.setId(id);
         book.setTitle(title);
-        book.setAuthor(author);
-        book.setCategoryid(categoryId);
+//        book.setAuthorId(author);
+      //  book.setCategoryId(categoryId);
         book.setPrice(price);
         book.setIssale(issale);
         book.setImage(img);

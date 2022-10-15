@@ -39,9 +39,9 @@
 
             <!-- Main -->
             <div id="main">
-                <h1 style="text-align: center">${book.getTitle()}</h2>
-                <h2 style="text-align: center">${thischapter.chapterName}</h3>
-                <c:forEach items="${list}" var="lit">
+                <h1 style="text-align: center">${book.title}</h2>
+                <h2 style="text-align: center">${thischapter.title}</h2>
+                <c:forEach items="${content}" var="lit">
                     <p style="margin-left: 80px; margin-right: 100px; text-align: justify">${lit}</p>
                 </c:forEach>
             </div>
