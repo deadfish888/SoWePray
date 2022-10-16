@@ -77,7 +77,7 @@ public class FavouriteDAO {
     public ArrayList<Book> getFavoriteBook(User user) {
         ArrayList<Book> bookList = new ArrayList<>();
         try {
-            String sql = "SELECT [id]\n"
+            String sql = "SELECT [Book].[id]\n"
                     + "      ,[title]\n"
                     + "      ,[authorId]\n"
                     + "      ,[rating]\n"
@@ -88,8 +88,10 @@ public class FavouriteDAO {
                     + "      ,[description]\n"
                     + "      ,[views]\n"
                     + "      ,[status]\n"
+                    +"       ,a.[name]"
                     + "  FROM [Book]"
                     + "  INNER JOIN [Favourite] ON [Favourite].uid = [id]"
+                    + "  INNER JOIN [Author] a ON [Book].[authorId] = a.[id]"
                     + "  WHERE id = ?";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, user.getId());
@@ -103,7 +105,7 @@ public class FavouriteDAO {
                 AuthorDAO authorDAO = new AuthorDAO();
                 Author author = new Author();
                 author.setId(rs.getInt("authorId"));
-                author = authorDAO.get(author);
+                author.setName(rs.getString(12));
                 book.setAuthor(author);
 
                 CategoryDAO cd = new CategoryDAO();
