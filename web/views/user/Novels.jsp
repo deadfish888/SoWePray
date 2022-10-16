@@ -91,11 +91,11 @@
                                     <tr style="cursor: pointer; font-size: 15px;  text-align: center;">
                                         <th>Title</th>
                                         <th style="width: 150px;">Image</th>
-                                        <th>Genre</th>
+                                        <th>Genres</th>
                                         <th style="width: 30px;">Paid</th>
                                         <th style="width: 30px;">Update</th>
                                         <th style="width: 30px;">TOC</th>
-                                        <th style="width: 30px;">Enable</th>
+                                        <th style="width: 30px;">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>

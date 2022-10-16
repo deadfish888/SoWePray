@@ -5,6 +5,7 @@
 package Controller.product;
 
 import Model.auth.User;
+import Model.product.Author;
 import Model.product.Book;
 import Model.product.Category;
 import context.product.BookDAO;
@@ -48,6 +49,9 @@ public class AddNovelController extends HttpServlet {
         
         Book book = new Book();
         book.setTitle(title);
+        Author author = new Author();
+        author.setUserId(user.getId());
+        book.setAuthor(author);
         book.setCategory(category);
         book.setPrice(0);
         book.setIssale(false);
@@ -61,7 +65,7 @@ public class AddNovelController extends HttpServlet {
         }
         
         BookDAO bd = new BookDAO();
-        if (bd.addNovel(user.getId(), book) == 0) {
+        if (bd.addNovel(book) == 0) {
             CategoryDAO cd = new CategoryDAO();
             ArrayList<Category> cates = cd.getAllCategory();
             request.setAttribute("categories", cates);
