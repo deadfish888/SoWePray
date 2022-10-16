@@ -127,11 +127,11 @@
                                                     <div class="wrapper row">
                                                         <table>
                                                             <tr>
-                                                                <th style="padding-left: 2em">
+                                                                <th style="padding-left: 2em; width: 30%">
                                                                     Category name
                                                                 </th>
                                                                 <td>
-                                                                    <input type="text" name="categoryName" required/>
+                                                                    <input type="text" name="categoryName" style="width: 80%" required/>
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -149,11 +149,11 @@
                                 <div class="table-responsive">
                                     <table class="table user-table " id="tablepro">
                                         <thead>
-                                            <tr style="cursor: pointer; font-size: 15px;  text-align: center;">
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Number of book</th>
-                                                <th>Remove</th>
+                                            <tr class="text-center" style="cursor: pointer; font-size: 15px;  text-align: center;">
+                                                <th class="text-center">ID</th>
+                                                <th class="text-center" style="width: 40%">Name</th>
+                                                <th class="text-center">Number of books</th>
+                                                <th class="text-center">Remove</th>
                                             </tr>
                                         </thead>
                                         <tbody>

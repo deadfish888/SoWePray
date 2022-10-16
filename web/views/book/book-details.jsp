@@ -54,7 +54,7 @@
                     </h1>
                     <c:forEach items="${book.category}" var="category">
                         <h4 style="margin: 0 0 0 0; display: inline-block;"><a href="./Book?categoryId=${category.id}"><span class="badge badge-pill badge-secondary">${category.name}</span></a></h4>
-                    </c:forEach>
+                            </c:forEach>
 
                     <h2> ${book.author.name} </h2>
 
@@ -93,10 +93,20 @@
                                                 </div>
                                             </form>
                                         </c:if>
-                                        <c:if test="${!own}">
+                                        <c:if test="${!own && (book.price ne 0)}">
                                             <div class="col-sm-2">
                                                 <input type="button" class="primary btn-primary" data-toggle="modal" data-target="#purchase" value="Buy"/>
                                             </div>
+                                        </c:if>
+                                        <c:if test="${!own && (book.price eq 0)}">
+                                            <form action="User/Purchase" method="get">
+                                                <div class="col-sm-4">
+                                                    <input type="hidden" name="bookId" value="${book.id}">
+                                                    <input type="hidden" name="amount" value="${book.price}">
+                                                    <input type="hidden" name="bookTitle" value="${book.title}"/>
+                                                    <input type="submit" class="primary" value="Get">
+                                                </div>
+                                            </form>
                                         </c:if>
                                     </c:if>
                                     <c:if test="${sessionScope.user == null}">
