@@ -4,6 +4,7 @@
  */
 package Model;
 
+import Model.product.Author;
 import Model.product.Book;
 import context.auth.UserDAO;
 import context.product.AuthorDAO;
@@ -60,10 +61,11 @@ public class Test {
                 + "Travel\n"
                 + "Young Adult";
         String[] array = all.split("\n");
-        for(int i=0;i<array.length;i++){
-            cd.addCategory(array[i]);
-        }
-        
+//        for(int i=0;i<array.length;i++){
+//            cd.addCategory(array[i]);
+//        }
+        Author au = new Author();
+        au.setName(all);
         AuthorDAO ad = new AuthorDAO();
         UserDAO ud = new UserDAO();
 //        ArrayList<User> userList = ud.getAllUsers();

@@ -33,23 +33,6 @@ public class AuthorDAO {
         }
     }
 
-    public void add(Author author) {
-        try {
-            String sql = "INSERT INTO [dbo].[Author]\n"
-                    + "           ([userId]\n"
-                    + "           ,[authorName])\n"
-                    + "     VALUES\n"
-                    + "           ( ? "
-                    + "           , ? )";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, author.getUserId());
-            stm.setString(2, author.getName());
-            stm.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(AuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     public void delAuthor(int id) {
         try {
             String sql = "DELETE FROM [dbo].[Author]\n"
@@ -62,23 +45,28 @@ public class AuthorDAO {
         }
     }
 
-    public void addAuthor(int userid, String name) {
+    public int addAuthor(Author author) {
         try {
             String sql = "INSERT INTO [dbo].[Author]\n"
                     + "           (\n"
                     + "           [name]\n"
                     + "           ,[date])\n"
+                    + "     OUTPUT [INSERTED].[id]"
                     + "     VALUES\n"
                     + "           (  \n"
                     + "            ? \n"
                     + "           , ? )";
             stm = cnn.prepareStatement(sql);
-            stm.setString(1, name);
+            stm.setString(1, author.getName());
             stm.setString(2, java.time.LocalDate.now().toString());
-            stm.executeUpdate();
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(AuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return 0;
     }
 
     public ArrayList<Author> getAllAuthor() {
@@ -232,10 +220,10 @@ public class AuthorDAO {
             Logger.getLogger(AuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-     public Author getAuthorById(int aid) {
+
+    public Author getAuthorById(int aid) {
         try {
-            String sql = "SELECT * from Author where aid = ?";
+            String sql = "SELECT * from Author where id = ?";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, aid);
             rs = stm.executeQuery();

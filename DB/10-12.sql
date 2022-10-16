@@ -206,7 +206,8 @@ CREATE TABLE [dbo].[Comment](
 	[comment] [nvarchar](2000) NOT NULL,
 	[sonOf] [int] NULL,
 	[replyTo] [int] NULL,
-	[createdAt] [date] NOT NULL,
+	[createdAt] [datetime] NOT NULL,
+	[editedAt] [datetime],
  CONSTRAINT [PK_comment] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC

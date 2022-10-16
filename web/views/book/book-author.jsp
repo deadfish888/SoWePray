@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>From ${author.name}</title>
+        <title>${author.name}'s Works</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="assets/css/main.css" />
@@ -57,7 +57,7 @@
             <!-- Main -->
             <div id="main">
                 <div class="inner">
-                    <h1>From this author</h1>
+                    <h1>From ${author.name}</h1>
                     <div class="image main">
                         <img
                             src="images/banner-image-6-1920x500.jpg"

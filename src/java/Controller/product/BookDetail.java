@@ -50,12 +50,10 @@ public class BookDetail extends HttpServlet {
         if (user != null) {
             request.setAttribute("own", user.isOwnBook(id));
         }
-        ArrayList<Book> sames = null; //b.getSimilarBooks(id, thisbook.getCategoryId());
-        ArrayList<Book> bookauthor = b.getFeaturedBooksByAuthorId(b.getAuthorIdByBookId(id), id);
+        ArrayList<Book> sames = b.getSimilarBooks(id, thisbook.getCategory());
         ArrayList<Volume> vols = vd.getVolumesByBookId(id);
         ArrayList<Chapter> chaps = chd.getChaptersByBookId(id);
         ArrayList<Comment> coms = cmd.loadComment(id);
-        request.setAttribute("bookauthor", bookauthor);
         request.setAttribute("chaps", chaps);
         request.setAttribute("sames", sames);
         request.setAttribute("book", thisbook);

@@ -56,7 +56,7 @@
                         <h4 style="margin: 0 0 0 0; display: inline-block;"><a href="./Book?categoryId=${category.id}"><span class="badge badge-pill badge-secondary">${category.name}</span></a></h4>
                     </c:forEach>
 
-                    <h2> ${book.author.name} </h2>
+                        <h2><a href="./Author?id=${book.author.id}"> ${book.author.name}</a> </h2>
 
                     <div class="container-fluid">
                         <div class="row" style="width: 1200px; text-align: justify;">
@@ -205,7 +205,7 @@
                     <br>
 
                     <div class="container-fluid">
-                        <h2 class="h2">Table of Contents</h2>
+                        <h3 class="">Table of Contents</h3>
                         <div class="accordion col-md-7" id="accordionExample">
                             <c:forEach items="${requestScope.vols}" var="vol">
                                 <div class="card">
@@ -238,11 +238,10 @@
                             </c:forEach>
 
                         </div>  
-                        <div> </div>
                     </div>
-                    <div class="container-fluid">
-                        <h4>${(! empty requestScope.comments)? requestScope.comments.size() : "0"} comment(s)</h4>
-                        <div class="col-md-7">
+                    <div class="container-fluid mt-5">
+                        <h3>${(! empty requestScope.comments)? requestScope.comments.size() : "0"} comment(s)</h3>
+                        <div class="col-12">
                             <form role="form" action="Comment" method="get">
                                 <input type="hidden" name="bookId" value="${book.id}"> 
                                 <div class="form-group">
@@ -254,8 +253,8 @@
                                 <c:forEach items="${requestScope.comments}" var="comment">
 
                                     <tr>
-                                        <th style="width: 100px" scope="row">
-                                            No.${comment.uid}
+                                        <th style="width: 200px" scope="row">
+                                            ${comment.user.name}
                                         </th>
                                         <td style="white-space: pre-line">${comment.comment}</td>
                                     </tr>
@@ -265,7 +264,7 @@
                         </div>
                     </div>
 
-                    <div class="container-fluid">
+                    <div class="container-fluid mt-5">
                         <h2 class="h2">Similar Products</h2>
 
                         <!-- Products -->
@@ -291,39 +290,6 @@
                                 </article>
                             </c:forEach>
                         </section>
-                    </div>
-                                
-                     <div class="container-fluid">
-                        <h2 class="h2">Also from this author</h2>
-
-                        <!-- Products -->
-                        <section class="tiles">
-                            <c:forEach items="${requestScope.bookauthor}" var="bookau">
-                                <article class="style1">
-                                    <span class="image">
-                                        <img src="${bookau.image}" alt="${bookau.image}" style="height: 391px;" />
-                                    </span>
-                                    <a href="BookDetail?id=${bookau.id}">
-                                        <h2>${bookau.title}</h2>
-
-                                        <c:if test="${bookau.issale()}">
-                                            <p>
-                                                <del>$${bookau.price}</del> 
-                                                <strong>$5.00</strong>
-                                            </p>
-                                        </c:if>
-                                        <c:if test="${!bookau.issale()}">
-                                            <p><strong>$${bookau.price}</strong></p>
-                                        </c:if>
-                                    </a>
-                                </article>
-                            </c:forEach>
-                        </section>
-                        <p class="text-center">
-                        <a href="BookAuthor?aid=${requestScope.aid}">More Books &nbsp;<i class="fa fa-long-arrow-right"></i>
-                        </a>
-                    </p>
-
                     </div>
                                 
                 </div>
