@@ -31,7 +31,7 @@
         <!-- ============================================================== -->
         <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="mini-sidebar" data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
             <!-- Topbar header - style you can find in pages.scss -->
-            
+
             <!-- Topbar header - style you can find in pages.scss -->
             <jsp:include page="/manage/base/header.jsp"/>
             <!-- Left Sidebar - style you can find in sidebar.scss  -->
@@ -100,13 +100,22 @@
                                                 <tr>
                                                     <td class="text-center">${category.id}</td>
                                                     <td id="${category.name}">${category.name} 
-                                                        <button style="border: 0; background: none" onclick="">
+                                                        <button style="border: 0; background: none">
                                                             <i id="pen" class='fa fa-pencil-square'></i>
                                                         </button>
+
                                                     </td>
                                                     <td class="text-center">${categoryMap[category]}</td>
-                                                    
-                                                    <td class="text-center"><button style="border: 0; background: none"><a href="Remove?categoryId=${category.id}"><i id="garbage-can" class='fa fa-trash-o'></i></a></button></td>
+
+                                                    <td class="text-center">
+                                                        <form action="Remove" method="post" id="addPaymentForm" name="addForm" onsubmit="return confirm('Do you really want to remove this category?');">
+                                                            <button style="border: 0; background: none">
+                                                                <a href="Remove?categoryId=${category.id}">
+                                                                    <i id="garbage-can" class='fa fa-trash-o'></i>
+                                                                </a>
+                                                            </button>
+                                                        </form>
+                                                    </td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
@@ -128,19 +137,19 @@
             <!-- End footer -->
         </div>
         <!-- End Page wrapper  -->
-    
-    <!-- End Wrapper -->
-    <!-- All Jquery -->
-    <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="/Bookie/manage/assets/plugins/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    <script src="/Bookie/manage/html/js/app-style-switcher.js"></script>
-    <!--Wave Effects -->
-    <script src="/Bookie/manage/html/js/waves.js"></script>
-    <!--Menu sidebar -->
-    <script src="/Bookie/manage/html/js/sidebarmenu.js"></script>
-    <!--Custom JavaScript -->
-    <script src="/Bookie/manage/html/js/custom.js"></script>
-    
+
+        <!-- End Wrapper -->
+        <!-- All Jquery -->
+        <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap tether Core JavaScript -->
+        <script src="/Bookie/manage/assets/plugins/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="/Bookie/manage/html/js/app-style-switcher.js"></script>
+        <!--Wave Effects -->
+        <script src="/Bookie/manage/html/js/waves.js"></script>
+        <!--Menu sidebar -->
+        <script src="/Bookie/manage/html/js/sidebarmenu.js"></script>
+        <!--Custom JavaScript -->
+        <script src="/Bookie/manage/html/js/custom.js"></script>
+        
     </body>
 </html>
