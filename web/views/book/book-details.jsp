@@ -280,10 +280,11 @@
 
                         <!-- Products -->
                         <section class="tiles">
+                            <div class= "" style = "display: flex ">
                             <c:forEach items="${requestScope.sames}" var="same">
                                 <article class="style1">
                                     <span class="image">
-                                        <img src="${same.image}" alt="${same.image}" style="height: 391px;" />
+                                        <img src="${same.image}" alt="${same.image}" style="height: 290px;" />
                                     </span>
                                     <a href="BookDetail?id=${same.id}">
                                         <h2>${same.title}</h2>
@@ -299,7 +300,7 @@
                                         </c:if>
                                     </a>
                                 </article>
-                            </c:forEach>
+                            </c:forEach></div>
                         </section>
                     </div>
                                 

@@ -231,10 +231,11 @@ public class BookDAO {
     public ArrayList<Book> getSimilarBooks(int bookid, ArrayList<Category> idCategory) {
         ArrayList<Book> list = new ArrayList<>();
         try {
-            String sql = "SELECT TOP 4 [Book].[id]\n"
+            String sql = "SELECT TOP 4 * FROM (SELECT DISTINCT [Book].[id] as [bookId]\n"
                     + "      ,[title]\n"
                     + "      ,[authorId]\n"
-                    + "      ,[Author].[name]\n"
+                    + "       ,[Author].[userId]\n"
+                    + "      ,[Author].[name] as [authorName]\n"
                     + "      ,[rating]\n"
                     + "      ,[favourite]\n"
                     + "      ,[price]\n"
@@ -245,36 +246,49 @@ public class BookDAO {
                     + "      ,[status]\n"
                     + "  FROM [Book]"
                     + " INNER JOIN [Author] ON [Book].[authorId] = [Author].[id]"
-                    + " WHERE [categoryId] = ?\n"
-                    + "   AND [Book].[id] != ?"
-                    + "   AND [status] != 0 ";
+                    + " INNER JOIN [CategoryBook] cb ON [Book].[id] = cb.[bookId]"
+                    + "   WHERE [status] != 0 "
+                    + "     AND [Book].[id] != ? ";
+            int idCateLength = idCategory.size();
+            if (idCategory.get(0).getId() != -1) {
+                sql += "AND cb.[categoryId] in (? ";
+                for (int i = 1; i < idCateLength; i++) {
+                    sql += ",? ";
+                }
+                sql += ") ) [Book]";
+            }
+
             stm = cnn.prepareStatement(sql);
-            stm.setInt(1, 1);
-            stm.setInt(2, bookid);
+            stm.setInt(1, bookid);
+            if (idCategory.get(0).getId() != -1) {
+                for (int i = 0; i < idCateLength; i++) {
+                    stm.setInt(i +2, idCategory.get(i).getId());
+                }
+            }
             rs = stm.executeQuery();
             while (rs.next()) {
                 Book book = new Book();
                 book.setId(rs.getInt(1));
                 book.setTitle(rs.getString(2));
                 book.setAuthorId(rs.getInt(3));
-
                 Author author = new Author();
                 author.setId(rs.getInt(3));
-                author.setName(rs.getString(4));
+                author.setUserId(rs.getInt(4));
+                author.setName(rs.getString(5));
                 book.setAuthor(author);
 
-                book.setRating(rs.getFloat(5));
-                book.setFavourite(rs.getInt(6));
-                book.setPrice(rs.getFloat(7));
-                book.setIssale(rs.getBoolean(8));
-                book.setImage(rs.getString(9));
-                book.setDescription(rs.getString(10));
-                book.setViews(rs.getInt(11));
-                book.setStatus(rs.getBoolean(12));
+                book.setRating(rs.getFloat(6));
+                book.setFavourite(rs.getInt(7));
+                book.setPrice(rs.getFloat(8));
+                book.setIssale(rs.getBoolean(9));
+                book.setImage(rs.getString(10));
+                book.setDescription(rs.getString(11));
+                book.setViews(rs.getInt(12));
+                book.setStatus(rs.getBoolean(13));
                 list.add(book);
             }
         } catch (Exception e) {
-            System.out.println("getSimilar Error:" + e.getMessage());
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return list;
     }

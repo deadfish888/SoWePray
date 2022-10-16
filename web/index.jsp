@@ -235,7 +235,7 @@
                         </c:forEach>
                     </section>
                     <p class="text-center">
-                        <a href="#"
+                        <a href="./Book?type=novel"
                            >Read More &nbsp;<i class="fa fa-long-arrow-right"></i
                             ></a>
                     </p>

@@ -68,9 +68,10 @@
                     <!-- Products -->
                     <section class="tiles">
                             <c:forEach items="${requestScope.bookauthor}" var="bookau">
-                                <article class="style1">
+                                <article class="style1" style="width: calc(17% - 2.5em);
+                                     margin: 4em 0 0 4em;">
                                     <span class="image">
-                                        <img src="${bookau.image}" alt="${bookau.image}" style="height: 391px;" />
+                                        <img src="${(!empty bookau.image)?bookau.image:"images/novel-sample.png"}" alt="${bookau.image}" style="height: 251px;" />
                                     </span>
                                     <a href="BookDetail?id=${bookau.id}">
                                         <h2>${bookau.title}</h2>
