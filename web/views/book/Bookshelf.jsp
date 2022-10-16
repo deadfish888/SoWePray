@@ -73,18 +73,18 @@
                 <div class="bookshelf col-md-10 m-auto" id="bookshelf">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#book">My books</a>
+                            <a class="nav-link <c:if test="${tab eq 'books'}">active</c:if>" data-toggle="tab" href="#book">My books</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#favorite">My favorite books</a>
+                            <a class="nav-link <c:if test="${tab eq 'favorites'}">active</c:if>" data-toggle="tab" href="#favorite">My favorite books</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#creation">My creations</a>
+                            <a class="nav-link <c:if test="${tab eq 'novels'}">active</c:if>" data-toggle="tab" href="#creation">My creations</a>
                         </li>
                     </ul>
 
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane active container" id="book">
+                        <div class="tab-pane container <c:if test="${tab eq 'books'}">active</c:if> <c:if test="${tab ne 'books'}">fade</c:if>" id="book">
                             <section class="tiles m-0">
                                 <c:forEach items="${bookList}" var="book">
                                     <article id="bootstrap-overrides" class="style1" style="width: 170px; margin: 2em; display: inline-block">
@@ -102,19 +102,19 @@
                             <div class="${bookTotalPage <= 1 ? "hidden" : ""}" style="margin-left: 40%">
                                 <ul class="pagination">
                                     <li class="page-item pl-0" >
-                                        <a href="./Bookshelf#book?bookPage=${bookPageIndex-1}" class="page-link" data="${bookPageIndex-1}"
+                                        <a href="?bookPage=${bookPageIndex-1}" class="page-link" data="${bookPageIndex-1}"
                                            style="${bookPageIndex<3?"display:none":""}">
                                             <i class="fa fa-angle-left" aria-hidden="true" ></i>
                                         </a>
                                     </li>
                                     <c:forEach begin="${1}" end="${bookTotalPage}" var="item">
                                         <li class=" page-item ${item==bookPageIndex?"active":""} pl-0">
-                                            <a href="./Bookshelf#book?bookPage=${item}" class="page-link" data="${item}"
+                                            <a href="?bookPage=${item}" class="page-link" data="${item}"
                                                style="${(bookPageIndex-1>item || bookPageIndex+1<item ) ?"display:none;":""}"
                                                >${item}</a></li>
                                         </c:forEach>
                                     <li class="page-item pl-0">
-                                        <a href="./Bookshelf#book?bookPage=${bookPageIndex+1}" class="page-link" data="${bookPageIndex+1}"
+                                        <a href="?bookPage=${bookPageIndex+1}" class="page-link" data="${bookPageIndex+1}"
                                            style="${bookPageIndex+2>bookTotalPage?"display:none":""}">
                                             <i class="fa fa-angle-right" aria-hidden="true"></i>
                                         </a>
@@ -122,7 +122,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="tab-pane container fade" id="favorite">
+                        <div class="tab-pane container <c:if test="${tab eq 'favorites'}">active</c:if> <c:if test="${tab ne 'favorites'}">fade</c:if>" id="favorite">
                             <section class="tiles m-0">
                                 <c:forEach items="${favorList}" var="book">
                                     <article id="bootstrap-overrides" class="style1" style="width: 170px; margin: 2em; display: inline-block">
@@ -140,19 +140,19 @@
                             <div class="${favorTotalPage <= 1 ? "hidden" : ""}" style="margin-left: 40%">
                                 <ul class="pagination">
                                     <li class="page-item pl-0" >
-                                        <a href="./Bookshelf#favorite?favorPage=${favorPageIndex-1}" class="page-link" data="${favorPageIndex-1}"
+                                        <a href="?favorPage=${favorPageIndex-1}" class="page-link" data="${favorPageIndex-1}"
                                            style="${favorPageIndex<3?"display:none":""}">
                                             <i class="fa fa-angle-left" aria-hidden="true" ></i>
                                         </a>
                                     </li>
                                     <c:forEach begin="${1}" end="${favorTotalPage}" var="item">
                                         <li class=" page-item ${item==favorPageIndex?"active":""} pl-0">
-                                            <a href="./Bookshelf#favorite?favorPage=${item}" class="page-link" data="${item}"
+                                            <a href="?favorPage=${item}" class="page-link" data="${item}"
                                                style="${(favorPageIndex-1>item || favorPageIndex+1<item ) ?"display:none;":""}"
                                                >${item}</a></li>
                                         </c:forEach>
                                     <li class="page-item pl-0">
-                                        <a href="./Bookshelf#favorite?favorPage=${favorPageIndex+1}" class="page-link" data="${favorPageIndex+1}"
+                                        <a href="?favorPage=${favorPageIndex+1}" class="page-link" data="${favorPageIndex+1}"
                                            style="${favorPageIndex+2>favorTotalPage?"display:none":""}">
                                             <i class="fa fa-angle-right" aria-hidden="true"></i>
                                         </a>
@@ -160,7 +160,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="tab-pane container fade" id="creation">
+                        <div class="tab-pane container <c:if test="${tab eq 'novels'}">active</c:if> <c:if test="${tab ne 'novels'}">fade</c:if>" id="creation">
                             <section class="tiles m-0">
                                 <c:forEach items="${novelList}" var="book">
                                     <article id="bootstrap-overrides" class="style1" style="width: 170px; margin: 2em; display: inline-block">
@@ -247,23 +247,23 @@
             <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
 
             <script>
-                const url_string = window.location.href;
-                const url = new URL(url_string);
-                const search = url.searchParams.get("search");
-                const paginationLinks = document.querySelectorAll(".page-link");
-                if (paginationLinks) {
-                    paginationLinks.forEach(item => {
-                        var search = location.search.substring(1);
-                        const params = search ? JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"')
-                                .replace(/&/g, '","').replace(/=/g, '":"') + '"}') : {};
-                        const page = item.getAttribute("data");
-                        params.page = page;
-                        const href = new URLSearchParams(params).toString();
-                        item.setAttribute("href", "?" + href);
-                    });
-                }
-                const params1 = new URLSearchParams('abc=foo&def=%5Basf%5D&xyz=5&def=dude');
-                console.log(params1.toString());
+//                const url_string = window.location.href;
+//                const url = new URL(url_string);
+//                const search = url.searchParams.get("search");
+//                const paginationLinks = document.querySelectorAll(".page-link");
+//                if (paginationLinks) {
+//                    paginationLinks.forEach(item => {
+//                        var search = location.search.substring(1);
+//                        const params = search ? JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"')
+//                                .replace(/&/g, '","').replace(/=/g, '":"') + '"}') : {};
+//                        const page = item.getAttribute("data");
+//                        params.page = page;
+//                        const href = new URLSearchParams(params).toString();
+//                        item.setAttribute("href", "?" + href);
+//                    });
+//                }
+//                const params1 = new URLSearchParams('abc=foo&def=%5Basf%5D&xyz=5&def=dude');
+//                console.log(params1.toString());
             </script>
     </body>
 </html>

@@ -33,6 +33,7 @@ public class RemoveCategoryController extends HttpServlet {
             throws ServletException, IOException {
         CategoryDAO categoryDAO = new CategoryDAO();
         int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+        System.out.println(categoryId);
         categoryDAO.delBookCategory(categoryId);
         categoryDAO.delCategory(categoryId);
         response.sendRedirect(request.getContextPath() + "/Admin/Category/View");

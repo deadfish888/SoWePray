@@ -45,14 +45,15 @@ public class BookshelfController extends HttpServlet {
         FavouriteDAO favouriteDAO = new FavouriteDAO();
 //        CategoryDAO categoryDAO = new CategoryDAO();
         User user = (User) request.getSession().getAttribute("user");
-        if (request.getParameter("categoryId") != null) {
-
-        }
+//        if (request.getParameter("categoryId") != null) {
+//
+//        }
 //        ArrayList<Book> novelList = bookDAO.getNovels(user);
 //        ArrayList<Category> categoryList = categoryDAO.getAllCategory();
 //        bookList.size();
 
         int pageSize = 12;
+        
         
         String bookPage = request.getParameter("bookPage");
         if (bookPage == null) {
@@ -106,6 +107,14 @@ public class BookshelfController extends HttpServlet {
         request.setAttribute("novelList", novelList);
         
 //        request.removeAttribute("");
+
+        if(request.getParameter("novelPage") != null) {
+            request.setAttribute("tab", "novels");
+        } else if(request.getParameter("favorPage") != null) {
+            request.setAttribute("tab", "favorites");
+        } else {
+            request.setAttribute("tab", "books");
+        }
 
         request.setAttribute("bookPageIndex", bookPageIndex);
         request.setAttribute("favorPageIndex", favorPageIndex);

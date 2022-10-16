@@ -67,7 +67,6 @@ public class CategoryDAO {
             String sql = "delete from [Category] where [id] = ?";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, id);
-            stm.executeUpdate(sql);
             stm.executeUpdate();
         } catch (Exception e) {
             System.out.println("del Error:" + e.getMessage());
@@ -80,7 +79,6 @@ public class CategoryDAO {
                     + "      WHERE [categoryId] = ?";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, id);
-            stm.executeUpdate(sql);
             stm.executeUpdate();
         } catch (Exception e) {
             System.out.println("del Error:" + e.getMessage());
