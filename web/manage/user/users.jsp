@@ -119,11 +119,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="contentList">
-                                                <% int no=1;%>
                                                 <c:forEach var="s" items="${users}">
                                                 <form action="./Users" method="Post">
                                                     <tr>
-                                                        <td><%=no++%></td>
+                                                        <td>${s.id}</td>
                                                         <td width="15%">${s.name}</td>
                                                         <td style="width: 200px;">${s.username}</td>
                                                         <td>${s.email}</td>

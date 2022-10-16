@@ -4,6 +4,12 @@
  */
 package Controller.admin.user;
 
+<<<<<<<< HEAD:src/java/Controller/admin/user/DashBoard.java
+import context.product.BookDAO;
+import context.auth.UserDAO;
+import context.product.AuthorDAO;
+========
+>>>>>>>> duypd:src/java/Controller/admin/user/LoadAuthor.java
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,8 +23,13 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author duypham0705
  */
+<<<<<<<< HEAD:src/java/Controller/admin/user/DashBoard.java
+@WebServlet("/Admin/DashBoard")
+public class DashBoard extends HttpServlet {
+========
 @WebServlet("/Admin/LoadAuthor")
 public class LoadAuthor extends HttpServlet {
+>>>>>>>> duypd:src/java/Controller/admin/user/LoadAuthor.java
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,10 +40,20 @@ public class LoadAuthor extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    AuthorDAO aDao = new AuthorDAO();
+    UserDAO uDao = new UserDAO();
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+<<<<<<<< HEAD:src/java/Controller/admin/user/DashBoard.java
+        int per = aDao.getPercent();
+        request.setAttribute("per1", per);
+        request.setAttribute("per2", 100-per);
+        request.getRequestDispatcher("../manage/dashboard.jsp").forward(request, response);
+========
         response.setContentType("text/html;charset=UTF-8");
 
+>>>>>>>> duypd:src/java/Controller/admin/user/LoadAuthor.java
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -47,6 +68,11 @@ public class LoadAuthor extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+<<<<<<<< HEAD:src/java/Controller/admin/user/DashBoard.java
+        processRequest(request, response);
+    }
+
+========
         HttpSession session = request.getSession();
         if (request.getParameter("xpage1") != null) {
             String xpage1 = request.getParameter("xpage1");
@@ -70,6 +96,7 @@ public class LoadAuthor extends HttpServlet {
 
     }
 
+>>>>>>>> duypd:src/java/Controller/admin/user/LoadAuthor.java
     /**
      * Handles the HTTP <code>POST</code> method.
      *

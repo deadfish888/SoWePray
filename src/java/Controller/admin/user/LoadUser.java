@@ -104,7 +104,7 @@ public class LoadUser extends HttpServlet {
         run_way = (run_way + 1) % 2;
 
         session.setAttribute("order", Integer.toString(run_way));
-
+        users = dao.getByPage(users, 0, 10);
         PrintWriter out = response.getWriter();
         int i = 0;
         for (User u : users) {

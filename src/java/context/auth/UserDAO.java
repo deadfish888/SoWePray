@@ -398,9 +398,8 @@ public class UserDAO {
         }
     }
 
-//    public int getNumberUser() {
-//        return (getAllUsers().size());
-//    }
+    
+
     public ArrayList<User> getAllUsers() {
         ArrayList<User> list = new ArrayList<>();
         try {

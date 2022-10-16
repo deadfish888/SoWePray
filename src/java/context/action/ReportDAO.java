@@ -54,4 +54,20 @@ public class ReportDAO {
         }
     }
 
+    public int count() {
+        int ret = 0;
+        try {
+            String sql = "SELECT COUNT([id])\n"
+                    + "  FROM [dbo].[ReportDetail]";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                ret = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("getAuthorIdByBookId Error: ");
+        }
+        return ret;
+    }
+
 }

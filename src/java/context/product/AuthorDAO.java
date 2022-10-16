@@ -255,4 +255,72 @@ public class AuthorDAO {
         return -1;
     }
 
+    public ArrayList<Integer> getNumQuater(int now, int before) {
+        ArrayList<Integer> list = new ArrayList<>();
+        try {
+            String sql = "(SELECT COUNT([Author].[date])\n"
+                    + "                    FROM[dbo].[Author]\n"
+                    + "                    WHERE[date] <= '" + before + "-1-1')\n"
+                    + "                                          UNION ALL\n"
+                    + "    (SELECT COUNT([Author].[date])\n"
+                    + "                    FROM[dbo].[Author]\n"
+                    + "                    WHERE[date] BETWEEN '" + before + "-1-1' AND '" + before + "-3-31')\n"
+                    + "                                          UNION ALL\n"
+                    + "    (SELECT COUNT([Author].[date])\n"
+                    + "                                          FROM[dbo].[Author]\n"
+                    + "                                          WHERE[date] BETWEEN '" + before + "-4-1' AND '" + before + "-6-30')\n"
+                    + "                                          UNION ALL\n"
+                    + "    (SELECT COUNT([Author].[date])\n"
+                    + "                                          FROM[dbo].[Author]\n"
+                    + "                                          WHERE[date] BETWEEN '" + before + "-7-1' AND '" + before + "-9-30')\n"
+                    + "                                          UNION ALL\n"
+                    + "    (SELECT COUNT([Author].[date])\n"
+                    + "                                          FROM[dbo].[Author]\n"
+                    + "                                          WHERE[date] BETWEEN '" + before + "-10-1' AND '" + before + "-12-31')\n"
+                    + "                                           UNION ALL\n"
+                    + "    (SELECT COUNT([Author].[date])\n"
+                    + "                                          FROM[dbo].[Author]\n"
+                    + "                                          WHERE[date] BETWEEN '" + now + "-1-1' AND '" + now + "-3-31')\n"
+                    + "                                          UNION ALL\n"
+                    + "    (SELECT COUNT([Author].[date])\n"
+                    + "                                          FROM[dbo].[Author]\n"
+                    + "                                          WHERE[date] BETWEEN '" + now + "-4-1' AND '" + now + "-6-30')\n"
+                    + "                                          UNION ALL\n"
+                    + "    (SELECT COUNT([Author].[date])\n"
+                    + "                                          FROM[dbo].[Author]\n"
+                    + "                                          WHERE[date] BETWEEN '" + now + "-7-1' AND '" + now + "-9-30')\n"
+                    + "                                          UNION ALL\n"
+                    + "    (SELECT COUNT([Author].[date])\n"
+                    + "                                          FROM[dbo].[Author]\n"
+                    + "                                          WHERE[date] BETWEEN '" + now + "-10-1' AND '" + now + "-12-31')";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int userid = rs.getInt(1);
+                list.add(userid);
+            }
+        } catch (Exception e) {
+            System.out.println("count Error:" + e.getMessage());
+        }
+        return list;
+    }
+
+    public Integer getNumYear(int month, int year) {
+        int ret = 0;
+        try {
+            String sql = "(SELECT COUNT([Author].[id])\n"
+                    + "  FROM [dbo].[Author]\n"
+                    + "  WHERE YEAR([date]) = ? AND MONTH([date]) = ?)";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, year);
+            stm.setInt(2, month);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                ret = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("count Error:" + e.getMessage());
+        }
+        return ret;
+    }
 }

@@ -117,11 +117,10 @@
                                         </tr>
                                     </thead>
                                     <tbody id="contentList">
-                                        <% int no=1;%>
                                         <c:forEach var="s" items="${listA}">
                                         <form action="./Author" method="Post">
                                             <tr>
-                                                <td><a href="LoadAuthor?aid=${s.id}" style="text-decoration: none"><%=no++%></a></td>
+                                                <td><a href="LoadAuthor?aid=${s.id}" style="text-decoration: none">${s.id}</a></td>
                                                 <td style="padding-left: 100px">
                                                     <div class="form-group">
                                                         
@@ -193,7 +192,7 @@
                                         <c:forEach var="se" items="${listU}">
                                         <form action="./Users" method="Post">
                                             <tr>
-                                                <td><a href="LoadAuthor?aid=${se.id}" style="text-decoration: none"><%=no1++%></a></td>
+                                                <td><a href="LoadAuthor?aid=${se.id}" style="text-decoration: none">${se.id}</a></td>
                                                 <td style="padding-left: 100px">
                                                     <div class="form-group">
                                                         <div class="col-md-12">
