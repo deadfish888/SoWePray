@@ -110,13 +110,6 @@ public class UsersController extends HttpServlet {
         } else {
             page = Integer.parseInt(xpage);
         }
-        String xpage = (String) session.getAttribute("whichpage");
-        int page;
-        if (xpage == null) {
-            page = 1;
-        } else {
-            page = Integer.parseInt(xpage);
-        }
         ArrayList<User> users = dao.getByAccess(us.is_super());
         if (request.getParameter("txt") != null) {
             users = dao.searchByUname(us.is_super(), "%" + request.getParameter("txt") + "%");

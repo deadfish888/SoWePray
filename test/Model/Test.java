@@ -6,7 +6,6 @@ package Model;
 
 import Model.product.Author;
 import Model.product.Book;
-import context.auth.UserDAO;
 import context.product.AuthorDAO;
 import context.product.BookDAO;
 import context.product.CategoryDAO;
@@ -67,7 +66,6 @@ public class Test {
         Author au = new Author();
         au.setName(all);
         AuthorDAO ad = new AuthorDAO();
-        UserDAO ud = new UserDAO();
 //        ArrayList<User> userList = ud.getAllUsers();
 //        userList.forEach((t) -> {
 //            Author author = new Author();

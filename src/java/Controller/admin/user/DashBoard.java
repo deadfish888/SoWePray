@@ -73,7 +73,7 @@ public class DashBoard extends HttpServlet {
         request.setAttribute("thisYear", date.getYear() + 1900);
         request.setAttribute("forYear", date.getYear() + 1899);
 
-        request.setAttribute("books", bDao.count());
+        request.setAttribute("books", bDao.countBookNumber());
         request.setAttribute("cmt", cDao.count());
         request.setAttribute("rp", rDao.count());
 
