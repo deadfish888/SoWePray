@@ -92,6 +92,7 @@ CREATE TABLE [dbo].[Author](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[userId] [int] NULL,
 	[name] [nvarchar](50) NULL,
+	[date] DATE NULL,
  CONSTRAINT [PK_author] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -190,7 +191,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Chapter_Payment](
 	[chapterId] [int] NOT NULL,
-	[isPaid] [bit] NOT NULL,
 	[price] [decimal](10, 2) NOT NULL
 ) ON [PRIMARY]
 GO
@@ -396,240 +396,139 @@ CREATE TABLE [dbo].[Volume](
 GO
 SET IDENTITY_INSERT [dbo].[Author] ON 
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (1, NULL, N'Gillian Flynn')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (1, NULL, N'Gillian Flynn','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (2, NULL, N'Agatha Christie')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (2, NULL, N'Agatha Christie','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (3, NULL, N'Alex Michaelides')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (3, NULL, N'Alex Michaelides','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (4, NULL, N'Paula Hawkins')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (4, NULL, N'Paula Hawkins','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (5, NULL, N'Cuttlefish That Loves Diving')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (5, NULL, N'Cuttlefish That Loves Diving','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (6, NULL, N'Stephen King')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (6, NULL, N'Stephen King','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (7, NULL, N'George RR Martin')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (7, NULL, N'George RR Martin','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (8, NULL, N'Suzanne Collins')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (8, NULL, N'Suzanne Collins','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (9, NULL, N'H.G. Wells, Greg Bear')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (9, NULL, N'H.G. Wells, Greg Bear','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (10, NULL, N'Diana Gabaldon')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (10, NULL, N'Diana Gabaldon','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (11, NULL, N'Anthony Doerr')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (11, NULL, N'Anthony Doerr','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (12, NULL, N'Hiromu Arakawa')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (12, NULL, N'Hiromu Arakawa','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (13, NULL, N'Tsugumi Ohba')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (13, NULL, N'Tsugumi Ohba','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (14, NULL, N'Eiichiro Oda')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (14, NULL, N'Eiichiro Oda','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (15, NULL, N'Syougo Kinugasa')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (15, NULL, N'Syougo Kinugasa','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (16, 2, N'Vinh Nguyen')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (16, 2, N'Vinh Nguyen','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (17, 3, N'Ivory Marcel')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (17, 3, N'Ivory Marcel','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (18, 4, N'Mary Barisol')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (18, 4, N'Mary Barisol','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (19, 5, N'Eden Frost')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (19, 5, N'Eden Frost','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (20, 6, N'Benidict Robinett')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (20, 6, N'Benidict Robinett','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (21, 7, N'Zera Farmer')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (21, 7, N'Zera Farmer','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (22, 8, N'Ceil Howell')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (22, 8, N'Ceil Howell','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (23, 9, N'Taylor Marcel')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (23, 9, N'Taylor Marcel','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (24, 10, N'Wisley Ray')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (24, 10, N'Wisley Ray','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (25, 11, N'Aiken Pope')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (25, 11, N'Aiken Pope','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (26, 12, N'Rodolphe Blossom')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (26, 12, N'Rodolphe Blossom','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (27, 13, N'Alex Rogze')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (27, 13, N'Alex Rogze','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (28, 14, N'Jean Padilla')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (28, 14, N'Jean Padilla','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (29, 15, N'Dana Franklin')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (29, 15, N'Dana Franklin','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (30, 16, N'Elluka Bush')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (30, 16, N'Elluka Bush','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (31, 17, N'Kenelm Binder')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (31, 17, N'Kenelm Binder','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (32, 18, N'Narcissus Freezis')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (32, 18, N'Narcissus Freezis','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (33, 19, N'Michelle Reynolds')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (33, 19, N'Michelle Reynolds','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (34, 20, N'Callie Banica')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (34, 20, N'Callie Banica','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (35, 21, N'Malceria Freezis')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (35, 21, N'Malceria Freezis','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (36, 22, N'Jasmine Shepard')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (36, 22, N'Jasmine Shepard','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (37, 23, N'Mia Franklin')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (37, 23, N'Mia Franklin','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (38, 24, N'Schick Reyes')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (38, 24, N'Schick Reyes','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (39, 25, N'Allen Reese')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (39, 25, N'Allen Reese','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (40, 26, N'Elman Baxter')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (40, 26, N'Elman Baxter','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (41, 27, N'Willard Jordan')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (41, 27, N'Willard Jordan','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (42, 28, N'Winona Walton')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (42, 28, N'Winona Walton','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (43, 29, N'Sophia Knight')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (43, 29, N'Sophia Knight','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (44, 30, N'Hank Wade')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (44, 30, N'Hank Wade','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (45, 31, N'Mia Dinwiddie')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (45, 31, N'Mia Dinwiddie','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (46, 32, N'Ronald Chandler')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (46, 32, N'Ronald Chandler','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (47, 33, N'Elluka Ackerman')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (47, 33, N'Elluka Ackerman','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (48, 34, N'Jude Gilbert')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (48, 34, N'Jude Gilbert','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (49, 35, N'Philbert Schultz')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (49, 35, N'Philbert Schultz','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (50, 36, N'Lamia Fowler')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (50, 36, N'Lamia Fowler','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (51, 37, N'Gererd Pope')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (51, 37, N'Gererd Pope','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (52, 38, N'Thetal Shepard')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (52, 38, N'Thetal Shepard','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (53, 39, N'Yocaski Blossom')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (53, 39, N'Yocaski Blossom','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (54, 40, N'Danielle Hodges')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (54, 40, N'Danielle Hodges','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (55, 41, N'Darlene Feron')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (55, 41, N'Darlene Feron','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (56, 42, N'Hadden Chandler')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (56, 42, N'Hadden Chandler','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (57, 43, N'Sateriasis Hardy')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (57, 43, N'Sateriasis Hardy','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (58, 44, N'Mia Carpenter')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (58, 44, N'Mia Carpenter','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (59, 45, N'Kit Nerune')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (59, 45, N'Kit Nerune','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (60, 46, N'Rodolphe Frost')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (60, 46, N'Rodolphe Frost','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (61, 47, N'Jesse Watts')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (61, 47, N'Jesse Watts','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (62, 48, N'Carl Crawford')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (62, 48, N'Carl Crawford','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (63, 49, N'Ronald Robinett')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (63, 49, N'Ronald Robinett','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (64, 50, N'Zera Stanley')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (64, 50, N'Zera Stanley','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (65, 51, N'Harley Avadonia')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (65, 51, N'Harley Avadonia','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (66, 52, N'Butglar Gray')
+INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (66, 52, N'Butglar Gray','2022-6-15')
 GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (67, 53, N'Joe Baxter')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (68, 54, N'Ward Wagner')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (69, 55, N'Charlie Reese')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (70, 56, N'Windsor Dinwiddie')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (71, 57, N'Charon Walton')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (72, 58, N'Hank Michaelis')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (73, 59, N'Seth Manning')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (74, 60, N'Seth Manning')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (75, 61, N'Light Jenning')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (76, 62, N'David Barisol')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (77, 63, N'Michaela Kelley')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (78, 64, N'Melody Elphen')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (79, 65, N'Elluka Norman')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (80, 66, N'Strange Feron')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (81, 67, N'Taylor Valdez')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (82, 68, N'Dana Macy')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (83, 69, N'Jean Valdez')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (84, 70, N'Minis Goodwin')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (85, 71, N'Clay Marlon')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (86, 72, N'Phil Powers')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (87, 73, N'Butglar Hardy')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (88, 74, N'Camelia Mullins')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (89, 75, N'Lionel Stanley')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (90, 76, N'Linda Payne')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (91, 77, N'Philbert Cross')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (92, 78, N'Phil Jordan')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (93, 79, N'Robert Kissos')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (94, 80, N'Ronald Rios')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (95, 81, N'Elluka Manning')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (96, 82, N'Ceil Payne')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (97, 83, N'Lizzy Meld')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (98, 84, N'Camelia Miller')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (99, 85, N'Diana Macy')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (100, 86, N'Windsor Badman')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (101, 87, N'Diana Obrien')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (102, 88, N'Adam Hodges')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (103, 89, N'Hansel May')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (104, 90, N'Oswald Pope')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (105, 91, N'Alex Hardy')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (106, 92, N'Butglar Michaelis')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (107, 93, N'Elman Blair')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (108, 94, N'Lucifer Blair')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (109, 95, N'Philbert Phantomhive')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (110, 96, N'Albion Alexdander')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (111, 97, N'Melody Chandler')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (112, 98, N'Katya Corbyn')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (113, 99, N'Rahab Octo')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (114, 100, N'Hansel May')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (115, 101, N'Luke Thayne')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (116, 102, N'Cyril Watson')
-GO
-INSERT [dbo].[Author] ([id], [userId], [name]) VALUES (117, 109, N'I Am Tester')
-GO
+
 SET IDENTITY_INSERT [dbo].[Author] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Book] ON 
@@ -2752,6 +2651,7 @@ ALTER TABLE [dbo].[User] CHECK CONSTRAINT [FK_User_Payment_Account]
 GO
 ALTER TABLE [dbo].[Volume]  WITH CHECK ADD FOREIGN KEY([bookId])
 REFERENCES [dbo].[Book] ([id])
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Star]  WITH CHECK ADD  CONSTRAINT [chk_star] CHECK  (([star]>=(1) AND [star]<=(5)))
 GO

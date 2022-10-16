@@ -54,7 +54,7 @@
                     </h1>
                     <c:forEach items="${book.category}" var="category">
                         <h4 style="margin: 0 0 0 0; display: inline-block;"><a href="./Book?categoryId=${category.id}"><span class="badge badge-pill badge-secondary">${category.name}</span></a></h4>
-                    </c:forEach>
+                            </c:forEach>
 
                     <h2> ${book.author.name} </h2>
 
@@ -108,64 +108,73 @@
                                         </form>
                                     </c:if>
 
-                                <div class="modal fade" id="purchase" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <form action="User/Purchase" method="post" id="purchaseForm" name="purchaseForm" onsubmit="return validatePassword()">
-                                                <div class="modal-header">
-                                                    <h3 class="modal-title">Purchase</h3>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="wrapper row">
-                                                        <table style="width: 80%; margin: auto">
-                                                            <tr>
-                                                                <th>
-                                                                    Book
-                                                                </th>
-                                                                <td>
-                                                                    ${book.title}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>
-                                                                    Price
-                                                                </th>
-                                                                <td>
-                                                                    ${book.price}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>
-                                                                    Password
-                                                                </th>
-                                                                <td>
-                                                                    <input type="password" name="password"/>
-                                                                    <div style="color: red" id="purchase-pass-noti"></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
+                                    <div class="modal fade" id="purchase" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <form action="User/Purchase" method="post" id="purchaseForm" name="purchaseForm" onsubmit="return validatePassword()">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title">Purchase</h3>
                                                     </div>
-                                                </div>
-                                                <div class="modal-footer" style="text-align: center">
-                                                    <button type="button" class="primary btn-primary text-center" data-dismiss="modal" style="width: auto; padding: 0 1em">Cancel</button>
-                                                    <input type="hidden" id="pass" value="${sessionScope.user.password}"/>
-                                                    <input type="hidden" name="amount" value="${book.price}"/>
-                                                    <input type="hidden" name="bookId" value="${book.id}"/>
-                                                    <input type="hidden" name="bookTitle" value="${book.title}"/>
-                                                    <input type="submit" class="primary text-center" value="Confirm"/>
-                                                </div>
-                                            </form>
+                                                    <div class="modal-body">
+                                                        <div class="wrapper row">
+                                                            <table style="width: 80%; margin: auto">
+                                                                <tr>
+                                                                    <th>
+                                                                        Book
+                                                                    </th>
+                                                                    <td>
+                                                                        ${book.title}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        Price
+                                                                    </th>
+                                                                    <td>
+                                                                        ${book.price}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        Password
+                                                                    </th>
+                                                                    <td>
+                                                                        <input type="password" name="password"/>
+                                                                        <div style="color: red" id="purchase-pass-noti"></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer" style="text-align: center">
+                                                        <button type="button" class="primary btn-primary text-center" data-dismiss="modal" style="width: auto; padding: 0 1em">Cancel</button>
+                                                        <input type="hidden" id="pass" value="${sessionScope.user.password}"/>
+                                                        <input type="hidden" name="amount" value="${book.price}"/>
+                                                        <input type="hidden" name="bookId" value="${book.id}"/>
+                                                        <input type="hidden" name="bookTitle" value="${book.title}"/>
+                                                        <input type="submit" class="primary text-center" value="Confirm"/>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                    <c:if test="${check==true}">
+                                        <form action="Fav" method="POST">
+                                            <div class="col-sm-4">
+                                                <input type="submit" class="primary" value="Delete Favourite">                                 
+                                                <input type="hidden" name="bId" value="${book.getId()}">
+                                            </div>
+                                        </form>
+                                    </c:if> 
+                                    <c:if test="${check==false}">
+                                        <form action="Favourite" method="POST">
+                                            <div class="col-sm-4">
+                                                <input type="submit" class="primary" value="Add to Favorite">                                 
+                                                <input type="hidden" name="bId" value="${book.getId()}">
+                                            </div>
+                                        </form>
+                                    </c:if>
 
-                                    <form action="Favourite" method="POST">
-                                        <div class="col-sm-4">
-
-                                            <input type="submit" class="primary" value="Add to Favorite">                                 
-                                            <input type="hidden" name="bId" value="${book.getId()}">
-                                        </div>
-                                    </form>
                                     <form action="Report" method="POST">
                                         <div class="col-sm-4"> 
                                             <input type="submit" class="primary" value="Report">                                 
@@ -228,10 +237,10 @@
                                                                     </c:when>
                                                                     <c:otherwise>
                                                             <a href="BookPreread?id=${book.id}"><p><i class="fa fa-lock"></i> ${chap.title}</p></a>
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </c:if>
-                                                    </c:forEach>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:if>
+                                                        </c:forEach>
                                         </div>
                                     </div>
                                 </div>
@@ -292,6 +301,40 @@
                             </c:forEach>
                         </section>
                     </div>
+
+                    <div class="container-fluid">
+                        <h2 class="h2">Also from this author</h2>
+
+                        <!-- Products -->
+                        <section class="tiles">
+                            <c:forEach items="${requestScope.bookauthor}" var="bookau">
+                                <article class="style1">
+                                    <span class="image">
+                                        <img src="${bookau.image}" alt="${bookau.image}" style="height: 391px;" />
+                                    </span>
+                                    <a href="BookDetail?id=${bookau.id}">
+                                        <h2>${bookau.title}</h2>
+
+                                        <c:if test="${bookau.issale()}">
+                                            <p>
+                                                <del>$${bookau.price}</del> 
+                                                <strong>$5.00</strong>
+                                            </p>
+                                        </c:if>
+                                        <c:if test="${!bookau.issale()}">
+                                            <p><strong>$${bookau.price}</strong></p>
+                                        </c:if>
+                                    </a>
+                                </article>
+                            </c:forEach>
+                        </section>
+                        <p class="text-center">
+                            <a href="BookAuthor?aid=${requestScope.aid}">More Books &nbsp;<i class="fa fa-long-arrow-right"></i>
+                            </a>
+                        </p>
+
+                    </div>
+
                 </div>
             </div>
 

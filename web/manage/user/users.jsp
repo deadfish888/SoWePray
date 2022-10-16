@@ -31,7 +31,7 @@
         <!-- Favicon icon -->
         <!-- Custom CSS -->
         <link href="/Bookie/manage/html/css/style.min.css" rel="stylesheet">
-
+        <link href="/Bookie/manage/html/css/dropdown.css" rel="stylesheet">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -58,7 +58,7 @@
             <jsp:include page="/manage/base/header.jsp"/>
             <!-- Left Sidebar - style you can find in sidebar.scss  -->
             <jsp:include page="/manage/base/sidebar.jsp"/>
-            
+
             <!-- Page wrapper  -->
             <div class="page-wrapper">
                 <!-- ============================================================== -->
@@ -98,14 +98,11 @@
                                     <h4 class="card-title">Users List</h4>
                                     <div class="table-responsive">
                                         <table class="table user-table">
+                                            
                                             <div class="form-outline">
-                                                <input type="search" id="form1" class="form-control" placeholder="Search . . . ." aria-label="Search" style="width: 200px"
-                                                       oninput="searchByName(this)" value="${txtS}" name="txt" type="text"/>
-                                            </div>
-                                            <div class="form-outline">
-                                                <form action="UserManager" method="Post">
-                                                <input type="search" id="form1" class="form-control" placeholder="Search . . . ." aria-label="Search" style="width: 200px"
-                                                       name="txt" type="text" value="${txt}" >
+                                                <form action="Users" method="Post">
+                                                    <input type="search" id="form1" class="form-control" placeholder="Search . . . ." aria-label="Search" style="width: 200px"
+                                                           name="txt" type="text" value="${txt}" >
                                                 </form>
                                             </div>
                                             <thead>
@@ -134,21 +131,27 @@
                                                         <td width="200px">${s.address}</td>
                                                         <td>${s.is_super()}</td>
 
-                                                        <c:choose>
-                                                            <c:when test="${s.is_super()==0}">
-                                                                <td><button class="btn btn-primary" name="id_up" value="${s.id}" type="submit"><i class="fa-solid fa-up-long"></i></button></td>
-                                                                    </c:when>
-                                                                    <c:when test="${s.is_super()+1==sessionScope.admin.is_super()}">
-                                                                <td></td>
-                                                                <td><button class="btn btn-primary" name="id_down" value="${s.id}" type="submit"><i class="fa-solid fa-down-long"></i></button></td>
-                                                                <td><button class="btn btn-primary" name="id_ban" value="${s.id}" type="submit"><i class="fa-solid fa-user-slash"></i></button></td>
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                                <td><button class="btn btn-primary" name="id_up" value="${s.id}" type="submit"><i class="fa-solid fa-up-long"></i></button></td>
-                                                                <td><button class="btn btn-primary" name="id_down" value="${s.id}" type="submit"><i class="fa-solid fa-down-long"></i></button></td>
-                                                                <td><button class="btn btn-primary" name="id_ban" value="${s.id}" type="submit"><i class="fa-solid fa-user-slash"></i></button></td>
-                                                                    </c:otherwise>
-                                                                </c:choose>
+                                                        <td>  
+                                                            <div class="dropdown">
+                                                                <button class="btn btn-primary"><i class="fa fa-chevron-down"></i></button>
+                                                                <div class="noidung_dropdown">
+                                                                    <c:choose>
+                                                                        <c:when test="${s.is_super()==0}">
+                                                                            <a><button class="btn btn-primary" name="id_up" value="${s.getId()}" type="submit">Up<i class="fa-solid fa-up-long"></i></button></a>
+                                                                                </c:when>
+                                                                                <c:when test="${s.is_super()+1==sessionScope.admin.is_super()}">
+                                                                            <a><button class="btn btn-primary" name="id_down" value="${s.getId()}" type="submit">Down<i class="fa-solid fa-down-long"></i></button></a>
+                                                                            <a><button class="btn btn-primary" name="id_ban" value="${s.getId()}" type="submit">Disable<i class="fa-solid fa-user-slash"></i></button></a>
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                            <a><button class="btn btn-primary" name="id_up" value="${s.getId()}" type="submit">Up<i class="fa-solid fa-up-long"></i></button></a>
+                                                                            <a><button class="btn btn-primary" name="id_down" value="${s.getId()}" type="submit">Down<i class="fa-solid fa-down-long"></i></button></a>
+                                                                            <a><button class="btn btn-primary" name="id_ban" value="${s.getId()}" type="submit">Disable<i class="fa-solid fa-user-slash"></i></button></a>
+                                                                                </c:otherwise>
+                                                                            </c:choose>
+                                                                </div>
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                 </form>
 
@@ -157,7 +160,27 @@
                                             </tbody>
 
                                         </table>
+                                        <div id="sp" class="pagination-arena " style="margin-left: 40%">
+                                            <ul class="pagination">
+                                                <li class="page-item" >
+                                                    <a href="LoadUser?xpage3=${xpage3-1}" class="page-link" style="${xpage3<3?"display:none":""}">
+                                                        <i class="fa fa-angle-left" aria-hidden="true" ></i>
+                                                    </a>
+                                                </li>
+                                                <c:forEach begin="${1}" end="${numPage3}" var="item">
+                                                    <li class="page-item ${item==xpage3?"active":""}">
+                                                        <a href="LoadUser?xpage3=${item}"  
 
+                                                           class="page-link " style="${(xpage3-1>item || xpage3+1<item ) ?"display:none;":""}"
+                                                           >${item}</a></li>
+                                                    </c:forEach>
+                                                <li >
+                                                    <a href="LoadUser?xpage3=${xpage3+1}" class="page-link" style="${xpage3+2>numPage?"display:none":""}">
+                                                        <i class="fa fa-angle-right" aria-hidden="true"  ></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>                 
                                     </div>
                                 </div>
                             </div>
@@ -204,7 +227,7 @@
         <script>
             function load(param) {
                 $.ajax({
-                    url: "/Bookie/LoadUser",
+                    url: "/Bookie/Admin/LoadUser",
                     type: "post", //send it through get method
                     data: {
                         type: param
@@ -252,6 +275,7 @@
 
         <!--Custom JavaScript -->
         <script src="/Bookie/manage/html/js/custom.js"></script>
+        <script src="/Bookie/manage/html/js/dropdown.js"></script>
     </body>
 
 </html>

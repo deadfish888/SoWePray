@@ -19,7 +19,7 @@
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="assets/css/main.css" />
         <noscript><link rel="stylesheet" href="assets/css/noscript.css"/></noscript>
-        
+
     </head>
     <body class="is-preload">
         <!-- Wrapper -->
@@ -59,21 +59,54 @@
                     </div>
                     <form action="Favourite" method="GET">
                         <input type="hidden" name="category" value="${category!=null?category:"0"}"> 
-                    <div class="md-form active-pink active-pink-2 mb-3 mt-0 col-md-10" style="margin:0 auto;">
-                        <input name="search" class="form-control" type="text" placeholder="Search by Title" aria-label="Search">
+                        <!--                    <div class="md-form active-pink active-pink-2 mb-3 mt-0 col-md-10" style="margin:0 auto;">
+                                                <input name="search" class="form-control" type="text" placeholder="Search by Title" aria-label="Search">
+                                            </div>-->
+
+                        <!--                        <div class="grid_column-10">
+                                                    <div class="home-filter">
+                                                        <h2>Category</h2>
+                                                    </div>
+                                                    <div class="home-filter">
+                                                        <button name="category"  type="submit" class="primary" value="0" style="overflow:initial;">All</button>
+                        
+                                                        
+                        <c:forEach items="${category}" var="category">
+                                                            <button name="category" type="submit" class="primary" value="${category.id}">${category.getName()}</button>
+                        </c:forEach>
                     </div>
-                    
-                    <div class="grid_column-10">
-                        <div class="home-filter">
-                            <h2>Category</h2>
+                </div>-->
+
+                        <div class="mb-3 mt-0 col-10 row" style="margin:0 auto;">
+                            <div class="col-10">
+                                <input name="search" class="form-control" type="text" placeholder="Search by Title" aria-label="Search">
+                            </div>
+                            <div class="col-2">
+                                <input type="submit" value="Search">
+                            </div>
                         </div>
-                        <div class="home-filter">
-                            <button name="category"  type="submit" class="primary" value="0" style="overflow:initial;">All</button>
-                            <c:forEach items="${category}" var="category">
-                                <button name="category" type="submit" class="primary" value="${category.id}">${category.getName()}</button>
-                            </c:forEach>
+                        <p  class="text-right">
+                            <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <i class="fa fa-filter"></i> Advanced Search
+                            </a>
+                        </p>
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                                <h4 class="mb-0">Author</h4>
+                                <div class="mb-3 col-3">
+                                    <input type="text" class="form-control" name="author" placeholder="Can be left blank...">
+                                </div>
+                                <h4>Genre</h4>
+                                <div class="row">
+                                    <c:forEach items="${categories}" var="category">
+                                        <div class="form-check form-check-inline col-3 mx-0" >
+                                            <input name="categoryId" class="form-check-input" type="checkbox" id="inlineCheckbox${category.id}" value="${category.id}">
+                                            <label class="form-check-label" for="inlineCheckbox${category.id}">${category.name}</label>
+                                        </div>
+                                    </c:forEach> 
+                                </div>
+                            </div>
                         </div>
-                    </div>
                     </form>
                     <style>
                         .home-filter{
@@ -86,7 +119,7 @@
                         }
                         section #bootstrap-overrides{
                             width: calc(17% - 2.5em);
-                                     margin: 4em 0 0 4em;
+                            margin: 4em 0 0 4em;
                         }
 
                     </style>
@@ -110,7 +143,7 @@
                                     <c:if test="${!book.issale()}">
                                         <p><strong>$${book.getPrice()}</strong></p>
                                     </c:if>
-                                   
+
                                 </a>
                             </article>
                         </c:forEach>

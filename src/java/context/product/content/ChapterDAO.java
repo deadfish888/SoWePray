@@ -160,6 +160,7 @@ public class ChapterDAO {
                     + "           ,[title]\n"
                     + "           ,[status]\n"
                     + "           ,[content])\n"
+                    + "     OUTPUT [Inserted].[id]"
                     + "     VALUES\n"
                     + "           ( ? "
                     + "           , (SELECT COUNT([no]) FROM [dbo].[Chapter] WHERE [volumeId] = ?)+1 "
@@ -172,7 +173,8 @@ public class ChapterDAO {
             stm.setString(3, chapter.getTitle());
             stm.setBoolean(4, chapter.isStatus());
             stm.setString(5, chapter.getContent());
-            return stm.executeUpdate();
+            rs = stm.executeQuery();
+            if (rs.next()) return rs.getInt(1);
         } catch (SQLException ex) {
             Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

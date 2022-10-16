@@ -12,6 +12,7 @@ import Model.auth.User;
 import context.product.BookDAO;
 import context.product.content.ChapterDAO;
 import context.action.CommentDAO;
+import context.action.FavouriteDAO;
 import context.product.content.VolumeDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -40,7 +41,8 @@ public class BookDetail extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-
+        FavouriteDAO fdao = new FavouriteDAO();
+        boolean check=false;
         BookDAO b = new BookDAO();
         ChapterDAO chd = new ChapterDAO();
         VolumeDAO vd = new VolumeDAO();
@@ -49,17 +51,27 @@ public class BookDetail extends HttpServlet {
         User user = (User) request.getSession().getAttribute("user");
         if (user != null) {
             request.setAttribute("own", user.isOwnBook(id));
+            int uId = user.getId();
+            if (fdao.checkFavourite(uId, id) == true) {
+            check = true;
+        } else {
+            check = false;
         }
+        }
+        
         ArrayList<Book> sames = null; //b.getSimilarBooks(id, thisbook.getCategoryId());
+        ArrayList<Book> bookauthor = b.getFeaturedBooksByAuthorId(b.getAuthorIdByBookId(id), id);
         ArrayList<Volume> vols = vd.getVolumesByBookId(id);
         ArrayList<Chapter> chaps = chd.getChaptersByBookId(id);
         ArrayList<Comment> coms = cmd.loadComment(id);
+        request.setAttribute("bookauthor", bookauthor);
         request.setAttribute("chaps", chaps);
         request.setAttribute("sames", sames);
         request.setAttribute("book", thisbook);
         request.setAttribute("vols", vols);
         request.setAttribute("comments", coms);
-
+        request.setAttribute("aid", b.getAuthorIdByBookId(id));
+        request.setAttribute("check", check);
         request.getRequestDispatcher("/views/book/book-details.jsp").forward(request, response);
     }
 
