@@ -2,14 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.payment;
+package Controller.admin.category;
 
-import Model.payment.PaymentAccount;
-import Model.payment.PaymentMethod;
-import Model.auth.User;
-import context.auth.UserDAO;
-import context.payment.PaymentAccountDAO;
-import context.payment.PaymentMethodDAO;
+import context.product.CategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -22,8 +17,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author Silver_000
  */
-@WebServlet(name = "AddPaymentController", urlPatterns = {"/User/AddPayment"})
-public class AddPaymentController extends HttpServlet {
+@WebServlet(name = "RemoveCategoryController", urlPatterns = {"/Admin/Category/Remove"})
+public class RemoveCategoryController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,30 +31,12 @@ public class AddPaymentController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
-        long acccountNumer = Long.parseLong(request.getParameter("accountNumber"));
-        PaymentAccount paymentAccount = payAccDAO.get(new PaymentAccount(acccountNumer));
-        if (paymentAccount == null) {
-            request.setAttribute("addErrorNoti", "Payment account is invalid");
-
-        request.getRequestDispatcher("/User/Payment").forward(request, response);
-//            response.sendRedirect(request.getContextPath() + "/User/Payment");
-        } else {
-            PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
-            PaymentMethod paymentMethod = new PaymentMethod();
-            User user = (User) request.getSession().getAttribute("user");
-            paymentMethod.setUser(user);
-            paymentMethod.setPaymentAccount(paymentAccount);
-            paymentMethod.setName(request.getParameter("paymentName"));
-            paymentMethod.setActive(true);
-            payMedDAO.insert(paymentMethod);
-            response.sendRedirect(request.getContextPath() + "/User/Payment");
-            if(user.is_super() == 1) {
-                user.setIs_super(2);
-                UserDAO userDAO = new UserDAO();
-                userDAO.editRank(user.getId(), 1);
-            }
-        }
+        CategoryDAO categoryDAO = new CategoryDAO();
+        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+        System.out.println(categoryId);
+        categoryDAO.delBookCategory(categoryId);
+        categoryDAO.delCategory(categoryId);
+        response.sendRedirect(request.getContextPath() + "/Admin/Category/View");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

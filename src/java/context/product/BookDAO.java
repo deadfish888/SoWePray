@@ -15,7 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
+//import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
@@ -38,6 +38,14 @@ public class BookDAO {
             System.out.println("Connect successfully!");
         } catch (Exception e) {
             System.out.println("Connect error:" + e.getMessage());
+        }
+    }
+
+    public void close() {
+        try {
+            cnn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -784,6 +792,116 @@ public class BookDAO {
         return 0;
     }
 
+    //Get all novels that this user is their author
+    public ArrayList<Book> getNovels(User user) {
+        ArrayList<Book> bookList = new ArrayList<>();
+        try {
+            String sql = "SELECT [Book].[id]\n"
+                    + "      ,[title]\n"
+                    + "      ,[authorId]\n"
+                    + "      ,[Author].[name]\n"
+                    + "      ,[rating]\n"
+                    + "      ,[favourite]\n"
+                    + "      ,[price]\n"
+                    + "      ,[is_sale]\n"
+                    + "      ,[image]\n"
+                    + "      ,[description]\n"
+                    + "      ,[views]\n"
+                    + "      ,[status]\n"
+                    + "  FROM [Book]"
+                    + " INNER JOIN [Author] ON [Book].[authorId] = [Author].[id]"
+                    + " WHERE [Author].[userId] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, user.getId());
+            rs = stm.executeQuery();
+            while (rs.next()) {
+
+                Book book = new Book();
+                book.setId(rs.getInt(1));
+                book.setTitle(rs.getString(2));
+                book.setAuthorId(rs.getInt(3));
+                Author author = new Author();
+                author.setId(rs.getInt(3));
+                author.setName(rs.getString(4));
+                book.setAuthor(author);
+
+                CategoryDAO cd = new CategoryDAO();
+                book.setCategory(cd.getCategoriesByBookId(rs.getInt(1)));
+
+                book.setRating(rs.getFloat(5));
+                book.setFavourite(rs.getInt(6));
+                book.setPrice(rs.getFloat(7));
+                book.setIssale(rs.getBoolean(8));
+                book.setImage(rs.getString(9));
+                book.setDescription(rs.getString(10));
+                book.setViews(rs.getInt(11));
+                book.setStatus(rs.getBoolean(12));
+                bookList.add(book);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return bookList;
+    }
+
+    //Get all novels that this user is their author
+    public ArrayList<Book> getNovelsPagging(User user, int pageSize, int pageIndex) {
+        ArrayList<Book> bookList = new ArrayList<>();
+        try {
+            String sql = "SELECT [Book].[id]\n"
+                    + "      ,[title]\n"
+                    + "      ,[authorId]\n"
+                    + "      ,[Author].[name]\n"
+                    + "      ,[rating]\n"
+                    + "      ,[favourite]\n"
+                    + "      ,[price]\n"
+                    + "      ,[is_sale]\n"
+                    + "      ,[image]\n"
+                    + "      ,[description]\n"
+                    + "      ,[views]\n"
+                    + "      ,[status]\n"
+                    + "  FROM [Book]"
+                    + " INNER JOIN [Author] ON [Book].[authorId] = [Author].[id]"
+                    + " WHERE [Author].[userId] = ?"
+                    + " ORDER BY [Book].id ASC \n"
+                    + " OFFSET ? * (?-1) ROWS  FETCH NEXT ?\n"
+                    + " ROWS ONLY";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, user.getId());
+            stm.setInt(2, pageSize);
+            stm.setInt(3, pageIndex);
+            stm.setInt(4, pageSize);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+
+                Book book = new Book();
+                book.setId(rs.getInt(1));
+                book.setTitle(rs.getString(2));
+                book.setAuthorId(rs.getInt(3));
+                Author author = new Author();
+                author.setId(rs.getInt(3));
+                author.setName(rs.getString(4));
+                book.setAuthor(author);
+
+                CategoryDAO cd = new CategoryDAO();
+                book.setCategory(cd.getCategoriesByBookId(rs.getInt(1)));
+
+                book.setRating(rs.getFloat(5));
+                book.setFavourite(rs.getInt(6));
+                book.setPrice(rs.getFloat(7));
+                book.setIssale(rs.getBoolean(8));
+                book.setImage(rs.getString(9));
+                book.setDescription(rs.getString(10));
+                book.setViews(rs.getInt(11));
+                book.setStatus(rs.getBoolean(12));
+                bookList.add(book);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return bookList;
+    }
+
     public boolean checkNovelSold(int bookId) {
         try {
             String sql = "SELECT DISTINCT [co].[userId] "
@@ -814,6 +932,24 @@ public class BookDAO {
         } catch (SQLException ex) {
             Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    
+    public int countNovel(User user) {
+        try {
+            String sql = "SELECT COUNT(*) as total FROM [Book]"
+                    + "  INNER JOIN [Author] on [Book].authorId = [Author].id"
+                    + "  WHERE [Author].userId = " + user.getId();
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+
     }
 
     public ArrayList<Book> getFeaturedBooksByAuthorId(int aid, int bid) {
