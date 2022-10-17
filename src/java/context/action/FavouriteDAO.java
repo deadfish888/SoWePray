@@ -194,4 +194,67 @@ public class FavouriteDAO {
         return -1;
 
     }
+    
+    public void deleteFavourite(int uID, int bID) {
+        try {
+            String sql = "DELETE FROM [dbo].[Favourite]\n"
+                    + " WHERE uid= ? and bid= ? ";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, uID);
+            stm.setInt(2, bID);
+            stm.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("edit Error:" + e.getMessage());
+        }
+    }
+
+    public boolean checkFavourite(int uID, int bID) {
+        try {
+            String sql = "SELECT [uid]\n"
+                    + ",[bid]\n"
+                    + " FROM [dbo].[Favourite] \n"
+                    + " WHERE uid='" + uID + "' and bid='" + bID + "'";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("edit Error:" + e.getMessage());
+        }
+        return false;
+    }
+    
+    public ArrayList<Favourite> getAllFav(int bID) {
+        ArrayList<Favourite> list = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM [Favourite] WHERE bid='" + bID + "'";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int uid = rs.getInt(1);
+                int bid = rs.getInt(2);
+                list.add(new Favourite(uid, bid));
+            }
+        } catch (Exception e) {
+            System.out.println("edit Error:" + e.getMessage());
+        }
+        return list;
+    }
+
+    public void sendFavtoBook(int count) {
+        try {
+
+            String sql = "INSERT INTO [dbo].[Book]\n"
+                    + "           (\n"
+                    + "           [favourite])\n"
+                    + "     VALUES\n"
+                    + "           ('" + count + "'"
+                    + "           )";
+            stm =cnn.prepareStatement(sql);
+            stm.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("edit Error:" + e.getMessage());
+        }
+    }
 }

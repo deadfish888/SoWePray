@@ -170,13 +170,22 @@
                                         </div>
                                     </div>
 
-                                    <form action="Favourite" method="POST">
-                                        <div class="col-sm-4">
-
-                                            <input type="submit" class="primary" value="Add to Favorite">                                 
-                                            <input type="hidden" name="bId" value="${book.getId()}">
-                                        </div>
-                                    </form>
+                                    <c:if test="${check==true}">
+                                        <form action="Fav" method="POST">
+                                            <div class="col-sm-4">
+                                                <input type="submit" class="primary" value="Delete Favourite">                                 
+                                                <input type="hidden" name="bId" value="${book.getId()}">
+                                            </div>
+                                        </form>
+                                    </c:if> 
+                                    <c:if test="${check==false}">
+                                        <form action="Favourite" method="POST">
+                                            <div class="col-sm-4">
+                                                <input type="submit" class="primary" value="Add to Favorite">                                 
+                                                <input type="hidden" name="bId" value="${book.getId()}">
+                                            </div>
+                                        </form>
+                                    </c:if>
                                     <form action="Report" method="POST">
                                         <div class="col-sm-4"> 
                                             <input type="submit" class="primary" value="Report">                                 

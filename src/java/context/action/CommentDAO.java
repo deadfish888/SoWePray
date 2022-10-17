@@ -72,7 +72,8 @@ public class CommentDAO {
                     + "      ,[createdAt]\n"
                     + "  FROM [Comment] c"
                     + " INNER JOIN [User] u ON c.[userId] = u.[id]"
-                    + " WHERE [bookId]= ? ";
+                    + " WHERE [bookId]= ? "
+                    + " ORDER BY [createdAt] DESC";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, bid);
             rs = stm.executeQuery();
