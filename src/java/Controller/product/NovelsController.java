@@ -51,6 +51,7 @@ public class NovelsController extends HttpServlet {
         BookDAO bd = new BookDAO();
         ArrayList<Category> cates = cd.getAllCategory();
         ArrayList<Book> books = bd.getUserNovels(user.getId(), search);
+        System.out.println(books.size());
 
         int size = books.size();
         int numPage = (int) Math.ceil((double) size / pageSize);
