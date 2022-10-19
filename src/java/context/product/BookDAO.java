@@ -651,7 +651,7 @@ public class BookDAO {
             }
 
             stm = cnn.prepareStatement(sql);
-            stm.setString(1, "%" + search + "%");
+            stm.setString(1, "%" + search.trim() + "%");
             stm.setString(2, "%" + authorname + "%");
             if (idCategory[0] != -1) {
                 for (int i = 0; i < idCateLength; i++) {
@@ -708,7 +708,7 @@ public class BookDAO {
                     + " AND [Book].[title] LIKE ? ";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, userId);
-            stm.setString(2, "%" + search.trim() + "%");
+            stm.setString(2, "%" + search + "%");
             rs = stm.executeQuery();
             while (rs.next()) {
                 Book book = new Book();
@@ -720,7 +720,8 @@ public class BookDAO {
                 author.setName(rs.getString(4));
                 book.setAuthor(author);
 
-                book.setCategory(getCategoriesBook(rs.getInt(1)));
+                CategoryDAO cd = new CategoryDAO();
+                book.setCategory(cd.getCategoriesByBookId(rs.getInt(1)));
 
                 book.setRating(rs.getFloat(5));
                 book.setFavourite(rs.getInt(6));
@@ -733,7 +734,7 @@ public class BookDAO {
                 list.add(book);
             }
         } catch (Exception e) {
-            System.out.println("getlist Error:" + e.getMessage());
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return list;
     }
@@ -763,7 +764,8 @@ public class BookDAO {
             stm.setString(6, book.getDescription());
             rs = stm.executeQuery();
             if (rs.next()) {
-                addCategoryBook(rs.getInt(1), book.getCategory());
+                CategoryDAO cd = new CategoryDAO();
+                cd.addCategoryBook(rs.getInt(1), book.getCategory());
                 VolumeDAO vd = new VolumeDAO();
                 Volume volume = new Volume();
                 volume.setBookId(rs.getInt(1));
@@ -796,7 +798,8 @@ public class BookDAO {
             pre.setInt(6, book.getId());
             int n = pre.executeUpdate();
             if (n != 0) {
-                return editCategoryBook(book.getId(), book.getCategory());
+                CategoryDAO cd= new CategoryDAO();
+                return cd.editCategoryBook(book.getId(), book.getCategory());
             }
             return n;
         } catch (Exception e) {
@@ -1143,80 +1146,4 @@ public class BookDAO {
         return null;
     }
 
-    private int addCategoryBook(int bookId, ArrayList<Category> category) {
-        try {
-            String sql = "INSERT INTO [CategoryBook] ([bookId], [CategoryId])"
-                    + " VALUES ( ? ,? ) ";
-            for (int i=1;i<category.size();i++) {
-                sql += ", (?, ?)";
-            }
-            stm = cnn.prepareStatement(sql);
-            for (int i=0;i<category.size();i++) {
-                stm.setInt(2*i+1, bookId);
-                stm.setInt(2*i+2, category.get(i).getId());
-            }
-            return stm.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("addCategoryBook Error:" + e.getMessage());
-        }
-        return 0;
-    }
-
-    private int editCategoryBook(int bookId, ArrayList<Category> category) {
-        try {
-            deleteCategoryBook(bookId);
-            String sql = "INSERT INTO [CategoryBook] ([bookId], [CategoryId])"
-                    + " VALUES ( ? ,? ) ";
-            for (int i=1;i<category.size();i++) {
-                sql += ", (?, ?)";
-            }
-            stm = cnn.prepareStatement(sql);
-            for (int i=0;i<category.size();i++) {
-                stm.setInt(2*i+1, bookId);
-                stm.setInt(2*i+2, category.get(i).getId());
-            }
-            return stm.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("addCategoryBook Error:" + e.getMessage());
-        }
-        return 0;
-    }
-
-    private void deleteCategoryBook(int bookId) {
-        try {
-            String sql = "DELETE FROM [CategoryBook]"
-                    + " WHERE [bookId] = ? ";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, bookId);
-            stm.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("addCategoryBook Error:" + e.getMessage());
-        }
-    }
-
-    private ArrayList<Category> getCategoriesBook(int bookId) {
-        ArrayList<Category> cates = new ArrayList<>();
-        try {
-            String sql = "SELECT [categoryId]"
-                    + "         ,[name]\n"
-                    + "  FROM [CategoryBook] cb"
-                    + " INNER JOIN [Category] c ON cb.[categoryId] = c.[id]"
-                    + " WHERE [bookId] = ? "
-                    + " ORDER BY [name] ASC";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, bookId);
-            rs = stm.executeQuery();
-            while (rs.next()) {
-                Category category = new Category();
-                category.setId(rs.getInt(1));
-                category.setName(rs.getString(2));
-
-                cates.add(category);
-            }
-            return cates;
-        } catch (SQLException ex) {
-            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
 }

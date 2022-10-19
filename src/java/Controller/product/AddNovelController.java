@@ -53,7 +53,7 @@ public class AddNovelController extends HttpServlet {
         author.setUserId(user.getId());
         book.setAuthor(author);
         book.setCategory(category);
-        book.setPrice(0);
+        book.setPrice((float) 0.1);
         book.setIssale(false);
         book.setImage(img.trim().equals("")? null : img);
         book.setDescription(description);

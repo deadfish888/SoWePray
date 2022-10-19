@@ -689,12 +689,6 @@ INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], 
 GO
 INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (17, N'Lạc', 16, NULL, 0, CAST(0.00 AS Decimal(10, 2)), 0, NULL, N'Một đứa trẻ lạc lối giữa thế giới đầy kết nối...', 0, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (18, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, 1)
-GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (19, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, 1)
-GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (20, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, 1)
-GO
 SET IDENTITY_INSERT [dbo].[Book] OFF
 GO
 INSERT [dbo].[Book_Own] ([userId], [bookId]) VALUES (109, 4)
@@ -3832,6 +3826,7 @@ REFERENCES [dbo].[User] ([id])
 GO
 ALTER TABLE [dbo].[Chapter_Payment]  WITH CHECK ADD FOREIGN KEY([chapterId])
 REFERENCES [dbo].[Chapter] ([id])
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Comment]  WITH CHECK ADD FOREIGN KEY([bookId])
 REFERENCES [dbo].[Book] ([id])
