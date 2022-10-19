@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [BOOKIE]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Database [BOOKIE]    Script Date: 10/19/2022 9:55:23 PM ******/
 IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'BOOKIE')
 BEGIN
 	ALTER DATABASE [BOOKIE] SET OFFLINE WITH ROLLBACK IMMEDIATE;
@@ -83,7 +83,7 @@ ALTER DATABASE [BOOKIE] SET QUERY_STORE = OFF
 GO
 USE [BOOKIE]
 GO
-/****** Object:  Table [dbo].[Author]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Table [dbo].[Author]    Script Date: 10/19/2022 9:55:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -99,7 +99,7 @@ CREATE TABLE [dbo].[Author](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Book]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Table [dbo].[Book]    Script Date: 10/19/2022 9:55:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -122,7 +122,7 @@ CREATE TABLE [dbo].[Book](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Book_Own]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Table [dbo].[Book_Own]    Script Date: 10/19/2022 9:55:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -132,7 +132,7 @@ CREATE TABLE [dbo].[Book_Own](
 	[bookId] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Category]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Table [dbo].[Category]    Script Date: 10/19/2022 9:55:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -146,7 +146,7 @@ CREATE TABLE [dbo].[Category](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CategoryBook]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Table [dbo].[CategoryBook]    Script Date: 10/19/2022 9:55:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -156,7 +156,7 @@ CREATE TABLE [dbo].[CategoryBook](
 	[categoryId] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Chapter]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Table [dbo].[Chapter]    Script Date: 10/19/2022 9:55:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -174,17 +174,7 @@ CREATE TABLE [dbo].[Chapter](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Chapter_Own]    Script Date: 10/17/2022 10:43:49 AM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Chapter_Own](
-	[userId] [int] NOT NULL,
-	[chapterId] [int] NOT NULL
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Chapter_Payment]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Table [dbo].[Chapter_Payment]    Script Date: 10/19/2022 9:55:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -194,7 +184,7 @@ CREATE TABLE [dbo].[Chapter_Payment](
 	[price] [decimal](10, 2) NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Comment]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Table [dbo].[Comment]    Script Date: 10/19/2022 9:55:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -207,13 +197,14 @@ CREATE TABLE [dbo].[Comment](
 	[sonOf] [int] NULL,
 	[replyTo] [int] NULL,
 	[createdAt] [datetime] NOT NULL,
+	[status] [bit] NOT NULL,
  CONSTRAINT [PK_comment] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Favourite]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Table [dbo].[Favourite]    Script Date: 10/19/2022 9:55:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -228,7 +219,7 @@ CREATE TABLE [dbo].[Favourite](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Payment_Account]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Table [dbo].[Payment_Account]    Script Date: 10/19/2022 9:55:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -242,7 +233,7 @@ CREATE TABLE [dbo].[Payment_Account](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Payment_Method]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Table [dbo].[Payment_Method]    Script Date: 10/19/2022 9:55:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -259,38 +250,56 @@ CREATE TABLE [dbo].[Payment_Method](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Report]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Table [dbo].[Report]    Script Date: 10/19/2022 9:55:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Report](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	[title] [nvarchar](100) NOT NULL,
- CONSTRAINT [PK_report] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[ReportDetail]    Script Date: 10/17/2022 10:43:49 AM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[ReportDetail](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[reportId] [int] NOT NULL,
-	[bookId] [int] NOT NULL,
+	[reportTypeId] [int] NOT NULL,
 	[userId] [int] NOT NULL,
+	[objectId] [int],
 	[note] [nvarchar](2000) NULL,
+	[sent] [datetime] NOT NULL,
+	[solved] [datetime],
+	[status] [bit] NOT NULL,
  CONSTRAINT [PK_reportdetail] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Star]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Table [dbo].[Report_Violation]    Script Date: 10/19/2022 9:55:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Report_Violation](
+	[reportId] [int] NOT NULL,
+	[violationId] [int] NOT NULL,
+ CONSTRAINT [PK_Report_Violation] PRIMARY KEY CLUSTERED 
+(
+	[reportId] ASC,
+	[violationId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ReportType]    Script Date: 10/19/2022 9:55:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ReportType](
+	[id] [int] NOT NULL,
+	[typeName] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_ReportType] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Star]    Script Date: 10/19/2022 9:55:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -306,7 +315,7 @@ CREATE TABLE [dbo].[Star](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Token]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Table [dbo].[Token]    Script Date: 10/19/2022 9:55:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -317,7 +326,7 @@ CREATE TABLE [dbo].[Token](
 	[expiredDate] [datetime] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Transaction]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Table [dbo].[Transaction]    Script Date: 10/19/2022 9:55:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -338,7 +347,7 @@ CREATE TABLE [dbo].[Transaction](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Transaction_Token]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Table [dbo].[Transaction_Token]    Script Date: 10/19/2022 9:55:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -354,7 +363,7 @@ CREATE TABLE [dbo].[Transaction_Token](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 10/19/2022 9:55:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -377,7 +386,22 @@ CREATE TABLE [dbo].[User](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Volume]    Script Date: 10/17/2022 10:43:49 AM ******/
+/****** Object:  Table [dbo].[Violation]    Script Date: 10/19/2022 9:55:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Violation](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[reportTypeId] [int] NOT NULL,
+	[title] [nvarchar](100) NOT NULL,
+ CONSTRAINT [PK_report] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Volume]    Script Date: 10/19/2022 9:55:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -629,6 +653,7 @@ GO
 INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (116, 102, N'Cyril Watson', CAST(N'2022-09-05' AS Date))
 GO
 INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (117, 109, N'I Am Tester', CAST(N'2022-09-05' AS Date))
+
 GO
 SET IDENTITY_INSERT [dbo].[Author] OFF
 GO
@@ -686,7 +711,7 @@ INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], 
 GO
 INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (16, N'Classroom of the Elite Vol. 1', 15, NULL, 0, CAST(9.69 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?', 0, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (17, N'Lạc', 16, NULL, 0, CAST(0.00 AS Decimal(10, 2)), 0, NULL, N'Một đứa trẻ lạc lối giữa thế giới đầy kết nối...', 0, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (17, N'Lạc', 16, NULL, 0, CAST(0.10 AS Decimal(10, 2)), 0, NULL, N'Một đứa trẻ lạc lối giữa thế giới đầy kết nối...', 0, 1)
 GO
 SET IDENTITY_INSERT [dbo].[Book] OFF
 GO
@@ -2039,17 +2064,33 @@ INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VA
 GO
 INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (22, 4, 2, N'Nhật ký 2020', 0, N'Đó là một cuốn nhật ký nhàu nát và bám đầy bụi.')
 GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (26, 4, 3, N'Nandayo', 1, N'Men always say that as the defining compliment, don’t they? She’s a cool girl. Being the Cool Girl means I am a hot, brilliant, funny woman who adores football, poker, dirty jokes, and burping, who plays video games, drinks cheap beer, loves threesomes and anal sex, and jams hot dogs and hamburgers into her mouth like she’s hosting the world’s biggest culinary gang bang while somehow maintaining a size 2, because Cool Girls are above all hot. Hot and understanding. Cool Girls never get angry; they only smile in a chagrined, loving manner and let their men do whatever they want. Go ahead, shit on me, I don’t mind, I’m the Cool Girl.
+
+Men actually think this girl exists. Maybe they’re fooled because so many women are willing to pretend to be this girl. For a long time Cool Girl offended me. I used to see men – friends, coworkers, strangers – giddy over these awful pretender women, and I’d want to sit these men down and calmly say: You are not dating a woman, you are dating a woman who has watched too many movies written by socially awkward men who’d like to believe that this kind of woman exists and might kiss them. I’d want to grab the poor guy by his lapels or messenger bag and say: The bitch doesn’t really love chili dogs that much – no one loves chili dogs that much! And the Cool Girls are even more pathetic: They’re not even pretending to be the woman they want to be, they’re pretending to be the woman a man wants them to be. Oh, and if you’re not a Cool Girl, I beg you not to believe that your man doesn’t want the Cool Girl. It may be a slightly different version – maybe he’s a vegetarian, so Cool Girl loves seitan and is great with dogs; or maybe he’s a hipster artist, so Cool Girl is a tattooed, bespectacled nerd who loves comics. There are variations to the window dressing, but believe me, he wants Cool Girl, who is basically the girl who likes every fucking thing he likes and doesn’t ever complain. (How do you know you’re not Cool Girl? Because he says things like: “I like strong women.” If he says that to you, he will at some point fuck someone else. Because “I like strong women” is code for “I hate strong women.”
+Men always say that as the defining compliment, don’t they? She’s a cool girl. Being the Cool Girl means I am a hot, brilliant, funny woman who adores football, poker, dirty jokes, and burping, who plays video games, drinks cheap beer, loves threesomes and anal sex, and jams hot dogs and hamburgers into her mouth like she’s hosting the world’s biggest culinary gang bang while somehow maintaining a size 2, because Cool Girls are above all hot. Hot and understanding. Cool Girls never get angry; they only smile in a chagrined, loving manner and let their men do whatever they want. Go ahead, shit on me, I don’t mind, I’m the Cool Girl.
+
+Men actually think this girl exists. Maybe they’re fooled because so many women are willing to pretend to be this girl. For a long time Cool Girl offended me. I used to see men – friends, coworkers, strangers – giddy over these awful pretender women, and I’d want to sit these men down and calmly say: You are not dating a woman, you are dating a woman who has watched too many movies written by socially awkward men who’d like to believe that this kind of woman exists and might kiss them. I’d want to grab the poor guy by his lapels or messenger bag and say: The bitch doesn’t really love chili dogs that much – no one loves chili dogs that much! And the Cool Girls are even more pathetic: They’re not even pretending to be the woman they want to be, they’re pretending to be the woman a man wants them to be. Oh, and if you’re not a Cool Girl, I beg you not to believe that your man doesn’t want the Cool Girl. It may be a slightly different version – maybe he’s a vegetarian, so Cool Girl loves seitan and is great with dogs; or maybe he’s a hipster artist, so Cool Girl is a tattooed, bespectacled nerd who loves comics. There are variations to the window dressing, but believe me, he wants Cool Girl, who is basically the girl who likes every fucking thing he likes and doesn’t ever complain. (How do you know you’re not Cool Girl? Because he says things like: “I like strong women.” If he says that to you, he will at some point fuck someone else. Because “I like strong women” is code for “I hate strong women.”
+Men always say that as the defining compliment, don’t they? She’s a cool girl. Being the Cool Girl means I am a hot, brilliant, funny woman who adores football, poker, dirty jokes, and burping, who plays video games, drinks cheap beer, loves threesomes and anal sex, and jams hot dogs and hamburgers into her mouth like she’s hosting the world’s biggest culinary gang bang while somehow maintaining a size 2, because Cool Girls are above all hot. Hot and understanding. Cool Girls never get angry; they only smile in a chagrined, loving manner and let their men do whatever they want. Go ahead, shit on me, I don’t mind, I’m the Cool Girl.
+
+Men actually think this girl exists. Maybe they’re fooled because so many women are willing to pretend to be this girl. For a long time Cool Girl offended me. I used to see men – friends, coworkers, strangers – giddy over these awful pretender women, and I’d want to sit these men down and calmly say: You are not dating a woman, you are dating a woman who has watched too many movies written by socially awkward men who’d like to believe that this kind of woman exists and might kiss them. I’d want to grab the poor guy by his lapels or messenger bag and say: The bitch doesn’t really love chili dogs that much – no one loves chili dogs that much! And the Cool Girls are even more pathetic: They’re not even pretending to be the woman they want to be, they’re pretending to be the woman a man wants them to be. Oh, and if you’re not a Cool Girl, I beg you not to believe that your man doesn’t want the Cool Girl. It may be a slightly different version – maybe he’s a vegetarian, so Cool Girl loves seitan and is great with dogs; or maybe he’s a hipster artist, so Cool Girl is a tattooed, bespectacled nerd who loves comics. There are variations to the window dressing, but believe me, he wants Cool Girl, who is basically the girl who likes every fucking thing he likes and doesn’t ever complain. (How do you know you’re not Cool Girl? Because he says things like: “I like strong women.” If he says that to you, he will at some point fuck someone else. Because “I like strong women” is code for “I hate strong women.”
+
+Men always say that as the defining compliment, don’t they? She’s a cool girl. Being the Cool Girl means I am a hot, brilliant, funny woman who adores football, poker, dirty jokes, and burping, who plays video games, drinks cheap beer, loves threesomes and anal sex, and jams hot dogs and hamburgers into her mouth like she’s hosting the world’s biggest culinary gang bang while somehow maintaining a size 2, because Cool Girls are above all hot. Hot and understanding. Cool Girls never get angry; they only smile in a chagrined, loving manner and let their men do whatever they want. Go ahead, shit on me, I don’t mind, I’m the Cool Girl.
+
+Men actually think this girl exists. Maybe they’re fooled because so many women are willing to pretend to be this girl. For a long time Cool Girl offended me. I used to see men – friends, coworkers, strangers – giddy over these awful pretender women, and I’d want to sit these men down and calmly say: You are not dating a woman, you are dating a woman who has watched too many movies written by socially awkward men who’d like to believe that this kind of woman exists and might kiss them. I’d want to grab the poor guy by his lapels or messenger bag and say: The bitch doesn’t really love chili dogs that much – no one loves chili dogs that much! And the Cool Girls are even more pathetic: They’re not even pretending to be the woman they want to be, they’re pretending to be the woman a man wants them to be. Oh, and if you’re not a Cool Girl, I beg you not to believe that your man doesn’t want the Cool Girl. It may be a slightly different version – maybe he’s a vegetarian, so Cool Girl loves seitan and is great with dogs; or maybe he’s a hipster artist, so Cool Girl is a tattooed, bespectacled nerd who loves comics. There are variations to the window dressing, but believe me, he wants Cool Girl, who is basically the girl who likes every fucking thing he likes and doesn’t ever complain. (How do you know you’re not Cool Girl? Because he says things like: “I like strong women.” If he says that to you, he will at some point fuck someone else. Because “I like strong women” is code for “I hate strong women.”')
+GO
 SET IDENTITY_INSERT [dbo].[Chapter] OFF
+GO
+INSERT [dbo].[Chapter_Payment] ([chapterId], [price]) VALUES (26, CAST(0.10 AS Decimal(10, 2)))
 GO
 SET IDENTITY_INSERT [dbo].[Comment] ON 
 GO
-INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [editedAt]) VALUES (1, 1, 2, N'hehe', NULL, NULL, CAST(N'2022-10-15T23:13:00.507' AS DateTime), NULL)
+INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [status]) VALUES (1, 1, 2, N'hehe', NULL, NULL, CAST(N'2022-10-15T23:13:00.507' AS DateTime), 1)
 GO
-INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [editedAt]) VALUES (2, 1, 109, N'Quite simply, this is one of the best novels of the year. It''s a thriller in the best tradition of Alfred Hitchcock and layered with brilliantly written characters.', NULL, NULL, CAST(N'2022-10-17T10:32:06.783' AS DateTime), NULL)
+INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [status]) VALUES (2, 1, 109, N'Quite simply, this is one of the best novels of the year. It''s a thriller in the best tradition of Alfred Hitchcock and layered with brilliantly written characters.', NULL, NULL, CAST(N'2022-10-17T10:32:06.783' AS DateTime), 1)
 GO
-INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [editedAt]) VALUES (3, 1, 3, N'In my mind, any book that takes me 3 months and 20 different tries to read is not worth 3 stars, especially a book written by an author I already respect. And I am not kidding, for me the first half of Gone Girl was a PURE TORTURE to read.', NULL, NULL, CAST(N'2022-10-17T10:36:06.177' AS DateTime), NULL)
+INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [status]) VALUES (3, 1, 3, N'In my mind, any book that takes me 3 months and 20 different tries to read is not worth 3 stars, especially a book written by an author I already respect. And I am not kidding, for me the first half of Gone Girl was a PURE TORTURE to read.', NULL, NULL, CAST(N'2022-10-17T10:36:06.177' AS DateTime), 1)
 GO
-INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [editedAt]) VALUES (4, 1, 3, N'I hate Amy.', NULL, NULL, CAST(N'2022-10-17T10:37:41.260' AS DateTime), NULL)
+INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [status]) VALUES (4, 1, 3, N'I hate Amy.', NULL, NULL, CAST(N'2022-10-17T10:37:41.260' AS DateTime), 1)
 GO
 SET IDENTITY_INSERT [dbo].[Comment] OFF
 GO
@@ -3303,29 +3344,11 @@ INSERT [dbo].[Payment_Method] ([paymentId], [userId], [accountNumber], [name], [
 GO
 SET IDENTITY_INSERT [dbo].[Payment_Method] OFF
 GO
-SET IDENTITY_INSERT [dbo].[Report] ON 
+INSERT [dbo].[ReportType] ([id], [typeName]) VALUES (1, N'Book')
 GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (1, N'Sexual Content')
+INSERT [dbo].[ReportType] ([id], [typeName]) VALUES (2, N'Comment')
 GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (2, N'Violent or repulsive content')
-GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (3, N'Hateful or abusive content')
-GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (4, N'Harassment or bullying')
-GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (5, N'Harmful or dangerous acts')
-GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (6, N'Child abuse')
-GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (7, N'Promotes terrorism')
-GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (8, N'Spam or misleading')
-GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (9, N'Infringes my rights')
-GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (10, N'Caption issue')
-GO
-SET IDENTITY_INSERT [dbo].[Report] OFF
+INSERT [dbo].[ReportType] ([id], [typeName]) VALUES (3, N'Application')
 GO
 INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (1, 2, 2)
 GO
@@ -3559,7 +3582,7 @@ SET IDENTITY_INSERT [dbo].[User] ON
 GO
 INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (1, N'Vinh Nguyen', 1, CAST(N'2002-12-25' AS Date), N'vinhnthe163219@fpt.edu.vn', N'0382132025', N'FBT University ', N'admin', N'admin', 5, 1)
 GO
-INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (2, N'Vinh Nguyen', 1, CAST(N'2002-12-25' AS Date), N'vinhvn102@gmail.com', N'0382132025', N'FBT University ', N'vinh', N'2002', 2, 2)
+INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (2, N'Vinh Nguyen', 1, CAST(N'2002-12-25' AS Date), N'vinhvn102@gmail.com', N'0382132025', N'FBT University ', N'vinh', N'2002', 3, 2)
 GO
 INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (3, N'Ivory Marcel', 0, CAST(N'1969-09-20' AS Date), N'Bookie_User1@qa.team', N'6128170843', N'E312R', N'user_no1', N'9v9SJ2gqt1', 1, 3)
 GO
@@ -3767,6 +3790,30 @@ INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [addre
 GO
 SET IDENTITY_INSERT [dbo].[User] OFF
 GO
+SET IDENTITY_INSERT [dbo].[Violation] ON 
+GO
+INSERT [dbo].[Violation] ([id],[reportTypeId], [title]) VALUES (1,1, N'Sexual Content')
+GO
+INSERT [dbo].[Violation] ([id],[reportTypeId], [title]) VALUES (2,1, N'Violent or repulsive content')
+GO
+INSERT [dbo].[Violation] ([id],[reportTypeId], [title]) VALUES (3,1, N'Hateful or abusive content')
+GO
+INSERT [dbo].[Violation] ([id],[reportTypeId], [title]) VALUES (4,1, N'Harassment or bullying')
+GO
+INSERT [dbo].[Violation] ([id],[reportTypeId], [title]) VALUES (5,1, N'Harmful or dangerous acts')
+GO
+INSERT [dbo].[Violation] ([id],[reportTypeId], [title]) VALUES (6,1, N'Child abuse')
+GO
+INSERT [dbo].[Violation] ([id],[reportTypeId], [title]) VALUES (7,1, N'Promotes terrorism')
+GO
+INSERT [dbo].[Violation] ([id],[reportTypeId], [title]) VALUES (8,1, N'Spam or misleading')
+GO
+INSERT [dbo].[Violation] ([id],[reportTypeId], [title]) VALUES (9,1, N'Infringes my rights')
+GO
+INSERT [dbo].[Violation] ([id],[reportTypeId], [title]) VALUES (10,1, N'Caption issue')
+GO
+SET IDENTITY_INSERT [dbo].[Violation] OFF
+GO
 SET IDENTITY_INSERT [dbo].[Volume] ON 
 GO
 INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (1, 1, 1, N'Part One: BOY LOSES GIRL', NULL)
@@ -3785,12 +3832,13 @@ ALTER TABLE [dbo].[Book] ADD  CONSTRAINT [DF__Book__views__30F848ED]  DEFAULT ((
 GO
 ALTER TABLE [dbo].[Book] ADD  DEFAULT ((1)) FOR [status]
 GO
+ALTER TABLE [dbo].[Comment] ADD  CONSTRAINT [DF_Comment_status]  DEFAULT ((1)) FOR [status]
+GO
+ALTER TABLE [dbo].[Report] ADD  CONSTRAINT [DF_Report_status]  DEFAULT ((0)) FOR [status]
+GO
 ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF__User__is_super__31EC6D26]  DEFAULT ((1)) FOR [is_super]
 GO
 ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF_User_balance]  DEFAULT ((0)) FOR [walletNumber]
-GO
-ALTER TABLE [dbo].[Author]  WITH CHECK ADD FOREIGN KEY([userId])
-REFERENCES [dbo].[User] ([id])
 GO
 ALTER TABLE [dbo].[Author]  WITH CHECK ADD FOREIGN KEY([userId])
 REFERENCES [dbo].[User] ([id])
@@ -3817,15 +3865,8 @@ ALTER TABLE [dbo].[Chapter]  WITH CHECK ADD FOREIGN KEY([volumeId])
 REFERENCES [dbo].[Volume] ([id])
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[Chapter_Own]  WITH CHECK ADD FOREIGN KEY([chapterId])
-REFERENCES [dbo].[Chapter] ([id])
-GO
-ALTER TABLE [dbo].[Chapter_Own]  WITH CHECK ADD FOREIGN KEY([userId])
-REFERENCES [dbo].[User] ([id])
-GO
 ALTER TABLE [dbo].[Chapter_Payment]  WITH CHECK ADD FOREIGN KEY([chapterId])
 REFERENCES [dbo].[Chapter] ([id])
-ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Comment]  WITH CHECK ADD FOREIGN KEY([bookId])
 REFERENCES [dbo].[Book] ([id])
@@ -3859,14 +3900,23 @@ REFERENCES [dbo].[User] ([id])
 GO
 ALTER TABLE [dbo].[Payment_Method] CHECK CONSTRAINT [FK_Payment_Method_User]
 GO
-ALTER TABLE [dbo].[ReportDetail]  WITH CHECK ADD FOREIGN KEY([bookId])
-REFERENCES [dbo].[Book] ([id])
+ALTER TABLE [dbo].[Report]  WITH CHECK ADD FOREIGN KEY([userId])
+REFERENCES [dbo].[User] ([id])
 GO
-ALTER TABLE [dbo].[ReportDetail]  WITH CHECK ADD FOREIGN KEY([reportId])
+ALTER TABLE [dbo].[Report]  WITH CHECK ADD  CONSTRAINT [FK_Report_ReportType] FOREIGN KEY([reportTypeId])
+REFERENCES [dbo].[ReportType] ([id])
+GO
+ALTER TABLE [dbo].[Report] CHECK CONSTRAINT [FK_Report_ReportType]
+GO
+ALTER TABLE [dbo].[Report_Violation]  WITH CHECK ADD  CONSTRAINT [FK_Report_Violation_Report] FOREIGN KEY([reportId])
 REFERENCES [dbo].[Report] ([id])
 GO
-ALTER TABLE [dbo].[ReportDetail]  WITH CHECK ADD FOREIGN KEY([userId])
-REFERENCES [dbo].[User] ([id])
+ALTER TABLE [dbo].[Report_Violation] CHECK CONSTRAINT [FK_Report_Violation_Report]
+GO
+ALTER TABLE [dbo].[Report_Violation]  WITH CHECK ADD  CONSTRAINT [FK_Report_Violation_Violation] FOREIGN KEY([violationId])
+REFERENCES [dbo].[Violation] ([id])
+GO
+ALTER TABLE [dbo].[Report_Violation] CHECK CONSTRAINT [FK_Report_Violation_Violation]
 GO
 ALTER TABLE [dbo].[Star]  WITH CHECK ADD  CONSTRAINT [FK__Star__bid__2E1BDC42] FOREIGN KEY([bid])
 REFERENCES [dbo].[Book] ([id])
