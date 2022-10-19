@@ -5,7 +5,6 @@
 
 package Controller.product.content;
 
-import Controller.admin.book.content.AddVolumeController;
 import Model.auth.User;
 import Model.product.Book;
 import Model.product.content.Chapter;
@@ -13,7 +12,6 @@ import context.product.BookDAO;
 import context.product.content.ChapterDAO;
 import context.product.content.VolumeDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

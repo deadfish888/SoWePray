@@ -105,7 +105,7 @@
                                     <div class="form-group row col-12">
                                         <label class="col-sm-2 col-form-label">Price ($/thousand words)</label>
                                         <div class="col-sm-4">
-                                            <input class="form-control" type="text" name="price" pattern="[+-]?([0-9]*[.])?[0-9]+" required value="${! empty book.getPrice() ? book.price : 0}">
+                                            <input class="form-control" type="number" name="price" step="0.01" min="0" max="0.1" required value="${! empty book.getPrice() ? book.price : 0}">
                                         </div>
                                     </div>
                                     <div class="form-group row col-12">

@@ -3838,6 +3838,7 @@ REFERENCES [dbo].[User] ([id])
 GO
 ALTER TABLE [dbo].[Chapter_Payment]  WITH CHECK ADD FOREIGN KEY([chapterId])
 REFERENCES [dbo].[Chapter] ([id])
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Comment]  WITH CHECK ADD FOREIGN KEY([bookId])
 REFERENCES [dbo].[Book] ([id])

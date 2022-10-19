@@ -32,7 +32,7 @@ public class NovelsController extends HttpServlet {
         }
         String page = request.getParameter("page");
         String search = request.getParameter("search");
-        if (search == null) {
+        if (search == null || search.trim().length()==0) {
             search = "";
         }
         if (page == null || page.trim().length() == 0) {
