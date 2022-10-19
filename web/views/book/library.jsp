@@ -76,7 +76,7 @@
                     <form action="Book" method="get">
                         <div class="mb-3 mt-0 col-10 row" style="margin:0 auto;">
                             <div class="col-10">
-                            <input name="search" class="form-control" type="text" placeholder="Search by Title" aria-label="Search">
+                                <input name="search" class="form-control" type="text" placeholder="Search by Title" aria-label="Search">
                             </div>
                             <div class="col-2">
                                 <input type="submit" value="Search">
@@ -93,14 +93,22 @@
                                 <div class="mb-3 col-3">
                                     <input type="text" class="form-control" name="author" placeholder="Can be left blank...">
                                 </div>
+                                <h4 class="mb-0">Type</h4>
+                                <div class="form-group mb-3 col-3">
+                                    <select id="inputState" name="type" class="form-control" >
+                                        <option value="all">All</option>
+                                        <option value="book" selected>Our Book</option>
+                                        <option value="novel">Original Novel</option>
+                                    </select>
+                                </div>
                                 <h4>Genre</h4>
                                 <div class="row">
-                                <c:forEach items="${categories}" var="category">
-                                    <div class="form-check form-check-inline col-3 mx-0" >
-                                        <input name="categoryId" class="form-check-input" type="checkbox" id="inlineCheckbox${category.id}" value="${category.id}">
-                                        <label class="form-check-label" for="inlineCheckbox${category.id}">${category.name}</label>
-                                    </div>
-                                </c:forEach> 
+                                    <c:forEach items="${categories}" var="category">
+                                        <div class="form-check form-check-inline col-3 mx-0" >
+                                            <input name="categoryId" class="form-check-input" type="checkbox" id="inlineCheckbox${category.id}" value="${category.id}">
+                                            <label class="form-check-label" for="inlineCheckbox${category.id}">${category.name}</label>
+                                        </div>
+                                    </c:forEach> 
                                 </div>
                             </div>
                         </div>
@@ -112,21 +120,25 @@
                                 <c:forEach items="${books}" var="book">
                                     <article id="bootstrap-overrides" class="style1" style="">
                                         <span class="image">
-                                            <img src="${book.getImage()}" alt="" style="height: 230px;"/>
+                                            <img src="${(!empty book.image)?book.image:"images/novel-sample.png"}" alt="" style="height: 230px;"/>
                                         </span>
                                         <a href="BookDetail?id=${book.id}" alt="${book.title}">
                                             <h2 style="overflow: hidden;text-overflow: ellipsis;font-size: 0.85em;">${book.title}</h2>
                                             <h3 style="font-size: 0.7em;"><i>${book.author.name}</i></h3>
-                                                    <c:if test="${book.issale()}">
-                                                <p>
-                                                    <del>$${book.getPrice()}</del> 
-                                                    <strong>$${5.00}</strong>
-                                                </p>
+                                                    <c:if test="${empty book.author.userId}">
+                                                        <c:if test="${book.issale()}">
+                                                    <p>
+                                                        <del>$${book.getPrice()}</del> 
+                                                        <strong>$${5.00}</strong>
+                                                    </p>
+                                                </c:if>
+                                                <c:if test="${!book.issale()}">
+                                                    <p><strong>$${book.getPrice()}</strong></p>
+                                                </c:if>
                                             </c:if>
-                                            <c:if test="${!book.issale()}">
-                                                <p><strong>$${book.getPrice()}</strong></p>
-                                            </c:if>
+                                            <c:if test="${!empty book.author.userId}">
 
+                                            </c:if>
                                         </a>
                                     </article>
                                 </c:forEach>
@@ -155,7 +167,20 @@
                             </div>
                         </div>
                         <div class="col-3">
-
+                            <div class="font-medium bg-white border py-2 px-3 mb-3">
+                                <h3 class="section-title">Type</h3><!-- comment -->
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item" style="padding: 0.2rem 1rem;">
+                                        <a href="./Book?type=all" class="page-link-type" data="all">All</a>
+                                    </li>
+                                    <li class="list-group-item" style="padding: 0.2rem 1rem;">
+                                        <a href="./Book?type=book" class="page-link-type" data="book">Our Book</a>
+                                    </li>
+                                    <li class="list-group-item" style="padding: 0.2rem 1rem;">
+                                        <a href="./Book?type=novel" class="page-link-type" data="novel">Original Novel</a>
+                                    </li>
+                                </ul>
+                            </div>
                             <div class="font-medium bg-white border py-2 px-3">
                                 <h3 class="section-title">Genre</h3>
                                 <div>
@@ -214,21 +239,35 @@
         <script>
             const url_string = window.location.href;
             const url = new URL(url_string);
-            const search = url.searchParams.get("search");
+            var qtype = url.searchParams.get("type");
             const paginationLinks = document.querySelectorAll(".page-link");
+            var search = location.search.substring(1);
             if (paginationLinks) {
                 paginationLinks.forEach(item => {
-                    var search = location.search.substring(1);
-                    const params = search ? JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"')
-                            .replace(/&/g, '","').replace(/=/g, '":"') + '"}') : {};
+                    const params = new URLSearchParams(search);
                     const page = item.getAttribute("data");
-                    params.page = page;
+                    params.set('page', page);
                     const href = new URLSearchParams(params).toString();
                     item.setAttribute("href", "?" + href);
                 });
             }
-            const params1 = new URLSearchParams('abc=foo&def=%5Basf%5D&xyz=5&def=dude');
-            console.log(params1.toString());
+            const typeLinks = document.querySelectorAll(".page-link-type");
+            if (typeLinks) {
+                typeLinks.forEach(item => {
+                    const params = new URLSearchParams(search);
+                    const type = item.getAttribute("data");
+                    params.set('type', type);
+                    params.delete('page');
+                    const href = params.toString();
+                    item.setAttribute("href", "?" + href);
+                    if (qtype == null)
+                        qtype = "book";
+                    if (qtype == type) {
+                        item.style.fontWeight = "900";
+                    }
+                });
+            }
+            console.log(qtype);
         </script>
     </body>
 </html>

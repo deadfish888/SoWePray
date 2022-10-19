@@ -2,6 +2,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<c:set var="context" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
 <html>
@@ -128,7 +129,7 @@
                                 <a href="BookDetail?id=${book.id}">
                                     <h2>${book.title}</h2>
                                     <h3 style="font-size: 0.85em;"><i>${book.author.name}</i></h3>
-                                    <c:if test="${book.issale()}">
+                                            <c:if test="${book.issale()}">
                                         <p>
                                             <del>$${book.price}</del> 
                                             <strong>$${5.00}</strong>
@@ -141,39 +142,51 @@
                             </article>
                         </c:forEach>
                     </section>
-                    
-                         <h2 class="h2">Weekly Sales </h2>
+                    <p class="text-center">
+                        <a href="./Book"
+                           >More Books &nbsp;<i class="fa fa-long-arrow-right"></i
+                            ></a>
+                    </p>
+
+                    <br />
+                    <h2 class="h2">In Sales </h2>
                     <!-- Products -->
                     <section class="tiles" style="margin-right: 30px">
                         <div class= "" style = "display: flex ">
-                        <c:forEach items="${salebooks}" var="book">
-                            <article class="style1">
-                                <span class="image">
-                                    <img src="${book.image}" alt="" style="max-height: 391px"/>
-                                </span>
-                                <a href="BookDetail?id=${book.id}">
-                                    <h2>${book.title}</h2>
-                                    <h3 style="font-size: 0.85em;"><i>${book.author.name}</i></h3>
-                                    <c:if test="${book.issale()}">
-                                        <p>
-                                            <del>$${book.getPrice()}</del> 
-                                            <strong>$${5.00}</strong>
-                                        </p>
-                                    </c:if>
-                                    <c:if test="${!book.issale()}">
-                                        <p><strong>$${book.getPrice()}</strong></p>
-                                    </c:if>
-                                </a>
-                                
-                            </article>
-                        </c:forEach>
+                            <c:forEach items="${salebooks}" var="book">
+                                <article class="style1">
+                                    <span class="image">
+                                        <img src="${book.image}" alt="" style="max-height: 391px"/>
+                                    </span>
+                                    <a href="BookDetail?id=${book.id}">
+                                        <h2>${book.title}</h2>
+                                        <h3 style="font-size: 0.85em;"><i>${book.author.name}</i></h3>
+                                                <c:if test="${book.issale()}">
+                                            <p>
+                                                <del>$${book.getPrice()}</del> 
+                                                <strong>$${5.00}</strong>
+                                            </p>
+                                        </c:if>
+                                        <c:if test="${!book.issale()}">
+                                            <p><strong>$${book.getPrice()}</strong></p>
+                                        </c:if>
+                                    </a>
+
+                                </article>
+                            </c:forEach>
                         </div> 
                     </section>
-                    
-                    <h2 class="h2">All Product </h2>
+                    <p class="text-center">
+                        <a href="./Book"
+                           >More Books &nbsp;<i class="fa fa-long-arrow-right"></i
+                            ></a>
+                    </p>
+
+                    <br />
+                    <h2 class="h2">Latest Books</h2>
                     <!-- Products -->
                     <section class="tiles" style="margin-left: 15px">
-                        
+
                         <c:forEach items="${allbooks}" var="book">
                             <article class="style1" style="width: calc(17% - 2.5em);
                                      margin: 4em 0 0 4em;">
@@ -183,7 +196,7 @@
                                 <a href="BookDetail?id=${book.id}">
                                     <h2 style="overflow: hidden;text-overflow: ellipsis;">${book.title}</h2>
                                     <h3 style="font-size: 0.85em;"><i>${book.author.name}</i></h3>
-                                    <c:if test="${book.issale()}">
+                                            <c:if test="${book.issale()}">
                                         <p>
                                             <del>$${book.getPrice()}</del> 
                                             <strong>$${5.00}</strong>
@@ -204,10 +217,25 @@
 
                     <br />
 
-                    <h2 class="h2">Original Work</h2>
+                    <h2 class="h2">Original Novels</h2>
+                    <section class="tiles" style="margin-left: 15px">
 
+                        <c:forEach items="${novels}" var="book">
+                            <article class="style1" style="width: calc(17% - 2.5em);
+                                     margin: 4em 0 0 4em;">
+                                <span class="image">
+                                    <img src="${(! empty book.image)?book.image:("images/novel-sample.png")}" alt="" style="height: 250px "/>
+                                </span>
+                                <a href="BookDetail?id=${book.id}">
+                                    <h2 style="overflow: hidden;text-overflow: ellipsis;">${book.title}</h2>
+                                    <h3 style="font-size: 0.85em;"><i>${book.author.name}</i></h3>
+                                            
+                                </a>
+                            </article>
+                        </c:forEach>
+                    </section>
                     <p class="text-center">
-                        <a href="#"
+                        <a href="./Book?type=novel"
                            >Read More &nbsp;<i class="fa fa-long-arrow-right"></i
                             ></a>
                     </p>

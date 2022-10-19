@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [BOOKIE]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Database [BOOKIE]    Script Date: 10/17/2022 10:43:49 AM ******/
 IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'BOOKIE')
 BEGIN
 	ALTER DATABASE [BOOKIE] SET OFFLINE WITH ROLLBACK IMMEDIATE;
@@ -83,7 +83,7 @@ ALTER DATABASE [BOOKIE] SET QUERY_STORE = OFF
 GO
 USE [BOOKIE]
 GO
-/****** Object:  Table [dbo].[Author]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Author]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -92,14 +92,14 @@ CREATE TABLE [dbo].[Author](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[userId] [int] NULL,
 	[name] [nvarchar](50) NULL,
-	[date] DATE NULL,
+	[date] [date] NULL,
  CONSTRAINT [PK_author] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Book]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Book]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -122,7 +122,7 @@ CREATE TABLE [dbo].[Book](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Book_Own]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Book_Own]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -132,7 +132,7 @@ CREATE TABLE [dbo].[Book_Own](
 	[bookId] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Category]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Category]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -146,7 +146,7 @@ CREATE TABLE [dbo].[Category](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CategoryBook]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[CategoryBook]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -156,7 +156,7 @@ CREATE TABLE [dbo].[CategoryBook](
 	[categoryId] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Chapter]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Chapter]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -174,7 +174,7 @@ CREATE TABLE [dbo].[Chapter](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Chapter_Own]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Chapter_Own]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -184,7 +184,7 @@ CREATE TABLE [dbo].[Chapter_Own](
 	[chapterId] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Chapter_Payment]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Chapter_Payment]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -194,7 +194,7 @@ CREATE TABLE [dbo].[Chapter_Payment](
 	[price] [decimal](10, 2) NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Comment]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Comment]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -207,14 +207,14 @@ CREATE TABLE [dbo].[Comment](
 	[sonOf] [int] NULL,
 	[replyTo] [int] NULL,
 	[createdAt] [datetime] NOT NULL,
-	[editedAt] [datetime],
+	[editedAt] [datetime] NULL,
  CONSTRAINT [PK_comment] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Favourite]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Favourite]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -229,7 +229,7 @@ CREATE TABLE [dbo].[Favourite](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Payment_Account]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Payment_Account]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -243,7 +243,7 @@ CREATE TABLE [dbo].[Payment_Account](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Payment_Method]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Payment_Method]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -260,7 +260,7 @@ CREATE TABLE [dbo].[Payment_Method](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Report]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Report]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -274,7 +274,7 @@ CREATE TABLE [dbo].[Report](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ReportDetail]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[ReportDetail]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -291,7 +291,7 @@ CREATE TABLE [dbo].[ReportDetail](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Star]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Star]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -307,7 +307,7 @@ CREATE TABLE [dbo].[Star](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Token]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Token]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -318,7 +318,7 @@ CREATE TABLE [dbo].[Token](
 	[expiredDate] [datetime] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Transaction]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Transaction]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -339,7 +339,7 @@ CREATE TABLE [dbo].[Transaction](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Transaction_Token]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Transaction_Token]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -355,7 +355,7 @@ CREATE TABLE [dbo].[Transaction_Token](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -378,7 +378,7 @@ CREATE TABLE [dbo].[User](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Volume]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Volume]    Script Date: 10/17/2022 10:43:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -397,239 +397,239 @@ CREATE TABLE [dbo].[Volume](
 GO
 SET IDENTITY_INSERT [dbo].[Author] ON 
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (1, NULL, N'Gillian Flynn','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (1, NULL, N'Gillian Flynn', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (2, NULL, N'Agatha Christie','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (2, NULL, N'Agatha Christie', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (3, NULL, N'Alex Michaelides','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (3, NULL, N'Alex Michaelides', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (4, NULL, N'Paula Hawkins','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (4, NULL, N'Paula Hawkins', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (5, NULL, N'Cuttlefish That Loves Diving','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (5, NULL, N'Cuttlefish That Loves Diving', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (6, NULL, N'Stephen King','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (6, NULL, N'Stephen King', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (7, NULL, N'George RR Martin','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (7, NULL, N'George RR Martin', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (8, NULL, N'Suzanne Collins','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (8, NULL, N'Suzanne Collins', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (9, NULL, N'H.G. Wells, Greg Bear','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (9, NULL, N'H.G. Wells, Greg Bear', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (10, NULL, N'Diana Gabaldon','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (10, NULL, N'Diana Gabaldon', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (11, NULL, N'Anthony Doerr','2021-2-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (11, NULL, N'Anthony Doerr', CAST(N'2021-02-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (12, NULL, N'Hiromu Arakawa','2021-2-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (12, NULL, N'Hiromu Arakawa', CAST(N'2021-02-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (13, NULL, N'Tsugumi Ohba','2021-2-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (13, NULL, N'Tsugumi Ohba', CAST(N'2021-02-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (14, NULL, N'Eiichiro Oda','2021-2-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (14, NULL, N'Eiichiro Oda', CAST(N'2021-02-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (15, NULL, N'Syougo Kinugasa','2021-2-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (15, NULL, N'Syougo Kinugasa', CAST(N'2021-02-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (16, 2, N'Vinh Nguyen','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (16, 2, N'Vinh Nguyen', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (17, 3, N'Ivory Marcel','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (17, 3, N'Ivory Marcel', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (18, 4, N'Mary Barisol','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (18, 4, N'Mary Barisol', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (19, 5, N'Eden Frost','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (19, 5, N'Eden Frost', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (20, 6, N'Benidict Robinett','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (20, 6, N'Benidict Robinett', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (21, 7, N'Zera Farmer','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (21, 7, N'Zera Farmer', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (22, 8, N'Ceil Howell','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (22, 8, N'Ceil Howell', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (23, 9, N'Taylor Marcel','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (23, 9, N'Taylor Marcel', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (24, 10, N'Wisley Ray','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (24, 10, N'Wisley Ray', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (25, 11, N'Aiken Pope','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (25, 11, N'Aiken Pope', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (26, 12, N'Rodolphe Blossom','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (26, 12, N'Rodolphe Blossom', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (27, 13, N'Alex Rogze','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (27, 13, N'Alex Rogze', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (28, 14, N'Jean Padilla','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (28, 14, N'Jean Padilla', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (29, 15, N'Dana Franklin','2021-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (29, 15, N'Dana Franklin', CAST(N'2021-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (30, 16, N'Elluka Bush','2021-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (30, 16, N'Elluka Bush', CAST(N'2021-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (31, 17, N'Kenelm Binder','2021-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (31, 17, N'Kenelm Binder', CAST(N'2021-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (32, 18, N'Narcissus Freezis','2021-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (32, 18, N'Narcissus Freezis', CAST(N'2021-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (33, 19, N'Michelle Reynolds','2021-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (33, 19, N'Michelle Reynolds', CAST(N'2021-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (34, 20, N'Callie Banica','2021-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (34, 20, N'Callie Banica', CAST(N'2021-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (35, 21, N'Malceria Freezis','2021-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (35, 21, N'Malceria Freezis', CAST(N'2021-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (36, 22, N'Jasmine Shepard','2021-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (36, 22, N'Jasmine Shepard', CAST(N'2021-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (37, 23, N'Mia Franklin','2021-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (37, 23, N'Mia Franklin', CAST(N'2021-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (38, 24, N'Schick Reyes','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (38, 24, N'Schick Reyes', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (39, 25, N'Allen Reese','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (39, 25, N'Allen Reese', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (40, 26, N'Elman Baxter','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (40, 26, N'Elman Baxter', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (41, 27, N'Willard Jordan','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (41, 27, N'Willard Jordan', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (42, 28, N'Winona Walton','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (42, 28, N'Winona Walton', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (43, 29, N'Sophia Knight','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (43, 29, N'Sophia Knight', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (44, 30, N'Hank Wade','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (44, 30, N'Hank Wade', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (45, 31, N'Mia Dinwiddie','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (45, 31, N'Mia Dinwiddie', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (46, 32, N'Ronald Chandler','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (46, 32, N'Ronald Chandler', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (47, 33, N'Elluka Ackerman','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (47, 33, N'Elluka Ackerman', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (48, 34, N'Jude Gilbert','2021-8-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (48, 34, N'Jude Gilbert', CAST(N'2021-08-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (49, 35, N'Philbert Schultz','2021-8-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (49, 35, N'Philbert Schultz', CAST(N'2021-08-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (50, 36, N'Lamia Fowler','2021-8-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (50, 36, N'Lamia Fowler', CAST(N'2021-08-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (51, 37, N'Gererd Pope','2021-8-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (51, 37, N'Gererd Pope', CAST(N'2021-08-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (52, 38, N'Thetal Shepard','2021-8-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (52, 38, N'Thetal Shepard', CAST(N'2021-08-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (53, 39, N'Yocaski Blossom','2021-8-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (53, 39, N'Yocaski Blossom', CAST(N'2021-08-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (54, 40, N'Danielle Hodges','2021-8-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (54, 40, N'Danielle Hodges', CAST(N'2021-08-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (55, 41, N'Darlene Feron','2021-10-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (55, 41, N'Darlene Feron', CAST(N'2021-10-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (56, 42, N'Hadden Chandler','2021-10-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (56, 42, N'Hadden Chandler', CAST(N'2021-10-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (57, 43, N'Sateriasis Hardy','2021-10-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (57, 43, N'Sateriasis Hardy', CAST(N'2021-10-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (58, 44, N'Mia Carpenter','2021-10-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (58, 44, N'Mia Carpenter', CAST(N'2021-10-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (59, 45, N'Kit Nerune','2021-10-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (59, 45, N'Kit Nerune', CAST(N'2021-10-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (60, 46, N'Rodolphe Frost','2021-10-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (60, 46, N'Rodolphe Frost', CAST(N'2021-10-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (61, 47, N'Jesse Watts','2021-10-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (61, 47, N'Jesse Watts', CAST(N'2021-10-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (62, 48, N'Carl Crawford','2021-12-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (62, 48, N'Carl Crawford', CAST(N'2021-12-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (63, 49, N'Ronald Robinett','2021-12-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (63, 49, N'Ronald Robinett', CAST(N'2021-12-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (64, 50, N'Zera Stanley','2021-12-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (64, 50, N'Zera Stanley', CAST(N'2021-12-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (65, 51, N'Harley Avadonia','2021-12-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (65, 51, N'Harley Avadonia', CAST(N'2021-12-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (66, 52, N'Butglar Gray','2021-12-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (66, 52, N'Butglar Gray', CAST(N'2021-12-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (67, 53, N'Joe Baxter','2022-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (67, 53, N'Joe Baxter', CAST(N'2022-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (68, 54, N'Ward Wagner','2022-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (68, 54, N'Ward Wagner', CAST(N'2022-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (69, 55, N'Charlie Reese','2022-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (69, 55, N'Charlie Reese', CAST(N'2022-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (70, 56, N'Windsor Dinwiddie','2022-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (70, 56, N'Windsor Dinwiddie', CAST(N'2022-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (71, 57, N'Charon Walton','2022-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (71, 57, N'Charon Walton', CAST(N'2022-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (72, 58, N'Hank Michaelis','2022-2-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (72, 58, N'Hank Michaelis', CAST(N'2022-02-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (73, 59, N'Seth Manning','2022-2-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (73, 59, N'Seth Manning', CAST(N'2022-02-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (74, 60, N'Seth Manning','2022-2-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (74, 60, N'Seth Manning', CAST(N'2022-02-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (75, 61, N'Light Jenning','2022-2-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (75, 61, N'Light Jenning', CAST(N'2022-02-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (76, 62, N'David Barisol','2022-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (76, 62, N'David Barisol', CAST(N'2022-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (77, 63, N'Michaela Kelley','2022-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (77, 63, N'Michaela Kelley', CAST(N'2022-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (78, 64, N'Melody Elphen','2022-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (78, 64, N'Melody Elphen', CAST(N'2022-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (79, 65, N'Elluka Norman','2022-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (79, 65, N'Elluka Norman', CAST(N'2022-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (80, 66, N'Strange Feron','2022-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (80, 66, N'Strange Feron', CAST(N'2022-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (81, 67, N'Taylor Valdez','2022-5-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (81, 67, N'Taylor Valdez', CAST(N'2022-05-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (82, 68, N'Dana Macy','2022-6-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (82, 68, N'Dana Macy', CAST(N'2022-06-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (83, 69, N'Jean Valdez','2022-6-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (83, 69, N'Jean Valdez', CAST(N'2022-06-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (84, 70, N'Minis Goodwin','2022-6-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (84, 70, N'Minis Goodwin', CAST(N'2022-06-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (85, 71, N'Clay Marlon','2022-6-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (85, 71, N'Clay Marlon', CAST(N'2022-06-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (86, 72, N'Phil Powers','2022-6-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (86, 72, N'Phil Powers', CAST(N'2022-06-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (87, 73, N'Butglar Hardy','2022-6-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (87, 73, N'Butglar Hardy', CAST(N'2022-06-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (88, 74, N'Camelia Mullins','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (88, 74, N'Camelia Mullins', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (89, 75, N'Lionel Stanley','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (89, 75, N'Lionel Stanley', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (90, 76, N'Linda Payne','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (90, 76, N'Linda Payne', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (91, 77, N'Philbert Cross','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (91, 77, N'Philbert Cross', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (92, 78, N'Phil Jordan','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (92, 78, N'Phil Jordan', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (93, 79, N'Robert Kissos','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (93, 79, N'Robert Kissos', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (94, 80, N'Ronald Rios','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (94, 80, N'Ronald Rios', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (95, 81, N'Elluka Manning','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (95, 81, N'Elluka Manning', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (96, 82, N'Ceil Payne','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (96, 82, N'Ceil Payne', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (97, 83, N'Lizzy Meld','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (97, 83, N'Lizzy Meld', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (98, 84, N'Camelia Miller','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (98, 84, N'Camelia Miller', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (99, 85, N'Diana Macy','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (99, 85, N'Diana Macy', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (100, 86, N'Windsor Badman','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (100, 86, N'Windsor Badman', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (101, 87, N'Diana Obrien','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (101, 87, N'Diana Obrien', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (102, 88, N'Adam Hodges','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (102, 88, N'Adam Hodges', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (103, 89, N'Hansel May','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (103, 89, N'Hansel May', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (104, 90, N'Oswald Pope','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (104, 90, N'Oswald Pope', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (105, 91, N'Alex Hardy','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (105, 91, N'Alex Hardy', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (106, 92, N'Butglar Michaelis','2022-8-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (106, 92, N'Butglar Michaelis', CAST(N'2022-08-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (107, 93, N'Elman Blair','2022-8-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (107, 93, N'Elman Blair', CAST(N'2022-08-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (108, 94, N'Lucifer Blair','2022-8-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (108, 94, N'Lucifer Blair', CAST(N'2022-08-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (109, 95, N'Philbert Phantomhive','2022-8-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (109, 95, N'Philbert Phantomhive', CAST(N'2022-08-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (110, 96, N'Albion Alexdander','2022-8-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (110, 96, N'Albion Alexdander', CAST(N'2022-08-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (111, 97, N'Melody Chandler','2022-8-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (111, 97, N'Melody Chandler', CAST(N'2022-08-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (112, 98, N'Katya Corbyn','2022-9-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (112, 98, N'Katya Corbyn', CAST(N'2022-09-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (113, 99, N'Rahab Octo','2022-9-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (113, 99, N'Rahab Octo', CAST(N'2022-09-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (114, 100, N'Hansel May','2022-9-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (114, 100, N'Hansel May', CAST(N'2022-09-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (115, 101, N'Luke Thayne','2022-9-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (115, 101, N'Luke Thayne', CAST(N'2022-09-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (116, 102, N'Cyril Watson','2022-9-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (116, 102, N'Cyril Watson', CAST(N'2022-09-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (117, 109, N'I Am Tester','2022-9-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (117, 109, N'I Am Tester', CAST(N'2022-09-05' AS Date))
 GO
 SET IDENTITY_INSERT [dbo].[Author] OFF
 GO
@@ -694,6 +694,12 @@ GO
 INSERT [dbo].[Book_Own] ([userId], [bookId]) VALUES (109, 4)
 GO
 INSERT [dbo].[Book_Own] ([userId], [bookId]) VALUES (109, 7)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId]) VALUES (2, 1)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId]) VALUES (2, 5)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId]) VALUES (2, 15)
 GO
 SET IDENTITY_INSERT [dbo].[Category] ON 
 GO
@@ -2036,11 +2042,27 @@ INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VA
 GO
 SET IDENTITY_INSERT [dbo].[Chapter] OFF
 GO
+SET IDENTITY_INSERT [dbo].[Comment] ON 
+GO
+INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [editedAt]) VALUES (1, 1, 2, N'hehe', NULL, NULL, CAST(N'2022-10-15T23:13:00.507' AS DateTime), NULL)
+GO
+INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [editedAt]) VALUES (2, 1, 109, N'Quite simply, this is one of the best novels of the year. It''s a thriller in the best tradition of Alfred Hitchcock and layered with brilliantly written characters.', NULL, NULL, CAST(N'2022-10-17T10:32:06.783' AS DateTime), NULL)
+GO
+INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [editedAt]) VALUES (3, 1, 3, N'In my mind, any book that takes me 3 months and 20 different tries to read is not worth 3 stars, especially a book written by an author I already respect. And I am not kidding, for me the first half of Gone Girl was a PURE TORTURE to read.', NULL, NULL, CAST(N'2022-10-17T10:36:06.177' AS DateTime), NULL)
+GO
+INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [editedAt]) VALUES (4, 1, 3, N'I hate Amy.', NULL, NULL, CAST(N'2022-10-17T10:37:41.260' AS DateTime), NULL)
+GO
+SET IDENTITY_INSERT [dbo].[Comment] OFF
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (2, 1)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (2, 5)
+GO
 INSERT [dbo].[Payment_Account] ([accountNumber], [balance]) VALUES (0, CAST(0.00 AS Decimal(10, 2)))
 GO
 INSERT [dbo].[Payment_Account] ([accountNumber], [balance]) VALUES (1, CAST(0.00 AS Decimal(10, 2)))
 GO
-INSERT [dbo].[Payment_Account] ([accountNumber], [balance]) VALUES (2, CAST(1541.47 AS Decimal(10, 2)))
+INSERT [dbo].[Payment_Account] ([accountNumber], [balance]) VALUES (2, CAST(1526.47 AS Decimal(10, 2)))
 GO
 INSERT [dbo].[Payment_Account] ([accountNumber], [balance]) VALUES (3, CAST(4120.33 AS Decimal(10, 2)))
 GO
@@ -3526,6 +3548,12 @@ INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter],
 GO
 INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000110, 109, CAST(10.50 AS Decimal(10, 2)), CAST(205.67 AS Decimal(10, 2)), CAST(N'2022-10-03T13:53:14.897' AS DateTime), 3, 2, N'Buy It.', 47763)
 GO
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000111, 2, CAST(5.00 AS Decimal(10, 2)), CAST(1536.47 AS Decimal(10, 2)), CAST(N'2022-10-16T21:48:36.080' AS DateTime), 3, 2, N'Buy Gone Girl .', 47118)
+GO
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000112, 2, CAST(5.00 AS Decimal(10, 2)), CAST(1531.47 AS Decimal(10, 2)), CAST(N'2022-10-17T10:25:04.947' AS DateTime), 3, 2, N'Buy Lord of the Mysteries.', 47118)
+GO
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000113, 2, CAST(5.00 AS Decimal(10, 2)), CAST(1526.47 AS Decimal(10, 2)), CAST(N'2022-10-17T10:25:39.513' AS DateTime), 3, 2, N'Buy One Piece, Volume 1: Romance Dawn.', 47118)
+GO
 SET IDENTITY_INSERT [dbo].[Transaction] OFF
 GO
 SET IDENTITY_INSERT [dbo].[User] ON 
@@ -3798,6 +3826,7 @@ REFERENCES [dbo].[User] ([id])
 GO
 ALTER TABLE [dbo].[Chapter_Payment]  WITH CHECK ADD FOREIGN KEY([chapterId])
 REFERENCES [dbo].[Chapter] ([id])
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Comment]  WITH CHECK ADD FOREIGN KEY([bookId])
 REFERENCES [dbo].[Book] ([id])

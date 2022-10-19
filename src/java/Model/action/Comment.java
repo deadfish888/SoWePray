@@ -4,7 +4,9 @@
  */
 package Model.action;
 
+import Model.auth.User;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,21 +16,22 @@ public class Comment {
     private int id;
     private int bookId;
     private int userId;
+    private User user;
     private String comment;
     private int sonOf;
     private int replyTo;
+    private ArrayList<Comment> replies;
     private Timestamp createdAt;
+    private Timestamp editedAt;
 
     public Comment() {
     }
 
-    public Comment(int id, int bookId, int userId, String comment, int sonOf, int replyTo, Timestamp createdAt) {
+    public Comment(int id, int bookId, int userId, String comment, Timestamp createdAt) {
         this.id = id;
         this.bookId = bookId;
         this.userId = userId;
         this.comment = comment;
-        this.sonOf = sonOf;
-        this.replyTo = replyTo;
         this.createdAt = createdAt;
     }
     
@@ -36,10 +39,35 @@ public class Comment {
         return bookId;
     }
 
+    public Timestamp getEditedAt() {
+        return editedAt;
+    }
+
+    public void setEditedAt(Timestamp editedAt) {
+        this.editedAt = editedAt;
+    }
+
+
     public void setBookId(int bookId) {
         this.bookId = bookId;
     }
 
+    public ArrayList<Comment> getReplies() {
+        return replies;
+    }
+
+    public void setReplies(ArrayList<Comment> replies) {
+        this.replies = replies;
+    }
+    
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
     public int getUserId() {
         return userId;
     }

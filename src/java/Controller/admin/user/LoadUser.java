@@ -20,7 +20,7 @@ import java.util.ArrayList;
  *
  * @author duypham0705
  */
-@WebServlet("/LoadUser")
+@WebServlet("/Admin/LoadUser")
 
 public class LoadUser extends HttpServlet {
 
@@ -51,38 +51,9 @@ public class LoadUser extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        User us = (User) session.getAttribute("admin");
-        String txtSearch = request.getParameter("txt");
-        UserDAO dao = new UserDAO();
-        ArrayList<User> users = dao.searchByUname(us.is_super(), "%" + txtSearch + "%");
-        PrintWriter out = response.getWriter();
-        int i = 0;
-        for (User u : users) {
-            out.println("<form action=\"./Users\" method=\"Post\">\n"
-                    + "                                                    <tr>\n"
-                    + "                                                        <td>" + (++i) + "</td>\n"
-                    + "                                                        <td width=\"15%\">" + u.getName() + "</td>\n"
-                    + "                                                        <td style=\"width: 200px;\">" + u.getUsername() + "</td>\n"
-                    + "                                                        <td>" + u.getEmail() + "</td>\n"
-                    + "                                                        <td>" + u.getPhone() + "</td>\n"
-                    + "                                                        <td width=\"200px\">" + u.getAddress() + "</td>\n"
-                    + "                                                        <td>" + u.is_super() + "</td>\n"
-                    + "\n");
-            if (u.is_super() == 0) {
-                out.println("<td><button class=\"btn btn-primary\" name=\"id_up\" value=\"${s.getId()}\" type=\"submit\"><i class=\"fa-solid fa-up-long\"></i></button></td>\n");
-            } else if (u.is_super() + 1 == us.is_super()) {
-                out.println("<td></td>\n"
-                        + "                                                                <td><button class=\"btn btn-primary\" name=\"id_down\" value=\"${s.getId()}\" type=\"submit\"><i class=\"fa-solid fa-down-long\"></i></button></td>\n"
-                        + "                                                                <td><button class=\"btn btn-primary\" name=\"id_ban\" value=\"${s.getId()}\" type=\"submit\"><i class=\"fa-solid fa-user-slash\"></i></button></td>");
-            } else {
-                out.println("<td><button class=\"btn btn-primary\" name=\"id_up\" value=\"${s.getId()}\" type=\"submit\"><i class=\"fa-solid fa-up-long\"></i></button></td>\n"
-                        + "                                                                <td><button class=\"btn btn-primary\" name=\"id_down\" value=\"${s.getId()}\" type=\"submit\"><i class=\"fa-solid fa-down-long\"></i></button></td>\n"
-                        + "                                                                <td><button class=\"btn btn-primary\" name=\"id_ban\" value=\"${s.getId()}\" type=\"submit\"><i class=\"fa-solid fa-user-slash\"></i></button></td>");
-            }
-            out.println("                                                    </tr>\n"
-                    + "                                                </form>");
-
-        }
+        String xpage = request.getParameter("xpage3");
+        session.setAttribute("whichpage", xpage);
+        response.sendRedirect("Users");
     }
 
     /**
@@ -130,14 +101,14 @@ public class LoadUser extends HttpServlet {
             users = dao.sortUser(us.is_super(), "is_super", Integer.parseInt(order));
 
         }
-        run_way=(run_way+1)%2;
-        
-        session.setAttribute("order", Integer.toString(run_way));
+        run_way = (run_way + 1) % 2;
 
+        session.setAttribute("order", Integer.toString(run_way));
+        users = dao.getByPage(users, 0, 10);
         PrintWriter out = response.getWriter();
         int i = 0;
         for (User u : users) {
-            out.println("<form action=\"./Users\" method=\"Post\">\n"
+            out.println("<form action=\"UserManager\" method=\"Post\">\n"
                     + "                                                    <tr>\n"
                     + "                                                        <td>" + (++i) + "</td>\n"
                     + "                                                        <td width=\"15%\">" + u.getName() + "</td>\n"

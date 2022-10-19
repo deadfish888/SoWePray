@@ -5,7 +5,9 @@
 package Controller.admin.user;
 
 import Model.auth.User;
+import Model.product.Author;
 import context.auth.UserDAO;
+import context.product.AuthorDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -38,8 +40,22 @@ public class UsersController extends HttpServlet {
         HttpSession session = request.getSession();
         User us = (User) session.getAttribute("admin");
         UserDAO dao = new UserDAO();
-        ArrayList<User> users = dao.getByAccess(us.is_super());
 
+        ArrayList<User> users = dao.getByAccess(us.is_super());
+        String xpage = (String) session.getAttribute("whichpage");
+        int page;
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int size = users.size();
+        int numPage = (size % 10 == 0) ? (size / 10) : (size / 10 + 1);
+        int start = (page - 1) * 10;
+        int end = Math.min(size, start + 10);
+        users = dao.getByPage(users, start, end);
+        session.setAttribute("xpage3", page);
+        request.setAttribute("numPage3", numPage);
         request.setAttribute("users", users);
         request.getRequestDispatcher("../manage/user/users.jsp").forward(request, response);
     }
@@ -73,21 +89,41 @@ public class UsersController extends HttpServlet {
         HttpSession session = request.getSession();
         User us = (User) session.getAttribute("admin");
         UserDAO dao = new UserDAO();
+        AuthorDAO authorDao = new AuthorDAO();
+        User searchUser = new User();
         if (request.getParameter("id_ban") != null) {
-            dao.disableUser(Integer.parseInt(request.getParameter("id_ban")));
+            searchUser = dao.getUser(Integer.parseInt(request.getParameter("id_ban")));
+            dao.disableUser(searchUser.getId());
         }
         if (request.getParameter("id_up") != null) {
-            dao.editRank(Integer.parseInt(request.getParameter("id_up")), 1);
+            searchUser = dao.getUser(Integer.parseInt(request.getParameter("id_up")));
+            dao.editRank(searchUser.getId(), 1);
         }
         if (request.getParameter("id_down") != null) {
-            dao.editRank(Integer.parseInt(request.getParameter("id_down")), -1);
+            searchUser = dao.getUser(Integer.parseInt(request.getParameter("id_down")));
+            dao.editRank(searchUser.getId(), -1);
+        }
+        String xpage = (String) session.getAttribute("whichpage");
+        int page;
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
         }
         ArrayList<User> users = dao.getByAccess(us.is_super());
-
         if (request.getParameter("txt") != null) {
             users = dao.searchByUname(us.is_super(), "%" + request.getParameter("txt") + "%");
             request.setAttribute("txt", request.getParameter("txt"));
+            page = 1;
         }
+        
+        int size = users.size();
+        int numPage = (size % 10 == 0) ? (size / 10) : (size / 10 + 1);
+        int start = (page - 1) * 10;
+        int end = Math.min(size, start + 10);
+        users = dao.getByPage(users, start, end);
+        session.setAttribute("xpage3", page);
+        request.setAttribute("numPage3", numPage);
         request.setAttribute("users", users);
         request.getRequestDispatcher("../manage/user/users.jsp").forward(request, response);
     }

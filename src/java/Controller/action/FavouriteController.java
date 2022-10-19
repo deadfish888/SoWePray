@@ -59,7 +59,10 @@ public class FavouriteController extends HttpServlet {
            User user=(User)request.getSession().getAttribute("user");
            int uId=user.getId();
             fdao.addFavourite(uId, bId);
-            response.sendRedirect("./Favourite");
+            ArrayList<Favourite> list=fdao.getAllFav(bId);
+            int count=list.size();
+            fdao.sendFavtoBook(count);
+            response.sendRedirect("./BookDetail?id="+bId);
        }
        
     }

@@ -16,7 +16,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 /* @author ACER */
@@ -32,6 +31,7 @@ public class BookController extends HttpServlet {
         String[] category = request.getParameterValues("categoryId");
         String search = request.getParameter("search");
         String author = request.getParameter("author");
+        String type = request.getParameter("type");
         
         int[] idCategory = new int[category == null ? 1 : category.length];
         if (category == null || category.length == 0 || category[0].equals("")) {
@@ -59,10 +59,13 @@ public class BookController extends HttpServlet {
         if (author == null) {
             author = "";
         }
+        if (type == null || (!type.equals("all") && !type.equals("book") && !type.equals("novel"))){
+            type = "book";
+        }
         
         BookDAO bd = new BookDAO();
         CategoryDAO cd = new CategoryDAO();
-        ArrayList<Book> books = bd.getBooks(search, author, idCategory);
+        ArrayList<Book> books = bd.getBooks(type, search, author, idCategory);
         
         int size = books.size();
         int numPage = (int) Math.ceil((double)size / pageSize);

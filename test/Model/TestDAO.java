@@ -5,16 +5,12 @@
 package Model;
 
 import context.payment.TransactionDAO;
-import context.payment.PaymentMethodDAO;
-import context.payment.PaymentAccountDAO;
 import context.product.BookOwnDAO;
-import context.auth.UserDAO;
 import context.product.BookDAO;
 import Model.product.Book;
 import Model.payment.PaymentAccount;
 import Model.payment.PaymentMethod;
 import Model.auth.User;
-import context.action.FavouriteDAO;
 
 /**
  *
@@ -23,15 +19,7 @@ import context.action.FavouriteDAO;
 public class TestDAO {
 
     public static void main(String[] args) {
-        UserDAO userDBC = new UserDAO();
-        User user = new User();
-        user.setId(111);
-
-        PaymentAccountDAO payAccDBC = new PaymentAccountDAO();
-        PaymentMethodDAO payMedDBC = new PaymentMethodDAO();
-        TransactionDAO transactionDAO = new TransactionDAO();
-        FavouriteDAO favouriteDAO = new FavouriteDAO();
-        System.out.println(favouriteDAO.getFavorBooksPagging(user, 10, 1).size());
+//        UserDAO userDBC = new UserDAO();
 //        BookOwnDAO bookOwnDAO = new BookOwnDAO();
 //        BookDAO bookDAO = new BookDAO();
 //        Book book = new Book();

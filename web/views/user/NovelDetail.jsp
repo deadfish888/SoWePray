@@ -7,44 +7,20 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<c:set var="context" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script src="../assets/js/ProfileScript.js" type="text/javascript"></script>
-        <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="../assets/css/main.css" />
-        <link href="../assets/css/style-profile.css" rel="stylesheet" type="text/css"/>
-        <style>
-            .section-title{
-                background-color: #f5f5f5;
-                border: 1px solid #d4dae2;
-                border-radius: 4px;
-                display: inline-block;
-                padding: 4px 10px;
-            }
-            #bootstrap-overrides{
-                font-size: 0.8em;
-                font-weight: 900;
-                height: 3.5em;
-                letter-spacing: 0.35em;
-                line-height: 3.45em;
-                overflow: hidden;
-                padding: 0 1.25em 0 1.6em;
-                text-align: center;
-                text-decoration: none;
-                text-overflow: ellipsis;
-                text-transform: uppercase;
-                white-space: nowrap;
-            }
-        </style>
+        <jsp:include page="/views/base/userHeadImport.jsp"/>
         <title>Create Your Novel</title>
     </head>
     <body>
         <div class="wrapper">
             <nav id="sidebar" class="bg-dark col-md-2 text-light" style="display: block; float: left; padding: 5px">
                 <div style="display: block; margin: auto; text-align: center; margin-top: 2em">
-                    <img src="../images/default.png" width="100em" height="100em" class="rounded mx-auto d-block" alt="..." style="border:2px solid #fff; display: block; margin: auto">
+                    <img src="${context}/images/default.png" width="100em" height="100em" class="rounded mx-auto d-block" alt="..." style="border:2px solid #fff; display: block; margin: auto">
                     <div class="sidebar-header">
                         <h3 class="" style="margin-bottom: 0">Hi, ${sessionScope.user.username}</h3>
                         <p>UserID: ${sessionScope.user.id}</p>
@@ -54,13 +30,13 @@
 
                 <ul class="list-unstyled components" style="padding: 0.5em; font-size: 1.4em">
                     <li class="sidebar-item">
-                        <a href="./Profile">My profile</a>
+                        <a href="./Profile">My Profile</a>
                     </li>
                     <li class="sidebar-item">
                         <a href="./Security">Security</a>
                     </li>
-                    <li class="sidebar-item">
-                        <a href="./Novels">My Novels</a>
+                    <li class="active sidebar-item">
+                        My Novels
                     </li>
                     <li class="sidebar-item">
                         <a href="./Payment">Payment</a>
@@ -71,14 +47,12 @@
                 </ul>
             </nav>
             <div class="right-aside col-md-10" style="display: block">
-                <!-- Header -->
-                <!--            <div class="topbar">-->
-
+                <!-- Menu -->
                 <div class="" style="padding: 0; display: block">
                     <header id="header" style="padding: 0;padding-top: 1.1em">
                         <div>
                             <!-- Logo -->
-                            <a href="<%=request.getContextPath()%>/Home" class="logo" style="margin-bottom: 1.1em">
+                            <a href="${context}/Home" class="logo" style="margin-bottom: 1.1em">
                                 <span class="fa fa-book" style="padding-left: 2em"></span>
                                 <span class="title">BOOKIE</span>
                             </a>
@@ -92,12 +66,8 @@
                             </nav>
                         </div>
                     </header>
-
-                    <!-- Menu -->
                     <jsp:include page="/views/base/menu.jsp" />
-
                 </div>
-                <!--            </div>-->
 
                 <div>
                     <div class="text-center">
@@ -135,7 +105,7 @@
                                     <div class="form-group row col-12">
                                         <label class="col-sm-2 col-form-label">Price ($/thousand words)</label>
                                         <div class="col-sm-4">
-                                            <input class="form-control" type="text" name="price" pattern="[+-]?([0-9]*[.])?[0-9]+" required value="${! empty book.getPrice() ? book.price : 0}">
+                                            <input class="form-control" type="number" name="price" step="0.01" min="0" max="0.1" required value="${! empty book.getPrice() ? book.price : 0}">
                                         </div>
                                     </div>
                                     <div class="form-group row col-12">
@@ -207,11 +177,7 @@
         </div>
         <!-- Scripts -->
 
-        <script src="../assets/js/jquery.min.js"></script>
-        <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="../assets/js/jquery.scrolly.min.js"></script>
-        <script src="../assets/js/jquery.scrollex.min.js"></script>
-        <script src="../assets/js/main.js"></script>
+        <jsp:include page="/views/base/userFootImport.jsp"/>
         <script>
             $(function () {
                 var requiredCheckboxes = $('.browsers :checkbox[required]');

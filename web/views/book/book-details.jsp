@@ -56,7 +56,7 @@
                         <h4 style="margin: 0 0 0 0; display: inline-block;"><a href="./Book?categoryId=${category.id}"><span class="badge badge-pill badge-secondary">${category.name}</span></a></h4>
                             </c:forEach>
 
-                    <h2> ${book.author.name} </h2>
+                        <h2><a href="./Author?id=${book.author.id}"> ${book.author.name}</a> </h2>
 
                     <div class="container-fluid">
                         <div class="row" style="width: 1200px; text-align: justify;">
@@ -180,13 +180,22 @@
                                         </div>
                                     </div>
 
-                                    <form action="Favourite" method="POST">
-                                        <div class="col-sm-4">
-
-                                            <input type="submit" class="primary" value="Add to Favorite">                                 
-                                            <input type="hidden" name="bId" value="${book.getId()}">
-                                        </div>
-                                    </form>
+                                    <c:if test="${check==true}">
+                                        <form action="Fav" method="POST">
+                                            <div class="col-sm-4">
+                                                <input type="submit" class="primary" value="Delete Favourite">                                 
+                                                <input type="hidden" name="bId" value="${book.getId()}">
+                                            </div>
+                                        </form>
+                                    </c:if> 
+                                    <c:if test="${check==false}">
+                                        <form action="Favourite" method="POST">
+                                            <div class="col-sm-4">
+                                                <input type="submit" class="primary" value="Add to Favorite">                                 
+                                                <input type="hidden" name="bId" value="${book.getId()}">
+                                            </div>
+                                        </form>
+                                    </c:if>
                                     <form action="Report" method="POST">
                                         <div class="col-sm-4"> 
                                             <input type="submit" class="primary" value="Report">                                 
@@ -226,7 +235,7 @@
                     <br>
 
                     <div class="container-fluid">
-                        <h2 class="h2">Table of Contents</h2>
+                        <h3 class="">Table of Contents</h3>
                         <div class="accordion col-md-7" id="accordionExample">
                             <c:forEach items="${requestScope.vols}" var="vol">
                                 <div class="card">
@@ -259,11 +268,10 @@
                             </c:forEach>
 
                         </div>  
-                        <div> </div>
                     </div>
-                    <div class="container-fluid">
-                        <h4>${(! empty requestScope.comments)? requestScope.comments.size() : "0"} comment(s)</h4>
-                        <div class="col-md-7">
+                    <div class="container-fluid mt-5">
+                        <h3>${(! empty requestScope.comments)? requestScope.comments.size() : "0"} comment(s)</h3>
+                        <div class="col-12">
                             <form role="form" action="Comment" method="get">
                                 <input type="hidden" name="bookId" value="${book.id}"> 
                                 <div class="form-group">
@@ -275,8 +283,8 @@
                                 <c:forEach items="${requestScope.comments}" var="comment">
 
                                     <tr>
-                                        <th style="width: 100px" scope="row">
-                                            No.${comment.uid}
+                                        <th style="width: 200px" scope="row">
+                                            ${comment.user.name}
                                         </th>
                                         <td style="white-space: pre-line">${comment.comment}</td>
                                     </tr>
@@ -286,15 +294,16 @@
                         </div>
                     </div>
 
-                    <div class="container-fluid">
+                    <div class="container-fluid mt-5">
                         <h2 class="h2">Similar Products</h2>
 
                         <!-- Products -->
                         <section class="tiles">
+                            <div class= "" style = "display: flex ">
                             <c:forEach items="${requestScope.sames}" var="same">
                                 <article class="style1">
                                     <span class="image">
-                                        <img src="${same.image}" alt="${same.image}" style="height: 391px;" />
+                                        <img src="${same.image}" alt="${same.image}" style="height: 290px;" />
                                     </span>
                                     <a href="BookDetail?id=${same.id}">
                                         <h2>${same.title}</h2>
@@ -310,9 +319,10 @@
                                         </c:if>
                                     </a>
                                 </article>
-                            </c:forEach>
+                            </c:forEach></div>
                         </section>
                     </div>
+                                
                 </div>
             </div>
 

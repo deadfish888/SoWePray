@@ -29,11 +29,13 @@ public class Home extends HttpServlet {
     throws ServletException, IOException {
         BookDAO ud = new BookDAO();
         ArrayList<Book> allbooks = ud.getBooksByNewest();
-        ArrayList<Book> salebooks = ud.getWeeklySaleBooks();
+        ArrayList<Book> salebooks = ud.getSaleBooks();
         ArrayList<Book> favebooks = ud.getFavouriteBooks();
+        ArrayList<Book> novels = ud.getNovelsByLatest();
         request.setAttribute("allbooks", allbooks);
         request.setAttribute("salebooks", salebooks);
         request.setAttribute("favebooks", favebooks);
+        request.setAttribute("novels", novels);
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     } 
 

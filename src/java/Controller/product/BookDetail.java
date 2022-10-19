@@ -12,6 +12,7 @@ import Model.auth.User;
 import context.product.BookDAO;
 import context.product.content.ChapterDAO;
 import context.action.CommentDAO;
+import context.action.FavouriteDAO;
 import context.product.content.VolumeDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -40,7 +41,8 @@ public class BookDetail extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-
+        FavouriteDAO fdao = new FavouriteDAO();
+        boolean check = false;
         BookDAO b = new BookDAO();
         ChapterDAO chd = new ChapterDAO();
         VolumeDAO vd = new VolumeDAO();
@@ -49,8 +51,10 @@ public class BookDetail extends HttpServlet {
         User user = (User) request.getSession().getAttribute("user");
         if (user != null) {
             request.setAttribute("own", user.isOwnBook(id));
+            int uId = user.getId();
+            check = fdao.checkFavourite(uId, id) == true;
         }
-        ArrayList<Book> sames = null; //b.getSimilarBooks(id, thisbook.getCategoryId());
+        ArrayList<Book> sames = b.getSimilarBooks(id, thisbook.getCategory());
         ArrayList<Volume> vols = vd.getVolumesByBookId(id);
         ArrayList<Chapter> chaps = chd.getChaptersByBookId(id);
         ArrayList<Comment> coms = cmd.loadComment(id);
@@ -59,7 +63,7 @@ public class BookDetail extends HttpServlet {
         request.setAttribute("book", thisbook);
         request.setAttribute("vols", vols);
         request.setAttribute("comments", coms);
-
+        request.setAttribute("check", check);
         request.getRequestDispatcher("/views/book/book-details.jsp").forward(request, response);
     }
 
