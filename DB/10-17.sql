@@ -281,10 +281,13 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ReportDetail](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	[reportId] [int] NOT NULL,
-	[bookId] [int] NOT NULL,
-	[userId] [int] NOT NULL,
+	[reportId] [int]  NULL,
+	[bookId] [int]  NULL,
+	[userId] [int]  NULL,
 	[note] [nvarchar](2000) NULL,
+	[sent] [date] NULL,
+	[received] [date] NULL,
+	[status] [bit]  NULL,
  CONSTRAINT [PK_reportdetail] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -695,11 +698,11 @@ INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], 
 GO
 INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (20, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (21, N'Classroom of the Elite Vol. 1', 23, NULL, 0, CAST(9.69 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?', 1000, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (21, N'Classroom of the Elite Vol. 1', 25, NULL, 0, CAST(9.69 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?', 1000, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (22, N'Classroom of the Elite Vol. 1', 23, NULL, 0, CAST(9.69 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?', 2000, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (22, N'Classroom of the Elite Vol. 1', 25, NULL, 0, CAST(9.69 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?', 2000, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (23, N'Classroom of the Elite Vol. 1', 23, NULL, 0, CAST(9.69 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?', 3000, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (23, N'Classroom of the Elite Vol. 1', 25, NULL, 0, CAST(9.69 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?', 3000, 1)
 GO
 SET IDENTITY_INSERT [dbo].[Book] OFF
 GO
@@ -3338,6 +3341,10 @@ INSERT [dbo].[Report] ([id], [title]) VALUES (9, N'Infringes my rights')
 GO
 INSERT [dbo].[Report] ([id], [title]) VALUES (10, N'Caption issue')
 GO
+INSERT [dbo].[Report] ([id], [title]) VALUES (11, N'monetization')
+GO
+INSERT [dbo].[Report] ([id], [title]) VALUES (12, N'enable account')
+GO
 SET IDENTITY_INSERT [dbo].[Report] OFF
 GO
 INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (1, 2, 2)
@@ -3791,6 +3798,16 @@ GO
 INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (4, 17, 1, N'Lạc', NULL)
 GO
 SET IDENTITY_INSERT [dbo].[Volume] OFF
+GO
+SET IDENTITY_INSERT [dbo].[ReportDetail] ON 
+GO
+INSERT INTO [dbo].[ReportDetail] ([id],[reportId],[bookId],[userId],[note],[sent],[received],[status]) VALUES ( 1 , 11 , NULL , 11 , N'Part Three Boy Gets Girl Back (Or Vice Versa', CAST(N'2022-9-13' AS Date) ,CAST(N'2022-9-14' AS Date), false)
+GO
+INSERT INTO [dbo].[ReportDetail] ([id],[reportId],[bookId],[userId],[note],[sent],[received],[status]) VALUES ( 2 , 12 , NULL , 11 , N'username', CAST(N'2022-9-13' AS Date) ,CAST(N'2022-9-13' AS Date), false)
+GO
+INSERT INTO [dbo].[ReportDetail] ([id],[reportId],[bookId],[userId],[note],[sent],[received],[status]) VALUES ( 3 , NULL , NULL , 11 , N'Part Three Boy Gets Girl Back (Or Vice Versa', CAST(N'2022-9-13' AS Date) ,NULL, NULL)
+GO
+SET IDENTITY_INSERT [dbo].[ReportDetail] OFF
 GO
 ALTER TABLE [dbo].[Book] ADD  DEFAULT ((0)) FOR [favourite]
 GO
