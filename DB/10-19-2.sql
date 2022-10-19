@@ -262,7 +262,7 @@ CREATE TABLE [dbo].[Report](
 	[objectId] [int],
 	[note] [nvarchar](2000) NULL,
 	[sent] [datetime] NOT NULL,
-	[solved] [datetime],
+	[received] [datetime],
 	[status] [bit] NOT NULL,
  CONSTRAINT [PK_reportdetail] PRIMARY KEY CLUSTERED 
 (
