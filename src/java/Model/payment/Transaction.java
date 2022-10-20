@@ -4,8 +4,8 @@
  */
 package Model.payment;
 
-import Model.payment.PaymentMethod;
 import Model.auth.User;
+import Model.product.Product;
 import java.sql.Timestamp;
 
 /**
@@ -20,6 +20,7 @@ public class Transaction {
     float balanceAfter;
     PaymentMethod payment;
     int type;
+    Product product;
     //1. Recharge
     //2. Withdraw
     //3. Buy
@@ -116,6 +117,14 @@ public class Transaction {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     /**

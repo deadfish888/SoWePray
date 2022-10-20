@@ -4,17 +4,12 @@
  */
 package Controller.User;
 
-import Model.action.Favourite;
 import Model.auth.User;
 import Model.product.Book;
-import Model.product.BookOwn;
-import Model.product.Category;
 import context.action.FavouriteDAO;
 import context.product.BookDAO;
 import context.product.BookOwnDAO;
-import context.product.CategoryDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -60,21 +55,18 @@ public class BookshelfController extends HttpServlet {
             bookPage = "1";
         }
         int bookPageIndex = Integer.parseInt(bookPage);
-        System.out.println(bookPageIndex);
         
         String favorPage = request.getParameter("favorPage");
         if (favorPage == null) {
             favorPage = "1";
         }
         int favorPageIndex = Integer.parseInt(favorPage);
-        System.out.println(favorPageIndex);
         
         String novelPage = request.getParameter("novelPage");
         if (novelPage == null) {
             novelPage = "1";
         }
         int novelPageIndex = Integer.parseInt(novelPage);
-        System.out.println(novelPageIndex);
         
         ArrayList<Book> bookList = bookOwnDAO.getOwnBooksPagging(user, pageSize, bookPageIndex);
 //        ArrayList<BookOwn> bookOwnList = new ArrayList<>();
@@ -83,7 +75,7 @@ public class BookshelfController extends HttpServlet {
 //        }
         int bookCount = bookOwnDAO.count(user);
         int bookTotalPage = (bookCount % pageSize == 0) ? (bookCount / pageSize) : (bookCount / pageSize) + 1;
-        System.out.println("TotalPage: " + bookTotalPage);
+//        System.out.println("TotalPage: " + bookTotalPage);
         
         ArrayList<Book> favorList = favouriteDAO.getFavorBooksPagging(user, pageSize, favorPageIndex);
         int favorCount = favouriteDAO.count(user);
