@@ -4,8 +4,6 @@
  */
 package context.payment;
 
-import context.payment.PaymentMethodDAO;
-import Model.payment.PaymentAccount;
 import Model.payment.PaymentMethod;
 import Model.payment.Transaction;
 import Model.auth.User;
@@ -14,9 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -91,6 +87,7 @@ public class TransactionDAO {
                     + "      ,[status]\n"
                     + "      ,[description]\n"
                     + "      ,[paymentId]\n"
+                    + "      ,[productId]\n"
                     + "  FROM [Transaction]"
                     + "  WHERE userId = ?"
                     + "  ORDER BY transactionTime desc";
