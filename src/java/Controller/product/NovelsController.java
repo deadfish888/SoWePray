@@ -38,7 +38,7 @@ public class NovelsController extends HttpServlet {
         if (page == null || page.trim().length() == 0) {
             page = "1";
         }
-        int pageIndex, pageSize = 12;
+        int pageIndex, pageSize = 5;
         try {
             pageIndex = Integer.parseInt(page);
             if (pageIndex <= 0) {

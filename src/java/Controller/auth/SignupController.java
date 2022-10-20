@@ -69,8 +69,7 @@ public class SignupController extends HttpServlet {
             user.createWallet();
             ud.setWalletNumber(user.getPaymentAccount(), user);
             AuthorDAO au = new AuthorDAO();
-            User latest1 = ud.getLatest();
-            au.addSignup(latest1.getId(),latest1.getName());
+            au.addSignup(user.getId(),user.getName());
             session.setAttribute("user", user);
 
             request.setAttribute("error", "Sign up successfully!");

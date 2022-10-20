@@ -4,17 +4,12 @@
  */
 package Controller.User;
 
-import Model.action.Favourite;
 import Model.auth.User;
 import Model.product.Book;
-import Model.product.BookOwn;
-import Model.product.Category;
 import context.action.FavouriteDAO;
 import context.product.BookDAO;
 import context.product.BookOwnDAO;
-import context.product.CategoryDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

@@ -1086,7 +1086,7 @@ public class BookDAO {
     public ArrayList<Book> getNovelsByLatest() {
         ArrayList<Book> list = new ArrayList<>();
         try {
-            String sql = "SELECT TOP 15 b.[id]\n"
+            String sql = "SELECT TOP 5 b.[id]\n"
                     + "      ,b.[title]\n"
                     + "      ,[authorId]\n"
                     + "      ,a.[name]\n"
