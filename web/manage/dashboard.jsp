@@ -96,11 +96,8 @@
                 <!-- Container fluid  -->
                 <!-- ============================================================== -->
                 <div class="container-fluid">
-                    <!-- ============================================================== -->
-                    <!-- Sales chart -->
-                    <!-- ============================================================== -->
+
                     <div class="row">
-                        <!-- Column -->
                         <div class="col-lg-8">
                             <div class="card">
                                 <div class="card-body">
@@ -108,25 +105,67 @@
                                         <div class="col-12">
                                             <div class="d-flex flex-wrap align-items-center">
                                                 <div>
-                                                    <h3 class="card-title">Sales Overview</h3>
-                                                    <h6 class="card-subtitle">Ample Admin Vs Pixel Admin</h6>
+                                                    <h3 class="card-title">By Month</h3>
+                                                    <h6 class="card-subtitle">User Sign up in ${requestScope.thisYear}</h6>
                                                 </div>
-                                                <div class="ms-lg-auto mx-sm-auto mx-lg-0">
-                                                    <ul class="list-inline d-flex">
-                                                        <li class="me-4">
-                                                            <h6 class="text-success"><i
-                                                                    class="fa fa-circle font-10 me-2 "></i>Ample</h6>
-                                                        </li>
-                                                        <li>
-                                                            <h6 class="text-info"><i
-                                                                    class="fa fa-circle font-10 me-2"></i>Pixel</h6>
-                                                        </li>
-                                                    </ul>
+                                                <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                                                <div id="chartContainer" style="height: 300px; width: 100%;">
+                                                    <script type="text/javascript">
+                                                        window.onload = function () {
+                                                            var chart = new CanvasJS.Chart("chartContainer",
+                                                                    {
+
+                                                                        title: {
+                                                                            text: "Users - per month"
+                                                                        },
+                                                                        axisX: {
+                                                                            valueFormatString: "MMM",
+                                                                            interval: 1,
+                                                                            intervalType: "month"
+                                                                        },
+                                                                        axisY: {
+                                                                            includeZero: false
+
+                                                                        },
+                                                                        data: [
+                                                                            {
+                                                                                type: "bar",
+
+                                                                                dataPoints: [
+                                                                                    {x: new Date(2022, 00, 1), y: ${requestScope.m0}},
+                                                                                    {x: new Date(2022, 01, 1), y: ${requestScope.m1}},
+                                                                                    {x: new Date(2022, 02, 1), y: ${requestScope.m2}},
+                                                                                    {x: new Date(2022, 03, 1), y: ${requestScope.m3}},
+                                                                                    {x: new Date(2022, 04, 1), y: ${requestScope.m4}},
+                                                                                    {x: new Date(2022, 05, 1), y: ${requestScope.m5}},
+                                                                                    {x: new Date(2022, 06, 1), y: ${requestScope.m6}},
+                                                                                    {x: new Date(2022, 07, 1), y: ${requestScope.m7}},
+                                                                                    {x: new Date(2022, 08, 1), y: ${requestScope.m8}},
+                                                                                    {x: new Date(2022, 09, 1), y: ${requestScope.m9}},
+                                                                                    {x: new Date(2022, 10, 1), y: ${requestScope.m10}},
+                                                                                    {x: new Date(2022, 11, 1), y: ${requestScope.m11}}
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    });
+
+                                                            chart.render();
+                                                        }
+                                                    </script>
                                                 </div>
+
+                                            </div>
+
+                                            <div class="card-body text-center ">
+                                                <div>
+                                                    <hr class="mt-0 mb-0">
+                                                </div>
+                                                <h8 class="text-info">
+                                                    <i class="mdi mdi-account">Total Users ${sum}</i></h8>
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <div class="amp-pxl" style="height: 360px;">
+                                            <div class="amp-pxl" style="height: 0px;">
                                                 <div class="chartist-tooltip"></div>
                                             </div>
                                         </div>
@@ -137,15 +176,14 @@
                         <div class="col-lg-4">
                             <div class="card">
                                 <div class="card-body">
-                                    <h3 class="card-title">Our Visitors </h3>
-                                    <h6 class="card-subtitle">Different Devices Used to Visit</h6>
-                                    <div id="visitor"
-                                         style="height: 290px; width: 100%; max-height: 290px; position: relative;"
-                                         class="c3">
-                                        <div class="c3-tooltip-container"
-                                             style="position: absolute; pointer-events: none; display: none;">
-                                        </div>
-                                    </div>
+                                    <h3 class="card-title">Total Book</h3>
+                                    <h6 class="card-subtitle">Amount ${requestScope.books} </h6>
+                                    
+                                    <h3 class="card-title">Total Comment</h3>
+                                    <h6 class="card-subtitle">Amount ${requestScope.cmt}</h6>
+                                    <h3 class="card-title">Total Report</h3>
+                                    <h6 class="card-subtitle">Amount ${requestScope.rp}</h6>
+
                                 </div>
                                 <div>
                                     <hr class="mt-0 mb-0">
@@ -153,13 +191,8 @@
                                 <div class="card-body text-center ">
                                     <ul class="list-inline d-flex justify-content-center align-items-center mb-0">
                                         <li class="me-4">
-                                            <h6 class="text-info"><i class="fa fa-circle font-10 me-2 "></i>Mobile</h6>
-                                        </li>
-                                        <li class="me-4">
-                                            <h6 class=" text-primary"><i class="fa fa-circle font-10 me-2"></i>Desktop</h6>
-                                        </li>
-                                        <li class="me-4">
-                                            <h6 class=" text-success"><i class="fa fa-circle font-10 me-2"></i>Tablet</h6>
+                                            <h6 class="text-info">
+                                                </h6>
                                         </li>
 
                                     </ul>
@@ -167,9 +200,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- ============================================================== -->
-                    <!-- Sales chart -->
-                    <!-- ============================================================== -->
+
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="card">
@@ -178,39 +209,56 @@
                                         <div class="col-12">
                                             <div class="d-flex flex-wrap align-items-center">
                                                 <div>
-                                                    <h3 class="card-title">Sales Overview</h3>
-                                                    <h6 class="card-subtitle">Ample Admin Vs Pixel Admin</h6>
+                                                    <h3 class="card-title">By Quaters</h3>
+                                                    <h6 class="card-subtitle">Line Chart about Users Sign up from 2021</h6>
                                                 </div>
-                                                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-                                                <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
-                                                <script>
-                                                    var xValues = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
-                                                    var yValues = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
 
-                                                    new Chart("myChart", {
-                                                        type: "line",
-                                                        data: {
-                                                            labels: xValues,
-                                                            datasets: [{
-                                                                    fill: false,
-                                                                    lineTension: 0,
-                                                                    backgroundColor: "rgba(0,0,255,1.0)",
-                                                                    borderColor: "rgba(0,0,255,0.1)",
-                                                                    data: yValues
-                                                                }]
-                                                        },
-                                                        options: {
-                                                            legend: {display: false},
-                                                            scales: {
-                                                                yAxes: [{ticks: {min: 6, max: 16}}],
-                                                            }
+                                                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+                                                <canvas id="myChart" style="width:100%;max-width:700px;margin-left: 70px"></canvas>
+                                                <script>
+                                                        function chart() {
+                                                            var xValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+                                                            var yValues = ${requestScope.listQuater };
+                                                            new Chart("myChart", {
+                                                                type: "line",
+                                                                data: {
+                                                                    labels: xValues,
+                                                                    datasets: [{
+                                                                            fill: false,
+                                                                            lineTension: 0,
+                                                                            backgroundColor: "rgba(0,0,255,1.0)",
+                                                                            borderColor: "rgba(0,0,255,0.1)",
+                                                                            data: yValues
+                                                                        }]
+                                                                },
+                                                                options: {
+                                                                    legend: {display: false},
+                                                                    scales: {
+                                                                        yAxes: [{ticks: {min: 0, max: ${requestScope.max+5}}
+                                                                            }],
+                                                                    }
+                                                                }
+                                                            });
                                                         }
-                                                    });
+                                                        document.getElementById("myChart").innerHTML = chart();
                                                 </script>
+                                            </div>
+
+                                            <div class="card-body text-center ">
+                                                <div style="margin-bottom: 10px">
+                                                    <hr class="mt-0 mb-0">
+                                                </div>
+                                                <h8 class="text-info">
+                                                    <i class="mdi mdi-account">Total Users ${totalU}</i></h8>
+                                                <br>
+                                                <h10 class="text-info"><i class="mdi mdi-calendar-text"> 1 : before ${requestScope.forYear}</i></h10><br>
+                                                <h10 class="text-info"><i class="mdi mdi-calendar-text"> 2-5 : quater in ${requestScope.forYear}</i></h10><br>
+                                                <h10 class="text-info"><i class="mdi mdi-calendar-text"> 6-9 : quater in ${requestScope.thisYear}</i></h10>
+
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <div class="amp-pxl" style="height: 10px;">
+                                            <div class="amp-pxl" style="height: 0px;">
                                                 <div class="chartist-tooltip"></div>
                                             </div>
                                         </div>
@@ -221,20 +269,19 @@
                         <div class="col-lg-4">
                             <div class="card">
                                 <div class="card-body">
-                                    <h3 class="card-title">Our Visitors </h3>
-                                    <h6 class="card-subtitle">Different Devices Used to Visit</h6>
+                                    <h3 class="card-title">Authors</h3>
+                                    <h6 class="card-subtitle">Piechart </h6>
 
                                     <canvas id="myChart2" style="height: 290px; width: 100%;  position: relative;"></canvas>
 
                                     <script>
                                         function searchByName(param1, param2) {
-                                            var xValues = ["Italy", "France"];
+                                            var xValues = ["Authors", "Users - Authors"];
                                             var yValues = [param1, param2];
                                             var barColors = [
                                                 "#1e88e5",
                                                 "#26c6da"
                                             ];
-
                                             new Chart("myChart2", {
                                                 type: "doughnut",
                                                 data: {
@@ -246,11 +293,11 @@
                                                 },
                                                 options: {
                                                     title: {
-                                                        display: true,
-                                                        text: "World Wide Wine Production 2018"
+                                                        display: false,
+                                                        text: ""
                                                     }
                                                 }
-                                            })
+                                            });
                                         }
                                         document.getElementById("myChart2").innerHTML = searchByName(${requestScope.per1}, ${requestScope.per2});
                                     </script>
@@ -262,13 +309,8 @@
                                 <div class="card-body text-center ">
                                     <ul class="list-inline d-flex justify-content-center align-items-center mb-0">
                                         <li class="me-4">
-                                            <h6 class="text-info"><i class="fa fa-circle font-10 me-2 "></i>Authors</h6>
-                                        </li>
-                                        <li class="me-4">
-                                            <h6 class=" text-primary"><i class="fa fa-circle font-10 me-2"></i>Desktop</h6>
-                                        </li>
-                                        <li class="me-4">
-                                            <h6 class=" text-success"><i class="fa fa-circle font-10 me-2"></i>Users - Authors</h6>
+                                            <h6 class="text-info">
+                                                <i class="mdi mdi-account-edit"></i>Total Authors ${totalA}</h6>
                                         </li>
 
                                     </ul>

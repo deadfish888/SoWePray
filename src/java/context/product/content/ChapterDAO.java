@@ -174,7 +174,10 @@ public class ChapterDAO {
             stm.setBoolean(4, chapter.isStatus());
             stm.setString(5, chapter.getContent());
             rs = stm.executeQuery();
-            if (rs.next()) return rs.getInt(1);
+            if (rs.next()) {
+                if(chapter.isStatus()) setChapterPrice(rs.getInt(1), chapter.getContent());
+                return rs.getInt(1);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -251,7 +254,15 @@ public class ChapterDAO {
             stm.setBoolean(2, chapter.isStatus());
             stm.setString(3, chapter.getContent());
             stm.setInt(4, chapter.getId());
-            return stm.executeUpdate();
+            int n = stm.executeUpdate();
+            if(n != 0 ){
+                if(chapter.isStatus()){
+                    setChapterPrice(chapter.getId(), chapter.getContent());
+                }else{
+                    deleteChapterPayment(chapter.getId());
+                }
+            }
+            return n;
         } catch (SQLException ex) {
             Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -325,6 +336,49 @@ public class ChapterDAO {
             System.out.println("getFirstChapter " + e.getMessage());
         }
         return null;
+    }
+
+    private void setChapterPrice(int chapterId, String chapter) {
+        try {
+            String sql = "UPDATE [Chapter_Payment] SET [price] = ? * (SELECT b.[price] FROM [Book] b"
+                    + "                        INNER JOIN [Volume] v ON b.[id] = v.[bookId]"
+                    + "                        INNER JOIN [Chapter] c ON v.[id]= c.[volumeId]"
+                    + "                        WHERE c.[id] = ? )"
+                    + "   WHERE [chapterId] = ? "
+                    + "   IF @@ROWCOUNT = 0 "
+                    + "     INSERT INTO [dbo].[Chapter_Payment]\n"
+                    + "           ([chapterId]\n"
+                    + "           ,[price])\n"
+                    + "     VALUES\n"
+                    + "           ( ? \n"
+                    + "           , ? * (SELECT b.[price] FROM [Book] b"
+                    + "                        INNER JOIN [Volume] v ON b.[id] = v.[bookId]"
+                    + "                        INNER JOIN [Chapter] c ON v.[id]= c.[volumeId]"
+                    + "                        WHERE c.[id] = ? ))";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, chapter.split("\\s+").length/1000);
+            stm.setInt(2, chapterId);
+            stm.setInt(3, chapterId);
+            stm.setInt(4, chapterId);
+            stm.setInt(5, chapter.split("\\s+").length/1000);
+            stm.setInt(6, chapterId);
+            stm.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
+    private void deleteChapterPayment(int id) {
+        try {
+            String sql = "DELETE FROM [Chapter_Payment] "
+                    + "         WHERE [chapterId] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

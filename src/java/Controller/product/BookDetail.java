@@ -12,6 +12,7 @@ import Model.auth.User;
 import context.product.BookDAO;
 import context.product.content.ChapterDAO;
 import context.action.CommentDAO;
+import context.action.FavouriteDAO;
 import context.product.content.VolumeDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -39,30 +40,39 @@ public class BookDetail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-
-        BookDAO b = new BookDAO();
-        ChapterDAO chd = new ChapterDAO();
-        VolumeDAO vd = new VolumeDAO();
-        CommentDAO cmd = new CommentDAO();
-        Book thisbook = b.getBookById(id);
-        User user = (User) request.getSession().getAttribute("user");
-        if (user != null) {
-            request.setAttribute("own", user.isOwnBook(id));
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            FavouriteDAO fdao = new FavouriteDAO();
+            boolean check = false;
+            BookDAO b = new BookDAO();
+            ChapterDAO chd = new ChapterDAO();
+            VolumeDAO vd = new VolumeDAO();
+            CommentDAO cmd = new CommentDAO();
+            Book thisbook = b.getBookById(id);
+            User user = (User) request.getSession().getAttribute("user");
+            if (user != null) {
+                request.setAttribute("own", user.isOwnBook(id));
+                int uId = user.getId();
+                check = fdao.checkFavourite(uId, id) == true;
+            }
+            if (thisbook.getAuthor().getUserId() == 0) {
+                ArrayList<Book> sames = b.getSimilarBooks(id, thisbook.getCategory());
+                ArrayList<Volume> vols = vd.getVolumesByBookId(id);
+                ArrayList<Chapter> chaps = chd.getChaptersByBookId(id);
+                ArrayList<Comment> coms = cmd.loadComment(id);
+                request.setAttribute("chaps", chaps);
+                request.setAttribute("sames", sames);
+                request.setAttribute("book", thisbook);
+                request.setAttribute("vols", vols);
+                request.setAttribute("comments", coms);
+                request.setAttribute("check", check);
+                request.getRequestDispatcher("/views/book/book-details.jsp").forward(request, response);
+                return;
+            }
+            
+        } catch (Exception e) {
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
-        ArrayList<Book> sames = null; //b.getSimilarBooks(id, thisbook.getCategoryId());
-        ArrayList<Book> bookauthor = b.getFeaturedBooksByAuthorId(b.getAuthorIdByBookId(id), id);
-        ArrayList<Volume> vols = vd.getVolumesByBookId(id);
-        ArrayList<Chapter> chaps = chd.getChaptersByBookId(id);
-        ArrayList<Comment> coms = cmd.loadComment(id);
-        request.setAttribute("bookauthor", bookauthor);
-        request.setAttribute("chaps", chaps);
-        request.setAttribute("sames", sames);
-        request.setAttribute("book", thisbook);
-        request.setAttribute("vols", vols);
-        request.setAttribute("comments", coms);
-        request.setAttribute("aid", b.getAuthorIdByBookId(id));
-        request.getRequestDispatcher("/views/book/book-details.jsp").forward(request, response);
     }
 
     @Override

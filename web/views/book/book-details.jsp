@@ -54,9 +54,9 @@
                     </h1>
                     <c:forEach items="${book.category}" var="category">
                         <h4 style="margin: 0 0 0 0; display: inline-block;"><a href="./Book?categoryId=${category.id}"><span class="badge badge-pill badge-secondary">${category.name}</span></a></h4>
-                    </c:forEach>
+                            </c:forEach>
 
-                    <h2> ${book.author.name} </h2>
+                        <h2><a href="./Author?id=${book.author.id}"> ${book.author.name}</a> </h2>
 
                     <div class="container-fluid">
                         <div class="row" style="width: 1200px; text-align: justify;">
@@ -93,10 +93,20 @@
                                                 </div>
                                             </form>
                                         </c:if>
-                                        <c:if test="${!own}">
+                                        <c:if test="${!own && (book.price ne 0)}">
                                             <div class="col-sm-2">
                                                 <input type="button" class="primary btn-primary" data-toggle="modal" data-target="#purchase" value="Buy"/>
                                             </div>
+                                        </c:if>
+                                        <c:if test="${!own && (book.price eq 0)}">
+                                            <form action="User/Purchase" method="get">
+                                                <div class="col-sm-4">
+                                                    <input type="hidden" name="bookId" value="${book.id}">
+                                                    <input type="hidden" name="amount" value="${book.price}">
+                                                    <input type="hidden" name="bookTitle" value="${book.title}"/>
+                                                    <input type="submit" class="primary" value="Get">
+                                                </div>
+                                            </form>
                                         </c:if>
                                     </c:if>
                                     <c:if test="${sessionScope.user == null}">
@@ -108,64 +118,84 @@
                                         </form>
                                     </c:if>
 
-                                <div class="modal fade" id="purchase" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <form action="User/Purchase" method="post" id="purchaseForm" name="purchaseForm" onsubmit="return validatePassword()">
-                                                <div class="modal-header">
-                                                    <h3 class="modal-title">Purchase</h3>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="wrapper row">
-                                                        <table style="width: 80%; margin: auto">
-                                                            <tr>
-                                                                <th>
-                                                                    Book
-                                                                </th>
-                                                                <td>
-                                                                    ${book.title}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>
-                                                                    Price
-                                                                </th>
-                                                                <td>
-                                                                    ${book.price}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>
-                                                                    Password
-                                                                </th>
-                                                                <td>
-                                                                    <input type="password" name="password"/>
-                                                                    <div style="color: red" id="purchase-pass-noti"></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
+                                    <div class="modal fade" id="purchase" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <form action="User/Purchase" method="post" id="purchaseForm" name="purchaseForm" onsubmit="return validatePassword()">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title">Purchase</h3>
                                                     </div>
-                                                </div>
-                                                <div class="modal-footer" style="text-align: center">
-                                                    <button type="button" class="primary btn-primary text-center" data-dismiss="modal" style="width: auto; padding: 0 1em">Cancel</button>
-                                                    <input type="hidden" id="pass" value="${sessionScope.user.password}"/>
-                                                    <input type="hidden" name="amount" value="${book.price}"/>
-                                                    <input type="hidden" name="bookId" value="${book.id}"/>
-                                                    <input type="hidden" name="bookTitle" value="${book.title}"/>
-                                                    <input type="submit" class="primary text-center" value="Confirm"/>
-                                                </div>
-                                            </form>
+                                                    <div class="modal-body">
+                                                        <div class="wrapper row">
+                                                            <table style="width: 80%; margin: auto">
+                                                                <tr>
+                                                                    <th>
+                                                                        Book
+                                                                    </th>
+                                                                    <td>
+                                                                        ${book.title}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        Price
+                                                                    </th>
+                                                                    <td>
+                                                                        <c:if test="${book.issale()}">
+                                                                            $5.00
+                                                                        </c:if>
+                                                                        <c:if test="${!book.issale()}">
+                                                                            ${book.price}
+                                                                        </c:if>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        Password
+                                                                    </th>
+                                                                    <td>
+                                                                        <input type="password" name="password"/>
+                                                                        <div style="color: red" id="purchase-pass-noti"></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer" style="text-align: center">
+                                                        <button type="button" class="primary btn-primary text-center" data-dismiss="modal" style="width: auto; padding: 0 1em">Cancel</button>
+                                                        <input type="hidden" id="pass" value="${sessionScope.user.password}"/>
+                                                        <c:if test="${book.issale()}">
+                                                            <input type="hidden" name="amount" value="5"/>
+                                                        </c:if>
+                                                        <c:if test="${!book.issale()}">
+                                                            <input type="hidden" name="amount" value="${book.price}"/>
+
+                                                        </c:if>
+                                                        <input type="hidden" name="bookId" value="${book.id}"/>
+                                                        <input type="hidden" name="bookTitle" value="${book.title}"/>
+                                                        <input type="submit" class="primary text-center" value="Confirm"/>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                    <form action="Favourite" method="POST">
-                                        <div class="col-sm-4">
-
-                                            <input type="submit" class="primary" value="Add to Favorite">                                 
-                                            <input type="hidden" name="bId" value="${book.getId()}">
-                                        </div>
-                                    </form>
+                                    <c:if test="${check==true}">
+                                        <form action="Fav" method="POST">
+                                            <div class="col-sm-4">
+                                                <input type="submit" class="primary" value="Delete Favourite">                                 
+                                                <input type="hidden" name="bId" value="${book.getId()}">
+                                            </div>
+                                        </form>
+                                    </c:if> 
+                                    <c:if test="${check==false}">
+                                        <form action="Favourite" method="POST">
+                                            <div class="col-sm-4">
+                                                <input type="submit" class="primary" value="Add to Favorite">                                 
+                                                <input type="hidden" name="bId" value="${book.getId()}">
+                                            </div>
+                                        </form>
+                                    </c:if>
                                     <form action="Report" method="POST">
                                         <div class="col-sm-4"> 
                                             <input type="submit" class="primary" value="Report">                                 
@@ -205,7 +235,7 @@
                     <br>
 
                     <div class="container-fluid">
-                        <h2 class="h2">Table of Contents</h2>
+                        <h3 class="">Table of Contents</h3>
                         <div class="accordion col-md-7" id="accordionExample">
                             <c:forEach items="${requestScope.vols}" var="vol">
                                 <div class="card">
@@ -228,21 +258,20 @@
                                                                     </c:when>
                                                                     <c:otherwise>
                                                             <a href="BookPreread?id=${book.id}"><p><i class="fa fa-lock"></i> ${chap.title}</p></a>
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </c:if>
-                                                    </c:forEach>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:if>
+                                                        </c:forEach>
                                         </div>
                                     </div>
                                 </div>
                             </c:forEach>
 
                         </div>  
-                        <div> </div>
                     </div>
-                    <div class="container-fluid">
-                        <h4>${(! empty requestScope.comments)? requestScope.comments.size() : "0"} comment(s)</h4>
-                        <div class="col-md-7">
+                    <div class="container-fluid mt-5">
+                        <h3>${(! empty requestScope.comments)? requestScope.comments.size() : "0"} comment(s)</h3>
+                        <div class="col-12">
                             <form role="form" action="Comment" method="get">
                                 <input type="hidden" name="bookId" value="${book.id}"> 
                                 <div class="form-group">
@@ -254,8 +283,8 @@
                                 <c:forEach items="${requestScope.comments}" var="comment">
 
                                     <tr>
-                                        <th style="width: 100px" scope="row">
-                                            No.${comment.uid}
+                                        <th style="width: 200px" scope="row">
+                                            ${comment.user.name}
                                         </th>
                                         <td style="white-space: pre-line">${comment.comment}</td>
                                     </tr>
@@ -265,15 +294,16 @@
                         </div>
                     </div>
 
-                    <div class="container-fluid">
+                    <div class="container-fluid mt-5">
                         <h2 class="h2">Similar Products</h2>
 
                         <!-- Products -->
                         <section class="tiles">
+                            <div class= "" style = "display: flex ">
                             <c:forEach items="${requestScope.sames}" var="same">
                                 <article class="style1">
                                     <span class="image">
-                                        <img src="${same.image}" alt="${same.image}" style="height: 391px;" />
+                                        <img src="${same.image}" alt="${same.image}" style="height: 290px;" />
                                     </span>
                                     <a href="BookDetail?id=${same.id}">
                                         <h2>${same.title}</h2>
@@ -289,41 +319,8 @@
                                         </c:if>
                                     </a>
                                 </article>
-                            </c:forEach>
+                            </c:forEach></div>
                         </section>
-                    </div>
-                                
-                     <div class="container-fluid">
-                        <h2 class="h2">Also from this author</h2>
-
-                        <!-- Products -->
-                        <section class="tiles">
-                            <c:forEach items="${requestScope.bookauthor}" var="bookau">
-                                <article class="style1">
-                                    <span class="image">
-                                        <img src="${bookau.image}" alt="${bookau.image}" style="height: 391px;" />
-                                    </span>
-                                    <a href="BookDetail?id=${bookau.id}">
-                                        <h2>${bookau.title}</h2>
-
-                                        <c:if test="${bookau.issale()}">
-                                            <p>
-                                                <del>$${bookau.price}</del> 
-                                                <strong>$5.00</strong>
-                                            </p>
-                                        </c:if>
-                                        <c:if test="${!bookau.issale()}">
-                                            <p><strong>$${bookau.price}</strong></p>
-                                        </c:if>
-                                    </a>
-                                </article>
-                            </c:forEach>
-                        </section>
-                        <p class="text-center">
-                        <a href="BookAuthor?aid=${requestScope.aid}">More Books &nbsp;<i class="fa fa-long-arrow-right"></i>
-                        </a>
-                    </p>
-
                     </div>
                                 
                 </div>
@@ -355,7 +352,6 @@
         <script src="assets/js/jquery.scrollex.min.js"></script>
         <script src="assets/js/main.js"></script>
         <script>
-
                                                     function validatePassword() {
                                                         let pass = document.forms["purchaseForm"]["pass"].value;
                                                         let x = document.forms["purchaseForm"]["password"].value;
@@ -364,7 +360,6 @@
                                                             return false;
                                                         }
                                                     }
-
         </script>
     </body>
 </html>

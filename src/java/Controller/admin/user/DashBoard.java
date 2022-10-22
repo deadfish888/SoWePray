@@ -4,6 +4,10 @@
  */
 package Controller.admin.user;
 
+import Model.product.Author;
+import Model.auth.User;
+import context.action.CommentDAO;
+import context.action.ReportDAO;
 import context.product.BookDAO;
 import context.auth.UserDAO;
 import context.product.AuthorDAO;
@@ -14,6 +18,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -33,12 +40,50 @@ public class DashBoard extends HttpServlet {
      */
     AuthorDAO aDao = new AuthorDAO();
     UserDAO uDao = new UserDAO();
+    BookDAO bDao = new BookDAO();
+    CommentDAO cDao = new CommentDAO();
+    ReportDAO rDao = new ReportDAO();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int per = aDao.getPercent();
+        ArrayList<Author> listAuthor = aDao.getAllAuthor();
+        ArrayList<Author> listUserAu = aDao.getAllUser();
+        int a = listAuthor.size();
+        int b = listUserAu.size();
+        double ret = (double) a / (a + b) * 100;
+        int per = (int) ret;
+
+        Date date = new Date();
+        ArrayList<User> listUser = uDao.getAllUsers();
+        ArrayList<Integer> listQuater = aDao.getNumQuater(date.getYear() + 1900, date.getYear() + 1899);
+        ArrayList<Integer> listYear = new ArrayList<>();
+        System.out.println(date.getMonth());
+        for (int i = 0; i < date.getMonth(); i++) {
+            listYear.add(aDao.getNumYear(i + 1, date.getYear() + 1900));
+        }
+        for (int i = date.getMonth(); i < 12; i++) {
+            listYear.add(0);
+        }
+        int sum = 0;
+        for (int i = 0; i < 12; i++) {
+            request.setAttribute("m" + i, listYear.get(i));
+            sum += listYear.get(i);
+        }
+        request.setAttribute("sum", sum);
+        request.setAttribute("thisYear", date.getYear() + 1900);
+        request.setAttribute("forYear", date.getYear() + 1899);
+
+        request.setAttribute("books", bDao.countBookNumber());
+        request.setAttribute("cmt", cDao.count());
+        request.setAttribute("rp", rDao.count());
+
+        request.setAttribute("listQuater", listQuater);
+        request.setAttribute("max", getMax(listQuater));
+        request.setAttribute("totalU", listUser.size());
+
+        request.setAttribute("totalA", a + b);
         request.setAttribute("per1", per);
-        request.setAttribute("per2", 100-per);
+        request.setAttribute("per2", 100 - per);
         request.getRequestDispatcher("../manage/dashboard.jsp").forward(request, response);
     }
 
@@ -80,5 +125,15 @@ public class DashBoard extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private int getMax(ArrayList<Integer> listQuater) {
+        int max = 0;
+        for (Integer item : listQuater) {
+            if (item > max) {
+                max = item;
+            }
+        }
+        return max;
+    }
 
 }

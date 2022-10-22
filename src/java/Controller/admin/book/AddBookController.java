@@ -42,8 +42,8 @@ public class AddBookController extends HttpServlet {
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         String title = request.getParameter("title");
-        String author = request.getParameter("author");
-        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+        String author = request.getParameter("authorId");
+        String[] category = request.getParameterValues("categoryId");
         float price = Float.parseFloat(request.getParameter("price"));
         boolean issale = (request.getParameter("issale") != null);
         String description = request.getParameter("description");
@@ -52,8 +52,17 @@ public class AddBookController extends HttpServlet {
         Book book = new Book();
         book.setId(id);
         book.setTitle(title);
-//        book.setAuthorId(author);
-        // book.setCategoryId(categoryId);
+
+        if (author != null) {
+            book.setAuthorId(Integer.parseInt(author));
+        } else {
+            String newAuthor = request.getParameter("author");
+            Author au = new Author();
+            au.setName(newAuthor);
+            book.setAuthor(au);
+        }
+
+        book.setCategory(category);
         book.setPrice(price);
         book.setIssale(issale);
         book.setImage(img);
@@ -71,13 +80,11 @@ public class AddBookController extends HttpServlet {
         if (bd.addBook(book) == 0) {
             request.setAttribute("message", "Add Failed! Please try again!");
             request.setAttribute("book", book);
-
+            request.setAttribute("newId", bd.countBookNumber() + 1);
+            request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
         } else {
             response.sendRedirect("./Book");
         }
-        request.setAttribute("newId", bd.countBookNumber() + 1);
-        request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
-
     }
 
     @Override

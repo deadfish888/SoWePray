@@ -2,21 +2,19 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script src="../assets/js/ProfileScript.js" type="text/javascript"></script>
-        <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="../assets/css/main.css" />
-        <link href="../assets/css/style-profile.css" rel="stylesheet" type="text/css"/>
-        <title>My Novels</title>
+        <jsp:include page="/views/base/userHeadImport.jsp"/>
+        <title>Series of ${sessionScope.user.name}</title>
     </head>
     <body>
         <div class="wrapper">
             <nav id="sidebar" class="bg-dark col-md-2 text-light" style="display: block; float: left; padding: 5px">
                 <div style="display: block; margin: auto; text-align: center; margin-top: 2em">
-                    <img src="../images/default.png" width="100em" height="100em" class="rounded mx-auto d-block" alt="..." style="border:2px solid #fff; display: block; margin: auto">
+                    <img src="${context}/images/default.png" width="100em" height="100em" class="rounded mx-auto d-block" alt="..." style="border:2px solid #fff; display: block; margin: auto">
                     <div class="sidebar-header">
                         <h3 class="" style="margin-bottom: 0">Hi, ${sessionScope.user.username}</h3>
                         <p>UserID: ${sessionScope.user.id}</p>
@@ -26,7 +24,7 @@
 
                 <ul class="list-unstyled components" style="padding: 0.5em; font-size: 1.4em">
                     <li class="sidebar-item">
-                        <a href="./Profile">My profile</a>
+                        <a href="./Profile">My Profile</a>
                     </li>
                     <li class="sidebar-item">
                         <a href="./Security">Security</a>
@@ -43,14 +41,12 @@
                 </ul>
             </nav>
             <div class="right-aside col-md-10" style="display: block">
-                <!-- Header -->
-                <!--            <div class="topbar">-->
-
+                <!-- Menu -->
                 <div class="" style="padding: 0; display: block">
                     <header id="header" style="padding: 0;padding-top: 1.1em">
                         <div>
                             <!-- Logo -->
-                            <a href="<%=request.getContextPath()%>/Home" class="logo" style="margin-bottom: 1.1em">
+                            <a href="${context}/Home" class="logo" style="margin-bottom: 1.1em">
                                 <span class="fa fa-book" style="padding-left: 2em"></span>
                                 <span class="title">BOOKIE</span>
                             </a>
@@ -64,16 +60,12 @@
                             </nav>
                         </div>
                     </header>
-
-                    <!-- Menu -->
                     <jsp:include page="/views/base/menu.jsp" />
-
                 </div>
-                <!--            </div>-->
 
                 <div>
                     <div class="text-center">
-                        <h2>Series of ${sessionScope.user.name}</h2>
+                        <h1>SERIES OF ${sessionScope.user.name}</h1>
                     </div>
                     <div class="container border rounded py-3">
                         <div class="row col-12">
@@ -95,11 +87,11 @@
                                     <tr style="cursor: pointer; font-size: 15px;  text-align: center;">
                                         <th>Title</th>
                                         <th style="width: 150px;">Image</th>
-                                        <th>Genre</th>
+                                        <th>Genres</th>
                                         <th style="width: 30px;">Paid</th>
                                         <th style="width: 30px;">Update</th>
                                         <th style="width: 30px;">TOC</th>
-                                        <th style="width: 30px;">Enable</th>
+                                        <th style="width: 30px;">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -167,11 +159,7 @@
         </div>
         <!-- Scripts -->
 
-        <script src="../assets/js/jquery.min.js"></script>
-        <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="../assets/js/jquery.scrolly.min.js"></script>
-        <script src="../assets/js/jquery.scrollex.min.js"></script>
-        <script src="../assets/js/main.js"></script>
+        <jsp:include page="/views/base/userFootImport.jsp"/>
         <script>
             var search = location.search.substring(1);
             const changeLinks = document.querySelectorAll(".change-link");

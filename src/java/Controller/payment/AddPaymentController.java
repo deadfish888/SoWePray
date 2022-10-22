@@ -7,6 +7,7 @@ package Controller.payment;
 import Model.payment.PaymentAccount;
 import Model.payment.PaymentMethod;
 import Model.auth.User;
+import context.auth.UserDAO;
 import context.payment.PaymentAccountDAO;
 import context.payment.PaymentMethodDAO;
 import java.io.IOException;
@@ -46,12 +47,18 @@ public class AddPaymentController extends HttpServlet {
         } else {
             PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
             PaymentMethod paymentMethod = new PaymentMethod();
-            paymentMethod.setUser((User) request.getSession().getAttribute("user"));
+            User user = (User) request.getSession().getAttribute("user");
+            paymentMethod.setUser(user);
             paymentMethod.setPaymentAccount(paymentAccount);
             paymentMethod.setName(request.getParameter("paymentName"));
             paymentMethod.setActive(true);
             payMedDAO.insert(paymentMethod);
             response.sendRedirect(request.getContextPath() + "/User/Payment");
+            if(user.is_super() == 1) {
+                user.setIs_super(2);
+                UserDAO userDAO = new UserDAO();
+                userDAO.editRank(user.getId(), 1);
+            }
         }
     }
 

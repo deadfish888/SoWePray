@@ -19,28 +19,23 @@ import java.util.ArrayList;
 
 
 /* @author ACER */
-@WebServlet("/BookAuthor")
-public class BookAuthor extends HttpServlet {
+@WebServlet("/Author")
+public class AuthorController extends HttpServlet {
 
     // <editor-fold defaultstate="" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        int id = Integer.parseInt(request.getParameter("id"));
-        int aid = Integer.parseInt(request.getParameter("aid"));
+        int aid = Integer.parseInt(request.getParameter("id"));
         BookDAO b = new BookDAO();
-//        Book thisbook = b.getBookById(id);
+        
         AuthorDAO a = new AuthorDAO();
         Author thisauthor = a.getAuthorById(aid);
         ArrayList<Book> bookauthor = b.getAllBooksByAuthorId(aid);
         
         
-//        request.setAttribute("book", thisbook);
         request.setAttribute("author", thisauthor);
         request.setAttribute("bookauthor", bookauthor);
-        request.setAttribute("aid", aid);
-
-
 
         request.getRequestDispatcher("/views/book/book-author.jsp").forward(request, response);
     }

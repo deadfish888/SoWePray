@@ -33,23 +33,6 @@ public class AuthorDAO {
         }
     }
 
-    public void add(Author author) {
-        try {
-            String sql = "INSERT INTO [dbo].[Author]\n"
-                    + "           ([userId]\n"
-                    + "           ,[authorName])\n"
-                    + "     VALUES\n"
-                    + "           ( ? "
-                    + "           , ? )";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, author.getUserId());
-            stm.setString(2, author.getName());
-            stm.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(AuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     public void delAuthor(int id) {
         try {
             String sql = "DELETE FROM [dbo].[Author]\n"
@@ -62,23 +45,28 @@ public class AuthorDAO {
         }
     }
 
-    public void addAuthor(int userid, String name) {
+    public int addAuthor(Author author) {
         try {
             String sql = "INSERT INTO [dbo].[Author]\n"
                     + "           (\n"
                     + "           [name]\n"
                     + "           ,[date])\n"
+                    + "     OUTPUT [INSERTED].[id]"
                     + "     VALUES\n"
                     + "           (  \n"
                     + "            ? \n"
                     + "           , ? )";
             stm = cnn.prepareStatement(sql);
-            stm.setString(1, name);
+            stm.setString(1, author.getName());
             stm.setString(2, java.time.LocalDate.now().toString());
-            stm.executeUpdate();
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(AuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return 0;
     }
 
     public ArrayList<Author> getAllAuthor() {
@@ -232,10 +220,10 @@ public class AuthorDAO {
             Logger.getLogger(AuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-     public Author getAuthorById(int aid) {
+
+    public Author getAuthorById(int aid) {
         try {
-            String sql = "SELECT * from Author where aid = ?";
+            String sql = "SELECT * from Author where id = ?";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, aid);
             rs = stm.executeQuery();
@@ -267,4 +255,72 @@ public class AuthorDAO {
         return -1;
     }
 
+    public ArrayList<Integer> getNumQuater(int now, int before) {
+        ArrayList<Integer> list = new ArrayList<>();
+        try {
+            String sql = "(SELECT COUNT([Author].[date])\n"
+                    + "                    FROM[dbo].[Author]\n"
+                    + "                    WHERE[date] <= '" + before + "-1-1')\n"
+                    + "                                          UNION ALL\n"
+                    + "    (SELECT COUNT([Author].[date])\n"
+                    + "                    FROM[dbo].[Author]\n"
+                    + "                    WHERE[date] BETWEEN '" + before + "-1-1' AND '" + before + "-3-31')\n"
+                    + "                                          UNION ALL\n"
+                    + "    (SELECT COUNT([Author].[date])\n"
+                    + "                                          FROM[dbo].[Author]\n"
+                    + "                                          WHERE[date] BETWEEN '" + before + "-4-1' AND '" + before + "-6-30')\n"
+                    + "                                          UNION ALL\n"
+                    + "    (SELECT COUNT([Author].[date])\n"
+                    + "                                          FROM[dbo].[Author]\n"
+                    + "                                          WHERE[date] BETWEEN '" + before + "-7-1' AND '" + before + "-9-30')\n"
+                    + "                                          UNION ALL\n"
+                    + "    (SELECT COUNT([Author].[date])\n"
+                    + "                                          FROM[dbo].[Author]\n"
+                    + "                                          WHERE[date] BETWEEN '" + before + "-10-1' AND '" + before + "-12-31')\n"
+                    + "                                           UNION ALL\n"
+                    + "    (SELECT COUNT([Author].[date])\n"
+                    + "                                          FROM[dbo].[Author]\n"
+                    + "                                          WHERE[date] BETWEEN '" + now + "-1-1' AND '" + now + "-3-31')\n"
+                    + "                                          UNION ALL\n"
+                    + "    (SELECT COUNT([Author].[date])\n"
+                    + "                                          FROM[dbo].[Author]\n"
+                    + "                                          WHERE[date] BETWEEN '" + now + "-4-1' AND '" + now + "-6-30')\n"
+                    + "                                          UNION ALL\n"
+                    + "    (SELECT COUNT([Author].[date])\n"
+                    + "                                          FROM[dbo].[Author]\n"
+                    + "                                          WHERE[date] BETWEEN '" + now + "-7-1' AND '" + now + "-9-30')\n"
+                    + "                                          UNION ALL\n"
+                    + "    (SELECT COUNT([Author].[date])\n"
+                    + "                                          FROM[dbo].[Author]\n"
+                    + "                                          WHERE[date] BETWEEN '" + now + "-10-1' AND '" + now + "-12-31')";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int userid = rs.getInt(1);
+                list.add(userid);
+            }
+        } catch (Exception e) {
+            System.out.println("count Error:" + e.getMessage());
+        }
+        return list;
+    }
+
+    public Integer getNumYear(int month, int year) {
+        int ret = 0;
+        try {
+            String sql = "(SELECT COUNT([Author].[id])\n"
+                    + "  FROM [dbo].[Author]\n"
+                    + "  WHERE YEAR([date]) = ? AND MONTH([date]) = ?)";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, year);
+            stm.setInt(2, month);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                ret = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("count Error:" + e.getMessage());
+        }
+        return ret;
+    }
 }

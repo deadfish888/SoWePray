@@ -67,7 +67,18 @@ public class CategoryDAO {
             String sql = "delete from [Category] where [id] = ?";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, id);
-            stm.executeUpdate(sql);
+            stm.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("del Error:" + e.getMessage());
+        }
+    }
+
+    public void delBookCategory(int id) {
+        try {
+            String sql = "DELETE FROM [CategoryBook]\n"
+                    + "      WHERE [categoryId] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, id);
             stm.executeUpdate();
         } catch (Exception e) {
             System.out.println("del Error:" + e.getMessage());
@@ -81,6 +92,26 @@ public class CategoryDAO {
                     + "      ,[name]\n"
                     + "  FROM [Category]"
                     + " ORDER BY [name] ASC";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                list.add(new Category(id, name));
+            }
+        } catch (Exception e) {
+            System.out.println("getCategories Error:" + e.getMessage());
+        }
+        return list;
+    }
+
+    public ArrayList<Category> getAllCategory_SortById() {
+        ArrayList<Category> list = new ArrayList<>();
+        try {
+            String sql = "SELECT [id]\n"
+                    + "      ,[name]\n"
+                    + "  FROM [Category]"
+                    + " ORDER BY [id] ASC";
             stm = cnn.prepareStatement(sql);
             rs = stm.executeQuery();
             while (rs.next()) {
@@ -136,18 +167,17 @@ public class CategoryDAO {
         return null;
     }
 
-
     public int addCategoryBook(int bookId, ArrayList<Category> category) {
         try {
             String sql = "INSERT INTO [CategoryBook] ([bookId], [CategoryId])"
                     + " VALUES ( ? ,? ) ";
-            for (int i=1;i<category.size();i++) {
+            for (int i = 1; i < category.size(); i++) {
                 sql += ", (?, ?)";
             }
             stm = cnn.prepareStatement(sql);
-            for (int i=0;i<category.size();i++) {
-                stm.setInt(2*i+1, bookId);
-                stm.setInt(2*i+2, category.get(i).getId());
+            for (int i = 0; i < category.size(); i++) {
+                stm.setInt(2 * i + 1, bookId);
+                stm.setInt(2 * i + 2, category.get(i).getId());
             }
             return stm.executeUpdate();
         } catch (Exception e) {
@@ -161,13 +191,13 @@ public class CategoryDAO {
             deleteCategoryBook(bookId);
             String sql = "INSERT INTO [CategoryBook] ([bookId], [CategoryId])"
                     + " VALUES ( ? ,? ) ";
-            for (int i=1;i<category.size();i++) {
+            for (int i = 1; i < category.size(); i++) {
                 sql += ", (?, ?)";
             }
             stm = cnn.prepareStatement(sql);
-            for (int i=0;i<category.size();i++) {
-                stm.setInt(2*i+1, bookId);
-                stm.setInt(2*i+2, category.get(i).getId());
+            for (int i = 0; i < category.size(); i++) {
+                stm.setInt(2 * i + 1, bookId);
+                stm.setInt(2 * i + 2, category.get(i).getId());
             }
             return stm.executeUpdate();
         } catch (Exception e) {
@@ -186,6 +216,24 @@ public class CategoryDAO {
         } catch (Exception e) {
             System.out.println("addCategoryBook Error:" + e.getMessage());
         }
+    }
+
+    public int countBook(Category category) {
+        try {
+            String sql = "  select COUNT (*) as total from Category c\n"
+                    + "  INNER JOIN CategoryBook cb \n"
+                    + "  ON c.id = cb.categoryId\n"
+                    + "  where c.id = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, category.getId());
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 
 }

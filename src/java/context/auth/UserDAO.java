@@ -398,9 +398,8 @@ public class UserDAO {
         }
     }
 
-//    public int getNumberUser() {
-//        return (getAllUsers().size());
-//    }
+    
+
     public ArrayList<User> getAllUsers() {
         ArrayList<User> list = new ArrayList<>();
         try {
@@ -683,5 +682,31 @@ public class UserDAO {
 
     public Object countUser() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public User getBasicInformation(int userId) {
+        try {
+            String sql = "SELECT [id] " 
+                    + "      ,[fullname]\n"
+                    + "      ,[gender]\n"
+                    + "      ,[username]\n"
+                    + "      ,[id]\n"
+                    + "  FROM [User] "
+                    + "where username = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, userId);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return new User(rs.getInt("id"), rs.getString(1), rs.getBoolean(2) ? "Male" : "Female",
+                        rs.getString(3), rs.getString(4), rs.getString(5),
+                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9),
+                        new PaymentAccount(rs.getLong("walletNumber")));
+//                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
     }
 }

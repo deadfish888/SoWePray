@@ -49,8 +49,8 @@ public class UpdateBookController extends HttpServlet {
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         String title = request.getParameter("title");
-        String author = request.getParameter("author");
-        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+        String author = request.getParameter("authorId");
+        String[] category = request.getParameterValues("categoryId");
         float price = Float.parseFloat(request.getParameter("price"));
         boolean issale = (request.getParameter("issale") != null);
         String description = request.getParameter("description");
@@ -59,8 +59,17 @@ public class UpdateBookController extends HttpServlet {
         Book book = new Book();
         book.setId(id);
         book.setTitle(title);
-//        book.setAuthorId(author);
-        //  book.setCategoryId(categoryId);
+
+        if (author != null) {
+            book.setAuthorId(Integer.parseInt(author));
+        } else {
+            String newAuthor = request.getParameter("author");
+            Author au = new Author();
+            au.setName(newAuthor);
+            book.setAuthor(au);
+        }
+
+        book.setCategory(category);
         book.setPrice(price);
         book.setIssale(issale);
         book.setImage(img);
@@ -78,11 +87,11 @@ public class UpdateBookController extends HttpServlet {
         BookDAO bd = new BookDAO();
         if (bd.editBook(book) == 0) {
             request.setAttribute("message", "Update Failed! Please try again!");
+            request.setAttribute("book", book);
+            request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
         } else {
-            request.setAttribute("message", "Update Successfully!");
+            response.sendRedirect("./Book");
         }
-        request.setAttribute("book", book);
-        request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
     }
 
     @Override
