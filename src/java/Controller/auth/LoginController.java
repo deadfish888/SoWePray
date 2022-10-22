@@ -33,28 +33,24 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         String key = request.getParameter("username");
         String pass = request.getParameter("password");
+        String origin = request.getParameter("origin");
+            if (origin.equals("")) {
+                origin = "./Home";
+            }
 
         UserDAO ud = new UserDAO();
         User user = ud.getUser(key, pass);
         if (user != null) {
             HttpSession session = request.getSession();
 
-            if (user.is_super()==0) {
-                request.setAttribute("origin", request.getParameter("origin"));
-                request.setAttribute("error", "Account has been disable !");
-                forward(request, response, "/views/auth/login.jsp");
-                return;
-            }
+            
             if (user.is_super() >= 4) {
                 session.setAttribute("admin", user);
                 response.sendRedirect("Admin/DashBoard");
                 return;
             }
             session.setAttribute("user", user);
-            String origin = request.getParameter("origin");
-            if (origin.equals("")) {
-                origin = "./Home";
-            }
+            
             Cookie name = new Cookie("name", key);
             Cookie password = new Cookie("pass", pass);
             name.setMaxAge(3600 * 24);

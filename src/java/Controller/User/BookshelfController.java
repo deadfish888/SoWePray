@@ -40,6 +40,7 @@ public class BookshelfController extends HttpServlet {
         FavouriteDAO favouriteDAO = new FavouriteDAO();
 //        CategoryDAO categoryDAO = new CategoryDAO();
         User user = (User) request.getSession().getAttribute("user");
+        
 //        if (request.getParameter("categoryId") != null) {
 //
 //        }
