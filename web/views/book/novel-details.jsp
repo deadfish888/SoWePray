@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Your Book</title>
+        <title>${book.title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="assets/css/main.css" />
@@ -41,27 +41,21 @@
             <!-- Main -->
             <div id="main">
                 <div class="inner">
+
                     <h1 style="margin: 0 0 0 0;">${book.title}
-                        <c:if test="${book.issale()}">
-                            <span class="pull-right">
-                                <del>$${book.price}</del> 
-                                $5.00
-                            </span>
-                        </c:if> 
-                        <c:if test="${!book.issale()}">
-                            <span class="pull-right">$${book.price}</span>
-                        </c:if>
+                        <span class="pull-right"><a href="./Book?type=novel">ORIGINAL</a></span>
                     </h1>
+                    
                     <c:forEach items="${book.category}" var="category">
-                        <h4 style="margin: 0 0 0 0; display: inline-block;"><a href="./Book?categoryId=${category.id}"><span class="badge badge-pill badge-secondary">${category.name}</span></a></h4>
+                        <h4 style="margin: 0 0 0 0; display: inline-block;"><a href="./Book?categoryId=${category.id}&type=novel"><span class="badge badge-pill badge-secondary">${category.name}</span></a></h4>
                             </c:forEach>
 
-                        <h2><a href="./Author?id=${book.author.id}"> ${book.author.name}</a> </h2>
+                    <h2><a href="./Author?id=${book.author.id}"> ${book.author.name}</a> </h2>
 
                     <div class="container-fluid">
                         <div class="row" style="width: 1200px; text-align: justify;">
                             <div class="col-md-3">
-                                <img src="${book.image}" class="img-fluid" alt="${book.image}">
+                                <img src="${(! empty book.image)? book.image : "images/novel-sample.png"}" class="img-fluid" alt="${book.image}">
                                 <form action="BookPreread" method="GET">
                                     <div style ="text-align: center ">
                                         <input type="hidden" name="id" value="${book.id}">
@@ -93,12 +87,12 @@
                                                 </div>
                                             </form>
                                         </c:if>
-                                        <c:if test="${!own && (book.price ne 0)}">
-                                            <div class="col-sm-2">
-                                                <input type="button" class="primary btn-primary" data-toggle="modal" data-target="#purchase" value="Buy"/>
+                                        <c:if test="${!own && (book.issale())}">
+                                            <div class="col-sm-3">
+                                                <input type="button" class="primary btn-primary" data-toggle="modal" data-target="#purchase" value="Buy (All)"/>
                                             </div>
                                         </c:if>
-                                        <c:if test="${!own && (book.price eq 0)}">
+                                        <c:if test="${!own && (!book.issale())}">
                                             <form action="User/Purchase" method="get">
                                                 <div class="col-sm-4">
                                                     <input type="hidden" name="bookId" value="${book.id}">
@@ -140,14 +134,7 @@
                                                                     <th>
                                                                         Price
                                                                     </th>
-                                                                    <td>
-                                                                        <c:if test="${book.issale()}">
-                                                                            $5.00
-                                                                        </c:if>
-                                                                        <c:if test="${!book.issale()}">
-                                                                            ${book.price}
-                                                                        </c:if>
-                                                                    </td>
+
                                                                 </tr>
                                                                 <tr>
                                                                     <th>
@@ -253,13 +240,69 @@
                                             <c:forEach items="${requestScope.chaps}" var="chap">
                                                 <c:if test="${chap.volumeId == vol.id}">
                                                     <c:choose>
-                                                        <c:when test="${(! empty sessionScope.user && requestScope.own) || !empty sessionScope.admin}">
+                                                        <c:when test="${(! empty sessionScope.user && (requestScope.own || chaptersOwn.contains(chap.id))) || !empty sessionScope.admin}">
                                                             <a href="BookReading?id=${book.id}&cid=${chap.id}"><p><i class="fa fa-unlock"></i> ${chap.title}</p></a>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <a href="BookPreread?id=${book.id}"><p><i class="fa fa-lock"></i> ${chap.title}</p></a>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                            <a data-toggle="modal" data-target="#cpurchase${chap.id}"><p><i class="fa fa-lock"></i> ${chap.title}</p></a>
+                                                            <div class="modal fade" id="cpurchase${chap.id}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                                <div class="modal-dialog modal-lg">
+                                                                    <div class="modal-content">
+                                                                        <form action="User/Purchase" method="post" id="purchaseForm" name="purchaseForm" onsubmit="return validatePassword()">
+                                                                            <div class="modal-header">
+                                                                                <h3 class="modal-title">Purchase</h3>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="wrapper row">
+                                                                                    <table style="width: 80%; margin: auto">
+                                                                                        <tr>
+                                                                                            <th>
+                                                                                                Chapter ${chap.no}
+                                                                                            </th>
+                                                                                            <td>
+                                                                                                ${chap.title}
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th>
+                                                                                                Price
+                                                                                            </th>
+
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th>
+                                                                                                Password
+                                                                                            </th>
+                                                                                            <td>
+                                                                                                <input type="password" name="password"/>
+                                                                                                <div style="color: red" id="purchase-pass-noti"></div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer" style="text-align: center">
+                                                                                <button type="button" class="primary btn-primary text-center" data-dismiss="modal" style="width: auto; padding: 0 1em">Cancel</button>
+                                                                                <input type="hidden" id="pass" value="${sessionScope.user.password}"/>
+                                                                                <c:if test="${book.issale()}">
+                                                                                    <input type="hidden" name="amount" value="5"/>
+                                                                                </c:if>
+                                                                                <c:if test="${!book.issale()}">
+                                                                                    <input type="hidden" name="amount" value="${book.price}"/>
+
+                                                                                </c:if>
+                                                                                <input type="hidden" name="bookId" value="${book.id}"/>
+                                                                                <input type="hidden" name="bookTitle" value="${book.title}"/>
+                                                                                <input type="submit" class="primary text-center" value="Confirm"/>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </c:otherwise>
+
                                                     </c:choose>
+
                                                 </c:if>
                                             </c:forEach>
                                         </div>
@@ -300,29 +343,29 @@
                         <!-- Products -->
                         <section class="tiles">
                             <div class= "" style = "display: flex ">
-                            <c:forEach items="${requestScope.sames}" var="same">
-                                <article class="style1">
-                                    <span class="image">
-                                        <img src="${same.image}" alt="${same.image}" style="height: 290px;" />
-                                    </span>
-                                    <a href="BookDetail?id=${same.id}">
-                                        <h2>${same.title}</h2>
+                                <c:forEach items="${requestScope.sames}" var="same">
+                                    <article class="style1">
+                                        <span class="image">
+                                            <img src="${same.image}" alt="${same.image}" style="height: 290px;" />
+                                        </span>
+                                        <a href="BookDetail?id=${same.id}">
+                                            <h2>${same.title}</h2>
 
-                                        <c:if test="${same.issale()}">
-                                            <p>
-                                                <del>$${same.price}</del> 
-                                                <strong>$5.00</strong>
-                                            </p>
-                                        </c:if>
-                                        <c:if test="${!same.issale()}">
-                                            <p><strong>$${same.price}</strong></p>
-                                        </c:if>
-                                    </a>
-                                </article>
-                            </c:forEach></div>
+                                            <c:if test="${same.issale()}">
+                                                <p>
+                                                    <del>$${same.price}</del> 
+                                                    <strong>$5.00</strong>
+                                                </p>
+                                            </c:if>
+                                            <c:if test="${!same.issale()}">
+                                                <p><strong>$${same.price}</strong></p>
+                                            </c:if>
+                                        </a>
+                                    </article>
+                                </c:forEach></div>
                         </section>
                     </div>
-                                
+
                 </div>
             </div>
 
@@ -352,14 +395,14 @@
         <script src="assets/js/jquery.scrollex.min.js"></script>
         <script src="assets/js/main.js"></script>
         <script>
-                                                    function validatePassword() {
-                                                        let pass = document.forms["purchaseForm"]["pass"].value;
-                                                        let x = document.forms["purchaseForm"]["password"].value;
-                                                        if (pass !== x) {
-                                                            document.getElementById("purchase-pass-noti").innerHTML = "Wrong password";
-                                                            return false;
-                                                        }
-                                                    }
+                                                                            function validatePassword() {
+                                                                                let pass = document.forms["purchaseForm"]["pass"].value;
+                                                                                let x = document.forms["purchaseForm"]["password"].value;
+                                                                                if (pass !== x) {
+                                                                                    document.getElementById("purchase-pass-noti").innerHTML = "Wrong password";
+                                                                                    return false;
+                                                                                }
+                                                                            }
         </script>
     </body>
 </html>

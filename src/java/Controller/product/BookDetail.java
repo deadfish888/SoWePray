@@ -13,6 +13,7 @@ import context.product.BookDAO;
 import context.product.content.ChapterDAO;
 import context.action.CommentDAO;
 import context.action.FavouriteDAO;
+import context.product.ProductDAO;
 import context.product.content.VolumeDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -54,22 +55,25 @@ public class BookDetail extends HttpServlet {
                 request.setAttribute("own", user.isOwnBook(id));
                 int uId = user.getId();
                 check = fdao.checkFavourite(uId, id) == true;
+                ProductDAO pd = new ProductDAO();
+                ArrayList<Integer> chapterOwns = pd.getChaptersOwn(user.getId(), thisbook.getId());
+                request.setAttribute("chaptersOwn", chapterOwns);
             }
+            ArrayList<Book> sames = b.getSimilarBooks(id, thisbook.getCategory());
+            ArrayList<Volume> vols = vd.getVolumesByBookId(id);
+            ArrayList<Chapter> chaps = chd.getChaptersByBookId(id);
+            ArrayList<Comment> coms = cmd.loadComment(id);
+            request.setAttribute("chaps", chaps);
+            request.setAttribute("sames", sames);
+            request.setAttribute("book", thisbook);
+            request.setAttribute("vols", vols);
+            request.setAttribute("comments", coms);
+            request.setAttribute("check", check);
             if (thisbook.getAuthor().getUserId() == 0) {
-                ArrayList<Book> sames = b.getSimilarBooks(id, thisbook.getCategory());
-                ArrayList<Volume> vols = vd.getVolumesByBookId(id);
-                ArrayList<Chapter> chaps = chd.getChaptersByBookId(id);
-                ArrayList<Comment> coms = cmd.loadComment(id);
-                request.setAttribute("chaps", chaps);
-                request.setAttribute("sames", sames);
-                request.setAttribute("book", thisbook);
-                request.setAttribute("vols", vols);
-                request.setAttribute("comments", coms);
-                request.setAttribute("check", check);
                 request.getRequestDispatcher("/views/book/book-details.jsp").forward(request, response);
                 return;
             }
-            
+            request.getRequestDispatcher("/views/book/novel-details.jsp").forward(request, response);
         } catch (Exception e) {
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
