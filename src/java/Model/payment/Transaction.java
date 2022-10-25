@@ -18,7 +18,7 @@ public class Transaction {
     float amount;
     User user;
     float balanceAfter;
-    PaymentMethod payment;
+//    PaymentMethod payment;
     int type;
     Product product;
     //1. Recharge
@@ -35,12 +35,12 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(long transactionId, User user, float balanceAfter, float amount, PaymentMethod payment, int type, int status, Timestamp transactionTime, String description) {
+    public Transaction(long transactionId, User user, float balanceAfter, float amount, int type, int status, Timestamp transactionTime, String description) {
         this.transactionId = transactionId;
         this.user = user;
         this.balanceAfter = balanceAfter;
         this.amount = amount;
-        this.payment = payment;
+//        this.payment = payment;
         this.type = type;
         this.status = status;
         this.transactionTime = transactionTime;
@@ -79,13 +79,13 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public PaymentMethod getPayment() {
-        return payment;
-    }
-
-    public void setPayment(PaymentMethod payment) {
-        this.payment = payment;
-    }
+//    public PaymentMethod getPayment() {
+//        return payment;
+//    }
+//
+//    public void setPayment(PaymentMethod payment) {
+//        this.payment = payment;
+//    }
 
     public int getType() {
         return type;
@@ -127,6 +127,12 @@ public class Transaction {
         this.product = product;
     }
 
+    @Override
+    public String toString() {
+        return user.getId() + "\t" + amount;
+    }
+
+    
     /**
      * Compare if 2 transaction id is equal
     *

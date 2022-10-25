@@ -19,12 +19,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
 
 /**
  *
  * @author Silver_000
  */
-@WebServlet(name = "RechargeController", urlPatterns = {"/User/Recharge"})
+@WebServlet(name = "RechargeController", urlPatterns = {"/User/Deposit"})
 public class RechargeController extends HttpServlet {
 
     /**
@@ -38,46 +40,7 @@ public class RechargeController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
-        PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
-        TransactionDAO transDAO = new TransactionDAO();
-
-        float amount = Float.parseFloat(request.getParameter("amount"));
-        User user = (User) request.getSession().getAttribute("user");
-
-        PaymentMethod paymentMethod = new PaymentMethod();
-        paymentMethod.setPaymentId(Integer.parseInt(request.getParameter("payment")));
-        paymentMethod = payMedDAO.get(paymentMethod);
-        if (!paymentMethod.isActive()) {
-            request.setAttribute("walletNoti", "This payment method is deactive.");
-            request.getRequestDispatcher("/User/Payment").forward(request, response);
-
-        } else if (amount > paymentMethod.getPaymentAccount().getBalance()) {
-            request.setAttribute("walletNoti", "Balance of " + paymentMethod.getName() + " is not enough to recharge.");
-            request.getRequestDispatcher("/User/Payment").forward(request, response);
-        } else {
-            float bankBalance = paymentMethod.getPaymentAccount().getBalance() - amount;
-            paymentMethod.getPaymentAccount().setBalance(bankBalance);
-            float walletBalance = user.getPaymentAccount().getBalance() + amount;
-            user.getPaymentAccount().setBalance(walletBalance);
-
-
-            Transaction transaction = new Transaction();
-            transaction.setUser(user);
-            transaction.setAmount(amount);
-            transaction.setBalanceAfter(walletBalance);
-            transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-            transaction.setType(1);
-            transaction.setStatus(2);
-            transaction.setDescription("Recharge from " + paymentMethod.getName() + " into wallet.");
-            transaction.setPayment(paymentMethod);
-            payAccDAO.update(paymentMethod.getPaymentAccount());
-            payAccDAO.update(user.getPaymentAccount());
-            transDAO.insert(transaction);
-
-            response.sendRedirect(request.getContextPath() + "/User/Payment");
-        }
-
+        request.getRequestDispatcher("../views/user/Recharge.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -106,7 +69,31 @@ public class RechargeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        try {
+                //Tao transaction gui cho admin
+                TransactionDAO transDAO = new TransactionDAO();
+                User user = (User) request.getSession().getAttribute("user");
+                float amount = Float.parseFloat(request.getParameter("amount"));
+//                float walletBalance = user.getPaymentAccount().getBalance() + amount;
+
+                Transaction transaction = new Transaction();
+                transaction.setUser(user);
+                transaction.setAmount(amount);
+//                transaction.setBalanceAfter(walletBalance);
+                transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+                transaction.setType(1);
+                transaction.setStatus(1);
+                transaction.setDescription("Deposit into wallet.");
+//                System.out.println(transaction);
+//                transaction.setPayment(paymentMethod);
+//                payAccDAO.update(paymentMethod.getPaymentAccount());
+//                payAccDAO.update(user.getPaymentAccount());
+                transDAO.insert(transaction);
+
+                response.sendRedirect(request.getContextPath() + "/User/Payment");
+//        } catch (Exception e) {
+//            response.sendRedirect(request.getContextPath() + "/User/Payment");
+//        }
     }
 
     /**

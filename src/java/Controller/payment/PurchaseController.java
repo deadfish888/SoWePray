@@ -69,7 +69,7 @@ public class PurchaseController extends HttpServlet {
             transaction.setType(3);
             transaction.setStatus(2);
             transaction.setDescription("Buy " + request.getParameter("bookTitle") + ".");
-            transaction.setPayment(payMedDAO.get(paymentMethod));
+//            transaction.setPayment(payMedDAO.get(paymentMethod));
             transDAO.insert(transaction);
 
             payAccDAO.update(paymentMethod.getPaymentAccount());

@@ -38,45 +38,46 @@ public class WithdrawController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
-        PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
-        TransactionDAO transDAO = new TransactionDAO();
-        float amount = Float.parseFloat(request.getParameter("amount"));
+//        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
+//        PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
+//        TransactionDAO transDAO = new TransactionDAO();
+//        float amount = Float.parseFloat(request.getParameter("amount"));
+//
+//        User user = (User) request.getSession().getAttribute("user");
+//
+//        PaymentMethod paymentMethod = new PaymentMethod();
+//        paymentMethod.setPaymentId(Integer.parseInt(request.getParameter("payment")));
+//        paymentMethod = payMedDAO.get(paymentMethod);
+//        if (!paymentMethod.isActive()) {
+//            request.setAttribute("walletNoti", "This payment method is deactive.");
+//            request.getRequestDispatcher("/User/Payment").forward(request, response);
+//
+//        } else if (amount > user.getPaymentAccount().getBalance()) {
+//            request.setAttribute("walletNoti", "Balance in wallet is not enough to recharge.");
+//            request.getRequestDispatcher("/User/Payment").forward(request, response);
+//        } else {
+//            float bankBalance = paymentMethod.getPaymentAccount().getBalance() + amount;
+//            paymentMethod.getPaymentAccount().setBalance(bankBalance);
+//            float walletBalance = user.getPaymentAccount().getBalance() - amount;
+//            user.getPaymentAccount().setBalance(walletBalance);
+//
+//            Transaction transaction = new Transaction();
+//            transaction.setUser(user);
+//            transaction.setAmount(amount);
+//            transaction.setBalanceAfter(walletBalance);
+//            transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+//            transaction.setType(2);
+//            transaction.setStatus(2);
+//            transaction.setDescription("Withdraw from wallet to " + paymentMethod.getName() + ".");
+////            transaction.setPayment(paymentMethod);
+//            transDAO.insert(transaction);
+//
+//            payAccDAO.update(paymentMethod.getPaymentAccount());
+//            payAccDAO.update(user.getPaymentAccount());
+//            response.sendRedirect(request.getContextPath() + "/User/Payment");
+//        }
 
-        User user = (User) request.getSession().getAttribute("user");
-
-        PaymentMethod paymentMethod = new PaymentMethod();
-        paymentMethod.setPaymentId(Integer.parseInt(request.getParameter("payment")));
-        paymentMethod = payMedDAO.get(paymentMethod);
-        if (!paymentMethod.isActive()) {
-            request.setAttribute("walletNoti", "This payment method is deactive.");
-            request.getRequestDispatcher("/User/Payment").forward(request, response);
-
-        } else if (amount > user.getPaymentAccount().getBalance()) {
-            request.setAttribute("walletNoti", "Balance in wallet is not enough to recharge.");
-            request.getRequestDispatcher("/User/Payment").forward(request, response);
-        } else {
-            float bankBalance = paymentMethod.getPaymentAccount().getBalance() + amount;
-            paymentMethod.getPaymentAccount().setBalance(bankBalance);
-            float walletBalance = user.getPaymentAccount().getBalance() - amount;
-            user.getPaymentAccount().setBalance(walletBalance);
-
-            Transaction transaction = new Transaction();
-            transaction.setUser(user);
-            transaction.setAmount(amount);
-            transaction.setBalanceAfter(walletBalance);
-            transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-            transaction.setType(2);
-            transaction.setStatus(2);
-            transaction.setDescription("Withdraw from wallet to " + paymentMethod.getName() + ".");
-            transaction.setPayment(paymentMethod);
-            transDAO.insert(transaction);
-
-            payAccDAO.update(paymentMethod.getPaymentAccount());
-            payAccDAO.update(user.getPaymentAccount());
-            response.sendRedirect(request.getContextPath() + "/User/Payment");
-        }
-
+        request.getRequestDispatcher("../views/user/Recharge.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -105,7 +106,26 @@ public class WithdrawController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+                TransactionDAO transDAO = new TransactionDAO();
+                User user = (User) request.getSession().getAttribute("user");
+                float amount = Float.parseFloat(request.getParameter("amount"));
+//                float walletBalance = user.getPaymentAccount().getBalance() + amount;
+
+                Transaction transaction = new Transaction();
+                transaction.setUser(user);
+                transaction.setAmount(amount);
+//                transaction.setBalanceAfter(walletBalance);
+                transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+                transaction.setType(2);
+                transaction.setStatus(1);
+                transaction.setDescription("Withdraw from wallet.");
+//                System.out.println(transaction);
+//                transaction.setPayment(paymentMethod);
+//                payAccDAO.update(paymentMethod.getPaymentAccount());
+//                payAccDAO.update(user.getPaymentAccount());
+                transDAO.insert(transaction);
+
+                response.sendRedirect(request.getContextPath() + "/User/Payment");
     }
 
     /**

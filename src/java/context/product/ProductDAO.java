@@ -2,14 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package context.product;
 
 import Model.product.Product;
 import context.DBContext;
+import context.product.content.ChapterDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -33,21 +36,42 @@ public class ProductDAO {
             System.out.println("Connect error:" + e.getMessage());
         }
     }
-    
+
     public Product get(Product product) {
+        try {
+            String sql = "SELECT [productId]\n"
+                    + "      ,[bookId]\n"
+                    + "      ,[chapterId]\n"
+                    + "      ,[price]\n"
+                    + "  FROM [Product]\n"
+                    + "  WHERE [productId] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, product.getProductId());
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                BookDAO bookDAO = new BookDAO();
+                ChapterDAO chapterDAO = new ChapterDAO();
+                product.setBook(bookDAO.getBookById(rs.getInt("bookId")));
+                product.setChapter(chapterDAO.getChapterById(rs.getInt("chapterId")));
+                product.setPrice(rs.getFloat("price"));
+                return product;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return null;
     }
-    
+
     public int insert(Product product) {
         return 0;
     }
-    
+
     public int update(Product product) {
         return 0;
     }
-    
+
     public int delete(Product product) {
         return 0;
     }
-    
+
 }
