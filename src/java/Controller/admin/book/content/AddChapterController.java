@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /* @author ACER */
-@WebServlet(name = "AddChapterController", urlPatterns = {"/Admin/Book/AddChapter"})
+@WebServlet(name = "AdAddChapterController", urlPatterns = {"/Admin/Book/AddChapter"})
 public class AddChapterController extends HttpServlet {
 
     @Override

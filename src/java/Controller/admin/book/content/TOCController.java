@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /* @author ACER */
-@WebServlet(name = "TOCController", urlPatterns = {"/Admin/Book/TOC"})
+@WebServlet(name = "AdTOCController", urlPatterns = {"/Admin/Book/TOC"})
 public class TOCController extends HttpServlet {
 
     @Override

@@ -19,7 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /* @author ACER */
-@WebServlet(name = "EditVolumeController", urlPatterns = {"/Admin/Book/EditVolume"})
+@WebServlet(name = "AdEditVolumeController", urlPatterns = {"/Admin/Book/EditVolume"})
 public class EditVolumeController extends HttpServlet {
 
     @Override
