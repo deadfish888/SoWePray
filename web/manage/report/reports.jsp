@@ -95,13 +95,13 @@
                                 </div>
                                 <table class="table table-striped mt-3">
                                     <thead>
-                                        <tr style="cursor: pointer; font-size: 15px;">
-                                            <th class="border-top-0"><i class="fa-solid fa-list-ol"></i></th>
-                                            <th class="border-top-0" style="padding-left: 100px">Reporter</th>
-                                            <th class="border-top-0">Type</th>
-                                            <th class="border-top-0">Violations</th>
-                                            <th class="border-top-0">Date</th>
-                                            <th class="border-top-0">Solved</th>
+                                        <tr style="cursor: pointer; font-size: 15px;  text-align: center;">
+                                            <th style="width: 40px"><i class="fa-solid fa-list-ol"></i></th>
+                                            <th style="width: 200px">Reporter</th>
+                                            <th style="width: 100px">Type</th>
+                                            <th style="width: 327px">Violations</th>
+                                            <th style="width: 217px">Date</th>
+                                            <th>Solved</th>
                                         </tr>
                                     </thead>
                                     <tbody id="contentList">
@@ -109,21 +109,23 @@
                                         <form action="./Author" method="Post">
                                             <tr>
                                                 <td>${s.id}</a></td>
-                                                <td style="padding-left: 100px">
-                                                    <a href="#" style="text-decoration: none">${s.userR.name} - ID: ${s.userId}</a>
+                                                <td>
+                                                    <a href="#" style="text-decoration: none">${s.userR.username} - ID: ${s.userId}</a>
                                                 </td>
                                                 <td>  
                                                     ${s.reportTypeName}
                                                 </td>
                                                 <td>
+                                                    <ul>
                                                     <c:forEach var="ss" items="${s.violates}">
-                                                        <span class="badge rounded-pill bg-secondary" style="font-size: 80%;font-weight: 400;display: block;">${ss.title}</span>
+                                                        <li>${ss.title}</li>
                                                     </c:forEach>
+                                                    </ul>
                                                 </td>
                                                 <td>
-                                                    ${s.sent}
+                                                    ${s.getSent()}
                                                 </td>
-                                                <td>
+                                                <td style="text-align: center">
                                                     <span class="fa ${s.isStatus()? "fa-check-square-o":"fa-times-circle"}"></span>
                                                     <c:if test="${s.status}">
                                                         ${s.received}
@@ -157,9 +159,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="left-filter">
-                                    <a class="btn btn-purple" href="./AddBook">Add Author</a>
-                                </div>
+                                
                             </div>
                         </div>
                         

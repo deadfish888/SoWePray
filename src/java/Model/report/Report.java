@@ -9,6 +9,7 @@ import Model.action.Comment;
 import Model.auth.User;
 import Model.product.Book;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /* @author ACER */
@@ -44,6 +45,11 @@ public class Report {
 
     public void setReportType(int reportType) {
         this.reportType = reportType;
+        if (reportType == 1){
+            this.reportTypeName = "Book";
+        }else if(reportType ==2){
+            this.reportTypeName = "Comment";
+        }
     }
 
     public int getUserId() {
@@ -70,8 +76,8 @@ public class Report {
         this.note = note;
     }
 
-    public Timestamp getSent() {
-        return sent;
+    public String getSent() {
+        return new SimpleDateFormat("HH:mm a MM/dd/yyyy").format(sent);
     }
 
     public void setSent(Timestamp sent) {
@@ -132,6 +138,14 @@ public class Report {
 
     public void setComO(Comment comO) {
         this.comO = comO;
+    }
+
+    public ArrayList<Violation> getViolates() {
+        return violates;
+    }
+
+    public void setViolates(ArrayList<Violation> violates) {
+        this.violates = violates;
     }
     
     

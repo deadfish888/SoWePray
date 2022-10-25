@@ -5,6 +5,7 @@
 
 package Controller.admin.report;
 
+import context.action.ReportDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,8 +19,10 @@ import jakarta.servlet.http.HttpServletResponse;
 public class ReportsController extends HttpServlet {
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ReportDAO rd = new ReportDAO();
+        request.setAttribute("listR", rd.getAllReports());
         
-        request.getRequestDispatcher("manage/report/reports.jsp").forward(request, response);
+        request.getRequestDispatcher("../manage/report/reports.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

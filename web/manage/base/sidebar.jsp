@@ -22,13 +22,16 @@
                             class="hide-menu">Authors Management</span></a></li>
                 <li id="book-management" class="sidebar-item" > <a id="book-management-a" class="sidebar-link waves-effect waves-dark sidebar-link"
                                                                    href="${context}/Admin/Book" aria-expanded="false"><i
-                            class="mdi me-2 mdi-book-multiple-variant"></i><span class="hide-menu">Book Management</span></a></li>
+                            class="mdi me-2 mdi-book-multiple-variant"></i><span class="hide-menu">Books</span></a></li>
                 <li id="category-management" class="sidebar-item"> 
                     <a id="category-management-a" class="sidebar-link waves-effect waves-dark sidebar-link"
                        href="${context}/Admin/Category/View" aria-expanded="false">
                         <i class="mdi me-2 mdi-book-multiple-variant"></i>
                         <span class="hide-menu">Category Management</span></a>
                 </li>
+                <li id="report-management" class="sidebar-item" > <a id="report-management-a" class="sidebar-link waves-effect waves-dark sidebar-link"
+                                                                   href="${context}/Admin/Report" aria-expanded="false"><i
+                            class="mdi me-2 mdi-contact-mail"></i><span class="hide-menu">Reports</span></a></li>
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                              href="./manage/GGmap.jsp" aria-expanded="false"><i class="mdi me-2 mdi-earth"></i><span
                             class="hide-menu">Google Map</span></a></li>
