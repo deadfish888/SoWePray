@@ -9,6 +9,7 @@ import Model.payment.Transaction;
 import Model.auth.User;
 import Model.product.Product;
 import context.DBContext;
+import context.auth.UserDAO;
 import context.product.ProductDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -98,6 +99,49 @@ public class TransactionDAO {
                 Transaction transaction = new Transaction();
                 transaction.setTransactionId(rs.getLong("transactionId"));
                 transaction.setUser(user);
+                transaction.setAmount(rs.getFloat("amount"));
+                transaction.setBalanceAfter(rs.getFloat("balanceAfter"));
+                transaction.setTransactionTime(rs.getTimestamp("transactionTime"));
+                transaction.setType(rs.getInt("type"));
+                transaction.setStatus(rs.getInt("status"));
+                transaction.setDescription(rs.getString("description"));
+                transaction.setProduct(productDAO.get(new Product(rs.getString("productId"))));
+//                PaymentMethodDAO paymentMethodDAO = new PaymentMethodDAO();
+//                PaymentMethod paymentMethod = new PaymentMethod();
+//                paymentMethod.setPaymentId(rs.getInt("paymentId"));
+//                paymentMethod = paymentMethodDAO.get(paymentMethod);
+//                transaction.setPayment(paymentMethod);
+                transactionList.add(transaction);
+            }
+            return transactionList;
+        } catch (SQLException ex) {
+            Logger.getLogger(TransactionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<Transaction> getAll() {
+        UserDAO userDAO = new UserDAO();
+        ArrayList<Transaction> transactionList = new ArrayList<>();
+        try {
+            ProductDAO productDAO = new ProductDAO();
+            String sql = "SELECT [transactionId]\n"
+                    + "      ,[userId]\n"
+                    + "      ,[amount]\n"
+                    + "      ,[balanceAfter]\n"
+                    + "      ,[transactionTime]\n"
+                    + "      ,[type]\n"
+                    + "      ,[status]\n"
+                    + "      ,[description]\n"
+                    + "      ,[productId]\n"
+                    + "  FROM [Transaction]"
+                    + "  ORDER BY transactionTime desc";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Transaction transaction = new Transaction();
+                transaction.setTransactionId(rs.getLong("transactionId"));
+                transaction.setUser(userDAO.getUser(rs.getInt("userId")));
                 transaction.setAmount(rs.getFloat("amount"));
                 transaction.setBalanceAfter(rs.getFloat("balanceAfter"));
                 transaction.setTransactionTime(rs.getTimestamp("transactionTime"));
