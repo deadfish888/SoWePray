@@ -22,7 +22,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- Tell the browser to be responsive to screen width -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Authors Management</title>
+        <title>Reports</title>
         <link href="/Bookie/manage/html/css/style.min.css" rel="stylesheet">
         <link href="/Bookie/manage/html/css/dropdown.css" rel="stylesheet">
     </head>
@@ -58,7 +58,7 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="/Bookie/Home">Home</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Reports Management</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Reports</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -83,25 +83,46 @@
                             </div>
                             <div class="card-body">
 
-                                <div class="card-sub">	
+                                <div class="col-12">	
+                                    <form action="./Report" method="Post">
+                                        <div class="row col-12">
+                                            <div class="col-3">
+                                                <label class="form-control"
+                                                       style="border:none;display: inline;">Type</label>
+                                                <select class="form-control" name="cid" style="display: inline; width: 100px;">
+                                                    <option value="">All</option>
+                                                    <c:forEach var="cate" items="${cates}">
+                                                        <option value="${cate.getId()}" ${cate.getId()==param['cid']?"selected":""}>${cate.getName()}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <div class="col-3">
+                                                <input type="text" name="search" class="form-control" value="${param['search']} "
+                                                       style="width: 250px;" placeholder="Search" />
+                                            </div>
+                                            <div class="col-3">
 
-                                    <div class="form-outline">
-                                        <form action="./Report" method="Post">
-                                            <input type="search" id="form1" class="form-control" placeholder="Search . . . ." aria-label="Search" style="width: 200px"
-                                                   name="txt" type="text" value="${txt}" >
-                                        </form>
-
-                                    </div>
+                                                <select class="form-control input-sm" name="type-search">
+                                                        <option value="0" ${param['type-search']==0?'selected':''}>Title</option>
+                                                    <option value="1" ${param['type-search']==1?'selected':''}>Author</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-3">
+                                                <button class="btn btn-default" name="service" value="search">Go</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
+
                                 <table class="table table-striped mt-3">
                                     <thead>
                                         <tr style="cursor: pointer; font-size: 15px;  text-align: center;">
                                             <th style="width: 40px"><i class="fa-solid fa-list-ol"></i></th>
                                             <th style="width: 200px">Reporter</th>
                                             <th style="width: 100px">Type</th>
-                                            <th style="width: 327px">Violations</th>
-                                            <th style="width: 217px">Date</th>
-                                            <th>Solved</th>
+                                            <th style="width: 380px">Violations</th>
+                                            <th style="width: 217px">Sent Date</th>
+                                            <th>Settle Date</th>
                                         </tr>
                                     </thead>
                                     <tbody id="contentList">
@@ -117,19 +138,16 @@
                                                 </td>
                                                 <td>
                                                     <ul>
-                                                    <c:forEach var="ss" items="${s.violates}">
-                                                        <li>${ss.title}</li>
-                                                    </c:forEach>
+                                                        <c:forEach var="ss" items="${s.violates}">
+                                                            <li>${ss.title}</li>
+                                                            </c:forEach>
                                                     </ul>
                                                 </td>
                                                 <td>
                                                     ${s.getSent()}
                                                 </td>
                                                 <td style="text-align: center">
-                                                    <span class="fa ${s.isStatus()? "fa-check-square-o":"fa-times-circle"}"></span>
-                                                    <c:if test="${s.status}">
-                                                        ${s.received}
-                                                    </c:if>
+                                                    ${(s.isStatus()?s.getReceived():"Pending")}
                                                 </td>
                                             </tr>
                                         </form>
@@ -141,28 +159,28 @@
                                 <div id="sp" class="pagination-arena " style="margin-left: 40%">
                                     <ul class="pagination">
                                         <li class="page-item" >
-                                            <a href="LoadAuthor?xpage1=${xpage1-1}" class="page-link" style="${xpage1<3?"display:none":""}">
+                                            <a href="./Report?page=${xpage-1}" class="page-link" style="${xpage1<3?"display:none":""}">
                                                 <i class="fa fa-angle-left" aria-hidden="true" ></i>
                                             </a>
                                         </li>
-                                        <c:forEach begin="${1}" end="${numPage1}" var="item">
-                                            <li class="page-item ${item==xpage1?"active":""}">
-                                                <a href="LoadAuthor?xpage1=${item}"  
+                                        <c:forEach begin="${1}" end="${numPage}" var="item">
+                                            <li class="page-item ${item==xpage?"active":""}">
+                                                <a href="./Report?page=${item}"  
 
-                                                   class="page-link " style="${(xpage1-1>item || xpage1+1<item ) ?"display:none;":""}"
+                                                   class="page-link " style="${(xpage-1>item || xpage+1<item ) ?"display:none;":""}"
                                                    >${item}</a></li>
                                             </c:forEach>
                                         <li >
-                                            <a href="LoadAuthor?xpage1=${xpage1+1}" class="page-link" style="${xpage1+2>numPage1?"display:none":""}">
+                                            <a href="./Report?page=${xpage+1}" class="page-link" style="${xpage+2>numPage?"display:none":""}">
                                                 <i class="fa fa-angle-right" aria-hidden="true"  ></i>
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
-                                
+
                             </div>
                         </div>
-                        
+
                     </div>
 
 
