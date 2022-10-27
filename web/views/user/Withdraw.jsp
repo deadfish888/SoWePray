@@ -7,12 +7,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
+<%@ page import="net.tanesha.recaptcha.ReCaptchaImpl" %>
+<%@ page import="net.tanesha.recaptcha.ReCaptchaResponse" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="/views/base/userHeadImport.jsp"/>
         <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <script src="https://www.google.com/recaptcha/api.js"></script>
+        <style>
+            .g-recaptcha {
+                display: inline-block;
+                margin: auto;
+            }
+        </style>
         <title>Withdraw</title>
     </head>
     <body>
@@ -72,7 +81,7 @@
                         <h1>WITHDRAW</h1>
                     </div>
                     <div style="margin: 10px 5em">
-                        <form action="Deposit" method="post">
+                        <form action="Withdraw" method="post">
                             <div id="step-1">
                                 <div>Step 1: Enter the amount you want to withdraw.</div>
                                 <div class="text-center">
@@ -80,35 +89,22 @@
                                 </div>
                             </div>
                             <div id="step-2">
-                                <div>
-                                    Step 2: Enter your bank and account number <br/>
+                                <div>Step 2: Enter your bank and account number <br/>
                                     <!-- Or upload qr image? -->
-                                    Bank: &emsp; 
-                                    <select>
-                                        <option>
-                                            BIDV
-                                        </option>
-                                        <option>
-                                            TP Bank
-                                        </option>
-                                        <option>
-                                            BM Bank
-                                        </option>
-                                        <option>
-                                            Vietcombank
-                                        </option>
-                                        <option>
-                                            Techcombank
-                                        </option>
-                                        <option>
-                                            Agribank
-                                        </option>
-                                    </select>
-                                    Account number: &emsp; <input type="number" name="AccountNumber" required/>
-                                </div>
-                                <div class="text-center">
-                                    <img src="${context}/images/qr code (not value).png" alt="QR Code"/>
-
+                                    <div class="text-center">
+                                        <div style="display: inline-block">
+                                                Bank:&emsp; 
+                                            <select name="bank">
+                                                <option>BIDV</option>
+                                                <option>TP Bank</option>
+                                                <option>MB Bank</option>
+                                                <option>Vietcombank</option>
+                                                <option>Techcombank</option>
+                                                <option>Agribank</option>
+                                            </select>
+                                            Account number: &emsp; <input type="number" name="accountNumber" required/>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -120,7 +116,9 @@
                                 <div class="text-center">
                                     <div class="g-recaptcha text-center" data-sitekey="6LfpnrEiAAAAAEOoMb6jEkwi6PxfbU5A6j4fBvTb"></div>
                                 </div>
+
                                 <button type="submit" style="float: right">Submit</button>
+                                <button type="button" style="float: right; margin-right: 5px"><a href="Payment">Cancel</a></button>
                             </div>
                         </form>
 

@@ -89,8 +89,7 @@
                                 </div>
                             </div>
                             <div id="step-2">
-                                <div>
-                                    Step 2: Scan the below QR code and make the money transfer. <br/>
+                                <div>Step 2: Scan the below QR code and make the money transfer. <br/>
                                     <span style="color: red">
                                         The amount to be transferred needs to match with the amount you entered above. <br/>
                                         Transfer content is your user id.
@@ -111,6 +110,7 @@
                                     <div class="g-recaptcha text-center" data-sitekey="6LfpnrEiAAAAAEOoMb6jEkwi6PxfbU5A6j4fBvTb"></div>
                                 </div>
                                 <button type="submit" style="float: right">Submit</button>
+                                <button type="button" style="float: right; margin-right: 5px"><a href="Payment">Cancel</a></button>
                             </div>
                         </form>
 

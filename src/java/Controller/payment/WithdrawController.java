@@ -4,14 +4,13 @@
  */
 package Controller.payment;
 
-import Model.payment.PaymentMethod;
+//import Model.payment.PaymentMethod;
 import Model.payment.Transaction;
 import Model.auth.User;
 import context.payment.PaymentAccountDAO;
-import context.payment.PaymentMethodDAO;
+//import context.payment.PaymentMethodDAO;
 import context.payment.TransactionDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -77,7 +76,7 @@ public class WithdrawController extends HttpServlet {
 //            response.sendRedirect(request.getContextPath() + "/User/Payment");
 //        }
 
-        request.getRequestDispatcher("../views/user/Recharge.jsp").forward(request, response);
+        request.getRequestDispatcher("../views/user/Withdraw.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -115,10 +114,9 @@ public class WithdrawController extends HttpServlet {
                 transaction.setUser(user);
                 transaction.setAmount(amount);
 //                transaction.setBalanceAfter(walletBalance);
-                transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
                 transaction.setType(2);
-                transaction.setStatus(1);
-                transaction.setDescription("Withdraw from wallet.");
+                transaction.setStatus(2);
+                transaction.setDescription("Withdraw to bank: " + request.getParameter("bank") +", account number: " + request.getParameter("accountNumber"));
 //                System.out.println(transaction);
 //                transaction.setPayment(paymentMethod);
 //                payAccDAO.update(paymentMethod.getPaymentAccount());

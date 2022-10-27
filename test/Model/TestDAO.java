@@ -9,8 +9,8 @@ import context.product.BookOwnDAO;
 import context.product.BookDAO;
 import Model.product.Book;
 import Model.payment.PaymentAccount;
-import Model.payment.PaymentMethod;
 import Model.auth.User;
+import Model.payment.Transaction;
 
 /**
  *
@@ -19,33 +19,11 @@ import Model.auth.User;
 public class TestDAO {
 
     public static void main(String[] args) {
-//        UserDAO userDBC = new UserDAO();
-//        BookOwnDAO bookOwnDAO = new BookOwnDAO();
-//        BookDAO bookDAO = new BookDAO();
-//        Book book = new Book();
-//        book.setId(3);
-////        bookDAO.getOwnBooks(user);
-////        System.out.println(bookDAO.getOwnBooks(user).size());
-////        System.out.println(bookDAO.isOwn(user, book));
-//        System.out.println(user.isOwnBook(book.getId()));
 
-//    PaymentMethod paymentMethod = new PaymentMethod(0, user, new PaymentAccount(10028714113l), "Bank 3", true);
-//    payMedDBC.insert(paymentMethod);
-//        System.out.println(transactionDAO.getTransactionList(user).size());
-//    transactionDAO.generateData();
-//    payAccDBC.generateData();
-//    payMedDBC.generateData();
-//    user.createWallet();
-//    PaymentAccount paymentAccount = user.getPaymentAccount();
-//    payAccDBC.insert(paymentAccount);
-//    userDBC.setWalletNumber(user.getPaymentAccount(), user);
-//    userDBC.changePassword(1, "admin1");
-//    userDBC.generateData();
-//        user = new User("MrA", "Male", "2000-01-01", "abc@def", "0000000000", "username", "123456");
-//user = userDBC.getUser(101);
-//        System.out.println(user.getDob());
-//        user.setEmail("Bookie_User101@qa.team");
-//        user.setIs_super(1);
-//        userDBC.addUser(user);
+        TransactionDAO transactionDAO = new TransactionDAO();
+        User user = new User();
+        user.setId(109);
+        Transaction transaction = new Transaction(0, user, 0, 0, -1, -1, null, null);
+        System.out.println(transactionDAO.search(transaction).size());
     }
 }

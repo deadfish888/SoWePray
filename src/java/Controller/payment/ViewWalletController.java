@@ -7,7 +7,7 @@ package Controller.payment;
 
 import Model.payment.Transaction;
 import Model.auth.User;
-import context.payment.PaymentMethodDAO;
+//import context.payment.PaymentMethodDAO;
 import context.payment.TransactionDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -33,12 +33,12 @@ public class ViewWalletController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
-        request.setAttribute("payMedList", payMedDAO.getActivePayment(
-                        (User) request.getSession().getAttribute("user")));
-        
-        request.setAttribute("bankList", payMedDAO.getBankList(
-                        (User) request.getSession().getAttribute("user")));
+//        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
+//        request.setAttribute("payMedList", payMedDAO.getActivePayment(
+//                        (User) request.getSession().getAttribute("user")));
+//        
+//        request.setAttribute("bankList", payMedDAO.getBankList(
+//                        (User) request.getSession().getAttribute("user")));
         
         TransactionDAO transDAO = new TransactionDAO();
         ArrayList<Transaction> transactionList = transDAO.getTransactionList((User) request.getSession().getAttribute("user"));

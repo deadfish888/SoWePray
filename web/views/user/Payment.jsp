@@ -13,6 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="/views/base/userHeadImport.jsp"/>
         <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>Your Payment</title>
     </head>
     <body>
@@ -80,8 +81,8 @@
                                 <span class="SPN" data-text="Balance: $${sessionScope.user.paymentAccount.balance}">Balance: ****.**</span>
                                 <i id="faPlus" class='bx bx-hide'></i> 
                             </a>
-                                <button style="margin-left: 1em; float: right"><a href="Deposit">Deposit</a></button>
-                                <button style="margin-left: 1em; float: right"><a href="Withdraw">Withdraw</a></button> <br/>
+                            <button style="margin-left: 1em; float: right"><a href="Deposit">Deposit</a></button>
+                            <button style="margin-left: 1em; float: right"><a href="Withdraw">Withdraw</a></button> <br/>
                             <span style="color: red">${requestScope.walletNoti}</span>
 
                         </div>
@@ -99,6 +100,7 @@
                                 <th style="padding: 0" class="text-center">Time</th>
                                 <th style="padding: 0" class="text-center">Status</th>
                                 <th style="padding: 0" class="text-center">Description</th>
+                                <th style="padding: 0" class="text-center">Report</th>
                             </tr>
                             <%int index = 0;%>
                             <c:forEach items="${requestScope.transList}" var="transaction">
@@ -120,13 +122,17 @@
                                         ${transaction.transactionTime}
                                     </td>
                                     <td>
-                                        <c:if test="${transaction.status == 0}">Fail</c:if>
-                                        <c:if test="${transaction.status == 1}">Pending</c:if>
-                                        <c:if test="${transaction.status == 2}">Success</c:if>
+                                        <c:if test="${transaction.status == 1}">Fail</c:if>
+                                        <c:if test="${transaction.status == 2}">Pending</c:if>
+                                        <c:if test="${transaction.status == 3}">Success</c:if>
                                         </td>
                                         <td>
                                         ${transaction.description}
                                     </td>
+                                    <td>
+                                        <button name="report" style="border: 0; background: none">
+                                            <a><i class="fa fa-warning"></i></a>
+                                        </button></td>
                                 </tr>
                             </c:forEach>
                         </table>

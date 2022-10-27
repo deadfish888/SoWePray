@@ -26,9 +26,9 @@ public class Transaction {
     //3. Buy
     //4. Sell
     int status;
-    //0. Fail
-    //1. Pending
-    //2. Successful
+    //1. Fail
+    //2. Pending
+    //3. Successful
     Timestamp transactionTime;
     String description;
 

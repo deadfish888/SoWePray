@@ -4,7 +4,7 @@
  */
 package context.payment;
 
-import Model.payment.PaymentMethod;
+//import Model.payment.PaymentMethod;
 import Model.payment.Transaction;
 import Model.auth.User;
 import Model.product.Product;
@@ -163,6 +163,42 @@ public class TransactionDAO {
         return null;
     }
 
+    public Transaction get(Transaction transaction) {
+        UserDAO userDAO = new UserDAO();
+        try {
+            ProductDAO productDAO = new ProductDAO();
+            String sql = "SELECT [transactionId]\n"
+                    + "      ,[userId]\n"
+                    + "      ,[amount]\n"
+                    + "      ,[balanceAfter]\n"
+                    + "      ,[transactionTime]\n"
+                    + "      ,[type]\n"
+                    + "      ,[status]\n"
+                    + "      ,[description]\n"
+                    + "      ,[productId]\n"
+                    + "  FROM [Transaction]"
+                    + "  WHERE [transactionId] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setLong(1, transaction.getTransactionId());
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                transaction.setTransactionId(rs.getLong("transactionId"));
+                transaction.setUser(userDAO.getUser(rs.getInt("userId")));
+                transaction.setAmount(rs.getFloat("amount"));
+                transaction.setBalanceAfter(rs.getFloat("balanceAfter"));
+                transaction.setTransactionTime(rs.getTimestamp("transactionTime"));
+                transaction.setType(rs.getInt("type"));
+                transaction.setStatus(rs.getInt("status"));
+                transaction.setDescription(rs.getString("description"));
+                transaction.setProduct(productDAO.get(new Product(rs.getString("productId"))));
+            }
+            return transaction;
+        } catch (SQLException ex) {
+            Logger.getLogger(TransactionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public int update(Transaction transaction) {
         try {
             String sql = "UPDATE [Transaction]\n"
@@ -170,19 +206,76 @@ public class TransactionDAO {
                     + "      ,[balanceAfter] = ?\n"
                     + "      ,[status] = ?\n"
                     + "      ,[description] = ?\n"
-                    + "      ,[productID] = ?\n"
+                    + "      ,[transactionTime] = ?\n"
                     + " WHERE [transactionId] = ?\n";
             stm = cnn.prepareStatement(sql);
             stm.setFloat(1, transaction.getAmount());
             stm.setFloat(2, transaction.getBalanceAfter());
             stm.setInt(3, transaction.getStatus());
             stm.setString(4, transaction.getDescription());
-            stm.setString(5, transaction.getProduct().getProductId());
+            stm.setTimestamp(5, transaction.getTransactionTime());
             stm.setLong(6, transaction.getTransactionId());
             return stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(TransactionDAO.class.getName()).log(Level.SEVERE, null, ex);
             return 0;
+        }
+    }
+
+    public ArrayList<Transaction> search(Transaction transaction) {
+        ArrayList<Transaction> transactionList = new ArrayList<>();
+        ProductDAO productDAO = new ProductDAO();
+        UserDAO userDAO = new UserDAO();
+        try {
+            String sql = "SELECT [transactionId]\n"
+                    + "      ,[userId]\n"
+                    + "      ,[amount]\n"
+                    + "      ,[balanceAfter]\n"
+                    + "      ,[transactionTime]\n"
+                    + "      ,[type]\n"
+                    + "      ,[status]\n"
+                    + "      ,[description]\n"
+                    + "      ,[productID]\n"
+                    + "  FROM [Transaction]"
+                    + "  WHERE 1 = 1";
+            if(transaction.getUser() != null) {
+                sql += "\n  AND [userId] = " + transaction.getUser().getId();
+            }
+            if(transaction.getType() > 0) {
+                sql += "\n  AND [type] = " + transaction.getType();
+            }
+            if(transaction.getStatus()> 0) {
+                sql += "\n  AND [status] = " + transaction.getStatus();
+            }
+            if(transaction.getProduct() != null) {
+                sql += "\n  AND [productId] = '" + transaction.getProduct().getProductId() + "'";
+            }
+            System.out.println(sql);
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Transaction trans = new Transaction();
+                trans.setTransactionId(rs.getLong("transactionId"));
+                trans.setUser(userDAO.getUser(rs.getInt("userId")));
+                trans.setAmount(rs.getFloat("amount"));
+                trans.setBalanceAfter(rs.getFloat("balanceAfter"));
+                trans.setTransactionTime(rs.getTimestamp("transactionTime"));
+                trans.setType(rs.getInt("type"));
+                trans.setStatus(rs.getInt("status"));
+                trans.setDescription(rs.getString("description"));
+                trans.setProduct(productDAO.get(new Product(rs.getString("productId"))));
+//                PaymentMethodDAO paymentMethodDAO = new PaymentMethodDAO();
+//                PaymentMethod paymentMethod = new PaymentMethod();
+//                paymentMethod.setPaymentId(rs.getInt("paymentId"));
+//                paymentMethod = paymentMethodDAO.get(paymentMethod);
+//                transaction.setPayment(paymentMethod);
+                transactionList.add(trans);
+                
+            }
+            return transactionList;
+        } catch (SQLException ex) {
+            Logger.getLogger(TransactionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 

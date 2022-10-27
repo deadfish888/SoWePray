@@ -12,9 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="/Bookie/manage/html/css/style.min.css">
         <link href="../../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
         <title>Category management</title>
@@ -79,20 +77,42 @@
                             <div class="card-body">
                                 <h4 class="card-title">Transactions list</h4>
 
-                                
+
                                 <div class="table-responsive">
-                                    <table class="table user-table " id="tablepro">
-                                        <thead>
+                                    <table class="table user-table " id="tableTrans">
+                                        <thead class="thead-dark">
+                                        <form id="filterForm" action="Transaction" method="post">
                                             <tr class="text-center" style="cursor: pointer; font-size: 15px;  text-align: center;">
-                                                <th class="text-center">Transaction ID</th>
-                                                <th class="text-center">User ID</th>
-                                                <th class="text-center">Amount</th>
-                                                <th class="text-center">Time</th>
-                                                <th class="text-center">Type</th>
-                                                <th class="text-center">Status</th>
-                                                <th class="text-center">Description</th>
-                                                <th class="text-center">Product</th>
+
+                                                <th class="text-center" style="text-align: center; vertical-align: middle">Transaction ID</th>
+                                                <th class="text-center" style="width: 10%; text-align: center; vertical-align: middle">User ID<br/>
+                                                    <input type="number" name="userId" value="${tempTrans.user.id}" style="width: 100%" min="1" onblur="change()">
+                                                </th>
+                                                <th class="" style="text-align: center; vertical-align: middle">Amount</th>
+                                                <th class="text-center" style="text-align: center; vertical-align: middle">Time</th>
+                                                <th class="text-center" style="text-align: center; vertical-align: middle">Type<br/>
+                                                    <select name="type" onchange="change()" style="border: 0; background: none">
+                                                        <option value="-1">All</option>
+                                                        <option value="1" <c:if test="${tempTrans.type eq 1}">selected</c:if> >Deposit</option>
+                                                        <option value="2" <c:if test="${tempTrans.type eq 2}">selected</c:if> >Withdraw</option>
+                                                        <option value="3" <c:if test="${tempTrans.type eq 3}">selected</c:if> >Purchase</option>
+                                                        <option value="4" <c:if test="${tempTrans.type eq 4}">selected</c:if> >Selling</option>
+                                                        </select>
+                                                    </th>
+                                                    <th class="text-center" style="text-align: center; vertical-align: middle">Status<br/>
+                                                        <select name="status" onchange="change()" style="border: 0; background: none">
+                                                            <option value="-1">All</option>
+                                                            <option value="1" <c:if test="${tempTrans.status eq 1}">selected</c:if> >Fail</option>
+                                                        <option value="2" <c:if test="${tempTrans.status eq 2}">selected</c:if> >Pending</option>
+                                                        <option value="3" <c:if test="${tempTrans.status eq 3}">selected</c:if> >Success</option>
+                                                        </select>
+                                                    </th>
+                                                    <th class="text-center" style="text-align: center; vertical-align: middle">Description</th>
+                                                    <th class="text-center" style="text-align: center; vertical-align: middle; width: 14%">Product<br/>
+                                                        <input type="text" name="productId" value="${tempTrans.product.productId}" style="width: 100%" min="1" onblur="change()">
+                                                </th>
                                             </tr>
+                                        </form>
                                         </thead>
                                         <tbody>
                                             <c:forEach items="${transactionList}" var="transaction">
@@ -101,10 +121,47 @@
                                                     <td class="text-center">${transaction.user.id}</td>
                                                     <td class="text-center">${transaction.amount}</td>
                                                     <td class="text-center">${transaction.transactionTime}</td>
-                                                    <td class="text-center">${transaction.type}</td>
-                                                    <td class="text-center">${transaction.status}</td>
+                                                    <td class="text-center">
+                                                        <c:if test="${transaction.type == 1}">
+                                                            Deposit
+                                                        </c:if>
+                                                        <c:if test="${transaction.type == 2}">
+                                                            Withdraw
+                                                        </c:if>
+                                                        <c:if test="${transaction.type == 3}">
+                                                            Purchase
+                                                        </c:if>
+                                                        <c:if test="${transaction.type == 4}">
+                                                            Selling
+                                                        </c:if>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <c:if test="${transaction.status == 1}">
+                                                            Fail
+                                                        </c:if>
+                                                        <c:if test="${transaction.status == 2}">
+                                                            <form id="changeStatus" action="Status" method="post">
+                                                                <select name="upStatus" onchange="changeStatus()">
+                                                                    <option value="1" style="color: red">Fail</option>
+                                                                    <option value="2" selected>Pending</option>
+                                                                    <option value="3" style="color: #11f680">Success</option>
+                                                                </select>
+                                                                <input name="transactionId" type="hidden" value="${transaction.transactionId}">
+                                                            </form>
+                                                            <button name="report" style="border: 0; background: 0; color: #ffdd11">
+                                                                <a><i class="fa fa-warning"></i></a>
+                                                            </button>
+                                                        </c:if>
+                                                        <c:if test="${transaction.status == 3}">
+                                                            Success
+                                                        </c:if>
+                                                    </td>
                                                     <td>${transaction.description}</td>
-                                                    <td class="text-center">${transaction.product.productId}</td>
+                                                    <td class="text-center">
+                                                        <c:if test="${transaction.product ne null}">
+                                                            ${transaction.product.productId} - ${transaction.product.toString()}
+                                                        </c:if>
+                                                    </td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
@@ -139,7 +196,18 @@
         <script src="/Bookie/manage/html/js/sidebarmenu.js"></script>
         <!--Custom JavaScript -->
         <script src="/Bookie/manage/html/js/custom.js"></script>
-
+        <script>
+                                                                    function change() {
+                                                                        document.getElementById('filterForm').submit();
+                                                                    }
+                                                                    function changeStatus() {
+                                                                        if (confirm("Are you sure want to change status of this transaction?\nThis action can not be undo.") == true) {
+                                                                            document.getElementById('changeStatus').submit();
+                                                                        } else {
+                                                                            document.getElementById('changeStatus').reset();
+                                                                        }
+                                                                    }
+        </script>
 
     </body>
 </html>

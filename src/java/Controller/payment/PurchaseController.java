@@ -6,12 +6,12 @@ package Controller.payment;
 
 import Model.product.Book;
 import Model.payment.PaymentAccount;
-import Model.payment.PaymentMethod;
+//import Model.payment.PaymentMethod;
 import Model.payment.Transaction;
 import Model.auth.User;
 import context.product.BookOwnDAO;
 import context.payment.PaymentAccountDAO;
-import context.payment.PaymentMethodDAO;
+//import context.payment.PaymentMethodDAO;
 import context.payment.TransactionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -42,16 +42,16 @@ public class PurchaseController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
+//        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
         PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
         TransactionDAO transDAO = new TransactionDAO();
 
         float amount = Float.parseFloat(request.getParameter("amount"));
 
         User user = (User) request.getSession().getAttribute("user");
-        PaymentMethod paymentMethod = new PaymentMethod();
-        paymentMethod.setUser(user);
-        paymentMethod.setPaymentAccount(user.getPaymentAccount());
+//        PaymentMethod paymentMethod = new PaymentMethod();
+//        paymentMethod.setUser(user);
+//        paymentMethod.setPaymentAccount(user.getPaymentAccount());
 
         if (amount > user.getPaymentAccount().getBalance()) {
 //            request.setAttribute("walletNoti", "Balance in wallet is not enough to purchase this book.");
@@ -72,7 +72,7 @@ public class PurchaseController extends HttpServlet {
 //            transaction.setPayment(payMedDAO.get(paymentMethod));
             transDAO.insert(transaction);
 
-            payAccDAO.update(paymentMethod.getPaymentAccount());
+//            payAccDAO.update(paymentMethod.getPaymentAccount());
             payAccDAO.update(user.getPaymentAccount());
 
             BookOwnDAO bookOwnDAO = new BookOwnDAO();

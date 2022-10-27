@@ -62,5 +62,17 @@ public class Product {
     public void setPrice(float price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        String name = "";
+        name += "Book "+ book.getTitle();
+        if(chapter != null) {
+            name += ", Chapter " + chapter.getNo();
+        }
+        return name;
+    }
+    
+    
     
 }

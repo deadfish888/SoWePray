@@ -4,23 +4,23 @@
  */
 package Controller.payment;
 
-import Model.payment.PaymentMethod;
+//import Model.payment.PaymentMethod;
 import Model.payment.Transaction;
 import Model.auth.User;
-import context.payment.PaymentAccountDAO;
-import context.payment.PaymentMethodDAO;
+//import context.payment.PaymentAccountDAO;
+//import context.payment.PaymentMethodDAO;
 import context.payment.TransactionDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
+//import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.Timestamp;
-import java.util.Calendar;
-import net.tanesha.recaptcha.ReCaptchaImpl;
-import net.tanesha.recaptcha.ReCaptchaResponse;
+//import java.sql.Timestamp;
+//import java.util.Calendar;
+//import net.tanesha.recaptcha.ReCaptchaImpl;
+//import net.tanesha.recaptcha.ReCaptchaResponse;
 
 /**
  *
@@ -80,9 +80,8 @@ public class RechargeController extends HttpServlet {
                 transaction.setUser(user);
                 transaction.setAmount(amount);
 //                transaction.setBalanceAfter(walletBalance);
-                transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
                 transaction.setType(1);
-                transaction.setStatus(1);
+                transaction.setStatus(2);
                 transaction.setDescription("Deposit into wallet.");
 //                System.out.println(transaction);
 //                transaction.setPayment(paymentMethod);

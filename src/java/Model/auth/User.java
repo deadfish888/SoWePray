@@ -5,9 +5,9 @@
 package Model.auth;
 
 import Model.payment.PaymentAccount;
-import Model.payment.PaymentMethod;
+//import Model.payment.PaymentMethod;
 import Model.product.Book;
-import context.payment.PaymentMethodDAO;
+//import context.payment.PaymentMethodDAO;
 import context.product.BookOwnDAO;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -194,13 +194,13 @@ public class User {
     public void createWallet(){
         paymentAccount = new PaymentAccount();
         paymentAccount = paymentAccount.createWallet(this);
-        PaymentMethod paymentMethod = new PaymentMethod();
-        paymentMethod.setActive(true);
-        paymentMethod.setPaymentAccount(paymentAccount);
-        paymentMethod.setUser(this);
-        paymentMethod.setName("Wallet of " + username);
-        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
-        payMedDAO.insert(paymentMethod);
+//        PaymentMethod paymentMethod = new PaymentMethod();
+//        paymentMethod.setActive(true);
+//        paymentMethod.setPaymentAccount(paymentAccount);
+//        paymentMethod.setUser(this);
+//        paymentMethod.setName("Wallet of " + username);
+//        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
+//        payMedDAO.insert(paymentMethod);
     }
 
     public boolean isOwnBook(int bookId){
