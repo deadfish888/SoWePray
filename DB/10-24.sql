@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [BOOKIE]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Database [BOOKIE]    Script Date: 10/24/2022 8:25:11 PM ******/
 IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'BOOKIE')
 BEGIN
 	ALTER DATABASE [BOOKIE] SET OFFLINE WITH ROLLBACK IMMEDIATE;
@@ -83,7 +83,7 @@ ALTER DATABASE [BOOKIE] SET QUERY_STORE = OFF
 GO
 USE [BOOKIE]
 GO
-/****** Object:  Table [dbo].[Author]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Author]    Script Date: 10/24/2022 8:25:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -92,14 +92,14 @@ CREATE TABLE [dbo].[Author](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[userId] [int] NULL,
 	[name] [nvarchar](50) NULL,
-	[date] DATE NULL,
+	[date] [date] NULL,
  CONSTRAINT [PK_author] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Book]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Book]    Script Date: 10/24/2022 8:25:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -122,17 +122,19 @@ CREATE TABLE [dbo].[Book](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Book_Own]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Book_Own]    Script Date: 10/24/2022 8:25:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Book_Own](
 	[userId] [int] NOT NULL,
-	[bookId] [int] NOT NULL
+	[bookId] [int] NOT NULL,
+	[recentTime] [datetime] NULL,
+	[recentChapterId] [int] NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Category]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Category]    Script Date: 10/24/2022 8:25:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -146,7 +148,7 @@ CREATE TABLE [dbo].[Category](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CategoryBook]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[CategoryBook]    Script Date: 10/24/2022 8:25:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -156,7 +158,7 @@ CREATE TABLE [dbo].[CategoryBook](
 	[categoryId] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Chapter]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Chapter]    Script Date: 10/24/2022 8:25:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -174,17 +176,7 @@ CREATE TABLE [dbo].[Chapter](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Chapter_Own]    Script Date: 10/12/2022 10:47:01 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Chapter_Own](
-	[userId] [int] NOT NULL,
-	[chapterId] [int] NOT NULL
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Chapter_Payment]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Chapter_Payment]    Script Date: 10/24/2022 8:25:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -194,7 +186,7 @@ CREATE TABLE [dbo].[Chapter_Payment](
 	[price] [decimal](10, 2) NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Comment]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Comment]    Script Date: 10/24/2022 8:25:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -207,14 +199,15 @@ CREATE TABLE [dbo].[Comment](
 	[sonOf] [int] NULL,
 	[replyTo] [int] NULL,
 	[createdAt] [datetime] NOT NULL,
-	[editedAt] [datetime],
+	[editedAt] [datetime] NULL,
+	[status] [bit] NOT NULL,
  CONSTRAINT [PK_comment] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Favourite]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Favourite]    Script Date: 10/24/2022 8:25:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -229,7 +222,7 @@ CREATE TABLE [dbo].[Favourite](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Payment_Account]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Payment_Account]    Script Date: 10/24/2022 8:25:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -243,7 +236,7 @@ CREATE TABLE [dbo].[Payment_Account](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Payment_Method]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Payment_Method]    Script Date: 10/24/2022 8:25:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -260,38 +253,68 @@ CREATE TABLE [dbo].[Payment_Method](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Report]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Product]    Script Date: 10/24/2022 8:25:11 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Product](
+	[productId] [varchar](30) NOT NULL,
+	[bookId] [int] NOT NULL,
+	[chapterId] [int] NULL,
+	[price] [decimal](10, 2) NOT NULL,
+ CONSTRAINT [PK_Product] PRIMARY KEY CLUSTERED 
+(
+	[productId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Product_Own]    Script Date: 10/24/2022 8:25:11 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Product_Own](
+	[userId] [int] NOT NULL,
+	[productId] [varchar](30) NOT NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Report]    Script Date: 10/24/2022 8:25:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Report](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	[title] [nvarchar](100) NOT NULL,
- CONSTRAINT [PK_report] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[ReportDetail]    Script Date: 10/12/2022 10:47:01 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[ReportDetail](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[reportId] [int] NOT NULL,
-	[bookId] [int] NOT NULL,
+	[reportType] [int] NOT NULL,
 	[userId] [int] NOT NULL,
+	[objectId] [int] NULL,
 	[note] [nvarchar](2000) NULL,
+	[sent] [datetime] NOT NULL,
+	[received] [datetime] NULL,
+	[status] [bit] NOT NULL,
  CONSTRAINT [PK_reportdetail] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Star]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Report_Violation]    Script Date: 10/24/2022 8:25:11 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Report_Violation](
+	[reportId] [int] NOT NULL,
+	[violationId] [int] NOT NULL,
+ CONSTRAINT [PK_Report_Violation] PRIMARY KEY CLUSTERED 
+(
+	[reportId] ASC,
+	[violationId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Star]    Script Date: 10/24/2022 8:25:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -307,7 +330,7 @@ CREATE TABLE [dbo].[Star](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Token]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Token]    Script Date: 10/24/2022 8:25:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -318,7 +341,7 @@ CREATE TABLE [dbo].[Token](
 	[expiredDate] [datetime] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Transaction]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Transaction]    Script Date: 10/24/2022 8:25:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -333,13 +356,14 @@ CREATE TABLE [dbo].[Transaction](
 	[status] [int] NOT NULL,
 	[description] [nvarchar](500) NULL,
 	[paymentId] [int] NOT NULL,
+	[productID] [varchar](30) NULL,
  CONSTRAINT [PK_Transaction] PRIMARY KEY CLUSTERED 
 (
 	[transactionId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Transaction_Token]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Transaction_Token]    Script Date: 10/24/2022 8:25:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -355,7 +379,7 @@ CREATE TABLE [dbo].[Transaction_Token](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 10/24/2022 8:25:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -378,7 +402,22 @@ CREATE TABLE [dbo].[User](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Volume]    Script Date: 10/12/2022 10:47:01 PM ******/
+/****** Object:  Table [dbo].[Violation]    Script Date: 10/24/2022 8:25:11 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Violation](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[reportType] [int] NOT NULL,
+	[title] [nvarchar](100) NOT NULL,
+ CONSTRAINT [PK_report] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Volume]    Script Date: 10/24/2022 8:25:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -397,239 +436,241 @@ CREATE TABLE [dbo].[Volume](
 GO
 SET IDENTITY_INSERT [dbo].[Author] ON 
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (1, NULL, N'Gillian Flynn','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (1, NULL, N'Gillian Flynn', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (2, NULL, N'Agatha Christie','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (2, NULL, N'Agatha Christie', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (3, NULL, N'Alex Michaelides','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (3, NULL, N'Alex Michaelides', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (4, NULL, N'Paula Hawkins','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (4, NULL, N'Paula Hawkins', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (5, NULL, N'Cuttlefish That Loves Diving','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (5, NULL, N'Cuttlefish That Loves Diving', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (6, NULL, N'Stephen King','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (6, NULL, N'Stephen King', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (7, NULL, N'George RR Martin','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (7, NULL, N'George RR Martin', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (8, NULL, N'Suzanne Collins','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (8, NULL, N'Suzanne Collins', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (9, NULL, N'H.G. Wells, Greg Bear','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (9, NULL, N'H.G. Wells, Greg Bear', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (10, NULL, N'Diana Gabaldon','2021-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (10, NULL, N'Diana Gabaldon', CAST(N'2021-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (11, NULL, N'Anthony Doerr','2021-2-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (11, NULL, N'Anthony Doerr', CAST(N'2021-02-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (12, NULL, N'Hiromu Arakawa','2021-2-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (12, NULL, N'Hiromu Arakawa', CAST(N'2021-02-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (13, NULL, N'Tsugumi Ohba','2021-2-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (13, NULL, N'Tsugumi Ohba', CAST(N'2021-02-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (14, NULL, N'Eiichiro Oda','2021-2-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (14, NULL, N'Eiichiro Oda', CAST(N'2021-02-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (15, NULL, N'Syougo Kinugasa','2021-2-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (15, NULL, N'Syougo Kinugasa', CAST(N'2021-02-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (16, 2, N'Vinh Nguyen','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (16, 2, N'Vinh Nguyen', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (17, 3, N'Ivory Marcel','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (17, 3, N'Ivory Marcel', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (18, 4, N'Mary Barisol','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (18, 4, N'Mary Barisol', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (19, 5, N'Eden Frost','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (19, 5, N'Eden Frost', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (20, 6, N'Benidict Robinett','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (20, 6, N'Benidict Robinett', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (21, 7, N'Zera Farmer','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (21, 7, N'Zera Farmer', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (22, 8, N'Ceil Howell','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (22, 8, N'Ceil Howell', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (23, 9, N'Taylor Marcel','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (23, 9, N'Taylor Marcel', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (24, 10, N'Wisley Ray','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (24, 10, N'Wisley Ray', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (25, 11, N'Aiken Pope','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (25, 11, N'Aiken Pope', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (26, 12, N'Rodolphe Blossom','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (26, 12, N'Rodolphe Blossom', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (27, 13, N'Alex Rogze','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (27, 13, N'Alex Rogze', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (28, 14, N'Jean Padilla','2021-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (28, 14, N'Jean Padilla', CAST(N'2021-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (29, 15, N'Dana Franklin','2021-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (29, 15, N'Dana Franklin', CAST(N'2021-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (30, 16, N'Elluka Bush','2021-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (30, 16, N'Elluka Bush', CAST(N'2021-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (31, 17, N'Kenelm Binder','2021-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (31, 17, N'Kenelm Binder', CAST(N'2021-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (32, 18, N'Narcissus Freezis','2021-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (32, 18, N'Narcissus Freezis', CAST(N'2021-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (33, 19, N'Michelle Reynolds','2021-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (33, 19, N'Michelle Reynolds', CAST(N'2021-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (34, 20, N'Callie Banica','2021-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (34, 20, N'Callie Banica', CAST(N'2021-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (35, 21, N'Malceria Freezis','2021-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (35, 21, N'Malceria Freezis', CAST(N'2021-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (36, 22, N'Jasmine Shepard','2021-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (36, 22, N'Jasmine Shepard', CAST(N'2021-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (37, 23, N'Mia Franklin','2021-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (37, 23, N'Mia Franklin', CAST(N'2021-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (38, 24, N'Schick Reyes','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (38, 24, N'Schick Reyes', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (39, 25, N'Allen Reese','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (39, 25, N'Allen Reese', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (40, 26, N'Elman Baxter','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (40, 26, N'Elman Baxter', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (41, 27, N'Willard Jordan','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (41, 27, N'Willard Jordan', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (42, 28, N'Winona Walton','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (42, 28, N'Winona Walton', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (43, 29, N'Sophia Knight','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (43, 29, N'Sophia Knight', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (44, 30, N'Hank Wade','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (44, 30, N'Hank Wade', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (45, 31, N'Mia Dinwiddie','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (45, 31, N'Mia Dinwiddie', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (46, 32, N'Ronald Chandler','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (46, 32, N'Ronald Chandler', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (47, 33, N'Elluka Ackerman','2021-6-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (47, 33, N'Elluka Ackerman', CAST(N'2021-06-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (48, 34, N'Jude Gilbert','2021-8-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (48, 34, N'Jude Gilbert', CAST(N'2021-08-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (49, 35, N'Philbert Schultz','2021-8-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (49, 35, N'Philbert Schultz', CAST(N'2021-08-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (50, 36, N'Lamia Fowler','2021-8-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (50, 36, N'Lamia Fowler', CAST(N'2021-08-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (51, 37, N'Gererd Pope','2021-8-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (51, 37, N'Gererd Pope', CAST(N'2021-08-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (52, 38, N'Thetal Shepard','2021-8-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (52, 38, N'Thetal Shepard', CAST(N'2021-08-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (53, 39, N'Yocaski Blossom','2021-8-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (53, 39, N'Yocaski Blossom', CAST(N'2021-08-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (54, 40, N'Danielle Hodges','2021-8-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (54, 40, N'Danielle Hodges', CAST(N'2021-08-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (55, 41, N'Darlene Feron','2021-10-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (55, 41, N'Darlene Feron', CAST(N'2021-10-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (56, 42, N'Hadden Chandler','2021-10-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (56, 42, N'Hadden Chandler', CAST(N'2021-10-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (57, 43, N'Sateriasis Hardy','2021-10-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (57, 43, N'Sateriasis Hardy', CAST(N'2021-10-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (58, 44, N'Mia Carpenter','2021-10-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (58, 44, N'Mia Carpenter', CAST(N'2021-10-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (59, 45, N'Kit Nerune','2021-10-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (59, 45, N'Kit Nerune', CAST(N'2021-10-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (60, 46, N'Rodolphe Frost','2021-10-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (60, 46, N'Rodolphe Frost', CAST(N'2021-10-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (61, 47, N'Jesse Watts','2021-10-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (61, 47, N'Jesse Watts', CAST(N'2021-10-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (62, 48, N'Carl Crawford','2021-12-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (62, 48, N'Carl Crawford', CAST(N'2021-12-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (63, 49, N'Ronald Robinett','2021-12-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (63, 49, N'Ronald Robinett', CAST(N'2021-12-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (64, 50, N'Zera Stanley','2021-12-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (64, 50, N'Zera Stanley', CAST(N'2021-12-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (65, 51, N'Harley Avadonia','2021-12-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (65, 51, N'Harley Avadonia', CAST(N'2021-12-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (66, 52, N'Butglar Gray','2021-12-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (66, 52, N'Butglar Gray', CAST(N'2021-12-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (67, 53, N'Joe Baxter','2022-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (67, 53, N'Joe Baxter', CAST(N'2022-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (68, 54, N'Ward Wagner','2022-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (68, 54, N'Ward Wagner', CAST(N'2022-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (69, 55, N'Charlie Reese','2022-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (69, 55, N'Charlie Reese', CAST(N'2022-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (70, 56, N'Windsor Dinwiddie','2022-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (70, 56, N'Windsor Dinwiddie', CAST(N'2022-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (71, 57, N'Charon Walton','2022-1-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (71, 57, N'Charon Walton', CAST(N'2022-01-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (72, 58, N'Hank Michaelis','2022-2-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (72, 58, N'Hank Michaelis', CAST(N'2022-02-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (73, 59, N'Seth Manning','2022-2-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (73, 59, N'Seth Manning', CAST(N'2022-02-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (74, 60, N'Seth Manning','2022-2-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (74, 60, N'Seth Manning', CAST(N'2022-02-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (75, 61, N'Light Jenning','2022-2-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (75, 61, N'Light Jenning', CAST(N'2022-02-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (76, 62, N'David Barisol','2022-3-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (76, 62, N'David Barisol', CAST(N'2022-03-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (77, 63, N'Michaela Kelley','2022-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (77, 63, N'Michaela Kelley', CAST(N'2022-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (78, 64, N'Melody Elphen','2022-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (78, 64, N'Melody Elphen', CAST(N'2022-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (79, 65, N'Elluka Norman','2022-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (79, 65, N'Elluka Norman', CAST(N'2022-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (80, 66, N'Strange Feron','2022-4-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (80, 66, N'Strange Feron', CAST(N'2022-04-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (81, 67, N'Taylor Valdez','2022-5-15')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (81, 67, N'Taylor Valdez', CAST(N'2022-05-15' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (82, 68, N'Dana Macy','2022-6-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (82, 68, N'Dana Macy', CAST(N'2022-06-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (83, 69, N'Jean Valdez','2022-6-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (83, 69, N'Jean Valdez', CAST(N'2022-06-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (84, 70, N'Minis Goodwin','2022-6-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (84, 70, N'Minis Goodwin', CAST(N'2022-06-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (85, 71, N'Clay Marlon','2022-6-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (85, 71, N'Clay Marlon', CAST(N'2022-06-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (86, 72, N'Phil Powers','2022-6-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (86, 72, N'Phil Powers', CAST(N'2022-06-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (87, 73, N'Butglar Hardy','2022-6-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (87, 73, N'Butglar Hardy', CAST(N'2022-06-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (88, 74, N'Camelia Mullins','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (88, 74, N'Camelia Mullins', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (89, 75, N'Lionel Stanley','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (89, 75, N'Lionel Stanley', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (90, 76, N'Linda Payne','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (90, 76, N'Linda Payne', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (91, 77, N'Philbert Cross','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (91, 77, N'Philbert Cross', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (92, 78, N'Phil Jordan','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (92, 78, N'Phil Jordan', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (93, 79, N'Robert Kissos','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (93, 79, N'Robert Kissos', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (94, 80, N'Ronald Rios','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (94, 80, N'Ronald Rios', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (95, 81, N'Elluka Manning','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (95, 81, N'Elluka Manning', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (96, 82, N'Ceil Payne','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (96, 82, N'Ceil Payne', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (97, 83, N'Lizzy Meld','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (97, 83, N'Lizzy Meld', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (98, 84, N'Camelia Miller','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (98, 84, N'Camelia Miller', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (99, 85, N'Diana Macy','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (99, 85, N'Diana Macy', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (100, 86, N'Windsor Badman','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (100, 86, N'Windsor Badman', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (101, 87, N'Diana Obrien','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (101, 87, N'Diana Obrien', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (102, 88, N'Adam Hodges','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (102, 88, N'Adam Hodges', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (103, 89, N'Hansel May','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (103, 89, N'Hansel May', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (104, 90, N'Oswald Pope','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (104, 90, N'Oswald Pope', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (105, 91, N'Alex Hardy','2022-7-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (105, 91, N'Alex Hardy', CAST(N'2022-07-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (106, 92, N'Butglar Michaelis','2022-8-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (106, 92, N'Butglar Michaelis', CAST(N'2022-08-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (107, 93, N'Elman Blair','2022-8-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (107, 93, N'Elman Blair', CAST(N'2022-08-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (108, 94, N'Lucifer Blair','2022-8-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (108, 94, N'Lucifer Blair', CAST(N'2022-08-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (109, 95, N'Philbert Phantomhive','2022-8-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (109, 95, N'Philbert Phantomhive', CAST(N'2022-08-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (110, 96, N'Albion Alexdander','2022-8-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (110, 96, N'Albion Alexdander', CAST(N'2022-08-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (111, 97, N'Melody Chandler','2022-8-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (111, 97, N'Melody Chandler', CAST(N'2022-08-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (112, 98, N'Katya Corbyn','2022-9-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (112, 98, N'Katya Corbyn', CAST(N'2022-09-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (113, 99, N'Rahab Octo','2022-9-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (113, 99, N'Rahab Octo', CAST(N'2022-09-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (114, 100, N'Hansel May','2022-9-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (114, 100, N'Hansel May', CAST(N'2022-09-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (115, 101, N'Luke Thayne','2022-9-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (115, 101, N'Luke Thayne', CAST(N'2022-09-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (116, 102, N'Cyril Watson','2022-9-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (116, 102, N'Cyril Watson', CAST(N'2022-09-05' AS Date))
 GO
-INSERT [dbo].[Author] ([id], [userId], [name],[date]) VALUES (117, 109, N'I Am Tester','2022-9-5')
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (117, 109, N'I Am Tester', CAST(N'2022-09-05' AS Date))
+GO
+INSERT [dbo].[Author] ([id], [userId], [name], [date]) VALUES (118, 111, N'Thanh Hien', CAST(N'2022-10-20' AS Date))
 GO
 SET IDENTITY_INSERT [dbo].[Author] OFF
 GO
@@ -687,13 +728,91 @@ INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], 
 GO
 INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (16, N'Classroom of the Elite Vol. 1', 15, NULL, 0, CAST(9.69 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?', 0, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (17, N'Lạc', 16, NULL, 0, CAST(0.00 AS Decimal(10, 2)), 0, NULL, N'Một đứa trẻ lạc lối giữa thế giới đầy kết nối...', 0, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (17, N'Lạc', 16, NULL, 0, CAST(0.10 AS Decimal(10, 2)), 1, NULL, N'Một đứa trẻ lạc lối giữa thế giới đầy kết nối...', 0, 1)
+GO
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (18, N'Doraemon', 118, NULL, 0, CAST(11.00 AS Decimal(10, 2)), 0, N'https://i.ebayimg.com/images/g/LMYAAOSw8Zhib4cD/s-l640.jpg', N'Nobita''s failures in school and subsequently, his career, have left his family line with endless financial problems. Thus, his great-great-grandson, Sewashi (a clumsy and very unlucky fourth-grader), sends a blue robotic cat called Doraemon to Nobita''s generation to help improve Nobita''s circumstances. In doing so he hopes that Nobita and all of his descendants will be able to enjoy a better future.', 0, 1)
+GO
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (22, N'Detective Conan', 118, NULL, 0, CAST(11.00 AS Decimal(10, 2)), 0, N'https://www.detectiveconanworld.com/wiki/images/thumb/0/00/Volume_100.jpg/275px-Volume_100.jpg', N'Shinichi Kudo, a great mystery expert at only seventeen, is already well known for having solved several challenging cases. One day, when Shinichi sees two suspicious men and decides to follow them, he inadvertently becomes witness to a disturbing illegal activity. When the men catch Shinichi, they dose him with an Experimental Drug formulated by the Black Organization and abandon him to die. However, to his own astonishment, Shinichi is still alive and soon wakes up, but now, he has the body of a seven-year-old, perfectly preserving his original intelligence. He hides his real identity from everyone, including his childhood friend Ran Mouri and her father, private detective Kogoro Mouri. He eventually takes on the alias of Conan Edogawa, inspired by the mystery writers Arthur Conan Doyle and Ranpo Edogawa.', 0, 1)
+GO
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (23, N'Gangsta Granny', 118, NULL, 0, CAST(25.00 AS Decimal(10, 2)), 0, N'https://m.media-amazon.com/images/I/81Jw7-+FtFL.jpg', N'Ben, a curious boy, hates having to stay with his old Granny every Friday because his parents go to see a dancing show named "Strictly Stars Dancing" (a parody of Strictly Come Dancing). He finds it boring and repetitive as his Granny always feeds him cabbage-related dishes, most commonly cabbage soup and cabbage chocolate, and they are constantly playing Scrabble, plus her television hasn''t been working since the 1990s. Ben loves plumbing and is a long-term subscriber to the magazine Plumbing Weekly, which he buys every week from Raj''s news-agency. Ben''s parents disapprove of him being a plumber, as their ambition for their only child was to be a professional ballet dancer like the one they used to watch every Friday.', 0, 1)
+GO
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (24, N'Demon Dentist', 118, NULL, 0, CAST(25.00 AS Decimal(10, 2)), 1, N'https://d3ddkgxe55ca6c.cloudfront.net/assets/t1496536687/a/86/b8/153606-ml-1144102.jpg', N'Walliams makes going to the dentist a wacky adventure with his signature humor—this is one dentist appointment you don’t want to miss.
+
+Something strange is happening in Alfie''s town. Instead of shiny coins from the Tooth Fairy, kids are waking up to dead slugs, live spiders, and other dreadfully icky things under their pillows.
+
+Who would do something so horrific? Alfie is sure that Miss Root, the creepy new dentist in town, is behind it all. There''s nothing Alfie hates more than going to the dentist, but to solve this mystery, he may have to book a dreaded appointment….', 0, 1)
+GO
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (25, N'Lòng tốt của bạn cần thêm đôi phần sắc sảo', 118, NULL, 0, CAST(19.00 AS Decimal(10, 2)), 0, N'https://sach86.com/wp-content/uploads/2020/01/long-tot-cua-ban-can-them-doi-phan-sac-sao.jpg', N'Chúng ta không giây phút nào không bị thế giới bên ngoài chỉ trỏ, lâu dần sẽ quên mất tâm tư ban sơ, mất đi khả năng suy nghĩ độc lập và giữ vững cái tôi.
+
+ 
+
+So với từng câu từng câu an ủi dịu dàng, tôi nghĩ chúng ta cần một chậu nước lạnh hơn. Nó sẽ giúp chúng ta tỉnh táo ý thức được tính tình cáu bẳn của mình, tầm nhìn và lòng dạ hạn hẹp của mình, EQ thấp của mình, và tất cả những vấn đề mà bản thân chúng ta không nhìn rõ, nhưng người khác thấy rõ mồn một mà không muốn nói cho chúng ta biết.
+
+ 
+
+Khi bạn khốn đốn, hoang mang, nếu đọc được cuốn sách này, mong rằng bạn có thể rút ra sức mạnh từ trong câu chữ của nó, đừng nộp vũ khí đầu hàng thế giới này. Nguyện cho tất cả những người không hiểu và thấu hiểu trên đời không ngừng trưởng thành nhưng vẫn tốt bụng như xưa!', 0, 1)
+GO
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (26, N'Men are from Mars, Women from Venus', 118, NULL, 0, CAST(30.00 AS Decimal(10, 2)), 0, N'https://m.media-amazon.com/images/I/81RfW9mFkEL.jpg', N'Once upon a time Martians and Venusians met, fell in love, and had happy relationships together because they respected and accepted their differences. Then they came to Earth and amnesia set in: they forgot they were from different planets.
+
+Based on years of successful counseling of couples and individuals, Men Are from Mars, Women Are from Venus has helped millions of couples transform their relationships. Now viewed as a modern classic, this timeless book has helped men and women realize how different they can be in their communication styles, their emotional needs, and their modes of behavior, and offers the secrets of communicating without conflicts, allowing couples to give intimacy every chance to grow. ', 0, 1)
+GO
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (27, N'The Miracles of the Namiya General Store
+
+', 118, NULL, 0, CAST(30.00 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1564085721l/44287550.jpg', N'When three delinquents hole up in an abandoned general store after their most recent robbery, to their great surprise, a letter drops through the mail slot in the store''s shutter. This seemingly simple request for advice sets the trio on a journey of discovery as, over the course of a single night, they step into the role of the kindhearted former shopkeeper who devoted his waning years to offering thoughtful counsel to his correspondents. Through the lens of time, they share insight with those seeking guidance, and by morning, none of their lives will ever be the same.', 0, 1)
+GO
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (28, N'5cm per Second', 118, NULL, 0, CAST(25.00 AS Decimal(10, 2)), 0, N'https://cdn.verasia.eu/15367/byosoku-go-senchimetoru-5-centimeters-per-second-japanese-novel-written-by-shinkai.jpg', N'Love can move at the speed of terminal velocity, but as award-winning director Makoto Shinkai reveals in his latest comic, it can only be shared and embraced by those who refuse to see it stop.
+
+Takaki Tohno quickly befriends Akari Shinohara when she transfers to his school. They grow closer to each other due to similar interests and attitudes; for instance, they both prefer to stay inside during recess due to their constitutions. As a result, they form a strong bond.
+
+Upon ending their school year, Akari moves to Tochigi, due to her parents'' jobs. The two keep in contact by writing letters, but eventually begin to drift apart.', 0, 1)
+GO
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (30, N'The Boy wear Striped Pyjamas', 118, NULL, 0, CAST(19.00 AS Decimal(10, 2)), 0, N'https://m.media-amazon.com/images/I/914nabSHOsL.jpg', N'John Boyne has described the conception of his novel as an idea popping into his head of "two boys, the mirror of each other, sitting either side of a wire fence". While the conception of the book came about fast, his inspiration for writing has a more lengthy foundation. Boyne has stated that his style and writing process has been influenced by Malcolm Bradbury at the University of East Anglia, who suggested he write every day without rest days.', 0, 1)
+GO
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (31, N'Weathering with you', 118, NULL, 0, CAST(19.00 AS Decimal(10, 2)), 0, N'https://cdn.verasia.eu/12673-big_default_2x/tenki-no-ko-weathering-with-you-japanese-novel-written-by-makoto-shinkai.jpg', N'Longing to escape his island home, a boy named Hodaka runs away during his first summer of high school to find a new life in Tokyo. As rain falls for days on end and Hodaka struggles to adjust, he meets a girl named Hina who holds a mysterious power: With a single prayer, she can part the clouds and bring back the sun. But her power comes at a price, and as the weather spirals further and further out of control, they must choose what future they truly want for themselves.', 0, 1)
+GO
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (32, N'The After-Dinner Mysterie', 118, NULL, 0, CAST(25.00 AS Decimal(10, 2)), 0, N'https://japanesebooks.jp/wp-content/uploads/2021/09/4cbbd83b531db57c281b6790fdd0c987-400x581.jpg', N'Reiko is the only daughter to the CEO of a major enterprise, "Hosho Group," known worldwide. Hiding her true identity behind her day time job as a rookie police officer, Reiko comes home to her butler and driver, Kageyama whenever she is faced with a complex case, being a perfectionist, Kageyama is flawless when it comes to serving meals full course from hors d''oeuvre to dessert. He sharply points out the lack of reasoning on Reiko''s side, keeping the comment one fine line away from being offensive. The cutting remarks by Kageyama and appearances by unique characters, as well as the play on words and light tempo of witty conversations...and most of all, being referred to as the "Armchair detective" who solves mysteries without encountering the suspects together create a daring mystery solving roller-coaster ride.', 0, 1)
 GO
 SET IDENTITY_INSERT [dbo].[Book] OFF
 GO
-INSERT [dbo].[Book_Own] ([userId], [bookId]) VALUES (109, 4)
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (109, 4, NULL, NULL)
 GO
-INSERT [dbo].[Book_Own] ([userId], [bookId]) VALUES (109, 7)
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (109, 7, NULL, NULL)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (109, 1, CAST(N'2022-10-10T00:00:00.000' AS DateTime), 2)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (111, 1, NULL, NULL)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (111, 2, NULL, NULL)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (111, 3, NULL, NULL)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (111, 5, NULL, NULL)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (111, 11, NULL, NULL)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (111, 10, NULL, NULL)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (111, 9, NULL, NULL)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (111, 8, NULL, NULL)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (111, 13, NULL, NULL)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (111, 7, NULL, NULL)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (111, 14, NULL, NULL)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (111, 16, NULL, NULL)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (111, 12, NULL, NULL)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (111, 6, NULL, NULL)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (111, 4, NULL, NULL)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (111, 15, NULL, NULL)
+GO
+INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (2, 1, NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[Category] ON 
 GO
@@ -918,6 +1037,32 @@ GO
 INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (17, 12)
 GO
 INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (17, 19)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (18, 20)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (22, 20)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (23, 13)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (24, 13)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (25, 28)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (28, 28)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (30, 13)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (27, 18)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (27, 13)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (32, 10)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (32, 13)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (27, 30)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (28, 30)
 GO
 SET IDENTITY_INSERT [dbo].[Chapter] ON 
 GO
@@ -2034,13 +2179,47 @@ INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VA
 GO
 INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (22, 4, 2, N'Nhật ký 2020', 0, N'Đó là một cuốn nhật ký nhàu nát và bám đầy bụi.')
 GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (26, 4, 3, N'Nandayo', 1, N'Men always say that as the defining compliment, don’t they? She’s a cool girl. Being the Cool Girl means I am a hot, brilliant, funny woman who adores football, poker, dirty jokes, and burping, who plays video games, drinks cheap beer, loves threesomes and anal sex, and jams hot dogs and hamburgers into her mouth like she’s hosting the world’s biggest culinary gang bang while somehow maintaining a size 2, because Cool Girls are above all hot. Hot and understanding. Cool Girls never get angry; they only smile in a chagrined, loving manner and let their men do whatever they want. Go ahead, shit on me, I don’t mind, I’m the Cool Girl.
+
+Men actually think this girl exists. Maybe they’re fooled because so many women are willing to pretend to be this girl. For a long time Cool Girl offended me. I used to see men – friends, coworkers, strangers – giddy over these awful pretender women, and I’d want to sit these men down and calmly say: You are not dating a woman, you are dating a woman who has watched too many movies written by socially awkward men who’d like to believe that this kind of woman exists and might kiss them. I’d want to grab the poor guy by his lapels or messenger bag and say: The bitch doesn’t really love chili dogs that much – no one loves chili dogs that much! And the Cool Girls are even more pathetic: They’re not even pretending to be the woman they want to be, they’re pretending to be the woman a man wants them to be. Oh, and if you’re not a Cool Girl, I beg you not to believe that your man doesn’t want the Cool Girl. It may be a slightly different version – maybe he’s a vegetarian, so Cool Girl loves seitan and is great with dogs; or maybe he’s a hipster artist, so Cool Girl is a tattooed, bespectacled nerd who loves comics. There are variations to the window dressing, but believe me, he wants Cool Girl, who is basically the girl who likes every fucking thing he likes and doesn’t ever complain. (How do you know you’re not Cool Girl? Because he says things like: “I like strong women.” If he says that to you, he will at some point fuck someone else. Because “I like strong women” is code for “I hate strong women.”
+Men always say that as the defining compliment, don’t they? She’s a cool girl. Being the Cool Girl means I am a hot, brilliant, funny woman who adores football, poker, dirty jokes, and burping, who plays video games, drinks cheap beer, loves threesomes and anal sex, and jams hot dogs and hamburgers into her mouth like she’s hosting the world’s biggest culinary gang bang while somehow maintaining a size 2, because Cool Girls are above all hot. Hot and understanding. Cool Girls never get angry; they only smile in a chagrined, loving manner and let their men do whatever they want. Go ahead, shit on me, I don’t mind, I’m the Cool Girl.
+
+Men actually think this girl exists. Maybe they’re fooled because so many women are willing to pretend to be this girl. For a long time Cool Girl offended me. I used to see men – friends, coworkers, strangers – giddy over these awful pretender women, and I’d want to sit these men down and calmly say: You are not dating a woman, you are dating a woman who has watched too many movies written by socially awkward men who’d like to believe that this kind of woman exists and might kiss them. I’d want to grab the poor guy by his lapels or messenger bag and say: The bitch doesn’t really love chili dogs that much – no one loves chili dogs that much! And the Cool Girls are even more pathetic: They’re not even pretending to be the woman they want to be, they’re pretending to be the woman a man wants them to be. Oh, and if you’re not a Cool Girl, I beg you not to believe that your man doesn’t want the Cool Girl. It may be a slightly different version – maybe he’s a vegetarian, so Cool Girl loves seitan and is great with dogs; or maybe he’s a hipster artist, so Cool Girl is a tattooed, bespectacled nerd who loves comics. There are variations to the window dressing, but believe me, he wants Cool Girl, who is basically the girl who likes every fucking thing he likes and doesn’t ever complain. (How do you know you’re not Cool Girl? Because he says things like: “I like strong women.” If he says that to you, he will at some point fuck someone else. Because “I like strong women” is code for “I hate strong women.”
+Men always say that as the defining compliment, don’t they? She’s a cool girl. Being the Cool Girl means I am a hot, brilliant, funny woman who adores football, poker, dirty jokes, and burping, who plays video games, drinks cheap beer, loves threesomes and anal sex, and jams hot dogs and hamburgers into her mouth like she’s hosting the world’s biggest culinary gang bang while somehow maintaining a size 2, because Cool Girls are above all hot. Hot and understanding. Cool Girls never get angry; they only smile in a chagrined, loving manner and let their men do whatever they want. Go ahead, shit on me, I don’t mind, I’m the Cool Girl.
+
+Men actually think this girl exists. Maybe they’re fooled because so many women are willing to pretend to be this girl. For a long time Cool Girl offended me. I used to see men – friends, coworkers, strangers – giddy over these awful pretender women, and I’d want to sit these men down and calmly say: You are not dating a woman, you are dating a woman who has watched too many movies written by socially awkward men who’d like to believe that this kind of woman exists and might kiss them. I’d want to grab the poor guy by his lapels or messenger bag and say: The bitch doesn’t really love chili dogs that much – no one loves chili dogs that much! And the Cool Girls are even more pathetic: They’re not even pretending to be the woman they want to be, they’re pretending to be the woman a man wants them to be. Oh, and if you’re not a Cool Girl, I beg you not to believe that your man doesn’t want the Cool Girl. It may be a slightly different version – maybe he’s a vegetarian, so Cool Girl loves seitan and is great with dogs; or maybe he’s a hipster artist, so Cool Girl is a tattooed, bespectacled nerd who loves comics. There are variations to the window dressing, but believe me, he wants Cool Girl, who is basically the girl who likes every fucking thing he likes and doesn’t ever complain. (How do you know you’re not Cool Girl? Because he says things like: “I like strong women.” If he says that to you, he will at some point fuck someone else. Because “I like strong women” is code for “I hate strong women.”
+
+Men always say that as the defining compliment, don’t they? She’s a cool girl. Being the Cool Girl means I am a hot, brilliant, funny woman who adores football, poker, dirty jokes, and burping, who plays video games, drinks cheap beer, loves threesomes and anal sex, and jams hot dogs and hamburgers into her mouth like she’s hosting the world’s biggest culinary gang bang while somehow maintaining a size 2, because Cool Girls are above all hot. Hot and understanding. Cool Girls never get angry; they only smile in a chagrined, loving manner and let their men do whatever they want. Go ahead, shit on me, I don’t mind, I’m the Cool Girl.
+
+Men actually think this girl exists. Maybe they’re fooled because so many women are willing to pretend to be this girl. For a long time Cool Girl offended me. I used to see men – friends, coworkers, strangers – giddy over these awful pretender women, and I’d want to sit these men down and calmly say: You are not dating a woman, you are dating a woman who has watched too many movies written by socially awkward men who’d like to believe that this kind of woman exists and might kiss them. I’d want to grab the poor guy by his lapels or messenger bag and say: The bitch doesn’t really love chili dogs that much – no one loves chili dogs that much! And the Cool Girls are even more pathetic: They’re not even pretending to be the woman they want to be, they’re pretending to be the woman a man wants them to be. Oh, and if you’re not a Cool Girl, I beg you not to believe that your man doesn’t want the Cool Girl. It may be a slightly different version – maybe he’s a vegetarian, so Cool Girl loves seitan and is great with dogs; or maybe he’s a hipster artist, so Cool Girl is a tattooed, bespectacled nerd who loves comics. There are variations to the window dressing, but believe me, he wants Cool Girl, who is basically the girl who likes every fucking thing he likes and doesn’t ever complain. (How do you know you’re not Cool Girl? Because he says things like: “I like strong women.” If he says that to you, he will at some point fuck someone else. Because “I like strong women” is code for “I hate strong women.”')
+GO
 SET IDENTITY_INSERT [dbo].[Chapter] OFF
+GO
+INSERT [dbo].[Chapter_Payment] ([chapterId], [price]) VALUES (26, CAST(0.10 AS Decimal(10, 2)))
+GO
+SET IDENTITY_INSERT [dbo].[Comment] ON 
+GO
+INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [editedAt], [status]) VALUES (1, 1, 2, N'hehe', NULL, NULL, CAST(N'2022-10-15T23:13:00.507' AS DateTime), NULL, 1)
+GO
+INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [editedAt], [status]) VALUES (2, 1, 109, N'Quite simply, this is one of the best novels of the year. It''s a thriller in the best tradition of Alfred Hitchcock and layered with brilliantly written characters.', NULL, NULL, CAST(N'2022-10-17T10:32:06.783' AS DateTime), NULL, 1)
+GO
+INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [editedAt], [status]) VALUES (3, 1, 3, N'In my mind, any book that takes me 3 months and 20 different tries to read is not worth 3 stars, especially a book written by an author I already respect. And I am not kidding, for me the first half of Gone Girl was a PURE TORTURE to read.', NULL, NULL, CAST(N'2022-10-17T10:36:06.177' AS DateTime), NULL, 1)
+GO
+INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [editedAt], [status]) VALUES (4, 1, 3, N'I hate Amy.', NULL, NULL, CAST(N'2022-10-17T10:37:41.260' AS DateTime), NULL, 1)
+GO
+INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [editedAt], [status]) VALUES (5, 17, 2, N'Actually good!', NULL, NULL, CAST(N'2022-10-23T21:21:04.430' AS DateTime), NULL, 1)
+GO
+SET IDENTITY_INSERT [dbo].[Comment] OFF
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (2, 1)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (2, 5)
 GO
 INSERT [dbo].[Payment_Account] ([accountNumber], [balance]) VALUES (0, CAST(0.00 AS Decimal(10, 2)))
 GO
 INSERT [dbo].[Payment_Account] ([accountNumber], [balance]) VALUES (1, CAST(0.00 AS Decimal(10, 2)))
 GO
-INSERT [dbo].[Payment_Account] ([accountNumber], [balance]) VALUES (2, CAST(1541.47 AS Decimal(10, 2)))
+INSERT [dbo].[Payment_Account] ([accountNumber], [balance]) VALUES (2, CAST(1496.47 AS Decimal(10, 2)))
 GO
 INSERT [dbo].[Payment_Account] ([accountNumber], [balance]) VALUES (3, CAST(4120.33 AS Decimal(10, 2)))
 GO
@@ -2247,6 +2426,8 @@ GO
 INSERT [dbo].[Payment_Account] ([accountNumber], [balance]) VALUES (109, CAST(205.67 AS Decimal(10, 2)))
 GO
 INSERT [dbo].[Payment_Account] ([accountNumber], [balance]) VALUES (110, CAST(0.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Payment_Account] ([accountNumber], [balance]) VALUES (111, CAST(0.00 AS Decimal(10, 2)))
 GO
 INSERT [dbo].[Payment_Account] ([accountNumber], [balance]) VALUES (37075223, CAST(1013.68 AS Decimal(10, 2)))
 GO
@@ -3280,31 +3461,85 @@ INSERT [dbo].[Payment_Method] ([paymentId], [userId], [accountNumber], [name], [
 GO
 INSERT [dbo].[Payment_Method] ([paymentId], [userId], [accountNumber], [name], [active]) VALUES (48078, 110, 110, N'Wallet of autester', 1)
 GO
+INSERT [dbo].[Payment_Method] ([paymentId], [userId], [accountNumber], [name], [active]) VALUES (48081, 111, 111, N'Wallet of thanhienee', 1)
+GO
 SET IDENTITY_INSERT [dbo].[Payment_Method] OFF
 GO
-SET IDENTITY_INSERT [dbo].[Report] ON 
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B1', 1, NULL, CAST(11.99 AS Decimal(10, 2)))
 GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (1, N'Sexual Content')
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B10', 10, NULL, CAST(12.50 AS Decimal(10, 2)))
 GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (2, N'Violent or repulsive content')
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B11', 11, NULL, CAST(13.99 AS Decimal(10, 2)))
 GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (3, N'Hateful or abusive content')
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B12', 12, NULL, CAST(10.99 AS Decimal(10, 2)))
 GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (4, N'Harassment or bullying')
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B13', 13, NULL, CAST(9.35 AS Decimal(10, 2)))
 GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (5, N'Harmful or dangerous acts')
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B14', 14, NULL, CAST(10.40 AS Decimal(10, 2)))
 GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (6, N'Child abuse')
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B15', 15, NULL, CAST(11.00 AS Decimal(10, 2)))
 GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (7, N'Promotes terrorism')
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B16', 16, NULL, CAST(9.69 AS Decimal(10, 2)))
 GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (8, N'Spam or misleading')
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B17', 17, NULL, CAST(0.00 AS Decimal(10, 2)))
 GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (9, N'Infringes my rights')
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B17-C1', 17, 21, CAST(0.00 AS Decimal(10, 2)))
 GO
-INSERT [dbo].[Report] ([id], [title]) VALUES (10, N'Caption issue')
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B2', 2, NULL, CAST(12.99 AS Decimal(10, 2)))
 GO
-SET IDENTITY_INSERT [dbo].[Report] OFF
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B3', 3, NULL, CAST(10.50 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B4', 4, NULL, CAST(13.99 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B5', 5, NULL, CAST(11.99 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B6', 6, NULL, CAST(12.99 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B7', 7, NULL, CAST(10.50 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B8', 8, NULL, CAST(13.99 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B9', 9, NULL, CAST(15.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (109, N'B4')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (109, N'B7')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (109, N'B1')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (111, N'B1')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (111, N'B2')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (111, N'B3')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (111, N'B4')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (111, N'B5')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (111, N'B6')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (111, N'B7')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (111, N'B8')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (111, N'B9')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (111, N'B10')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (111, N'B11')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (111, N'B12')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (111, N'B13')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (111, N'B14')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (111, N'B15')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (111, N'B16')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (109, N'B17-C1')
 GO
 INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (1, 2, 2)
 GO
@@ -3312,219 +3547,229 @@ INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (1, 109, 5)
 GO
 SET IDENTITY_INSERT [dbo].[Transaction] ON 
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000001, 2, CAST(297.69 AS Decimal(10, 2)), CAST(297.69 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.323' AS DateTime), 1, 2, N'Recharge money from Bank 1', 45684)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000001, 2, CAST(297.69 AS Decimal(10, 2)), CAST(297.69 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.323' AS DateTime), 1, 2, N'Recharge money from Bank 1', 45684, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000002, 3, CAST(4120.33 AS Decimal(10, 2)), CAST(4120.33 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.380' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47127)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000002, 3, CAST(4120.33 AS Decimal(10, 2)), CAST(4120.33 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.380' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47127, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000003, 4, CAST(1442.86 AS Decimal(10, 2)), CAST(1442.86 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.430' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47133)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000003, 4, CAST(1442.86 AS Decimal(10, 2)), CAST(1442.86 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.430' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47133, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000004, 5, CAST(1079.29 AS Decimal(10, 2)), CAST(1079.29 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.493' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47139)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000004, 5, CAST(1079.29 AS Decimal(10, 2)), CAST(1079.29 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.493' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47139, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000005, 6, CAST(3782.48 AS Decimal(10, 2)), CAST(3782.48 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.557' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47145)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000005, 6, CAST(3782.48 AS Decimal(10, 2)), CAST(3782.48 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.557' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47145, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000006, 7, CAST(3407.86 AS Decimal(10, 2)), CAST(3407.86 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.617' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47151)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000006, 7, CAST(3407.86 AS Decimal(10, 2)), CAST(3407.86 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.617' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47151, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000007, 8, CAST(7827.57 AS Decimal(10, 2)), CAST(7827.57 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.670' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47157)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000007, 8, CAST(7827.57 AS Decimal(10, 2)), CAST(7827.57 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.670' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47157, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000008, 9, CAST(2443.45 AS Decimal(10, 2)), CAST(2443.45 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.753' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47163)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000008, 9, CAST(2443.45 AS Decimal(10, 2)), CAST(2443.45 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.753' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47163, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000009, 10, CAST(9.17 AS Decimal(10, 2)), CAST(9.17 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.820' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47169)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000009, 10, CAST(9.17 AS Decimal(10, 2)), CAST(9.17 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.820' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47169, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000010, 11, CAST(5982.25 AS Decimal(10, 2)), CAST(5982.25 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.890' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47175)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000010, 11, CAST(5982.25 AS Decimal(10, 2)), CAST(5982.25 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.890' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47175, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000011, 12, CAST(909.46 AS Decimal(10, 2)), CAST(909.46 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.953' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47181)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000011, 12, CAST(909.46 AS Decimal(10, 2)), CAST(909.46 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:10.953' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47181, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000012, 13, CAST(3551.77 AS Decimal(10, 2)), CAST(3551.77 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.010' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47187)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000012, 13, CAST(3551.77 AS Decimal(10, 2)), CAST(3551.77 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.010' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47187, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000013, 14, CAST(6174.18 AS Decimal(10, 2)), CAST(6174.18 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.073' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47193)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000013, 14, CAST(6174.18 AS Decimal(10, 2)), CAST(6174.18 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.073' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47193, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000014, 15, CAST(77.97 AS Decimal(10, 2)), CAST(77.97 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.130' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47199)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000014, 15, CAST(77.97 AS Decimal(10, 2)), CAST(77.97 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.130' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47199, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000015, 16, CAST(2703.23 AS Decimal(10, 2)), CAST(2703.23 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.190' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47205)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000015, 16, CAST(2703.23 AS Decimal(10, 2)), CAST(2703.23 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.190' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47205, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000016, 17, CAST(455.40 AS Decimal(10, 2)), CAST(455.40 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.263' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47211)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000016, 17, CAST(455.40 AS Decimal(10, 2)), CAST(455.40 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.263' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47211, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000017, 18, CAST(5027.96 AS Decimal(10, 2)), CAST(5027.96 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.320' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47217)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000017, 18, CAST(5027.96 AS Decimal(10, 2)), CAST(5027.96 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.320' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47217, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000018, 19, CAST(4319.66 AS Decimal(10, 2)), CAST(4319.66 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.373' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47223)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000018, 19, CAST(4319.66 AS Decimal(10, 2)), CAST(4319.66 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.373' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47223, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000019, 20, CAST(4195.68 AS Decimal(10, 2)), CAST(4195.68 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.433' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47229)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000019, 20, CAST(4195.68 AS Decimal(10, 2)), CAST(4195.68 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.433' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47229, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000020, 21, CAST(7731.47 AS Decimal(10, 2)), CAST(7731.47 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.490' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47235)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000020, 21, CAST(7731.47 AS Decimal(10, 2)), CAST(7731.47 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.490' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47235, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000021, 22, CAST(5349.61 AS Decimal(10, 2)), CAST(5349.61 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.547' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47241)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000021, 22, CAST(5349.61 AS Decimal(10, 2)), CAST(5349.61 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.547' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47241, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000022, 23, CAST(5313.50 AS Decimal(10, 2)), CAST(5313.50 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.603' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47247)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000022, 23, CAST(5313.50 AS Decimal(10, 2)), CAST(5313.50 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.603' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47247, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000023, 24, CAST(2078.36 AS Decimal(10, 2)), CAST(2078.36 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.650' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47253)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000023, 24, CAST(2078.36 AS Decimal(10, 2)), CAST(2078.36 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.650' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47253, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000024, 25, CAST(6675.17 AS Decimal(10, 2)), CAST(6675.17 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.700' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47259)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000024, 25, CAST(6675.17 AS Decimal(10, 2)), CAST(6675.17 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.700' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47259, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000025, 26, CAST(1440.90 AS Decimal(10, 2)), CAST(1440.90 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.747' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47265)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000025, 26, CAST(1440.90 AS Decimal(10, 2)), CAST(1440.90 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.747' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47265, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000026, 27, CAST(14.59 AS Decimal(10, 2)), CAST(14.59 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.797' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47271)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000026, 27, CAST(14.59 AS Decimal(10, 2)), CAST(14.59 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.797' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47271, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000027, 28, CAST(760.99 AS Decimal(10, 2)), CAST(760.99 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.850' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47277)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000027, 28, CAST(760.99 AS Decimal(10, 2)), CAST(760.99 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.850' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47277, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000028, 29, CAST(6765.91 AS Decimal(10, 2)), CAST(6765.91 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.897' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47283)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000028, 29, CAST(6765.91 AS Decimal(10, 2)), CAST(6765.91 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.897' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47283, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000029, 30, CAST(7622.32 AS Decimal(10, 2)), CAST(7622.32 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.940' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47289)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000029, 30, CAST(7622.32 AS Decimal(10, 2)), CAST(7622.32 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.940' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47289, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000030, 31, CAST(826.10 AS Decimal(10, 2)), CAST(826.10 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.983' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47295)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000030, 31, CAST(826.10 AS Decimal(10, 2)), CAST(826.10 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:11.983' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47295, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000031, 32, CAST(85.16 AS Decimal(10, 2)), CAST(85.16 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.040' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47301)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000031, 32, CAST(85.16 AS Decimal(10, 2)), CAST(85.16 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.040' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47301, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000032, 33, CAST(3136.10 AS Decimal(10, 2)), CAST(3136.10 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.093' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47307)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000032, 33, CAST(3136.10 AS Decimal(10, 2)), CAST(3136.10 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.093' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47307, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000033, 34, CAST(76.44 AS Decimal(10, 2)), CAST(76.44 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.143' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47313)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000033, 34, CAST(76.44 AS Decimal(10, 2)), CAST(76.44 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.143' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47313, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000034, 35, CAST(4839.84 AS Decimal(10, 2)), CAST(4839.84 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.203' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47319)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000034, 35, CAST(4839.84 AS Decimal(10, 2)), CAST(4839.84 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.203' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47319, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000035, 36, CAST(5480.93 AS Decimal(10, 2)), CAST(5480.93 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.307' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47325)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000035, 36, CAST(5480.93 AS Decimal(10, 2)), CAST(5480.93 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.307' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47325, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000036, 37, CAST(3678.42 AS Decimal(10, 2)), CAST(3678.42 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.357' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47331)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000036, 37, CAST(3678.42 AS Decimal(10, 2)), CAST(3678.42 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.357' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47331, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000037, 38, CAST(4267.66 AS Decimal(10, 2)), CAST(4267.66 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.403' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47337)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000037, 38, CAST(4267.66 AS Decimal(10, 2)), CAST(4267.66 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.403' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47337, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000038, 39, CAST(5559.76 AS Decimal(10, 2)), CAST(5559.76 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.453' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47343)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000038, 39, CAST(5559.76 AS Decimal(10, 2)), CAST(5559.76 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.453' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47343, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000039, 40, CAST(981.02 AS Decimal(10, 2)), CAST(981.02 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.507' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47349)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000039, 40, CAST(981.02 AS Decimal(10, 2)), CAST(981.02 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.507' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47349, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000040, 41, CAST(8808.18 AS Decimal(10, 2)), CAST(8808.18 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.553' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47355)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000040, 41, CAST(8808.18 AS Decimal(10, 2)), CAST(8808.18 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.553' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47355, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000041, 42, CAST(4875.06 AS Decimal(10, 2)), CAST(4875.06 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.597' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47361)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000041, 42, CAST(4875.06 AS Decimal(10, 2)), CAST(4875.06 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.597' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47361, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000042, 43, CAST(8112.23 AS Decimal(10, 2)), CAST(8112.23 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.643' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47367)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000042, 43, CAST(8112.23 AS Decimal(10, 2)), CAST(8112.23 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.643' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47367, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000043, 44, CAST(2829.23 AS Decimal(10, 2)), CAST(2829.23 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.693' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47373)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000043, 44, CAST(2829.23 AS Decimal(10, 2)), CAST(2829.23 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.693' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47373, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000044, 45, CAST(6999.18 AS Decimal(10, 2)), CAST(6999.18 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.740' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47379)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000044, 45, CAST(6999.18 AS Decimal(10, 2)), CAST(6999.18 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.740' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47379, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000045, 46, CAST(6558.10 AS Decimal(10, 2)), CAST(6558.10 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.787' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47385)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000045, 46, CAST(6558.10 AS Decimal(10, 2)), CAST(6558.10 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.787' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47385, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000046, 47, CAST(7931.99 AS Decimal(10, 2)), CAST(7931.99 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.837' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47391)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000046, 47, CAST(7931.99 AS Decimal(10, 2)), CAST(7931.99 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.837' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47391, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000047, 48, CAST(7476.40 AS Decimal(10, 2)), CAST(7476.40 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.897' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47397)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000047, 48, CAST(7476.40 AS Decimal(10, 2)), CAST(7476.40 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.897' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47397, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000048, 49, CAST(4480.66 AS Decimal(10, 2)), CAST(4480.66 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.943' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47403)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000048, 49, CAST(4480.66 AS Decimal(10, 2)), CAST(4480.66 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.943' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47403, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000049, 50, CAST(1196.33 AS Decimal(10, 2)), CAST(1196.33 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.990' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47409)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000049, 50, CAST(1196.33 AS Decimal(10, 2)), CAST(1196.33 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:12.990' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47409, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000050, 51, CAST(3107.50 AS Decimal(10, 2)), CAST(3107.50 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.037' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47415)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000050, 51, CAST(3107.50 AS Decimal(10, 2)), CAST(3107.50 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.037' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47415, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000051, 52, CAST(1721.74 AS Decimal(10, 2)), CAST(1721.74 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.083' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47421)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000051, 52, CAST(1721.74 AS Decimal(10, 2)), CAST(1721.74 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.083' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47421, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000052, 53, CAST(7169.71 AS Decimal(10, 2)), CAST(7169.71 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.133' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47427)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000052, 53, CAST(7169.71 AS Decimal(10, 2)), CAST(7169.71 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.133' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47427, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000053, 54, CAST(2465.22 AS Decimal(10, 2)), CAST(2465.22 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.180' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47433)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000053, 54, CAST(2465.22 AS Decimal(10, 2)), CAST(2465.22 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.180' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47433, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000054, 55, CAST(8525.55 AS Decimal(10, 2)), CAST(8525.55 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.227' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47439)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000054, 55, CAST(8525.55 AS Decimal(10, 2)), CAST(8525.55 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.227' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47439, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000055, 56, CAST(1163.63 AS Decimal(10, 2)), CAST(1163.63 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.270' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47445)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000055, 56, CAST(1163.63 AS Decimal(10, 2)), CAST(1163.63 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.270' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47445, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000056, 57, CAST(1910.84 AS Decimal(10, 2)), CAST(1910.84 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.320' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47451)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000056, 57, CAST(1910.84 AS Decimal(10, 2)), CAST(1910.84 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.320' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47451, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000057, 58, CAST(1578.50 AS Decimal(10, 2)), CAST(1578.50 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.370' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47457)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000057, 58, CAST(1578.50 AS Decimal(10, 2)), CAST(1578.50 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.370' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47457, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000058, 59, CAST(2177.29 AS Decimal(10, 2)), CAST(2177.29 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.423' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47463)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000058, 59, CAST(2177.29 AS Decimal(10, 2)), CAST(2177.29 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.423' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47463, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000059, 60, CAST(5623.95 AS Decimal(10, 2)), CAST(5623.95 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.473' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47469)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000059, 60, CAST(5623.95 AS Decimal(10, 2)), CAST(5623.95 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.473' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47469, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000060, 61, CAST(5093.20 AS Decimal(10, 2)), CAST(5093.20 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.530' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47475)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000060, 61, CAST(5093.20 AS Decimal(10, 2)), CAST(5093.20 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.530' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47475, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000061, 62, CAST(8543.68 AS Decimal(10, 2)), CAST(8543.68 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.593' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47481)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000061, 62, CAST(8543.68 AS Decimal(10, 2)), CAST(8543.68 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.593' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47481, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000062, 63, CAST(5424.55 AS Decimal(10, 2)), CAST(5424.55 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.643' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47487)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000062, 63, CAST(5424.55 AS Decimal(10, 2)), CAST(5424.55 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.643' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47487, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000063, 64, CAST(1068.78 AS Decimal(10, 2)), CAST(1068.78 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.700' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47493)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000063, 64, CAST(1068.78 AS Decimal(10, 2)), CAST(1068.78 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.700' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47493, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000064, 65, CAST(2659.99 AS Decimal(10, 2)), CAST(2659.99 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.757' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47499)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000064, 65, CAST(2659.99 AS Decimal(10, 2)), CAST(2659.99 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.757' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47499, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000065, 66, CAST(6317.44 AS Decimal(10, 2)), CAST(6317.44 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.817' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47505)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000065, 66, CAST(6317.44 AS Decimal(10, 2)), CAST(6317.44 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.817' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47505, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000066, 67, CAST(531.91 AS Decimal(10, 2)), CAST(531.91 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.883' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47511)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000066, 67, CAST(531.91 AS Decimal(10, 2)), CAST(531.91 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.883' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47511, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000067, 68, CAST(4332.51 AS Decimal(10, 2)), CAST(4332.51 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.953' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47517)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000067, 68, CAST(4332.51 AS Decimal(10, 2)), CAST(4332.51 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:13.953' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47517, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000068, 69, CAST(5425.50 AS Decimal(10, 2)), CAST(5425.50 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.017' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47523)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000068, 69, CAST(5425.50 AS Decimal(10, 2)), CAST(5425.50 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.017' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47523, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000069, 70, CAST(8037.13 AS Decimal(10, 2)), CAST(8037.13 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.080' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47529)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000069, 70, CAST(8037.13 AS Decimal(10, 2)), CAST(8037.13 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.080' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47529, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000070, 71, CAST(6357.76 AS Decimal(10, 2)), CAST(6357.76 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.163' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47535)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000070, 71, CAST(6357.76 AS Decimal(10, 2)), CAST(6357.76 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.163' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47535, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000071, 72, CAST(3767.05 AS Decimal(10, 2)), CAST(3767.05 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.223' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47541)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000071, 72, CAST(3767.05 AS Decimal(10, 2)), CAST(3767.05 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.223' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47541, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000072, 73, CAST(7528.66 AS Decimal(10, 2)), CAST(7528.66 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.277' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47547)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000072, 73, CAST(7528.66 AS Decimal(10, 2)), CAST(7528.66 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.277' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47547, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000073, 74, CAST(7135.03 AS Decimal(10, 2)), CAST(7135.03 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.333' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47553)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000073, 74, CAST(7135.03 AS Decimal(10, 2)), CAST(7135.03 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.333' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47553, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000074, 75, CAST(979.24 AS Decimal(10, 2)), CAST(979.24 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.390' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47559)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000074, 75, CAST(979.24 AS Decimal(10, 2)), CAST(979.24 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.390' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47559, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000075, 76, CAST(1645.65 AS Decimal(10, 2)), CAST(1645.65 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.450' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47565)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000075, 76, CAST(1645.65 AS Decimal(10, 2)), CAST(1645.65 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.450' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47565, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000076, 77, CAST(5195.25 AS Decimal(10, 2)), CAST(5195.25 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.500' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47571)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000076, 77, CAST(5195.25 AS Decimal(10, 2)), CAST(5195.25 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.500' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47571, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000077, 78, CAST(6283.85 AS Decimal(10, 2)), CAST(6283.85 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.543' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47577)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000077, 78, CAST(6283.85 AS Decimal(10, 2)), CAST(6283.85 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.543' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47577, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000078, 79, CAST(4977.79 AS Decimal(10, 2)), CAST(4977.79 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.597' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47583)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000078, 79, CAST(4977.79 AS Decimal(10, 2)), CAST(4977.79 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.597' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47583, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000079, 80, CAST(5043.27 AS Decimal(10, 2)), CAST(5043.27 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.647' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47589)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000079, 80, CAST(5043.27 AS Decimal(10, 2)), CAST(5043.27 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.647' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47589, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000080, 81, CAST(381.53 AS Decimal(10, 2)), CAST(381.53 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.690' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47595)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000080, 81, CAST(381.53 AS Decimal(10, 2)), CAST(381.53 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.690' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47595, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000081, 82, CAST(5080.89 AS Decimal(10, 2)), CAST(5080.89 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.737' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47601)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000081, 82, CAST(5080.89 AS Decimal(10, 2)), CAST(5080.89 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.737' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47601, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000082, 83, CAST(16.69 AS Decimal(10, 2)), CAST(16.69 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.787' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47607)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000082, 83, CAST(16.69 AS Decimal(10, 2)), CAST(16.69 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.787' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47607, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000083, 84, CAST(3547.69 AS Decimal(10, 2)), CAST(3547.69 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.837' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47613)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000083, 84, CAST(3547.69 AS Decimal(10, 2)), CAST(3547.69 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.837' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47613, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000084, 85, CAST(3475.33 AS Decimal(10, 2)), CAST(3475.33 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.883' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47619)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000084, 85, CAST(3475.33 AS Decimal(10, 2)), CAST(3475.33 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.883' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47619, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000085, 86, CAST(1805.99 AS Decimal(10, 2)), CAST(1805.99 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.927' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47625)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000085, 86, CAST(1805.99 AS Decimal(10, 2)), CAST(1805.99 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.927' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47625, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000086, 87, CAST(7012.19 AS Decimal(10, 2)), CAST(7012.19 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.973' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47631)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000086, 87, CAST(7012.19 AS Decimal(10, 2)), CAST(7012.19 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:14.973' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47631, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000087, 88, CAST(6935.14 AS Decimal(10, 2)), CAST(6935.14 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.017' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47637)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000087, 88, CAST(6935.14 AS Decimal(10, 2)), CAST(6935.14 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.017' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47637, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000088, 89, CAST(1641.78 AS Decimal(10, 2)), CAST(1641.78 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.067' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47643)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000088, 89, CAST(1641.78 AS Decimal(10, 2)), CAST(1641.78 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.067' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47643, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000089, 90, CAST(1300.46 AS Decimal(10, 2)), CAST(1300.46 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.110' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47649)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000089, 90, CAST(1300.46 AS Decimal(10, 2)), CAST(1300.46 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.110' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47649, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000090, 91, CAST(7175.78 AS Decimal(10, 2)), CAST(7175.78 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.157' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47655)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000090, 91, CAST(7175.78 AS Decimal(10, 2)), CAST(7175.78 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.157' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47655, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000091, 92, CAST(3341.84 AS Decimal(10, 2)), CAST(3341.84 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.203' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47661)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000091, 92, CAST(3341.84 AS Decimal(10, 2)), CAST(3341.84 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.203' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47661, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000092, 93, CAST(6665.80 AS Decimal(10, 2)), CAST(6665.80 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.247' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47667)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000092, 93, CAST(6665.80 AS Decimal(10, 2)), CAST(6665.80 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.247' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47667, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000093, 94, CAST(8094.17 AS Decimal(10, 2)), CAST(8094.17 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.293' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47673)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000093, 94, CAST(8094.17 AS Decimal(10, 2)), CAST(8094.17 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.293' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47673, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000094, 95, CAST(1064.11 AS Decimal(10, 2)), CAST(1064.11 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.337' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47679)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000094, 95, CAST(1064.11 AS Decimal(10, 2)), CAST(1064.11 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.337' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47679, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000095, 96, CAST(4197.52 AS Decimal(10, 2)), CAST(4197.52 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.387' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47685)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000095, 96, CAST(4197.52 AS Decimal(10, 2)), CAST(4197.52 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.387' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47685, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000096, 97, CAST(8879.19 AS Decimal(10, 2)), CAST(8879.19 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.433' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47691)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000096, 97, CAST(8879.19 AS Decimal(10, 2)), CAST(8879.19 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.433' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47691, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000097, 98, CAST(5057.10 AS Decimal(10, 2)), CAST(5057.10 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.483' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47697)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000097, 98, CAST(5057.10 AS Decimal(10, 2)), CAST(5057.10 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.483' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47697, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000098, 99, CAST(3718.89 AS Decimal(10, 2)), CAST(3718.89 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.530' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47703)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000098, 99, CAST(3718.89 AS Decimal(10, 2)), CAST(3718.89 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.530' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47703, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000099, 100, CAST(1627.63 AS Decimal(10, 2)), CAST(1627.63 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.580' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47709)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000099, 100, CAST(1627.63 AS Decimal(10, 2)), CAST(1627.63 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.580' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47709, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000100, 101, CAST(4261.23 AS Decimal(10, 2)), CAST(4261.23 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.627' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47715)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000100, 101, CAST(4261.23 AS Decimal(10, 2)), CAST(4261.23 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.627' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47715, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000101, 102, CAST(4800.82 AS Decimal(10, 2)), CAST(4800.82 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.683' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47721)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000101, 102, CAST(4800.82 AS Decimal(10, 2)), CAST(4800.82 AS Decimal(10, 2)), CAST(N'2022-10-01T05:52:15.683' AS DateTime), 1, 2, N'Recharge money from Linked Bank', 47721, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000102, 2, CAST(150.13 AS Decimal(10, 2)), CAST(147.56 AS Decimal(10, 2)), CAST(N'2022-10-01T22:25:58.213' AS DateTime), 2, 2, N'Withdraw from wallet to Bank 1.', 45684)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000102, 2, CAST(150.13 AS Decimal(10, 2)), CAST(147.56 AS Decimal(10, 2)), CAST(N'2022-10-01T22:25:58.213' AS DateTime), 2, 2, N'Withdraw from wallet to Bank 1.', 45684, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000103, 2, CAST(1235.42 AS Decimal(10, 2)), CAST(1783.24 AS Decimal(10, 2)), CAST(N'2022-10-01T22:31:43.330' AS DateTime), 1, 2, N'Recharge from Linked Bank into wallet.', 47121)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000103, 2, CAST(1235.42 AS Decimal(10, 2)), CAST(1783.24 AS Decimal(10, 2)), CAST(N'2022-10-01T22:31:43.330' AS DateTime), 1, 2, N'Recharge from Linked Bank into wallet.', 47121, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000104, 2, CAST(241.77 AS Decimal(10, 2)), CAST(1541.47 AS Decimal(10, 2)), CAST(N'2022-10-01T22:32:21.120' AS DateTime), 2, 2, N'Withdraw from wallet to Bank 1.', 45684)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000104, 2, CAST(241.77 AS Decimal(10, 2)), CAST(1541.47 AS Decimal(10, 2)), CAST(N'2022-10-01T22:32:21.120' AS DateTime), 2, 2, N'Withdraw from wallet to Bank 1.', 45684, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000108, 109, CAST(230.16 AS Decimal(10, 2)), CAST(230.16 AS Decimal(10, 2)), CAST(N'2022-10-03T13:50:31.843' AS DateTime), 1, 2, N'Recharge from Bank 2 into wallet.', 47766)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000108, 109, CAST(230.16 AS Decimal(10, 2)), CAST(230.16 AS Decimal(10, 2)), CAST(N'2022-10-03T13:50:31.843' AS DateTime), 1, 2, N'Recharge from Bank 2 into wallet.', 47766, NULL)
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000109, 109, CAST(13.99 AS Decimal(10, 2)), CAST(216.17 AS Decimal(10, 2)), CAST(N'2022-10-03T13:50:45.683' AS DateTime), 3, 2, N'Buy The Girl on the Train.', 47763)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000109, 109, CAST(13.99 AS Decimal(10, 2)), CAST(216.17 AS Decimal(10, 2)), CAST(N'2022-10-03T13:50:45.683' AS DateTime), 3, 2, N'Buy The Girl on the Train.', 47763, N'B4')
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId]) VALUES (3000110, 109, CAST(10.50 AS Decimal(10, 2)), CAST(205.67 AS Decimal(10, 2)), CAST(N'2022-10-03T13:53:14.897' AS DateTime), 3, 2, N'Buy It.', 47763)
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000110, 109, CAST(10.50 AS Decimal(10, 2)), CAST(205.67 AS Decimal(10, 2)), CAST(N'2022-10-03T13:53:14.897' AS DateTime), 3, 2, N'Buy It.', 47763, N'B7')
+GO
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000111, 2, CAST(5.00 AS Decimal(10, 2)), CAST(1536.47 AS Decimal(10, 2)), CAST(N'2022-10-16T21:48:36.080' AS DateTime), 3, 2, N'Buy Gone Girl .', 47118, N'B1')
+GO
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000112, 2, CAST(5.00 AS Decimal(10, 2)), CAST(1531.47 AS Decimal(10, 2)), CAST(N'2022-10-17T10:25:04.947' AS DateTime), 3, 2, N'Buy Lord of the Mysteries.', 47118, N'B5')
+GO
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000113, 2, CAST(5.00 AS Decimal(10, 2)), CAST(1526.47 AS Decimal(10, 2)), CAST(N'2022-10-17T10:25:39.513' AS DateTime), 3, 2, N'Buy One Piece, Volume 1: Romance Dawn.', 47118, N'B15')
+GO
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000114, 2, CAST(25.00 AS Decimal(10, 2)), CAST(1501.47 AS Decimal(10, 2)), CAST(N'2022-10-23T15:43:12.647' AS DateTime), 3, 2, N'Buy 5cm per Second.', 47118, NULL)
+GO
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [paymentId], [productID]) VALUES (3000115, 2, CAST(5.00 AS Decimal(10, 2)), CAST(1496.47 AS Decimal(10, 2)), CAST(N'2022-10-23T21:16:32.677' AS DateTime), 3, 2, N'Buy Gone Girl .', 47118, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[Transaction] OFF
 GO
@@ -3532,7 +3777,7 @@ SET IDENTITY_INSERT [dbo].[User] ON
 GO
 INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (1, N'Vinh Nguyen', 1, CAST(N'2002-12-25' AS Date), N'vinhnthe163219@fpt.edu.vn', N'0382132025', N'FBT University ', N'admin', N'admin', 5, 1)
 GO
-INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (2, N'Vinh Nguyen', 1, CAST(N'2002-12-25' AS Date), N'vinhvn102@gmail.com', N'0382132025', N'FBT University ', N'vinh', N'2002', 2, 2)
+INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (2, N'Vinh Nguyen', 1, CAST(N'2002-12-25' AS Date), N'vinhvn102@gmail.com', N'0382132025', N'FBT University ', N'vinh', N'2002', 3, 2)
 GO
 INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (3, N'Ivory Marcel', 0, CAST(N'1969-09-20' AS Date), N'Bookie_User1@qa.team', N'6128170843', N'E312R', N'user_no1', N'9v9SJ2gqt1', 1, 3)
 GO
@@ -3738,7 +3983,33 @@ INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [addre
 GO
 INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (110, N'Test Author', 0, CAST(N'2011-12-13' AS Date), N'Bookie_Author1@qa.team', N'0963852741', NULL, N'autester', N'test_author1', 2, 110)
 GO
+INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (111, N'Thanh Hien', 0, CAST(N'2022-10-04' AS Date), N'thanhienee@123.com', N'0123456789', NULL, N'thanhienee', N'123456789', 1, 111)
+GO
 SET IDENTITY_INSERT [dbo].[User] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Violation] ON 
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (1, 1, N'Sexual Content')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (2, 1, N'Violent or repulsive content')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (3, 1, N'Hateful or abusive content')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (4, 1, N'Harassment or bullying')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (5, 1, N'Harmful or dangerous acts')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (6, 1, N'Child abuse')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (7, 1, N'Promotes terrorism')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (8, 1, N'Spam or misleading')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (9, 1, N'Infringes my rights')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (10, 1, N'Caption issue')
+GO
+SET IDENTITY_INSERT [dbo].[Violation] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Volume] ON 
 GO
@@ -3750,6 +4021,28 @@ INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (3, 1, 3
 GO
 INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (4, 17, 1, N'Lạc', NULL)
 GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (5, 18, 1, N'Lạc', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (6, 22, 1, N'Lạc', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (7, 23, 1, N'Lạc', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (8, 24, 1, N'Lạc', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (9, 25, 1, N'Lạc', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (10, 26, 1, N'Lạc', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (11, 27, 1, N'Lạc', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (12, 28, 1, N'Lạc', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (13, 30, 1, N'Lạc', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (14, 31, 1, N'Lạc', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (15, 32, 1, N'Lạc', NULL)
+GO
 SET IDENTITY_INSERT [dbo].[Volume] OFF
 GO
 ALTER TABLE [dbo].[Book] ADD  DEFAULT ((0)) FOR [favourite]
@@ -3758,12 +4051,13 @@ ALTER TABLE [dbo].[Book] ADD  CONSTRAINT [DF__Book__views__30F848ED]  DEFAULT ((
 GO
 ALTER TABLE [dbo].[Book] ADD  DEFAULT ((1)) FOR [status]
 GO
+ALTER TABLE [dbo].[Comment] ADD  CONSTRAINT [DF_Comment_status]  DEFAULT ((1)) FOR [status]
+GO
+ALTER TABLE [dbo].[Report] ADD  CONSTRAINT [DF_Report_status]  DEFAULT ((0)) FOR [status]
+GO
 ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF__User__is_super__31EC6D26]  DEFAULT ((1)) FOR [is_super]
 GO
 ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF_User_balance]  DEFAULT ((0)) FOR [walletNumber]
-GO
-ALTER TABLE [dbo].[Author]  WITH CHECK ADD FOREIGN KEY([userId])
-REFERENCES [dbo].[User] ([id])
 GO
 ALTER TABLE [dbo].[Author]  WITH CHECK ADD FOREIGN KEY([userId])
 REFERENCES [dbo].[User] ([id])
@@ -3772,6 +4066,11 @@ ALTER TABLE [dbo].[Book_Own]  WITH CHECK ADD  CONSTRAINT [FK_Book_Own_Book] FORE
 REFERENCES [dbo].[Book] ([id])
 GO
 ALTER TABLE [dbo].[Book_Own] CHECK CONSTRAINT [FK_Book_Own_Book]
+GO
+ALTER TABLE [dbo].[Book_Own]  WITH CHECK ADD  CONSTRAINT [FK_Book_Own_Chapter] FOREIGN KEY([recentChapterId])
+REFERENCES [dbo].[Chapter] ([id])
+GO
+ALTER TABLE [dbo].[Book_Own] CHECK CONSTRAINT [FK_Book_Own_Chapter]
 GO
 ALTER TABLE [dbo].[Book_Own]  WITH CHECK ADD  CONSTRAINT [FK_Book_Own_User] FOREIGN KEY([userId])
 REFERENCES [dbo].[User] ([id])
@@ -3789,12 +4088,6 @@ GO
 ALTER TABLE [dbo].[Chapter]  WITH CHECK ADD FOREIGN KEY([volumeId])
 REFERENCES [dbo].[Volume] ([id])
 ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[Chapter_Own]  WITH CHECK ADD FOREIGN KEY([chapterId])
-REFERENCES [dbo].[Chapter] ([id])
-GO
-ALTER TABLE [dbo].[Chapter_Own]  WITH CHECK ADD FOREIGN KEY([userId])
-REFERENCES [dbo].[User] ([id])
 GO
 ALTER TABLE [dbo].[Chapter_Payment]  WITH CHECK ADD FOREIGN KEY([chapterId])
 REFERENCES [dbo].[Chapter] ([id])
@@ -3831,14 +4124,33 @@ REFERENCES [dbo].[User] ([id])
 GO
 ALTER TABLE [dbo].[Payment_Method] CHECK CONSTRAINT [FK_Payment_Method_User]
 GO
-ALTER TABLE [dbo].[ReportDetail]  WITH CHECK ADD FOREIGN KEY([bookId])
+ALTER TABLE [dbo].[Product]  WITH CHECK ADD  CONSTRAINT [FK_Product_Book] FOREIGN KEY([bookId])
 REFERENCES [dbo].[Book] ([id])
 GO
-ALTER TABLE [dbo].[ReportDetail]  WITH CHECK ADD FOREIGN KEY([reportId])
+ALTER TABLE [dbo].[Product] CHECK CONSTRAINT [FK_Product_Book]
+GO
+ALTER TABLE [dbo].[Product]  WITH CHECK ADD  CONSTRAINT [FK_Product_Chapter] FOREIGN KEY([chapterId])
+REFERENCES [dbo].[Chapter] ([id])
+GO
+ALTER TABLE [dbo].[Product] CHECK CONSTRAINT [FK_Product_Chapter]
+GO
+ALTER TABLE [dbo].[Product_Own]  WITH CHECK ADD  CONSTRAINT [FK_Product_Own_Product] FOREIGN KEY([productId])
+REFERENCES [dbo].[Product] ([productId])
+GO
+ALTER TABLE [dbo].[Product_Own] CHECK CONSTRAINT [FK_Product_Own_Product]
+GO
+ALTER TABLE [dbo].[Report]  WITH CHECK ADD FOREIGN KEY([userId])
+REFERENCES [dbo].[User] ([id])
+GO
+ALTER TABLE [dbo].[Report_Violation]  WITH CHECK ADD  CONSTRAINT [FK_Report_Violation_Report] FOREIGN KEY([reportId])
 REFERENCES [dbo].[Report] ([id])
 GO
-ALTER TABLE [dbo].[ReportDetail]  WITH CHECK ADD FOREIGN KEY([userId])
-REFERENCES [dbo].[User] ([id])
+ALTER TABLE [dbo].[Report_Violation] CHECK CONSTRAINT [FK_Report_Violation_Report]
+GO
+ALTER TABLE [dbo].[Report_Violation]  WITH CHECK ADD  CONSTRAINT [FK_Report_Violation_Violation] FOREIGN KEY([violationId])
+REFERENCES [dbo].[Violation] ([id])
+GO
+ALTER TABLE [dbo].[Report_Violation] CHECK CONSTRAINT [FK_Report_Violation_Violation]
 GO
 ALTER TABLE [dbo].[Star]  WITH CHECK ADD  CONSTRAINT [FK__Star__bid__2E1BDC42] FOREIGN KEY([bid])
 REFERENCES [dbo].[Book] ([id])
@@ -3863,6 +4175,11 @@ ALTER TABLE [dbo].[Transaction]  WITH CHECK ADD  CONSTRAINT [FK_Transaction_Paym
 REFERENCES [dbo].[Payment_Method] ([paymentId])
 GO
 ALTER TABLE [dbo].[Transaction] CHECK CONSTRAINT [FK_Transaction_Payment_Method]
+GO
+ALTER TABLE [dbo].[Transaction]  WITH CHECK ADD  CONSTRAINT [FK_Transaction_Product] FOREIGN KEY([productID])
+REFERENCES [dbo].[Product] ([productId])
+GO
+ALTER TABLE [dbo].[Transaction] CHECK CONSTRAINT [FK_Transaction_Product]
 GO
 ALTER TABLE [dbo].[Transaction]  WITH CHECK ADD  CONSTRAINT [FK_Transaction_User] FOREIGN KEY([userId])
 REFERENCES [dbo].[User] ([id])

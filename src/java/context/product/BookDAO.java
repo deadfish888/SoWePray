@@ -919,22 +919,22 @@ public class BookDAO {
     }
 
     public boolean checkNovelSold(int bookId) {
-        try {
-            String sql = "SELECT DISTINCT [co].[userId] "
-                    + "          FROM [Book] b"
-                    + "    INNER JOIN [Volume] v       ON b.[id] = v.[bookId] "
-                    + "    INNER JOIN [Chapter] c      ON v.[id] = c.[volumeId] "
-                    + "    INNER JOIN [Chapter_Own] co ON c.[id] = co.[chapterId] "
-                    + "    WHERE [b].[id] = ? ";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, bookId);
-            rs = stm.executeQuery();
-            if (rs.next()) {
-                return true;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            String sql = "SELECT DISTINCT [co].[userId] "
+//                    + "          FROM [Book] b"
+//                    + "    INNER JOIN [Volume] v       ON b.[id] = v.[bookId] "
+//                    + "    INNER JOIN [Chapter] c      ON v.[id] = c.[volumeId] "
+//                    + "    INNER JOIN [Chapter_Own] co ON c.[id] = co.[chapterId] "
+//                    + "    WHERE [b].[id] = ? ";
+//            stm = cnn.prepareStatement(sql);
+//            stm.setInt(1, bookId);
+//            rs = stm.executeQuery();
+//            if (rs.next()) {
+//                return true;
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         return false;
     }
 

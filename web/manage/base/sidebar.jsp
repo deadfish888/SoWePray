@@ -29,6 +29,9 @@
                 <li id="transaction-management" class="sidebar-item"> <a id="transaction-management-a" class="sidebar-link waves-effect waves-dark sidebar-link"
                        href="${context}/Admin/Transaction" aria-expanded="false"> <i class="mdi me-2 mdi-book-multiple-variant"></i>
                         <span class="hide-menu">Transaction Management</span></a></li>
+                <li id="report-management" class="sidebar-item" > <a id="report-management-a" class="sidebar-link waves-effect waves-dark sidebar-link"
+                                                                   href="${context}/Admin/Report" aria-expanded="false"><i
+                            class="mdi me-2 mdi-contact-mail"></i><span class="hide-menu">Reports</span></a></li>
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                              href="./manage/GGmap.jsp" aria-expanded="false"><i class="mdi me-2 mdi-earth"></i><span
                             class="hide-menu">Google Map</span></a></li>
