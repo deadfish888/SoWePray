@@ -49,6 +49,7 @@ public class PurchaseController extends HttpServlet {
         float amount = Float.parseFloat(request.getParameter("amount"));
 
         User user = (User) request.getSession().getAttribute("user");
+        
         PaymentMethod paymentMethod = new PaymentMethod();
         paymentMethod.setUser(user);
         paymentMethod.setPaymentAccount(user.getPaymentAccount());

@@ -23,10 +23,8 @@
         <li><a href="${context}/Book">Library</a></li>
 
         <c:choose>
-            <c:when test="${sessionScope.user.is_super()==0}">
-                <li><a href="${context}/User/Profile">My profile</a></li>
-                </c:when>
-                <c:when test="${sessionScope.user.is_super()>0 and sessionScope.user.is_super()<5}">
+            
+                <c:when test="${!empty sessionScope.user.is_super()}">
                 <li><a href="${context}/User/Profile">My profile</a></li>
                 <li><a href="${context}/User/Bookshelf">Bookshelf</a></li>
                 <li><a href="${context}/Favourite">Favor</a></li>

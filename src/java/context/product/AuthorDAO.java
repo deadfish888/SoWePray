@@ -255,6 +255,27 @@ public class AuthorDAO {
         return -1;
     }
 
+    public Author getAuthorByUserId(int id) {
+        Author au = new Author();
+        try {
+            String sql = "SELECT [id]\n"
+                    + "      ,[name]\n"
+                    + "      ,[date]\n"
+                    + "  FROM [dbo].[Author]\n"
+                    + "  WHERE [Author].[userId] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, id);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                au.setId(rs.getInt(1));
+                au.setName(rs.getString(2));
+            }
+        } catch (Exception e) {
+            System.out.println("getAuthorByBookId Error:" + e.getMessage());
+        }
+        return au;
+    }
+
     public ArrayList<Integer> getNumQuater(int now, int before) {
         ArrayList<Integer> list = new ArrayList<>();
         try {
@@ -322,5 +343,22 @@ public class AuthorDAO {
             System.out.println("count Error:" + e.getMessage());
         }
         return ret;
+    }
+
+    public int getViews(int id) {
+        try {
+            String sql = "SELECT SUM([views])\n"
+                    + "  FROM [dbo].[Book] \n"
+                    + "	WHERE [Book].[authorId] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, id);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("count Error:" + e.getMessage());
+        }
+        return 0;
     }
 }

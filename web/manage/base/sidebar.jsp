@@ -60,8 +60,20 @@
             </div>
             <div class="col-4 link-wrap">
                 <!-- item-->
-                <a href="" class="link" data-toggle="tooltip" title="" data-original-title="Email"><i
-                        class="mdi mdi-gmail"></i></a>
+
+                <c:choose>
+                    <c:when test="${sessionScope.number >0}">
+                        <a style="color: red" href="${context}/Admin/Report" class="link" data-toggle="tooltip" title="" data-original-title="Email"><i
+                                class="mdi mdi-gmail"></i>
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="${context}/Admin/Report" class="link" data-toggle="tooltip" title="" data-original-title="Email"><i
+                                class="mdi mdi-gmail"></i>
+                        </a>
+                    </c:otherwise>
+                </c:choose>
+
             </div>
             <div class="col-4 link-wrap">
                 <!-- item-->

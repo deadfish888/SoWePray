@@ -11,7 +11,7 @@ import java.sql.Date;
 public class Author {
     private int id, userId;
     private String name;
-    private Date date;
+    private Date date; 
     public Author() {
     }
 

@@ -398,8 +398,6 @@ public class UserDAO {
         }
     }
 
-    
-
     public ArrayList<User> getAllUsers() {
         ArrayList<User> list = new ArrayList<>();
         try {
@@ -686,7 +684,7 @@ public class UserDAO {
 
     public User getBasicInformation(int userId) {
         try {
-            String sql = "SELECT [id] " 
+            String sql = "SELECT [id] "
                     + "      ,[fullname]\n"
                     + "      ,[gender]\n"
                     + "      ,[username]\n"
@@ -708,5 +706,26 @@ public class UserDAO {
         }
 
         return null;
+    }
+
+    public boolean isVIP(int id) {
+        int num = 0;
+        try {
+            String sql = "SELECT count([transactionId])\n"
+                    + "  FROM [dbo].[Transaction]\n"
+                    + "  WHERE [userId] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, id);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+            num = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (num >3) {
+            return true;
+        }
+        return false;
     }
 }

@@ -4,26 +4,39 @@
  */
 package Model.action;
 
+import java.util.Date;
+
 /**
  *
  * @author ttaad
  */
 public class Report {
-    private int id;
-    private int reportid;
-    private int bid;
-    private int uid;
-    private String note;
 
+    private int id;
+    private int typeID;
+    private String typeName;
+    private int uid;
+    private int objectId;
+    private String note;
+    private Date sent;
+    private Date received;
+    private boolean status;
+    private String stage;
+            
     public Report() {
     }
 
-    public Report(int id, int reportid, int bid, int uid, String note) {
+    public Report(int id, int typeID, String typeName, int uid, int objectId, String note, Date sent, Date received, boolean status, String stage) {
         this.id = id;
-        this.reportid = reportid;
-        this.bid = bid;
+        this.typeID = typeID;
+        this.typeName = typeName;
         this.uid = uid;
+        this.objectId = objectId;
         this.note = note;
+        this.sent = sent;
+        this.received = received;
+        this.status = status;
+        this.stage = stage;
     }
 
     public int getId() {
@@ -34,20 +47,20 @@ public class Report {
         this.id = id;
     }
 
-    public int getReportid() {
-        return reportid;
+    public int getTypeID() {
+        return typeID;
     }
 
-    public void setReportid(int reportid) {
-        this.reportid = reportid;
+    public void setTypeID(int typeID) {
+        this.typeID = typeID;
     }
 
-    public int getBid() {
-        return bid;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setBid(int bid) {
-        this.bid = bid;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     public int getUid() {
@@ -58,6 +71,14 @@ public class Report {
         this.uid = uid;
     }
 
+    public int getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(int objectId) {
+        this.objectId = objectId;
+    }
+
     public String getNote() {
         return note;
     }
@@ -65,6 +86,39 @@ public class Report {
     public void setNote(String note) {
         this.note = note;
     }
-    
-    
+
+    public Date getSent() {
+        return sent;
+    }
+
+    public void setSent(Date sent) {
+        this.sent = sent;
+    }
+
+    public Date getReceived() {
+        return received;
+    }
+
+    public void setReceived(Date received) {
+        this.received = received;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public String getStage() {
+        return stage;
+    }
+
+    public void setStage(String stage) {
+        this.stage = stage;
+    }
+
+
+
 }

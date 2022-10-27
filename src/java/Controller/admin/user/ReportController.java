@@ -4,13 +4,10 @@
  */
 package Controller.admin.user;
 
-import Model.product.Author;
+import Model.action.Report;
 import Model.auth.User;
-import context.action.CommentDAO;
 import context.action.ReportDAO;
-import context.product.BookDAO;
 import context.auth.UserDAO;
-import context.product.AuthorDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,16 +15,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
  * @author duypham0705
  */
-@WebServlet("/Admin/DashBoard")
-public class DashBoard extends HttpServlet {
+@WebServlet({"/Admin/Report"})
+public class ReportController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,51 +34,24 @@ public class DashBoard extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    AuthorDAO aDao = new AuthorDAO();
-    UserDAO uDao = new UserDAO();
-    BookDAO bDao = new BookDAO();
-    CommentDAO cDao = new CommentDAO();
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<Author> listAuthor = aDao.getAllAuthor();
-        ArrayList<Author> listUserAu = aDao.getAllUser();
-        int a = listAuthor.size();
-        int b = listUserAu.size();
-        double ret = (double) a / (a + b) * 100;
-        int per = (int) ret;
-
-        Date date = new Date();
-        ArrayList<User> listUser = uDao.getAllUsers();
-        ArrayList<Integer> listQuater = aDao.getNumQuater(date.getYear() + 1900, date.getYear() + 1899);
-        ArrayList<Integer> listYear = new ArrayList<>();
-        for (int i = 0; i < date.getMonth(); i++) {
-            listYear.add(aDao.getNumYear(i + 1, date.getYear() + 1900));
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ReportController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ReportController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        for (int i = date.getMonth(); i < 12; i++) {
-            listYear.add(0);
-        }
-        int sum = 0;
-        for (int i = 0; i < 12; i++) {
-            request.setAttribute("m" + i, listYear.get(i));
-            sum += listYear.get(i);
-        }
-        request.setAttribute("sum", sum);
-        request.setAttribute("thisYear", date.getYear() + 1900);
-        request.setAttribute("forYear", date.getYear() + 1899);
-
-        request.setAttribute("books", bDao.countBookNumber());
-        request.setAttribute("cmt", cDao.count());
-
-        request.setAttribute("listQuater", listQuater);
-        request.setAttribute("max", getMax(listQuater));
-        request.setAttribute("totalU", listUser.size());
-
-        request.setAttribute("totalA", a + b);
-        request.setAttribute("per1", per);
-        request.setAttribute("per2", 100 - per);
-        request.getRequestDispatcher("../manage/dashboard.jsp").forward(request, response);
     }
+    ReportDAO rpDao = new ReportDAO();
+    UserDAO uDao = new UserDAO();
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -96,7 +65,14 @@ public class DashBoard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        ArrayList<Report> listRead = rpDao.getAll();
+        HttpSession session = request.getSession();
+        User us = (User) session.getAttribute("admin");
+
+        request.setAttribute("baocao", listRead);
+
+        request.getRequestDispatcher("../manage/report.jsp").forward(request, response);
     }
 
     /**
@@ -110,7 +86,23 @@ public class DashBoard extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        if (request.getParameter("id_pass") != null) {
+            Report rp = rpDao.getRP(Integer.parseInt(request.getParameter("id_pass")));
+            rpDao.setStatus(rp.getId(), true);
+            if (rp.getTypeID() == 3) {
+                uDao.editRank(rp.getUid(), 1);
+            }
+            if (rp.getTypeID() == 4) {
+                 User us = uDao.getUser(rp.getUid());
+                uDao.editRank(rp.getUid(), (3-us.is_super()));
+            }
+        }
+        if (request.getParameter("id_reject") != null) {
+            Report rp = rpDao.getRP(Integer.parseInt(request.getParameter("id_pass")));
+            rpDao.setStatus(rp.getId(), false);
+        }
+
+        response.sendRedirect("Report");
     }
 
     /**
@@ -122,15 +114,5 @@ public class DashBoard extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private int getMax(ArrayList<Integer> listQuater) {
-        int max = 0;
-        for (Integer item : listQuater) {
-            if (item > max) {
-                max = item;
-            }
-        }
-        return max;
-    }
 
 }

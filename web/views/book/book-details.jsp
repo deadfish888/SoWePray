@@ -56,7 +56,7 @@
                         <h4 style="margin: 0 0 0 0; display: inline-block;"><a href="./Book?categoryId=${category.id}"><span class="badge badge-pill badge-secondary">${category.name}</span></a></h4>
                             </c:forEach>
 
-                        <h2><a href="./Author?id=${book.author.id}"> ${book.author.name}</a> </h2>
+                    <h2><a href="./Author?id=${book.author.id}"> ${book.author.name}</a> </h2>
 
                     <div class="container-fluid">
                         <div class="row" style="width: 1200px; text-align: justify;">
@@ -93,7 +93,7 @@
                                                 </div>
                                             </form>
                                         </c:if>
-                                        <c:if test="${!own && (book.price ne 0)}">
+                                        <c:if test="${!own && (book.price ne 0) && sessionScope.user.is_super()!=0}">
                                             <div class="col-sm-2">
                                                 <input type="button" class="primary btn-primary" data-toggle="modal" data-target="#purchase" value="Buy"/>
                                             </div>
@@ -205,7 +205,7 @@
                                 </div>
 
                                 <c:choose >
-                                    <c:when test="${sessionScope.user!=null}" > 
+                                    <c:when test="${sessionScope.user.is_super()>0}" > 
                                         <div class="row">
                                             <form action="Rating" method="POST">        
                                                 <div class="rate">
@@ -255,13 +255,13 @@
                                                     <c:choose>
                                                         <c:when test="${(! empty sessionScope.user && requestScope.own) || !empty sessionScope.admin}">
                                                             <a href="BookReading?id=${book.id}&cid=${chap.id}"><p><i class="fa fa-unlock"></i> ${chap.title}</p></a>
-                                                        </c:when>
-                                                        <c:otherwise>
+                                                                    </c:when>
+                                                                    <c:otherwise>
                                                             <a href="BookPreread?id=${book.id}"><p><i class="fa fa-lock"></i> ${chap.title}</p></a>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:if>
-                                            </c:forEach>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:if>
+                                                        </c:forEach>
                                         </div>
                                     </div>
                                 </div>
@@ -272,13 +272,15 @@
                     <div class="container-fluid mt-5">
                         <h3>${(! empty requestScope.comments)? requestScope.comments.size() : "0"} comment(s)</h3>
                         <div class="col-12">
-                            <form role="form" action="Comment" method="get">
-                                <input type="hidden" name="bookId" value="${book.id}"> 
-                                <div class="form-group">
-                                    <textarea class="form-control" name="comment" placeholder="Add a comment..."></textarea>
-                                </div>
-                                <input type="submit" value="Post">
-                            </form> 
+                            <c:if test="${sessionScope.user.is_super()>0 || empty sessionScope.user}">
+                                <form role="form" action="Comment" method="get">
+                                    <input type="hidden" name="bookId" value="${book.id}"> 
+                                    <div class="form-group">
+                                        <textarea class="form-control" name="comment" placeholder="Add a comment..."></textarea>
+                                    </div>
+                                    <input type="submit" value="Post">
+                                </form> 
+                            </c:if>
                             <table class="table">
                                 <c:forEach items="${requestScope.comments}" var="comment">
 
@@ -300,29 +302,29 @@
                         <!-- Products -->
                         <section class="tiles">
                             <div class= "" style = "display: flex ">
-                            <c:forEach items="${requestScope.sames}" var="same">
-                                <article class="style1">
-                                    <span class="image">
-                                        <img src="${same.image}" alt="${same.image}" style="height: 290px;" />
-                                    </span>
-                                    <a href="BookDetail?id=${same.id}">
-                                        <h2>${same.title}</h2>
+                                <c:forEach items="${requestScope.sames}" var="same">
+                                    <article class="style1">
+                                        <span class="image">
+                                            <img src="${same.image}" alt="${same.image}" style="height: 290px;" />
+                                        </span>
+                                        <a href="BookDetail?id=${same.id}">
+                                            <h2>${same.title}</h2>
 
-                                        <c:if test="${same.issale()}">
-                                            <p>
-                                                <del>$${same.price}</del> 
-                                                <strong>$5.00</strong>
-                                            </p>
-                                        </c:if>
-                                        <c:if test="${!same.issale()}">
-                                            <p><strong>$${same.price}</strong></p>
-                                        </c:if>
-                                    </a>
-                                </article>
-                            </c:forEach></div>
+                                            <c:if test="${same.issale()}">
+                                                <p>
+                                                    <del>$${same.price}</del> 
+                                                    <strong>$5.00</strong>
+                                                </p>
+                                            </c:if>
+                                            <c:if test="${!same.issale()}">
+                                                <p><strong>$${same.price}</strong></p>
+                                            </c:if>
+                                        </a>
+                                    </article>
+                                </c:forEach></div>
                         </section>
                     </div>
-                                
+
                 </div>
             </div>
 
