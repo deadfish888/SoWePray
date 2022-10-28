@@ -2,32 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.payment;
+package Controller.admin.transaction;
 
-//import Model.payment.PaymentMethod;
-import Model.payment.Transaction;
 import Model.auth.User;
-//import context.payment.PaymentAccountDAO;
-//import context.payment.PaymentMethodDAO;
+import Model.payment.Transaction;
+import context.auth.UserDAO;
+import context.payment.PaymentAccountDAO;
 import context.payment.TransactionDAO;
 import java.io.IOException;
-//import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-//import java.sql.Timestamp;
-//import java.util.Calendar;
-//import net.tanesha.recaptcha.ReCaptchaImpl;
-//import net.tanesha.recaptcha.ReCaptchaResponse;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 /**
  *
  * @author Silver_000
  */
-@WebServlet(name = "RechargeController", urlPatterns = {"/User/Deposit"})
-public class RechargeController extends HttpServlet {
+@WebServlet(name = "StatusController", urlPatterns = {"/Admin/Status"})
+public class StatusController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,7 +36,33 @@ public class RechargeController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("../views/user/Recharge.jsp").forward(request, response);
+        TransactionDAO transactionDAO = new TransactionDAO();
+//        UserDAO userDAO = new UserDAO();
+        PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
+
+        long transactionId = Long.parseLong(request.getParameter("transactionId"));
+        Transaction transaction = new Transaction();
+        transaction.setTransactionId(transactionId);
+        transaction = transactionDAO.get(transaction);
+        int status = Integer.parseInt(request.getParameter("upStatus"));
+        transaction.setStatus(status);
+
+        User transUser = transaction.getUser();
+        if (status == 1) {
+            transaction.setBalanceAfter(transUser.getPaymentAccount().getBalance());
+        } else if (status == 3) {
+            if (transaction.getType() == 1) {
+                transUser.getPaymentAccount().setBalance(transUser.getPaymentAccount().getBalance() + transaction.getAmount());
+                transaction.setBalanceAfter(transUser.getPaymentAccount().getBalance());
+            } else {
+                transUser.getPaymentAccount().setBalance(transUser.getPaymentAccount().getBalance() - transaction.getAmount());
+                transaction.setBalanceAfter(transUser.getPaymentAccount().getBalance());
+            }
+            payAccDAO.update(transUser.getPaymentAccount());
+        }
+        transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+        transactionDAO.update(transaction);
+        response.sendRedirect(request.getContextPath() + "/Admin/Transaction");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -69,30 +91,7 @@ public class RechargeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        try {
-                //Tao transaction gui cho admin
-                TransactionDAO transDAO = new TransactionDAO();
-                User user = (User) request.getSession().getAttribute("user");
-                float amount = Float.parseFloat(request.getParameter("amount"));
-//                float walletBalance = user.getPaymentAccount().getBalance() + amount;
-
-                Transaction transaction = new Transaction();
-                transaction.setUser(user);
-                transaction.setAmount(amount);
-//                transaction.setBalanceAfter(walletBalance);
-                transaction.setType(1);
-                transaction.setStatus(2);
-                transaction.setDescription("Deposit into wallet.");
-//                System.out.println(transaction);
-//                transaction.setPayment(paymentMethod);
-//                payAccDAO.update(paymentMethod.getPaymentAccount());
-//                payAccDAO.update(user.getPaymentAccount());
-                transDAO.insert(transaction);
-
-                response.sendRedirect(request.getContextPath() + "/User/Payment");
-//        } catch (Exception e) {
-//            response.sendRedirect(request.getContextPath() + "/User/Payment");
-//        }
+        processRequest(request, response);
     }
 
     /**

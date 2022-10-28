@@ -6,6 +6,7 @@ package context.product;
 
 import Model.product.Product;
 import context.DBContext;
+import context.product.content.ChapterDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,6 +39,27 @@ public class ProductDAO {
     }
 
     public Product get(Product product) {
+        try {
+            String sql = "SELECT [productId]\n"
+                    + "      ,[bookId]\n"
+                    + "      ,[chapterId]\n"
+                    + "      ,[price]\n"
+                    + "  FROM [Product]\n"
+                    + "  WHERE [productId] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, product.getProductId());
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                BookDAO bookDAO = new BookDAO();
+                ChapterDAO chapterDAO = new ChapterDAO();
+                product.setBook(bookDAO.getBookById(rs.getInt("bookId")));
+                product.setChapter(chapterDAO.getChapterById(rs.getInt("chapterId")));
+                product.setPrice(rs.getFloat("price"));
+                return product;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return null;
     }
 
