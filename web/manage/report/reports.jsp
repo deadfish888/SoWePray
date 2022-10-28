@@ -86,30 +86,25 @@
                                 <div class="col-12">	
                                     <form id="frm" action="./Report" method="get">
                                         <div class="row col-12">
-                                            <div class="col-auto">
+                                            <div class="col-4">
                                                 <label class="form-control"
                                                        style="border:none;display: inline;">Type</label>
-                                                <select class="form-select" name="reportType" style="display: inline; width: 100px;">
+                                                <select class="form-select" name="type" style="display: inline; width: 150px;" onchange="typeR()">
                                                     <option id="opt1" value="">All</option>
                                                     <option id="opt2" value="book">Book</option>
                                                     <option id="opt3" value="comment">Comment</option>
                                                 </select>
                                             </div>
-                                            <div class="col-auto">
-                                                <input type="text" name="q" class="form-control" value="${q} "
-                                                       style="width: 250px;" placeholder="Search" />
-                                            </div>
-
-                                            <div class="col-auto">
-                                                <button type="submit" class="btn btn-default" value="search">Go</button>
-                                            </div>
                                             <div class="col-2 ms-auto">
                                                 <div class="btn-group" role="group" onclick="status()">
-                                                    <input type="radio" class="btn-check" name="status" id="btnradio1" autocomplete="off" value="0" checked>
+                                                    <input type="radio" class="btn-check" name="status" id="btnradio1" autocomplete="off" value="" checked>
                                                     <label class="btn btn-outline-primary" for="btnradio1">Open</label>
 
                                                     <input type="radio" class="btn-check" name="status" id="btnradio2" autocomplete="off" value="1">
-                                                    <label class="btn btn-outline-primary" for="btnradio2">Closed</label>
+                                                    <label class="btn btn-outline-primary" for="btnradio2">Close</label>
+
+                                                    <input type="radio" class="btn-check" name="status" id="btnradio3" autocomplete="off" value="0">
+                                                    <label class="btn btn-outline-primary" for="btnradio3">Reject</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -118,13 +113,12 @@
 
                                 <table class="table table-striped mt-3">
                                     <thead>
-                                        <tr style="cursor: pointer; font-size: 15px;  text-align: center;">
+                                        <tr style="cursor: pointer; font-size: 15px; ">
                                             <th style="width: 40px"><i class="fa-solid fa-list-ol"></i></th>
-                                            <th style="width: 200px">Reporter</th>
-                                            <th style="width: 100px">Type</th>
-                                            <th style="width: 350px">Violations</th>
-                                            <th style="width: 217px">Sent Date</th>
-                                            <th>Closed</th>
+                                            <th style="width: 250px">Reporter</th>
+                                            <th style="width: 150px">Type</th>
+                                            <th style="width: 370px; padding-left: 50px">Violations</th>
+                                            <th style="width: 250px">Sent Date</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -149,9 +143,6 @@
                                                 <td>
                                                     ${s.getSent()}
                                                 </td>
-                                                <td style="text-align: center">
-                                                    ${(s.isStatus()?s.getReceived():"Pending")}
-                                                </td>
                                                 <td><a class="btn btn-secondary" href="./ReportDetail?id=${s.id}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
                                             </tr>
                                         </form>
@@ -163,19 +154,19 @@
                                 <div id="sp" class="pagination-arena " style="margin-left: 45%">
                                     <ul class="pagination">
                                         <li class="page-item" >
-                                            <a href="./Report?page=${page-1}" class="page-link" style="${page<3?"display:none":""}">
+                                            <a href="./Report?page=${page-1}" class="page-link" style="${page<3?"display:none":""}" data="${page-1}">
                                                 <i class="fa fa-angle-left" aria-hidden="true" ></i>
                                             </a>
                                         </li>
                                         <c:forEach begin="${1}" end="${numPage}" var="item">
                                             <li class="page-item ${item==page?"active":""}">
                                                 <a href="./Report?page=${item}"  
-
+                                                   data="${item}"
                                                    class="page-link " style="${(page-1>item || page+1<item ) ?"display:none;":""}"
                                                    >${item}</a></li>
                                             </c:forEach>
                                         <li >
-                                            <a href="./Report?page=${page+1}" class="page-link" style="${page+2>numPage?"display:none":""}">
+                                            <a href="./Report?page=${page+1}" class="page-link" style="${page+2>numPage?"display:none":""}" data="${page+1}">
                                                 <i class="fa fa-angle-right" aria-hidden="true"  ></i>
                                             </a>
                                         </li>
@@ -231,21 +222,40 @@
         <!-- ============================================================== -->
 
         <script>
-            
-            function status(){
+
+            function status() {
+                document.getElementById("frm").submit();
+            }
+            function typeR() {
                 document.getElementById("frm").submit();
             }
             const url_string = window.location.href;
             const url = new URL(url_string);
             var status1 = url.searchParams.get("status");
-            var type = url.searchParams.get("reportType");
+            var type = url.searchParams.get("type");
             if (status1 == "1") {
-                document.getElementById("btnradio2").checked=true;
+                document.getElementById("btnradio2").checked = true;
             }
-            if(type == "book"){
-                document.getElementById("opt2").selected=true;
+            if (status1 == "0") {
+                document.getElementById("btnradio3").checked = true;
+            }
+            if (type == "book") {
+                document.getElementById("opt2").selected = true;
+            }else if(type == "comment"){
+                document.getElementById("opt3").selected = true;
             }
             console.log(type);
+            const paginationLinks = document.querySelectorAll(".page-link");
+            var search = location.search.substring(1);
+            if (paginationLinks) {
+                paginationLinks.forEach(item => {
+                    const params = new URLSearchParams(search);
+                    const page = item.getAttribute("data");
+                    params.set('page', page);
+                    const href = new URLSearchParams(params).toString();
+                    item.setAttribute("href", "?" + href);
+                });
+            }
         </script>
         <script src="https://kit.fontawesome.com/a65741f09b.js" crossorigin="anonymous"></script>
         <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>

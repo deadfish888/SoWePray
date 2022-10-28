@@ -4,10 +4,12 @@
  */
 package context.action;
 
+import Model.action.Comment;
 import Model.auth.User;
 import Model.report.Report;
 import Model.report.Violation;
 import context.DBContext;
+import context.product.BookDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -131,7 +133,7 @@ public class ReportDAO {
         return null;
     }
 
-    public ArrayList<Report> getReports(String reportType, boolean status) {
+    public ArrayList<Report> getReports(String reportType, String status) {
         ArrayList<Report> list = new ArrayList<>();
         try {
             String sql = "SELECT r.[id]\n"
@@ -145,9 +147,13 @@ public class ReportDAO {
                     + "      ,r.[status]\n"
                     + "  FROM [Report] r "
                     + " INNER JOIN [User] u ON r.[userId] = u.[id]"
-                    + " WHERE [reportType] like ? "
-                    + "   AND r.[status] = ? "
-                    + " ORDER BY [sent] DESC";
+                    + " WHERE [reportType] like ? ";
+            if(status.equals(""))
+                    sql += "   AND r.[status] IS NULL ";
+            else{
+                    sql += " AND r.[status] = ? ";
+            }
+                    sql += " ORDER BY [sent] DESC";
             stm = cnn.prepareStatement(sql);
             if (reportType.equals("book")) {
                 reportType = "1";
@@ -155,7 +161,9 @@ public class ReportDAO {
                 reportType = "2";
             }
             stm.setString(1, "%" + reportType + "%");
-            stm.setBoolean(2, status);
+            if (!status.equals("")){
+                stm.setString(2, status);
+            }
             rs = stm.executeQuery();
             while (rs.next()) {
                 Report r = new Report();
@@ -172,7 +180,9 @@ public class ReportDAO {
                 r.setNote(rs.getString(6));
                 r.setSent(rs.getTimestamp(7));
                 r.setReceived(rs.getTimestamp(8));
-                r.setStatus(rs.getBoolean(9));
+                if(rs.getObject(9)!=null){
+                    r.setStatus(rs.getBoolean(9));
+                }
                 ViolationDAO vd = new ViolationDAO();
                 r.setViolates(vd.getReportViolations(rs.getInt(1)));
                 list.add(r);
@@ -191,5 +201,62 @@ public class ReportDAO {
             listpage.add(reports.get(i));
         }
         return listpage;
+    }
+
+    public Report getReportById(int id) {
+        try {
+            String sql = "SELECT r.[id]\n"
+                    + "      ,[reportType]\n"
+                    + "      ,[userId]\n"
+                    + "      ,u.[username]"
+                    + "      ,[objectId]\n"
+                    + "      ,[note]\n"
+                    + "      ,[sent]\n"
+                    + "      ,[received]\n"
+                    + "      ,r.[status]\n"
+                    + "  FROM [Report] r "
+                    + " INNER JOIN [User] u ON r.[userId] = u.[id]"
+                    + " WHERE r.[id] = ? ";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, id);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Report r = new Report();
+                r.setId(rs.getInt(1));
+                r.setReportType(rs.getInt(2));
+                r.setUserId(rs.getInt(3));
+
+                User userR = new User();
+                userR.setId(rs.getInt(3));
+                userR.setUsername(rs.getString(4));
+
+                r.setUserR(userR);
+                
+                r.setObjectId(rs.getInt(5));
+                if(r.getReportType()==1){
+                    BookDAO bd =new BookDAO();
+                    r.setBookO(bd.getBookById(r.getObjectId()));
+                }
+                if (r.getReportType()==2){
+                    CommentDAO cmt = new CommentDAO();
+                    Comment cm = cmt.getCommentById(r.getObjectId());
+                    r.setComO(cm);
+                    BookDAO bd =new BookDAO();
+                    r.setBookO(bd.getBookById(cm.getBookId()));
+                }
+                r.setNote(rs.getString(6));
+                r.setSent(rs.getTimestamp(7));
+                r.setReceived(rs.getTimestamp(8));
+                if(rs.getObject(9)!=null){
+                    r.setStatus(rs.getBoolean(9));
+                }
+                ViolationDAO vd = new ViolationDAO();
+                r.setViolates(vd.getReportViolations(rs.getInt(1)));
+                return r;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ReportDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

@@ -191,8 +191,10 @@ public class BookDAO {
                     + "      ,[description]\n"
                     + "      ,[views]\n"
                     + "      ,[status]\n"
+                    + "      ,u.[fullname]"
                     + "  FROM [Book]"
                     + " INNER JOIN [Author] ON [Book].[authorId] = [Author].[id]"
+                    + "  LEFT JOIN [User] u ON [Author].[userId] = u.[id]"
                     + " WHERE [Book].[id] = ? ";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, bookId);
@@ -206,6 +208,13 @@ public class BookDAO {
                 author.setId(rs.getInt(3));
                 author.setUserId(rs.getInt(4));
                 author.setName(rs.getString(5));
+                
+                if(author.getUserId() !=0 ){
+                    User user = new User();
+                    user.setId(author.getId());
+                    user.setName(rs.getString(14));
+                    author.setUser(user);
+                }
                 book.setAuthor(author);
 
                 CategoryDAO cd = new CategoryDAO();

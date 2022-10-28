@@ -110,4 +110,38 @@ public class CommentDAO {
         return ret;
     }
 
+    Comment getCommentById(int objectId) {
+        try {
+            String sql = "SELECT c.[id]"
+                    + "      ,[bookId]\n"
+                    + "      ,c.[userId]\n"
+                    + "      ,u.[fullname]\n"
+                    + "      ,u.[username]\n"
+                    + "      ,u.[gender]\n"
+                    + "      ,[comment]\n"
+                    + "      ,[createdAt]\n"
+                    + "  FROM [Comment] c"
+                    + " INNER JOIN [User] u ON c.[userId] = u.[id]"
+                    + " WHERE c.[id] = ? ";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, objectId);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                Comment cm = new Comment(rs.getInt(1), rs.getInt(2), rs.getInt(3)
+                        , rs.getString(7), rs.getTimestamp(8));
+                User user = new User();
+                user.setId(rs.getInt(3));
+                user.setName(rs.getString(4));
+                user.setUsername(rs.getString(5));
+                user.setGender(rs.getBoolean(6)?"Male":"Female");
+                cm.setUser(user);
+                return cm;
+            }
+            
+        } catch (Exception e) {
+            System.out.println("load error:" + e.getMessage());
+        }
+        return null;
+    }
+
 }
