@@ -29,16 +29,14 @@ public class ReportController extends HttpServlet {
         int uId = user.getId();
         int bid = Integer.parseInt(request.getParameter("bookId"));
         String[] report = request.getParameterValues("report");
-        int[] r_id = new int[report.length];
+        int[] violate_ids = new int[report.length];
         int j = 0;
         for (String s : report) {
-            r_id[j++] = Integer.parseInt(s);
+            violate_ids[j++] = Integer.parseInt(s);
         }
         String note = request.getParameter("note");
         ReportDAO redao = new ReportDAO();
-        for (int i = 0; i < j; i++) {
-            redao.addReport(r_id[i], bid, uId, note);
-        }
+        redao.addBookReport(violate_ids, bid, uId, note);
         response.sendRedirect("./BookDetail?id="+bid);
     }
 

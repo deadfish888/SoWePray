@@ -17,7 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /* @author ACER */
-@WebServlet(name="DeleteChapterController", urlPatterns={"/Admin/Book/DeleteChapter"})
+@WebServlet(name="AdDeleteChapterController", urlPatterns={"/Admin/Book/DeleteChapter"})
 public class DeleteChapterController extends HttpServlet {
    
     @Override

@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [BOOKIE]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Database [BOOKIE]    Script Date: 10/26/2022 8:38:04 PM ******/
 IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'BOOKIE')
 BEGIN
 	ALTER DATABASE [BOOKIE] SET OFFLINE WITH ROLLBACK IMMEDIATE;
@@ -83,7 +83,7 @@ ALTER DATABASE [BOOKIE] SET QUERY_STORE = OFF
 GO
 USE [BOOKIE]
 GO
-/****** Object:  Table [dbo].[Author]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Author]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -99,7 +99,7 @@ CREATE TABLE [dbo].[Author](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Book]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Book]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -122,7 +122,7 @@ CREATE TABLE [dbo].[Book](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Book_Own]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Book_Own]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -134,7 +134,7 @@ CREATE TABLE [dbo].[Book_Own](
 	[recentChapterId] [int] NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Category]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Category]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -148,7 +148,7 @@ CREATE TABLE [dbo].[Category](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CategoryBook]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[CategoryBook]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -158,7 +158,7 @@ CREATE TABLE [dbo].[CategoryBook](
 	[categoryId] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Chapter]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Chapter]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -176,7 +176,7 @@ CREATE TABLE [dbo].[Chapter](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Chapter_Payment]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Chapter_Payment]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -186,7 +186,7 @@ CREATE TABLE [dbo].[Chapter_Payment](
 	[price] [decimal](10, 2) NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Comment]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Comment]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -199,7 +199,7 @@ CREATE TABLE [dbo].[Comment](
 	[sonOf] [int] NULL,
 	[replyTo] [int] NULL,
 	[createdAt] [datetime] NOT NULL,
-	[editedAt] [datetime] ,
+	[editedAt] [datetime] NULL,
 	[status] [bit] NOT NULL,
  CONSTRAINT [PK_comment] PRIMARY KEY CLUSTERED 
 (
@@ -207,7 +207,7 @@ CREATE TABLE [dbo].[Comment](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Favourite]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Favourite]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -222,7 +222,7 @@ CREATE TABLE [dbo].[Favourite](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Payment_Account]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Payment_Account]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -236,7 +236,7 @@ CREATE TABLE [dbo].[Payment_Account](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Payment_Method]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Payment_Method]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -253,7 +253,7 @@ CREATE TABLE [dbo].[Payment_Method](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Product]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Product]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -269,7 +269,7 @@ CREATE TABLE [dbo].[Product](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Product_Own]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Product_Own]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -279,27 +279,27 @@ CREATE TABLE [dbo].[Product_Own](
 	[productId] [varchar](30) NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Report]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Report]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Report](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	[reportTypeId] [int] NOT NULL,
+	[reportType] [int] NOT NULL,
 	[userId] [int] NOT NULL,
 	[objectId] [int] NULL,
 	[note] [nvarchar](2000) NULL,
 	[sent] [datetime] NOT NULL,
 	[received] [datetime] NULL,
-	[status] [bit] NULL,
+	[status] [bit] NOT NULL,
  CONSTRAINT [PK_reportdetail] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Report_Violation]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Report_Violation]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -314,21 +314,7 @@ CREATE TABLE [dbo].[Report_Violation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ReportType]    Script Date: 10/23/2022 9:30:56 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[ReportType](
-	[id] [int] NOT NULL,
-	[typeName] [nvarchar](50) NOT NULL,
- CONSTRAINT [PK_ReportType] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Star]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Star]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -344,7 +330,7 @@ CREATE TABLE [dbo].[Star](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Token]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Token]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -355,7 +341,7 @@ CREATE TABLE [dbo].[Token](
 	[expiredDate] [datetime] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Transaction]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Transaction]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -377,7 +363,7 @@ CREATE TABLE [dbo].[Transaction](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Transaction_Token]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Transaction_Token]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -393,7 +379,7 @@ CREATE TABLE [dbo].[Transaction_Token](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -416,14 +402,14 @@ CREATE TABLE [dbo].[User](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Violation]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Violation]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Violation](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	[reportTypeId] [int] NOT NULL,
+	[reportType] [int] NOT NULL,
 	[title] [nvarchar](100) NOT NULL,
  CONSTRAINT [PK_report] PRIMARY KEY CLUSTERED 
 (
@@ -431,7 +417,7 @@ CREATE TABLE [dbo].[Violation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Volume]    Script Date: 10/23/2022 9:30:56 PM ******/
+/****** Object:  Table [dbo].[Volume]    Script Date: 10/26/2022 8:38:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -785,12 +771,6 @@ GO
 INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (31, N'Weathering with you', 118, NULL, 0, CAST(19.00 AS Decimal(10, 2)), 0, N'https://cdn.verasia.eu/12673-big_default_2x/tenki-no-ko-weathering-with-you-japanese-novel-written-by-makoto-shinkai.jpg', N'Longing to escape his island home, a boy named Hodaka runs away during his first summer of high school to find a new life in Tokyo. As rain falls for days on end and Hodaka struggles to adjust, he meets a girl named Hina who holds a mysterious power: With a single prayer, she can part the clouds and bring back the sun. But her power comes at a price, and as the weather spirals further and further out of control, they must choose what future they truly want for themselves.', 0, 1)
 GO
 INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (32, N'The After-Dinner Mysterie', 118, NULL, 0, CAST(25.00 AS Decimal(10, 2)), 0, N'https://japanesebooks.jp/wp-content/uploads/2021/09/4cbbd83b531db57c281b6790fdd0c987-400x581.jpg', N'Reiko is the only daughter to the CEO of a major enterprise, "Hosho Group," known worldwide. Hiding her true identity behind her day time job as a rookie police officer, Reiko comes home to her butler and driver, Kageyama whenever she is faced with a complex case, being a perfectionist, Kageyama is flawless when it comes to serving meals full course from hors d''oeuvre to dessert. He sharply points out the lack of reasoning on Reiko''s side, keeping the comment one fine line away from being offensive. The cutting remarks by Kageyama and appearances by unique characters, as well as the play on words and light tempo of witty conversations...and most of all, being referred to as the "Armchair detective" who solves mysteries without encountering the suspects together create a daring mystery solving roller-coaster ride.', 0, 1)
-GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (33, N'Classroom of the Elite Vol. 1', 25, NULL, 0, CAST(9.69 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?', 1000, 1)
-GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (34, N'Classroom of the Elite Vol. 1', 25, NULL, 0, CAST(9.69 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?', 2000, 1)
-GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (35, N'Classroom of the Elite Vol. 1', 25, NULL, 0, CAST(9.69 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?', 3000, 1)
 GO
 SET IDENTITY_INSERT [dbo].[Book] OFF
 GO
@@ -2219,15 +2199,15 @@ INSERT [dbo].[Chapter_Payment] ([chapterId], [price]) VALUES (26, CAST(0.10 AS D
 GO
 SET IDENTITY_INSERT [dbo].[Comment] ON 
 GO
-INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [status]) VALUES (1, 1, 2, N'hehe', NULL, NULL, CAST(N'2022-10-15T23:13:00.507' AS DateTime), 1)
+INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [editedAt], [status]) VALUES (1, 1, 2, N'hehe', NULL, NULL, CAST(N'2022-10-15T23:13:00.507' AS DateTime), NULL, 1)
 GO
-INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [status]) VALUES (2, 1, 109, N'Quite simply, this is one of the best novels of the year. It''s a thriller in the best tradition of Alfred Hitchcock and layered with brilliantly written characters.', NULL, NULL, CAST(N'2022-10-17T10:32:06.783' AS DateTime), 1)
+INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [editedAt], [status]) VALUES (2, 1, 109, N'Quite simply, this is one of the best novels of the year. It''s a thriller in the best tradition of Alfred Hitchcock and layered with brilliantly written characters.', NULL, NULL, CAST(N'2022-10-17T10:32:06.783' AS DateTime), NULL, 1)
 GO
-INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [status]) VALUES (3, 1, 3, N'In my mind, any book that takes me 3 months and 20 different tries to read is not worth 3 stars, especially a book written by an author I already respect. And I am not kidding, for me the first half of Gone Girl was a PURE TORTURE to read.', NULL, NULL, CAST(N'2022-10-17T10:36:06.177' AS DateTime), 1)
+INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [editedAt], [status]) VALUES (3, 1, 3, N'In my mind, any book that takes me 3 months and 20 different tries to read is not worth 3 stars, especially a book written by an author I already respect. And I am not kidding, for me the first half of Gone Girl was a PURE TORTURE to read.', NULL, NULL, CAST(N'2022-10-17T10:36:06.177' AS DateTime), NULL, 1)
 GO
-INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [status]) VALUES (4, 1, 3, N'I hate Amy.', NULL, NULL, CAST(N'2022-10-17T10:37:41.260' AS DateTime), 1)
+INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [editedAt], [status]) VALUES (4, 1, 3, N'I hate Amy.', NULL, NULL, CAST(N'2022-10-17T10:37:41.260' AS DateTime), NULL, 1)
 GO
-INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [status]) VALUES (5, 17, 2, N'Actually good!', NULL, NULL, CAST(N'2022-10-23T21:21:04.430' AS DateTime), 1)
+INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo], [createdAt], [editedAt], [status]) VALUES (5, 17, 2, N'Actually good!', NULL, NULL, CAST(N'2022-10-23T21:21:04.430' AS DateTime), NULL, 1)
 GO
 SET IDENTITY_INSERT [dbo].[Comment] OFF
 GO
@@ -3561,23 +3541,45 @@ INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (111, N'B16')
 GO
 INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (109, N'B17-C1')
 GO
-INSERT [dbo].[ReportType] ([id], [typeName]) VALUES (1, N'Book')
-GO
-INSERT [dbo].[ReportType] ([id], [typeName]) VALUES (2, N'Comment')
-GO
-INSERT [dbo].[ReportType] ([id], [typeName]) VALUES (3, N'Enable Account')
-GO
-INSERT [dbo].[ReportType] ([id], [typeName]) VALUES (4, N'Enable Monetization')
-GO
 SET IDENTITY_INSERT [dbo].[Report] ON 
 GO
-INSERT INTO [dbo].[Report] ([id],[reportTypeId],[userId],[objectId],[note],[sent],[received],[status]) VALUES ( 1, 3, 11,NULL , N'Enable Account', CAST(N'2022-10-23' AS Date), CAST(N'2022-10-24' AS Date), 0)
+INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status]) VALUES (1, 1, 2, 1, N'Hate', CAST(N'2022-10-25T21:41:00.603' AS DateTime), NULL, 0)
 GO
-INSERT INTO [dbo].[Report] ([id],[reportTypeId],[userId],[objectId],[note],[sent],[received],[status]) VALUES ( 2, 3, 11,NULL , N'Enable Account', CAST(N'2022-10-23' AS Date), CAST(N'2022-10-24' AS Date), 0)
+INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status]) VALUES (2, 1, 2, 5, N'Anti because this book is too interesting to exist.', CAST(N'2022-10-25T21:43:14.847' AS DateTime), NULL, 0)
 GO
-INSERT INTO [dbo].[Report] ([id],[reportTypeId],[userId],[objectId],[note],[sent],[received],[status]) VALUES ( 3, 3, 11,NULL , N'Enable Account', CAST(N'2022-10-23' AS Date), NULL, 1)
+INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status]) VALUES (3, 1, 109, 13, N'Bait and Switch', CAST(N'2022-10-25T21:44:11.080' AS DateTime), NULL, 0)
+GO
+INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status]) VALUES (5, 2, 109, 4, N'Character is also human.', CAST(N'2022-10-26T00:00:00.000' AS DateTime), NULL, 0)
+GO
+INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status]) VALUES (6, 2, 2, 2, N'Containing oriented marketing suspect.', CAST(N'2022-10-20T00:00:00.000' AS DateTime), NULL, 0)
 GO
 SET IDENTITY_INSERT [dbo].[Report] OFF
+GO
+INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (1, 2)
+GO
+INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (1, 3)
+GO
+INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (2, 1)
+GO
+INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (2, 7)
+GO
+INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (2, 9)
+GO
+INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (3, 3)
+GO
+INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (3, 5)
+GO
+INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (3, 7)
+GO
+INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (5, 13)
+GO
+INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (5, 19)
+GO
+INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (6, 15)
+GO
+INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (6, 16)
+GO
+INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (6, 17)
 GO
 INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (1, 2, 2)
 GO
@@ -3833,7 +3835,7 @@ INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [addre
 GO
 INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (10, N'Wisley Ray', 1, CAST(N'1971-10-28' AS Date), N'Bookie_User8@qa.team', N'8155814231', N'B398R', N'user_no8', N'T4dI4P82Ab', 1, 10)
 GO
-INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (11, N'Aiken Pope', 1, CAST(N'1979-05-01' AS Date), N'Bookie_User9@qa.team', N'7770308417', N'F421L', N'duy', N'2002', 1, 11)
+INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (11, N'Aiken Pope', 1, CAST(N'1979-05-01' AS Date), N'Bookie_User9@qa.team', N'7770308417', N'F421L', N'user_no9', N'op6An5T76g', 1, 11)
 GO
 INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (12, N'Rodolphe Blossom', 1, CAST(N'2001-02-19' AS Date), N'Bookie_User10@qa.team', N'6610856429', N'A168L', N'user_no10', N'2203lupus8', 1, 12)
 GO
@@ -4027,25 +4029,43 @@ SET IDENTITY_INSERT [dbo].[User] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Violation] ON 
 GO
-INSERT [dbo].[Violation] ([id], [reportTypeId], [title]) VALUES (1, 1, N'Sexual Content')
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (1, 1, N'Sexual Content')
 GO
-INSERT [dbo].[Violation] ([id], [reportTypeId], [title]) VALUES (2, 1, N'Violent or repulsive content')
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (2, 1, N'Violent or repulsive content')
 GO
-INSERT [dbo].[Violation] ([id], [reportTypeId], [title]) VALUES (3, 1, N'Hateful or abusive content')
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (3, 1, N'Hateful or abusive content')
 GO
-INSERT [dbo].[Violation] ([id], [reportTypeId], [title]) VALUES (4, 1, N'Harassment or bullying')
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (4, 1, N'Harassment or bullying')
 GO
-INSERT [dbo].[Violation] ([id], [reportTypeId], [title]) VALUES (5, 1, N'Harmful or dangerous acts')
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (5, 1, N'Harmful or dangerous acts')
 GO
-INSERT [dbo].[Violation] ([id], [reportTypeId], [title]) VALUES (6, 1, N'Child abuse')
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (6, 1, N'Child abuse')
 GO
-INSERT [dbo].[Violation] ([id], [reportTypeId], [title]) VALUES (7, 1, N'Promotes terrorism')
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (7, 1, N'Promotes terrorism')
 GO
-INSERT [dbo].[Violation] ([id], [reportTypeId], [title]) VALUES (8, 1, N'Spam or misleading')
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (8, 1, N'Spam or misleading')
 GO
-INSERT [dbo].[Violation] ([id], [reportTypeId], [title]) VALUES (9, 1, N'Infringes my rights')
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (9, 1, N'Infringes my rights')
 GO
-INSERT [dbo].[Violation] ([id], [reportTypeId], [title]) VALUES (10, 1, N'Caption issue')
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (10, 1, N'Caption issue')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (11, 2, N'Nudity')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (12, 2, N'Violence')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (13, 2, N'Harassment')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (14, 2, N'Suicide or self-injury')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (15, 2, N'False information')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (16, 2, N'Spam')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (17, 2, N'Unauthorized sales')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (18, 2, N'Hate speech')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (19, 2, N'Personal attack')
 GO
 SET IDENTITY_INSERT [dbo].[Violation] OFF
 GO
@@ -4179,11 +4199,6 @@ ALTER TABLE [dbo].[Product_Own] CHECK CONSTRAINT [FK_Product_Own_Product]
 GO
 ALTER TABLE [dbo].[Report]  WITH CHECK ADD FOREIGN KEY([userId])
 REFERENCES [dbo].[User] ([id])
-GO
-ALTER TABLE [dbo].[Report]  WITH CHECK ADD  CONSTRAINT [FK_Report_ReportType] FOREIGN KEY([reportTypeId])
-REFERENCES [dbo].[ReportType] ([id])
-GO
-ALTER TABLE [dbo].[Report] CHECK CONSTRAINT [FK_Report_ReportType]
 GO
 ALTER TABLE [dbo].[Report_Violation]  WITH CHECK ADD  CONSTRAINT [FK_Report_Violation_Report] FOREIGN KEY([reportId])
 REFERENCES [dbo].[Report] ([id])
