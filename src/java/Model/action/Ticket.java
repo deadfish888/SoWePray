@@ -14,7 +14,6 @@ public class Ticket {
 
     private int id;
     private int typeID;
-    private String typeName;
     private int uid;
     private int objectId;
     private String note;
@@ -26,10 +25,9 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(int id, int typeID, String typeName, int uid, int objectId, String note, Date sent, Date received, boolean status, String stage) {
+    public Ticket(int id, int typeID, int uid, int objectId, String note, Date sent, Date received, boolean status, String stage) {
         this.id = id;
         this.typeID = typeID;
-        this.typeName = typeName;
         this.uid = uid;
         this.objectId = objectId;
         this.note = note;
@@ -50,19 +48,18 @@ public class Ticket {
     public int getTypeID() {
         return typeID;
     }
+    public String getTypeName(){
+        if (this.typeID==3) {
+            return "Enable Account";
+        }
+        return "Enabale Monetization";
+    }
 
     public void setTypeID(int typeID) {
         this.typeID = typeID;
     }
 
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-
+   
     public int getUid() {
         return uid;
     }

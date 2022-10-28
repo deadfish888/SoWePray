@@ -123,16 +123,14 @@ public class TicketDAO {
         try {
             String sql = "SELECT TOP 5 [Report].[id]\n"
                     + "      ,[reportTypeId]\n"
-                    + "      ,[ReportType].[typeName]\n"
                     + "      ,[userId]\n"
                     + "      ,[objectId]\n"
                     + "      ,[note]\n"
                     + "      ,[sent]\n"
                     + "      ,[received]\n"
                     + "      ,[status]\n"
-                    + "  FROM [dbo].[Report] , [dbo].[ReportType]\n"
-                    + "  WHERE [dbo].[Report].[reportTypeId] = [dbo].[ReportType].[id]\n"
-                    + "  AND [received] IS NOT NULL\n"
+                    + "  FROM [dbo].[Report] \n"
+                    + "  WHERE [received] IS NOT NULL\n"
                     + "  AND [userId] = ?\n"
                     + "  ORDER BY [Report].[id] DESC";
             stm = cnn.prepareStatement(sql);
@@ -141,17 +139,16 @@ public class TicketDAO {
             while (rs.next()) {
                 int id = rs.getInt(1);
                 int type = rs.getInt(2);
-                String reportType = rs.getString(3);
-                int objectId = rs.getInt(5);
-                String note = rs.getString(6);
-                Date sent = rs.getDate(7);
-                Date received = rs.getDate(8);
-                boolean status = rs.getBoolean(9);
+                int objectId = rs.getInt(4);
+                String note = rs.getString(5);
+                Date sent = rs.getDate(6);
+                Date received = rs.getDate(7);
+                boolean status = rs.getBoolean(8);
                 String stage = "Passed";
                 if (status == false) {
                     stage = "Reject";
                 }
-                Ticket rp = new Ticket(id, type, reportType, uid, objectId, note, sent, received, status, stage);
+                Ticket rp = new Ticket(id, type, uid, objectId, note, sent, received, status, stage);
                 list.add(rp);
             }
         } catch (Exception e) {
@@ -165,16 +162,14 @@ public class TicketDAO {
         try {
             String sql = "SELECT TOP 5[Report].[id]\n"
                     + "  ,[reportTypeId]\n"
-                    + "  , [ReportType].[typeName]\n"
                     + "  , [userId]\n"
                     + "  , [objectId]\n"
                     + "  , [note]\n"
                     + "  , [sent]\n"
                     + "  , [received]\n"
                     + "  , [status]\n"
-                    + "FROM[dbo].[Report], [dbo].[ReportType]\n"
-                    + "WHERE[dbo].[Report].[reportTypeId] = [dbo].[ReportType].[id]\n"
-                    + "AND[received] IS NULL\n"
+                    + "FROM[dbo].[Report] \n"
+                    + "WHERE [received] IS NULL\n"
                     + "AND[status] IS NOT NULL\n"
                     + "AND[userId] = ? \n"
                     + "  ORDER BY[Report].[id] DESC";
@@ -184,17 +179,17 @@ public class TicketDAO {
             while (rs.next()) {
                 int id = rs.getInt(1);
                 int type = rs.getInt(2);
-                String reportType = rs.getString(3);
-                int objectId = rs.getInt(5);
-                String note = rs.getString(6);
-                Date sent = rs.getDate(7);
-                Date received = rs.getDate(8);
-                boolean status = rs.getBoolean(9);
+                int objectId = rs.getInt(4);
+                String note = rs.getString(5);
+                Date sent = rs.getDate(6);
+                Date received = rs.getDate(7);
+                boolean status = rs.getBoolean(8);
                 String stage = "Passed";
                 if (status == false) {
                     stage = "Reject";
                 }
-                Ticket rp = new Ticket(id, type, reportType, uid, objectId, note, sent, received, status, stage);
+                
+                Ticket rp = new Ticket(id, type, uid, objectId, note, sent, received, status, stage);
 
                 list.add(rp);
             }
@@ -209,16 +204,14 @@ public class TicketDAO {
         try {
             String sql = "SELECT [Report].[id]\n"
                     + "      ,[reportTypeId]\n"
-                    + "  , [ReportType].[typeName]\n"
                     + "  , [userId]\n"
                     + "  , [objectId]\n"
                     + "  , [note]\n"
                     + "  , [sent]\n"
                     + "  , [received]\n"
                     + "  , [status]\n"
-                    + "FROM[dbo].[Report], [dbo].[ReportType]\n"
-                    + "WHERE[dbo].[Report].[reportTypeId] = [dbo].[ReportType].[id]\n"
-                    + "AND[userId] = ? \n"
+                    + "FROM[dbo].[Report] \n"
+                    + "WHERE [userId] = ? \n"
                     + "AND [status] IS NULL\n"
                     + "ORDER BY[Report].[id] DESC";
             stm = cnn.prepareStatement(sql);
@@ -228,16 +221,12 @@ public class TicketDAO {
                 int id = rs.getInt(1);
                 int type = rs.getInt(2);
                 String reportType = rs.getString(3);
-                int objectId = rs.getInt(5);
-                String note = rs.getString(6);
-                Date sent = rs.getDate(7);
-                Date received = rs.getDate(8);
-                boolean status = rs.getBoolean(9);
-                String stage = "Passed";
-                if (status == false) {
-                    stage = "Reject";
-                }
-                Ticket rp = new Ticket(id, type, reportType, uid, objectId, note, sent, received, status, "On Process");
+                int objectId = rs.getInt(4);
+                String note = rs.getString(5);
+                Date sent = rs.getDate(6);
+                Date received = rs.getDate(7);
+                boolean status = rs.getBoolean(8);
+                Ticket rp = new Ticket(id, type, uid, objectId, note, sent, received, status, "On Process");
                 list.add(rp);
             }
         } catch (Exception e) {
@@ -251,34 +240,28 @@ public class TicketDAO {
         try {
             String sql = "SELECT [Report].[id]\n"
                     + "      ,[reportTypeId]\n"
-                    + "  , [ReportType].[typeName]\n"
                     + "  , [userId]\n"
                     + "  , [objectId]\n"
                     + "  , [note]\n"
                     + "  , [sent]\n"
                     + "  , [received]\n"
                     + "  , [status]\n"
-                    + "FROM[dbo].[Report], [dbo].[ReportType]\n"
-                    + "WHERE[dbo].[Report].[reportTypeId] = [dbo].[ReportType].[id]\n"
-                    + "AND [status] IS NULL\n"
+                    + "FROM[dbo].[Report] \n"
+                    + "WHERE  [status] IS NULL\n"
                     + "ORDER BY[Report].[id] DESC";
             stm = cnn.prepareStatement(sql);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt(1);
                 int type = rs.getInt(2);
-                String reportType = rs.getString(3);
-                int uid = rs.getInt(4);
-                int objectId = rs.getInt(5);
-                String note = rs.getString(6);
-                Date sent = rs.getDate(7);
-                Date received = rs.getDate(8);
-                boolean status = rs.getBoolean(9);
-                String stage = "Passed";
-                if (status == false) {
-                    stage = "Reject";
-                }
-                Ticket rp = new Ticket(id, type, reportType, uid, objectId, note, sent, received, status, "On Process");
+                int uid = rs.getInt(3);
+                int objectId = rs.getInt(4);
+                String note = rs.getString(5);
+                Date sent = rs.getDate(6);
+                Date received = rs.getDate(7);
+                boolean status = rs.getBoolean(8);
+                
+                Ticket rp = new Ticket(id, type, uid, objectId, note, sent, received, status, "On Process");
                 list.add(rp);
             }
         } catch (Exception e) {
@@ -348,7 +331,6 @@ public class TicketDAO {
         try {
             String sql = "SELECT [Report].[id]\n"
                     + "      ,[reportTypeId]\n"
-                    + "  , [ReportType].[typeName]\n"
                     + "  , [userId]\n"
                     + "  , [objectId]\n"
                     + "  , [note]\n"
@@ -362,15 +344,14 @@ public class TicketDAO {
             rs = stm.executeQuery();
             while (rs.next()) {
                 int type = rs.getInt(2);
-                String reportType = rs.getString(3);
-                int uid = rs.getInt(4);
-                int objectId = rs.getInt(5);
-                String note = rs.getString(6);
-                Date sent = rs.getDate(7);
-                Date received = rs.getDate(8);
-                boolean status = rs.getBoolean(9);
+                int uid = rs.getInt(3);
+                int objectId = rs.getInt(4);
+                String note = rs.getString(5);
+                Date sent = rs.getDate(6);
+                Date received = rs.getDate(7);
+                boolean status = rs.getBoolean(8);
 
-                rp = new Ticket(id, type, reportType, uid, objectId, note, sent, received, status, "On Process");
+                rp = new Ticket(id, type, uid, objectId, note, sent, received, status, "On Process");
             }
         } catch (Exception e) {
             System.out.println("get rp Error:" + e.getMessage());

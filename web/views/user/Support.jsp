@@ -116,7 +116,7 @@
                         <tbody>
                             <c:forEach var="reads" items="${reads}">
                                 <tr data-toggle="modal" data-target="#changePasswordModal" style="cursor: pointer" >
-                                    <td style="width: 15%">${reads.typeName}
+                                    <td style="width: 15%">${reads.getTypeName()}
                                         <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
@@ -131,7 +131,7 @@
                                                                     Title
                                                                 </th>
                                                                 <td>
-                                                                    <span>${reads.typeName}</span>
+                                                                    <span>${reads.getTypeName()}</span>
                                                                 </td>
                                                             </tr>
                                                             <tr>

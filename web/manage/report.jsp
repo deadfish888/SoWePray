@@ -122,7 +122,7 @@
                                                     <tr>
                                                         <td>${s.id}</td>
                                                         <td width="15%">${s.uid}</td>
-                                                        <td>${s.typeName}</td>
+                                                        <td>${s.getTypeName()}</td>
                                                         <td style="width: 40%;text-align: center;">${s.note}</td>
                                                         <td>${s.sent}</td>
                                                         <td>  

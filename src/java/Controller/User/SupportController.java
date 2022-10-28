@@ -113,8 +113,10 @@ public class SupportController extends HttpServlet {
         if (user.is_super() == 0) {
             if (uDao.isVIP(user.getId())) {
                 rpDao.passReport(3, user.getId(), txt, true);
+                uDao.editRank(user.getId(), 1);
             } else {
                 rpDao.senndReport(3, user.getId(), txt);
+                 uDao.editRank(user.getId(), (3-user.is_super()));
             }
             response.sendRedirect("Support");
             return;
