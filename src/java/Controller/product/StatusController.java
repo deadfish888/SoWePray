@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /* @author ACER */
-@WebServlet(name = "StatusController", urlPatterns = {"/User/Status"})
+@WebServlet(name = "sStatusController", urlPatterns = {"/User/Status"})
 public class StatusController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
