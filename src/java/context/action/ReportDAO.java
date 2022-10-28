@@ -131,6 +131,65 @@ public class ReportDAO {
         return null;
     }
 
-    
+    public ArrayList<Report> getReports(String reportType, boolean status) {
+        ArrayList<Report> list = new ArrayList<>();
+        try {
+            String sql = "SELECT r.[id]\n"
+                    + "      ,[reportType]\n"
+                    + "      ,[userId]\n"
+                    + "      ,u.[username]"
+                    + "      ,[objectId]\n"
+                    + "      ,[note]\n"
+                    + "      ,[sent]\n"
+                    + "      ,[received]\n"
+                    + "      ,r.[status]\n"
+                    + "  FROM [Report] r "
+                    + " INNER JOIN [User] u ON r.[userId] = u.[id]"
+                    + " WHERE [reportType] like ? "
+                    + "   AND r.[status] = ? "
+                    + " ORDER BY [sent] DESC";
+            stm = cnn.prepareStatement(sql);
+            if (reportType.equals("book")) {
+                reportType = "1";
+            } else if (reportType.equals("comment")) {
+                reportType = "2";
+            }
+            stm.setString(1, "%" + reportType + "%");
+            stm.setBoolean(2, status);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Report r = new Report();
+                r.setId(rs.getInt(1));
+                r.setReportType(rs.getInt(2));
+                r.setUserId(rs.getInt(3));
 
+                User userR = new User();
+                userR.setId(rs.getInt(3));
+                userR.setUsername(rs.getString(4));
+
+                r.setUserR(userR);
+
+                r.setNote(rs.getString(6));
+                r.setSent(rs.getTimestamp(7));
+                r.setReceived(rs.getTimestamp(8));
+                r.setStatus(rs.getBoolean(9));
+                ViolationDAO vd = new ViolationDAO();
+                r.setViolates(vd.getReportViolations(rs.getInt(1)));
+                list.add(r);
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(ReportDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<Report> getByPage(ArrayList<Report> reports, int start, int end) {
+        ArrayList<Report> listpage = new ArrayList<>();
+
+        for (int i = start; i < end; i++) {
+            listpage.add(reports.get(i));
+        }
+        return listpage;
+    }
 }
