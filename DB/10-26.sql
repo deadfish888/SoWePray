@@ -292,7 +292,7 @@ CREATE TABLE [dbo].[Report](
 	[note] [nvarchar](2000) NULL,
 	[sent] [datetime] NOT NULL,
 	[received] [datetime] NULL,
-	[status] [bit] NOT NULL,
+	[status] [bit],
  CONSTRAINT [PK_reportdetail] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -3543,15 +3543,15 @@ INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (109, N'B17-C1')
 GO
 SET IDENTITY_INSERT [dbo].[Report] ON 
 GO
-INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status]) VALUES (1, 1, 2, 1, N'Hate', CAST(N'2022-10-25T21:41:00.603' AS DateTime), NULL, 0)
+INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status]) VALUES (1, 1, 2, 1, N'Hate', CAST(N'2022-10-25T21:41:00.603' AS DateTime), NULL, null)
 GO
-INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status]) VALUES (2, 1, 2, 5, N'Anti because this book is too interesting to exist.', CAST(N'2022-10-25T21:43:14.847' AS DateTime), NULL, 0)
+INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status]) VALUES (2, 1, 2, 5, N'Anti because this book is too interesting to exist.', CAST(N'2022-10-25T21:43:14.847' AS DateTime), NULL, null)
 GO
-INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status]) VALUES (3, 1, 109, 13, N'Bait and Switch', CAST(N'2022-10-25T21:44:11.080' AS DateTime), NULL, 0)
+INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status]) VALUES (3, 1, 109, 13, N'Bait and Switch', CAST(N'2022-10-25T21:44:11.080' AS DateTime), NULL, null)
 GO
-INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status]) VALUES (5, 2, 109, 4, N'Character is also human.', CAST(N'2022-10-26T00:00:00.000' AS DateTime), NULL, 0)
+INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status]) VALUES (5, 2, 109, 4, N'Character is also human.', CAST(N'2022-10-26T00:00:00.000' AS DateTime), NULL, null)
 GO
-INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status]) VALUES (6, 2, 2, 2, N'Containing oriented marketing suspect.', CAST(N'2022-10-20T00:00:00.000' AS DateTime), NULL, 0)
+INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status]) VALUES (6, 2, 2, 2, N'Containing oriented marketing suspect.', CAST(N'2022-10-20T00:00:00.000' AS DateTime), NULL, null)
 GO
 SET IDENTITY_INSERT [dbo].[Report] OFF
 GO
@@ -4110,8 +4110,6 @@ GO
 ALTER TABLE [dbo].[Book] ADD  DEFAULT ((1)) FOR [status]
 GO
 ALTER TABLE [dbo].[Comment] ADD  CONSTRAINT [DF_Comment_status]  DEFAULT ((1)) FOR [status]
-GO
-ALTER TABLE [dbo].[Report] ADD  CONSTRAINT [DF_Report_status]  DEFAULT ((0)) FOR [status]
 GO
 ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF__User__is_super__31EC6D26]  DEFAULT ((1)) FOR [is_super]
 GO
