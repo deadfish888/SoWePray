@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /* @author ACER */
-@WebServlet(name="DeleteVolumeController", urlPatterns={"/Admin/Book/DeleteVolume"})
+@WebServlet(name="AdDeleteVolumeController", urlPatterns={"/Admin/Book/DeleteVolume"})
 public class DeleteVolumeController extends HttpServlet {
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
