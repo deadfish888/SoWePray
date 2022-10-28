@@ -67,12 +67,12 @@
                 <div class="page-breadcrumb">
                     <div class="row align-items-center">
                         <div class="col-md-6 col-8 align-self-center">
-                            <h3 class="page-title mb-0 p-0">Reports</h3>
+                            <h3 class="page-title mb-0 p-0">Ticket</h3>
                             <div class="d-flex align-items-center">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="/Bookie/Home">Home</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Reports</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Ticket</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -118,7 +118,7 @@
                                             </thead>
                                             <tbody id="contentList">
                                                 <c:forEach var="s" items="${baocao}">
-                                                <form action="./Report" method="Post">
+                                                <form action="./Ticket" method="Post">
                                                     <tr>
                                                         <td>${s.id}</td>
                                                         <td width="15%">${s.uid}</td>
@@ -147,18 +147,18 @@
                                     <div id="sp" class="pagination-arena " style="margin-left: 40%">
                                         <ul class="pagination">
                                             <li class="page-item" >
-                                                <a href="Report?xpage=${xpage-1}" class="page-link" style="${xpage<3?"display:none":""}">
+                                                <a href="Ticket?xpage=${xpage-1}" class="page-link" style="${xpage<3?"display:none":""}">
                                                     <i class="fa fa-angle-left" aria-hidden="true" ></i>
                                                 </a>
                                             </li>
                                             <c:forEach begin="${1}" end="${numPage}" var="item">
                                                 <li class="page-item ${item==xpage?"active":""}">
-                                                    <a href="Report?xpage=${item}" 
+                                                    <a href="Ticket?xpage=${item}" 
                                                        class="page-link " style="${(xpage-1>item || xpage+1<item ) ?"display:none;":""}"
                                                        >${item}</a></li>
                                                 </c:forEach>
                                             <li >
-                                                <a href="Report?xpage=${xpage+1}" class="page-link" style="${xpage+2>numPage?"display:none":""}">
+                                                <a href="Ticket?xpage=${xpage+1}" class="page-link" style="${xpage+2>numPage?"display:none":""}">
                                                     <i class="fa fa-angle-right" aria-hidden="true"  ></i>
                                                 </a>
                                             </li>

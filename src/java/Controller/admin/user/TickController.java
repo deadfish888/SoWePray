@@ -22,8 +22,8 @@ import java.util.ArrayList;
  *
  * @author duypham0705
  */
-@WebServlet({"/Admin/Report"})
-public class ReportController extends HttpServlet {
+@WebServlet({"/Admin/Ticket"})
+public class TickController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -86,7 +86,7 @@ public class ReportController extends HttpServlet {
         request.setAttribute("numPage", numPage);
         request.setAttribute("baocao", listRead);
 
-        request.getRequestDispatcher("../manage/report.jsp").forward(request, response);
+        request.getRequestDispatcher("../manage/ticket.jsp").forward(request, response);
     }
 
     /**
@@ -116,7 +116,7 @@ public class ReportController extends HttpServlet {
             rpDao.setStatus(rp.getId(), false);
         }
 
-        response.sendRedirect("Report");
+        response.sendRedirect("Ticket");
     }
 
     /**
