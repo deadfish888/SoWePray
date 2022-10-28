@@ -144,6 +144,26 @@
                                         </table>
 
                                     </div>
+                                    <div id="sp" class="pagination-arena " style="margin-left: 40%">
+                                        <ul class="pagination">
+                                            <li class="page-item" >
+                                                <a href="Report?xpage=${xpage-1}" class="page-link" style="${xpage<3?"display:none":""}">
+                                                    <i class="fa fa-angle-left" aria-hidden="true" ></i>
+                                                </a>
+                                            </li>
+                                            <c:forEach begin="${1}" end="${numPage}" var="item">
+                                                <li class="page-item ${item==xpage?"active":""}">
+                                                    <a href="Report?xpage=${item}" 
+                                                       class="page-link " style="${(xpage-1>item || xpage+1<item ) ?"display:none;":""}"
+                                                       >${item}</a></li>
+                                                </c:forEach>
+                                            <li >
+                                                <a href="Report?xpage=${xpage+1}" class="page-link" style="${xpage+2>numPage?"display:none":""}">
+                                                    <i class="fa fa-angle-right" aria-hidden="true"  ></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>

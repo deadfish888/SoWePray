@@ -69,7 +69,21 @@ public class ReportController extends HttpServlet {
         ArrayList<Report> listRead = rpDao.getAll();
         HttpSession session = request.getSession();
         User us = (User) session.getAttribute("admin");
-
+        
+        String xpage = request.getParameter("xpage");
+        int page;
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int size = listRead.size();
+        int numPage = (int) Math.ceil((double) size / 10);
+        int start = (page - 1) * 10;
+        int end = Math.min(size, start + 10);
+        listRead = rpDao.getByPage(listRead, start, end);
+        request.setAttribute("xpage", page);
+        request.setAttribute("numPage", numPage);
         request.setAttribute("baocao", listRead);
 
         request.getRequestDispatcher("../manage/report.jsp").forward(request, response);

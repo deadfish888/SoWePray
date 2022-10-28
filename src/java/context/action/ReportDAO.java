@@ -413,4 +413,15 @@ public class ReportDAO {
         }
     }
 
+    public ArrayList<Report> getByPage(ArrayList<Report> listRead, int start, int end) {
+         ArrayList<Report> listpage = new ArrayList<>();
+        if (listRead.size() < end) {
+            end = listRead.size();
+        }
+        for (int i = start; i < end; i++) {
+            listpage.add(listRead.get(i));
+        }
+        return listpage;
+    }
+
 }
