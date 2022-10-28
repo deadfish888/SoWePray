@@ -23,16 +23,18 @@ public class Comment {
     private ArrayList<Comment> replies;
     private Timestamp createdAt;
     private Timestamp editedAt;
+    private boolean status;
 
     public Comment() {
     }
 
-    public Comment(int id, int bookId, int userId, String comment, Timestamp createdAt) {
+    public Comment(int id, int bookId, int userId, String comment, Timestamp createdAt, boolean status) {
         this.id = id;
         this.bookId = bookId;
         this.userId = userId;
         this.comment = comment;
         this.createdAt = createdAt;
+        this.status = status;
     }
     
     public int getBookId() {
@@ -115,5 +117,15 @@ public class Comment {
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    
     
 }

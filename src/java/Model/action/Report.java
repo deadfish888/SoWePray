@@ -4,26 +4,33 @@
  */
 package Model.action;
 
+import Model.auth.User;
+import java.sql.Timestamp;
+
 /**
  *
  * @author ttaad
  */
 public class Report {
     private int id;
-    private int reportid;
-    private int bid;
-    private int uid;
+    private int reportType;
+    private int userId;
+    private User user;
+    private int objectId;
     private String note;
+    private Timestamp sent;
 
     public Report() {
     }
 
-    public Report(int id, int reportid, int bid, int uid, String note) {
+    public Report(int id, int reportType, int userId, User user, int objectId, String note, Timestamp sent) {
         this.id = id;
-        this.reportid = reportid;
-        this.bid = bid;
-        this.uid = uid;
+        this.reportType = reportType;
+        this.userId = userId;
+        this.user = user;
+        this.objectId = objectId;
         this.note = note;
+        this.sent = sent;
     }
 
     public int getId() {
@@ -34,28 +41,36 @@ public class Report {
         this.id = id;
     }
 
-    public int getReportid() {
-        return reportid;
+    public int getReportType() {
+        return reportType;
     }
 
-    public void setReportid(int reportid) {
-        this.reportid = reportid;
+    public void setReportType(int reportType) {
+        this.reportType = reportType;
     }
 
-    public int getBid() {
-        return bid;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setBid(int bid) {
-        this.bid = bid;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public int getUid() {
-        return uid;
+    public User getUser() {
+        return user;
     }
 
-    public void setUid(int uid) {
-        this.uid = uid;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public int getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(int objectId) {
+        this.objectId = objectId;
     }
 
     public String getNote() {
@@ -65,6 +80,22 @@ public class Report {
     public void setNote(String note) {
         this.note = note;
     }
+
+    public Timestamp getSent() {
+        return sent;
+    }
+
+    public void setSent(Timestamp sent) {
+        this.sent = sent;
+    }
+    
+    
+
+    
+    
+    
+    
+    
     
     
 }
