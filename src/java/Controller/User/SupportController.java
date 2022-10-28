@@ -4,10 +4,10 @@
  */
 package Controller.User;
 
-import Model.action.Report;
+import Model.action.Ticket;
 import Model.auth.User;
 import Model.product.Author;
-import context.action.ReportDAO;
+import context.action.TicketDAO;
 import context.auth.UserDAO;
 import context.product.AuthorDAO;
 import java.io.IOException;
@@ -28,7 +28,7 @@ import org.apache.jasper.tagplugins.jstl.core.ForEach;
 @WebServlet(name = "SupportController", urlPatterns = {"/User/Support"})
 public class SupportController extends HttpServlet {
 
-    ReportDAO rpDao = new ReportDAO();
+    TicketDAO rpDao = new TicketDAO();
     AuthorDAO auDao = new AuthorDAO();
     UserDAO uDao = new UserDAO();
 
@@ -62,7 +62,7 @@ public class SupportController extends HttpServlet {
         try {
             User user = (User) request.getSession().getAttribute("user");
 
-            ArrayList<Report> listRead = new ArrayList<Report>();
+            ArrayList<Ticket> listRead = new ArrayList<Ticket>();
             String type = (String) request.getParameter("type");
             int p;
             if (type == null) {

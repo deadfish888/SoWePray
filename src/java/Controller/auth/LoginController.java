@@ -5,7 +5,7 @@
 package Controller.auth;
 
 import Model.auth.User;
-import context.action.ReportDAO;
+import context.action.TicketDAO;
 import context.auth.UserDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class LoginController extends HttpServlet {
 
             if (user.is_super() >= 4) {
                 session.setAttribute("admin", user);
-                ReportDAO rp = new ReportDAO();
+                TicketDAO rp = new TicketDAO();
                 if (rp.count() > 0) {
                     session.setAttribute("number", rp.count());
                 }

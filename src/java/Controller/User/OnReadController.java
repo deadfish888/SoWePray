@@ -5,7 +5,7 @@
 package Controller.User;
 
 import Model.auth.User;
-import context.action.ReportDAO;
+import context.action.TicketDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -56,7 +56,7 @@ public class OnReadController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    ReportDAO rpDao = new ReportDAO();
+    TicketDAO rpDao = new TicketDAO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

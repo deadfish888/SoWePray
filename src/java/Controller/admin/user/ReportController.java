@@ -4,9 +4,9 @@
  */
 package Controller.admin.user;
 
-import Model.action.Report;
+import Model.action.Ticket;
 import Model.auth.User;
-import context.action.ReportDAO;
+import context.action.TicketDAO;
 import context.auth.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -50,7 +50,7 @@ public class ReportController extends HttpServlet {
             out.println("</html>");
         }
     }
-    ReportDAO rpDao = new ReportDAO();
+    TicketDAO rpDao = new TicketDAO();
     UserDAO uDao = new UserDAO();
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -66,7 +66,7 @@ public class ReportController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ArrayList<Report> listRead = rpDao.getAll();
+        ArrayList<Ticket> listRead = rpDao.getAll();
         HttpSession session = request.getSession();
         User us = (User) session.getAttribute("admin");
         
@@ -101,7 +101,7 @@ public class ReportController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (request.getParameter("id_pass") != null) {
-            Report rp = rpDao.getRP(Integer.parseInt(request.getParameter("id_pass")));
+            Ticket rp = rpDao.getRP(Integer.parseInt(request.getParameter("id_pass")));
             rpDao.setStatus(rp.getId(), true);
             if (rp.getTypeID() == 3) {
                 uDao.editRank(rp.getUid(), 1);
@@ -112,7 +112,7 @@ public class ReportController extends HttpServlet {
             }
         }
         if (request.getParameter("id_reject") != null) {
-            Report rp = rpDao.getRP(Integer.parseInt(request.getParameter("id_pass")));
+            Ticket rp = rpDao.getRP(Integer.parseInt(request.getParameter("id_pass")));
             rpDao.setStatus(rp.getId(), false);
         }
 

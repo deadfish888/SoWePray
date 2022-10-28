@@ -10,7 +10,7 @@ import java.util.Date;
  *
  * @author ttaad
  */
-public class Report {
+public class Ticket {
 
     private int id;
     private int typeID;
@@ -23,10 +23,10 @@ public class Report {
     private boolean status;
     private String stage;
             
-    public Report() {
+    public Ticket() {
     }
 
-    public Report(int id, int typeID, String typeName, int uid, int objectId, String note, Date sent, Date received, boolean status, String stage) {
+    public Ticket(int id, int typeID, String typeName, int uid, int objectId, String note, Date sent, Date received, boolean status, String stage) {
         this.id = id;
         this.typeID = typeID;
         this.typeName = typeName;

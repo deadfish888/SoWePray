@@ -4,7 +4,7 @@
  */
 package context.action;
 
-import Model.action.Report;
+import Model.action.Ticket;
 import context.DBContext;
 import context.auth.UserDAO;
 import java.sql.Connection;
@@ -21,9 +21,9 @@ import java.util.logging.Logger;
  *
  * @author ttaad
  */
-public class ReportDAO {
+public class TicketDAO {
 
-    public ReportDAO() {
+    public TicketDAO() {
         connectDB();
     }
     Connection cnn; // ket noi db
@@ -38,28 +38,7 @@ public class ReportDAO {
         }
     }
 
-    public void addReport(int rid, int bid, int uid, String note) {
-        try {
-            String sql = "INSERT INTO [dbo].[ReportDetail]\n"
-                    + "           ([reportId]\n"
-                    + "           ,[bookId]\n"
-                    + "           ,[userId]\n"
-                    + "           ,[note])\n"
-                    + "     VALUES\n"
-                    + "           ( ?"
-                    + "           , ?"
-                    + "           , ?"
-                    + "           , ? ) ";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, rid);
-            stm.setInt(2, bid);
-            stm.setInt(3, uid);
-            stm.setString(4, note);
-            stm.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("add error:" + e.getMessage());
-        }
-    }
+    
 
     public void passReport(int type, int uid, String txt, boolean status) {
         try {
@@ -139,8 +118,8 @@ public class ReportDAO {
         return ret;
     }
 
-    public ArrayList<Report> getRead(int uid) {
-        ArrayList<Report> list = new ArrayList<>();
+    public ArrayList<Ticket> getRead(int uid) {
+        ArrayList<Ticket> list = new ArrayList<>();
         try {
             String sql = "SELECT TOP 5 [Report].[id]\n"
                     + "      ,[reportTypeId]\n"
@@ -172,7 +151,7 @@ public class ReportDAO {
                 if (status == false) {
                     stage = "Reject";
                 }
-                Report rp = new Report(id, type, reportType, uid, objectId, note, sent, received, status, stage);
+                Ticket rp = new Ticket(id, type, reportType, uid, objectId, note, sent, received, status, stage);
                 list.add(rp);
             }
         } catch (Exception e) {
@@ -181,8 +160,8 @@ public class ReportDAO {
         return list;
     }
 
-    public ArrayList<Report> getUnRead(int uid) {
-        ArrayList<Report> list = new ArrayList<>();
+    public ArrayList<Ticket> getUnRead(int uid) {
+        ArrayList<Ticket> list = new ArrayList<>();
         try {
             String sql = "SELECT TOP 5[Report].[id]\n"
                     + "  ,[reportTypeId]\n"
@@ -215,7 +194,7 @@ public class ReportDAO {
                 if (status == false) {
                     stage = "Reject";
                 }
-                Report rp = new Report(id, type, reportType, uid, objectId, note, sent, received, status, stage);
+                Ticket rp = new Ticket(id, type, reportType, uid, objectId, note, sent, received, status, stage);
 
                 list.add(rp);
             }
@@ -225,8 +204,8 @@ public class ReportDAO {
         return list;
     }
 
-    public ArrayList<Report> getSent(int uid) {
-        ArrayList<Report> list = new ArrayList<>();
+    public ArrayList<Ticket> getSent(int uid) {
+        ArrayList<Ticket> list = new ArrayList<>();
         try {
             String sql = "SELECT [Report].[id]\n"
                     + "      ,[reportTypeId]\n"
@@ -258,7 +237,7 @@ public class ReportDAO {
                 if (status == false) {
                     stage = "Reject";
                 }
-                Report rp = new Report(id, type, reportType, uid, objectId, note, sent, received, status, "On Process");
+                Ticket rp = new Ticket(id, type, reportType, uid, objectId, note, sent, received, status, "On Process");
                 list.add(rp);
             }
         } catch (Exception e) {
@@ -267,8 +246,8 @@ public class ReportDAO {
         return list;
     }
 
-    public ArrayList<Report> getAll() {
-        ArrayList<Report> list = new ArrayList<>();
+    public ArrayList<Ticket> getAll() {
+        ArrayList<Ticket> list = new ArrayList<>();
         try {
             String sql = "SELECT [Report].[id]\n"
                     + "      ,[reportTypeId]\n"
@@ -299,7 +278,7 @@ public class ReportDAO {
                 if (status == false) {
                     stage = "Reject";
                 }
-                Report rp = new Report(id, type, reportType, uid, objectId, note, sent, received, status, "On Process");
+                Ticket rp = new Ticket(id, type, reportType, uid, objectId, note, sent, received, status, "On Process");
                 list.add(rp);
             }
         } catch (Exception e) {
@@ -364,8 +343,8 @@ public class ReportDAO {
         }
     }
 
-    public Report getRP(int id) {
-        Report rp = new Report();
+    public Ticket getRP(int id) {
+        Ticket rp = new Ticket();
         try {
             String sql = "SELECT [Report].[id]\n"
                     + "      ,[reportTypeId]\n"
@@ -391,7 +370,7 @@ public class ReportDAO {
                 Date received = rs.getDate(8);
                 boolean status = rs.getBoolean(9);
 
-                rp = new Report(id, type, reportType, uid, objectId, note, sent, received, status, "On Process");
+                rp = new Ticket(id, type, reportType, uid, objectId, note, sent, received, status, "On Process");
             }
         } catch (Exception e) {
             System.out.println("get rp Error:" + e.getMessage());
@@ -413,8 +392,8 @@ public class ReportDAO {
         }
     }
 
-    public ArrayList<Report> getByPage(ArrayList<Report> listRead, int start, int end) {
-         ArrayList<Report> listpage = new ArrayList<>();
+    public ArrayList<Ticket> getByPage(ArrayList<Ticket> listRead, int start, int end) {
+         ArrayList<Ticket> listpage = new ArrayList<>();
         if (listRead.size() < end) {
             end = listRead.size();
         }
