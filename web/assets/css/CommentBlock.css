@@ -1,0 +1,70 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : Oct 28, 2022, 2:44:18 PM
+    Author     : ttaad
+*/
+div {
+    display: block;
+}
+.ln-comment-info {
+    background-color: #f1f2f4;
+    border-radius: 4px;
+    border: 2px;
+    border-style: solid;
+    margin-bottom: 10px;
+    margin-left: 50px;
+    padding: 6px 40px 6px 10px;
+}
+.ln-comment-info {
+    margin-left: 40px;
+    padding-right: 10px;
+    color: #111;
+    font-family: OpenSans;
+    font-size: 14px;
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 22px;
+    line-height: 2.2rem;
+}
+.ln-comment-wrapper {
+    position: relative;
+}
+.ln-comment-time {
+    color: rgba(0,0,0,.4);
+    display: inline-block;
+    font-size: 13px;
+/*    font-size: 1.3rem;*/
+    margin-right: 10px;
+}
+.visible-toolkit-item {
+    border-bottom: 0 solid #111;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 13px;
+/*    font-size: 1.3rem;*/
+    line-height: 15px;
+    line-height: 1.5rem;
+    margin-right: 10px;
+    opacity: 1;
+}
+.ln-comment-user_name {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-top: 2px;
+    border-style: solid;
+}
+.ln-comment-content {
+    word-wrap: break-word;
+    margin-bottom: 10px;
+    max-height: 90px;
+    overflow-y: hidden;
+    font-style: italic;
+}
+.ln-comment-content {
+    padding-right: 0;
+}
