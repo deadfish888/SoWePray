@@ -4,6 +4,8 @@
  */
 package context.product;
 
+import Model.auth.User;
+import Model.payment.PaymentAccount;
 import Model.product.Author;
 import context.DBContext;
 import java.sql.Connection;
@@ -69,6 +71,21 @@ public class AuthorDAO {
         return 0;
     }
 
+    public int countBookNumberByAuthorId(int aid) {
+        try {
+            String sql = "select * from Book b, Author a where b.authorId = a.id and a.id = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, aid);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("countBookNumberByAuthorId Error");
+        }
+        return -1;
+    }
+    
     public ArrayList<Author> getAllAuthor() {
         ArrayList<Author> list = new ArrayList<>();
         try {
@@ -240,19 +257,26 @@ public class AuthorDAO {
         return null;
     }
 
-    public int getAuthorByBookId(int bid) {
+    
+    
+    public User getInformationByAuthorId(int aid) {
         try {
-            String sql = "select authorId from dbo.Book where id = ?";
+            String sql = "select * from [User] u, Author a where u.id = a.userId and a.Id = ?";
             stm = cnn.prepareStatement(sql);
-            stm.setInt(1, bid);
+            stm.setInt(1, aid);
             rs = stm.executeQuery();
             while (rs.next()) {
-                return rs.getInt(1);
+                User user = new User();
+                user.setId(rs.getInt(1));
+                user.setName(rs.getString(2));
+                user.setGender(rs.getBoolean(3) ? "Male" : "Female");
+                user.setEmail(rs.getString(5));
+                return user;
             }
         } catch (Exception e) {
-            System.out.println("getAuthorByBookId Error:" + e.getMessage());
+            System.out.println("getInformationByAuthorId Error:" + e.getMessage());
         }
-        return -1;
+        return null;
     }
 
     public ArrayList<Integer> getNumQuater(int now, int before) {

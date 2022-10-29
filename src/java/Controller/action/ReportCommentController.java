@@ -5,7 +5,7 @@
 package Controller.action;
 
 import Model.action.Comment;
-import Model.action.Violation;
+import Model.report.Violation;
 import Model.product.Book;
 import Model.auth.User;
 import context.action.CommentDAO;
@@ -47,6 +47,7 @@ public class ReportCommentController extends HttpServlet {
             ArrayList<Violation> list = vd.getAllReportType(2);
             request.setAttribute("list", list);
             request.setAttribute("comment", comment);
+            request.setAttribute("confirm","Report Successfully!");
             request.getRequestDispatcher("/views/book/report-comment.jsp").forward(request, response);
         }
     }
@@ -59,11 +60,17 @@ public class ReportCommentController extends HttpServlet {
         int uId = user.getId();
         int bid = Integer.parseInt(request.getParameter("bId"));
         int cid = Integer.parseInt(request.getParameter("cId"));
-        
- 
+        String[] report = request.getParameterValues("report");
+        int[] violate_ids = new int[report.length];
+        int j = 0;
+        for (String s : report) {
+            violate_ids[j++] = Integer.parseInt(s);
+        }
         String note = request.getParameter("note");
         ReportDAO redao = new ReportDAO();
-        redao.addReportComment(uId, cid, note);
+        redao.addCommentReport(violate_ids, bid, uId, note);
+        request.setAttribute("confirm","Report Successfully!");
+
         response.sendRedirect("./BookDetail?id="+bid);
     }
     

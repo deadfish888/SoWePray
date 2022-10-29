@@ -40,9 +40,8 @@ public class BanCommentController extends HttpServlet {
         try {
             int commentId =  Integer.parseInt(request.getParameter("id"));
             int bookId = Integer.parseInt(request.getParameter("bid"));
-            BookDAO bd = new BookDAO();
+            
             CommentDAO cd = new CommentDAO();
-            Book book = bd.getBookById(bookId);
             cd.deleteComment(commentId);
             request.getRequestDispatcher("./BookDetail?id="+bookId).forward(request, response) ;
         } catch (Exception ex) {

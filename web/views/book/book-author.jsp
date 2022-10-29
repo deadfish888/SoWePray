@@ -15,18 +15,18 @@
         <link rel="stylesheet" href="assets/css/main.css" />
         <noscript><link rel="stylesheet" href="assets/css/noscript.css"/></noscript>
         <style>
-                        .home-filter{
-                            text-align: center;
-                            display: flex;
-                            margin: 0 50px;
-                        }
-                        button{
-                            margin: 0 10px;
-                        }
-                        section #bootstrap-overrides{
-                            width: calc(17% - 2.5em);
-                                     margin: 4em 0 0 4em;
-                        }
+            .home-filter{
+                text-align: center;
+                display: flex;
+                margin: 0 50px;
+            }
+            button{
+                margin: 0 10px;
+            }
+            section #bootstrap-overrides{
+                width: calc(17% - 2.5em);
+                margin: 4em 0 0 4em;
+            }
         </style>
     </head>
     <body class="is-preload">
@@ -58,18 +58,59 @@
             <div id="main">
                 <div class="inner">
                     <h1>From ${author.name}</h1>
-                    <div class="image main">
-                        <img
-                            src="images/banner-image-6-1920x500.jpg"
-                            class="img-fluid"
-                            alt=""
-                            />
-                    </div>
-                    <!-- Products -->
-                    <section class="tiles">
+                    <div style="display: flex">
+                        <c:if test = "${author.userId != null}">
+                            <div class="col-md-2">
+                                <img
+                                    src="Bookie/images/default.png"
+                                    alt="avatar"
+                                    />
+                            </div>
+                            <div class="col-md-10">
+                                <table class="table">
+                                    <tr>
+                                        <th style="width: 200px" scope="row">
+                                            Name
+                                        </th>
+                                        <td style="" style="height: 100px">
+                                            ${au.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width: 200px" scope="row">
+                                            Gender
+                                        </th>
+                                        <td style="" style="height: 100px">
+                                            ${au.gender}
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <th style="width: 200px" scope="row">
+                                            Email
+                                        </th>
+                                        <td style="" style="height: 100px">
+                                            ${au.email}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width: 200px" scope="row">
+                                            Total of books
+                                        </th>
+                                        <td style="" style="height: 100px">
+                                            ${countbook}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </c:if>
+                        </div>
+
+                        <!-- Products -->
+                        <section class="tiles">
                             <c:forEach items="${requestScope.bookauthor}" var="bookau">
                                 <article class="style1" style="width: calc(17% - 2.5em);
-                                     margin: 4em 0 0 4em;">
+                                         margin: 4em 0 0 4em;">
                                     <span class="image">
                                         <img src="${(!empty bookau.image)?bookau.image:"images/novel-sample.png"}" alt="${bookau.image}" style="height: 251px;" />
                                     </span>
@@ -90,38 +131,38 @@
                             </c:forEach>
                         </section>
 
+                    </div>
                 </div>
-            </div>
-            <!-- Footer -->
-            <footer id="footer">
-                <div class="inner">
-                    <section>
-                        <h2>Contact Info</h2>
-                        <ul class="alt">
-                            <li>
-                                <span class="fa fa-github"></span>
-                                <a href="https://github.com/nekon0/SoWePray">Our Project</a>
-                            </li>
-                            <li>
-                                <span class="fa fa-map-pin"></span>
-                                <a href="https://goo.gl/maps/ojwCjTqRteiA4B9U7">
-                                    DE210, FBT University</a
-                                >
-                            </li>
+                <!-- Footer -->
+                <footer id="footer">
+                    <div class="inner">
+                        <section>
+                            <h2>Contact Info</h2>
+                            <ul class="alt">
+                                <li>
+                                    <span class="fa fa-github"></span>
+                                    <a href="https://github.com/nekon0/SoWePray">Our Project</a>
+                                </li>
+                                <li>
+                                    <span class="fa fa-map-pin"></span>
+                                    <a href="https://goo.gl/maps/ojwCjTqRteiA4B9U7">
+                                        DE210, FBT University</a
+                                    >
+                                </li>
+                            </ul>
+                        </section>
+                        <ul class="copyright">
+                            <li>Bookie</li>
                         </ul>
-                    </section>
-                    <ul class="copyright">
-                        <li>Bookie</li>
-                    </ul>
-                </div>
-            </footer>
-        </div>
+                    </div>
+                </footer>
+            </div>
 
-        <!-- Scripts -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="assets/js/jquery.scrolly.min.js"></script>
-        <script src="assets/js/jquery.scrollex.min.js"></script>
-        <script src="assets/js/main.js"></script>
-    </body>
-</html>
+            <!-- Scripts -->
+            <script src="assets/js/jquery.min.js"></script>
+            <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <script src="assets/js/jquery.scrolly.min.js"></script>
+            <script src="assets/js/jquery.scrollex.min.js"></script>
+            <script src="assets/js/main.js"></script>
+        </body>
+    </html>

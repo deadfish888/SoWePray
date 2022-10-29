@@ -84,6 +84,7 @@
                                 <p>
                                     ${book.description}
                                 </p>
+                           
                                 <div class="row">        
                                     <c:if test="${sessionScope.user != null}">
                                         <c:if test="${requestScope.own}">
@@ -278,9 +279,10 @@
                                 <div class="form-group">
                                     <textarea class="form-control" name="comment" placeholder="Add a comment..."></textarea>
                                 </div>
-                                <input type="submit" value="Post">
-                                
+                                <div><input type="submit" value="Post">
+                                ${requestScope.confirm}</div>
                             </form> 
+                                
                             <table class="table">
                                 <c:forEach items="${requestScope.comments}" var="comment">
 
@@ -290,7 +292,7 @@
                                         </th>
                                         <td style="" style="height: 100px"><c:choose>
                                                 <c:when test="${comment.status == false}">
-                                                    <del>This comment has been banned.<del>
+                                                    <i>This comment has been banned.<i>
                                                 </c:when>
                                                 <c:otherwise>${comment.comment}
                                                 </c:otherwise>
@@ -299,8 +301,10 @@
                                         <td style="" style="height: 100px">
                                             <c:choose>
                                                 <c:when test="${!empty sessionScope.admin}">
+                                                    <c:if test="${comment.status == true}">
                                                     <a class="fa fa-times" type="button"  data-bs-toggle="modal" data-bs-target="#staticBackdrop-${comment.id}">
                                                     </a>
+                                                    </c:if>
                                                     <!-- Modal -->
                                                     <div class="modal" id="staticBackdrop-${comment.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
@@ -324,14 +328,15 @@
                                                 </div>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <form id="${comment.id}" action="ReportComment" method="get">
-                                                        <p><i class="fa fa-flag" aria-hidden="true" onclick="document.getElementById('${comment.id}').submit()"></i></p>
-                                                        <!--      <input type="submit" class="primary" display="hidden" value="Report">                          -->
-                                                        <input type="hidden" name="bId" value="${book.id}">
-                                                        <input type="hidden" name="cId" value="${comment.id}">
+                                                    <c:if test="${comment.status == true}">
+                                                        <form id="${comment.id}" action="ReportComment" method="get">
+                                                            <p><i class="fa fa-flag" aria-hidden="true" onclick="document.getElementById('${comment.id}').submit()"></i></p>
+                                                            <!--      <input type="submit" class="primary" display="hidden" value="Report">                          -->
+                                                            <input type="hidden" name="bId" value="${book.id}">
+                                                            <input type="hidden" name="cId" value="${comment.id}">
 
-                                                    </form>
-
+                                                        </form>
+                                                    </c:if>
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
@@ -381,12 +386,12 @@
                         <h2>Contact Info</h2>
                         <ul class="alt">
                             <li><span class="fa fa-github"></span> <a href="https://github.com/nekon0/SoWePray">Our Project</a></li>
-                            <li><span class="fa fa-map-pin"></span> <a href="https://goo.gl/maps/ojwCjTqRteiA4B9U7"> DE336, FBT University</a></li>
+                            <li><span class="fa fa-map-pin"></span> <a href="https://goo.gl/maps/ojwCjTqRteiA4B9U7"> DE210, FBT University</a></li>
                         </ul>
                     </section>
 
                     <ul class="copyright">
-                        <li> HLV </li>
+                        <li> Bookie </li>
                     </ul>
                 </div>
             </footer>
