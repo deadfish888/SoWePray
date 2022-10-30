@@ -128,8 +128,7 @@ public class TickController extends HttpServlet {
         if (request.getParameter("id_reject") != null) {
             int id_reject = Integer.parseInt(request.getParameter("id_reject"));
             if (id_reject > 0) {
-                Ticket rp = rpDao.getRP(id_reject);
-                rpDao.setStatus(rp.getId(), false);
+                rpDao.setStatus(id_reject, false);
             } else {
                 ArrayList<Ticket> listRead = rpDao.getAll();
                 for (Ticket ticket : listRead) {
