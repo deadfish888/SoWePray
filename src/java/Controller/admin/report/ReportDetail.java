@@ -32,6 +32,22 @@ public class ReportDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String action = request.getParameter("action");
+        String service = request.getParameter("service");
+        
+        Boolean status = null;
+        if (service.equals("close")) status = true;
+        if (service.equals("reject")) status = false;
+        
+        ReportDAO rd = new ReportDAO();
+        Report r = new Report();
+        r.setId(id);
+        r.setAction(action);
+        r.setStatus(status);
+        
+        rd.solveReport(r);
+        response.sendRedirect("./ReportDetail?id="+id);
     }
 
     @Override

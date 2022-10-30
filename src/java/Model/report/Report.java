@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Report {
 
     private int id, reportType, userId, objectId;
-    private String note;
+    private String note,action;
     private Timestamp sent, received;
     private Boolean status;
     // ReportType :
@@ -148,6 +148,14 @@ public class Report {
 
     public void setViolates(ArrayList<Violation> violates) {
         this.violates = violates;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
     
     

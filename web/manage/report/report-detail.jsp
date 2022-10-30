@@ -81,19 +81,38 @@
                         <div class="col-4">
                             <div class="card">
                                 <div class="card-body profile-card">
-                                    <center class="mt-4"> <img src="${report.bookO.image}" class="rounded"
-                                                               width="150" />
-                                        <h4 class="card-title mt-2">
-                                            <a target="_blank" href="../BookDetail?id=${report.bookO.id}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
-                                            <a href="./BookDetail?id=${report.bookO.id}">${report.bookO.title} - ID: ${report.bookO.id}</a></h4>
-                                        
-                                        <c:if test="${report.bookO.author.userId !=0}">
-                                            <h6 class="card-subtitle">Creator: <a href="url">${report.bookO.author.user.name} - ID: ${report.bookO.author.userId}</a></h6>
-                                            </c:if>
-                                            <c:if test="${report.bookO.author.userId ==0}">
-                                            <h6 class="card-subtitle">Author: ${report.bookO.author.name}</h6>
-                                            </c:if>
-                                    </center>
+                                    <c:choose>
+                                        <c:when test="${report.reportType == 1}">
+                                            <center class="mt-4"> <img src="${report.bookO.image}" class="rounded"
+                                                                       width="150" />
+                                                <h4 class="card-title mt-2">
+                                                    <a target="_blank" href="../BookDetail?id=${report.bookO.id}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
+                                                    <a href="./BookDetail?id=${report.bookO.id}">${report.bookO.title} - ID: ${report.bookO.id}</a></h4>
+
+                                                <c:if test="${report.bookO.author.userId !=0}">
+                                                    <h6 class="card-subtitle">Creator: <a href="url">${report.bookO.author.user.name} - ID: ${report.bookO.author.userId}</a></h6>
+                                                </c:if>
+                                                <c:if test="${report.bookO.author.userId ==0}">
+                                                    <h6 class="card-subtitle">Author: ${report.bookO.author.name}</h6>
+                                                </c:if>
+                                            </center>
+                                        </c:when>
+                                        <c:when test="${report.reportType == 2}">
+                                            <center class="mt-4"> <img src="../images/default.png" class="rounded-circle"
+                                                                       width="100" />
+                                                <h4 class="card-title mt-2">
+                                                    <a target="_blank" href="../"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
+                                                    <a href="./?id=${report.comO.user.id}">Commenter: ${report.comO.user.name} - ID: ${report.comO.userId}</a>
+                                                </h4>
+                                                    <h6 class="card-subtitle">
+                                                        <a target="_blank" href="../BookDetail?id=${report.bookO.id}&&cmtId=${report.comO.id}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
+                                                        CommentID: ${report.comO.id}
+                                                    </h6>
+                                                
+                                            </center>
+                                        </c:when>
+
+                                    </c:choose>
                                 </div>
                             </div>
                         </div>
@@ -112,62 +131,75 @@
                                             <span class="badge rounded-pill bg-danger">Rejected</span>
                                         </c:otherwise>
                                     </c:choose>
-                                    
+
                                 </div>
                                 <div class="card-body">
                                     <c:choose>
-                                        <c:when test="${report.reportType == 1}">
-                                            <table class="table">
-                                                <tr>
-                                                    <th>Type</th>
-                                                    <td>${report.reportTypeName}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Reporter</th>
-                                                    <td><a href="url">${report.userR.username}</a> - ID: ${report.userId}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Violations</th>
-                                                    <td>
-                                                        <ul>
-                                                            <c:forEach var="ss" items="${report.violates}">
-                                                                <li>${ss.title}</li>
-                                                                </c:forEach>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Detail</th>
-                                                    <td style="white-space: pre-line">${report.note}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Sent</th>
-                                                    <td>${report.getSent()}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Status</th>
-                                                    <td>
-                                                        ${empty report.isStatus()?"Pending":(report.isStatus()?(report.getReceived()):"Rejected")}
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                            <c:if test="${empty report.isStatus()}">
-                                                <div class="row mt-3">
-                                                    <div class="col-md-1">
-                                                        <form method="post" action="./ReportDetail" >
-                                                            <input type="hidden" name="id" value="${report.id}">
+                                        <c:when test="${report.reportType == 1 || report.reportType ==2 }">
+                                            <form action="./ReportDetail" method="post">
+                                                <input type="hidden" name="id" value="${report.id}">
+                                                <table class="table">
+                                                    <tr>
+                                                        <th>Type</th>
+                                                        <td>${report.reportTypeName}</td>
+                                                    </tr>
+                                                    <c:if test="${report.reportType ==2 }">
+                                                        <tr>
+                                                        <th>Content</th>
+                                                        <td style="white-space: pre-line; font-style: italic">${report.comO.comment}</td>
+                                                    </tr>
+                                                    </c:if>
+                                                    <tr>
+                                                        <th>Reporter</th>
+                                                        <td><a href="url">${report.userR.username}</a> - ID: ${report.userId}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Violations</th>
+                                                        <td>
+                                                            <ul>
+                                                                <c:forEach var="ss" items="${report.violates}">
+                                                                    <li>${ss.title}</li>
+                                                                    </c:forEach>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Detail</th>
+                                                        <td style="white-space: pre-line">${report.note}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Sent</th>
+                                                        <td>${report.getSent()}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Status</th>
+                                                        <td>
+                                                            ${empty report.isStatus()?"Pending":(report.isStatus()?(report.getReceived()):"Rejected")}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Action</th>
+                                                        <td>
+                                                            <c:if test="${empty report.isStatus()}">
+                                                                <textarea class="form-control" style="white-space: pre-line" name="action" rows="5" required>${report.action}</textarea>
+                                                            </c:if>
+                                                            <c:if test="${!empty report.isStatus()}">
+                                                                <p style="white-space: pre-line">${report.action}</p>
+                                                            </c:if>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <c:if test="${empty report.isStatus()}">
+                                                    <div class="row mt-3">
+                                                        <div class="col-md-1">
                                                             <button type="submit" name="service" value="close" class="btn btn-primary">Close</button>
-                                                        </form>
-                                                    </div>
-                                                    <div class="col-md-1 m-l-10">
-                                                        <form method="post" action="./ReportDetail" >
-                                                            <input type="hidden" name="id" value="${report.id}">
+                                                        </div>
+                                                        <div class="col-md-1 m-l-10">
                                                             <button type="submit" name="service" value="reject" class="btn btn-danger">Reject</button>
-                                                        </form>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </c:if>
-
+                                                </c:if>
+                                            </form>
                                         </c:when>
                                         <c:when test="${report.reportType == 2}">
 
