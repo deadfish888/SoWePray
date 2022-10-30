@@ -99,12 +99,7 @@
                                     <div class="table-responsive">
                                         <table class="table user-table">
 
-                                            <div class="form-outline">
-                                                <form action="Users" method="Post">
-                                                    <input type="search" id="form1" class="form-control" placeholder="Search . . . ." aria-label="Search" style="width: 200px"
-                                                           name="txt" type="text" value="${txt}" >
-                                                </form>
-                                            </div>
+                                           
                                             <thead>
                                                 <tr style="cursor: pointer; font-size: 15px;">
                                                     <th class="border-top-0"><i class="fa-solid fa-list-ol"></i></th>
@@ -122,7 +117,15 @@
                                                     <tr>
                                                         <td>${s.id}</td>
                                                         <td width="15%"><a style="text-decoration: none" href="Activities?id=${s.uid}">${s.uid}</a></td>
-                                                        <td>${s.getTypeName()}</td>
+                                                        
+                                                        <c:choose>
+                                                            <c:when test="${s.typeID==4}">
+                                                                <td><a href="LoadAuthor?sendid=${s.uid}" style="text-decoration: none">${s.getTypeName()}</a></td>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                  <td>${s.getTypeName()}</td>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                         <td style="width: 40%;text-align: center;">${s.note}</td>
                                                         <td>${s.sent}</td>
                                                         <td>  

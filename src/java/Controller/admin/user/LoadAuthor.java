@@ -5,6 +5,8 @@ package Controller.admin.user;
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
+import Model.product.Author;
+import context.product.AuthorDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -65,6 +67,14 @@ public class LoadAuthor extends HttpServlet {
         if (request.getParameter("aid") != null) {
             String aid = request.getParameter("aid");
             session.setAttribute("aid", aid);
+            response.sendRedirect("Book");
+            return;
+        }
+        
+        if (request.getParameter("sendid") != null) {
+            AuthorDAO dao = new AuthorDAO();
+            Author au = dao.getAuthorByUserId(Integer.parseInt(request.getParameter("sendid")));
+            session.setAttribute("aid", au.getId());
             response.sendRedirect("Book");
             return;
         }

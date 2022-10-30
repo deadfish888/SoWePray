@@ -109,10 +109,9 @@ public class SupportController extends HttpServlet {
 
         User user = (User) request.getSession().getAttribute("user");
         String txt = request.getParameter("txt").toString();
-        uDao.isVIP(user.getId());
         if (user.is_super() == 0) {
             if (uDao.isVIP(user.getId())) {
-                rpDao.passReport(3, user.getId(), txt, true);
+                rpDao.passReport(3, user.getId(), "Your request has been apporved", true);
                 uDao.editRank(user.getId(), 1);
             } else {
                 rpDao.senndReport(3, user.getId(), txt);
@@ -122,7 +121,8 @@ public class SupportController extends HttpServlet {
             return;
         }
         if (uDao.isVIP(user.getId())) {
-            rpDao.passReport(4, user.getId(), txt, true);
+            rpDao.passReport(4, user.getId(), "Your request has been apporved", true);
+            uDao.editRank(user.getId(), (3 - user.is_super()));
         } else {
             rpDao.senndReport(4, user.getId(), txt);
         }

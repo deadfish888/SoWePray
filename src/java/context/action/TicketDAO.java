@@ -402,13 +402,16 @@ public class TicketDAO {
     }
 
     public void setStatus(int id, boolean b) {
+        String send = b ? "Your request has been apporved" : "Your request has been denied";
         String sql = "UPDATE [dbo].[Report]\n"
                 + "   SET [status] = ?\n"
+                + "   ,[note] = ?"
                 + " WHERE [id] = ?";
         try {
             stm = cnn.prepareStatement(sql);
             stm.setBoolean(1, b);
-            stm.setInt(2, id);
+            stm.setString(2, send);
+            stm.setInt(3, id);
             stm.executeUpdate();
         } catch (Exception e) {
             System.out.println("editProfile Error:" + e.getMessage());

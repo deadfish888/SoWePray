@@ -103,6 +103,7 @@
                                                 <th>Author</th>
                                                 <th style="width: 150px;">Image</th>
                                                 <th>Genre</th>
+                                                <th>View</th>
                                                 <th>Price</th>
                                                 <th>Sale</th>
                                                 <th>Update</th>
@@ -123,6 +124,7 @@
                                                             <span class="badge rounded-pill bg-secondary" style="font-size: 80%;font-weight: 400;">${category.name}</span>
                                                         </c:forEach>
                                                     </td>
+                                                    <td>${book.views}</td>
                                                     <td>$${book.getPrice()}</td>
                                                     <td><input class="checkbox-inline" type="checkbox" ${book.issale()?"checked":""} disabled></td>
                                                     <td><a class="btn btn-primary" href="./UpdateBook?id=${book.id}"><i class="fa fa-pen-square" aria-hidden="true"></i></a></td>
@@ -191,7 +193,7 @@
     <script src="/Bookie/manage/html/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="/Bookie/manage/html/js/custom.js"></script>
-    
+
 </body>
 
 </html>
