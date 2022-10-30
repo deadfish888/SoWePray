@@ -95,7 +95,7 @@
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Users List</h4>
+                                    <h4 class="card-title">List</h4>
                                     <div class="table-responsive">
                                         <table class="table user-table">
 
@@ -121,7 +121,7 @@
                                                 <form action="./Ticket" method="Post">
                                                     <tr>
                                                         <td>${s.id}</td>
-                                                        <td width="15%">${s.uid}</td>
+                                                        <td width="15%"><a style="text-decoration: none" href="Activities?id=${s.uid}">${s.uid}</a></td>
                                                         <td>${s.getTypeName()}</td>
                                                         <td style="width: 40%;text-align: center;">${s.note}</td>
                                                         <td>${s.sent}</td>
@@ -162,8 +162,16 @@
                                                     <i class="fa fa-angle-right" aria-hidden="true"  ></i>
                                                 </a>
                                             </li>
+                                            <li style="margin-left: 80%">
+                                                <form action="./Ticket" method="Post">
+                                                    <a><button class="btn btn-primary" name="id_pass" value="0" type="submit">Pass</button></a>
+                                                    <a><button class="btn btn-primary" name="id_reject" value="0"  type="submit">Reject</button></a>
+                                                </form>
+                                            </li>
                                         </ul>
+
                                     </div>
+
                                 </div>
                             </div>
                         </div>

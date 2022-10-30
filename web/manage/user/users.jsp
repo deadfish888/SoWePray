@@ -122,7 +122,7 @@
                                                 <c:forEach var="s" items="${users}">
                                                 <form action="./Users" method="Post">
                                                     <tr>
-                                                        <td>${s.id}</td>
+                                                        <td><a style="text-decoration: none" href="Activities?id=${s.id}">${s.id}</a></td>
                                                         <td width="15%">${s.name}</td>
                                                         <td style="width: 200px;">${s.username}</td>
                                                         <td>${s.email}</td>
@@ -178,7 +178,7 @@
                                                            >${item}</a></li>
                                                     </c:forEach>
                                                 <li >
-                                                    <a href="LoadUser?xpage3=${xpage3+1}" class="page-link" style="${xpage3+2>numPage?"display:none":""}">
+                                                    <a href="LoadUser?xpage3=${xpage3+1}" class="page-link" style="${xpage3+2>numPage3?"display:none":""}">
                                                         <i class="fa fa-angle-right" aria-hidden="true"  ></i>
                                                     </a>
                                                 </li>

@@ -21,7 +21,7 @@ public class Ticket {
     private Date received;
     private boolean status;
     private String stage;
-            
+
     public Ticket() {
     }
 
@@ -48,18 +48,32 @@ public class Ticket {
     public int getTypeID() {
         return typeID;
     }
-    public String getTypeName(){
-        if (this.typeID==3) {
-            return "Enable Account";
+
+    public String getTypeName() {
+        String ret = "";
+        switch (this.typeID) {
+            case 1:
+                ret = "Report Book";
+                break;
+            case 2:
+                ret = "Report Comment";
+                break;
+            case 3:
+                ret = "Enable Account";
+                break;
+            case 4:
+                ret = "Enable Monetization ";
+                break;
+            default:
+                throw new AssertionError();
         }
-        return "Enabale Monetization";
+        return ret;
     }
 
     public void setTypeID(int typeID) {
         this.typeID = typeID;
     }
 
-   
     public int getUid() {
         return uid;
     }
@@ -115,7 +129,5 @@ public class Ticket {
     public void setStage(String stage) {
         this.stage = stage;
     }
-
-
 
 }

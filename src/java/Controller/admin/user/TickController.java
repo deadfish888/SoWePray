@@ -69,7 +69,7 @@ public class TickController extends HttpServlet {
         ArrayList<Ticket> listRead = rpDao.getAll();
         HttpSession session = request.getSession();
         User us = (User) session.getAttribute("admin");
-        
+
         String xpage = request.getParameter("xpage");
         int page;
         if (xpage == null) {
@@ -100,22 +100,51 @@ public class TickController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         if (request.getParameter("id_pass") != null) {
-            Ticket rp = rpDao.getRP(Integer.parseInt(request.getParameter("id_pass")));
-            rpDao.setStatus(rp.getId(), true);
-            if (rp.getTypeID() == 3) {
-                uDao.editRank(rp.getUid(), 1);
-            }
-            if (rp.getTypeID() == 4) {
-                 User us = uDao.getUser(rp.getUid());
-                uDao.editRank(rp.getUid(), (3-us.is_super()));
+            int in_pass = Integer.parseInt(request.getParameter("id_pass"));
+            if (in_pass > 0) {
+                Ticket rp = rpDao.getRP(in_pass);
+                rpDao.setStatus(rp.getId(), true);
+                if (rp.getTypeID() == 3) {
+                    uDao.editRank(rp.getUid(), 1);
+                } else if (rp.getTypeID() == 4) {
+                    User us = uDao.getUser(rp.getUid());
+                    uDao.editRank(rp.getUid(), (3 - us.is_super()));
+                }
+            } else {
+                ArrayList<Ticket> listRead = rpDao.getAll();
+                for (Ticket ticket : listRead) {
+                    rpDao.setStatus(ticket.getId(), true);
+                    if (ticket.getTypeID() == 3) {
+                        uDao.editRank(ticket.getUid(), 1);
+                    } else if (ticket.getTypeID() == 4) {
+                        User us = uDao.getUser(ticket.getUid());
+                        uDao.editRank(ticket.getUid(), (3 - us.is_super()));
+                    }
+                }
             }
         }
         if (request.getParameter("id_reject") != null) {
-            Ticket rp = rpDao.getRP(Integer.parseInt(request.getParameter("id_pass")));
-            rpDao.setStatus(rp.getId(), false);
+            int id_reject = Integer.parseInt(request.getParameter("id_reject"));
+            if (id_reject > 0) {
+                Ticket rp = rpDao.getRP(id_reject);
+                rpDao.setStatus(rp.getId(), false);
+            } else {
+                ArrayList<Ticket> listRead = rpDao.getAll();
+                for (Ticket ticket : listRead) {
+                    rpDao.setStatus(ticket.getId(), false);
+                }
+            }
         }
 
+        HttpSession session = request.getSession();
+
+        if (rpDao.count() == 0) {
+            session.removeAttribute("number");
+        } else {
+            session.setAttribute("number", rpDao.count());
+        }
         response.sendRedirect("Ticket");
     }
 

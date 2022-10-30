@@ -38,12 +38,10 @@ public class TicketDAO {
         }
     }
 
-    
-
     public void passReport(int type, int uid, String txt, boolean status) {
         try {
             String sql = "INSERT INTO [dbo].[Report]\n"
-                    + "           ([reportTypeId]\n"
+                    + "           ([reportType]\n"
                     + "           ,[userId]\n"
                     + "           ,[objectId]\n"
                     + "           ,[note]\n"
@@ -51,17 +49,17 @@ public class TicketDAO {
                     + "           ,[received]\n"
                     + "           ,[status])\n"
                     + "     VALUES\n"
-                    + "           ( ?\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,NULL\n"
+                    + "           , ?\n"
                     + "           , ?\n"
                     + "           , NULL\n"
-                    + "           , ?\n"
-                    + "           , ?\n"
-                    + "           , NULL\n"
-                    + "           , ? )";
+                    + "           ,? )";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, type);
             stm.setInt(2, uid);
-            stm.setString(3, "N'" + txt + "'");
+            stm.setString(3, txt);
             SimpleDateFormat sdf = new SimpleDateFormat();
             stm.setString(4, sdf.format(new Date()));
             stm.setBoolean(5, status);
@@ -74,7 +72,7 @@ public class TicketDAO {
     public void senndReport(int type, int uid, String txt) {
         try {
             String sql = "INSERT INTO [dbo].[Report]\n"
-                    + "           ([reportTypeId]\n"
+                    + "           ([reportType]\n"
                     + "           ,[userId]\n"
                     + "           ,[objectId]\n"
                     + "           ,[note]\n"
@@ -82,9 +80,9 @@ public class TicketDAO {
                     + "           ,[received]\n"
                     + "           ,[status])\n"
                     + "     VALUES\n"
-                    + "           ( ?\n"
-                    + "           , ?\n"
-                    + "           , NULL\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,NULL\n"
                     + "           , ?\n"
                     + "           , ?\n"
                     + "           , NULL\n"
@@ -92,7 +90,7 @@ public class TicketDAO {
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, type);
             stm.setInt(2, uid);
-            stm.setString(3, "N'" + txt + "'");
+            stm.setString(3, txt);
             SimpleDateFormat sdf = new SimpleDateFormat();
             stm.setString(4, sdf.format(new Date()));
             stm.executeUpdate();
@@ -106,7 +104,8 @@ public class TicketDAO {
         try {
             String sql = "SELECT COUNT([id])\n"
                     + "  FROM [BOOKIE].[dbo].[Report]\n"
-                    + "  WHERE [status] IS NULL";
+                    + "  WHERE [status] IS NULL "
+                    + "  AND ([reportType] = 3 OR [reportType] =4)";
             stm = cnn.prepareStatement(sql);
             rs = stm.executeQuery();
             if (rs.next()) {
@@ -121,18 +120,19 @@ public class TicketDAO {
     public ArrayList<Ticket> getRead(int uid) {
         ArrayList<Ticket> list = new ArrayList<>();
         try {
-            String sql = "SELECT TOP 5 [Report].[id]\n"
-                    + "      ,[reportTypeId]\n"
+            String sql = "SELECT TOP 5\n"
+                    + "		[id]\n"
+                    + "      ,[reportType]\n"
                     + "      ,[userId]\n"
                     + "      ,[objectId]\n"
                     + "      ,[note]\n"
                     + "      ,[sent]\n"
                     + "      ,[received]\n"
                     + "      ,[status]\n"
-                    + "  FROM [dbo].[Report] \n"
+                    + "  FROM [dbo].[Report]\n"
                     + "  WHERE [received] IS NOT NULL\n"
-                    + "  AND [userId] = ?\n"
-                    + "  ORDER BY [Report].[id] DESC";
+                    + "  AND userId = ?\n"
+                    + "  ORDER BY [id] DESC";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, uid);
             rs = stm.executeQuery();
@@ -160,19 +160,19 @@ public class TicketDAO {
     public ArrayList<Ticket> getUnRead(int uid) {
         ArrayList<Ticket> list = new ArrayList<>();
         try {
-            String sql = "SELECT TOP 5[Report].[id]\n"
-                    + "  ,[reportTypeId]\n"
-                    + "  , [userId]\n"
-                    + "  , [objectId]\n"
-                    + "  , [note]\n"
-                    + "  , [sent]\n"
-                    + "  , [received]\n"
-                    + "  , [status]\n"
-                    + "FROM[dbo].[Report] \n"
-                    + "WHERE [received] IS NULL\n"
-                    + "AND[status] IS NOT NULL\n"
-                    + "AND[userId] = ? \n"
-                    + "  ORDER BY[Report].[id] DESC";
+            String sql = "SELECT [id]\n"
+                    + "      ,[reportType]\n"
+                    + "      ,[userId]\n"
+                    + "      ,[objectId]\n"
+                    + "      ,[note]\n"
+                    + "      ,[sent]\n"
+                    + "      ,[received]\n"
+                    + "      ,[status]\n"
+                    + "  FROM [dbo].[Report]\n"
+                    + "  WHERE [received] IS  NULL\n"
+                    + "  AND userId = ?\n"
+                    + "  AND [status] IS NOT NULL\n"
+                    + "  ORDER BY [id] DESC";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, uid);
             rs = stm.executeQuery();
@@ -188,7 +188,7 @@ public class TicketDAO {
                 if (status == false) {
                     stage = "Reject";
                 }
-                
+
                 Ticket rp = new Ticket(id, type, uid, objectId, note, sent, received, status, stage);
 
                 list.add(rp);
@@ -202,18 +202,18 @@ public class TicketDAO {
     public ArrayList<Ticket> getSent(int uid) {
         ArrayList<Ticket> list = new ArrayList<>();
         try {
-            String sql = "SELECT [Report].[id]\n"
-                    + "      ,[reportTypeId]\n"
-                    + "  , [userId]\n"
-                    + "  , [objectId]\n"
-                    + "  , [note]\n"
-                    + "  , [sent]\n"
-                    + "  , [received]\n"
-                    + "  , [status]\n"
-                    + "FROM[dbo].[Report] \n"
-                    + "WHERE [userId] = ? \n"
-                    + "AND [status] IS NULL\n"
-                    + "ORDER BY[Report].[id] DESC";
+            String sql = "SELECT [id]\n"
+                    + "      ,[reportType]\n"
+                    + "      ,[userId]\n"
+                    + "      ,[objectId]\n"
+                    + "      ,[note]\n"
+                    + "      ,[sent]\n"
+                    + "      ,[received]\n"
+                    + "      ,[status]\n"
+                    + "  FROM [dbo].[Report]\n"
+                    + "  WHERE  userId = ?\n"
+                    + "  AND [status] IS NULL\n"
+                    + "  ORDER BY [id] DESC";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, uid);
             rs = stm.executeQuery();
@@ -235,20 +235,61 @@ public class TicketDAO {
         return list;
     }
 
+    public ArrayList<Ticket> getAction(int uid) {
+        ArrayList<Ticket> list = new ArrayList<>();
+        try {
+            String sql = "SELECT [id]\n"
+                    + "      ,[reportType]\n"
+                    + "      ,[userId]\n"
+                    + "      ,[objectId]\n"
+                    + "      ,[note]\n"
+                    + "      ,[sent]\n"
+                    + "      ,[received]\n"
+                    + "      ,[status]\n"
+                    + "  FROM [dbo].[Report]\n"
+                    + "  WHERE [userId] = ?\n"
+                    + "  AND ([status] IS NULL OR [status] = 0 )";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, uid);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                int type = rs.getInt(2);
+                int objectId = rs.getInt(4);
+                String note = rs.getString(5);
+                Date sent = rs.getDate(6);
+                Date received = rs.getDate(7);
+                boolean status = rs.getBoolean(8);
+                String stage = "Passed";
+                if (status == false) {
+                    stage = "Reject";
+                }
+
+                Ticket rp = new Ticket(id, type, uid, objectId, note, sent, received, status, stage);
+
+                list.add(rp);
+            }
+        } catch (Exception e) {
+            System.out.println("get rp Error:" + e.getMessage());
+        }
+        return list;
+    }
+
     public ArrayList<Ticket> getAll() {
         ArrayList<Ticket> list = new ArrayList<>();
         try {
-            String sql = "SELECT [Report].[id]\n"
-                    + "      ,[reportTypeId]\n"
-                    + "  , [userId]\n"
-                    + "  , [objectId]\n"
-                    + "  , [note]\n"
-                    + "  , [sent]\n"
-                    + "  , [received]\n"
-                    + "  , [status]\n"
-                    + "FROM[dbo].[Report] \n"
-                    + "WHERE  [status] IS NULL\n"
-                    + "ORDER BY[Report].[id] DESC";
+            String sql = "SELECT [id]\n"
+                    + "      ,[reportType]\n"
+                    + "      ,[userId]\n"
+                    + "      ,[objectId]\n"
+                    + "      ,[note]\n"
+                    + "      ,[sent]\n"
+                    + "      ,[received]\n"
+                    + "      ,[status]\n"
+                    + "  FROM [dbo].[Report]\n"
+                    + "  WHERE  [status] IS NULL\n"
+                    + "  AND ([reportType] = 3 OR [reportType] =4)\n"
+                    + "  ORDER BY [id] DESC";
             stm = cnn.prepareStatement(sql);
             rs = stm.executeQuery();
             while (rs.next()) {
@@ -260,7 +301,7 @@ public class TicketDAO {
                 Date sent = rs.getDate(6);
                 Date received = rs.getDate(7);
                 boolean status = rs.getBoolean(8);
-                
+
                 Ticket rp = new Ticket(id, type, uid, objectId, note, sent, received, status, "On Process");
                 list.add(rp);
             }
@@ -273,10 +314,11 @@ public class TicketDAO {
     public boolean hasSent(int id) {
         int num = 0;
         try {
-            String sql = "SELECT count([id])\n"
-                    + "  FROM [dbo].[Report]\n"
-                    + "  WHERE [userId] = ?\n"
-                    + "  AND [status] IS NULL";
+            String sql = "SELECT COUNT([id])\n"
+                    + "  FROM [BOOKIE].[dbo].[Report]\n"
+                    + "  WHERE [Report].[userId] = ? \n"
+                    + "  AND [status] IS NULL\n"
+                    + "  AND ([reportType] = 3 OR [reportType] =4)";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, id);
             rs = stm.executeQuery();
@@ -329,16 +371,16 @@ public class TicketDAO {
     public Ticket getRP(int id) {
         Ticket rp = new Ticket();
         try {
-            String sql = "SELECT [Report].[id]\n"
-                    + "      ,[reportTypeId]\n"
-                    + "  , [userId]\n"
-                    + "  , [objectId]\n"
-                    + "  , [note]\n"
-                    + "  , [sent]\n"
-                    + "  , [received]\n"
-                    + "  , [status]\n"
-                    + "FROM[dbo].[Report], [dbo].[ReportType]\n"
-                    + "WHERE[dbo].[Report].[id] = ? ";
+            String sql = "SELECT [id]\n"
+                    + "      ,[reportType]\n"
+                    + "      ,[userId]\n"
+                    + "      ,[objectId]\n"
+                    + "      ,[note]\n"
+                    + "      ,[sent]\n"
+                    + "      ,[received]\n"
+                    + "      ,[status]\n"
+                    + "  FROM [dbo].[Report]\n"
+                    + "  WHERE  [Report].[id] = ? ";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, id);
             rs = stm.executeQuery();
@@ -374,7 +416,7 @@ public class TicketDAO {
     }
 
     public ArrayList<Ticket> getByPage(ArrayList<Ticket> listRead, int start, int end) {
-         ArrayList<Ticket> listpage = new ArrayList<>();
+        ArrayList<Ticket> listpage = new ArrayList<>();
         if (listRead.size() < end) {
             end = listRead.size();
         }

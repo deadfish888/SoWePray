@@ -107,7 +107,7 @@
                     <table class="table user-table " id="tablepro" style="width:70%">
                         <thead>
                             <tr style="cursor: pointer; font-size: 15px;">
-                                <th style="width: 15%">Title</th>
+                                <th style="width: 20%">Title</th>
                                 <th style="width: 40%;text-align: center">Note</th>
                                 <th style="width: 10%">Sent</th>
                                 <th style="width: 10%">Status</th>
@@ -116,7 +116,7 @@
                         <tbody>
                             <c:forEach var="reads" items="${reads}">
                                 <tr data-toggle="modal" data-target="#changePasswordModal" style="cursor: pointer" >
-                                    <td style="width: 15%">${reads.getTypeName()}
+                                    <td style="width: 20%">${reads.getTypeName()}
                                         <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">

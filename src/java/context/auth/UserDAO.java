@@ -178,7 +178,30 @@ public class UserDAO {
     public ArrayList<User> getByAccess(int us) {
         ArrayList<User> list = new ArrayList<>();
         try {
-            String sql = "Select * from [User] where [is_super] < ?";
+            String sql = "SELECT DISTINCT  [User].[id]\n"
+                    + "                     ,[fullname]\n"
+                    + "                     ,[gender]\n"
+                    + "                     ,[dob]\n"
+                    + "                     ,[email]\n"
+                    + "                     ,[phone]\n"
+                    + "                     ,[address]\n"
+                    + "                     ,[username]\n"
+                    + "                     ,[password]\n"
+                    + "                     ,[is_super]\n"
+                    + "                     ,[walletNumber] \n"
+                    + "                 FROM [dbo].[User]\n"
+                    + "                 WHERE [User].[is_super] < ?\n"
+                    + "				 AND  (\n"
+                    + "				 [User].[id] IN \n"
+                    + "				 (SELECT  [Report].[userId] FROM [Report]\n"
+                    + "				 WHERE ([status] = 0 OR [status] is null)\n"
+                    + "				 group by [Report].[userId]\n"
+                    + "				 having count([Report].[id]) >1)\n"
+                    + "				 OR \n"
+                    + "				 ([User].[id] IN  \n"
+                    + "				 (SELECT  [Transaction].[userId] FROM [Transaction]\n"
+                    + "				 group by [Transaction].[userId]\n"
+                    + "				 having count([Transaction].[transactionId])>5)))";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, us);
             rs = stm.executeQuery();
@@ -718,12 +741,12 @@ public class UserDAO {
             stm.setInt(1, id);
             rs = stm.executeQuery();
             if (rs.next()) {
-            num = rs.getInt(1);
+                num = rs.getInt(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (num >3) {
+        if (num > 3) {
             return true;
         }
         return false;
