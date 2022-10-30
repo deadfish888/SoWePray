@@ -9,6 +9,7 @@ import Model.product.content.Chapter;
 import Model.action.Comment;
 import Model.product.content.Volume;
 import Model.auth.User;
+import Model.product.Product;
 import context.product.BookDAO;
 import context.product.content.ChapterDAO;
 import context.action.CommentDAO;
@@ -49,6 +50,8 @@ public class BookDetail extends HttpServlet {
             ChapterDAO chd = new ChapterDAO();
             VolumeDAO vd = new VolumeDAO();
             CommentDAO cmd = new CommentDAO();
+            ProductDAO productDAO = new ProductDAO();
+
             Book thisbook = b.getBookById(id);
             User user = (User) request.getSession().getAttribute("user");
             if (user != null) {
@@ -71,9 +74,19 @@ public class BookDetail extends HttpServlet {
             request.setAttribute("check", check);
             if (thisbook.getAuthor().getUserId() == 0) {
                 request.getRequestDispatcher("/views/book/book-details.jsp").forward(request, response);
-                return;
+            } else {
+                ArrayList<Product> chapterProductList = new ArrayList<>();
+                for (Chapter chapter : chaps) {
+                    Product product = productDAO.getByChapter(chapter);
+                    chapterProductList.add(product);
+                }
+                Product bookProduct = new Product("B" + id);
+                bookProduct = productDAO.get(bookProduct);
+
+                request.setAttribute("chapterProductList", chapterProductList);
+                request.setAttribute("bookProduct", bookProduct);
+                request.getRequestDispatcher("/views/book/novel-details.jsp").forward(request, response);
             }
-            request.getRequestDispatcher("/views/book/novel-details.jsp").forward(request, response);
         } catch (Exception e) {
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }

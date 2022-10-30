@@ -8,6 +8,7 @@ package Controller.product.content;
 import Model.auth.User;
 import Model.product.Book;
 import Model.product.content.Chapter;
+import Model.product.content.Volume;
 import context.product.BookDAO;
 import context.product.content.ChapterDAO;
 import context.product.content.VolumeDAO;
@@ -70,11 +71,13 @@ public class EditChapterController extends HttpServlet {
 
         Chapter chapter = new Chapter();
         chapter.setId(id);
+        chapter.setVolumeId(volId);
         chapter.setTitle(name);
         chapter.setStatus(status);
         chapter.setContent(content);
 
         ChapterDAO cd = new ChapterDAO();
+        chapter.setNo(cd.getChapterNo(id));
 
         if (cd.editChapter(chapter) == 0) {
             BookDAO bd = new BookDAO();

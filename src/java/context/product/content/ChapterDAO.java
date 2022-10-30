@@ -6,9 +6,12 @@ package context.product.content;
 
 import Model.product.Author;
 import Model.product.Book;
+import Model.product.Product;
 import Model.product.content.Chapter;
 import Model.product.content.Volume;
 import context.DBContext;
+import context.product.BookDAO;
+import context.product.ProductDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -175,7 +178,17 @@ public class ChapterDAO {
             stm.setString(5, chapter.getContent());
             rs = stm.executeQuery();
             if (rs.next()) {
-                if(chapter.isStatus()) setChapterPrice(rs.getInt(1), chapter.getContent());
+                BookDAO bookDAO = new BookDAO();
+                Book book = bookDAO.getByVolume(chapter.getVolumeId());
+
+                ProductDAO productDAO = new ProductDAO();
+                ChapterDAO cd = new ChapterDAO();
+                Product product = new Product("B" + book.getId() + "-C" + cd.getChapterNo(rs.getInt(1)));
+                product.setBook(book);
+                chapter.setId(rs.getInt(1));
+                product.setChapter(chapter);
+                productDAO.insert(product);
+                productDAO.updateBookPrice(book);
                 return rs.getInt(1);
             }
         } catch (SQLException ex) {
@@ -255,12 +268,17 @@ public class ChapterDAO {
             stm.setString(3, chapter.getContent());
             stm.setInt(4, chapter.getId());
             int n = stm.executeUpdate();
-            if(n != 0 ){
-                if(chapter.isStatus()){
-                    setChapterPrice(chapter.getId(), chapter.getContent());
-                }else{
-                    deleteChapterPayment(chapter.getId());
-                }
+            if (n != 0) {
+                BookDAO bookDAO = new BookDAO();
+                Book book = bookDAO.getByVolume(chapter.getVolumeId());
+
+                ProductDAO productDAO = new ProductDAO();
+                Product product = new Product("B" + book.getId() + "-C" + chapter.getNo());
+                product.setBook(book);
+                product.setChapter(chapter);
+                product.caculatePrice();
+                productDAO.update(product);
+                productDAO.updateBookPrice(book);
             }
             return n;
         } catch (SQLException ex) {
@@ -273,6 +291,8 @@ public class ChapterDAO {
         try {
             String sql = "DELETE FROM [dbo].[Chapter]\n"
                     + "      WHERE [id] = ? ";
+            ProductDAO productDAO = new ProductDAO();
+            productDAO.deleteByChapter(chapterId);
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, chapterId);
             return stm.executeUpdate();
@@ -356,17 +376,17 @@ public class ChapterDAO {
                     + "                        INNER JOIN [Chapter] c ON v.[id]= c.[volumeId]"
                     + "                        WHERE c.[id] = ? ))";
             stm = cnn.prepareStatement(sql);
-            stm.setInt(1, chapter.split("\\s+").length/1000);
+            stm.setInt(1, chapter.split("\\s+").length / 1000);
             stm.setInt(2, chapterId);
             stm.setInt(3, chapterId);
             stm.setInt(4, chapterId);
-            stm.setInt(5, chapter.split("\\s+").length/1000);
+            stm.setInt(5, chapter.split("\\s+").length / 1000);
             stm.setInt(6, chapterId);
             stm.execute();
         } catch (SQLException ex) {
             Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     private void deleteChapterPayment(int id) {
@@ -379,6 +399,24 @@ public class ChapterDAO {
         } catch (SQLException ex) {
             Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public int getChapterNo(int id) {
+
+        try {
+            String sql = "SELECT [no]\n"
+                    + "  FROM [Chapter]"
+                    + "  WHERE [id] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, id);
+            rs = stm.executeQuery();
+            if(rs.next()) {
+                return rs.getInt("no");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 
 }
