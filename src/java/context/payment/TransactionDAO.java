@@ -248,7 +248,7 @@ public class TransactionDAO {
                 sql += "\n  AND [status] = " + transaction.getStatus();
             }
             if(transaction.getProduct() != null) {
-                sql += "\n  AND [productId] = '" + transaction.getProduct().getProductId() + "'";
+                sql += "\n  AND [productId] LIKE '%" + transaction.getProduct().getProductId() + "%'";
             }
             System.out.println(sql);
             stm = cnn.prepareStatement(sql);
