@@ -52,8 +52,10 @@ public class TransactionDAO {
                     + "           ,[status]\n"
                     + "           ,[description]\n"
                     + "           ,[transactionTime])\n"
+                    + "           ,[productId])\n"
                     + "     VALUES\n"
                     + "           (?\n"
+                    + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
@@ -68,6 +70,7 @@ public class TransactionDAO {
             stm.setInt(5, transaction.getStatus());
             stm.setString(6, transaction.getDescription());
             stm.setTimestamp(7, transaction.getTransactionTime());
+            stm.setString(8, transaction.getProduct().getProductId());
             return stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(TransactionDAO.class.getName()).log(Level.SEVERE, null, ex);

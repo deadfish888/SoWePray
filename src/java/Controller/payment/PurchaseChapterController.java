@@ -66,7 +66,7 @@ public class PurchaseChapterController extends HttpServlet {
             product = productDAO.get(product);
 
             transaction.setProduct(product);
-            transaction.setDescription("Buy " + product.getBook().getTitle() + ".");
+            transaction.setDescription("Buy " + product.toString() + ".");
             transDAO.insert(transaction);
 
             payAccDAO.update(user.getPaymentAccount());
