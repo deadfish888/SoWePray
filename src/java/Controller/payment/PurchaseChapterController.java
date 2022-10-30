@@ -2,20 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package Controller.payment;
 
-import Model.product.Book;
-//import Model.payment.PaymentMethod;
-import Model.payment.Transaction;
 import Model.auth.User;
+import Model.payment.Transaction;
+import Model.product.Book;
 import Model.product.Product;
-import context.product.BookOwnDAO;
 import context.payment.PaymentAccountDAO;
-//import context.payment.PaymentMethodDAO;
 import context.payment.TransactionDAO;
+import context.product.BookOwnDAO;
 import context.product.ProductDAO;
 import context.product.ProductOwnDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -28,27 +28,25 @@ import java.util.Calendar;
  *
  * @author Silver_000
  */
-@WebServlet(name = "PurchaseController", urlPatterns = {"/User/Purchase"})
-public class PurchaseController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+@WebServlet(name="PurchaseChapterController", urlPatterns={"/User/PurchaseChapter"})
+public class PurchaseChapterController extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
         TransactionDAO transDAO = new TransactionDAO();
 
         float amount = Float.parseFloat(request.getParameter("amount"));
 
         User user = (User) request.getSession().getAttribute("user");
-
+        
         if (amount > user.getPaymentAccount().getBalance()) {
             response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("bookId"));
         } else {
@@ -63,13 +61,12 @@ public class PurchaseController extends HttpServlet {
             transaction.setType(3);
             transaction.setStatus(3);
 
-            String bookId = request.getParameter("bookId");
             ProductDAO productDAO = new ProductDAO();
-            Product product = new Product("B" + bookId);
+            Product product = new Product(request.getParameter("productId"));
             product = productDAO.get(product);
 
             transaction.setProduct(product);
-            transaction.setDescription("Buy " + product.toString() + ".");
+            transaction.setDescription("Buy " + product.getBook().getTitle() + ".");
             transDAO.insert(transaction);
 
             payAccDAO.update(user.getPaymentAccount());
@@ -77,8 +74,8 @@ public class PurchaseController extends HttpServlet {
             if (author != null) {
                 Transaction auTransaction = new Transaction();
                 auTransaction.setUser(author);
-                auTransaction.setAmount(amount);
-                auTransaction.setBalanceAfter(author.getPaymentAccount().getBalance() + amount);
+                auTransaction.setAmount(author.getPaymentAccount().getBalance() + amount);
+                auTransaction.setBalanceAfter(walletBalance);
                 auTransaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
                 auTransaction.setType(4);
                 auTransaction.setStatus(3);
@@ -91,20 +88,17 @@ public class PurchaseController extends HttpServlet {
             }
 
             BookOwnDAO bookOwnDAO = new BookOwnDAO();
-            Book book = new Book();
-            book.setId(Integer.parseInt(bookId));
-            bookOwnDAO.insert(book, user);
+            bookOwnDAO.insert(product.getBook(), user);
             ProductOwnDAO productOwnDAO = new ProductOwnDAO();
             productOwnDAO.insert(product, user);
 
-            response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + bookId);
+            response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + product.getBook().getId());
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -112,13 +106,12 @@ public class PurchaseController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -126,13 +119,12 @@ public class PurchaseController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

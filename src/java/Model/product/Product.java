@@ -88,4 +88,17 @@ public class Product {
         return name;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Product) {
+            Product product = (Product) obj;
+            if(product.getChapter() != null) {
+                return product.getChapter().equals(chapter);
+            }
+            return product.getProductId().equals(productId);
+        }
+        return false;
+    }
+
+    
 }

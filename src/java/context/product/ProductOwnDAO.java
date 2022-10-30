@@ -5,10 +5,8 @@
 package context.product;
 
 import Model.auth.User;
-import Model.product.Author;
-import Model.product.Book;
-import Model.product.BookOwn;
 import Model.product.Product;
+import Model.product.ProductOwn;
 import context.DBContext;
 import context.product.content.ChapterDAO;
 import java.sql.Connection;
@@ -45,7 +43,7 @@ public class ProductOwnDAO {
     public ArrayList<Product> getOwnProducts(User user) {
         ArrayList<Product> list = new ArrayList<>();
         try {
-            String sql = "p.[productId]\n"
+            String sql = "SELECT p.[productId]\n"
                     + "      ,[bookId]\n"
                     + "      ,[chapterId]\n"
                     + "      ,[price]\n"
@@ -69,74 +67,23 @@ public class ProductOwnDAO {
                 list.add(product);
             }
         } catch (Exception e) {
-            System.out.println("getOwn Error:" + e.getMessage());
+            Logger.getLogger(BookOwnDAO.class.getName()).log(Level.SEVERE, null, e);
+            System.out.println("getProductOwn Error:" + e.getMessage());
         }
         return list;
     }
 
-    public ArrayList<Book> getOwnBooksPagging(User user, int pageSize, int pageIndex) {
-        ArrayList<Book> list = new ArrayList<>();
+    public void insert(Product product, User user) {
         try {
-            String sql = "select bo.bookId      "
-                    + ",b.[title]      "
-                    + ",b.[authorId]      "
-                    + ",b.[rating]\n"
-                    + ",b.[favourite]\n"
-                    + ",b.[price]\n"
-                    + ",b.[is_sale]\n"
-                    + ",b.[image]\n"
-                    + ",b.[description]\n"
-                    + ",b.[views]\n"
-                    + ",b.[status]\n"
-                    + "from [Book_Own] bo\n"
-                    + "inner join Book b\n"
-                    + "on bo.bookId = b.id\n"
-                    + "where bo.userId = ?\n"
-                    + " ORDER BY b.id ASC \n"
-                    + "OFFSET ? * (?-1) ROWS  FETCH NEXT ?\n"
-                    + "ROWS ONLY";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, user.getId());
-            stm.setInt(2, pageSize);
-            stm.setInt(3, pageIndex);
-            stm.setInt(4, pageSize);
-            rs = stm.executeQuery();
-            while (rs.next()) {
-//                int id = rs.getInt("bookId");
-                Book book = new Book();
-                Author author = new Author();
-                author.setId(rs.getInt("authorId"));
-                book.setAuthor(author);
-                book.setId(rs.getInt("bookId"));
-                book.setTitle(rs.getString("title"));
-                book.setRating(rs.getFloat("rating"));
-                book.setFavourite(rs.getInt("favourite"));
-                book.setPrice(rs.getFloat("price"));
-                book.setIssale(rs.getBoolean("is_sale"));
-                book.setImage(rs.getString("image"));
-                book.setDescription(rs.getString("description"));
-                book.setViews(rs.getInt("views"));
-                book.setStatus(rs.getBoolean("status"));
-//                Book book = getBookById(id);
-                list.add(book);
-            }
-        } catch (Exception e) {
-            System.out.println("getOwn Error:" + e.getMessage());
-        }
-        return list;
-    }
-
-    public void insert(Book book, User user) {
-        try {
-            String sql = "INSERT INTO [Book_Own]\n"
+            String sql = "INSERT INTO [Product_Own]\n"
                     + "           ([userId]\n"
-                    + "           ,[bookId])\n"
+                    + "           ,[productId])\n"
                     + "     VALUES\n"
                     + "           (?\n"
                     + "           ,?)";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, user.getId());
-            stm.setInt(2, book.getId());
+            stm.setString(2, product.getProductId());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(BookOwnDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -145,7 +92,7 @@ public class ProductOwnDAO {
 
     public int count(User user) {
         try {
-            String sql = "SELECT COUNT(*) as total FROM [Book_Own]"
+            String sql = "SELECT COUNT(*) as total FROM [Product_Own]"
                     + "  WHERE userId = ?";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, user.getId());
@@ -160,34 +107,26 @@ public class ProductOwnDAO {
 
     }
 
-    public BookOwn get(User user, Book book) {
-        BookOwn bookOwn = new BookOwn();
-        ChapterDAO chapterDAO = new ChapterDAO();
+    public ProductOwn get(User user, Product product) {
+        ProductOwn productOwn = new ProductOwn();
         try {
             String sql = "SELECT [userId]\n"
-                    + "      ,[bookId]\n"
-                    + "      ,[recentTime]\n"
-                    + "      ,[recentChapterId]\n"
-                    + "  FROM [Book_Own]"
+                    + "      ,[productId]\n"
+                    + "  FROM [Product_Own]"
                     + "  WHERE [userId] = ?"
-                    + "  AND [bookId] = ?";
+                    + "  AND [productId] = ?";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, user.getId());
-            stm.setInt(2, book.getId());
+            stm.setString(2, product.getProductId());
             rs = stm.executeQuery();
             if (rs.next()) {
-                bookOwn.setBook(book);
-                bookOwn.setUser(user);
-                if (rs.getTimestamp("recentTime") != null && rs.getObject("recentChapterId") != null) {
-                    bookOwn.setRecentTime(rs.getTimestamp("recentTime"));
-                    bookOwn.setRecentChapter(chapterDAO.getChapterById(rs.getInt("recentChapterId")));
-                }
-                return bookOwn;
+                productOwn.setProduct(product);
+                productOwn.setUser(user);
+                return productOwn;
             }
         } catch (SQLException ex) {
             Logger.getLogger(BookOwnDAO.class.getName()).log(Level.SEVERE, null, ex);
-            bookOwn = null;
         }
-        return bookOwn;
+        return null;
     }
 }

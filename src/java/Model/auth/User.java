@@ -6,9 +6,11 @@ package Model.auth;
 
 import Model.payment.PaymentAccount;
 //import Model.payment.PaymentMethod;
-import Model.product.Book;
+//import Model.product.Book;
+import Model.product.Product;
 //import context.payment.PaymentMethodDAO;
-import context.product.BookOwnDAO;
+//import context.product.BookOwnDAO;
+import context.product.ProductOwnDAO;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -203,11 +205,17 @@ public class User {
 //        payMedDAO.insert(paymentMethod);
     }
 
-    public boolean isOwnBook(int bookId){
-        BookOwnDAO bookOwnDAO = new BookOwnDAO();
-        Book book = new Book();
-        book.setId(bookId);
-        return bookOwnDAO.getOwnBooks(this).contains(book);
+//    public boolean isOwnBook(int bookId){
+//        BookOwnDAO bookOwnDAO = new BookOwnDAO();
+//        Book book = new Book();
+//        book.setId(bookId);
+//        return bookOwnDAO.getOwnBooks(this).contains(book);
+//    }
+    
+    public boolean isOwnProduct(String productId) {
+        ProductOwnDAO productOwnDAO = new ProductOwnDAO();
+        Product product = new Product(productId);
+        return productOwnDAO.get(this, product) != null;
     }
 
     @Override

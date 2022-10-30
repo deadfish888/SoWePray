@@ -11,6 +11,7 @@ import Model.auth.User;
 import Model.product.Product;
 import Model.product.content.Volume;
 import context.DBContext;
+import context.auth.UserDAO;
 import context.product.content.VolumeDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -212,8 +213,8 @@ public class BookDAO {
 
                 if (author.getUserId() != 0) {
                     User user = new User();
-                    user.setId(author.getId());
-                    user.setName(rs.getString(14));
+                    UserDAO userDAO = new UserDAO();
+                    user = userDAO.getUser(author.getUserId());
                     author.setUser(user);
                 }
                 book.setAuthor(author);
