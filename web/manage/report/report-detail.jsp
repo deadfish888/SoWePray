@@ -201,9 +201,6 @@
                                                 </c:if>
                                             </form>
                                         </c:when>
-                                        <c:when test="${report.reportType == 2}">
-
-                                        </c:when>
                                         <c:otherwise>
 
                                         </c:otherwise>
