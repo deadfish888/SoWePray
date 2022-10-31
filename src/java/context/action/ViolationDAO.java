@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package context.action;
-
 import Model.report.Violation;
 import context.DBContext;
 import java.sql.Connection;
@@ -13,10 +12,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-/* @author ACER */
-public class ViolationDAO {
-
+/**
+ *
+ * @author duypham0705
+ */
+class ViolationDAO {
+    
     public ViolationDAO() {
         connectDB();
     }

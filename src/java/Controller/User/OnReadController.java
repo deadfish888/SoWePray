@@ -1,12 +1,11 @@
-package Controller.admin.user;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+package Controller.User;
 
-import Model.product.Author;
-import context.product.AuthorDAO;
+import Model.auth.User;
+import context.action.TicketDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,14 +13,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author duypham0705
  */
-@WebServlet("/Admin/LoadAuthor")
-public class LoadAuthor extends HttpServlet {
+@WebServlet(name = "OnReadController", urlPatterns = {"/User/OnRead"})
+public class OnReadController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,8 +32,19 @@ public class LoadAuthor extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet OnReadController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet OnReadController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -47,38 +56,26 @@ public class LoadAuthor extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    TicketDAO rpDao = new TicketDAO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (request.getParameter("xpage1") != null) {
-            String xpage1 = request.getParameter("xpage1");
-            session.setAttribute("whichpage1", xpage1);
-            response.sendRedirect("Author");
-            return;
-        }
 
-        if (request.getParameter("xpage2") != null) {
-            String xpage2 = request.getParameter("xpage2");
-            session.setAttribute("whichpage2", xpage2);
-            response.sendRedirect("Author");
-            return;
+        User user = (User) request.getSession().getAttribute("user");
+        String type = (String) request.getParameter("rpID");
+        int p;
+        if (type == null) {
+            p = 0;
+        } else {
+            p = Integer.parseInt(type);
         }
-        if (request.getParameter("aid") != null) {
-            String aid = request.getParameter("aid");
-            session.setAttribute("aid", aid);
-            response.sendRedirect("Book");
-            return;
+        if (p == 0) {
+           rpDao.readAll(user.getId()); 
         }
-        
-        if (request.getParameter("sendid") != null) {
-            AuthorDAO dao = new AuthorDAO();
-            Author au = dao.getAuthorByUserId(Integer.parseInt(request.getParameter("sendid")));
-            session.setAttribute("aid", au.getId());
-            response.sendRedirect("Book");
-            return;
+        else{
+            rpDao.read(user.getId(),p);
         }
-
+        response.sendRedirect("Support");
     }
 
     /**

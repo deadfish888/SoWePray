@@ -42,7 +42,7 @@
                         <a href="./Payment">Payment</a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#">Support</a>
+                        <a href="./Support">Support</a>
                     </li>
                 </ul>
             </nav>

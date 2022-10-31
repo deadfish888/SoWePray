@@ -99,6 +99,24 @@ public class Transaction {
         return status;
     }
 
+    //0. Fail
+    //1. Pending
+    //2. Successful
+    public String getSta() {
+        String ret = "Fail";
+        switch (this.status) {
+            case 1:
+                ret = "Pending";
+                break;
+            case 2:
+                ret = "Successful";
+                break;
+            default:
+                throw new AssertionError();
+        }
+        return ret;
+    }
+
     public void setStatus(int status) {
         this.status = status;
     }
@@ -118,7 +136,7 @@ public class Transaction {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     public Product getProduct() {
         return product;
     }
@@ -135,7 +153,7 @@ public class Transaction {
     
     /**
      * Compare if 2 transaction id is equal
-    *
+     *
      */
     @Override
     public boolean equals(Object obj) {

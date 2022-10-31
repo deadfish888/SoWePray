@@ -30,6 +30,10 @@ public class NovelsController extends HttpServlet {
             response.sendRedirect("./Login");
             return;
         }
+        if (user.is_super() == 0) {
+            response.sendRedirect("Support");
+            return;
+        }
         String page = request.getParameter("page");
         String search = request.getParameter("search");
         if (search == null || search.trim().length()==0) {

@@ -182,7 +182,7 @@
                                     <h3 class="card-title">Total Comment</h3>
                                     <h6 class="card-subtitle">Amount ${requestScope.cmt}</h6>
                                     <h3 class="card-title">Total Report</h3>
-                                    <h6 class="card-subtitle">Amount ${requestScope.rp}</h6>
+                                    <h6 class="card-subtitle">Amount </h6>
 
                                 </div>
                                 <div>

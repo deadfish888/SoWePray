@@ -297,6 +297,18 @@ public class TransactionDAO {
 //            insert(transaction);
 //        }
 //    }
+
+    public ArrayList<Transaction> getByPage(ArrayList<Transaction> listT, int start, int end) {
+      
+        ArrayList<Transaction> listpage = new ArrayList<>();
+        if (listT.size() < end) {
+            end = listT.size();
+        }
+        for (int i = start; i < end; i++) {
+            listpage.add(listT.get(i));
+        }
+        return listpage;
+    }
 }
 
 /**
