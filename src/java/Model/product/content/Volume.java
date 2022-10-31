@@ -29,6 +29,10 @@ public class Volume {
         this.summary = summary;
     }
 
+    public Volume(int id) {
+        this.id = id;
+    }
+
      public Book getBook() {
         return book;
     }

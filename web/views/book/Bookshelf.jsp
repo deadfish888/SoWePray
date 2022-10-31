@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<c:set var="emptyImgSrc" value="${pageContext.request.contextPath}/images/novel-sample.png" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -89,7 +90,7 @@
                                 <c:forEach items="${bookList}" var="book">
                                     <article id="bootstrap-overrides" class="style1" style="width: 170px; margin: 2em; display: inline-block">
                                         <span class="image">
-                                            <img src="${book.getImage()}" alt="" style="height: 230px;"/>
+                                            <img src="${(! empty book.image)?book.image:emptyImgSrc}" alt="" style="height: 230px;"/>
                                         </span>
                                         <a href="../BookDetail?id=${book.id}" alt="${book.title}">
                                             <h2 style="overflow: hidden;text-overflow: ellipsis;font-size: 0.85em;">${book.title}</h2>
@@ -127,7 +128,7 @@
                                 <c:forEach items="${favorList}" var="book">
                                     <article id="bootstrap-overrides" class="style1" style="width: 170px; margin: 2em; display: inline-block">
                                         <span class="image">
-                                            <img src="${book.getImage()}" alt="" style="height: 230px;"/>
+                                            <img src="${(! empty book.image)?book.image:emptyImgSrc}" alt="" style="height: 230px;"/>
                                         </span>
                                         <a href="../BookDetail?id=${book.id}" alt="${book.title}">
                                             <h2 style="overflow: hidden;text-overflow: ellipsis;font-size: 0.85em;">${book.title}</h2>
@@ -165,7 +166,7 @@
                                 <c:forEach items="${novelList}" var="book">
                                     <article id="bootstrap-overrides" class="style1" style="width: 170px; margin: 2em; display: inline-block">
                                         <span class="image">
-                                            <img src="${(!empty book.getImage())?book.image:"../images/novel-sample.png"}" alt="" style="height: 230px;"/>
+                                            <img src="${(!empty book.getImage())?book.image:emptyImgSrc}" alt="" style="height: 230px;"/>
                                         </span>
                                         <a href="../BookDetail?id=${book.id}" alt="${book.title}">
                                             <h2 style="overflow: hidden;text-overflow: ellipsis;font-size: 0.85em;">${book.title}</h2>

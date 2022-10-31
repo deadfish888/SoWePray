@@ -4,11 +4,16 @@
  */
 package Model.product;
 
+import Model.product.content.Chapter;
+import context.product.AuthorDAO;
+import context.product.ProductDAO;
+import context.product.content.ChapterDAO;
 import java.util.ArrayList;
 
 public class Book {
+
     private int id;
-    private String title; 
+    private String title;
     private int authorId;
     private Author author;
     private ArrayList<Category> category;
@@ -45,7 +50,6 @@ public class Book {
         this.views = views;
         this.status = status;
     }
-
 
     public int getId() {
         return id;
@@ -143,11 +147,11 @@ public class Book {
     public void setCategory(ArrayList<Category> category) {
         this.category = category;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Book) {
-            Book book = (Book)obj;
+        if (obj instanceof Book) {
+            Book book = (Book) obj;
             return book.getId() == this.id;
         }
         return false;
@@ -161,7 +165,21 @@ public class Book {
             this.category.add(c);
         }
     }
-    
-    
+
+    public float calculatePrice() {
+        ChapterDAO chapterDAO = new ChapterDAO();
+        ArrayList<Chapter> chapterList = chapterDAO.getChaptersByBookId(id);
+        if (author.getUserId() != 0) {
+            ProductDAO productDAO = new ProductDAO();
+            price = 0;
+            for (Chapter chapter : chapterList) {
+                System.out.println(chapter.getId());
+                Product product = productDAO.getByChapter(chapter);
+                price += product.getPrice();
+            }
+            productDAO.close();
+        }
+        return price;
+    }
 
 }

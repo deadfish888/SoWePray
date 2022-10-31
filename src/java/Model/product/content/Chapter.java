@@ -85,6 +85,15 @@ public class Chapter {
         this.title = title;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Chapter) {
+            Chapter chapter = (Chapter) obj;
+            return chapter.getId() == this.id;
+        }
+        return false;
+    }
+
     
     
     }

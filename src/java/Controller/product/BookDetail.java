@@ -9,11 +9,13 @@ import Model.product.content.Chapter;
 import Model.action.Comment;
 import Model.product.content.Volume;
 import Model.auth.User;
+import Model.product.Product;
 import context.product.BookDAO;
 import context.product.content.ChapterDAO;
 import context.action.CommentDAO;
 import context.action.FavouriteDAO;
 import context.product.ProductDAO;
+import context.product.ProductOwnDAO;
 import context.product.content.VolumeDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -22,6 +24,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -49,15 +53,14 @@ public class BookDetail extends HttpServlet {
             ChapterDAO chd = new ChapterDAO();
             VolumeDAO vd = new VolumeDAO();
             CommentDAO cmd = new CommentDAO();
+            ProductDAO productDAO = new ProductDAO();
+
             Book thisbook = b.getBookById(id);
             User user = (User) request.getSession().getAttribute("user");
             if (user != null) {
-                request.setAttribute("own", user.isOwnBook(id));
+                request.setAttribute("own", user.isOwnProduct("B" + id));
                 int uId = user.getId();
                 check = fdao.checkFavourite(uId, id) == true;
-                ProductDAO pd = new ProductDAO();
-                ArrayList<Integer> chapterOwns = pd.getChaptersOwn(user.getId(), thisbook.getId());
-                request.setAttribute("chaptersOwn", chapterOwns);
             }
             ArrayList<Book> sames = b.getSimilarBooks(id, thisbook.getCategory());
             ArrayList<Volume> vols = vd.getVolumesByBookId(id);
@@ -72,10 +75,31 @@ public class BookDetail extends HttpServlet {
             
             if (thisbook.getAuthor().getUserId() == 0) {
                 request.getRequestDispatcher("/views/book/book-details.jsp").forward(request, response);
-                return;
+            } else {
+                Product bookProduct = new Product("B" + id);
+                bookProduct = productDAO.get(bookProduct);
+                
+                ProductOwnDAO productOwnDAO = new ProductOwnDAO();
+                ArrayList<Product> productOwnList = productOwnDAO.getOwnProducts(user);
+                
+                ArrayList<Product> chapterProductList = new ArrayList<>();
+                for (Chapter chapter : chaps) {
+                    Product product = productDAO.getByChapter(chapter);
+                    chapterProductList.add(product);
+                    if(productOwnList.contains(product)) {
+                        bookProduct.setPrice(bookProduct.getPrice() - product.getPrice());
+                    }
+                }
+                bookProduct.setPrice(Math.round(bookProduct.getPrice() * 100) / 100f);
+
+                request.setAttribute("productOwnList", productOwnList);
+                request.setAttribute("chapterProductList", chapterProductList);
+                request.setAttribute("bookProduct", bookProduct);
+                request.getRequestDispatcher("/views/book/novel-details.jsp").forward(request, response);
             }
-            request.getRequestDispatcher("/views/book/novel-details.jsp").forward(request, response);
         } catch (Exception e) {
+            
+            Logger.getLogger(BookDetail.class.getName()).log(Level.SEVERE, null, e);
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
