@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author duypham0705
  */
-class ViolationDAO {
+public class ViolationDAO {
     
     public ViolationDAO() {
         connectDB();
