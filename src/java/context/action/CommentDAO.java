@@ -11,8 +11,11 @@ import context.auth.UserDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -70,6 +73,7 @@ public class CommentDAO {
                     + "      ,u.[gender]\n"
                     + "      ,[comment]\n"
                     + "      ,[createdAt]\n"
+                    + "      ,[status]\n"
                     + "  FROM [Comment] c"
                     + " INNER JOIN [User] u ON c.[userId] = u.[id]"
                     + " WHERE [bookId]= ? "
@@ -79,7 +83,7 @@ public class CommentDAO {
             rs = stm.executeQuery();
             while (rs.next()) {
                 Comment cm = new Comment(rs.getInt(1), rs.getInt(2), rs.getInt(3)
-                        , rs.getString(7), rs.getTimestamp(8));
+                        , rs.getString(7), rs.getTimestamp(8), rs.getBoolean(9));
                 User user = new User();
                 user.setName(rs.getString(4));
                 user.setUsername(rs.getString(5));

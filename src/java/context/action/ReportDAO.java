@@ -72,6 +72,39 @@ public class ReportDAO {
             Logger.getLogger(ReportDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void addCommentReport(int[] rid, int cid, int uid, String note) {
+        try {
+            String sql = "INSERT INTO [dbo].[Report]\n"
+                    + "           ([reportType]\n"
+                    + "           ,[userId]\n"
+                    + "           ,[objectId]\n"
+                    + "           ,[note]\n"
+                    + "           ,[sent])\n"
+                    + "     OUTPUT [inserted].[id]"
+                    + "     VALUES\n"
+                    + "           ( ? "
+                    + "           , ? "
+                    + "           , ? "
+                    + "           , ? "
+                    + "           , ? )";
+
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, 2);
+            stm.setInt(2, uid);
+            stm.setInt(3, cid);
+            stm.setString(4, note);
+            stm.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                ViolationDAO vd = new ViolationDAO();
+                vd.addReportViolation(rs.getInt(1), rid);
+            }
+        }catch (Exception ex) {
+            Logger.getLogger(ReportDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    } 
 
     public int count() {
         int ret = 0;

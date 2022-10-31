@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Your Book</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="assets/css/StarRating.css" />
         <link rel="stylesheet" href="assets/css/rateButton.css" />
         <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+        
     </head>
     <body class="is-preload">
         <!-- Wrapper -->
@@ -83,6 +84,7 @@
                                 <p>
                                     ${book.description}
                                 </p>
+                           
                                 <div class="row">        
                                     <c:if test="${sessionScope.user != null}">
                                         <c:if test="${requestScope.own}">
@@ -272,15 +274,15 @@
                     <div class="container-fluid mt-5">
                         <h3>${(! empty requestScope.comments)? requestScope.comments.size() : "0"} comment(s)</h3>
                         <div class="col-12">
-                            <c:if test="${sessionScope.user.is_super()>0 || empty sessionScope.user}">
-                                <form role="form" action="Comment" method="get">
-                                    <input type="hidden" name="bookId" value="${book.id}"> 
-                                    <div class="form-group">
-                                        <textarea class="form-control" name="comment" placeholder="Add a comment..."></textarea>
-                                    </div>
-                                    <input type="submit" value="Post">
-                                </form> 
-                            </c:if>
+                            <form role="form" action="Comment" method="get">
+                                <input type="hidden" name="bookId" value="${book.id}"> 
+                                <div class="form-group">
+                                    <textarea class="form-control" name="comment" placeholder="Add a comment..."></textarea>
+                                </div>
+                                <div><input type="submit" value="Post">
+                                ${requestScope.confirm}</div>
+                            </form> 
+                                
                             <table class="table">
                                 <c:forEach items="${requestScope.comments}" var="comment">
 
@@ -288,7 +290,56 @@
                                         <th style="width: 200px" scope="row">
                                             ${comment.user.name}
                                         </th>
-                                        <td style="white-space: pre-line">${comment.comment}</td>
+                                        <td style="" style="height: 100px"><c:choose>
+                                                <c:when test="${comment.status == false}">
+                                                    <i>This comment has been banned.<i>
+                                                </c:when>
+                                                <c:otherwise>${comment.comment}
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                        <td style="" style="height: 100px">
+                                            <c:choose>
+                                                <c:when test="${!empty sessionScope.admin}">
+                                                    <c:if test="${comment.status == true}">
+                                                    <a class="fa fa-times" type="button"  data-bs-toggle="modal" data-bs-target="#staticBackdrop-${comment.id}">
+                                                    </a>
+                                                    </c:if>
+                                                    <!-- Modal -->
+                                                    <div class="modal" id="staticBackdrop-${comment.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="staticBackdropLabel">CONFIRMATION</h5>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <h6>Are you sure to ban this comment?</h6>                                                              
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <form method="get" action="./BanComment">
+                                                                    <input type="hidden" name="id" value="${comment.id}">
+                                                                    <input type="hidden" name="bid" value="${book.id}">
+                                                                    <button type="button" data-bs-dismiss="modal" style="background-color: #ffffff; margin-left: 0">Close</button>
+                                                                    <button type="submit" style="background-color: #ffffff; margin-right: 0">YES, BAN IT</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:if test="${comment.status == true}">
+                                                        <form id="${comment.id}" action="ReportComment" method="get">
+                                                            <p><i class="fa fa-flag" aria-hidden="true" onclick="document.getElementById('${comment.id}').submit()"></i></p>
+                                                            <!--      <input type="submit" class="primary" display="hidden" value="Report">                          -->
+                                                            <input type="hidden" name="bId" value="${book.id}">
+                                                            <input type="hidden" name="cId" value="${comment.id}">
+
+                                                        </form>
+                                                    </c:if>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
                                     </tr>
 
                                 </c:forEach>
@@ -335,12 +386,12 @@
                         <h2>Contact Info</h2>
                         <ul class="alt">
                             <li><span class="fa fa-github"></span> <a href="https://github.com/nekon0/SoWePray">Our Project</a></li>
-                            <li><span class="fa fa-map-pin"></span> <a href="https://goo.gl/maps/ojwCjTqRteiA4B9U7"> DE336, FBT University</a></li>
+                            <li><span class="fa fa-map-pin"></span> <a href="https://goo.gl/maps/ojwCjTqRteiA4B9U7"> DE210, FBT University</a></li>
                         </ul>
                     </section>
 
                     <ul class="copyright">
-                        <li> HLV </li>
+                        <li> Bookie </li>
                     </ul>
                 </div>
             </footer>
@@ -348,20 +399,17 @@
         </div>
 
         <!-- Scripts -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap tether Core JavaScript -->
+        <script src="/Bookie/manage/assets/plugins/bootstrap/dist/js/bootstrap.bundle.js"></script>
+       <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="assets/js/jquery.scrolly.min.js"></script>
         <script src="assets/js/jquery.scrollex.min.js"></script>
         <script src="assets/js/main.js"></script>
-        <script>
-                                                    function validatePassword() {
-                                                        let pass = document.forms["purchaseForm"]["pass"].value;
-                                                        let x = document.forms["purchaseForm"]["password"].value;
-                                                        if (pass !== x) {
-                                                            document.getElementById("purchase-pass-noti").innerHTML = "Wrong password";
-                                                            return false;
-                                                        }
-                                                    }
-        </script>
+        
+        
+        <!--Custom JavaScript -->
+        
+        
     </body>
 </html>

@@ -69,6 +69,7 @@ public class BookDetail extends HttpServlet {
             request.setAttribute("vols", vols);
             request.setAttribute("comments", coms);
             request.setAttribute("check", check);
+            
             if (thisbook.getAuthor().getUserId() == 0) {
                 request.getRequestDispatcher("/views/book/book-details.jsp").forward(request, response);
                 return;

@@ -2,12 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+package Model.action;
 
-package Model.report;
-
-/* @author ACER */
+/**
+ *
+ * @author thanhienee
+ */
 public class Violation {
-    private int id, reportType;
+    private int id;
+    private int reportType;
     private String title;
 
     public Violation() {
@@ -18,8 +21,6 @@ public class Violation {
         this.reportType = reportType;
         this.title = title;
     }
-    
-    
 
     public int getId() {
         return id;

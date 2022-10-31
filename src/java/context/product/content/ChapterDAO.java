@@ -278,6 +278,7 @@ public class ChapterDAO {
             return stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         return 0;
     }

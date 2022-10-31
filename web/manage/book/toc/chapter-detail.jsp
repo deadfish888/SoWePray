@@ -91,13 +91,13 @@
                                         <input type="hidden" name="bookId" value="${requestScope.book.id}">
                                         <input type="hidden" name="volumeId" value="${requestScope.vol.id}">
                                         <div class="row mb-3">
-                                            <label for="title" class="col-sm-2 col-form-label">Title <span style="color:red">*</span></label>
+                                            <label for="title" class="col-sm-2 col-form-label">Title  <span style="color:red">*</span></label>
                                             <div class="col-sm-10">
                                                 <input name="title" type="text" class="form-control" id="title" required value="${requestScope.chap.title}">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
-                                            <label for="status" class="col-sm-2 col-form-label">Status <span style="color:red">*</span></label>
+                                            <label for="status" class="col-sm-2 col-form-label">Status  <span style="color:red">*</span></label>
                                             <div class="col-sm-10">
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="status" id="status1" value="finished" ${requestScope.chap.status? "checked" : null}>
