@@ -59,7 +59,7 @@
                                 <form action="BookPreread" method="GET">
                                     <div style ="text-align: center ">
                                         <input type="hidden" name="id" value="${book.id}">
-                                        <c:if test="${! empty requestScope.chaps && !requestScope.own}">
+                                        <c:if test="${! empty requestScope.chaps && !requestScope.own && sessionScope.user.id ne book.author.userId}">
                                             <input type="submit" class="primary" value="Preread"> 
                                         </c:if>
 
@@ -79,7 +79,7 @@
                                 </p>
                                 <div class="row">        
                                     <c:if test="${sessionScope.user != null}">
-                                        <c:if test="${requestScope.own}">
+                                        <c:if test="${requestScope.own || sessionScope.user.id eq book.author.userId}">
                                             <form action="BookReading" method="get">
                                                 <div class="col-sm-4">
                                                     <input type="hidden" name="id" value="${book.id}">
@@ -87,12 +87,12 @@
                                                 </div>
                                             </form>
                                         </c:if>
-                                        <c:if test="${!own && (book.issale())}">
+                                        <c:if test="${!own && (book.issale()) && sessionScope.user.id ne book.author.userId}">
                                             <div class="col-sm-3">
                                                 <input type="button" class="primary btn-primary" data-toggle="modal" data-target="#purchase" value="Buy (All)"/>
                                             </div>
                                         </c:if>
-                                        <c:if test="${!own && (!book.issale())}">
+                                        <c:if test="${!own && (!book.issale()) && sessionScope.user.id ne book.author.userId}">
                                             <form action="User/Purchase" method="get">
                                                 <div class="col-sm-4">
                                                     <input type="hidden" name="bookId" value="${book.id}">
@@ -210,6 +210,9 @@
                                         </div>
                                     </c:when>
                                 </c:choose>    
+                                <div style="color: red">
+                                    ${sessionScope.notEnoughBalance}
+                                </div>
                             </div>
 
                         </div>           
@@ -379,6 +382,7 @@
                     </ul>
                 </div>
             </footer>
+            <%request.getSession().removeAttribute("notEnoughBalance");%>
 
         </div>
 

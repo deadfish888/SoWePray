@@ -42,62 +42,68 @@ public class PurchaseController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
-        TransactionDAO transDAO = new TransactionDAO();
+        try {
 
-        float amount = Float.parseFloat(request.getParameter("amount"));
+            PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
+            TransactionDAO transDAO = new TransactionDAO();
 
-        User user = (User) request.getSession().getAttribute("user");
+            float amount = Float.parseFloat(request.getParameter("amount"));
 
-        if (amount > user.getPaymentAccount().getBalance()) {
-            response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("bookId"));
-        } else {
-            float walletBalance = user.getPaymentAccount().getBalance() - amount;
-            user.getPaymentAccount().setBalance(walletBalance);
+            User user = (User) request.getSession().getAttribute("user");
 
-            Transaction transaction = new Transaction();
-            transaction.setUser(user);
-            transaction.setAmount(amount);
-            transaction.setBalanceAfter(walletBalance);
-            transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-            transaction.setType(3);
-            transaction.setStatus(3);
+            if (amount > user.getPaymentAccount().getBalance()) {
+                request.getSession().setAttribute("notEnoughBalance", "Your wallet have not enough coin to buy this book. Please deposit into wallet and try again.");
+                response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("bookId"));
+            } else {
+                float walletBalance = user.getPaymentAccount().getBalance() - amount;
+                user.getPaymentAccount().setBalance(walletBalance);
 
-            String bookId = request.getParameter("bookId");
-            ProductDAO productDAO = new ProductDAO();
-            Product product = new Product("B" + bookId);
-            product = productDAO.get(product);
+                Transaction transaction = new Transaction();
+                transaction.setUser(user);
+                transaction.setAmount(amount);
+                transaction.setBalanceAfter(walletBalance);
+                transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+                transaction.setType(3);
+                transaction.setStatus(3);
 
-            transaction.setProduct(product);
-            transaction.setDescription("Buy " + product.toString() + ".");
-            transDAO.insert(transaction);
+                String bookId = request.getParameter("bookId");
+                ProductDAO productDAO = new ProductDAO();
+                Product product = new Product("B" + bookId);
+                product = productDAO.get(product);
 
-            payAccDAO.update(user.getPaymentAccount());
-            User author = product.getBook().getAuthor().getUser();
-            if (author != null) {
-                Transaction auTransaction = new Transaction();
-                auTransaction.setUser(author);
-                auTransaction.setAmount(amount);
-                auTransaction.setBalanceAfter(author.getPaymentAccount().getBalance() + amount);
-                auTransaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-                auTransaction.setType(4);
-                auTransaction.setStatus(3);
-                auTransaction.setProduct(product);
-                auTransaction.setDescription("Sell " + product.toString() + ".");
-                transDAO.insert(auTransaction);
+                transaction.setProduct(product);
+                transaction.setDescription("Buy " + product.toString() + ".");
+                transDAO.insert(transaction);
 
-                author.getPaymentAccount().setBalance(author.getPaymentAccount().getBalance() + amount);
-                payAccDAO.update(author.getPaymentAccount());
+                payAccDAO.update(user.getPaymentAccount());
+                User author = product.getBook().getAuthor().getUser();
+                if (author != null) {
+                    Transaction auTransaction = new Transaction();
+                    auTransaction.setUser(author);
+                    auTransaction.setAmount(amount);
+                    auTransaction.setBalanceAfter(author.getPaymentAccount().getBalance() + amount);
+                    auTransaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+                    auTransaction.setType(4);
+                    auTransaction.setStatus(3);
+                    auTransaction.setProduct(product);
+                    auTransaction.setDescription("Sell " + product.toString() + ".");
+                    transDAO.insert(auTransaction);
+
+                    author.getPaymentAccount().setBalance(author.getPaymentAccount().getBalance() + amount);
+                    payAccDAO.update(author.getPaymentAccount());
+                }
+
+                BookOwnDAO bookOwnDAO = new BookOwnDAO();
+                Book book = new Book();
+                book.setId(Integer.parseInt(bookId));
+                bookOwnDAO.insert(book, user);
+                ProductOwnDAO productOwnDAO = new ProductOwnDAO();
+                productOwnDAO.insert(product, user);
+
+                response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + bookId);
             }
-
-            BookOwnDAO bookOwnDAO = new BookOwnDAO();
-            Book book = new Book();
-            book.setId(Integer.parseInt(bookId));
-            bookOwnDAO.insert(book, user);
-            ProductOwnDAO productOwnDAO = new ProductOwnDAO();
-            productOwnDAO.insert(product, user);
-
-            response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + bookId);
+        } catch (IOException | NumberFormatException e) {
+            response.sendRedirect(request.getContextPath() + "/Home");
         }
     }
 

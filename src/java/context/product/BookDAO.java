@@ -212,9 +212,8 @@ public class BookDAO {
                 author.setName(rs.getString(5));
 
                 if (author.getUserId() != 0) {
-                    User user = new User();
                     UserDAO userDAO = new UserDAO();
-                    user = userDAO.getUser(author.getUserId());
+                    User user = userDAO.getUser(author.getUserId());
                     author.setUser(user);
                 }
                 book.setAuthor(author);

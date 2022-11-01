@@ -51,7 +51,7 @@ public class TransactionDAO {
                     + "           ,[type]\n"
                     + "           ,[status]\n"
                     + "           ,[description]\n"
-                    + "           ,[transactionTime])\n"
+                    + "           ,[transactionTime]\n"
                     + "           ,[productId])\n"
                     + "     VALUES\n"
                     + "           (?\n"

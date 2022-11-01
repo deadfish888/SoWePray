@@ -46,6 +46,8 @@ public class PurchaseChapterController extends HttpServlet {
         User user = (User) request.getSession().getAttribute("user");
         
         if (amount > user.getPaymentAccount().getBalance()) {
+            request.getSession().setAttribute("notEnoughBalance", "Your wallet have not enough coin to buy this book. Please deposit into wallet and try again.");
+//            request.getSession().removeAttribute(string);
             response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("bookId"));
         } else {
             float walletBalance = user.getPaymentAccount().getBalance() - amount;
