@@ -59,8 +59,10 @@ public class StatusController extends HttpServlet {
                     transaction.setBalanceAfter(payAcc.getBalance());
                 } else {
                     transaction.setBalanceAfter(payAcc.getBalance());
+                    
                     status = 1;
-                    request.getSession().setAttribute("error", "Balance in wallet of user " + transaction.getUser().getId() + "is not enough.");
+                    transaction.setDescription(transaction.getDescription() + "\nReason: Balance in your wallet is not enough to finish this transaction.");
+                    request.getSession().setAttribute("error", "Balance in wallet of user " + transaction.getUser().getId() + " is not enough.");
                 }
             }
             payAccDAO.update(payAcc);

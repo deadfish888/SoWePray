@@ -64,10 +64,10 @@ public class WithdrawController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        try {
+        try {
             String pass = request.getParameter("password");
             if (!((User) request.getSession().getAttribute("user")).getPassword().equals(pass)) {
-//                throw new Exception("Entered password is incorrect. Please try again.");
+                throw new Exception("Entered password is incorrect. Please try again.");
             } else {
                 float amount = Float.parseFloat(request.getParameter("amount"));
                 User user = (User) request.getSession().getAttribute("user");
@@ -84,12 +84,12 @@ public class WithdrawController extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/User/Payment");
             }
 
-//        } catch (Exception e) {
-//            request.getSession().setAttribute("error", e.getMessage());
-//            System.out.println(e.getCause());
-//            System.out.println(e.getLocalizedMessage());
-//            response.sendRedirect(request.getContextPath() + "/User/Withdraw");
-//        }
+        } catch (Exception e) {
+            request.getSession().setAttribute("error", e.getMessage());
+            System.out.println(e.getCause());
+            System.out.println(e.getLocalizedMessage());
+            response.sendRedirect(request.getContextPath() + "/User/Withdraw");
+        }
     }
 
     /**
