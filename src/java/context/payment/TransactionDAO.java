@@ -70,7 +70,7 @@ public class TransactionDAO {
             stm.setInt(5, transaction.getStatus());
             stm.setString(6, transaction.getDescription());
             stm.setTimestamp(7, transaction.getTransactionTime());
-            stm.setString(8, transaction.getProduct().getProductId());
+            stm.setString(8, transaction.getProduct() == null ? null : transaction.getProduct().getProductId());
             return stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(TransactionDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -241,16 +241,16 @@ public class TransactionDAO {
                     + "      ,[productID]\n"
                     + "  FROM [Transaction]"
                     + "  WHERE 1 = 1";
-            if(transaction.getUser() != null) {
+            if (transaction.getUser() != null) {
                 sql += "\n  AND [userId] = " + transaction.getUser().getId();
             }
-            if(transaction.getType() > 0) {
+            if (transaction.getType() > 0) {
                 sql += "\n  AND [type] = " + transaction.getType();
             }
-            if(transaction.getStatus()> 0) {
+            if (transaction.getStatus() > 0) {
                 sql += "\n  AND [status] = " + transaction.getStatus();
             }
-            if(transaction.getProduct() != null) {
+            if (transaction.getProduct() != null) {
                 sql += "\n  AND [productId] LIKE '%" + transaction.getProduct().getProductId() + "%'";
             }
             System.out.println(sql);
@@ -273,7 +273,7 @@ public class TransactionDAO {
 //                paymentMethod = paymentMethodDAO.get(paymentMethod);
 //                transaction.setPayment(paymentMethod);
                 transactionList.add(trans);
-                
+
             }
             return transactionList;
         } catch (SQLException ex) {
@@ -300,9 +300,8 @@ public class TransactionDAO {
 //            insert(transaction);
 //        }
 //    }
-
     public ArrayList<Transaction> getByPage(ArrayList<Transaction> listT, int start, int end) {
-      
+
         ArrayList<Transaction> listpage = new ArrayList<>();
         if (listT.size() < end) {
             end = listT.size();

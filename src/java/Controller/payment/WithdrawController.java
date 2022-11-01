@@ -64,19 +64,32 @@ public class WithdrawController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                TransactionDAO transDAO = new TransactionDAO();
-                User user = (User) request.getSession().getAttribute("user");
+//        try {
+            String pass = request.getParameter("password");
+            if (!((User) request.getSession().getAttribute("user")).getPassword().equals(pass)) {
+//                throw new Exception("Entered password is incorrect. Please try again.");
+            } else {
                 float amount = Float.parseFloat(request.getParameter("amount"));
+                User user = (User) request.getSession().getAttribute("user");
+                TransactionDAO transDAO = new TransactionDAO();
 
                 Transaction transaction = new Transaction();
                 transaction.setUser(user);
                 transaction.setAmount(amount);
                 transaction.setType(2);
                 transaction.setStatus(2);
-                transaction.setDescription("Withdraw to bank: " + request.getParameter("bank") +", account number: " + request.getParameter("accountNumber"));
+                transaction.setDescription("Withdraw to bank: " + request.getParameter("bank") + ", account number: " + request.getParameter("accountNumber"));
                 transDAO.insert(transaction);
 
                 response.sendRedirect(request.getContextPath() + "/User/Payment");
+            }
+
+//        } catch (Exception e) {
+//            request.getSession().setAttribute("error", e.getMessage());
+//            System.out.println(e.getCause());
+//            System.out.println(e.getLocalizedMessage());
+//            response.sendRedirect(request.getContextPath() + "/User/Withdraw");
+//        }
     }
 
     /**

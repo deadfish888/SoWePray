@@ -33,38 +33,44 @@ public class BookReading extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String cid = request.getParameter("cid");
-        BookDAO b = new BookDAO();
-        ChapterDAO chd = new ChapterDAO();
-        Book thisbook = b.getBookById(id);
-        ArrayList<Chapter> listc = chd.getChaptersByBookId(id);
-        Product product = new Product("B" + id);
-        ProductDAO productDAO = new ProductDAO();
-        Chapter chapter;
-        if (cid == null) {
-            if (thisbook.getAuthor().getUser() != null) {
-                product.setProductId(product.getProductId() + "-C1");
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            String cid = request.getParameter("cid");
+            BookDAO b = new BookDAO();
+            ChapterDAO chd = new ChapterDAO();
+            Book thisbook = b.getBookById(id);
+            ArrayList<Chapter> listc = chd.getChaptersByBookId(id);
+            Product product = new Product("B" + id);
+            ProductDAO productDAO = new ProductDAO();
+            Chapter chapter;
+            if (cid == null) {
+                if (thisbook.getAuthor().getUser() != null) {
+                    product.setProductId(product.getProductId() + "-C1");
+                }
+                product = productDAO.get(product);
+                chapter = chd.getFirstChapter(id);
+            } else {
+                chapter = chd.getChapterById(Integer.parseInt(cid));
+                if (thisbook.getAuthor().getUser() != null) {
+                    product.setProductId(product.getProductId() + "-C" + chapter.getNo());
+                }
+                product = productDAO.get(product);
             }
-            product = productDAO.get(product);
-            chapter = chd.getFirstChapter(id);
-        } else {
-            chapter = chd.getChapterById(Integer.parseInt(cid));
-            if (thisbook.getAuthor().getUser() != null) {
-                product.setProductId(product.getProductId() + "-C" + chapter.getNo());
-            }
-            product = productDAO.get(product);
-        }
-        String[] listr = chapter.getContent().split("\n");
-        request.setAttribute("product", product);
+            String[] listr = chapter.getContent().split("\n");
+            request.setAttribute("product", product);
 
 //        ArrayList<Chapter> chap = chd.getChapterByVolumeIDandBookID(id, thisbook.getId());
 //        request.setAttribute("book", thisbook);
-        request.setAttribute("listr", listr);
-        request.setAttribute("chapter", chapter);
-        System.out.println(((User) request.getSession().getAttribute("user")).isOwnProduct(product.getProductId()));
+            request.setAttribute("listr", listr);
+            request.setAttribute("chapter", chapter);
+            System.out.println(((User) request.getSession().getAttribute("user")).isOwnProduct(product.getProductId()));
 //        System.out.println(((User) request.getSession().getAttribute("user")).isOwnBook(product.getBook().getId()));
-        request.getRequestDispatcher("/views/book/book-reading.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/book/book-reading.jsp").forward(request, response);
+
+        } catch (Exception e) {
+            request.getSession().setAttribute("error", e.getMessage() + "\n" + e.getLocalizedMessage());
+            response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("id"));
+        }
     }
 
     /**

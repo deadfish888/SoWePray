@@ -76,7 +76,10 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Transactions list</h4>
-
+                                <div style="color: red"> 
+                                    ${sessionScope.error}
+                                    <%request.getSession().removeAttribute("error");%>
+                                </div>
 
                                 <div class="table-responsive">
                                     <table class="table user-table " id="tableTrans">

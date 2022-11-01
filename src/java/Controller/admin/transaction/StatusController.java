@@ -5,6 +5,7 @@
 package Controller.admin.transaction;
 
 import Model.auth.User;
+import Model.payment.PaymentAccount;
 import Model.payment.Transaction;
 import context.auth.UserDAO;
 import context.payment.PaymentAccountDAO;
@@ -45,21 +46,28 @@ public class StatusController extends HttpServlet {
         transaction.setTransactionId(transactionId);
         transaction = transactionDAO.get(transaction);
         int status = Integer.parseInt(request.getParameter("upStatus"));
-        transaction.setStatus(status);
 
-        User transUser = transaction.getUser();
-        if (status == 1) {
-            transaction.setBalanceAfter(transUser.getPaymentAccount().getBalance());
-        } else if (status == 3) {
+        PaymentAccount payAcc = transaction.getUser().getPaymentAccount();
+        if (status == 3) {
             if (transaction.getType() == 1) {
-                transUser.getPaymentAccount().setBalance(transUser.getPaymentAccount().getBalance() + transaction.getAmount());
-                transaction.setBalanceAfter(transUser.getPaymentAccount().getBalance());
+                payAcc.setBalance(payAcc.getBalance() + transaction.getAmount());
+                transaction.setBalanceAfter(payAcc.getBalance());
             } else {
-                transUser.getPaymentAccount().setBalance(transUser.getPaymentAccount().getBalance() - transaction.getAmount());
-                transaction.setBalanceAfter(transUser.getPaymentAccount().getBalance());
+                //If amount in wallet is not enough to finish transaction, change to fail
+                if (transaction.getAmount() <= payAcc.getBalance()) {
+                    payAcc.setBalance(payAcc.getBalance() - transaction.getAmount());
+                    transaction.setBalanceAfter(payAcc.getBalance());
+                } else {
+                    transaction.setBalanceAfter(payAcc.getBalance());
+                    status = 1;
+                    request.getSession().setAttribute("error", "Balance in wallet of user " + transaction.getUser().getId() + "is not enough.");
+                }
             }
-            payAccDAO.update(transUser.getPaymentAccount());
+            payAccDAO.update(payAcc);
+        } else {
+            transaction.setBalanceAfter(payAcc.getBalance());
         }
+        transaction.setStatus(status);
         transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
         transactionDAO.update(transaction);
         response.sendRedirect(request.getContextPath() + "/Admin/Transaction");
