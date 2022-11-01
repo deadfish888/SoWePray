@@ -69,30 +69,19 @@ public class RechargeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        try {
-                //Tao transaction gui cho admin
-                TransactionDAO transDAO = new TransactionDAO();
-                User user = (User) request.getSession().getAttribute("user");
-                float amount = Float.parseFloat(request.getParameter("amount"));
-//                float walletBalance = user.getPaymentAccount().getBalance() + amount;
+        TransactionDAO transDAO = new TransactionDAO();
+        User user = (User) request.getSession().getAttribute("user");
+        float amount = Float.parseFloat(request.getParameter("amount"));
 
-                Transaction transaction = new Transaction();
-                transaction.setUser(user);
-                transaction.setAmount(amount);
-//                transaction.setBalanceAfter(walletBalance);
-                transaction.setType(1);
-                transaction.setStatus(2);
-                transaction.setDescription("Deposit into wallet.");
-//                System.out.println(transaction);
-//                transaction.setPayment(paymentMethod);
-//                payAccDAO.update(paymentMethod.getPaymentAccount());
-//                payAccDAO.update(user.getPaymentAccount());
-                transDAO.insert(transaction);
+        Transaction transaction = new Transaction();
+        transaction.setUser(user);
+        transaction.setAmount(amount);
+        transaction.setType(1);
+        transaction.setStatus(2);
+        transaction.setDescription("Deposit into wallet.");
+        transDAO.insert(transaction);
 
-                response.sendRedirect(request.getContextPath() + "/User/Payment");
-//        } catch (Exception e) {
-//            response.sendRedirect(request.getContextPath() + "/User/Payment");
-//        }
+        response.sendRedirect(request.getContextPath() + "/User/Payment");
     }
 
     /**

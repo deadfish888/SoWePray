@@ -7,7 +7,6 @@ package Controller.payment;
 
 import Model.auth.User;
 import Model.payment.Transaction;
-import Model.product.Book;
 import Model.product.Product;
 import context.payment.PaymentAccountDAO;
 import context.payment.TransactionDAO;
@@ -15,7 +14,6 @@ import context.product.BookOwnDAO;
 import context.product.ProductDAO;
 import context.product.ProductOwnDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
