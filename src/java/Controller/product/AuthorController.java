@@ -4,6 +4,7 @@
  */
 package Controller.product;
 
+import Model.auth.User;
 import Model.product.Author;
 import Model.product.Book;
 import context.product.AuthorDAO;
@@ -28,12 +29,14 @@ public class AuthorController extends HttpServlet {
             throws ServletException, IOException {
         int aid = Integer.parseInt(request.getParameter("id"));
         BookDAO b = new BookDAO();
-        
         AuthorDAO a = new AuthorDAO();
         Author thisauthor = a.getAuthorById(aid);
         ArrayList<Book> bookauthor = b.getAllBooksByAuthorId(aid);
+        User au = a.getInformationByAuthorId(aid);
+        int countbook = b.getAllBooksByAuthorId(aid).size();
         
-        
+        request.setAttribute("countbook",countbook);
+        request.setAttribute("au", au);
         request.setAttribute("author", thisauthor);
         request.setAttribute("bookauthor", bookauthor);
 

@@ -11,8 +11,11 @@ import context.auth.UserDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -70,6 +73,7 @@ public class CommentDAO {
                     + "      ,u.[gender]\n"
                     + "      ,[comment]\n"
                     + "      ,[createdAt]\n"
+                    + "      ,[status]\n"
                     + "  FROM [Comment] c"
                     + " INNER JOIN [User] u ON c.[userId] = u.[id]"
                     + " WHERE [bookId]= ? "
@@ -79,7 +83,7 @@ public class CommentDAO {
             rs = stm.executeQuery();
             while (rs.next()) {
                 Comment cm = new Comment(rs.getInt(1), rs.getInt(2), rs.getInt(3)
-                        , rs.getString(7), rs.getTimestamp(8));
+                        , rs.getString(7), rs.getTimestamp(8), rs.getBoolean(9));
                 User user = new User();
                 user.setName(rs.getString(4));
                 user.setUsername(rs.getString(5));
@@ -110,7 +114,7 @@ public class CommentDAO {
         return ret;
     }
 
-    Comment getCommentById(int objectId) {
+    public Comment getCommentById(int objectId) {
         try {
             String sql = "SELECT c.[id]"
                     + "      ,[bookId]\n"
@@ -120,6 +124,7 @@ public class CommentDAO {
                     + "      ,u.[gender]\n"
                     + "      ,[comment]\n"
                     + "      ,[createdAt]\n"
+                    + "      ,[status]"
                     + "  FROM [Comment] c"
                     + " INNER JOIN [User] u ON c.[userId] = u.[id]"
                     + " WHERE c.[id] = ? ";
@@ -128,7 +133,7 @@ public class CommentDAO {
             rs = stm.executeQuery();
             if (rs.next()) {
                 Comment cm = new Comment(rs.getInt(1), rs.getInt(2), rs.getInt(3)
-                        , rs.getString(7), rs.getTimestamp(8));
+                        , rs.getString(7), rs.getTimestamp(8), rs.getBoolean(9));
                 User user = new User();
                 user.setId(rs.getInt(3));
                 user.setName(rs.getString(4));
@@ -142,6 +147,19 @@ public class CommentDAO {
             System.out.println("load error:" + e.getMessage());
         }
         return null;
+    }
+
+    public void banComment(int commentId) {
+         try {
+            String sql = "UPDATE [Comment]"
+                    + "      SET [status] = 0"
+                    + "    WHERE [id] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, commentId);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CommentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

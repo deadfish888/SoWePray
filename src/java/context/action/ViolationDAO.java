@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package context.action;
-
 import Model.report.Violation;
 import context.DBContext;
 import java.sql.Connection;
@@ -13,10 +12,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-/* @author ACER */
+/**
+ *
+ * @author duypham0705
+ */
 public class ViolationDAO {
-
+    
     public ViolationDAO() {
         connectDB();
     }
@@ -77,6 +78,24 @@ public class ViolationDAO {
         } catch (SQLException ex) {
             Logger.getLogger(ReportDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+    }
+    
+    public ArrayList<Violation> getAllReportType(int rid) {
+        ArrayList<Violation> list = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM [Violation] WHERE reportType = ? ";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, rid);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                int reportType = rs.getInt(2);
+                String title = rs.getString(3);
+                list.add(new Violation(id, reportType, title));
+            }
+        } catch (Exception e) {
+            System.out.println("getAllReportType error:" + e.getMessage());
+        }
+        return list;
     }
 }

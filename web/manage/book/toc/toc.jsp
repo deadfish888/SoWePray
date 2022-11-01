@@ -22,7 +22,7 @@
                             <c:if test="${chapter.volumeId==volume.id}">
                                 <li class="list-group-item">
                                     <a target="_blank" href=""><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
-                                    <a href="./TOC?id=${book.id}&cid=${chapter.id}">   ${chapter.title}</a>
+                                    <a href="./TOC?id=${book.id}&cid=${chapter.id}">    ${chapter.title}</a>
                                 </li>
                             </c:if>
 

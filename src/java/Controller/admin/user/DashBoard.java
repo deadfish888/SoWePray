@@ -7,7 +7,6 @@ package Controller.admin.user;
 import Model.product.Author;
 import Model.auth.User;
 import context.action.CommentDAO;
-import context.action.ReportDAO;
 import context.product.BookDAO;
 import context.auth.UserDAO;
 import context.product.AuthorDAO;
@@ -42,7 +41,6 @@ public class DashBoard extends HttpServlet {
     UserDAO uDao = new UserDAO();
     BookDAO bDao = new BookDAO();
     CommentDAO cDao = new CommentDAO();
-    ReportDAO rDao = new ReportDAO();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -57,7 +55,6 @@ public class DashBoard extends HttpServlet {
         ArrayList<User> listUser = uDao.getAllUsers();
         ArrayList<Integer> listQuater = aDao.getNumQuater(date.getYear() + 1900, date.getYear() + 1899);
         ArrayList<Integer> listYear = new ArrayList<>();
-        System.out.println(date.getMonth());
         for (int i = 0; i < date.getMonth(); i++) {
             listYear.add(aDao.getNumYear(i + 1, date.getYear() + 1900));
         }
@@ -75,7 +72,6 @@ public class DashBoard extends HttpServlet {
 
         request.setAttribute("books", bDao.countBookNumber());
         request.setAttribute("cmt", cDao.count());
-        request.setAttribute("rp", rDao.count());
 
         request.setAttribute("listQuater", listQuater);
         request.setAttribute("max", getMax(listQuater));

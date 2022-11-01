@@ -1,8 +1,4 @@
-<%-- 
-    Document   : Works
-    Created on : Oct 11, 2022, 7:57:45 PM
-    Author     : ACER
---%>
+
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -40,7 +36,7 @@
                         <a href="./Payment">Payment</a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#">Support</a>
+                        <a href="./Support">Support</a>
                     </li>
                 </ul>
             </nav>
@@ -128,7 +124,7 @@
                             </table>
                             <c:if test="${empty books}">
                                 <h4>
-                                    No work to show
+                                    No work to show 
                                 </h4>
                             </c:if>
                             <div class="${numPage <= 1 ? "hidden" : ""}" style="margin-left: 40%">
