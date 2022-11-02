@@ -64,10 +64,10 @@ public class ReportDAO {
             stm.setString(4, note);
             stm.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
             rs = stm.executeQuery();
-//            if (rs.next()) {
-//                ViolationDAO vd = new ViolationDAO();
-//                vd.addReportViolation(rs.getInt(1), rid);
-//            }
+            if (rs.next()) {
+                ViolationDAO vd = new ViolationDAO();
+                vd.addReportViolation(rs.getInt(1), rid);
+            }
         } catch (Exception ex) {
             Logger.getLogger(ReportDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -155,8 +155,8 @@ public class ReportDAO {
                 r.setSent(rs.getTimestamp(7));
                 r.setReceived(rs.getTimestamp(8));
                 r.setStatus(rs.getBoolean(9));
-//                ViolationDAO vd = new ViolationDAO();
-//                r.setViolates(vd.getReportViolations(rs.getInt(1)));
+                ViolationDAO vd = new ViolationDAO();
+                r.setViolates(vd.getReportViolations(rs.getInt(1)));
                 listR.add(r);
             }
             return listR;

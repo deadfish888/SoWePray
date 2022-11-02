@@ -128,7 +128,7 @@
                                             <tr>
                                                 <td>${s.id}</a></td>
                                                 <td>
-                                                    <a href="#" style="text-decoration: none">${s.userR.username} - ID: ${s.userId}</a>
+                                                    <a href="./Activities?id=${s.userId}" style="text-decoration: none">${s.userR.username} - ID: ${s.userId}</a>
                                                 </td>
                                                 <td>  
                                                     ${s.reportTypeName}

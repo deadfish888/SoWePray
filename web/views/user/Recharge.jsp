@@ -96,7 +96,7 @@
                                     </span>
                                 </div>
                                 <div class="text-center">
-                                    <img src="${context}/images/qr code (not value).png" alt="QR Code"/>
+                                    <img src="${context}/images/qr.jpeg" alt="QR Code"/>
 
                                 </div>
                             </div>

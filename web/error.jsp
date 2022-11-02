@@ -48,7 +48,7 @@
                 }
             }
             body {
-                background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/257418/andy-holmes-698828-unsplash.jpg);
+                background-image: url("images/nebula.jpg");
                 background-size: cover;
                 background-repeat: no-repeat;
                 min-height: 100vh;
@@ -79,7 +79,7 @@
                     <div id="countUp">
                         <div class="number" data-count="404">404 NOT FOUND</div>
                         <div class="text">BẠN NHÌN THẤY GÌ KHÔNG? LÀ MÀN HÌNH ĐÓ!</div>
-                        <a href="./Home" class="text btn btn-danger">BACK</a>
+                        <a id="ac" onclick="goback()" class="text btn btn-danger">BACK</a>
                     </div>
                 </div>
             </div>
@@ -88,4 +88,9 @@
 
 
     </body>
+    <script>
+        function goback(){
+            history.back();
+        }
+    </script>
 </html>

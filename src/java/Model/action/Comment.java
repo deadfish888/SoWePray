@@ -6,6 +6,7 @@ package Model.action;
 
 import Model.auth.User;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -20,10 +21,11 @@ public class Comment {
     private String comment;
     private int sonOf;
     private int replyTo;
+    private String replyName;
     private ArrayList<Comment> replies;
     private Timestamp createdAt;
     private Timestamp editedAt;
-    private boolean status;
+    private Boolean status;
 
     public Comment() {
     }
@@ -36,13 +38,21 @@ public class Comment {
         this.createdAt = createdAt;
         this.status = status;
     }
+
+    public String getReplyName() {
+        return replyName;
+    }
+
+    public void setReplyName(String replyName) {
+        this.replyName = replyName;
+    }
     
     public int getBookId() {
         return bookId;
     }
 
-    public Timestamp getEditedAt() {
-        return editedAt;
+    public String getEditedAt() {
+        return editedAt ==null? null: new SimpleDateFormat("HH:mm a MM/dd/yyyy").format(editedAt);
     }
 
     public void setEditedAt(Timestamp editedAt) {
@@ -110,19 +120,19 @@ public class Comment {
         this.replyTo = replyTo;
     }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
+    public String getCreatedAt() {
+        return createdAt ==null? null: new SimpleDateFormat("HH:mm a MM/dd/yyyy").format(createdAt);
     }
 
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
-    public boolean isStatus() {
+    public Boolean isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

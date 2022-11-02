@@ -1,5 +1,6 @@
 package utils;
  
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
@@ -76,5 +77,61 @@ public class MyUtil {
         // sends the e-mail
         Transport.send(msg);
  
+    }
+    public int fieldInt(String value, String message) throws Exception {
+        int number = 0;
+        try {
+            number = Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            throw new Exception(message);
+        }
+        return number;
+    }
+
+    public double fieldDouble(String value, String message) throws Exception {
+        double number = 0;
+        try {
+            number = Double.parseDouble(value);
+        } catch (NumberFormatException e) {
+            throw new Exception(message);
+        }
+        return number;
+    }
+
+    public String fieldString(String value, String message) throws Exception {
+        if (value.isEmpty() || value.trim().equals("")) {
+            throw new Exception(message);
+        }
+        return value;
+    }
+
+    public boolean fieldBoolean(String value, String message) throws Exception {
+        boolean bool = false;
+        try {
+            bool = Boolean.parseBoolean(value);
+        } catch (Exception e) {
+            throw new Exception(message);
+        }
+        return bool;
+    }
+
+    public java.sql.Date fieldDate(String value, String message) throws Exception {
+        java.sql.Date date = null;
+        try {
+            date = java.sql.Date.valueOf(value);
+        } catch (Exception e) {
+            throw new Exception(message);
+        }
+        return date;
+    }
+
+    public Timestamp fieldTimestamp(String value, String message) throws Exception {
+        Timestamp timestamp = null;
+        try {
+            timestamp = new Timestamp(new java.util.Date(Long.parseLong(value)).getTime());
+        } catch (Exception e) {
+            throw new Exception(message);
+        }
+        return timestamp;
     }
 }
