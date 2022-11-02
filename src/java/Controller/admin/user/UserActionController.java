@@ -10,6 +10,7 @@ import Model.payment.Transaction;
 import context.action.TicketDAO;
 import context.auth.UserDAO;
 import context.payment.TransactionDAO;
+import context.product.BookDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -29,6 +30,7 @@ public class UserActionController extends HttpServlet {
     UserDAO uDao = new UserDAO();
     TransactionDAO tranDao = new TransactionDAO();
     TicketDAO ticDao = new TicketDAO();
+    BookDAO bDao = new BookDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -73,7 +75,7 @@ public class UserActionController extends HttpServlet {
         ArrayList<Transaction> listT = tranDao.getTransactionList(user);
         ArrayList<Ticket> listR = ticDao.getAction(id);
 
-        String xpage1 =  request.getParameter("xpage10");
+        String xpage1 = request.getParameter("xpage10");
         int page1;
         if (xpage1 == null) {
             page1 = 1;
@@ -96,14 +98,17 @@ public class UserActionController extends HttpServlet {
         int numPage2 = (size2 % 10 == 0) ? (size2 / 10) : (size2 / 10 + 1);
         int start2 = (page2 - 1) * 10;
         int end2 = Math.min(size2, start2 + 10);
-        
-         listT = tranDao.getByPage(listT, start1, end1);
+
+        listT = tranDao.getByPage(listT, start1, end1);
         listR = ticDao.getByPage(listR, start2, end2);
         request.setAttribute("xpage10", page1);
         request.setAttribute("numPage10", numPage1);
         request.setAttribute("xpage20", page2);
         request.setAttribute("numPage20", numPage2);
         request.setAttribute("userA", user);
+        request.setAttribute("numberNovel", bDao.countNovel(user));
+        request.setAttribute("numberBook", bDao.getOwnBooks(user).size());
+
         request.setAttribute("listA", listT);
         request.setAttribute("listU", listR);
         request.getRequestDispatcher("../manage/user/activities.jsp").forward(request, response);
