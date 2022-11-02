@@ -157,7 +157,6 @@ public class ProductDAO {
             rs = stm.executeQuery();
             if (rs.next()) {
                 BookDAO bookDAO = new BookDAO();
-//                ChapterDAO chapterDAO = new ChapterDAO();
                 Product product = new Product();
                 product.setProductId(rs.getString("productId"));
                 product.setBook(bookDAO.getBookById(rs.getInt("bookId")));

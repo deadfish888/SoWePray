@@ -244,6 +244,11 @@
                                                                 <p><i class="fa fa-unlock"></i> ${chapProduct.chapter.title}</p>
                                                             </a>
                                                         </c:when>
+                                                        <c:when test="${empty sessionScope.user && empty sessionScope.admin}">
+                                                            <a href="Login">
+                                                                <p><i class="fa fa-lock"></i> ${chapProduct.chapter.title}</p>
+                                                            </a>
+                                                        </c:when>
                                                         <c:otherwise>
                                                             <a data-toggle="modal" data-target="#cpurchase${chapProduct.chapter.id}"><p><i class="fa fa-lock"></i> ${chapProduct.chapter.title}</p></a>
                                                             <div class="modal fade" id="cpurchase${chapProduct.chapter.id}" tabindex="-1" role="dialog" aria-hidden="true">

@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controller.User;
 
 import Model.auth.User;
@@ -17,9 +16,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /* @author ACER */
-@WebServlet(name="ChangePassword", urlPatterns={"/User/ChangePassword"})
+@WebServlet(name = "ChangePassword", urlPatterns = {"/User/ChangePassword"})
 public class ChangePasswordController extends HttpServlet {
-   
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -29,9 +28,6 @@ public class ChangePasswordController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        String old_password = request.getParameter("oldPassword");
-//        String new_password = request.getParameter("newPassword");
-//        String confirm_password = request.getParameter("confirmPassword");
 
         UserDAO userDBC = new UserDAO();
         User user = (User) request.getSession().getAttribute("user");
@@ -41,17 +37,17 @@ public class ChangePasswordController extends HttpServlet {
                 if (request.getParameter("newPassword").equals(request.getParameter("confirmPassword"))) {
                     user.setPassword(request.getParameter("newPassword"));
                     userDBC.changePassword(user.getId(), request.getParameter("newPassword"));
-            request.setAttribute("processMessage", "Change password successfully.");
+                    request.setAttribute("processMessage", "Change password successfully.");
                 } else {
-                    request.setAttribute("confirm_pass_noti", "Confirm password is not match with new password.");
+                    request.setAttribute("error", "Confirm password is not match with new password.");
                     request.setAttribute("processMessage", "Change password fail.");
                 }
             } else {
-                request.setAttribute("new_pass_noti", "New password is invalid.");
+                request.setAttribute("error", "New password is invalid.");
                 request.setAttribute("processMessage", "Change password fail.");
             }
         } else {
-            request.setAttribute("old_pass_noti", "Old password is wrong.");
+            request.setAttribute("error", "Old password is wrong.");
             request.setAttribute("processMessage", "Change password fail.");
         }
         request.getRequestDispatcher("../views/user/Security.jsp").forward(request, response);
