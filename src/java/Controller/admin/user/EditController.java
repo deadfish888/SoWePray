@@ -53,10 +53,7 @@ public class EditController extends HttpServlet {
         if (session.getAttribute("admin")!=null) {
             us = (User) session.getAttribute("admin");
         }
-        if (session.getAttribute("adminS")!=null) {
-            us = (User) session.getAttribute("adminS");
-        }
-        
+       
         Boolean check = false;
         if (!request.getParameter("email").isEmpty()) {
             us.setEmail(request.getParameter("email"));
