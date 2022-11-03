@@ -325,7 +325,7 @@
                                                         <div class="row">
                                                             <div class="col-md-3 small">
                                                                 <c:if test="${comment.getEditedAt()==null}">${comment.getCreatedAt()}</c:if>
-                                                                <c:if test="${comment.getEditedAt()!=null}">${comment.getEditedAt()}</c:if>
+                                                                <c:if test="${comment.getEditedAt()!=null}">Edited ${comment.getEditedAt()}</c:if>
                                                                 </div>                                
                                                             <c:if test="${comment.getUserId()!=sessionScope.user.getId()}">
                                                                 <div class ="col-md-3 small">

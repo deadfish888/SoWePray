@@ -47,7 +47,6 @@ public class ReportCommentController extends HttpServlet {
             ArrayList<Violation> list = vd.getAllReportType(2);
             request.setAttribute("list", list);
             request.setAttribute("comment", comment);
-            request.setAttribute("confirm","Report Successfully!");
             request.getRequestDispatcher("/views/book/report-comment.jsp").forward(request, response);
         }
     }

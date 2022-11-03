@@ -13,6 +13,7 @@ import Model.product.content.Chapter;
 import Model.product.content.Volume;
 import context.action.CommentDAO;
 import context.action.FavouriteDAO;
+import context.action.RatingDAO;
 import context.product.BookDAO;
 import context.product.ProductDAO;
 import context.product.ProductOwnDAO;
@@ -42,9 +43,11 @@ public class BookDetailController extends HttpServlet {
             VolumeDAO vd = new VolumeDAO();
             CommentDAO cmd = new CommentDAO();
             ProductDAO pd = new ProductDAO();
-
+            RatingDAO rd =new RatingDAO();
+            
             Book thisbook = bd.getBookById(id);
             request.setAttribute("book", thisbook);
+            request.setAttribute("votes", rd.getStarList(id).size());
             request.getRequestDispatcher("../manage/book/book-details.jsp").forward(request, response);
 
         } catch (Exception e) {

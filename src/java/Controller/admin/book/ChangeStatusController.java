@@ -33,9 +33,10 @@ public class ChangeStatusController extends HttpServlet {
             int bookId = Integer.parseInt(request.getParameter("id"));
             BookDAO bd = new BookDAO();
             bd.changeStatus(bookId);
-            request.getRequestDispatcher("./Book?xpage="+page).forward(request, response);
+            response.sendRedirect("./Book?xpage="+page);
         } catch (Exception ex) {
             Logger.getLogger(ChangeStatusController.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendRedirect(request.getContextPath()+"/error.jsp");
         }
 
     } 
@@ -43,6 +44,15 @@ public class ChangeStatusController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        try {
+            int bookId = Integer.parseInt(request.getParameter("id"));
+            BookDAO bd = new BookDAO();
+            bd.changeStatus(bookId);
+            request.getRequestDispatcher("./BookDetail?id="+bookId).forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(ChangeStatusController.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendRedirect(request.getContextPath()+"/error.jsp");
+        }
     }
     
 

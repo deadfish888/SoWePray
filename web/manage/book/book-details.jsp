@@ -23,6 +23,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Book No.${book.id}</title>
         <link rel="stylesheet" href="/Bookie/manage/html/css/style.min.css">
+        <link href="/Bookie/manage/html/css/dropdown.css" rel="stylesheet">
 
     </head>
 
@@ -68,14 +69,19 @@
                                     </ol>
                                 </nav>
                             </div>
+
                         </div>
-                        <!--                        <div class="col-md-6 col-4 align-self-center">
-                                                    <div class="text-end upgrade-btn">
-                                                        <a href="https://www.wrappixel.com/templates/materialpro/"
-                                                           class="btn btn-danger d-none d-md-inline-block text-white" target="_blank">Upgrade to
-                                                            Pro</a>
-                                                    </div>
-                                                </div>-->
+                        <div class="col-6 left-filter">
+                            <form action="./ChangeStatus" method="post" style="margin-left: 80%">
+                                <input  type="hidden" name="id" value="${book.id}">
+                                <a><button class="btn ${book.status()?"btn-danger":"btn-primary"}" id="myButton" name="status" type="submit">
+                                        <i class="fa-solid ${book.status()?"fa-ban":"fa-up-long"}"></i>
+                                    </button>
+                                </a>
+
+                            </form>
+                        </div>
+
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -89,47 +95,67 @@
                     <!-- Start Page Content -->
                     <!-- Column -->
                     <div class="row">
-                                            <div class="col-lg-4 col-xlg-3 col-md-5">
-                                                <div class="card">
-                                                    <div class="card-body profile-card">
-                                                        <center class="mt-4"> <img src="assets/images/users/5.jpg"rounded-circle"
-                                                                                   width="150" />
-                                                            <h4 class="card-title mt-2">Hanna Gover</h4>
-                                                            <h6 class="card-subtitle">Accoubts Manager Amix corp</h6>
-                                                            <div class="row text-center justify-content-center">
-                                                                <div class="col-4">
-                                                                    <a href="javascript:void(0)" class="link">
-                                                                        <i class="icon-people" aria-hidden="true"></i>
-                                                                        <span class="value-digit">254</span>
-                                                                    </a>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                    <a href="javascript:void(0)" class="link">
-                                                                        <i class="icon-picture" aria-hidden="true"></i>
-                                                                        <span class="value-digit">54</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </center>
-                                                    </div>
-                                                </div>
-                                            </div>
-                    <div class="col-lg-8 col-xlg-9 col-md-7">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Books List</h4>
-                                <div class="left-filter">
-                                    <a class="btn btn-purple" href="./AddBook">Add Book</a>
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-body profile-card">
+                                    <center class="mt-4"> <img src="${book.image}" class="rounded"
+                                                               width="150" />
+                                        <h4 class="card-title mt-2">
+                                            <a target="_blank" href="../BookDetail?id=${book.id}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
+                                                ${book.title}
+                                        </h4>
+                                        <c:if test="${book.author.userId !=0}">
+                                            <h6 class="card-subtitle">Creator: <a target="_blank" href="./Activities?id=${book.author.userId}">${book.author.user.name} - ID: ${book.author.userId}</a></h6>
+                                            <h6 class="card-subtitle">${book.price}$/chapter</h6>
+                                        </c:if>
+                                        <c:if test="${book.author.userId ==0}">
+                                            <h6 class="card-subtitle">Author: ${book.author.name}</h6>
+                                            <h6 class="card-subtitle">${book.price}$</h6>
+                                            <h6 class="card-subtitle">${book.issale()?"In sale":""}</h6>
+                                        </c:if>
+                                        <h6 class="card-subtitle"><i class="fa fa-star"></i>${book.rating}</h6>
+                                    </center>
                                 </div>
-                                <div class="table-responsive">
-                                    
-                                </div>
-                                
                             </div>
                         </div>
+                        <div class="col-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Activities</h4>
+                                    <table class="table">
+                                        <tr>
+                                            <td>Number of words:</td>
+                                            <td>${words}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Number of views: </td>
+                                            <td>${book.views}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Number of favorite: </td>
+                                            <td>${book.favourite}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Number of votes:</td>
+                                            <td>${votes}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Number of comments:</td>
+                                            <td>${comments}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bought:</td>
+                                            <td>${users} user(s)</td>
+                                        </tr>
+                                    </table>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Column -->
                     </div>
-                    <!-- Column -->
-                </div>
                 </div>
                 <!-- ============================================================== -->
             </div>
@@ -145,6 +171,7 @@
     </div>
     <!-- End Wrapper -->
     <!-- All Jquery -->
+    <script src="https://kit.fontawesome.com/a65741f09b.js" crossorigin="anonymous"></script>
     <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="/Bookie/manage/assets/plugins/bootstrap/dist/js/bootstrap.bundle.js"></script>

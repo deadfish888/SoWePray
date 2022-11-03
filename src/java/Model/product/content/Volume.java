@@ -5,6 +5,7 @@
 package Model.product.content;
 
 import Model.product.Book;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,6 +18,7 @@ public class Volume {
     private int no;
     private String title;
     private String summary;
+    private ArrayList<Chapter> chapters;
 
     public Volume() {
     }
@@ -81,4 +83,13 @@ public class Volume {
     public void setSummary(String summary) {
         this.summary = summary;
     }
+
+    public ArrayList<Chapter> getChapters() {
+        return chapters;
+    }
+
+    public void setChapters(ArrayList<Chapter> chapters) {
+        this.chapters = chapters;
+    }
+    
 }

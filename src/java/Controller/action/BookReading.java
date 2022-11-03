@@ -8,9 +8,11 @@ import Model.auth.User;
 import Model.product.Book;
 import Model.product.Product;
 import Model.product.content.Chapter;
+import Model.product.content.Volume;
 import context.product.BookDAO;
 import context.product.ProductDAO;
 import context.product.content.ChapterDAO;
+import context.product.content.VolumeDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -36,9 +38,10 @@ public class BookReading extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         String cid = request.getParameter("cid");
         BookDAO b = new BookDAO();
+        VolumeDAO vd = new VolumeDAO();
         ChapterDAO chd = new ChapterDAO();
         Book thisbook = b.getBookById(id);
-        ArrayList<Chapter> listc = chd.getChaptersByBookId(id);
+        ArrayList<Volume> listV = vd.getVolumesByBookId(id);
         Product product = new Product("B" + id);
         ProductDAO productDAO = new ProductDAO();
         Chapter chapter;
@@ -61,9 +64,9 @@ public class BookReading extends HttpServlet {
 //        ArrayList<Chapter> chap = chd.getChapterByVolumeIDandBookID(id, thisbook.getId());
 //        request.setAttribute("book", thisbook);
         request.setAttribute("listr", listr);
+        request.setAttribute("listV", listV);
+        request.setAttribute("words", chapter.getContent().split("\\s+").length);
         request.setAttribute("chapter", chapter);
-        System.out.println(((User) request.getSession().getAttribute("user")).isOwnProduct(product.getProductId()));
-//        System.out.println(((User) request.getSession().getAttribute("user")).isOwnBook(product.getBook().getId()));
         request.getRequestDispatcher("/views/book/book-reading.jsp").forward(request, response);
     }
 

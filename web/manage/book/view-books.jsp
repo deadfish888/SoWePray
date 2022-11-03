@@ -115,7 +115,7 @@
 
                                             <c:forEach var="book" items="${books}">
                                                 <tr>
-                                                    <td >${book.id}</td>
+                                                    <td><a href="./BookDetail?id=${book.id}">${book.id}</a></td>
                                                     <td>${book.title}</td>
                                                     <td>${book.author.name}</td>
                                                     <td style="width: 150px;"><img  src="${book.image}" width="100px"></td>
@@ -130,13 +130,14 @@
                                                     <td><a class="btn btn-primary" href="./UpdateBook?id=${book.id}"><i class="fa fa-pen-square" aria-hidden="true"></i></a></td>
                                                     <td><a class="btn btn-secondary" href="./Book/TOC?id=${book.id}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
                                                     <td>
-                                                        <form action="Disable" method="get">
-                                                            <label class="switch">
-                                                                <a href="./ChangeStatus?id=${book.id}&xpage=${xpage}">
-                                                                    <input id="myButton" type="checkbox" name="status" ${book.status() ? "checked": null}>
-                                                                    <span class="slider"></span>
-                                                                </a>
-                                                            </label>
+                                                        <form action="./ChangeStatus" method="get">
+                                                            <input  type="hidden" name="id" value="${book.id}">
+                                                            <input  type="hidden" name="xpage" value="${xpage}">
+                                                            <a><button class="btn ${book.status()?"btn-danger":"btn-primary"}" type="submit">
+                                                                    <i class="fa-solid ${book.status()?"fa-ban":"fa-up-long"}"></i>
+                                                                </button>
+                                                            </a>
+
                                                         </form>
                                                     </td>
                                                 </tr>
@@ -158,7 +159,7 @@
                                                    >${item}</a></li>
                                             </c:forEach>
                                         <li >
-                                            <a href="BookManager?xpage=${xpage+1}" class="page-link" style="${xpage+2>numPage?"display:none":""}">
+                                            <a href="Book?xpage=${xpage+1}" class="page-link" style="${xpage+2>numPage?"display:none":""}">
                                                 <i class="fa fa-angle-right" aria-hidden="true"  ></i>
                                             </a>
                                         </li>
@@ -183,6 +184,7 @@
     </div>
     <!-- End Wrapper -->
     <!-- All Jquery -->
+    <script src="https://kit.fontawesome.com/a65741f09b.js" crossorigin="anonymous"></script>
     <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="/Bookie/manage/assets/plugins/bootstrap/dist/js/bootstrap.bundle.js"></script>
@@ -193,7 +195,13 @@
     <script src="/Bookie/manage/html/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="/Bookie/manage/html/js/custom.js"></script>
-
+    <script>
+                                                    var element = document.getElementById("book-management");
+                                                    element.classList.add("selected");
+                                                    element = document.getElementById("book-management-a");
+                                                    element.classList.add("active");
+                                                    
+    </script>
 </body>
 
 </html>

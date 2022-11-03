@@ -90,7 +90,7 @@
                                                     <a href="">${report.bookO.title} - ID: ${report.bookO.id}</a></h4>
 
                                                 <c:if test="${report.bookO.author.userId !=0}">
-                                                    <h6 class="card-subtitle">Creator: <a href="./Activities?id=${report.bookO.author.userId}">${report.bookO.author.user.name} - ID: ${report.bookO.author.userId}</a></h6>
+                                                    <h6 class="card-subtitle">Creator: <a target="_blank" href="./Activities?id=${report.bookO.author.userId}">${report.bookO.author.user.name} - ID: ${report.bookO.author.userId}</a></h6>
                                                 </c:if>
                                                 <c:if test="${report.bookO.author.userId ==0}">
                                                     <h6 class="card-subtitle">Author: ${report.bookO.author.name}</h6>
@@ -101,11 +101,11 @@
                                             <center class="mt-4"> <img src="../images/default.png" class="rounded-circle"
                                                                        width="100" />
                                                 <h4 class="card-title mt-2">
-                                                    <a target="_blank" href="../"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
-                                                    <a href="./Activities?id=${report.comO.userId}?id=${report.comO.user.id}">${report.comO.user.name} - ID: ${report.comO.userId}</a>
+                                                    <a target="_blank" href="./Activities?id=${report.comO.userId}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
+                                                    ${report.comO.user.name} - ID: ${report.comO.userId}
                                                 </h4>
                                                     <h6 class="card-subtitle">
-                                                        <a target="_blank" href="../BookDetail?id=${report.bookO.id}&&cmtId=${report.comO.id}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
+                                                        <a  href="../BookDetail?id=${report.bookO.id}&cmtId=${report.comO.id}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
                                                         CommentID: ${report.comO.id}
                                                     </h6>
                                                 
