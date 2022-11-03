@@ -11,7 +11,7 @@
           response.sendRedirect("./Login");
     %>
 </c:if>
-<c:if test="${!sessionScope.user.isOwnProduct(product.productId) && sessionScope.user.id ne product.book.author.user.id}">
+<c:if test="${!sessionScope.user.isOwnProduct(product.productId) && !sessionScope.user.isOwnProduct(bookProductId) && sessionScope.user.id ne product.book.author.user.id}">
     <%         
           response.sendRedirect("./BookDetail?id=" + ((Product) request.getAttribute("product")).getBook().getId());
     %>
@@ -84,13 +84,13 @@
             <!-- SideOption -->
             <section id="rd-side_icon" class="none force-block-l side_option">
                 <c:if test="${!empty chapter.prev}">
-                    <a href="./BookReading?id=${chapter.volume.bookId}&cid=${chapter.prev.id}"><i class='bx bu bx-chevrons-left bx-sm btm '></i></a><br>
+                    <a href="./BookReading?id=${chapter.volume.bookId}&cid=${chapter.prev.id}" class="rd_sd-button_item"><i class='bx bu bx-chevrons-left bx-sm btm '></i></a><br>
                     </c:if>
-                <a href="BookDetail?id=${product.book.id}"><i class='bx bu bxs-home bx-sm btm'></i></a><br>
-                <a id="rd-setting_icon" href="#setting" class="rd_sd-button_item"><i class='bx bu bx-font-family bx-sm'></i></a><br>
-                <a id="info" href="#menu" data="${chapter.id}"><i class='bx bu bx-info-circle bx-sm'></i></a><br>
+                <a class="rd_sd-button_item" href="BookDetail?id=${product.book.id}"><i class='bx bu bxs-home bx-sm btm'></i></a><br>
+                <a id="rd-setting_icon" data-affect="#" class="rd_sd-button_item" onclick="rdtoggle('setting', 'fade-in-down')"><i class='bx bu bx-font-family bx-sm'></i></a><br>
+                <a id="info" href="#menu" data="${chapter.id}" class="rd_sd-button_item"><i class='bx bu bx-info-circle bx-sm'></i></a><br>
                     <c:if test="${!empty chapter.next}">
-                    <a href="./BookReading?id=${chapter.volume.bookId}&cid=${chapter.next.id}">
+                    <a href="./BookReading?id=${chapter.volume.bookId}&cid=${chapter.next.id}"class="rd_sd-button_item">
                         <i class='bx  bx-chevrons-right bx-sm'></i></a><br>
                     </c:if>
             </section>
@@ -105,20 +105,16 @@
                                 <span data-color="#e6f0e6" data-id="1" style="background-color: #e6f0e6"></span>
                                 <span data-color="#e3f5fa" data-id="2" style="background-color: #e3f5fa"></span>
                                 <span data-color="#f6f4ec" data-id="3" style="background-color: #f6f4ec"></span>
-                                <span data-color="#eae4d3" data-id="6" style="background-color: #eae4d3"></span>
-                                <span data-color="#f5e9ef" data-id="4" style="background-color: #f5e9ef"></span>
-                                <span data-color="#222222" data-id="5" style="background-color: #222222"></span>
+                                <span data-color="#eae4d3" data-id="4" style="background-color: #eae4d3"></span>
+                                <span data-color="#f5e9ef" data-id="5" style="background-color: #f5e9ef"></span>
+                                <span data-color="#222222" data-id="6" style="background-color: #222222"></span>
                             </div>
                         </div>
                         <div class="set-list set-font-family clear"><label>Font Family</label>
                             <div class="set-slide set-input">
                                 <select>
                                     <option>Times New Roman</option>
-                                    <option>Merriweather</option>
-                                    <option>Lora</option>
-                                    <option>Roboto</option>
                                     <option>Noto Sans</option>
-                                    <option>Nunito</option>
                                 </select>
                             </div>
                         </div>
@@ -126,13 +122,6 @@
                             <div class="set-slide set-input">
                                 <span class="set-slide_button set-smaller"><i class="fas fa-chevron-left"></i></span>
                                 <input class="set-slide_input" disabled="" value="16px" type="text" style="width: 180px; display: inline">
-                                <span class="set-bigger set-slide_button"><i class="fas fa-chevron-right"></i></span>
-                            </div>
-                        </div>
-                        <div class="set-list set-margin clear"><label>Padding</label>
-                            <div class="set-slide set-input">
-                                <span class="set-slide_button set-smaller"><i class="fas fa-chevron-left"></i></span>
-                                <input class="set-slide_input" disabled="" value="20px" type="text" style="width: 180px; display: inline">
                                 <span class="set-bigger set-slide_button"><i class="fas fa-chevron-right"></i></span>
                             </div>
                         </div>
@@ -320,166 +309,179 @@
                 background-color: #f6f4ec;
             }
             #mainpart.reading-page.style-6, #mainpart.reading-page.style-6 #rd-side_icon {
-                background-color: #eae4d3;
+                background-color: #222222;
+                color: whitesmoke;
             }
             #mainpart.reading-page.style-4, #mainpart.reading-page.style-4 #rd-side_icon {
+                background-color: #eae4d3;
+            }
+            #mainpart.reading-page.style-5, #mainpart.reading-page.style-4 #rd-side_icon {
                 background-color: #f5e9ef;
             }
-            #mainpart.reading-page.style-5 {
-                background-color: #222;
+            .set-color span.current {
+                border: 3px solid #36a189;
+            }
+            #setting.black{
+                color: #585858;
             }
         </style>
         <!-- Scripts -->
-        <script>
-            var element = document.getElementById("setting");
-                                                    $("#setting").classList.add("on");
-            function showBox()
-            {
-                var id = document.getElementById("info").getAttribute("data");
-                const box = document.getElementById("c"+id);
-                box.scrollIntoView({block: "center"});
-                
-            }
-
-            function turnoffall() {
-                $(".rdtoggle").removeClass("on");
-                $(".rdtoggle_body").removeClass("animation fade-in-left-big fade-in-down");
-                $("html").removeClass("overflow-hiden");
-            }
-
-            function rdtoggle(classicon, effect) {
-                if ($(classicon).hasClass("on")) {
-                    turnoffall();
-                } else {
-                    turnoffall();
-                    $(classicon).addClass("on");
-                    $("html").addClass("overflow-hiden");
-                    $(classicon + " .rdtoggle_body").addClass("animation " + effect);
-                }
-            }
-            ;
-            
-            $("#info").on('click',function(){
-               showBox(); 
-            });
-            $("#rd-setting_icon").on('click', function () {
-                rdtoggle("#setting", "fade-in-down");
-            });
-
-            $("#rd-info_icon").on('click', function () {
-                rdtoggle("#chapters", "fade-in-left-big");
-            });
-
-            $("#rd-bookmark_icon").on('click', function () {
-                rdtoggle("#bookmarks", "fade-in-left-big");
-            });
-
-            $(".black-click").on('click', function () {
-                turnoffall();
-                $("#rd-side_icon").hide();
-                $("#bookmark_top").removeClass("on");
-            });
-
-            var bgcolor = Cookies.get('night_mode') ? 5 : (Cookies.get('color') || 3);
-            var fontfamily = Cookies.get('fontfamily') || '';
-            var fontsize = Cookies.get('font') || 18;
-            var margin = Cookies.get('margin') || 0;
-
-            function setcolor(alter = true) {
-                var switcher = $(".set-color .set-input span").eq(bgcolor);
-                switcher.addClass("current");
-
-                if (alter) {
-                    for (var i = 0; i < $(".set-color .set-input span").length; i++) {
-                        $("#mainpart").removeClass('style-' + i);
-                    }
-                    $("#mainpart").addClass('style-' + bgcolor);
-            }
-            }
-
-            // This creates unsmooth experience so we only use it for select box
-            function setfontfamily() {
-                $('.set-font-family select option').filter(function () {
-                    return fontfamily.split(',')[0].indexOf($(this).text()) != -1;
-                }).attr('selected', true);
-            }
-
-            function setfontstyle(alter = true) {
-                $(".set-font input.set-slide_input").val(fontsize + "px");
-
-                if (alter) {
-                    $("div#chapter-content").css("font-size", fontsize + "px");
-
-                    var lineheight = +fontsize + 10;
-                    $("#chapter-content").css("line-height", lineheight + "px");
-            }
-            }
-
-            function setmargin() {
-                $(".set-margin input.set-slide_input").val(margin + "px");
-                $("#chapter-content").css({
-                    'padding-left': margin + "px",
-                    'padding-right': margin + "px"
-                });
-            }
-
-            setcolor(false);
-            setfontfamily();
-            setfontstyle(false);
-            setmargin();
-
-            //1px = 0.0625rem;
-            //16px = 1rem (default);
-
-            $(".set-color .set-input span").click(function () {
-                bgcolor = $(this).data("id");
-                $(".set-color .set-input span").removeClass("current");
-                setcolor();
-                Cookies.set('color', bgcolor, {expires: 365});
-            });
-
-            $('.set-font-family select').on('change', function () {
-                fontfamily = "'" + $('option:selected', this).text() + "', " + '\'Times New Roman\', Georgia, serif';
-
-                $('div#chapter-content').css('font-family', fontfamily);
-
-                Cookies.set('fontfamily', fontfamily, {expires: 365});
-            });
-
-            $(".set-font .set-slide_button.set-smaller").click(function () {
-                fontsize = fontsize - 2;
-                if (fontsize < 0)
-                    fontsize = 0;
-                setfontstyle();
-                Cookies.set('font', fontsize, {expires: 365});
-            });
-
-            $(".set-font .set-slide_button.set-bigger").click(function () {
-                fontsize = +fontsize + 2;
-                setfontstyle();
-                Cookies.set('font', fontsize, {expires: 365});
-            });
-
-            $(".set-margin .set-slide_button.set-smaller").click(function () {
-                margin = margin - 20;
-                if (margin < 0)
-                    margin = 0;
-                setmargin();
-                Cookies.set('margin', margin, {expires: 365});
-            });
-
-            $(".set-margin .set-slide_button.set-bigger").click(function () {
-                margin = +margin + 20;
-                setmargin();
-                Cookies.set('margin', margin, {expires: 365});
-            });
-
-        </script>
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="assets/js/jquery.scrolly.min.js"></script>
         <script src="assets/js/jquery.scrollex.min.js"></script>
         <script src="assets/js/main.js"></script>
+        <script>
+                    function setCookie(cname, cvalue, exdays) {
+                        const d = new Date();
+                        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                        let expires = "expires=" + d.toUTCString();
+                        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+                    }
+
+                    function getCookie(cname) {
+                        let name = cname + "=";
+                        let ca = document.cookie.split(';');
+                        for (let i = 0; i < ca.length; i++) {
+                            let c = ca[i];
+                            while (c.charAt(0) == ' ') {
+                                c = c.substring(1);
+                            }
+                            if (c.indexOf(name) == 0) {
+                                return c.substring(name.length, c.length);
+                            }
+                        }
+                        return "";
+                    }
+
+                    function checkCookie() {
+                        let user = getCookie("username");
+                        if (user != "") {
+                            alert("Welcome again " + user);
+                        } else {
+                            user = prompt("Please enter your name:", "");
+                            if (user != "" && user != null) {
+                                setCookie("username", user, 365);
+                            }
+                        }
+                    }
+
+                    function showBox()
+                    {
+                        var id = document.getElementById("info").getAttribute("data");
+                        const box = document.getElementById("c" + id);
+                        box.scrollIntoView({block: "center"});
+
+                    }
+
+                    function turnoffall() {
+                        $(".rdtoggle").removeClass("on");
+                        $(".rdtoggle_body").removeClass("animation fade-in-left-big fade-in-down");
+                        $("html").removeClass("overflow-hiden");
+                    }
+
+                    function rdtoggle(classicon, effect) {
+                        if ($(classicon).hasClass("on")) {
+                            turnoffall();
+                        } else {
+                            turnoffall();
+                            $(classicon).addClass("on");
+                            $("html").addClass("overflow-hiden");
+                            $(classicon + " .rdtoggle_body").addClass("animation " + effect);
+                        }
+                    }
+                    ;
+
+                    $("#info").on('click', function () {
+                        showBox();
+                    });
+                    $("#rd-setting_icon").on('click', function () {
+                        rdtoggle("#setting", "fade-in-down");
+                    });
+
+                    $(".black-click").on('click', function () {
+                        turnoffall();
+                    });
+
+                    var bgcolor = getCookie('color') || 0;
+                    var fontfamily = getCookie('fontfamily') || '';
+                    var fontsize = getCookie('font') || 18;
+                    var margin = getCookie('margin') || 0;
+
+                    function setcolor(alter = true) {
+                        var switcher = $(".set-color .set-input span").eq(bgcolor);
+                        switcher.addClass("current");
+
+                        if (alter) {
+                            for (var i = 0; i < $(".set-color .set-input span").length; i++) {
+                                $("#mainpart").removeClass('style-' + i);
+                            }
+                            $("#mainpart").addClass('style-' + bgcolor);
+                            if(bgcolor=='6') $("#setting").addClass("black");
+                            else{
+                                $("#setting").removeClass("black");
+                            }
+                    }
+                    }
+
+                    // This creates unsmooth experience so we only use it for select box
+                    function setfontfamily() {
+                        $('.set-font-family select option').filter(function () {
+                            return fontfamily.split(',')[0].indexOf($(this).text()) != -1;
+                        }).attr('selected', true);
+                    }
+
+                    function setfontstyle(alter = true) {
+                        $(".set-font input.set-slide_input").val(fontsize + "px");
+
+                        if (alter) {
+                            $("div#chapter-content").css("font-size", fontsize + "px");
+
+                            var lineheight = +fontsize + 10;
+                            $("#chapter-content").css("line-height", lineheight + "px");
+                    }
+                    }
+
+                    setcolor();
+                    setfontfamily();
+                    setfontstyle();
+
+                    //1px = 0.0625rem;
+                    //16px = 1rem (default);
+
+                    $(".set-color .set-input span").click(function () {
+                        bgcolor = $(this).data("id");
+                        $(".set-color .set-input span").removeClass("current");
+                        setcolor();
+                        setCookie('color', bgcolor, 365);
+                    });
+
+                    $('.set-font-family select').on('change', function () {
+                        fontfamily = "'" + $('option:selected', this).text() + "', " + '\'Times New Roman\', Georgia, serif';
+
+                        $('div#chapter-content').css('font-family', fontfamily);
+
+                        setCookie('fontfamily', fontfamily, 365);
+                    });
+
+                    $(".set-font .set-slide_button.set-smaller").click(function () {
+                        fontsize = fontsize - 2;
+                        if (fontsize < 0)
+                            fontsize = 0;
+                        setfontstyle();
+                        setCookie('font', fontsize, 365);
+                    });
+
+                    $(".set-font .set-slide_button.set-bigger").click(function () {
+                        fontsize = +fontsize + 2;
+                        setfontstyle();
+                        setCookie('font', fontsize, 365);
+                    });
+
+                    
+
+        </script>
+
 
     </body>
 </html>

@@ -64,6 +64,7 @@ public class BookReading extends HttpServlet {
 
 //        ArrayList<Chapter> chap = chd.getChapterByVolumeIDandBookID(id, thisbook.getId());
 //        request.setAttribute("book", thisbook);
+        request.setAttribute("bookProductId", "B"+id);
             request.setAttribute("listr", listr);
         request.setAttribute("listV", listV);
         request.setAttribute("words", chapter.getContent().split("\\s+").length);
