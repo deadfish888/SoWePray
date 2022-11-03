@@ -78,15 +78,15 @@ public class ChangeEmailController extends HttpServlet {
         if (user.getPassword().equals(request.getParameter("password"))) {
             if (userDBC.checkEmailExisted(request.getParameter("newEmail"))==0) {
                 user.setEmail(request.getParameter("newEmail"));
-                userDBC.updateUser(user);
+                userDBC.changeEmail(user.getId(), request.getParameter("newEmail"));
+                request.getSession().setAttribute("processMessage", "Your email is changed.");
             } else {
-                request.setAttribute("new_email_noti", "This email is duplicate.");
-                request.setAttribute("processMessage", "Change email fail.");
-
+                request.getSession().setAttribute("error", "This email is duplicate.");
+                request.getSession().setAttribute("processMessage", "Change email fail.");
             }
         } else {
-            request.setAttribute("old_pass_noti", "Old password is wrong.");
-            request.setAttribute("processMessage", "Change email fail.");
+            request.getSession().setAttribute("error", "Password is wrong.");
+            request.getSession().setAttribute("processMessage", "Change email fail.");
         }
         request.getRequestDispatcher("../views/user/Security.jsp").forward(request, response);
     }

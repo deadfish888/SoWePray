@@ -63,11 +63,16 @@ public class BookReading extends HttpServlet {
 
 //        ArrayList<Chapter> chap = chd.getChapterByVolumeIDandBookID(id, thisbook.getId());
 //        request.setAttribute("book", thisbook);
-        request.setAttribute("listr", listr);
+            request.setAttribute("listr", listr);
         request.setAttribute("listV", listV);
         request.setAttribute("words", chapter.getContent().split("\\s+").length);
-        request.setAttribute("chapter", chapter);
-        request.getRequestDispatcher("/views/book/book-reading.jsp").forward(request, response);
+            request.setAttribute("chapter", chapter);
+                request.getRequestDispatcher("/views/book/book-reading.jsp").forward(request, response);
+
+        } catch (Exception e) {
+            request.getSession().setAttribute("error", e.getMessage() + "\n" + e.getLocalizedMessage());
+            response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("id"));
+        }
     }
 
     /**

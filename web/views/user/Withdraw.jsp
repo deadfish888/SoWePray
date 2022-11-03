@@ -93,7 +93,7 @@
                                     <!-- Or upload qr image? -->
                                     <div class="text-center">
                                         <div style="display: inline-block">
-                                                Bank:&emsp; 
+                                            Bank:&emsp; 
                                             <select name="bank">
                                                 <option>BIDV</option>
                                                 <option>TP Bank</option>
@@ -117,10 +117,42 @@
                                     <div class="g-recaptcha text-center" data-sitekey="6LfpnrEiAAAAAEOoMb6jEkwi6PxfbU5A6j4fBvTb"></div>
                                 </div>
 
-                                <button type="submit" style="float: right">Submit</button>
+                                <button type="button" data-toggle="modal" data-target="#withdraw" style="float: right">Submit</button>
                                 <button type="button" style="float: right; margin-right: 5px"><a href="Payment">Cancel</a></button>
                             </div>
-                        </form>
+                            <div class="modal fade" id="withdraw" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title">Withdraw</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="wrapper row">
+                                                <table style="width: 80%; margin: auto">
+                                                    <tr>
+                                                        <th>
+                                                            Password
+                                                        </th>
+                                                        <td>
+                                                            <input type="password" name="password"/>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer" style="text-align: center">
+                                            <button type="button" class="primary btn-primary text-center" data-dismiss="modal" style="width: auto; padding: 0 1em">Cancel</button>
+                                            <input type="submit" class="primary text-center" value="Confirm"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>                                                            
+                        <div style="color: red">
+                            ${sessionScope.error}
+                        </div>
+                        <%request.getSession().removeAttribute("error");%>
+
 
                     </div>
                 </div>

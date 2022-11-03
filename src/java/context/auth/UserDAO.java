@@ -580,6 +580,22 @@ public class UserDAO {
         }
         return null;
     }
+    
+    public int changeEmail(int userId, String email) {
+        try {
+
+            String sql = "update [User] set "
+                    + "  [email] = ?"
+                    + " where [id] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, email);
+            stm.setInt(2, userId);
+            return stm.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("updateEmail Error:" + e.getMessage());
+        }
+        return 0;
+    }
 
 //    void generateData() {
 //        int[] roleSlots = {5, 15, 80, 500};

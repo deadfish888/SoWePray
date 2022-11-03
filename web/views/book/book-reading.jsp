@@ -5,15 +5,16 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Model.product.Product"%>
 <c:if test="${empty sessionScope.user && empty sessionScope.admin}">
     <%         
           response.sendRedirect("./Login");
     %>
 </c:if>
-<c:if test="${!sessionScope.user.isOwnProduct(product.productId) && empty sessionScope.admin}">
-    <script>
-        history.back();
-    </script>
+<c:if test="${!sessionScope.user.isOwnProduct(product.productId) && sessionScope.user.id ne product.book.author.user.id}">
+    <%         
+          response.sendRedirect("./BookDetail?id=" + ((Product) request.getAttribute("product")).getBook().getId());
+    %>
 </c:if>
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <!DOCTYPE html>

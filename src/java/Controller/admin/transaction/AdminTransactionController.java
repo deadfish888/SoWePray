@@ -72,25 +72,25 @@ public class AdminTransactionController extends HttpServlet {
         String type = request.getParameter("type");
         String status = request.getParameter("status");
         String productId = request.getParameter("productId");
-            if (userId != null && !userId.equals("")) {
-                User user = new User();
-                user.setId(Integer.parseInt(userId));
-                tempTrans.setUser(user);
-            }
-            if (type != null && !type.equals("")) {
-                tempTrans.setType(Integer.parseInt(type));
-            }
-            if (status != null && !status.equals("")) {
-                tempTrans.setStatus(Integer.parseInt(status));
-            }
-            if (productId != null && !productId.equals("")) {
-                tempTrans.setProduct(new Product(productId));
-            }
-            TransactionDAO transactionDAO = new TransactionDAO();
-            ArrayList<Transaction> transactionList = transactionDAO.search(tempTrans);
-            request.setAttribute("transactionList", transactionList);
-            request.setAttribute("tempTrans", tempTrans);
-            processRequest(request, response);
+        if (userId != null && !userId.equals("")) {
+            User user = new User();
+            user.setId(Integer.parseInt(userId));
+            tempTrans.setUser(user);
+        }
+        if (type != null && !type.equals("")) {
+            tempTrans.setType(Integer.parseInt(type));
+        }
+        if (status != null && !status.equals("")) {
+            tempTrans.setStatus(Integer.parseInt(status));
+        }
+        if (productId != null && !productId.equals("")) {
+            tempTrans.setProduct(new Product(productId));
+        }
+        TransactionDAO transactionDAO = new TransactionDAO();
+        ArrayList<Transaction> transactionList = transactionDAO.search(tempTrans);
+        request.setAttribute("transactionList", transactionList);
+        request.setAttribute("tempTrans", tempTrans);
+        processRequest(request, response);
 
     }
 
