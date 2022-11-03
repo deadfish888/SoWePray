@@ -58,11 +58,11 @@
                 <h2>
                     <div class="row">
                         <div class="col-4">
-                            <img src="${listV.get(0).book.image}" class="rounded" width="60" />
+                            <img src="${!empty listV.get(0).book.image?listV.get(0).book.image:"images/novel-sample.png"}" class="rounded" width="60" />
                         </div>
                         <div class="col-8 p-0">
                             <h6 class="m-0">${listV.get(0).book.title}</h6>
-                            <p style="font-size: 13px"><i class="fa fa-pencil"></i><strong>${listc.get(0).book.author.name}</strong></p>
+                            <p style="font-size: 13px"><i class="fa fa-pencil"></i><strong>${listV.get(0).book.author.name}</strong></p>
                         </div>
                     </div>
 
@@ -308,20 +308,20 @@
             #mainpart.reading-page.style-3, #mainpart.reading-page.style-3 #rd-side_icon {
                 background-color: #f6f4ec;
             }
-            #mainpart.reading-page.style-6, #mainpart.reading-page.style-6 #rd-side_icon {
+            #mainpart.reading-page.style-6, #mainpart.reading-page.style-6 #rd-side_icon,#mainpart.reading-page.style-6 .rd_sd-button_item{
                 background-color: #222222;
                 color: whitesmoke;
             }
             #mainpart.reading-page.style-4, #mainpart.reading-page.style-4 #rd-side_icon {
                 background-color: #eae4d3;
             }
-            #mainpart.reading-page.style-5, #mainpart.reading-page.style-4 #rd-side_icon {
+            #mainpart.reading-page.style-5, #mainpart.reading-page.style-5 #rd-side_icon {
                 background-color: #f5e9ef;
             }
             .set-color span.current {
                 border: 3px solid #36a189;
             }
-            #setting.black{
+            .black{
                 color: #585858;
             }
         </style>
@@ -417,7 +417,9 @@
                                 $("#mainpart").removeClass('style-' + i);
                             }
                             $("#mainpart").addClass('style-' + bgcolor);
-                            if(bgcolor=='6') $("#setting").addClass("black");
+                            if(bgcolor=='6') {
+                                $("#setting").addClass("black");
+                            }
                             else{
                                 $("#setting").removeClass("black");
                             }
@@ -444,6 +446,7 @@
 
                     setcolor();
                     setfontfamily();
+                    $('div#chapter-content').css('font-family', fontfamily);
                     setfontstyle();
 
                     //1px = 0.0625rem;

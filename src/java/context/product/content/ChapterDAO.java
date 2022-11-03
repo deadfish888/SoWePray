@@ -355,55 +355,16 @@ public class ChapterDAO {
                 volume.setBook(book);
 
                 chap.setVolume(volume);
+                   
+                chap.setPrev(getPreviousChapter(bookId, chap.getVolume().getNo(),chap.getNo()));
+                
+                chap.setNext(getNextChapter(bookId,chap.getVolume().getNo(),chap.getNo()));
                 return chap;
             }
         } catch (Exception e) {
             System.out.println("getFirstChapter " + e.getMessage());
         }
         return null;
-    }
-
-    private void setChapterPrice(int chapterId, String chapter) {
-        try {
-            String sql = "UPDATE [Chapter_Payment] SET [price] = ? * (SELECT b.[price] FROM [Book] b"
-                    + "                        INNER JOIN [Volume] v ON b.[id] = v.[bookId]"
-                    + "                        INNER JOIN [Chapter] c ON v.[id]= c.[volumeId]"
-                    + "                        WHERE c.[id] = ? )"
-                    + "   WHERE [chapterId] = ? "
-                    + "   IF @@ROWCOUNT = 0 "
-                    + "     INSERT INTO [dbo].[Chapter_Payment]\n"
-                    + "           ([chapterId]\n"
-                    + "           ,[price])\n"
-                    + "     VALUES\n"
-                    + "           ( ? \n"
-                    + "           , ? * (SELECT b.[price] FROM [Book] b"
-                    + "                        INNER JOIN [Volume] v ON b.[id] = v.[bookId]"
-                    + "                        INNER JOIN [Chapter] c ON v.[id]= c.[volumeId]"
-                    + "                        WHERE c.[id] = ? ))";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, chapter.split("\\s+").length / 1000);
-            stm.setInt(2, chapterId);
-            stm.setInt(3, chapterId);
-            stm.setInt(4, chapterId);
-            stm.setInt(5, chapter.split("\\s+").length / 1000);
-            stm.setInt(6, chapterId);
-            stm.execute();
-        } catch (SQLException ex) {
-            Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    private void deleteChapterPayment(int id) {
-        try {
-            String sql = "DELETE FROM [Chapter_Payment] "
-                    + "         WHERE [chapterId] = ?";
-            stm = cnn.prepareStatement(sql);
-            stm.setInt(1, id);
-            stm.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public int getChapterNo(int id) {
