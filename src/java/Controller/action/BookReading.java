@@ -35,6 +35,7 @@ public class BookReading extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try{
         int id = Integer.parseInt(request.getParameter("id"));
         String cid = request.getParameter("cid");
         BookDAO b = new BookDAO();
@@ -73,6 +74,7 @@ public class BookReading extends HttpServlet {
             request.getSession().setAttribute("error", e.getMessage() + "\n" + e.getLocalizedMessage());
             response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("id"));
         }
+        
     }
 
     /**
