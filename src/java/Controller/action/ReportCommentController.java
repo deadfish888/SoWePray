@@ -67,7 +67,7 @@ public class ReportCommentController extends HttpServlet {
         }
         String note = request.getParameter("note");
         ReportDAO redao = new ReportDAO();
-        redao.addCommentReport(violate_ids, bid, uId, note);
+        redao.addCommentReport(violate_ids, cid, uId, note);
         request.setAttribute("confirm","Report Successfully!");
 
         response.sendRedirect("./BookDetail?id="+bid);

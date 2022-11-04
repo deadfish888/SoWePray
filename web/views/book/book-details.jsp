@@ -510,7 +510,7 @@
                                                                                 <p><i class="fa fa-flag" aria-hidden="true" onclick="document.getElementById('${reply.id}').submit()"></i></p>
                                                                                 <!--      <input type="submit" class="primary" display="hidden" value="Report">                          -->
                                                                                 <input type="hidden" name="bId" value="${book.id}">
-                                                                                <input type="hidden" name="cId" value="${comment.id}">
+                                                                                <input type="hidden" name="cId" value="${reply.id}">
 
                                                                             </form>
                                                                         </c:if>
@@ -575,38 +575,56 @@
 
                     <div class="container-fluid mt-5">
                         <h2 class="h2">Similar Products</h2>
+                        <section class="tiles" style="margin-right: 30px">
+                            <div class= "" style = "display: flex ">
+                                <c:forEach items="${sames}" var="book">
+                                    <article class="style1">
+                                        <span class="image">
+                                            <img src="${(! empty book.image)?book.image:("images/novel-sample.png")}" alt="" style="height: 281px"/>
+                                        </span>
+                                        <a href="BookDetail?id=${book.id}">
+                                            <h2>${book.title}</h2>
+                                            <h3 style="font-size: 0.85em;"><i>${book.author.name}</i></h3>
+                                            <c:if test="${book.author.userId==0}">
+                                                <c:if test="${book.issale()}">
+                                                    <p>
+                                                        <del>$${book.getPrice()}</del> 
+                                                        <strong>$${5.00}</strong>
+                                                    </p>
+                                                </c:if>
+                                                <c:if test="${!book.issale()}">
+                                                    <p><strong>$${book.getPrice()}</strong></p>
+                                                </c:if>
+                                            </c:if>
+                                        </a>
 
-                                                </div>
-                                                </div>
+                                    </article>
+                                </c:forEach>
+                            </div> 
+                        </section>
+                    </div>
+                </div>
+            </div>
 
-                                                <!-- Footer -->
-                                                <footer id="footer">
-                                                    <div class="inner">
-                                                        <section>
-                                                            <h2>Contact Info</h2>
-                                                            <ul class="alt">
-                                                                <li><span class="fa fa-github"></span> <a href="https://github.com/nekon0/SoWePray">Our Project</a></li>
-                                                                <li><span class="fa fa-map-pin"></span> <a href="https://goo.gl/maps/ojwCjTqRteiA4B9U7"> DE210, FBT University</a></li>
-                                                            </ul>
-                                                        </section>
 
-                                                        <ul class="copyright">
-                                                            <li> Bookie </li>
-                                                        </ul>
-                                                    </div>
-                                                </footer>
+            <!-- Footer -->
+            <footer id="footer">
+                <div class="inner">
+                    <section>
+                        <h2>Contact Info</h2>
+                        <ul class="alt">
+                            <li><span class="fa fa-github"></span> <a href="https://github.com/nekon0/SoWePray">Our Project</a></li>
+                            <li><span class="fa fa-map-pin"></span> <a href="https://goo.gl/maps/ojwCjTqRteiA4B9U7"> DE210, FBT University</a></li>
+                        </ul>
+                    </section>
 
-                                                </div>
+                    <ul class="copyright">
+                        <li> Bookie </li>
+                    </ul>
+                </div>
+            </footer>
 
-                                                <!-- Scripts -->
-                                                <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
-                                                <!-- Bootstrap tether Core JavaScript -->
-                                                <script src="/Bookie/manage/assets/plugins/bootstrap/dist/js/bootstrap.bundle.js"></script>
-                                                <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-                                                <script src="assets/js/jquery.scrolly.min.js"></script>
-                                                <script src="assets/js/jquery.scrollex.min.js"></script>
-                                                <script src="assets/js/main.js"></script>
-
+        </div>
 
         <!-- Scripts -->
         <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
@@ -616,9 +634,6 @@
         <script src="assets/js/jquery.scrolly.min.js"></script>
         <script src="assets/js/jquery.scrollex.min.js"></script>
         <script src="assets/js/main.js"></script>
-
-
-        <!--Custom JavaScript -->
 
 
     </body>

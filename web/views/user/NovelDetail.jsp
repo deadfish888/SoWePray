@@ -119,7 +119,7 @@
                                 <div class="form-group row col-12">
                                     <label class="col-sm-2 col-form-label">Summary</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" name="description" style="white-space: pre-line;min-height: 10em" rows="5">${book.getDescription()}</textarea>
+                                        <textarea class="form-control" name="description" style="white-space: pre-line;min-height: 10em" rows="5" required>${book.getDescription()}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row col-12">
