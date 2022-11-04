@@ -5,19 +5,19 @@
 package Controller.payment;
 
 import Model.product.Book;
-import Model.payment.PaymentAccount;
-import Model.payment.PaymentMethod;
+//import Model.payment.PaymentMethod;
 import Model.payment.Transaction;
 import Model.auth.User;
+import Model.product.Product;
 import context.product.BookOwnDAO;
 import context.payment.PaymentAccountDAO;
-import context.payment.PaymentMethodDAO;
+//import context.payment.PaymentMethodDAO;
 import context.payment.TransactionDAO;
+import context.product.ProductDAO;
+import context.product.ProductOwnDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -42,48 +42,68 @@ public class PurchaseController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
-        PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
-        TransactionDAO transDAO = new TransactionDAO();
+        try {
 
-        float amount = Float.parseFloat(request.getParameter("amount"));
+            PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
+            TransactionDAO transDAO = new TransactionDAO();
 
-        User user = (User) request.getSession().getAttribute("user");
-        
-        PaymentMethod paymentMethod = new PaymentMethod();
-        paymentMethod.setUser(user);
-        paymentMethod.setPaymentAccount(user.getPaymentAccount());
+            float amount = Float.parseFloat(request.getParameter("amount"));
 
-        if (amount > user.getPaymentAccount().getBalance()) {
-//            request.setAttribute("walletNoti", "Balance in wallet is not enough to purchase this book.");
-//            request.getRequestDispatcher("/BookDetail?id=" + request.getParameter("bookId")).forward(request, response);
-            response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("bookId"));
-        } else {
-            float walletBalance = user.getPaymentAccount().getBalance() - amount;
-            user.getPaymentAccount().setBalance(walletBalance);
+            User user = (User) request.getSession().getAttribute("user");
 
-            Transaction transaction = new Transaction();
-            transaction.setUser(user);
-            transaction.setAmount(amount);
-            transaction.setBalanceAfter(walletBalance);
-            transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-            transaction.setType(3);
-            transaction.setStatus(2);
-            transaction.setDescription("Buy " + request.getParameter("bookTitle") + ".");
-            transaction.setPayment(payMedDAO.get(paymentMethod));
-            transDAO.insert(transaction);
+            if (amount > user.getPaymentAccount().getBalance()) {
+                request.getSession().setAttribute("notEnoughBalance", "Your wallet have not enough coin to buy this book. Please deposit into wallet and try again.");
+                response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("bookId"));
+            } else {
+                float walletBalance = user.getPaymentAccount().getBalance() - amount;
+                user.getPaymentAccount().setBalance(walletBalance);
 
-            payAccDAO.update(paymentMethod.getPaymentAccount());
-            payAccDAO.update(user.getPaymentAccount());
+                Transaction transaction = new Transaction();
+                transaction.setUser(user);
+                transaction.setAmount(amount);
+                transaction.setBalanceAfter(walletBalance);
+                transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+                transaction.setType(3);
+                transaction.setStatus(3);
 
-            BookOwnDAO bookOwnDAO = new BookOwnDAO();
-            Book book = new Book();
-            book.setId(Integer.parseInt(request.getParameter("bookId")));
-            bookOwnDAO.insert(book, user);
-            System.out.println(book.getId());
-            System.out.println(user.getId());
-            
-            response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("bookId"));
+                String bookId = request.getParameter("bookId");
+                ProductDAO productDAO = new ProductDAO();
+                Product product = new Product("B" + bookId);
+                product = productDAO.get(product);
+
+                transaction.setProduct(product);
+                transaction.setDescription("Buy " + product.toString() + ".");
+                transDAO.insert(transaction);
+
+                payAccDAO.update(user.getPaymentAccount());
+                User author = product.getBook().getAuthor().getUser();
+                if (author != null) {
+                    Transaction auTransaction = new Transaction();
+                    auTransaction.setUser(author);
+                    auTransaction.setAmount(amount);
+                    auTransaction.setBalanceAfter(author.getPaymentAccount().getBalance() + amount);
+                    auTransaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+                    auTransaction.setType(4);
+                    auTransaction.setStatus(3);
+                    auTransaction.setProduct(product);
+                    auTransaction.setDescription("Sell " + product.toString() + ".");
+                    transDAO.insert(auTransaction);
+
+                    author.getPaymentAccount().setBalance(author.getPaymentAccount().getBalance() + amount);
+                    payAccDAO.update(author.getPaymentAccount());
+                }
+
+                BookOwnDAO bookOwnDAO = new BookOwnDAO();
+                Book book = new Book();
+                book.setId(Integer.parseInt(bookId));
+                bookOwnDAO.insert(book, user);
+                ProductOwnDAO productOwnDAO = new ProductOwnDAO();
+                productOwnDAO.insert(product, user);
+
+                response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + bookId);
+            }
+        } catch (IOException | NumberFormatException e) {
+            response.sendRedirect(request.getContextPath() + "/Home");
         }
     }
 

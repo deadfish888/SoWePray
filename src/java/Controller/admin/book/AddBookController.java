@@ -4,6 +4,7 @@
  */
 package Controller.admin.book;
 
+import Controller.product.BookDetail;
 import Model.product.Author;
 import Model.product.Book;
 import Model.product.Category;
@@ -17,74 +18,90 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import utils.MyUtil;
 
 /* @author ACER */
 @WebServlet(name = "AddBookController", urlPatterns = {"/Admin/AddBook"})
 public class AddBookController extends HttpServlet {
 
+    MyUtil mu = new MyUtil();
+    BookDAO bd = new BookDAO();
+    CategoryDAO cd = new CategoryDAO();
+    AuthorDAO ad = new AuthorDAO();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CategoryDAO cd = new CategoryDAO();
-        ArrayList<Category> cates = cd.getAllCategory();
-        AuthorDAO ad = new AuthorDAO();
-        ArrayList<Author> authors = ad.getAllAuthor();
-        request.setAttribute("authors", authors);
-        request.setAttribute("categories", cates);
-        request.setAttribute("service", "Add");
-        BookDAO bd = new BookDAO();
-        request.setAttribute("newId", bd.countBookNumber() + 1);
-        request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
+        try {
+            ArrayList<Category> cates = cd.getAllCategory();
+            ArrayList<Author> authors = ad.getAllAuthor();
+            request.setAttribute("authors", authors);
+            request.setAttribute("categories", cates);
+            request.setAttribute("service", "Add");
+            request.setAttribute("newId", bd.countBookNumber() + 1);
+            request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
+        } catch (Exception e) {
+                response.sendRedirect(request.getContextPath()+"/error.jsp");
+        }
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String title = request.getParameter("title");
-        String author = request.getParameter("authorId");
-        String[] category = request.getParameterValues("categoryId");
-        float price = Float.parseFloat(request.getParameter("price"));
-        boolean issale = (request.getParameter("issale") != null);
-        String description = request.getParameter("description");
-        String img = request.getParameter("image");
-
-        Book book = new Book();
-        book.setId(id);
-        book.setTitle(title);
-
-        if (author != null) {
-            book.setAuthorId(Integer.parseInt(author));
-        } else {
-            String newAuthor = request.getParameter("author");
-            Author au = new Author();
-            au.setName(newAuthor);
-            book.setAuthor(au);
-        }
-
-        book.setCategory(category);
-        book.setPrice(price);
-        book.setIssale(issale);
-        book.setImage(img);
-        book.setDescription(description);
-
-        CategoryDAO cd = new CategoryDAO();
         ArrayList<Category> cates = cd.getAllCategory();
         request.setAttribute("categories", cates);
-        AuthorDAO ad = new AuthorDAO();
         ArrayList<Author> authors = ad.getAllAuthor();
         request.setAttribute("authors", authors);
         request.setAttribute("service", "Add");
+        try {
+            int id = mu.fieldInt(request.getParameter("id"), "Wrong format!");
+            String title = mu.fieldString(request.getParameter("title"), "Required field!");
+            String author = request.getParameter("authorId");
+            String[] category = request.getParameterValues("categoryId");
+            if (category == null) {
+                throw new Exception("Genre required!");
+            }
+            float price = (float) mu.fieldDouble(request.getParameter("price"), "Wrong format!");
+            boolean issale = (request.getParameter("issale") != null);
+            String description = mu.fieldString(request.getParameter("description"), "Required field!");
+            String img = mu.fieldString(request.getParameter("image"), "Required field!");
 
-        BookDAO bd = new BookDAO();
-        if (bd.addBook(book) == 0) {
-            request.setAttribute("message", "Add Failed! Please try again!");
-            request.setAttribute("book", book);
+            Book book = new Book();
+            book.setId(id);
+            book.setTitle(title);
+
+            if (author != null) {
+                book.setAuthorId(Integer.parseInt(author));
+            } else {
+                String newAuthor = request.getParameter("author");
+                Author au = new Author();
+                au.setName(newAuthor);
+                book.setAuthor(au);
+            }
+
+            book.setCategory(category);
+            book.setPrice(price);
+            book.setIssale(issale);
+            book.setImage(img);
+            book.setDescription(description);
+
+            if (bd.addBook(book) == 0) {
+                request.setAttribute("message", "Add Failed! Please try again!");
+                request.setAttribute("book", book);
+                request.setAttribute("newId", bd.countBookNumber() + 1);
+                request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("./Book");
+            }
+        } catch (Exception e) {
+            request.setAttribute("message", e.getMessage());
             request.setAttribute("newId", bd.countBookNumber() + 1);
             request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
-        } else {
-            response.sendRedirect("./Book");
         }
+
     }
 
     @Override

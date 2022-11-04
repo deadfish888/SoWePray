@@ -11,36 +11,45 @@
                                              href="${context}/Edit" aria-expanded="false">
                         <i class="mdi me-2 mdi-account-check"></i><span class="hide-menu">Profile</span></a>
                 </li>
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                             href="${context}/Admin/DashBoard" aria-expanded="false"><i class="mdi me-2 mdi-gauge"></i><span
+                <li class="sidebar-item"> 
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                       href="${context}/Admin/DashBoard" aria-expanded="false"><i class="mdi me-2 mdi-gauge"></i><span
                             class="hide-menu">Dashboard</span></a></li>
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                             href="${context}/Admin/Users" aria-expanded="false"><i class="mdi me-2 mdi-table"></i><span
-                            class="hide-menu">Users Management</span></a></li>
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                             href="${context}/Admin/Author" aria-expanded="false"><i class="mdi me-2 mdi-table"></i><span
-                            class="hide-menu">Authors Management</span></a></li>
-                <li id="book-management" class="sidebar-item" > <a id="book-management-a" class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                                   href="${context}/Admin/Book" aria-expanded="false"><i
-                            class="mdi me-2 mdi-book-multiple-variant"></i><span class="hide-menu">Books</span></a></li>
                 <li id="category-management" class="sidebar-item"> 
                     <a id="category-management-a" class="sidebar-link waves-effect waves-dark sidebar-link"
-                       href="${context}/Admin/Category/View" aria-expanded="false">
+                       href="${context}/Admin/Category/View" aria-expanded="false"> 
                         <i class="mdi me-2 mdi-book-multiple-variant"></i>
-                        <span class="hide-menu">Category Management</span></a>
-                </li>
-                <li id="report-management" class="sidebar-item" > <a id="report-management-a" class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                                   href="${context}/Admin/Report" aria-expanded="false"><i
-                            class="mdi me-2 mdi-contact-mail"></i><span class="hide-menu">Reports</span></a></li>
+                        <span class="hide-menu">Genres</span></a></li>
+                <li id="book-management" class="sidebar-item" > 
+                    <a id="book-management-a" class="sidebar-link waves-effect waves-dark sidebar-link"
+                       href="${context}/Admin/Book" aria-expanded="false">
+                        <i class="mdi me-2 mdi-book-multiple-variant"></i>
+                        <span class="hide-menu">Books</span></a></li>
+                <li class="sidebar-item"> 
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                       href="${context}/Admin/Author" aria-expanded="false">
+                        <i class="mdi me-2 mdi-face"></i>
+                        <span class="hide-menu">Authors</span></a></li>
+                <li class="sidebar-item"> 
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                       href="${context}/Admin/Users" aria-expanded="false">
+                        <i class="mdi me-2 mdi-face-profile"></i>
+                        <span class="hide-menu">Users</span></a></li>
+                <li id="transaction-management" class="sidebar-item"> 
+                    <a id="transaction-management-a" class="sidebar-link waves-effect waves-dark sidebar-link"
+                        href="${context}/Admin/Transaction" aria-expanded="false"> 
+                        <i class="mdi me-2 mdi-transfer"></i>
+                        <span class="hide-menu">Transactions</span></a></li>
+                <li id="report-management" class="sidebar-item" > 
+                    <a id="report-management-a" class="sidebar-link waves-effect waves-dark sidebar-link"
+                            href="${context}/Admin/Report" aria-expanded="false">
+                        <i class="mdi me-2 mdi-contact-mail"></i>
+                        <span class="hide-menu">Reports</span></a></li>
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                             href="./manage/GGmap.jsp" aria-expanded="false"><i class="mdi me-2 mdi-earth"></i><span
+                                             href="${context}/manage/GGmap.jsp" aria-expanded="false"><i class="mdi me-2 mdi-earth"></i><span
                             class="hide-menu">Google Map</span></a></li>
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                             href="pages-blank.html" aria-expanded="false"><i
-                            class="mdi me-2 mdi-book-open-variant"></i><span class="hide-menu">Blank</span></a>
-                </li>
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                             href="pages-error-404.html" aria-expanded="false"><i
+                                             href="${context}/error.jsp" aria-expanded="false"><i
                             class="mdi me-2 mdi-help-circle"></i><span class="hide-menu">Error 404</span></a>
                 </li>
                 <!--                            <li class="text-center p-20 upgrade-btn">

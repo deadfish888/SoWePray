@@ -39,7 +39,7 @@ public class AddChapterController extends HttpServlet {
             BookDAO bd = new BookDAO();
             Book book = bd.getBookById(bookId);
             if (book.getAuthor().getUserId() != user.getId()) {
-                response.sendRedirect("../Login");
+                response.sendRedirect("../Login"); 
                 return;
             }
             request.setAttribute("book", book);
@@ -74,12 +74,13 @@ public class AddChapterController extends HttpServlet {
             chapter.setContent(content);
 
             BookDAO bd = new BookDAO();
-            request.setAttribute("book", bd.getBookById(bookId));
+            Book book = bd.getBookById(bookId);
 
             VolumeDAO vd = new VolumeDAO();
             ChapterDAO cd = new ChapterDAO();
             
             int newChapterId = cd.addChapter(chapter);
+            request.setAttribute("book", book);
             if (newChapterId == 0) {
                 request.setAttribute("vol", vd.getVolumeById(volId));
                 request.setAttribute("volumes", vd.getVolumesByBookId(bookId));

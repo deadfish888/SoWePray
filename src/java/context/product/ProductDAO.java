@@ -4,8 +4,11 @@
  */
 package context.product;
 
+import Model.product.Book;
 import Model.product.Product;
+import Model.product.content.Chapter;
 import context.DBContext;
+import context.product.content.ChapterDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,19 +41,84 @@ public class ProductDAO {
     }
 
     public Product get(Product product) {
+        try {
+            String sql = "SELECT [productId]\n"
+                    + "      ,[bookId]\n"
+                    + "      ,[chapterId]\n"
+                    + "      ,[price]\n"
+                    + "  FROM [Product]\n"
+                    + "  WHERE [productId] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, product.getProductId());
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                BookDAO bookDAO = new BookDAO();
+                ChapterDAO chapterDAO = new ChapterDAO();
+                product.setBook(bookDAO.getBookById(rs.getInt("bookId")));
+                product.setChapter(chapterDAO.getChapterById(rs.getInt("chapterId")));
+                product.setPrice(rs.getFloat("price"));
+                return product;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return null;
     }
 
     public int insert(Product product) {
-        return 0;
+        try {
+            String sql = "INSERT INTO [Product]\n"
+                    + "           ([productId]\n"
+                    + "           ,[bookId]\n"
+                    + "           ,[chapterId]\n"
+                    + "           ,[price])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?)";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, product.getProductId());
+            stm.setInt(2, product.getBook().getId());
+            if (product.getChapter() != null) {
+                stm.setInt(3, product.getChapter().getId());
+            } else {
+                stm.setObject(3, null);
+            }
+            stm.setFloat(4, product.caculatePrice());
+            return stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
     }
 
     public int update(Product product) {
-        return 0;
+        try {
+            String sql = "UPDATE [Product]\n"
+                    + "   SET [price] = ?\n"
+                    + " WHERE [productId] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setFloat(1, product.getPrice());
+            stm.setString(2, product.getProductId());
+            return stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
     }
 
-    public int delete(Product product) {
-        return 0;
+    public int deleteByChapter(int chapterId) {
+        try {
+            String sql = "DELETE FROM [Product]\n"
+                    + "      [chapterId] = ?\n";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, chapterId);
+            return stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
     }
 
     public ArrayList<Integer> getChaptersOwn(int userId, int bookId) {
@@ -66,7 +134,7 @@ public class ProductDAO {
             stm.setInt(1, userId);
             stm.setInt(2, bookId);
             rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 chapIds.add(rs.getInt(1));
             }
             return chapIds;
@@ -76,4 +144,55 @@ public class ProductDAO {
         return null;
     }
 
+    public Product getByChapter(Chapter chapter) {
+        try {
+            String sql = "SELECT [productId]\n"
+                    + "      ,[bookId]\n"
+                    + "      ,[chapterId]\n"
+                    + "      ,[price]\n"
+                    + "  FROM [Product]\n"
+                    + "  WHERE [chapterId] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, chapter.getId());
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                BookDAO bookDAO = new BookDAO();
+                Product product = new Product();
+                product.setProductId(rs.getString("productId"));
+                product.setBook(bookDAO.getBookById(rs.getInt("bookId")));
+                product.setChapter(chapter);
+                product.setPrice(rs.getFloat("price"));
+                return product;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    //Use to add price to product Book when edit price of each chapter
+    public int updateBookPrice(Book book) {
+        try {
+            String sql = "UPDATE [Product]\n"
+                    + "   SET [price] = ?\n"
+                    + " WHERE productId = ?";
+
+            book.calculatePrice();
+            stm = cnn.prepareStatement(sql);
+            stm.setFloat(1, book.getPrice());
+            stm.setString(2, "B" + book.getId());
+            return stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
+    }
+
+    public void close() {
+        try {
+            cnn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

@@ -4,10 +4,12 @@
  */
 package context.action;
 
+import Model.action.Comment;
 import Model.auth.User;
 import Model.report.Report;
 import Model.report.Violation;
 import context.DBContext;
+import context.product.BookDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -62,14 +64,47 @@ public class ReportDAO {
             stm.setString(4, note);
             stm.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
             rs = stm.executeQuery();
-//            if (rs.next()) {
-//                ViolationDAO vd = new ViolationDAO();
-//                vd.addReportViolation(rs.getInt(1), rid);
-//            }
+            if (rs.next()) {
+                ViolationDAO vd = new ViolationDAO();
+                vd.addReportViolation(rs.getInt(1), rid);
+            }
         } catch (Exception ex) {
             Logger.getLogger(ReportDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void addCommentReport(int[] rid, int cid, int uid, String note) {
+        try {
+            String sql = "INSERT INTO [dbo].[Report]\n"
+                    + "           ([reportType]\n"
+                    + "           ,[userId]\n"
+                    + "           ,[objectId]\n"
+                    + "           ,[note]\n"
+                    + "           ,[sent])\n"
+                    + "     OUTPUT [inserted].[id]"
+                    + "     VALUES\n"
+                    + "           ( ? "
+                    + "           , ? "
+                    + "           , ? "
+                    + "           , ? "
+                    + "           , ? )";
+
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, 2);
+            stm.setInt(2, uid);
+            stm.setInt(3, cid);
+            stm.setString(4, note);
+            stm.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                ViolationDAO vd = new ViolationDAO();
+                vd.addReportViolation(rs.getInt(1), rid);
+            }
+        }catch (Exception ex) {
+            Logger.getLogger(ReportDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    } 
 
     public int count() {
         int ret = 0;
@@ -120,8 +155,8 @@ public class ReportDAO {
                 r.setSent(rs.getTimestamp(7));
                 r.setReceived(rs.getTimestamp(8));
                 r.setStatus(rs.getBoolean(9));
-//                ViolationDAO vd = new ViolationDAO();
-//                r.setViolates(vd.getReportViolations(rs.getInt(1)));
+                ViolationDAO vd = new ViolationDAO();
+                r.setViolates(vd.getReportViolations(rs.getInt(1)));
                 listR.add(r);
             }
             return listR;
@@ -131,7 +166,7 @@ public class ReportDAO {
         return null;
     }
 
-    public ArrayList<Report> getReports(String reportType, boolean status) {
+    public ArrayList<Report> getReports(String reportType, String status) {
         ArrayList<Report> list = new ArrayList<>();
         try {
             String sql = "SELECT r.[id]\n"
@@ -145,9 +180,13 @@ public class ReportDAO {
                     + "      ,r.[status]\n"
                     + "  FROM [Report] r "
                     + " INNER JOIN [User] u ON r.[userId] = u.[id]"
-                    + " WHERE [reportType] like ? "
-                    + "   AND r.[status] = ? "
-                    + " ORDER BY [sent] DESC";
+                    + " WHERE [reportType] like ? ";
+            if (status.equals("")) {
+                sql += "   AND r.[status] IS NULL ";
+            } else {
+                sql += " AND r.[status] = ? ";
+            }
+            sql += " ORDER BY [sent] DESC";
             stm = cnn.prepareStatement(sql);
             if (reportType.equals("book")) {
                 reportType = "1";
@@ -155,7 +194,9 @@ public class ReportDAO {
                 reportType = "2";
             }
             stm.setString(1, "%" + reportType + "%");
-            stm.setBoolean(2, status);
+            if (!status.equals("")) {
+                stm.setString(2, status);
+            }
             rs = stm.executeQuery();
             while (rs.next()) {
                 Report r = new Report();
@@ -172,9 +213,11 @@ public class ReportDAO {
                 r.setNote(rs.getString(6));
                 r.setSent(rs.getTimestamp(7));
                 r.setReceived(rs.getTimestamp(8));
-                r.setStatus(rs.getBoolean(9));
-//                ViolationDAO vd = new ViolationDAO();
-//                r.setViolates(vd.getReportViolations(rs.getInt(1)));
+                if (rs.getObject(9) != null) {
+                    r.setStatus(rs.getBoolean(9));
+                }
+                ViolationDAO vd = new ViolationDAO();
+                r.setViolates(vd.getReportViolations(rs.getInt(1)));
                 list.add(r);
             }
             return list;
@@ -191,5 +234,115 @@ public class ReportDAO {
             listpage.add(reports.get(i));
         }
         return listpage;
+    }
+
+    public Report getReportById(int id) {
+        try {
+            String sql = "SELECT r.[id]\n"
+                    + "      ,[reportType]\n"
+                    + "      ,[userId]\n"
+                    + "      ,u.[username]"
+                    + "      ,[objectId]\n"
+                    + "      ,[note]\n"
+                    + "      ,[sent]\n"
+                    + "      ,[received]\n"
+                    + "      ,r.[status]\n"
+                    + "      ,r.[action]"
+                    + "  FROM [Report] r "
+                    + " INNER JOIN [User] u ON r.[userId] = u.[id]"
+                    + " WHERE r.[id] = ? ";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, id);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Report r = new Report();
+                r.setId(rs.getInt(1));
+                r.setReportType(rs.getInt(2));
+                r.setUserId(rs.getInt(3));
+
+                User userR = new User();
+                userR.setId(rs.getInt(3));
+                userR.setUsername(rs.getString(4));
+
+                r.setUserR(userR);
+
+                r.setObjectId(rs.getInt(5));
+                if (r.getReportType() == 1) {
+                    BookDAO bd = new BookDAO();
+                    r.setBookO(bd.getBookById(r.getObjectId()));
+                }
+                if (r.getReportType() == 2) {
+                    CommentDAO cmt = new CommentDAO();
+                    Comment cm = cmt.getCommentById(r.getObjectId());
+                    r.setComO(cm);
+                    BookDAO bd = new BookDAO();
+                    r.setBookO(bd.getBookById(cm.getBookId()));
+                }
+                r.setNote(rs.getString(6));
+                r.setSent(rs.getTimestamp(7));
+                r.setReceived(rs.getTimestamp(8));
+                if (rs.getObject(9) != null) {
+                    r.setStatus(rs.getBoolean(9));
+                }
+                r.setAction(rs.getString(10));
+                ViolationDAO vd = new ViolationDAO();
+                r.setViolates(vd.getReportViolations(rs.getInt(1)));
+                return r;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ReportDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void solveReport(Report r) {
+        try {
+            String sql = "UPDATE [dbo].[Report]\n"
+                    + "   SET "
+                    + "      [received] = ?\n"
+                    + "      ,[status] = ?\n"
+                    + "      ,[action] = ?\n"
+                    + " WHERE [id] = ? ";
+            stm = cnn.prepareStatement(sql);
+            stm.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+            stm.setBoolean(2, r.isStatus());
+            stm.setString(3, r.getAction());
+            stm.setInt(4, r.getId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ReportDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void addReport(int[] rid, int oId, int uid, String note, int type) {
+        try {
+            String sql = "INSERT INTO [dbo].[Report]\n"
+                    + "           ([reportType]\n"
+                    + "           ,[userId]\n"
+                    + "           ,[objectId]\n"
+                    + "           ,[note]\n"
+                    + "           ,[sent])\n"
+                    + "     OUTPUT [inserted].[id]"
+                    + "     VALUES\n"
+                    + "           ( ? "
+                    + "           , ? "
+                    + "           , ? "
+                    + "           , ? "
+                    + "           , ? )";
+
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, type);
+            stm.setInt(2, uid);
+            stm.setInt(3, oId);
+            stm.setString(4, note);
+            stm.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                ViolationDAO vd = new ViolationDAO();
+                vd.addReportViolation(rs.getInt(1), rid);
+            }
+        }catch (Exception ex) {
+            Logger.getLogger(ReportDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

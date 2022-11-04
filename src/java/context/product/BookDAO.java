@@ -8,8 +8,10 @@ import Model.product.Author;
 import Model.product.Book;
 import Model.product.Category;
 import Model.auth.User;
+import Model.product.Product;
 import Model.product.content.Volume;
 import context.DBContext;
+import context.auth.UserDAO;
 import context.product.content.VolumeDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -191,8 +193,10 @@ public class BookDAO {
                     + "      ,[description]\n"
                     + "      ,[views]\n"
                     + "      ,[status]\n"
+                    + "      ,u.[fullname]"
                     + "  FROM [Book]"
                     + " INNER JOIN [Author] ON [Book].[authorId] = [Author].[id]"
+                    + "  LEFT JOIN [User] u ON [Author].[userId] = u.[id]"
                     + " WHERE [Book].[id] = ? ";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, bookId);
@@ -206,6 +210,12 @@ public class BookDAO {
                 author.setId(rs.getInt(3));
                 author.setUserId(rs.getInt(4));
                 author.setName(rs.getString(5));
+
+                if (author.getUserId() != 0) {
+                    UserDAO userDAO = new UserDAO();
+                    User user = userDAO.getUser(author.getUserId());
+                    author.setUser(user);
+                }
                 book.setAuthor(author);
 
                 CategoryDAO cd = new CategoryDAO();
@@ -262,7 +272,7 @@ public class BookDAO {
             stm.setInt(1, bookid);
             if (idCategory.get(0).getId() != -1) {
                 for (int i = 0; i < idCateLength; i++) {
-                    stm.setInt(i +2, idCategory.get(i).getId());
+                    stm.setInt(i + 2, idCategory.get(i).getId());
                 }
             }
             rs = stm.executeQuery();
@@ -772,6 +782,13 @@ public class BookDAO {
                 volume.setTitle(book.getTitle());
                 volume.setSummary("");
                 vd.addVolume(volume);
+                ProductDAO productDAO = new ProductDAO();
+                Product product = new Product();
+                book.setId(rs.getInt(1));
+                product.setProductId("B" + rs.getInt(1));
+                product.setBook(book);
+                product.setPrice(0);
+                productDAO.insert(product);
                 return rs.getInt(1);
             }
         } catch (Exception e) {
@@ -798,7 +815,7 @@ public class BookDAO {
             pre.setInt(6, book.getId());
             int n = pre.executeUpdate();
             if (n != 0) {
-                CategoryDAO cd= new CategoryDAO();
+                CategoryDAO cd = new CategoryDAO();
                 return cd.editCategoryBook(book.getId(), book.getCategory());
             }
             return n;
@@ -949,8 +966,7 @@ public class BookDAO {
             Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+
     public int countNovel(User user) {
         try {
             String sql = "SELECT COUNT(*) as total FROM [Book]"
@@ -1146,4 +1162,47 @@ public class BookDAO {
         return null;
     }
 
+    public Book getByVolume(int volumeId) {
+        try {
+            String sql = "SELECT b.[id]\n"
+                    + "      ,b.[title]\n"
+                    + "      ,[authorId]\n"
+                    + "      ,[rating]\n"
+                    + "      ,[favourite]\n"
+                    + "      ,[price]\n"
+                    + "      ,[is_sale]\n"
+                    + "      ,[image]\n"
+                    + "      ,[description]\n"
+                    + "      ,[views]\n"
+                    + "      ,[status]\n"
+                    + "  FROM [Book] b\n"
+                    + "  inner join [Volume] v on v.bookId = b.id\n"
+                    + "  where v.id = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, volumeId);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                Book book = new Book();
+                book.setId(rs.getInt(1));
+                book.setTitle(rs.getString(2));
+                book.setAuthorId(rs.getInt(3));
+                AuthorDAO authorDAO = new AuthorDAO();
+                Author author = authorDAO.getAuthorById(rs.getInt(3));
+                book.setAuthor(author);
+
+                book.setRating(rs.getFloat(4));
+                book.setFavourite(rs.getInt(5));
+                book.setPrice(rs.getFloat(6));
+                book.setIssale(rs.getBoolean(7));
+                book.setImage(rs.getString(8));
+                book.setDescription(rs.getString(9));
+                book.setViews(rs.getInt(10));
+                book.setStatus(rs.getBoolean(11));
+                return book;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

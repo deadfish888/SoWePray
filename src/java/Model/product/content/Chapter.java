@@ -16,7 +16,9 @@ public class Chapter {
     private String title;
     private boolean status;
     private String content;
-
+    private Chapter prev;
+    private Chapter next;
+    
     public Chapter() {
     }
 
@@ -83,6 +85,32 @@ public class Chapter {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Chapter getPrev() {
+        return prev;
+    }
+
+    public void setPrev(Chapter prev) {
+        this.prev = prev;
+    }
+
+    public Chapter getNext() {
+        return next;
+    }
+
+    public void setNext(Chapter next) {
+        this.next = next;
+    }
+
+    
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Chapter) {
+            Chapter chapter = (Chapter) obj;
+            return chapter.getId() == this.id;
+        }
+        return false;
     }
 
     

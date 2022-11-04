@@ -568,15 +568,33 @@ public class UserDAO {
             stm.setInt(1, id);
             rs = stm.executeQuery();
             if (rs.next()) {
+                PaymentAccountDAO paymentAccountDAO = new PaymentAccountDAO();
+                PaymentAccount paymentAccount = paymentAccountDAO.get(new PaymentAccount(rs.getLong("walletNumber")));
                 return new User(id, rs.getString(1), rs.getBoolean(2) ? "Male" : "Female",
                         rs.getString(3), rs.getString(4), rs.getString(5),
                         rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9),
-                        new PaymentAccount(rs.getLong("walletNumber")));
+                        paymentAccount);
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    public int changeEmail(int userId, String email) {
+        try {
+
+            String sql = "update [User] set "
+                    + "  [email] = ?"
+                    + " where [id] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, email);
+            stm.setInt(2, userId);
+            return stm.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("updateEmail Error:" + e.getMessage());
+        }
+        return 0;
     }
 
 //    void generateData() {

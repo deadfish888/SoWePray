@@ -129,17 +129,7 @@
                                                                 <h5 class="modal-title" id="staticBackdropLabel">ALERT</h5>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
-                                                            <div class="modal-body">
-                                                                <h6>Are you sure to delete the volume - <i>${vol.title}</i> and all of its chapters: </h6>
-                                                                <c:forEach items="${requestScope.chapters}" var="chapter">
-                                                                    <c:if test="${chapter.volumeId==vol.id}">
-                                                                        <li class="list-group-item">
-                                                                            <a href="./TOC?id=${book.id}&cid=${chapter.id}">   ${chapter.title}</a>
-                                                                        </li>
-                                                                    </c:if>
-
-                                                                </c:forEach>
-                                                            </div>
+                                                            
                                                             <div class="modal-footer">
                                                                 <form method="get" action="./DeleteVolume">
                                                                     <input type="hidden" name="id" value="${vol.id}">
@@ -213,33 +203,7 @@
                                                 </div>
                                                 <div class="col-md-1">
                                                     <!-- Button trigger modal -->
-                                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                                        Delete
-                                                    </button>
-
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="staticBackdropLabel">Confirm</h5>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    Delete this chapter?
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <form method="get" action="./DeleteChapter">
-                                                                        <input type="hidden" name="cid" value="${chap.id}">
-                                                                        <input type="hidden" name="id" value="${book.id}">
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                        <button type="submit" class="btn btn-danger">YES</button>
-                                                                    </form>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    
 
                                                 </div>
                                             </div>

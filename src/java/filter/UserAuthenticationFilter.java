@@ -76,7 +76,7 @@ public class UserAuthenticationFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession httpSession = req.getSession(true);
 
-        if (httpSession != null && req.getSession().getAttribute("user") != null) {
+        if ((httpSession != null && req.getSession().getAttribute("user") != null) || req.getRequestURI().indexOf("/context") > 0) {
             chain.doFilter(request, response);
         } else {
             res.sendRedirect(req.getContextPath() + "/Login");

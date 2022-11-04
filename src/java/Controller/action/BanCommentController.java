@@ -3,10 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.payment;
+package Controller.action;
 
-import Model.payment.PaymentMethod;
-import context.payment.PaymentMethodDAO;
+import Controller.product.content.DeleteChapterController;
+import Model.action.Comment;
+import Model.auth.User;
+import Model.product.Book;
+import context.action.CommentDAO;
+import context.product.BookDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,13 +18,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author Silver_000
+ * @author thanhienee
  */
-@WebServlet(name="RemovePaymentController", urlPatterns={"/User/RemovePayment"})
-public class RemovePaymentController extends HttpServlet {
+@WebServlet(name="BanCommentController", urlPatterns={"/BanComment"})
+public class BanCommentController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -31,15 +37,16 @@ public class RemovePaymentController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
-        PaymentMethod paymentMethod = new PaymentMethod();
-        paymentMethod.setPaymentId(Integer.parseInt(request.getParameter("removedPaymentId")));
-//        System.out.println(paymentMethod.getPaymentId());
-        if((paymentMethod = payMedDAO.get(paymentMethod))!= null) {
-//            System.out.println(paymentMethod.getPaymentId());
-            payMedDAO.deactive(paymentMethod);
+        try {
+            int commentId =  Integer.parseInt(request.getParameter("id"));
+            int bookId = Integer.parseInt(request.getParameter("bid"));
+            
+            CommentDAO cd = new CommentDAO();
+            cd.banComment(commentId);
+            request.getRequestDispatcher("./BookDetail?id="+bookId).forward(request, response) ;
+        } catch (Exception ex) {
+            Logger.getLogger(BanCommentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        response.sendRedirect(request.getContextPath() + "/User/Payment");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

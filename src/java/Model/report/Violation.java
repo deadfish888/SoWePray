@@ -13,6 +13,14 @@ public class Violation {
     public Violation() {
     }
 
+    public Violation(int id, int reportType, String title) {
+        this.id = id;
+        this.reportType = reportType;
+        this.title = title;
+    }
+    
+    
+
     public int getId() {
         return id;
     }

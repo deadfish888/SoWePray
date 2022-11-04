@@ -40,7 +40,7 @@
                         <a href="./Payment">Payment</a>
                     </li>
                     <li class="sidebar-item">
-                       <a href="./Support">Support</a>
+                        <a href="./Support">Support</a>
                     </li>
                 </ul>
             </nav>
@@ -72,20 +72,20 @@
                         <h1>SECURITY</h1>
 
                     </div>
-                    <form method="post" action="Security" style="width: 90%; display: block; margin: auto">
-                        <table class="border-0">
-                            <tr>
-                                <th>
-                                    Linked email
-                                </th>
-                                <td>
-                                    ${sessionScope.user.email}
-                                </td>
-                                <td>
-                                    <button type="button" data-toggle="modal" data-target="#changeEmailModal">Change</button>
-                                    <div class="modal fade" id="changeEmailModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
+                    <table class="border-0">
+                        <tr>
+                            <th>
+                                Linked email
+                            </th>
+                            <td>
+                                ${sessionScope.user.email}
+                            </td>
+                            <td>
+                                <button type="button" data-toggle="modal" data-target="#changeEmailModal">Change</button>
+                                <div class="modal fade" id="changeEmailModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <form action="ChangeEmail" method="post">
                                                 <div class="modal-header">
                                                     <h3 class="modal-title">Change email</h3>
                                                 </div>
@@ -106,7 +106,6 @@
                                                             </th>
                                                             <td>
                                                                 <input type="email" name="newEmail"/>
-                                                                <div style="color: red">${new_email_noti}</div>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -115,7 +114,6 @@
                                                             </th>
                                                             <td>
                                                                 <input type="password" name="password"/>
-                                                                <div style="color: red">${old_pass_noti}</div>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -125,25 +123,27 @@
                                                     <button type="button" data-dismiss="modal">Cancel</button>
                                                     <button type="submit" name="action" value="changeEmail">Confirm</button>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Password
+                            </th>
+                            <td>
+                                <c:if test="${sessionScope.user.getPasswordLevel() == 1}"><span style="color: red">Week</span></c:if>
+                                <c:if test="${sessionScope.user.getPasswordLevel() == 2}"><span style="color: #ffbb00">Medium</span></c:if>
+                                <c:if test="${sessionScope.user.getPasswordLevel() == 3}"><span style="color: green">Strong</span></c:if>
                                 </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Password
-                                </th>
                                 <td>
-                                    <c:if test="${sessionScope.user.getPasswordLevel() == 1}"><span style="color: red">Week</span></c:if>
-                                    <c:if test="${sessionScope.user.getPasswordLevel() == 2}"><span style="color: #ffbb00">Medium</span></c:if>
-                                    <c:if test="${sessionScope.user.getPasswordLevel() == 3}"><span style="color: green">Strong</span></c:if>
-                                    </td>
-                                    <td>
-                                        <button type="button" data-toggle="modal" data-target="#changePasswordModal">Change</button>
-                                        <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
+                                    <button type="button" data-toggle="modal" data-target="#changePasswordModal">Change</button>
+                                    <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <form action="ChangePassword" method="post">
                                                     <div class="modal-header">
                                                         <h3 class="modal-title">Ticket</h3>
                                                     </div>
@@ -156,34 +156,33 @@
                                                                 </th>
                                                                 <td>
                                                                     <input type="password" name="currentPassword"/>
-                                                                    <div style="color: red">${old_pass_noti}</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>
-                                                                New password
-                                                            </th>
-                                                            <td>
-                                                                <input type="password" name="newPassword"/>
-                                                                <div style="color: red">${new_pass_noti}</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>
-                                                                Confirm password
-                                                            </th>
-                                                            <td>
-                                                                <input type="password" name="confirmPassword"/>
-                                                                <div style="color: red">${confirm_pass_noti}</div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>
+                                                                    New password
+                                                                </th>
+                                                                <td>
+                                                                    <input type="password" name="newPassword"/>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>
+                                                                    Confirm password
+                                                                </th>
+                                                                <td>
+                                                                    <input type="password" name="confirmPassword"/>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
 
-                                                </div>
-                                                <div class="modal-footer" style="text-align: center">
-                                                    <button type="button" data-dismiss="modal">Cancel</button>
-                                                    <button type="submit" name="action" value="changePassword">Confirm</button>
-                                                </div>
+                                                    </div>
+                                                    <div class="modal-footer" style="text-align: center">
+                                                        <button type="button" data-dismiss="modal">Cancel</button>
+                                                        <button type="submit" name="action" value="changePassword">Confirm</button>
+                                                    </div>
+
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -191,9 +190,11 @@
                             </tr>
                         </table>
 
-                        <p>${processMessage}</p>      
+                        <div>${sessionScope.processMessage}</div>                    
+                    <%request.getSession().removeAttribute("processMessage");%>
 
-                    </form>
+                    <div style="color: red">${sessionScope.error}</div>                                   
+                    <%request.getSession().removeAttribute("error");%>
                 </div>
             </div>
 
@@ -201,16 +202,6 @@
         </div>
         <!-- Scripts -->
 
-        <script>
-            function changePassword() {
-                var element = document.getElementById("change-password");
-                if (element.style.display == 'none')
-                    element.style.display = "block";
-                else {
-                    element.style.display = 'none';
-                }
-            }
-        </script>
         <script src="../assets/js/jquery.min.js"></script>
         <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="../assets/js/jquery.scrolly.min.js"></script>

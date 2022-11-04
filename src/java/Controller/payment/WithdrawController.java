@@ -4,21 +4,17 @@
  */
 package Controller.payment;
 
-import Model.payment.PaymentMethod;
+//import Model.payment.PaymentMethod;
 import Model.payment.Transaction;
 import Model.auth.User;
-import context.payment.PaymentAccountDAO;
-import context.payment.PaymentMethodDAO;
+//import context.payment.PaymentMethodDAO;
 import context.payment.TransactionDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.Timestamp;
-import java.util.Calendar;
 
 /**
  *
@@ -38,45 +34,8 @@ public class WithdrawController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
-        PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
-        TransactionDAO transDAO = new TransactionDAO();
-        float amount = Float.parseFloat(request.getParameter("amount"));
 
-        User user = (User) request.getSession().getAttribute("user");
-
-        PaymentMethod paymentMethod = new PaymentMethod();
-        paymentMethod.setPaymentId(Integer.parseInt(request.getParameter("payment")));
-        paymentMethod = payMedDAO.get(paymentMethod);
-        if (!paymentMethod.isActive()) {
-            request.setAttribute("walletNoti", "This payment method is deactive.");
-            request.getRequestDispatcher("/User/Payment").forward(request, response);
-
-        } else if (amount > user.getPaymentAccount().getBalance()) {
-            request.setAttribute("walletNoti", "Balance in wallet is not enough to recharge.");
-            request.getRequestDispatcher("/User/Payment").forward(request, response);
-        } else {
-            float bankBalance = paymentMethod.getPaymentAccount().getBalance() + amount;
-            paymentMethod.getPaymentAccount().setBalance(bankBalance);
-            float walletBalance = user.getPaymentAccount().getBalance() - amount;
-            user.getPaymentAccount().setBalance(walletBalance);
-
-            Transaction transaction = new Transaction();
-            transaction.setUser(user);
-            transaction.setAmount(amount);
-            transaction.setBalanceAfter(walletBalance);
-            transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-            transaction.setType(2);
-            transaction.setStatus(2);
-            transaction.setDescription("Withdraw from wallet to " + paymentMethod.getName() + ".");
-            transaction.setPayment(paymentMethod);
-            transDAO.insert(transaction);
-
-            payAccDAO.update(paymentMethod.getPaymentAccount());
-            payAccDAO.update(user.getPaymentAccount());
-            response.sendRedirect(request.getContextPath() + "/User/Payment");
-        }
-
+        request.getRequestDispatcher("../views/user/Withdraw.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -105,7 +64,32 @@ public class WithdrawController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            String pass = request.getParameter("password");
+            if (!((User) request.getSession().getAttribute("user")).getPassword().equals(pass)) {
+                throw new Exception("Entered password is incorrect. Please try again.");
+            } else {
+                float amount = Float.parseFloat(request.getParameter("amount"));
+                User user = (User) request.getSession().getAttribute("user");
+                TransactionDAO transDAO = new TransactionDAO();
+
+                Transaction transaction = new Transaction();
+                transaction.setUser(user);
+                transaction.setAmount(amount);
+                transaction.setType(2);
+                transaction.setStatus(2);
+                transaction.setDescription("Withdraw to bank: " + request.getParameter("bank") + ", account number: " + request.getParameter("accountNumber"));
+                transDAO.insert(transaction);
+
+                response.sendRedirect(request.getContextPath() + "/User/Payment");
+            }
+
+        } catch (Exception e) {
+            request.getSession().setAttribute("error", e.getMessage());
+            System.out.println(e.getCause());
+            System.out.println(e.getLocalizedMessage());
+            response.sendRedirect(request.getContextPath() + "/User/Withdraw");
+        }
     }
 
     /**

@@ -196,7 +196,7 @@
                                                 <td>  
                                                     ${s.transactionTime}
                                                 </td>
-                                                <td>${s.getSta()}</td>
+                                                <td>${s.getStatus()}</td>
                                             </tr>
 
                                             <!-- Show detail modal -->

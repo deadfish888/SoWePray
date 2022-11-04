@@ -21,8 +21,7 @@ public class ReportsController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            String reportType = request.getParameter("reportType");
-            String search = request.getParameter("q");
+            String reportType = request.getParameter("type");
             String page = request.getParameter("page");
             String status = request.getParameter("status");
 
@@ -38,18 +37,15 @@ public class ReportsController extends HttpServlet {
             } catch (NumberFormatException e) {
                 pageIndex = 1;
             }
-            if (search == null) {
-                search = "";
-            }
             if (reportType == null || (!reportType.equals("book") && !reportType.equals("comment"))) {
                 reportType = "";
             }
             if (status == null || status.trim().length() == 0) {
-                status = "0";
+                status = "";
             }
 
             ReportDAO rd = new ReportDAO();
-            ArrayList<Report> reports = rd.getReports(reportType, status.equals("1"));
+            ArrayList<Report> reports = rd.getReports(reportType, status);
 
             int size = reports.size();
             int numPage = (int) Math.ceil((double) size / pageSize);
@@ -62,6 +58,7 @@ public class ReportsController extends HttpServlet {
 
             request.setAttribute("listR", reports);
             request.getRequestDispatcher("../manage/report/reports.jsp").forward(request, response);
+            return;
         } catch (Exception ex) {
             response.sendRedirect("../error.jsp");
         }

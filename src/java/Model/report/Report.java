@@ -16,12 +16,14 @@ import java.util.ArrayList;
 public class Report {
 
     private int id, reportType, userId, objectId;
-    private String note;
+    private String note,action;
     private Timestamp sent, received;
-    private boolean status;
+    private Boolean status;
     // ReportType :
     // 1. Book
     // 2. Comment
+    // 3. Ticket
+    // 4. Transaction
     private String reportTypeName;
     private User userR,userO;
     private Book bookO;
@@ -84,19 +86,19 @@ public class Report {
         this.sent = sent;
     }
 
-    public Timestamp getReceived() {
-        return received;
+    public String getReceived() {
+        return received ==null? null: new SimpleDateFormat("HH:mm a MM/dd/yyyy").format(received);
     }
 
     public void setReceived(Timestamp received) {
         this.received = received;
     }
 
-    public boolean isStatus() {
+    public Boolean isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
@@ -146,6 +148,14 @@ public class Report {
 
     public void setViolates(ArrayList<Violation> violates) {
         this.violates = violates;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
     
     

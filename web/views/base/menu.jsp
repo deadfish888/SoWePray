@@ -39,6 +39,7 @@
             <li><a href="${context}/Logout"><i class="fa fa-sign-out"></i>Logout</a></li>
             </c:if>
             <c:if test="${!empty sessionScope.admin}">
+            <li class="nav-item"><a href="${context}/Admin/DashBoard"><i class="fa fa-cog"></i>Setting</a></li>
             <li class="nav-item"><a href="${context}/Logout"><i class="fa fa-sign-out"></i>Logout</a></li>
             </c:if>
 

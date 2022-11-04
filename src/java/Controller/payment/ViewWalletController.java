@@ -7,10 +7,9 @@ package Controller.payment;
 
 import Model.payment.Transaction;
 import Model.auth.User;
-import context.payment.PaymentMethodDAO;
+//import context.payment.PaymentMethodDAO;
 import context.payment.TransactionDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -34,28 +33,9 @@ public class ViewWalletController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        User user = (User) request.getSession().getAttribute("user");
-        if (user == null) {
-            response.sendRedirect("./Login");
-            return;
-        }
-        if (user.is_super() == 0) {
-            response.sendRedirect("Support");
-            return;
-        }
-        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
-        request.setAttribute("payMedList", payMedDAO.getActivePayment(
-                        (User) request.getSession().getAttribute("user")));
-        
-        request.setAttribute("bankList", payMedDAO.getBankList(
-                        (User) request.getSession().getAttribute("user")));
-        
         TransactionDAO transDAO = new TransactionDAO();
         ArrayList<Transaction> transactionList = transDAO.getTransactionList((User) request.getSession().getAttribute("user"));
         request.setAttribute("transList", transactionList);
-        
-        
-//        System.out.println(transactionList.size());
         request.getRequestDispatcher("../views/user/Payment.jsp").forward(request, response);
     } 
 

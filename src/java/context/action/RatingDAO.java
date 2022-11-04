@@ -134,4 +134,17 @@ public class RatingDAO {
         }
         return list_r;
     }
+
+    public int countBook(int bookId) {
+        try {
+            String sql = "SELECT COUNT(bid) FROM [Star] WHERE bid= ? ";
+            stm=cnn.prepareStatement(sql);
+            stm.setInt(1, bookId);
+            rs = stm.executeQuery();
+            return rs.getInt(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(RatingDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
 }

@@ -45,7 +45,7 @@
                     <h1 style="margin: 0 0 0 0;">${book.title}
                         <span class="pull-right"><a href="./Book?type=novel">ORIGINAL</a></span>
                     </h1>
-                    
+
                     <c:forEach items="${book.category}" var="category">
                         <h4 style="margin: 0 0 0 0; display: inline-block;"><a href="./Book?categoryId=${category.id}&type=novel"><span class="badge badge-pill badge-secondary">${category.name}</span></a></h4>
                             </c:forEach>
@@ -59,7 +59,7 @@
                                 <form action="BookPreread" method="GET">
                                     <div style ="text-align: center ">
                                         <input type="hidden" name="id" value="${book.id}">
-                                        <c:if test="${! empty requestScope.chaps && !requestScope.own}">
+                                        <c:if test="${! empty requestScope.chaps && !requestScope.own && sessionScope.user.id ne book.author.userId}">
                                             <input type="submit" class="primary" value="Preread"> 
                                         </c:if>
 
@@ -79,7 +79,7 @@
                                 </p>
                                 <div class="row">        
                                     <c:if test="${sessionScope.user != null}">
-                                        <c:if test="${requestScope.own}">
+                                        <c:if test="${requestScope.own || sessionScope.user.id eq book.author.userId}">
                                             <form action="BookReading" method="get">
                                                 <div class="col-sm-4">
                                                     <input type="hidden" name="id" value="${book.id}">
@@ -87,16 +87,16 @@
                                                 </div>
                                             </form>
                                         </c:if>
-                                        <c:if test="${!own && (book.issale())}">
+                                        <c:if test="${!own && (book.issale()) && sessionScope.user.id ne book.author.userId}">
                                             <div class="col-sm-3">
                                                 <input type="button" class="primary btn-primary" data-toggle="modal" data-target="#purchase" value="Buy (All)"/>
                                             </div>
                                         </c:if>
-                                        <c:if test="${!own && (!book.issale())}">
+                                        <c:if test="${!own && (!book.issale()) && sessionScope.user.id ne book.author.userId}">
                                             <form action="User/Purchase" method="get">
                                                 <div class="col-sm-4">
                                                     <input type="hidden" name="bookId" value="${book.id}">
-                                                    <input type="hidden" name="amount" value="${book.price}">
+                                                    <input type="hidden" name="amount" value="0">
                                                     <input type="hidden" name="bookTitle" value="${book.title}"/>
                                                     <input type="submit" class="primary" value="Get">
                                                 </div>
@@ -115,7 +115,7 @@
                                     <div class="modal fade" id="purchase" tabindex="-1" role="dialog" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
-                                                <form action="User/Purchase" method="post" id="purchaseForm" name="purchaseForm" onsubmit="return validatePassword()">
+                                                <form action="User/Purchase" method="post" id="purchaseForm" name="purchaseForm" onsubmit="return validatePassword('purchaseForm')">
                                                     <div class="modal-header">
                                                         <h3 class="modal-title">Purchase</h3>
                                                     </div>
@@ -134,7 +134,9 @@
                                                                     <th>
                                                                         Price
                                                                     </th>
-
+                                                                    <td>
+                                                                        ${bookProduct.price}
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>
@@ -151,13 +153,7 @@
                                                     <div class="modal-footer" style="text-align: center">
                                                         <button type="button" class="primary btn-primary text-center" data-dismiss="modal" style="width: auto; padding: 0 1em">Cancel</button>
                                                         <input type="hidden" id="pass" value="${sessionScope.user.password}"/>
-                                                        <c:if test="${book.issale()}">
-                                                            <input type="hidden" name="amount" value="5"/>
-                                                        </c:if>
-                                                        <c:if test="${!book.issale()}">
-                                                            <input type="hidden" name="amount" value="${book.price}"/>
-
-                                                        </c:if>
+                                                        <input type="hidden" name="amount" value="${bookProduct.price}"/>
                                                         <input type="hidden" name="bookId" value="${book.id}"/>
                                                         <input type="hidden" name="bookTitle" value="${book.title}"/>
                                                         <input type="submit" class="primary text-center" value="Confirm"/>
@@ -214,6 +210,9 @@
                                         </div>
                                     </c:when>
                                 </c:choose>    
+                                <div style="color: red">
+                                    ${sessionScope.notEnoughBalance}
+                                </div>
                             </div>
 
                         </div>           
@@ -237,18 +236,25 @@
                                     </div>
                                     <div id="collapse${vol.id}" class="collapse" aria-labelledby="heading${vol.id}" data-parent="#accordionExample">
                                         <div class="card-body">
-                                            <c:forEach items="${requestScope.chaps}" var="chap">
-                                                <c:if test="${chap.volumeId == vol.id}">
+                                            <c:forEach items="${requestScope.chapterProductList}" var="chapProduct">
+                                                <c:if test="${chapProduct.chapter.volumeId == vol.id}">
                                                     <c:choose>
-                                                        <c:when test="${(! empty sessionScope.user && (requestScope.own || chaptersOwn.contains(chap.id))) || !empty sessionScope.admin}">
-                                                            <a href="BookReading?id=${book.id}&cid=${chap.id}"><p><i class="fa fa-unlock"></i> ${chap.title}</p></a>
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                            <a data-toggle="modal" data-target="#cpurchase${chap.id}"><p><i class="fa fa-lock"></i> ${chap.title}</p></a>
-                                                            <div class="modal fade" id="cpurchase${chap.id}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                        <c:when test="${!empty sessionScope.admin || (! empty sessionScope.user && (requestScope.own || productOwnList.contains(chapProduct) || !book.issale()) || sessionScope.user.id eq book.author.userId)}">
+                                                            <a href="BookReading?id=${book.id}&cid=${chapProduct.chapter.id}">
+                                                                <p><i class="fa fa-unlock"></i> ${chapProduct.chapter.title}</p>
+                                                            </a>
+                                                        </c:when>
+                                                        <c:when test="${empty sessionScope.user && empty sessionScope.admin}">
+                                                            <a href="Login">
+                                                                <p><i class="fa fa-lock"></i> ${chapProduct.chapter.title}</p>
+                                                            </a>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <a data-toggle="modal" data-target="#cpurchase${chapProduct.chapter.id}"><p><i class="fa fa-lock"></i> ${chapProduct.chapter.title}</p></a>
+                                                            <div class="modal fade" id="cpurchase${chapProduct.chapter.id}" tabindex="-1" role="dialog" aria-hidden="true">
                                                                 <div class="modal-dialog modal-lg">
                                                                     <div class="modal-content">
-                                                                        <form action="User/Purchase" method="post" id="purchaseForm" name="purchaseForm" onsubmit="return validatePassword()">
+                                                                        <form action="User/PurchaseChapter" method="post" id="cpurchase${chapProduct.chapter.id}Form" name="purchaseForm" onsubmit="return validatePassword('cpurchase${chapProduct.chapter.id}Form')">
                                                                             <div class="modal-header">
                                                                                 <h3 class="modal-title">Purchase</h3>
                                                                             </div>
@@ -257,16 +263,19 @@
                                                                                     <table style="width: 80%; margin: auto">
                                                                                         <tr>
                                                                                             <th>
-                                                                                                Chapter ${chap.no}
+                                                                                                Chapter ${chapProduct.chapter.no}
                                                                                             </th>
                                                                                             <td>
-                                                                                                ${chap.title}
+                                                                                                ${chapProduct.chapter.title}
                                                                                             </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <th>
                                                                                                 Price
                                                                                             </th>
+                                                                                            <td>
+                                                                                                ${chapProduct.price}
+                                                                                            </td>
 
                                                                                         </tr>
                                                                                         <tr>
@@ -284,15 +293,8 @@
                                                                             <div class="modal-footer" style="text-align: center">
                                                                                 <button type="button" class="primary btn-primary text-center" data-dismiss="modal" style="width: auto; padding: 0 1em">Cancel</button>
                                                                                 <input type="hidden" id="pass" value="${sessionScope.user.password}"/>
-                                                                                <c:if test="${book.issale()}">
-                                                                                    <input type="hidden" name="amount" value="5"/>
-                                                                                </c:if>
-                                                                                <c:if test="${!book.issale()}">
-                                                                                    <input type="hidden" name="amount" value="${book.price}"/>
-
-                                                                                </c:if>
-                                                                                <input type="hidden" name="bookId" value="${book.id}"/>
-                                                                                <input type="hidden" name="bookTitle" value="${book.title}"/>
+                                                                                <input type="hidden" name="amount" value="${chapProduct.price}"/>
+                                                                                <input type="hidden" name="productId" value="${chapProduct.productId}"/>
                                                                                 <input type="submit" class="primary text-center" value="Confirm"/>
                                                                             </div>
                                                                         </form>
@@ -385,6 +387,7 @@
                     </ul>
                 </div>
             </footer>
+            <%request.getSession().removeAttribute("notEnoughBalance");%>
 
         </div>
 
@@ -395,9 +398,9 @@
         <script src="assets/js/jquery.scrollex.min.js"></script>
         <script src="assets/js/main.js"></script>
         <script>
-                                                                            function validatePassword() {
-                                                                                let pass = document.forms["purchaseForm"]["pass"].value;
-                                                                                let x = document.forms["purchaseForm"]["password"].value;
+                                                                            function validatePassword(formId) {
+                                                                                let pass = document.forms[formId]["pass"].value;
+                                                                                let x = document.forms[formId]["password"].value;
                                                                                 if (pass !== x) {
                                                                                     document.getElementById("purchase-pass-noti").innerHTML = "Wrong password";
                                                                                     return false;
