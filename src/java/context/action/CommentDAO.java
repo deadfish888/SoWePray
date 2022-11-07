@@ -62,8 +62,15 @@ public class CommentDAO {
         }
     }
 
-    public ArrayList<Comment> loadComment(int bid) {
+    public ArrayList<Comment> loadComment(int bid, String cmtId) {
         ArrayList<Comment> list = new ArrayList<>();
+        int cmtID ;
+        try{
+            cmtID = Integer.parseInt(cmtId);
+        }catch (Exception e){
+            cmtID = 0;
+        }
+        Comment cmt = getCommentById(cmtID);
         try {
             String sql = "SELECT c.[id]"
                     + "      ,[bookId]\n"
@@ -77,9 +84,16 @@ public class CommentDAO {
                     + "  FROM [Comment] c"
                     + " INNER JOIN [User] u ON c.[userId] = u.[id]"
                     + " WHERE [bookId]= ? "
-                    + " ORDER BY [createdAt] DESC";
+                    + " ORDER BY CASE WHEN c.[id] = ? THEN 1 ELSE 2 END"
+                    + ",[createdAt] DESC";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, bid);
+            if(cmt ==null || cmt.getSonOf() == 0){
+                stm.setInt(2, cmtID);
+            }else {
+                stm.setInt(2, cmt.getSonOf());
+            }
+            
             rs = stm.executeQuery();
             while (rs.next()) {
                 Comment cm = new Comment(rs.getInt(1), rs.getInt(2), rs.getInt(3),
@@ -121,10 +135,11 @@ public class CommentDAO {
                     + "      ,[bookId]\n"
                     + "      ,c.[userId]\n"
                     + "      ,u.[fullname]\n"
-                    + "      ,u.[username]\n"
-                    + "      ,u.[gender]\n"
                     + "      ,[comment]\n"
+                    + "      ,sonOf"
+                    + "      ,replyTo"
                     + "      ,[createdAt]\n"
+                    + "      ,[editedAt]\n"
                     + "      ,[status]"
                     + "  FROM [Comment] c"
                     + " INNER JOIN [User] u ON c.[userId] = u.[id]"
@@ -134,12 +149,13 @@ public class CommentDAO {
             rs = stm.executeQuery();
             if (rs.next()) {
                 Comment cm = new Comment(rs.getInt(1), rs.getInt(2), rs.getInt(3),
-                         rs.getString(7), rs.getTimestamp(8), rs.getBoolean(9));
+                         rs.getString(5), rs.getTimestamp(8), rs.getBoolean(10));
+                cm.setSonOf(rs.getInt(6));
+                cm.setReplyTo(rs.getInt(7));
+                cm.setEditedAt(rs.getTimestamp(9));
                 User user = new User();
                 user.setId(rs.getInt(3));
                 user.setName(rs.getString(4));
-                user.setUsername(rs.getString(5));
-                user.setGender(rs.getBoolean(6) ? "Male" : "Female");
                 cm.setUser(user);
                 return cm;
             }

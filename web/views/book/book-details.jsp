@@ -285,7 +285,7 @@
                                 </div>
                                 <input type="submit" value="Post">
                             </form> 
-                            <table class="table">
+                                <table class="table" style="margin-top: 10px">
                                 <style>
                                     form {
                                         margin-bottom: 0px;
@@ -311,11 +311,14 @@
                                         white-space: nowrap;
                                         width: auto;
                                     }
+                                    .current{
+                                        border-left: 2px #585858 ridge;
+                                    }
                                 </style>
                                 <c:forEach items="${requestScope.comments}" var="comment">
 
                                     <c:if test="${comment.getSonOf()==0}">       
-                                        <tr>
+                                        <tr id="cmt${comment.id}">
                                             <th style="width: 200px" scope="row">
                                                 ${comment.user.name}
                                             </th>
@@ -397,7 +400,7 @@
                                                 <table style="margin-top: 20px;">
                                                     <c:forEach items="${comment.replies}" var="reply">
 
-                                                        <tr>
+                                                        <tr id="cmt${reply.id}">
                                                             <th style="width: 150px" scope="row">
                                                                 ${reply.user.name}
                                                             </th>
@@ -634,7 +637,16 @@
         <script src="assets/js/jquery.scrolly.min.js"></script>
         <script src="assets/js/jquery.scrollex.min.js"></script>
         <script src="assets/js/main.js"></script>
-
+        <script>
+            const url_string = window.location.href;
+            const url = new URL(url_string);
+            var cmtId = url.searchParams.get("cmtId");
+            if (cmtId != null){
+                var id = document.getElementById("cmt"+cmtId);
+                        id.scrollIntoView({block: "center"});
+                        id.classList.add("current");
+            }
+        </script>
 
     </body>
 </html>

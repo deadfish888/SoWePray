@@ -39,7 +39,7 @@ public class CommentController extends HttpServlet {
     throws ServletException, IOException {
         int bId=Integer.parseInt(request.getParameter("bId"));
         CommentDAO cdao=new CommentDAO();
-        ArrayList<Comment> list_c=cdao.loadComment(bId);
+        ArrayList<Comment> list_c=cdao.loadComment(bId,"0");
         request.setAttribute("list", list_c);
     }
 

@@ -47,6 +47,7 @@ public class BookDetail extends HttpServlet {
             throws ServletException, IOException {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
+            String cmtId = request.getParameter("cmtId");
             FavouriteDAO fdao = new FavouriteDAO();
             boolean check = false;
             BookDAO b = new BookDAO();
@@ -65,7 +66,7 @@ public class BookDetail extends HttpServlet {
             ArrayList<Book> sames = b.getSimilarBooks(id, thisbook.getCategory());
             ArrayList<Volume> vols = vd.getVolumesByBookId(id);
             ArrayList<Chapter> chaps = chd.getChaptersByBookId(id);
-            ArrayList<Comment> coms = cmd.loadComment(id);
+            ArrayList<Comment> coms = cmd.loadComment(id,cmtId);
             request.setAttribute("chaps", chaps);
             request.setAttribute("sames", sames);
             request.setAttribute("book", thisbook);

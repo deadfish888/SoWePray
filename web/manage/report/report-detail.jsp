@@ -105,7 +105,7 @@
                                                     ${report.comO.user.name} - ID: ${report.comO.userId}
                                                 </h4>
                                                     <h6 class="card-subtitle">
-                                                        <a  href="../BookDetail?id=${report.bookO.id}&cmtId=${report.comO.id}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
+                                                        <a target="_blank" href="../BookDetail?id=${report.bookO.id}&cmtId=${report.comO.id}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
                                                         CommentID: ${report.comO.id}
                                                     </h6>
                                                 
@@ -151,7 +151,7 @@
                                                     </c:if>
                                                     <tr>
                                                         <th>Reporter</th>
-                                                        <td><a href="./Activities?id=${report.userId}">${report.userR.username}</a> - ID: ${report.userId}</td>
+                                                        <td><a target="_blank" href="./Activities?id=${report.userId}">${report.userR.username}</a> - ID: ${report.userId}</td>
                                                     </tr>
                                                     <tr>
                                                         <th>Violations</th>
