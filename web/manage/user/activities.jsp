@@ -105,12 +105,64 @@
                 <!-- ============================================================== -->
                 <!-- Container fluid  -->
                 <!-- ============================================================== -->
-                <div class="container-fluid">
+                <div class="container-fluid" >
+
                     <!-- ============================================================== -->
                     <!-- Start Page Content -->
                     <!-- ============================================================== -->
                     <div class="col-md-6" style="width: 100% ; display: flex ; flex-direction: row">
-                        <div class="card" style="flex-basis:  50%">
+                        <div class="card" style="flex-basis:  20%">
+                            <div class="card-header">
+                                <div class="card-title">Detail</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="example-email" class="col-md-12"><i class="fa-solid fa-envelope"></i> Email</label>
+                                    <div class="col-md-12">
+                                        ${requestScope.userA.email}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 mb-0"><i class="fa-solid fa-user"></i>  Username</label>
+                                    <div class="col-md-12">
+                                        ${requestScope.userA.username}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 mb-0"> <i class="fa-solid fa-lock"></i>   Password</label>         
+                                    <div class="col-md-12">
+                                        ${requestScope.userA.password} 
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 mb-0"><i class="fa-solid fa-address-book"></i> Full Name</label>
+                                    <div class="col-md-12">
+                                        ${requestScope.userA.name}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 mb-0"><i class="fa-solid fa-phone"></i>  Phone</label>
+                                    <div class="col-md-12">
+                                        ${requestScope.userA.phone}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 mb-0"><i class="fa-sharp fa-solid fa-location-pin"></i>  Address</label>
+                                    <div class="col-md-12">
+                                        ${requestScope.userA.address}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <a href="LoadAuthor?sendid=${requestScope.userA.id}" style="text-decoration: none;">
+                                        <label class="col-md-12 mb-0">${requestScope.userA.username} Novels : ${requestScope.numberNovel}</label></a>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 mb-0"> ${requestScope.userA.username} Books : ${requestScope.numberBook}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" style="flex-basis:  50%;margin-left: 5px">
                             <div class="card-header">
                                 <div class="card-title">Transaction</div>
                             </div>
@@ -175,7 +227,7 @@
 
                             </div>
                         </div>
-                        <div class="card" style="flex-basis:  50%;margin-left: 10px">
+                        <div class="card" style="flex-basis:  50%;margin-left: 5px">
                             <div class="card-header">
                                 <div class="card-title">Report - Ticket</div>
                             </div>
