@@ -195,22 +195,8 @@ public class User {
 
     public void createWallet(){
         paymentAccount = new PaymentAccount();
-        paymentAccount = paymentAccount.createWallet(this);
-//        PaymentMethod paymentMethod = new PaymentMethod();
-//        paymentMethod.setActive(true);
-//        paymentMethod.setPaymentAccount(paymentAccount);
-//        paymentMethod.setUser(this);
-//        paymentMethod.setName("Wallet of " + username);
-//        PaymentMethodDAO payMedDAO = new PaymentMethodDAO();
-//        payMedDAO.insert(paymentMethod);
+        paymentAccount.createWallet(this);
     }
-
-//    public boolean isOwnBook(int bookId){
-//        BookOwnDAO bookOwnDAO = new BookOwnDAO();
-//        Book book = new Book();
-//        book.setId(bookId);
-//        return bookOwnDAO.getOwnBooks(this).contains(book);
-//    }
     
     public boolean isOwnProduct(String productId) {
         ProductOwnDAO productOwnDAO = new ProductOwnDAO();

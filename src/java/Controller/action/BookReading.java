@@ -60,11 +60,9 @@ public class BookReading extends HttpServlet {
             request.setAttribute("product", product);
 
 //        ArrayList<Chapter> chap = chd.getChapterByVolumeIDandBookID(id, thisbook.getId());
-//        request.setAttribute("book", thisbook);
+            request.setAttribute("bookProductId", "B" + id);
             request.setAttribute("listr", listr);
             request.setAttribute("chapter", chapter);
-            System.out.println(((User) request.getSession().getAttribute("user")).isOwnProduct(product.getProductId()));
-//        System.out.println(((User) request.getSession().getAttribute("user")).isOwnBook(product.getBook().getId()));
             request.getRequestDispatcher("/views/book/book-reading.jsp").forward(request, response);
 
         } catch (Exception e) {

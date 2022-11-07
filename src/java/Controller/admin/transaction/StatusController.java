@@ -4,10 +4,8 @@
  */
 package Controller.admin.transaction;
 
-import Model.auth.User;
 import Model.payment.PaymentAccount;
 import Model.payment.Transaction;
-import context.auth.UserDAO;
 import context.payment.PaymentAccountDAO;
 import context.payment.TransactionDAO;
 import java.io.IOException;
@@ -37,41 +35,44 @@ public class StatusController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        TransactionDAO transactionDAO = new TransactionDAO();
-//        UserDAO userDAO = new UserDAO();
-        PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
+        try {
+            TransactionDAO transactionDAO = new TransactionDAO();
+            PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
 
-        long transactionId = Long.parseLong(request.getParameter("transactionId"));
-        Transaction transaction = new Transaction();
-        transaction.setTransactionId(transactionId);
-        transaction = transactionDAO.get(transaction);
-        int status = Integer.parseInt(request.getParameter("upStatus"));
+            long transactionId = Long.parseLong(request.getParameter("transactionId"));
+            Transaction transaction = new Transaction();
+            transaction.setTransactionId(transactionId);
+            transaction = transactionDAO.get(transaction);
+            int status = Integer.parseInt(request.getParameter("upStatus"));
 
-        PaymentAccount payAcc = transaction.getUser().getPaymentAccount();
-        if (status == 3) {
-            if (transaction.getType() == 1) {
-                payAcc.setBalance(payAcc.getBalance() + transaction.getAmount());
-                transaction.setBalanceAfter(payAcc.getBalance());
-            } else {
-                //If amount in wallet is not enough to finish transaction, change to fail
-                if (transaction.getAmount() <= payAcc.getBalance()) {
-                    payAcc.setBalance(payAcc.getBalance() - transaction.getAmount());
-                    transaction.setBalanceAfter(payAcc.getBalance());
+            PaymentAccount payAcc = transaction.getUser().getPaymentAccount();
+            if (status == 3) {
+                if (transaction.getType() == 1) {
+                    payAcc.setBalance(payAcc.getBalance() + transaction.getAmount());
+//                    transaction.setBalanceAfter(payAcc.getBalance());
                 } else {
-                    transaction.setBalanceAfter(payAcc.getBalance());
-                    
-                    status = 1;
-                    transaction.setDescription(transaction.getDescription() + "\nReason: Balance in your wallet is not enough to finish this transaction.");
-                    request.getSession().setAttribute("error", "Balance in wallet of user " + transaction.getUser().getId() + " is not enough.");
+                    //If amount in wallet is not enough to finish transaction, change to fail
+                    if (transaction.getAmount() <= payAcc.getBalance()) {
+                        payAcc.setBalance(payAcc.getBalance() - transaction.getAmount());
+//                        transaction.setBalanceAfter(payAcc.getBalance());
+                    } else {
+//                        transaction.setBalanceAfter(payAcc.getBalance());
+
+                        status = 1;
+                        transaction.setDescription(transaction.getDescription() + "\nReason: Balance in your wallet is not enough to finish this transaction.");
+                        request.getSession().setAttribute("error", "Balance in wallet of user " + transaction.getUser().getId() + " is not enough.");
+                    }
                 }
+                payAccDAO.update(payAcc);
             }
-            payAccDAO.update(payAcc);
-        } else {
             transaction.setBalanceAfter(payAcc.getBalance());
+            transaction.setStatus(status);
+            transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+            transactionDAO.update(transaction);
+
+        } catch (NumberFormatException e) {
+            request.getSession().setAttribute("error", e.getMessage());
         }
-        transaction.setStatus(status);
-        transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-        transactionDAO.update(transaction);
         response.sendRedirect(request.getContextPath() + "/Admin/Transaction");
     }
 

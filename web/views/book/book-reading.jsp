@@ -11,7 +11,7 @@
           response.sendRedirect("./Login");
     %>
 </c:if>
-<c:if test="${!sessionScope.user.isOwnProduct(product.productId) && sessionScope.user.id ne product.book.author.user.id}">
+<c:if test="${!sessionScope.user.isOwnProduct(product.productId) &&!sessionScope.user.isOwnProduct(bookProductId) && sessionScope.user.id ne product.book.author.user.id}">
     <%         
           response.sendRedirect("./BookDetail?id=" + ((Product) request.getAttribute("product")).getBook().getId());
     %>

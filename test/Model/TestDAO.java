@@ -20,10 +20,13 @@ public class TestDAO {
 
     public static void main(String[] args) {
 
-        TransactionDAO transactionDAO = new TransactionDAO();
-        User user = new User();
-        user.setId(109);
-        Transaction transaction = new Transaction(0, user, 0, 0, -1, -1, null, null);
-        System.out.println(transactionDAO.search(transaction).size());
+//        TransactionDAO transactionDAO = new TransactionDAO();
+//        User user = new User();
+//        user.setId(109);
+//        Transaction transaction = new Transaction(0, user, 0, 0, -1, -1, null, null);
+//        System.out.println(transactionDAO.search(transaction).size());
+System.out.println("UPDATE [Payment_Account]\n"
+                    + "   SET [balance] = ?\n"
+                    + " WHERE [accountNumber] = ?");
     }
 }

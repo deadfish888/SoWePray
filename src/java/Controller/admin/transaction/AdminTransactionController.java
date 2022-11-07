@@ -9,7 +9,6 @@ import Model.payment.Transaction;
 import Model.product.Product;
 import context.payment.TransactionDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -52,7 +51,10 @@ public class AdminTransactionController extends HttpServlet {
             throws ServletException, IOException {
         TransactionDAO transactionDAO = new TransactionDAO();
         ArrayList<Transaction> transactionList = transactionDAO.getAll();
+        ArrayList<Transaction> pendingTransactionList = transactionDAO.getPending();
+
         request.setAttribute("transactionList", transactionList);
+        request.setAttribute("pendingList", pendingTransactionList);
         processRequest(request, response);
     }
 
@@ -88,8 +90,25 @@ public class AdminTransactionController extends HttpServlet {
         }
         TransactionDAO transactionDAO = new TransactionDAO();
         ArrayList<Transaction> transactionList = transactionDAO.search(tempTrans);
+
+        Transaction pendingTempTrans = new Transaction();
+        String pendingUserId = request.getParameter("pendingUserId");
+        String pendingType = request.getParameter("pendingType");
+        if (pendingUserId != null && !pendingUserId.equals("")) {
+            User user = new User();
+            user.setId(Integer.parseInt(pendingUserId));
+            tempTrans.setUser(user);
+        }
+        if (pendingType != null && !pendingType.equals("")) {
+            tempTrans.setType(Integer.parseInt(pendingType));
+        }
+            tempTrans.setStatus(2);
+        ArrayList<Transaction> pendingTransactionList = transactionDAO.search(pendingTempTrans);
+
         request.setAttribute("transactionList", transactionList);
+        request.setAttribute("pendingList", pendingTransactionList);
         request.setAttribute("tempTrans", tempTrans);
+
         processRequest(request, response);
 
     }
