@@ -64,7 +64,6 @@ public class BookOwnDAO {
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, user.getId());
             rs = stm.executeQuery();
-            CategoryDAO categoryDAO = new CategoryDAO();
             while (rs.next()) {
 //                int id = rs.getInt("bookId");
                 Book book = new Book();
