@@ -59,10 +59,10 @@
                 <div class="inner">
                     <h1>From ${author.name}</h1>
                     <div style="display: flex">
-                        <c:if test = "${author.userId != null}">
+                        <c:if test = "${author.userId != 0}">
                             <div class="col-md-2">
                                 <img
-                                    src="Bookie/images/default.png"
+                                    src="/images/default.png"
                                     alt="avatar"
                                     />
                             </div>
