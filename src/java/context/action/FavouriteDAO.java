@@ -242,16 +242,15 @@ public class FavouriteDAO {
         return list;
     }
 
-    public void sendFavtoBook(int count) {
+    public void sendFavtoBook(int count,int bookId) {
         try {
 
-            String sql = "INSERT INTO [dbo].[Book]\n"
-                    + "           (\n"
-                    + "           [favourite])\n"
-                    + "     VALUES\n"
-                    + "           ('" + count + "'"
-                    + "           )";
+            String sql = "UPDATE [dbo].[Book]\n"
+                    + "      SET\n" 
+                    + "           [favourite]=" + count + ""
+                    + " WHERE [id] = ?";
             stm =cnn.prepareStatement(sql);
+            stm.setInt(1, bookId);
             stm.executeUpdate();
         } catch (Exception e) {
             System.out.println("edit Error:" + e.getMessage());

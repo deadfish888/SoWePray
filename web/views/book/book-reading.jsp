@@ -8,7 +8,7 @@
 <%@page import="Model.product.Product"%>
 <c:if test="${empty sessionScope.user && empty sessionScope.admin}">
     <%         
-          response.sendRedirect("./Login");
+          response.sendRedirect("./Login?origin=./BookDetail?id="+((Product) request.getAttribute("product")).getBook().getId());
     %>
 </c:if>
 <c:if test="${!sessionScope.user.isOwnProduct(product.productId) && !sessionScope.user.isOwnProduct(bookProductId) && sessionScope.user.id ne product.book.author.user.id}">

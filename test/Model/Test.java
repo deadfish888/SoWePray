@@ -8,6 +8,7 @@ import Model.product.Book;
 import context.product.AuthorDAO;
 import context.product.BookDAO;
 import context.product.CategoryDAO;
+import context.product.content.ChapterDAO;
 import java.util.ArrayList;
 
 
@@ -90,5 +91,7 @@ System.out.println("SELECT [Book].[id]\n"
                     + " ORDER BY [Book].id ASC \n"
                     + " OFFSET ? * (?-1) ROWS  FETCH NEXT ?\n"
                     + " ROWS ONLY");
+                    ChapterDAO chd = new ChapterDAO();
+                    System.out.println(chd.countWordsByBookId(2));
     }
 }

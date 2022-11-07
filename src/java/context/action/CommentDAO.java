@@ -82,8 +82,8 @@ public class CommentDAO {
             stm.setInt(1, bid);
             rs = stm.executeQuery();
             while (rs.next()) {
-                Comment cm = new Comment(rs.getInt(1), rs.getInt(2), rs.getInt(3)
-                        , rs.getString(5), rs.getTimestamp(6), rs.getBoolean(7));
+                Comment cm = new Comment(rs.getInt(1), rs.getInt(2), rs.getInt(3),
+                         rs.getString(5), rs.getTimestamp(6), rs.getBoolean(7));
                 cm.setSonOf(rs.getInt(8));
                 cm.setEditedAt(rs.getTimestamp(9));
                 User user = new User();
@@ -133,17 +133,17 @@ public class CommentDAO {
             stm.setInt(1, objectId);
             rs = stm.executeQuery();
             if (rs.next()) {
-                Comment cm = new Comment(rs.getInt(1), rs.getInt(2), rs.getInt(3)
-                        , rs.getString(7), rs.getTimestamp(8), rs.getBoolean(9));
+                Comment cm = new Comment(rs.getInt(1), rs.getInt(2), rs.getInt(3),
+                         rs.getString(7), rs.getTimestamp(8), rs.getBoolean(9));
                 User user = new User();
                 user.setId(rs.getInt(3));
                 user.setName(rs.getString(4));
                 user.setUsername(rs.getString(5));
-                user.setGender(rs.getBoolean(6)?"Male":"Female");
+                user.setGender(rs.getBoolean(6) ? "Male" : "Female");
                 cm.setUser(user);
                 return cm;
             }
-            
+
         } catch (Exception e) {
             System.out.println("load error:" + e.getMessage());
         }
@@ -151,7 +151,7 @@ public class CommentDAO {
     }
 
     public void banComment(int commentId) {
-         try {
+        try {
             String sql = "UPDATE [Comment]"
                     + "      SET [status] = 0"
                     + "    WHERE [id] = ?";
@@ -208,12 +208,12 @@ public class CommentDAO {
                     + "           ,[replyTo]\n"
                     + "           ,[createdAt])\n"
                     + " VALUES\n"
-                    + "           ('"+bookId+"'\n"
-                    + "           ,'"+userId+"'\n"
-                    + "           ,'"+reply+"'\n"
-                    + "           ,'"+sonOf+"'\n"
-                    + "           ,'"+replyTo+"'\n"
-                    + "           ,'"+time+"')\n";
+                    + "           ('" + bookId + "'\n"
+                    + "           ,'" + userId + "'\n"
+                    + "           ,'" + reply + "'\n"
+                    + "           ,'" + sonOf + "'\n"
+                    + "           ,'" + replyTo + "'\n"
+                    + "           ,'" + time + "')\n";
             stm = cnn.prepareStatement(sql);
             stm.executeUpdate();
         } catch (Exception e) {
@@ -244,11 +244,11 @@ public class CommentDAO {
             PreparedStatement pre = cnn.prepareStatement(sql);
             pre.setInt(1, cId);
             ResultSet re = pre.executeQuery();
-            while(re.next()){
-                 Comment cm = new Comment(re.getInt(1), re.getInt(2), re.getInt(3)
-                        , re.getString(5), re.getTimestamp(6), re.getBoolean(7));
-                 cm.setSonOf(re.getInt(8));
-                 cm.setReplyTo(re.getInt(9));
+            while (re.next()) {
+                Comment cm = new Comment(re.getInt(1), re.getInt(2), re.getInt(3),
+                         re.getString(5), re.getTimestamp(6), re.getBoolean(7));
+                cm.setSonOf(re.getInt(8));
+                cm.setReplyTo(re.getInt(9));
                 cm.setEditedAt(re.getTimestamp(10));
                 User user = new User();
                 user.setName(re.getString(4));
@@ -256,11 +256,26 @@ public class CommentDAO {
                 cm.setReplyName(re.getString(11));
                 list.add(cm);
             }
-           return list;
+            return list;
         } catch (SQLException ex) {
             Logger.getLogger(CommentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public int countByBook(int bookId) {
+        try {
+            String sql = "SELECT COUNT( [id])\n"
+                    + "  FROM [dbo].[Comment]\n"
+                    + "  WHERE bookId = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, bookId);
+            rs = stm.executeQuery();
+            if (rs.next()) return rs.getInt(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(CommentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 
 }

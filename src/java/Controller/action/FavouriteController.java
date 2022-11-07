@@ -61,7 +61,7 @@ public class FavouriteController extends HttpServlet {
             fdao.addFavourite(uId, bId);
             ArrayList<Favourite> list=fdao.getAllFav(bId);
             int count=list.size();
-            fdao.sendFavtoBook(count);
+            fdao.sendFavtoBook(count, bId);
             response.sendRedirect("./BookDetail?id="+bId);
        }
        

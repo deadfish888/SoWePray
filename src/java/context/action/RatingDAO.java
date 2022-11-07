@@ -141,7 +141,7 @@ public class RatingDAO {
             stm=cnn.prepareStatement(sql);
             stm.setInt(1, bookId);
             rs = stm.executeQuery();
-            return rs.getInt(1);
+            if(rs.next()) return rs.getInt(1);
         } catch (SQLException ex) {
             Logger.getLogger(RatingDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
