@@ -13,6 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
         <noscript><link rel="stylesheet" href="assets/css/noscript.css"/></noscript>
         <style>
             .home-filter{
@@ -114,8 +115,19 @@
                         </div>
                     </form>
                     <!-- Products -->
+
                     <div class="row">
                         <div class="col-9">
+                            <div class="col-3" style="z-index: 1; position: relative">
+                                <select id="sapxep" onchange="sapxep(this)">
+                                    <option value="latest">Latest Updated</option>
+                                    <option value="new">New book</option>
+                                    <option value="fav">Favorite</option>
+                                    <option value="view">View</option>
+                                    <option value="rate">Rating</option>
+                                    <option value="price">Price</option>
+                                </select>
+                            </div>
                             <section class="tiles">
                                 <c:forEach items="${books}" var="book">
                                     <article id="bootstrap-overrides" class="style1" style="">
@@ -167,6 +179,7 @@
                             </div>
                         </div>
                         <div class="col-3">
+
                             <div class="font-medium bg-white border py-2 px-3 mb-3">
                                 <h3 class="section-title">Type</h3><!-- comment -->
                                 <ul class="list-group list-group-flush">
@@ -267,7 +280,13 @@
                     }
                 });
             }
-            console.log(qtype);
+            function sapxep(elm){
+                const params = new URLSearchParams(search);
+                const type = elm.value;
+                params.set('order', type);
+                const href = new URLSearchParams(params).toString();
+                window.location = "Book?"+href;
+            }
         </script>
     </body>
 </html>

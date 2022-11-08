@@ -129,13 +129,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12 mb-0"> <i class="fa-solid fa-lock"></i>   Password</label>         
-                                    <div class="col-md-12">
-                                        ${requestScope.userA.password} 
-                                    </div>
-
-                                </div>
-                                <div class="form-group">
                                     <label class="col-md-12 mb-0"><i class="fa-solid fa-address-book"></i> Full Name</label>
                                     <div class="col-md-12">
                                         ${requestScope.userA.name}
