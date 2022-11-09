@@ -165,6 +165,45 @@ public class TransactionDAO {
         }
         return null;
     }
+    
+    public ArrayList<Transaction> getPending() {
+        UserDAO userDAO = new UserDAO();
+        ArrayList<Transaction> transactionList = new ArrayList<>();
+        try {
+            ProductDAO productDAO = new ProductDAO();
+            String sql = "SELECT [transactionId]\n"
+                    + "      ,[userId]\n"
+                    + "      ,[amount]\n"
+                    + "      ,[balanceAfter]\n"
+                    + "      ,[transactionTime]\n"
+                    + "      ,[type]\n"
+                    + "      ,[status]\n"
+                    + "      ,[description]\n"
+                    + "      ,[productId]\n"
+                    + "  FROM [Transaction]"
+                    + "  WHERE [status] = 2"
+                    + "  ORDER BY transactionTime desc";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Transaction transaction = new Transaction();
+                transaction.setTransactionId(rs.getLong("transactionId"));
+                transaction.setUser(userDAO.getUser(rs.getInt("userId")));
+                transaction.setAmount(rs.getFloat("amount"));
+                transaction.setBalanceAfter(rs.getFloat("balanceAfter"));
+                transaction.setTransactionTime(rs.getTimestamp("transactionTime"));
+                transaction.setType(rs.getInt("type"));
+                transaction.setStatus(rs.getInt("status"));
+                transaction.setDescription(rs.getString("description"));
+                transaction.setProduct(productDAO.get(new Product(rs.getString("productId"))));
+                transactionList.add(transaction);
+            }
+            return transactionList;
+        } catch (SQLException ex) {
+            Logger.getLogger(TransactionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public Transaction get(Transaction transaction) {
         UserDAO userDAO = new UserDAO();
@@ -282,6 +321,18 @@ public class TransactionDAO {
         }
     }
 
+    public ArrayList<Transaction> getByPage(ArrayList<Transaction> listT, int start, int end) {
+
+        ArrayList<Transaction> listpage = new ArrayList<>();
+        if (listT.size() < end) {
+            end = listT.size();
+        }
+        for (int i = start; i < end; i++) {
+            listpage.add(listT.get(i));
+        }
+        return listpage;
+    }
+    
 //    public void generateData() {
 //        UserDAO userDAO = new UserDAO();
 //        PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
@@ -300,17 +351,6 @@ public class TransactionDAO {
 //            insert(transaction);
 //        }
 //    }
-    public ArrayList<Transaction> getByPage(ArrayList<Transaction> listT, int start, int end) {
-
-        ArrayList<Transaction> listpage = new ArrayList<>();
-        if (listT.size() < end) {
-            end = listT.size();
-        }
-        for (int i = start; i < end; i++) {
-            listpage.add(listT.get(i));
-        }
-        return listpage;
-    }
 }
 
 /**

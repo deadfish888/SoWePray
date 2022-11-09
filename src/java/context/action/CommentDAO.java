@@ -7,7 +7,6 @@ package context.action;
 import Model.action.Comment;
 import Model.auth.User;
 import context.DBContext;
-import context.auth.UserDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

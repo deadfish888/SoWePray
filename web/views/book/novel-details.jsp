@@ -314,7 +314,7 @@
 
                         </div>  
                     </div>
-                    <div class="container-fluid mt-5">
+                   <div class="container-fluid mt-5">
                         <h3>${(! empty requestScope.comments)? requestScope.comments.size() : "0"} comment(s)</h3>
                         <div class="col-12">
                             <form role="form" action="Comment" method="get">
@@ -324,16 +324,291 @@
                                 </div>
                                 <input type="submit" value="Post">
                             </form> 
-                            <table class="table">
+                                <table class="table" style="margin-top: 10px">
+                                <style>
+                                    form {
+                                        margin-bottom: 0px;
+                                    }
+                                    table{
+                                        margin-bottom: 0px;
+                                    }
+                                    p{
+                                        margin-bottom: 5px;
+                                    }
+                                    #bootstrap-overrides{
+                                        font-size: 0.8em;
+                                        font-weight: 900;
+                                        height: 3.5em;
+                                        letter-spacing: 0.35em;
+                                        line-height: 3.45em;
+                                        overflow: hidden;
+                                        padding: 0 1.25em 0 1.6em;
+                                        text-align: center;
+                                        text-decoration: none;
+                                        text-overflow: ellipsis;
+                                        text-transform: uppercase;
+                                        white-space: nowrap;
+                                        width: auto;
+                                    }
+                                    .current{
+                                        border-left: 2px #585858 ridge;
+                                    }
+                                </style>
                                 <c:forEach items="${requestScope.comments}" var="comment">
 
-                                    <tr>
-                                        <th style="width: 200px" scope="row">
-                                            ${comment.user.name}
-                                        </th>
-                                        <td style="white-space: pre-line">${comment.comment}</td>
-                                    </tr>
+                                    <c:if test="${comment.getSonOf()==0}">       
+                                        <tr id="cmt${comment.id}">
+                                            <th style="width: 200px" scope="row">
+                                                ${comment.user.name}
+                                            </th>
+                                            <td >
+                                                <c:choose>
+                                                    <c:when test="${comment.isStatus() == false}">
+                                                        <i>This comment has been banned.</i>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <p style="white-space: pre-line">${comment.comment}</p>
+                                                        <div class="row">
+                                                            <div class="col-md-3 small">
+                                                                <c:if test="${comment.getEditedAt()==null}">${comment.getCreatedAt()}</c:if>
+                                                                <c:if test="${comment.getEditedAt()!=null}">Edited ${comment.getEditedAt()}</c:if>
+                                                                </div>                                
+                                                            <c:if test="${comment.getUserId()!=sessionScope.user.getId()}">
+                                                                <div class ="col-md-3 small">
+                                                                    <a class="visible-toolkit-item do-reply" href="#ReplyComment${comment.getId()}" data-toggle="collapse"
+                                                                       aria-expanded="false" aria-controls="Reply">Reply</a>
+                                                                </div>
 
+                                                                <div class="collapse col-12" id="ReplyComment${comment.getId()}">
+                                                                    <form action="Reply" method="get">
+                                                                        <input type="text" class="form-control" name="reply" ${empty sessionScope.user ? "":"required"}/>
+                                                                        <input type="submit" value="Reply">
+                                                                        <input type="hidden" id="sId" name="sId" value="${comment.getId()}"> 
+                                                                        <input type="hidden" id="rId" name="rId" value="${comment.getId()}"> 
+                                                                        <input type="hidden" id="uId" name="uId" value="${sessionScope.user.getId()}">
+                                                                        <input type="hidden" id="bId" name="bId" value="${requestScope.book.id}">
+                                                                    </form>
+                                                                </div>   
+                                                            </c:if>
+                                                            <c:if test="${comment.getUserId()==sessionScope.user.getId()}">
+                                                                <div class="col-md-1 small">
+                                                                    <a class="visible-toolkit-item do-reply" href="#EditComment${comment.getId()}" data-toggle="collapse"
+                                                                       aria-expanded="false" aria-controls="EditComment">Edit</a>
+                                                                </div>
+                                                                <div class="col-md-2 small">
+                                                                    <a class="visible-toolkit-item do-reply" data-toggle="modal" data-target="#DeleteComment${comment.getId()}">Delete</a>
+                                                                </div>
+
+                                                                <div class="collapse col-12" id="EditComment${comment.getId()}">
+                                                                    <form action="Update" method="get">
+                                                                        <input type="text" class="form-control" name="newComment"/>
+                                                                        <input type="submit" value="Edit">
+                                                                        <input type="hidden" id="cId" name="cId" value="${comment.getId()}"> 
+                                                                        <input type="hidden" id="uId" name="uId" value="${sessionScope.user.getId()}">
+                                                                        <input type="hidden" id="bId" name="bId" value="${requestScope.book.id}">
+                                                                    </form>
+                                                                </div>
+                                                                <form method="post" action="Update">
+                                                                    <input type="hidden" name="bId" value="${requestScope.book.id}"/>
+                                                                    <input type="hidden" name="uId" value="${sessionScope.user.id}"/>
+                                                                    <input type="hidden" name="cId" value="${comment.getId()}">
+                                                                    <div class="modal fade" id="DeleteComment${comment.getId()}" tabindex="-1" 
+                                                                         role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="exampleModalCenterTitle">Alert</h5>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    Delete this comment ... ?
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" id="bootstrap-overrides" data-dismiss="modal">Cancel</button>
+                                                                                    <input  type="submit" class="btn btn-danger" name="service" value="Delete">
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>    
+                                                                    </div>  
+                                                                </form>  
+                                                            </c:if>
+                                                        </div>
+                                                    </c:otherwise>
+                                                </c:choose>
+
+                                                <table style="margin-top: 20px;">
+                                                    <c:forEach items="${comment.replies}" var="reply">
+
+                                                        <tr id="cmt${reply.id}">
+                                                            <th style="width: 150px" scope="row">
+                                                                ${reply.user.name}
+                                                            </th>
+                                                            <td >
+                                                                <c:if test="${reply.isStatus() == false}">
+                                                                    <i>This comment has been banned.</i>
+                                                                </c:if>
+                                                                <c:if test="${reply.isStatus() == true}">
+                                                                    <p style="white-space: pre-line">@${reply.replyName} ${reply.comment}</p>
+                                                                    <div class="row">
+                                                                        <div class="col-md-3 small">
+                                                                            <c:if test="${reply.getEditedAt()==null}">${reply.getCreatedAt()}</c:if>
+                                                                            <c:if test="${reply.getEditedAt()!=null}">${reply.getEditedAt()}</c:if>
+                                                                            </div>                                
+                                                                        <c:if test="${reply.getUserId()!=sessionScope.user.getId()}">
+                                                                            <div class ="col-md-3 small">
+                                                                                <a class="visible-toolkit-item do-reply" href="#ReplyComment${reply.getId()}" data-toggle="collapse"
+                                                                                   aria-expanded="false" aria-controls="Reply">Reply</a>
+                                                                            </div>
+
+                                                                            <div class="collapse col-12" id="ReplyComment${reply.getId()}">
+                                                                                <form action="Reply" method="get">
+                                                                                    <input type="text" class="form-control" name="reply" ${empty sessionScope.user ? "":"required"}/>
+                                                                                    <input type="submit" value="Reply">
+                                                                                    <input type="hidden" id="cId" name="sId" value="${comment.getId()}"> 
+                                                                                    <input type="hidden" id="cId" name="rId" value="${reply.getId()}"> 
+                                                                                    <input type="hidden" id="uId" name="uId" value="${sessionScope.user.getId()}">
+                                                                                    <input type="hidden" id="bId" name="bId" value="${requestScope.book.id}">
+                                                                                </form>
+                                                                            </div>   
+                                                                        </c:if>
+                                                                        <c:if test="${reply.getUserId()==sessionScope.user.getId()}">
+                                                                            <div class="col-md-1 small">
+                                                                                <a class="visible-toolkit-item do-reply" href="#EditComment${reply.getId()}" data-toggle="collapse"
+                                                                                   aria-expanded="false" aria-controls="EditComment">Edit</a>
+                                                                            </div>
+                                                                            <div class="col-md-2 small">
+                                                                                <a class="visible-toolkit-item do-reply" data-toggle="modal" data-target="#DeleteComment${reply.getId()}">Delete</a>
+                                                                            </div>
+
+                                                                            <div class="collapse col-12" id="EditComment${reply.getId()}">
+                                                                                <form action="Update" method="get">
+                                                                                    <input type="text" class="form-control" name="newComment"/>
+                                                                                    <input type="submit" value="Edit">
+                                                                                    <input type="hidden" id="cId" name="cId" value="${reply.getId()}"> 
+                                                                                    <input type="hidden" id="uId" name="uId" value="${sessionScope.user.getId()}">
+                                                                                    <input type="hidden" id="bId" name="bId" value="${requestScope.book.id}">
+                                                                                </form>
+                                                                            </div>
+                                                                            <form method="post" action="Update">
+                                                                                <input type="hidden" name="bId" value="${requestScope.book.id}"/>
+                                                                                <input type="hidden" name="uId" value="${sessionScope.user.id}"/>
+                                                                                <input type="hidden" name="cId" value="${reply.getId()}">
+                                                                                <div class="modal fade" id="DeleteComment${reply.getId()}" tabindex="-1" 
+                                                                                     role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                                        <div class="modal-content">
+                                                                                            <div class="modal-header">
+                                                                                                <h5 class="modal-title" id="exampleModalCenterTitle">Alert</h5>
+                                                                                            </div>
+                                                                                            <div class="modal-body">
+                                                                                                Delete this comment ... ?
+                                                                                            </div>
+                                                                                            <div class="modal-footer">
+                                                                                                <button type="button" id="bootstrap-overrides" data-dismiss="modal">Cancel</button>
+                                                                                                <input  type="submit" class="btn btn-danger" name="service" value="Delete">
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>    
+                                                                                </div>  
+                                                                            </form>  
+                                                                        </c:if>
+                                                                    </div>
+
+                                                                </c:if>
+                                                            </td>
+                                                            <td style="height: 100px">
+                                                                <c:choose>
+                                                                    <c:when test="${!empty sessionScope.admin}">
+                                                                        <c:if test="${reply.isStatus() == true}">
+                                                                            <a class="fa fa-times" type="button"  data-bs-toggle="modal" data-bs-target="#staticBackdrop-${reply.id}">
+                                                                            </a>
+                                                                        </c:if>
+                                                                        <!-- Modal -->
+                                                                        <div class="modal" id="staticBackdrop-${reply.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                                            <div class="modal-dialog modal-dialog-centered">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title" id="staticBackdropLabel">CONFIRMATION</h5>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <h6>Are you sure to ban this comment?</h6>                                                              
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <form method="get" action="./BanComment">
+                                                                                            <input type="hidden" name="id" value="${reply.id}">
+                                                                                            <input type="hidden" name="bid" value="${book.id}">
+                                                                                            <button type="button" data-bs-dismiss="modal" style="background-color: #ffffff; margin-left: 0">Close</button>
+                                                                                            <button type="submit" style="background-color: #ffffff; margin-right: 0">YES, BAN IT</button>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <c:if test="${reply.isStatus() == true}">
+                                                                            <form id="${reply.id}" action="ReportComment" method="get">
+                                                                                <p><i class="fa fa-flag" aria-hidden="true" onclick="document.getElementById('${reply.id}').submit()"></i></p>
+                                                                                <!--      <input type="submit" class="primary" display="hidden" value="Report">                          -->
+                                                                                <input type="hidden" name="bId" value="${book.id}">
+                                                                                <input type="hidden" name="cId" value="${reply.id}">
+
+                                                                            </form>
+                                                                        </c:if>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </td>
+                                                            </td>
+                                                        </tr>
+
+                                                    </c:forEach>
+                                                </table>
+                                            </td>
+                                            <td style="" style="height: 100px">
+                                                <c:choose>
+                                                    <c:when test="${!empty sessionScope.admin}">
+                                                        <c:if test="${comment.isStatus() == true}">
+                                                            <a class="fa fa-times" type="button"  data-bs-toggle="modal" data-bs-target="#staticBackdrop-${comment.id}">
+                                                            </a>
+                                                        </c:if>
+                                                        <!-- Modal -->
+                                                        <div class="modal" id="staticBackdrop-${comment.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="staticBackdropLabel">CONFIRMATION</h5>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <h6>Are you sure to ban this comment?</h6>                                                              
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <form method="get" action="./BanComment">
+                                                                            <input type="hidden" name="id" value="${comment.id}">
+                                                                            <input type="hidden" name="bid" value="${book.id}">
+                                                                            <button type="button" data-bs-dismiss="modal" style="background-color: #ffffff; margin-left: 0">Close</button>
+                                                                            <button type="submit" style="background-color: #ffffff; margin-right: 0">YES, BAN IT</button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:if test="${comment.isStatus() == true}">
+                                                            <form id="${comment.id}" action="ReportComment" method="get">
+                                                                <p><i class="fa fa-flag" aria-hidden="true" onclick="document.getElementById('${comment.id}').submit()"></i></p>
+                                                                <!--      <input type="submit" class="primary" display="hidden" value="Report">                          -->
+                                                                <input type="hidden" name="bId" value="${book.id}">
+                                                                <input type="hidden" name="cId" value="${comment.id}">
+
+                                                            </form>
+                                                        </c:if>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                        </tr>
+                                    </c:if> 
                                 </c:forEach>
                             </table>
                         </div>
