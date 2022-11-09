@@ -39,7 +39,7 @@ public class UpdateBookController extends HttpServlet {
             if (book == null){
                 throw new Exception();
             }
-                    ArrayList<Category> cates = cd.getAllCategory();
+                    ArrayList<Category> cates = cd.getAllActiveCategory();
             ArrayList<Author> authors = ad.getAllAuthor();
             request.setAttribute("authors", authors);
             request.setAttribute("categories", cates);
@@ -93,7 +93,7 @@ public class UpdateBookController extends HttpServlet {
             book.setImage(img);
             book.setDescription(description);
 
-            BookDAO bd = new BookDAO();
+            bd = new BookDAO();
             if (bd.editBook(book) == 0) {
                 request.setAttribute("message", "Update Failed! Please try again!");
                 request.setAttribute("book", book);

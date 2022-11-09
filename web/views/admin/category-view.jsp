@@ -153,7 +153,7 @@
                                                 <th class="text-center">ID</th>
                                                 <th class="text-center" style="width: 40%">Name</th>
                                                 <th class="text-center">Number of books</th>
-                                                <th class="text-center">Remove</th>
+                                                <th class="text-center">Active</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -183,13 +183,20 @@
                                                     <td class="text-center">${categoryMap[category]}</td>
 
                                                     <td class="text-center">
-                                                        <form action="Remove?categoryId=${category.id}" method="post" name="remove" onsubmit="return confirm('Do you really want to remove this category?');">
-                                                            <button type="submit" style="border: 0; background: none">
-                                                                <i id="garbage-can" class='fa fa-trash-o'></i>
-                                                            </button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
+                                                        <form action="Remove?categoryId=${category.id}" method="post" name="remove" onsubmit="return confirm('Are you sure want to change active status of this category?');">
+                                                            <c:if test="${category.active}">
+                                                                <input type="hidden" name="active" value="1"/>
+                                                                <button type="submit" style="border: 0; background: none">
+                                                                    <i id="checkbox" class='fa fa-check-square'></i>
+                                                                </button></c:if>
+                                                            <c:if test="${!category.active}">
+                                                                <input type="hidden" name="active" value="0"/>
+                                                                <button type="submit" style="border: 0; background: none">
+                                                                    <i id="checkbox" class='fa fa-square-o'></i>
+                                                                </button></c:if>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
                                             </c:forEach>
                                         </tbody>
                                     </table>

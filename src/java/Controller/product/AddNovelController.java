@@ -31,7 +31,7 @@ public class AddNovelController extends HttpServlet {
             return;
         }
         CategoryDAO cd = new CategoryDAO();
-        ArrayList<Category> cates = cd.getAllCategory();
+        ArrayList<Category> cates = cd.getAllActiveCategory();
         request.setAttribute("categories", cates);
         request.setAttribute("service", "Create");
         request.getRequestDispatcher("../views/user/NovelDetail.jsp").forward(request, response);
@@ -66,10 +66,10 @@ public class AddNovelController extends HttpServlet {
         BookDAO bd = new BookDAO();
         if (bd.addNovel(book) == 0) {
             CategoryDAO cd = new CategoryDAO();
-            ArrayList<Category> cates = cd.getAllCategory();
+            ArrayList<Category> cates = cd.getAllActiveCategory();
             request.setAttribute("categories", cates);
             request.setAttribute("service", "Create");
-            request.setAttribute("message", "Failed successfully!");
+            request.setAttribute("message", "Create novel fail!");
             request.setAttribute("book", book);
             request.getRequestDispatcher("../views/user/NovelDetail.jsp").forward(request, response);
         } else {

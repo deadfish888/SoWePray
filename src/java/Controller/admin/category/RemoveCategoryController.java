@@ -4,6 +4,7 @@
  */
 package Controller.admin.category;
 
+import Model.product.Category;
 import context.product.CategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,9 +34,11 @@ public class RemoveCategoryController extends HttpServlet {
             throws ServletException, IOException {
         CategoryDAO categoryDAO = new CategoryDAO();
         int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+        categoryDAO.updateActiveCategory(new Category(categoryId, ""), !request.getParameter("active").equals("1"));
+//        Category category = new Category(categoryId, "");
 //        System.out.println(categoryId);
-        categoryDAO.delBookCategory(categoryId);
-        categoryDAO.delCategory(categoryId);
+//        categoryDAO.delBookCategory(categoryId);
+//        categoryDAO.delCategory(categoryId);
         response.sendRedirect(request.getContextPath() + "/Admin/Category/View");
     }
 

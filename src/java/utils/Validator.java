@@ -4,10 +4,7 @@
  */
 package utils;
 
-import jakarta.servlet.http.HttpServletRequest;
 import static java.lang.Double.NaN;
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,10 +15,15 @@ import java.util.regex.Pattern;
 public class Validator {
 
     public boolean getString(String string) {
-        if (string == null || string.trim().equals("")) {
-            return false;
-        }
-        return true;
+        return !(string == null || string.trim().equals(""));
+    }
+    
+    public boolean getPhone(String phone) {
+        String regex = "[^0-9]";
+        Pattern pattern = Pattern.compile(regex,
+                Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(phone);
+        return getString(phone) && !matcher.find() && !(phone.length() == 10);
     }
 
     public boolean getName(String name) {
@@ -29,10 +31,7 @@ public class Validator {
         Pattern pattern = Pattern.compile(regex,
                 Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(name);
-        if (!getString(name) || matcher.find() || name.length() > 40) {
-            return false;
-        }
-        return true;
+        return !(!getString(name) || matcher.find() || name.length() > 40);
     }
 
     public int getInt(String input) {

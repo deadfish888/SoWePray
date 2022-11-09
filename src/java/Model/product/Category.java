@@ -10,6 +10,7 @@ package Model.product;
 public class Category {
     private int id;
     private String name;
+    private boolean active;
 
     public Category(int id, String name) {
         this.id = id;
@@ -34,7 +35,14 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
-    
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
     
 }
 

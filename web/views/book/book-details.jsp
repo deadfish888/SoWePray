@@ -275,7 +275,7 @@
 
                         </div>  
                     </div>
-                    <div class="container-fluid mt-5">
+                   <div class="container-fluid mt-5">
                         <h3>${(! empty requestScope.comments)? requestScope.comments.size() : "0"} comment(s)</h3>
                         <div class="col-12">
                             <form role="form" action="Comment" method="get">

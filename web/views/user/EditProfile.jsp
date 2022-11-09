@@ -78,9 +78,9 @@
                                     Name<span style="color: red">*</span>
                                 </th>
                                 <td colspan="4">
-                                    <input type="text" name="name" value="${sessionScope.user.name}"/>
-                                    <div style="color: red">${requestScope.nameMessage1}</div>
-                                    <div style="color: red">${requestScope.nameMessage2}</div>
+                                    <input type="text" name="name" value="${sessionScope.user.name}" required minlength="1" maxlength="40"/>
+                                    <div style="color: red">${sessionScope.nameError}</div>
+                                    <%request.getSession().removeAttribute("nameError")%>
                                 </td>
                             </tr>
                             <tr>
@@ -115,8 +115,8 @@
                                         Phone number<span style="color: red">*</span>
                                     </th>
                                     <td colspan="4">
-                                        <input type="tel" name="phone" value="${sessionScope.user.phone}"/>
-                                    <div style="color: red">${requestScope.phoneMessage}</div>
+                                        <input type="tel" name="phone" value="${sessionScope.user.phone}" required/>
+                                    <div style="color: red">${sessionScope.phoneError}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -128,9 +128,6 @@
                                 </td>
                             </tr>
                         </table>
-                        <div class="text-center">
-                            <!--<button class="" onclick="editProfile()">Edit</button>-->
-                        </div>
                         <div style="text-align: center">
                             <input type="submit" name="action" value="clear"/>
                             <input type="submit" name="action" value="save" style="margin: 0em 2em"/>
