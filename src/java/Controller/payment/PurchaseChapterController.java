@@ -89,7 +89,9 @@ public class PurchaseChapterController extends HttpServlet {
                 }
 
                 BookOwnDAO bookOwnDAO = new BookOwnDAO();
-                bookOwnDAO.insert(product.getBook(), user);
+                if (bookOwnDAO.get(user, product.getBook()) == null) {
+                    bookOwnDAO.insert(product.getBook(), user);
+                }
                 ProductOwnDAO productOwnDAO = new ProductOwnDAO();
                 productOwnDAO.insert(product, user);
 
