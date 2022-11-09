@@ -136,17 +136,115 @@
                                                             </c:if>
                                                         </td>
                                                         <td class="text-center">
-                                                            <form id="changeStatus" action="Status" method="post">
-                                                                <select name="upStatus" onchange="changeStatus()">
-                                                                    <option value="1" style="color: red">Fail</option>
-                                                                    <option value="2" selected>Pending</option>
-                                                                    <option value="3" style="color: #11f680">Success</option>
+                                                            <form name="pendingform" id="changeStatus${transaction.transactionId}" action="Status" method="post">
+                                                                <select name="upStatus" onchange="openModal('${transaction.transactionId}')">
+                                                                    <option value=1 style="color: red">Fail</option>
+                                                                    <option value=2 selected>Pending</option>
+                                                                    <option value=3 style="color: #11f680">Success</option>
                                                                 </select>
-                                                                <input name="transactionId" type="hidden" value="${transaction.transactionId}">
+                                                                <input name="transactionId" type="hidden" value="${transaction.transactionId}"/>
+                                                                <div class="modal fade" name="reject" id="reject${transaction.transactionId}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-lg">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h3 class="modal-title">Reject transaction request</h3>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="wrapper row">
+                                                                                    <div class="text-center" style="font-weight: bold">
+                                                                                        Please explain why you reject this request
+                                                                                    </div>
+                                                                                    <table style="width: 80%; margin: auto">
+                                                                                        <tr>
+                                                                                            <th style="text-align: left">
+                                                                                                Transaction ID
+                                                                                            </th>
+                                                                                            <td style="width: 100%">
+                                                                                                ${transaction.transactionId}
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th style="text-align: left">
+                                                                                                User ID
+                                                                                            </th>
+                                                                                            <td style="width: 100%">
+                                                                                                ${transaction.user.id}
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th style="text-align: left">
+                                                                                                Amount
+                                                                                            </th>
+                                                                                            <td style="width: 100%">
+                                                                                                ${transaction.amount}
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th style="text-align: left">
+                                                                                                Reason
+                                                                                            </th>
+                                                                                            <td style="width: 100%">
+                                                                                                <input name="rejectReason" type="text" value=" " required/>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer" style="text-align: center">
+                                                                                <input type="submit" class="primary text-center" value="Confirm"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="modal fade" name="accept" id="accept${transaction.transactionId}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-lg">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h3 class="modal-title">Accept transaction request</h3>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="wrapper row">
+                                                                                    <h4 class="text-center">
+                                                                                        Are you sure you want to accept this request?<br/>
+                                                                                        This action cannot be undone.
+                                                                                    </h4>
+                                                                                    <table style="width: 80%; margin: auto">
+                                                                                        <tr>
+                                                                                            <th style="text-align: left">
+                                                                                                Transaction ID
+                                                                                            </th>
+                                                                                            <td style="width: 100%">
+                                                                                                ${transaction.transactionId}
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th style="text-align: left">
+                                                                                                User ID
+                                                                                            </th>
+                                                                                            <td style="width: 100%">
+                                                                                                ${transaction.user.id}
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th style="text-align: left">
+                                                                                                Amount
+                                                                                            </th>
+                                                                                            <td style="width: 100%">
+                                                                                                ${transaction.amount}
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer" style="text-align: center">
+                                                                                <input name="rejectReason" type="text" value="Success" required style="display: none"/>
+                                                                                <input type="submit" class="primary text-center" value="Confirm"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </form>
-                                                            <button name="report" style="border: 0; background: 0; color: #ffdd11">
-                                                                <a><i class="fa fa-warning"></i></a>
-                                                            </button>
                                                         </td>
                                                         <td>${transaction.description}</td>
                                                         <td class="text-center">
@@ -227,15 +325,114 @@
                                                             <c:if test="${transaction.status == 2}">
                                                                 <form id="changeStatus" action="Status" method="post">
                                                                     <select name="upStatus" onchange="changeStatus()">
-                                                                        <option value="1" style="color: red">Fail</option>
+                                                                        <option value="1" style="color: red" data-toggle="modal" data-target="#reject${transaction.transactionId}">Fail</option>
                                                                         <option value="2" selected>Pending</option>
-                                                                        <option value="3" style="color: #11f680">Success</option>
+                                                                        <option value="3" style="color: #11f680"><a data-toggle="modal" data-target="#accept${transaction.transactionId}">Success</a></option>
                                                                     </select>
                                                                     <input name="transactionId" type="hidden" value="${transaction.transactionId}">
+                                                                    <div class="modal fade" name="reject" id="reject${transaction.transactionId}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-lg">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h3 class="modal-title">Reject transaction request</h3>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="wrapper row">
+                                                                                        <div class="text-center" style="font-weight: bold">
+                                                                                            Please explain why you reject this request
+                                                                                        </div>
+                                                                                        <table style="width: 80%; margin: auto">
+                                                                                            <tr>
+                                                                                                <th style="text-align: left">
+                                                                                                    Transaction ID
+                                                                                                </th>
+                                                                                                <td style="width: 100%">
+                                                                                                    ${transaction.transactionId}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <th style="text-align: left">
+                                                                                                    User ID
+                                                                                                </th>
+                                                                                                <td style="width: 100%">
+                                                                                                    ${transaction.user.id}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <th style="text-align: left">
+                                                                                                    Amount
+                                                                                                </th>
+                                                                                                <td style="width: 100%">
+                                                                                                    ${transaction.amount}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <th style="text-align: left">
+                                                                                                    Reason
+                                                                                                </th>
+                                                                                                <td style="width: 100%">
+                                                                                                    <input name="rejectReason" type="text" value=" " required/>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer" style="text-align: center">
+                                                                                    <input type="submit" class="primary text-center" value="Confirm"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="modal fade" name="accept" id="accept${transaction.transactionId}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-lg">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h3 class="modal-title">Accept transaction request</h3>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="wrapper row">
+                                                                                        <h4 class="text-center">
+                                                                                            Are you sure you want to accept this request?<br/>
+                                                                                            This action cannot be undone.
+                                                                                        </h4>
+                                                                                        <table style="width: 80%; margin: auto">
+                                                                                            <tr>
+                                                                                                <th style="text-align: left">
+                                                                                                    Transaction ID
+                                                                                                </th>
+                                                                                                <td style="width: 100%">
+                                                                                                    ${transaction.transactionId}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <th style="text-align: left">
+                                                                                                    User ID
+                                                                                                </th>
+                                                                                                <td style="width: 100%">
+                                                                                                    ${transaction.user.id}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <th style="text-align: left">
+                                                                                                    Amount
+                                                                                                </th>
+                                                                                                <td style="width: 100%">
+                                                                                                    ${transaction.amount}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer" style="text-align: center">
+                                                                                <input name="rejectReason" type="text" value="Success" required style="display: none"/>
+                                                                                    <input type="submit" class="primary text-center" value="Confirm"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    </div>
                                                                 </form>
-                                                                <button name="report" style="border: 0; background: 0; color: #ffdd11">
-                                                                    <a><i class="fa fa-warning"></i></a>
-                                                                </button>
                                                             </c:if>
                                                             <c:if test="${transaction.status == 3}">
                                                                 Success
@@ -293,6 +490,33 @@
                                                                                 document.getElementById('changeStatus').reset();
                                                                             }
                                                                         }
+                                                                        function openModal(transId) {
+                                                                            var formId = 'changeStatus' + transId;
+                                                                            var selection = document.getElementById(formId).childNodes[1].value;
+                                                                            if (selection == 1) {
+                                                                                var id = 'reject' + transId;
+                                                                                var modal = document.getElementById(id);
+                                                                                const modalEl = new bootstrap.Modal(modal);
+                                                                                modalEl.show();
+                                                                            }
+                                                                            if (selection == 3) {
+                                                                                var id = 'accept' + transId;
+                                                                                var modal = document.getElementById(id);
+                                                                                const modalEl = new bootstrap.Modal(modal);
+                                                                                modalEl.show();
+                                                                            }
+                                                                        }
+//                                                                        $(document).ready(function () { //Make script DOM ready
+//                                                                            $('#upStatus').change(function () { //jQuery Change Function
+//                                                                                var opval = $(this).val(); //Get value from select element
+//                                                                                if (opval == "1") { //Compare it and if true
+//                                                                                    $('#reject').modal("show"); //Open Modal
+//                                                                                }
+//                                                                                if (opval == "3") { //Compare it and if true
+//                                                                                    $('#accept').modal("show"); //Open Modal
+//                                                                                }
+//                                                                            });
+//                                                                        });
         </script>
 
     </body>
