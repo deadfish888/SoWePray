@@ -111,6 +111,11 @@
                                                 </form>
                                                 </thead>
                                                 <tbody>
+                                                <c:if test="${pendingList.size() == 0}">
+                                                    <tr>
+                                                        <td colspan="7" class="text-center">There is no transaction need to solve</td>
+                                                    </tr>
+                                                </c:if>
                                                 <c:forEach items="${pendingList}" var="transaction">
                                                     <tr>
                                                         <td class="text-center">${transaction.transactionId}</td>
@@ -131,25 +136,17 @@
                                                             </c:if>
                                                         </td>
                                                         <td class="text-center">
-                                                            <c:if test="${transaction.status == 1}">
-                                                                Fail
-                                                            </c:if>
-                                                            <c:if test="${transaction.status == 2}">
-                                                                <form id="changeStatus" action="Status" method="post">
-                                                                    <select name="upStatus" onchange="changeStatus()">
-                                                                        <option value="1" style="color: red">Fail</option>
-                                                                        <option value="2" selected>Pending</option>
-                                                                        <option value="3" style="color: #11f680">Success</option>
-                                                                    </select>
-                                                                    <input name="transactionId" type="hidden" value="${transaction.transactionId}">
-                                                                </form>
-                                                                <button name="report" style="border: 0; background: 0; color: #ffdd11">
-                                                                    <a><i class="fa fa-warning"></i></a>
-                                                                </button>
-                                                            </c:if>
-                                                            <c:if test="${transaction.status == 3}">
-                                                                Success
-                                                            </c:if>
+                                                            <form id="changeStatus" action="Status" method="post">
+                                                                <select name="upStatus" onchange="changeStatus()">
+                                                                    <option value="1" style="color: red">Fail</option>
+                                                                    <option value="2" selected>Pending</option>
+                                                                    <option value="3" style="color: #11f680">Success</option>
+                                                                </select>
+                                                                <input name="transactionId" type="hidden" value="${transaction.transactionId}">
+                                                            </form>
+                                                            <button name="report" style="border: 0; background: 0; color: #ffdd11">
+                                                                <a><i class="fa fa-warning"></i></a>
+                                                            </button>
                                                         </td>
                                                         <td>${transaction.description}</td>
                                                         <td class="text-center">
