@@ -12,10 +12,13 @@ import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 /* @author ACER */
@@ -26,14 +29,14 @@ public class BookController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String page = request.getParameter("page");
         String[] category = request.getParameterValues("categoryId");
         String search = request.getParameter("search");
         String author = request.getParameter("author");
         String type = request.getParameter("type");
         String order = request.getParameter("order");
-        
+
         int[] idCategory = new int[category == null ? 1 : category.length];
         if (category == null || category.length == 0 || category[0].equals("")) {
             idCategory[0] = -1;
@@ -45,7 +48,17 @@ public class BookController extends HttpServlet {
         if (page == null || page.trim().length() == 0) {
             page = "1";
         }
-        int pageIndex = 0, pageSize = 12;
+        Cookie cookie =null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (int i = 0; i < cookies.length; i++) {
+                if (cookies[i].getName().equals("pageSize")) {
+                    cookie = cookies[i];
+                    break;
+                }
+            }
+        }
+        int pageIndex = 0, pageSize = (cookie==null? 12 : Integer.parseInt(cookie.getValue()));
         try {
             pageIndex = Integer.parseInt(page);
             if (pageIndex <= 0) {
@@ -60,51 +73,59 @@ public class BookController extends HttpServlet {
         if (author == null) {
             author = "";
         }
-        if (order == null || order.length()==0){
+        if (order == null || order.length() == 0) {
             order = "latest";
         }
-        switch (order){
-            case "latest":
-                break;
-            case "new":
-                break;
-            case "fav":
-                break;
-            case "view":
-                break;
-            case "rate":
-                break;
-            case "price":
-                break;
-        }
-        if (type == null || (!type.equals("all") && !type.equals("book") && !type.equals("novel"))){
+
+        if (type == null || (!type.equals("all") && !type.equals("book") && !type.equals("novel"))) {
             type = "book";
         }
-        
+
         BookDAO bd = new BookDAO();
         CategoryDAO cd = new CategoryDAO();
         ArrayList<Book> books = bd.getBooks(type, search, author, idCategory);
-        
+
+        switch (order) {
+            case "fav":
+                Collections.sort(books, (Book o1, Book o2) -> Integer.compare(o2.getFavourite(), o1.getFavourite()));
+                break;
+            case "view":
+                Collections.sort(books, (Book o1, Book o2) -> Integer.compare(o2.getViews(), o1.getViews()));
+                break;
+            case "rate":
+                Collections.sort(books, (Book o1, Book o2) -> Float.compare(o2.getRating(), o1.getRating()));
+                break;
+            case "price":
+                Collections.sort(books, new Comparator<Book>() {
+                    @Override
+                    public int compare(Book o1, Book o2) {
+                        return o2.getAuthor().getUserId()!=0? (!o2.issale()? -1 : Float.compare(o2.getPrice(), o1.getPrice())) : Float.compare(o2.getPrice(), o1.getPrice());
+                    }
+                });
+                break;
+            default:
+                break;
+        }
         int size = books.size();
-        int numPage = (int) Math.ceil((double)size / pageSize);
+        int numPage = (int) Math.ceil((double) size / pageSize);
         int start = (pageIndex - 1) * pageSize;
         int end = Math.min(size, start + pageSize);
-        
+
         books = bd.getByPage(books, start, end);
         request.setAttribute("page", pageIndex);
         request.setAttribute("numPage", numPage);
-        
+
         ArrayList<Category> categories = cd.getAllCategory();
         request.setAttribute("categories", categories);
         request.setAttribute("books", books);
         request.getRequestDispatcher("/views/book/library.jsp").forward(request, response);
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
-    
+
     @Override
     public String getServletInfo() {
         return "Short description";

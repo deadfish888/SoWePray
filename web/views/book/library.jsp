@@ -118,14 +118,22 @@
 
                     <div class="row">
                         <div class="col-9">
-                            <div class="col-3" style="z-index: 1; position: relative">
+                            <div class="col-3" style="z-index: 1; position: relative; display: inline-block">
                                 <select id="sapxep" onchange="sapxep(this)">
                                     <option value="latest">Latest Updated</option>
-                                    <option value="new">New book</option>
                                     <option value="fav">Favorite</option>
                                     <option value="view">View</option>
                                     <option value="rate">Rating</option>
                                     <option value="price">Price</option>
+                                </select>
+                            </div>
+                            <div class="col-2" style="z-index: 1; position: relative;display: inline-block;margin-left: 55%">
+                                <select id="pageSize" onchange="dsize(this)">
+                                    <option value="12">12</option>
+                                    <option value="16">16</option>
+                                    <option value="20">20</option>
+                                    <option value="24">24</option>
+                                    <option value="30">30</option>
                                 </select>
                             </div>
                             <section class="tiles">
@@ -137,7 +145,7 @@
                                         <a href="BookDetail?id=${book.id}" alt="${book.title}">
                                             <h2 style="overflow: hidden;text-overflow: ellipsis;font-size: 0.85em;">${book.title}</h2>
                                             <h3 style="font-size: 0.7em;"><i>${book.author.name}</i></h3>
-                                                    <c:if test="${empty book.author.userId}">
+                                                    <c:if test="${book.author.userId == 0}">
                                                         <c:if test="${book.issale()}">
                                                     <p>
                                                         <del>$${book.getPrice()}</del> 
@@ -148,8 +156,12 @@
                                                     <p><strong>$${book.getPrice()}</strong></p>
                                                 </c:if>
                                             </c:if>
-                                            <c:if test="${!empty book.author.userId}">
-
+                                            <c:if test="${ book.author.userId != 0}">
+                                                <c:if test="${book.issale()}">
+                                                    <p>
+                                                        <strong>$${book.getPrice()}</strong>
+                                                    </p>
+                                                </c:if>
                                             </c:if>
                                         </a>
                                     </article>
@@ -157,6 +169,12 @@
                             </section>
                             <div class="${numPage <= 1 ? "hidden" : ""}" style="margin-left: 40%">
                                 <ul class="pagination">
+                                    <li class="page-item pl-0" >
+                                        <a href="Book?page=${1}" class="page-link" data="${1}"
+                                           style="${page<3?"display:none":""}">
+                                            <i class="fa fa-angle-double-left" aria-hidden="true" ></i>
+                                        </a>
+                                    </li>
                                     <li class="page-item pl-0" >
                                         <a href="Book?page=${page-1}" class="page-link" data="${page-1}"
                                            style="${page<3?"display:none":""}">
@@ -173,6 +191,12 @@
                                         <a href="Book?page=${page+1}" class="page-link " data="${page+1}"
                                            style="${page+2>numPage?"display:none":""}">
                                             <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item pl-0" >
+                                        <a href="Book?page=${numPage}" class="page-link" data="${numPage}"
+                                           style="${page+2>numPage?"display:none":""}">
+                                            <i class="fa fa-angle-double-right" aria-hidden="true" ></i>
                                         </a>
                                     </li>
                                 </ul>
@@ -250,43 +274,79 @@
         <script src="assets/js/jquery.scrollex.min.js"></script>
         <script src="assets/js/main.js"></script>
         <script>
-            const url_string = window.location.href;
-            const url = new URL(url_string);
-            var qtype = url.searchParams.get("type");
-            const paginationLinks = document.querySelectorAll(".page-link");
-            var search = location.search.substring(1);
-            if (paginationLinks) {
-                paginationLinks.forEach(item => {
-                    const params = new URLSearchParams(search);
-                    const page = item.getAttribute("data");
-                    params.set('page', page);
-                    const href = new URLSearchParams(params).toString();
-                    item.setAttribute("href", "?" + href);
-                });
-            }
-            const typeLinks = document.querySelectorAll(".page-link-type");
-            if (typeLinks) {
-                typeLinks.forEach(item => {
-                    const params = new URLSearchParams(search);
-                    const type = item.getAttribute("data");
-                    params.set('type', type);
-                    params.delete('page');
-                    const href = params.toString();
-                    item.setAttribute("href", "?" + href);
-                    if (qtype == null)
-                        qtype = "book";
-                    if (qtype == type) {
-                        item.style.fontWeight = "900";
+            function setCookie(cname, cvalue, exdays) {
+                        const d = new Date();
+                        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                        let expires = "expires=" + d.toUTCString();
+                        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
                     }
-                });
-            }
-            function sapxep(elm){
-                const params = new URLSearchParams(search);
-                const type = elm.value;
-                params.set('order', type);
-                const href = new URLSearchParams(params).toString();
-                window.location = "Book?"+href;
-            }
+
+                    function getCookie(cname) {
+                        let name = cname + "=";
+                        let ca = document.cookie.split(';');
+                        for (let i = 0; i < ca.length; i++) {
+                            let c = ca[i];
+                            while (c.charAt(0) == ' ') {
+                                c = c.substring(1);
+                            }
+                            if (c.indexOf(name) == 0) {
+                                return c.substring(name.length, c.length);
+                            }
+                        }
+                        return "";
+                    }
+                                    const url_string = window.location.href;
+                                    const url = new URL(url_string);
+                                    var qtype = url.searchParams.get("type");
+                                    const paginationLinks = document.querySelectorAll(".page-link");
+                                    var search = location.search.substring(1);
+                                    if (paginationLinks) {
+                                        paginationLinks.forEach(item => {
+                                            const params = new URLSearchParams(search);
+                                            const page = item.getAttribute("data");
+                                            params.set('page', page);
+                                            const href = new URLSearchParams(params).toString();
+                                            item.setAttribute("href", "?" + href);
+                                        });
+                                    }
+                                    const typeLinks = document.querySelectorAll(".page-link-type");
+                                    if (typeLinks) {
+                                        typeLinks.forEach(item => {
+                                            const params = new URLSearchParams(search);
+                                            const type = item.getAttribute("data");
+                                            params.set('type', type);
+                                            params.delete('page');
+                                            const href = params.toString();
+                                            item.setAttribute("href", "?" + href);
+                                            if (qtype == null)
+                                                qtype = "book";
+                                            if (qtype == type) {
+                                                item.style.fontWeight = "900";
+                                            }
+                                        });
+                                    }
+                                    function sapxep(elm) {
+                                        const params = new URLSearchParams(search);
+                                        const type = elm.value;
+                                        params.set('order', type);
+                                        const href = new URLSearchParams(params).toString();
+                                        window.location = "Book?" + href;
+                                    }
+                                    var sapxep_t = url.searchParams.get("order");
+                                    if (sapxep_t !=null){
+                                        $('#sapxep option').filter(function () {
+                                        return $(this).val().indexOf(sapxep_t) != -1;
+                                    }).attr('selected', true);
+                                    }
+                                    var pageSize = getCookie("pageSize") || "16";
+                                     $('#pageSize option').filter(function () {
+                                        return $(this).val().indexOf(pageSize) != -1;
+                                    }).attr('selected', true);
+                                    function dsize(elm){
+                                        setCookie("pageSize",elm.value,365);
+                                        location.reload();
+                                    }
+                                    
         </script>
     </body>
 </html>

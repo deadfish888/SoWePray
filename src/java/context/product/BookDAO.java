@@ -593,33 +593,37 @@ public class BookDAO {
     }
 
     public ArrayList<Book> getBooks(String type, String search, String authorname, int[] idCategory) {
-        ArrayList<Book> list = new ArrayList<>();
         try {
-            String sql = "SELECT [Book].[id] as [bookId]\n"
-                    + "      ,[title]\n"
-                    + "      ,[authorId]\n"
-                    + "       ,[Author].[userId]\n"
-                    + "      ,[Author].[name] as [authorName]\n"
-                    + "      ,[rating]\n"
-                    + "      ,[favourite]\n"
-                    + "      ,[price]\n"
-                    + "      ,[is_sale]\n"
-                    + "      ,[image]\n"
-                    + "      ,[description]\n"
-                    + "      ,[views]\n"
-                    + "      ,[status]\n"
-                    + "  FROM [Book]"
-                    + " INNER JOIN [Author] ON [Book].[authorId] = [Author].[id]"
-                    + " INNER JOIN [CategoryBook] cb ON [Book].[id] = cb.[bookId]"
-                    + " WHERE [Book].[title] LIKE ? "
-                    + "   AND [Author].[name] LIKE ? "
-                    + "   AND [status] != 0 ";
+            ArrayList<Book> list = new ArrayList<>();
+            
+            String sql = "SELECT b.[id]\n"
+                    + "      ,b.[title]\n"
+                    + "      ,b.[authorId]\n"
+                    + "       ,a.[userId]\n"
+                    + "      ,a.[name]\n"
+                    + "      ,b.[rating]\n"
+                    + "      ,b.[favourite]\n"
+                    + "      ,b.[price]\n"
+                    + "      ,b.[is_sale]\n"
+                    + "      ,b.[image]\n"
+                    + "      ,b.[description]\n"
+                    + "      ,b.[views]\n"
+                    + "      ,b.[status]\n"
+                    + "      ,MAX(c.id)"
+                    + "  FROM [Book] b"
+                    + " INNER JOIN [Author] a ON b.[authorId] = a.[id]"
+                    + " INNER JOIN [CategoryBook] cb ON b.[id] = cb.[bookId]"
+                    + " LEFT JOIN [Volume] v ON b.[id] = v.[bookId] "
+                    + " LEFT JOIN [Chapter] c ON v.[id] = c.[volumeId]"
+                    + " WHERE b.[title] LIKE ? "
+                    + "   AND a.[name] LIKE ? "
+                    + "   AND b.[status] != 0 ";
             switch (type) {
                 case "book":
-                    sql += "   AND [Author].[userId] IS NULL ";
+                    sql += "   AND a.[userId] IS NULL ";
                     break;
                 case "novel":
-                    sql += "   AND [Author].[userId] IS NOT NULL ";
+                    sql += "   AND a.[userId] IS NOT NULL ";
                     break;
                 default:
                     break;
@@ -630,36 +634,36 @@ public class BookDAO {
                 for (int i = 1; i < idCateLength; i++) {
                     sql += ",? ";
                 }
-                sql += ") GROUP BY [Book].[id]\n"
-                        + "      ,[title]\n"
+                sql += ") GROUP BY b.[id]\n"
+                        + "      ,b.[title]\n"
                         + "      ,[authorId]\n"
-                        + "       ,[Author].[userId]\n"
-                        + "      ,[Author].[name]\n"
-                        + "      ,[rating]\n"
-                        + "      ,[favourite]\n"
-                        + "      ,[price]\n"
-                        + "      ,[is_sale]\n"
-                        + "      ,[image]\n"
-                        + "      ,[description]\n"
-                        + "      ,[views]\n"
-                        + "      ,[status]\n"
+                        + "       ,a.[userId]\n"
+                        + "      ,a.[name]\n"
+                        + "      ,b.[rating]\n"
+                        + "      ,b.[favourite]\n"
+                        + "      ,b.[price]\n"
+                        + "      ,b.[is_sale]\n"
+                        + "      ,b.[image]\n"
+                        + "      ,b.[description]\n"
+                        + "      ,b.[views]\n"
+                        + "      ,b.[status]\n"
                         + "having count(distinct cb.[categoryId]) = ? ";
             } else {
-                sql += " GROUP BY [Book].[id]\n"
-                        + "      ,[title]\n"
+                sql += " GROUP BY b.[id]\n"
+                        + "      ,b.[title]\n"
                         + "      ,[authorId]\n"
-                        + "       ,[Author].[userId]\n"
-                        + "      ,[Author].[name]\n"
-                        + "      ,[rating]\n"
-                        + "      ,[favourite]\n"
-                        + "      ,[price]\n"
-                        + "      ,[is_sale]\n"
-                        + "      ,[image]\n"
-                        + "      ,[description]\n"
-                        + "      ,[views]\n"
-                        + "      ,[status]\n";
+                        + "       ,a.[userId]\n"
+                        + "      ,a.[name]\n"
+                        + "      ,b.[rating]\n"
+                        + "      ,b.[favourite]\n"
+                        + "      ,b.[price]\n"
+                        + "      ,b.[is_sale]\n"
+                        + "      ,b.[image]\n"
+                        + "      ,b.[description]\n"
+                        + "      ,b.[views]\n"
+                        + "      ,b.[status]\n";
             }
-
+            sql+= " ORDER BY MAX(c.[id]) DESC";
             stm = cnn.prepareStatement(sql);
             stm.setString(1, "%" + search.trim() + "%");
             stm.setString(2, "%" + authorname + "%");
@@ -683,7 +687,11 @@ public class BookDAO {
 
                 book.setRating(rs.getFloat(6));
                 book.setFavourite(rs.getInt(7));
-                book.setPrice(rs.getFloat(8));
+                
+                ProductDAO pd = new ProductDAO();
+                Product p = pd.get(new Product("B"+rs.getInt(1)));
+                
+                book.setPrice(p.getPrice());
                 book.setIssale(rs.getBoolean(9));
                 book.setImage(rs.getString(10));
                 book.setDescription(rs.getString(11));
@@ -691,10 +699,11 @@ public class BookDAO {
                 book.setStatus(rs.getBoolean(13));
                 list.add(book);
             }
-        } catch (Exception e) {
-            System.out.println("getlist Error:" + e.getMessage());
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return list;
+        return null;
     }
 
     public ArrayList<Book> getUserNovels(int userId, String search) {
