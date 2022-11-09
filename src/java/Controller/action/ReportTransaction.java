@@ -5,9 +5,8 @@
 
 package Controller.action;
 
-import Model.action.Comment;
 import Model.auth.User;
-import context.action.CommentDAO;
+import context.action.ReportDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,34 +14,39 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
-@WebServlet("/Comment")
-public class CommentController extends HttpServlet {
+/**
+ *
+ * @author ttaad
+ */
+@WebServlet(name = "ReportTrans", urlPatterns = {"/User/ReportTrans"})
+public class ReportTransaction extends HttpServlet {
+ 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-    int bId=Integer.parseInt(request.getParameter("bookId"));    
-    if(request.getSession() == null || request.getSession().getAttribute("user") == null){
-           response.sendRedirect("./Login?origin=./BookDetail?id="+bId);
-    }else{ 
-        User user=(User)request.getSession().getAttribute("user");
-        int uId=user.getId();
-        String comment=request.getParameter("comment");
-        CommentDAO cdao=new CommentDAO();
-        cdao.addComment(bId, uId, comment);
-        response.sendRedirect("./BookDetail?id="+bId);
-    }  
+        User user = (User) request.getSession().getAttribute("user");
+        int uId = user.getId();
+        String[] report = request.getParameterValues("report");
+        int transactionId = Integer.parseInt(request.getParameter("transId"));
+        int[] vioId = new int[report.length];
+        int j = 0;
+        for (String s : report) {
+            vioId[j++] = Integer.parseInt(s);
+        }
+        String note = request.getParameter("note");
+        ReportDAO redao = new ReportDAO();
+        redao.addReport(vioId, transactionId, uId, note, 5);
+        response.sendRedirect("./Payment");
     } 
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        int bId=Integer.parseInt(request.getParameter("bId"));
-        CommentDAO cdao=new CommentDAO();
-        ArrayList<Comment> list_c=cdao.loadComment(bId,"0");
-        request.setAttribute("list", list_c);
+       
     }
-
     @Override
     public String getServletInfo() {
         return "Short description";

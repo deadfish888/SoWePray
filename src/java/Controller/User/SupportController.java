@@ -11,15 +11,12 @@ import context.action.TicketDAO;
 import context.auth.UserDAO;
 import context.product.AuthorDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.Date;
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
 /**
  *

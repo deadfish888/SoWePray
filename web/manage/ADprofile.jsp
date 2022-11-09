@@ -137,7 +137,7 @@
                                     <div class="form-group">
                                         <label for="example-email" class="col-md-12"><i class="fa-solid fa-envelope"></i> Email</label>
                                         <div class="col-md-12">
-                                            <input type="email" placeholder="${sessionScope.admin.email}${sessionScope.adminS.email}"
+                                            <input type="email" placeholder="${sessionScope.admin.email}"
                                                    class="form-control ps-0 form-control-line" name="email"
                                                    id="example-email">
                                         </div>
@@ -145,7 +145,7 @@
                                     <div class="form-group">
                                         <label class="col-md-12 mb-0"><i class="fa-solid fa-user"></i>  Username</label>
                                         <div class="col-md-12">
-                                            <input type="text" placeholder="${sessionScope.admin.username}${sessionScope.adminS.username}"
+                                            <input type="text" placeholder="${sessionScope.admin.username}"
                                                    class="form-control ps-0 form-control-line">
                                         </div>
                                     </div>
@@ -158,7 +158,7 @@
 
 
                                         <div class="col-md-12">
-                                            <input type="password" value="${sessionScope.admin.password}${sessionScope.adminS.password}" id="unsignPass"
+                                            <input type="password" value="${sessionScope.admin.password}" id="unsignPass"
                                                    class="form-control ps-0 form-control-line" name="password"> 
                                         </div>
 
@@ -166,14 +166,14 @@
                                     <div class="form-group">
                                         <label class="col-md-12 mb-0"><i class="fa-solid fa-address-book"></i> Full Name</label>
                                         <div class="col-md-12">
-                                            <input type="text" placeholder="${sessionScope.admin.name}${sessionScope.adminS.name}"
+                                            <input type="text" placeholder="${sessionScope.admin.name}"
                                                    class="form-control ps-0 form-control-line" name="fullname">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12 mb-0"><i class="fa-solid fa-phone"></i>  Phone</label>
                                         <div class="col-md-12">
-                                            <input type="text" placeholder="${sessionScope.admin.phone}${sessionScope.adminS.phone}"
+                                            <input type="text" placeholder="${sessionScope.admin.phone}"
                                                    class="form-control ps-0 form-control-line" name="phone">
                                         </div>
                                     </div>

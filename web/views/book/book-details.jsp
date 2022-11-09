@@ -285,7 +285,7 @@
                                 </div>
                                 <input type="submit" value="Post">
                             </form> 
-                            <table class="table">
+                                <table class="table" style="margin-top: 10px">
                                 <style>
                                     form {
                                         margin-bottom: 0px;
@@ -311,11 +311,14 @@
                                         white-space: nowrap;
                                         width: auto;
                                     }
+                                    .current{
+                                        border-left: 2px #585858 ridge;
+                                    }
                                 </style>
                                 <c:forEach items="${requestScope.comments}" var="comment">
 
                                     <c:if test="${comment.getSonOf()==0}">       
-                                        <tr>
+                                        <tr id="cmt${comment.id}">
                                             <th style="width: 200px" scope="row">
                                                 ${comment.user.name}
                                             </th>
@@ -329,7 +332,7 @@
                                                         <div class="row">
                                                             <div class="col-md-3 small">
                                                                 <c:if test="${comment.getEditedAt()==null}">${comment.getCreatedAt()}</c:if>
-                                                                <c:if test="${comment.getEditedAt()!=null}">${comment.getEditedAt()}</c:if>
+                                                                <c:if test="${comment.getEditedAt()!=null}">Edited ${comment.getEditedAt()}</c:if>
                                                                 </div>                                
                                                             <c:if test="${comment.getUserId()!=sessionScope.user.getId()}">
                                                                 <div class ="col-md-3 small">
@@ -397,7 +400,7 @@
                                                 <table style="margin-top: 20px;">
                                                     <c:forEach items="${comment.replies}" var="reply">
 
-                                                        <tr>
+                                                        <tr id="cmt${reply.id}">
                                                             <th style="width: 150px" scope="row">
                                                                 ${reply.user.name}
                                                             </th>
@@ -483,7 +486,7 @@
                                                                             </a>
                                                                         </c:if>
                                                                         <!-- Modal -->
-                                                                        <div class="modal" id="staticBackdrop-${comment.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                                        <div class="modal" id="staticBackdrop-${reply.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                                             <div class="modal-dialog modal-dialog-centered">
                                                                                 <div class="modal-content">
                                                                                     <div class="modal-header">
@@ -510,7 +513,7 @@
                                                                                 <p><i class="fa fa-flag" aria-hidden="true" onclick="document.getElementById('${reply.id}').submit()"></i></p>
                                                                                 <!--      <input type="submit" class="primary" display="hidden" value="Report">                          -->
                                                                                 <input type="hidden" name="bId" value="${book.id}">
-                                                                                <input type="hidden" name="cId" value="${comment.id}">
+                                                                                <input type="hidden" name="cId" value="${reply.id}">
 
                                                                             </form>
                                                                         </c:if>
@@ -575,38 +578,56 @@
 
                     <div class="container-fluid mt-5">
                         <h2 class="h2">Similar Products</h2>
+                        <section class="tiles" style="margin-right: 30px">
+                            <div class= "" style = "display: flex ">
+                                <c:forEach items="${sames}" var="book">
+                                    <article class="style1">
+                                        <span class="image">
+                                            <img src="${(! empty book.image)?book.image:("images/novel-sample.png")}" alt="" style="height: 281px"/>
+                                        </span>
+                                        <a href="BookDetail?id=${book.id}">
+                                            <h2>${book.title}</h2>
+                                            <h3 style="font-size: 0.85em;"><i>${book.author.name}</i></h3>
+                                            <c:if test="${book.author.userId==0}">
+                                                <c:if test="${book.issale()}">
+                                                    <p>
+                                                        <del>$${book.getPrice()}</del> 
+                                                        <strong>$${5.00}</strong>
+                                                    </p>
+                                                </c:if>
+                                                <c:if test="${!book.issale()}">
+                                                    <p><strong>$${book.getPrice()}</strong></p>
+                                                </c:if>
+                                            </c:if>
+                                        </a>
 
-                                                </div>
-                                                </div>
+                                    </article>
+                                </c:forEach>
+                            </div> 
+                        </section>
+                    </div>
+                </div>
+            </div>
 
-                                                <!-- Footer -->
-                                                <footer id="footer">
-                                                    <div class="inner">
-                                                        <section>
-                                                            <h2>Contact Info</h2>
-                                                            <ul class="alt">
-                                                                <li><span class="fa fa-github"></span> <a href="https://github.com/nekon0/SoWePray">Our Project</a></li>
-                                                                <li><span class="fa fa-map-pin"></span> <a href="https://goo.gl/maps/ojwCjTqRteiA4B9U7"> DE210, FBT University</a></li>
-                                                            </ul>
-                                                        </section>
 
-                                                        <ul class="copyright">
-                                                            <li> Bookie </li>
-                                                        </ul>
-                                                    </div>
-                                                </footer>
+            <!-- Footer -->
+            <footer id="footer">
+                <div class="inner">
+                    <section>
+                        <h2>Contact Info</h2>
+                        <ul class="alt">
+                            <li><span class="fa fa-github"></span> <a href="https://github.com/nekon0/SoWePray">Our Project</a></li>
+                            <li><span class="fa fa-map-pin"></span> <a href="https://goo.gl/maps/ojwCjTqRteiA4B9U7"> DE210, FBT University</a></li>
+                        </ul>
+                    </section>
 
-                                                </div>
+                    <ul class="copyright">
+                        <li> Bookie </li>
+                    </ul>
+                </div>
+            </footer>
 
-                                                <!-- Scripts -->
-                                                <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
-                                                <!-- Bootstrap tether Core JavaScript -->
-                                                <script src="/Bookie/manage/assets/plugins/bootstrap/dist/js/bootstrap.bundle.js"></script>
-                                                <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-                                                <script src="assets/js/jquery.scrolly.min.js"></script>
-                                                <script src="assets/js/jquery.scrollex.min.js"></script>
-                                                <script src="assets/js/main.js"></script>
-
+        </div>
 
         <!-- Scripts -->
         <script src="/Bookie/manage/assets/plugins/jquery/dist/jquery.min.js"></script>
@@ -616,10 +637,16 @@
         <script src="assets/js/jquery.scrolly.min.js"></script>
         <script src="assets/js/jquery.scrollex.min.js"></script>
         <script src="assets/js/main.js"></script>
-
-
-        <!--Custom JavaScript -->
-
+        <script>
+            const url_string = window.location.href;
+            const url = new URL(url_string);
+            var cmtId = url.searchParams.get("cmtId");
+            if (cmtId != null){
+                var id = document.getElementById("cmt"+cmtId);
+                        id.scrollIntoView({block: "center"});
+                        id.classList.add("current");
+            }
+        </script>
 
     </body>
 </html>

@@ -36,7 +36,7 @@ public class ReportController extends HttpServlet {
         }
         String note = request.getParameter("note");
         ReportDAO redao = new ReportDAO();
-            redao.addBookReport(r_id, bid, uId, note);
+        redao.addBookReport(r_id, bid, uId, note);
         response.sendRedirect("./BookDetail?id="+bid);
     }
 

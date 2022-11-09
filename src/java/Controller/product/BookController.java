@@ -32,6 +32,7 @@ public class BookController extends HttpServlet {
         String search = request.getParameter("search");
         String author = request.getParameter("author");
         String type = request.getParameter("type");
+        String order = request.getParameter("order");
         
         int[] idCategory = new int[category == null ? 1 : category.length];
         if (category == null || category.length == 0 || category[0].equals("")) {
@@ -58,6 +59,23 @@ public class BookController extends HttpServlet {
         }
         if (author == null) {
             author = "";
+        }
+        if (order == null || order.length()==0){
+            order = "latest";
+        }
+        switch (order){
+            case "latest":
+                break;
+            case "new":
+                break;
+            case "fav":
+                break;
+            case "view":
+                break;
+            case "rate":
+                break;
+            case "price":
+                break;
         }
         if (type == null || (!type.equals("all") && !type.equals("book") && !type.equals("novel"))){
             type = "book";

@@ -64,6 +64,9 @@ public class Ticket {
             case 4:
                 ret = "Enable Monetization ";
                 break;
+            case 5:
+                ret = "Report Transaction ";
+                break;
             default:
                 throw new AssertionError();
         }
