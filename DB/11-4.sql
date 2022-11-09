@@ -750,6 +750,12 @@ INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], 
 GO
 INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (33, N'Sau khi gây thù với chủ thần', 118, NULL, 0, CAST(0.10 AS Decimal(10, 2)), 1, NULL, N'', 0, 1)
 GO
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (34, N'Classroom of the Elite Vol. 1', 25, NULL, 0, CAST(9.69 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?', 1000, 1)
+GO
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (35, N'Classroom of the Elite Vol. 1', 25, NULL, 0, CAST(9.69 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?', 2000, 1)
+GO
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (36, N'Classroom of the Elite Vol. 1', 25, NULL, 0, CAST(9.69 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?', 3000, 1)
+GO
 SET IDENTITY_INSERT [dbo].[Book] OFF
 GO
 INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VALUES (109, 4, NULL, NULL)
@@ -5073,6 +5079,12 @@ INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent],
 GO
 INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status], [action]) VALUES (8, 5, 2, 3000115, N'Vấn đề', CAST(N'2022-11-04T14:09:23.877' AS DateTime), NULL, NULL, NULL)
 GO
+INSERT INTO [dbo].[Report] ([id],[reportType],[userId],[objectId],[note],[sent],[received],[status], [action]) VALUES ( 9, 3, 11,NULL , N'Enable Account', CAST(N'2022-10-23' AS Date), CAST(N'2022-10-24' AS Date), 0, NULL)
+GO
+INSERT INTO [dbo].[Report] ([id],[reportType],[userId],[objectId],[note],[sent],[received],[status], [action]) VALUES ( 10, 3, 11,NULL , N'Enable Account', CAST(N'2022-10-23' AS Date), CAST(N'2022-10-24' AS Date), 0 ,NULL)
+GO
+INSERT INTO [dbo].[Report] ([id],[reportType],[userId],[objectId],[note],[sent],[received],[status], [action]) VALUES ( 11, 3, 11,NULL , N'Enable Account', CAST(N'2022-10-23' AS Date), NULL, 1 ,NULL)
+GO
 SET IDENTITY_INSERT [dbo].[Report] OFF
 GO
 INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (1, 2)
@@ -5363,7 +5375,7 @@ INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [addre
 GO
 INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (10, N'Wisley Ray', 1, CAST(N'1971-10-28' AS Date), N'Bookie_User8@qa.team', N'8155814231', N'B398R', N'user_no8', N'T4dI4P82Ab', 1, 10)
 GO
-INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (11, N'Aiken Pope', 1, CAST(N'1979-05-01' AS Date), N'Bookie_User9@qa.team', N'7770308417', N'F421L', N'user_no9', N'op6An5T76g', 1, 11)
+INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (11, N'Aiken Pope', 1, CAST(N'1979-05-01' AS Date), N'Bookie_User9@qa.team', N'7770308417', N'F421L', N'duy', N'2002', 1, 11)
 GO
 INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (12, N'Rodolphe Blossom', 1, CAST(N'2001-02-19' AS Date), N'Bookie_User10@qa.team', N'6610856429', N'A168L', N'user_no10', N'2203lupus8', 1, 12)
 GO

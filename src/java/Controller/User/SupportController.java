@@ -79,6 +79,9 @@ public class SupportController extends HttpServlet {
             if (p == 2) {
                 listRead = rpDao.getSent(user.getId());
             }
+            for (Ticket ticket : listRead) {
+                System.out.println(ticket.getNote());
+            }
             Author check = auDao.getAuthorByUserId(user.getId());
             boolean valid = rpDao.hasSent(user.getId());
             if (user.is_super() == 0 && !valid || auDao.getViews(check.getId()) >= 5000 && !valid &&user.is_super()<3) {
