@@ -107,6 +107,7 @@ public class AdminTransactionController extends HttpServlet {
         request.setAttribute("transactionList", transactionList);
         request.setAttribute("pendingList", pendingTransactionList);
         request.setAttribute("tempTrans", tempTrans);
+        request.setAttribute("pendingTempTrans", pendingTempTrans);
 
         request.getRequestDispatcher("../views/admin/Transaction.jsp").forward(request, response);
         

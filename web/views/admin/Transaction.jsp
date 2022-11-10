@@ -85,16 +85,16 @@
                                     <div class="table-responsive">
                                         <table class="table user-table " id="tableTrans">
                                             <thead class="thead-dark">
-                                            <form id="filterForm" action="Transaction" method="post">
+                                            <form id="pendingFilterForm" action="Transaction" method="post">
                                                 <tr class="text-center" style="cursor: pointer; font-size: 15px;  text-align: center;">
 
                                                     <th class="text-center" style="text-align: center; vertical-align: middle">Transaction ID</th>
                                                     <th class="text-center" style="width: 10%; text-align: center; vertical-align: middle">User ID<br/>
-                                                        <input type="number" name="pendingUserId" value="${pendingTempTrans.user.id}" style="width: 100%" min="1" onblur="change()">
+                                                        <input type="number" name="pendingUserId" value="${pendingTempTrans.user.id}" style="width: 100%" min="1" onblur="change('pendingFilterForm')">
                                                     </th>
                                                     <th class="text-center" style="text-align: center; vertical-align: middle">Amount</th>
                                                     <th class="text-center" style="text-align: center; vertical-align: middle">Type<br/>
-                                                        <select name="pendingType" onchange="change()" style="border: 0; background: none">
+                                                        <select name="pendingType" onchange="change('pendingFilterForm')" style="border: 0; background: none">
                                                             <option value="-1">All</option>
                                                             <option value="1" <c:if test="${pendingTempTrans.type eq 1}">selected</c:if> >Deposit</option>
                                                             <option value="2" <c:if test="${pendingTempTrans.type eq 2}">selected</c:if> >Withdraw</option>
@@ -269,12 +269,12 @@
 
                                                     <th class="text-center" style="text-align: center; vertical-align: middle">Transaction ID</th>
                                                     <th class="text-center" style="width: 10%; text-align: center; vertical-align: middle">User ID<br/>
-                                                        <input type="number" name="userId" value="${tempTrans.user.id}" style="width: 100%" min="1" onblur="change()">
+                                                        <input type="number" name="userId" value="${tempTrans.user.id}" style="width: 100%" min="1" onblur="change('filterForm')">
                                                     </th>
                                                     <th class="" style="text-align: center; vertical-align: middle">Amount</th>
                                                     <th class="text-center" style="text-align: center; vertical-align: middle">Time</th>
                                                     <th class="text-center" style="text-align: center; vertical-align: middle">Type<br/>
-                                                        <select name="type" onchange="change()" style="border: 0; background: none">
+                                                        <select name="type" onchange="change('filterForm')" style="border: 0; background: none">
                                                             <option value="-1">All</option>
                                                             <option value="1" <c:if test="${tempTrans.type eq 1}">selected</c:if> >Deposit</option>
                                                             <option value="2" <c:if test="${tempTrans.type eq 2}">selected</c:if> >Withdraw</option>
@@ -283,7 +283,7 @@
                                                             </select>
                                                         </th>
                                                         <th class="text-center" style="text-align: center; vertical-align: middle">Status<br/>
-                                                            <select name="status" onchange="change()" style="border: 0; background: none">
+                                                            <select name="status" onchange="change('filterForm')" style="border: 0; background: none">
                                                                 <option value="-1">All</option>
                                                                 <option value="1" <c:if test="${tempTrans.status eq 1}">selected</c:if> >Fail</option>
                                                             <option value="2" <c:if test="${tempTrans.status eq 2}">selected</c:if> >Pending</option>
@@ -292,12 +292,17 @@
                                                         </th>
                                                         <th class="text-center" style="text-align: center; vertical-align: middle">Description</th>
                                                         <th class="text-center" style="text-align: center; vertical-align: middle; width: 14%">Product<br/>
-                                                            <input type="text" name="productId" value="${tempTrans.product.productId}" style="width: 100%" min="1" onblur="change()">
+                                                            <input type="text" name="productId" value="${tempTrans.product.productId}" style="width: 100%" min="1" onblur="change('filterForm')">
                                                     </th>
                                                 </tr>
                                             </form>
                                             </thead>
                                             <tbody>
+                                                <c:if test="${transactionList.size() == 0}">
+                                                    <tr>
+                                                        <td colspan="8" class="text-center">There is no transaction here</td>
+                                                    </tr>
+                                                </c:if>
                                                 <c:forEach items="${transactionList}" var="transaction">
                                                     <tr>
                                                         <td class="text-center">${transaction.transactionId}</td>
@@ -480,8 +485,8 @@
         <!--Custom JavaScript -->
         <script src="/Bookie/manage/html/js/custom.js"></script>
         <script>
-                                                                        function change() {
-                                                                            document.getElementById('filterForm').submit();
+                                                                        function change(id) {
+                                                                            document.getElementById(id).submit();
                                                                         }
                                                                         function changeStatus() {
                                                                             if (confirm("Are you sure want to change status of this transaction?\nThis action can not be undo.") == true) {
