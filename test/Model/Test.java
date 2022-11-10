@@ -73,25 +73,11 @@ public class Test {
 //            author.setAuthorName(t.getName());
 //            dao.add(author);
 //        });
-System.out.println("SELECT [Book].[id]\n"
-                    + "      ,[title]\n"
-                    + "      ,[authorId]\n"
-                    + "      ,[Author].[name]\n"
-                    + "      ,[rating]\n"
-                    + "      ,[favourite]\n"
-                    + "      ,[price]\n"
-                    + "      ,[is_sale]\n"
-                    + "      ,[image]\n"
-                    + "      ,[description]\n"
-                    + "      ,[views]\n"
-                    + "      ,[status]\n"
-                    + "  FROM [Book]"
-                    + " INNER JOIN [Author] ON [Book].[authorId] = [Author].[id]"
-                    + " WHERE [Author].[userId] = ?"
-                    + " ORDER BY [Book].id ASC \n"
-                    + " OFFSET ? * (?-1) ROWS  FETCH NEXT ?\n"
-                    + " ROWS ONLY");
-                    ChapterDAO chd = new ChapterDAO();
-                    System.out.println(chd.countWordsByBookId(2));
+        System.out.println("INSERT INTO [Category]\n"
+                    + "           ([name]\n"
+                    + "           ,[active])\n"
+                    + "     VALUES\n"
+                    + "           (?,?)");
+
     }
 }

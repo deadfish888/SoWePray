@@ -32,19 +32,6 @@ public class ChangeEmailController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ChangeEmailController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ChangeEmailController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -76,7 +63,7 @@ public class ChangeEmailController extends HttpServlet {
         UserDAO userDBC = new UserDAO();
         User user = (User) request.getSession().getAttribute("user");
         if (user.getPassword().equals(request.getParameter("password"))) {
-            if (userDBC.checkEmailExisted(request.getParameter("newEmail"))==0) {
+            if (userDBC.checkEmailExisted(request.getParameter("newEmail")) == 0) {
                 user.setEmail(request.getParameter("newEmail"));
                 userDBC.changeEmail(user.getId(), request.getParameter("newEmail"));
                 request.getSession().setAttribute("processMessage", "Your email is changed.");
