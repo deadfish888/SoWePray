@@ -35,10 +35,6 @@ public class RemoveCategoryController extends HttpServlet {
         CategoryDAO categoryDAO = new CategoryDAO();
         int categoryId = Integer.parseInt(request.getParameter("categoryId"));
         categoryDAO.updateActiveCategory(new Category(categoryId, ""), !request.getParameter("active").equals("1"));
-//        Category category = new Category(categoryId, "");
-//        System.out.println(categoryId);
-//        categoryDAO.delBookCategory(categoryId);
-//        categoryDAO.delCategory(categoryId);
         response.sendRedirect(request.getContextPath() + "/Admin/Category/View");
     }
 

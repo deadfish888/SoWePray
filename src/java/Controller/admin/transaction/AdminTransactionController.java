@@ -34,7 +34,6 @@ public class AdminTransactionController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("../views/admin/Transaction.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,7 +54,7 @@ public class AdminTransactionController extends HttpServlet {
 
         request.setAttribute("transactionList", transactionList);
         request.setAttribute("pendingList", pendingTransactionList);
-        processRequest(request, response);
+        request.getRequestDispatcher("../views/admin/Transaction.jsp").forward(request, response);
     }
 
     /**
@@ -97,20 +96,20 @@ public class AdminTransactionController extends HttpServlet {
         if (pendingUserId != null && !pendingUserId.equals("")) {
             User user = new User();
             user.setId(Integer.parseInt(pendingUserId));
-            tempTrans.setUser(user);
+            pendingTempTrans.setUser(user);
         }
         if (pendingType != null && !pendingType.equals("")) {
-            tempTrans.setType(Integer.parseInt(pendingType));
+            pendingTempTrans.setType(Integer.parseInt(pendingType));
         }
-            tempTrans.setStatus(2);
+            pendingTempTrans.setStatus(2);
         ArrayList<Transaction> pendingTransactionList = transactionDAO.search(pendingTempTrans);
 
         request.setAttribute("transactionList", transactionList);
         request.setAttribute("pendingList", pendingTransactionList);
         request.setAttribute("tempTrans", tempTrans);
 
-        processRequest(request, response);
-
+        request.getRequestDispatcher("../views/admin/Transaction.jsp").forward(request, response);
+        
     }
 
     /**
