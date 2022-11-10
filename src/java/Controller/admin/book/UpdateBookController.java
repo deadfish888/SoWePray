@@ -36,10 +36,10 @@ public class UpdateBookController extends HttpServlet {
         try {
             int bookId = Integer.parseInt(request.getParameter("id"));
             Book book = bd.getBookById(bookId);
-            if (book == null){
+            if (book == null) {
                 throw new Exception();
             }
-                    ArrayList<Category> cates = cd.getAllCategory();
+            ArrayList<Category> cates = cd.getAllCategory();
             ArrayList<Author> authors = ad.getAllAuthor();
             request.setAttribute("authors", authors);
             request.setAttribute("categories", cates);
@@ -48,7 +48,7 @@ public class UpdateBookController extends HttpServlet {
             request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(UpdateBookController.class.getName()).log(Level.SEVERE, null, ex);
-            response.sendRedirect(request.getContextPath()+"/error.jsp");
+            response.sendRedirect(request.getContextPath() + "/error.jsp");
         }
     }
 
@@ -60,8 +60,9 @@ public class UpdateBookController extends HttpServlet {
         request.setAttribute("authors", authors);
         request.setAttribute("categories", cates);
         request.setAttribute("service", "Update");
+        int id = 0;
         try {
-            int id = Integer.parseInt(request.getParameter("id"));
+            id = Integer.parseInt(request.getParameter("id"));
             request.setAttribute("book", bd.getBookById(id));
             String title = mu.fieldString(request.getParameter("title"), "Required field!");
             String author = request.getParameter("authorId");
@@ -93,15 +94,12 @@ public class UpdateBookController extends HttpServlet {
             book.setImage(img);
             book.setDescription(description);
 
-            BookDAO bd = new BookDAO();
-            if (bd.editBook(book) == 0) {
-                request.setAttribute("message", "Update Failed! Please try again!");
-                request.setAttribute("book", book);
-                request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
-            } else {
-                response.sendRedirect("./Book");
-            }
-        } catch (Exception e) {
+            bd.editBook(book);
+            response.sendRedirect("./BookDetail?id=" + id);
+        }catch (NumberFormatException e){
+            response.sendRedirect(request.getContextPath()+"/error.jsp");
+        }catch (Exception e) {
+            request.setAttribute("book", bd.getBookById(id));
             request.setAttribute("message", e.getMessage());
             request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
         }

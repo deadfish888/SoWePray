@@ -34,8 +34,8 @@ public class TokenDAO {
 
     public int checkTokenExpired(String token) {
         String sql = "SELECT [userId] FROM [Token] "
-                    + "               WHERE [token] = ? "
-                    + "                 AND [expiredDate] > ?";
+                + "               WHERE [token] = ? "
+                + "                 AND [expiredDate] > ?";
             try {
                 stm = cnn.prepareStatement(sql);
                 stm.setString(1, token);

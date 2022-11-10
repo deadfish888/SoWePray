@@ -9,6 +9,7 @@ import Model.product.Book;
 import Model.product.Category;
 import context.product.BookDAO;
 import context.product.CategoryDAO;
+import context.product.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -40,7 +41,8 @@ public class UpdateNovelController extends HttpServlet {
             response.sendRedirect("../Login");
             return;
         }
-        boolean issold = bd.checkNovelSold(bookId);
+        ProductDAO pd = new ProductDAO();
+        boolean issold = pd.countOwner(bookId)>0;
         request.setAttribute("issold", issold);
         request.setAttribute("book", book);
         request.setAttribute("service", "Update");

@@ -138,8 +138,9 @@ public class VolumeDAO {
                     + "           ,[no]\n"
                     + "           ,[title]\n"
                     + "           ,[summary])\n"
+                    + "     OUTPUT [inserted].[id]"
                     + "     VALUES ( ?"
-                    + "             , (SELECT COUNT([no]) FROM [dbo].[Volume] WHERE [bookId] = ?)+1"
+                    + "             , (SELECT COALESCE(MAX([no]), 0) FROM [dbo].[Volume] WHERE [bookId] = ?)+1"
                     + "             , ?"
                     + "             , ? )";
             stm = cnn.prepareStatement(sql);
@@ -151,7 +152,8 @@ public class VolumeDAO {
             } else {
                 stm.setNull(4, Types.NVARCHAR);
             }
-            return stm.executeUpdate();
+            rs = stm.executeQuery();
+            if(rs.next()) return rs.getInt(1);
         } catch (SQLException ex) {
             Logger.getLogger(VolumeDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

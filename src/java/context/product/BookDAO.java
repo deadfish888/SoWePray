@@ -144,14 +144,16 @@ public class BookDAO {
                 + "           ,[price]\n"
                 + "           ,[is_sale]\n"
                 + "           ,[image]\n"
-                + "           ,[description])\n"
+                + "           ,[description]\n"
+                + "           ,[status])"
                 + "     OUTPUT Inserted.[id]"
                 + "     VALUES ( ? "
                 + "             , ? "
                 + "             , ? "
                 + "             , ? "
                 + "             , ? "
-                + "             , ? )";
+                + "             , ? "
+                + "             , 0 )";
         try {
             stm = cnn.prepareStatement(sql);
             stm.setString(1, book.getTitle());
@@ -315,6 +317,20 @@ public class BookDAO {
             System.out.println("getNumberBook Error");
         }
         return -1;
+    }
+    
+    public int currentId(){
+        try {
+            String sql = "select max([id]) from [Book]";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 
     public ArrayList<Book> getBooksByNewest() {

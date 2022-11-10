@@ -87,7 +87,7 @@
                                                                        width="150" />
                                                 <h4 class="card-title mt-2">
                                                     <a target="_blank" href="../BookDetail?id=${report.bookO.id}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
-                                                    <a target="_blank" href="./BookAnalysis?id=${report.bookO.id}">${report.bookO.title} - ID: ${report.bookO.id}</a></h4>
+                                                    <a target="_blank" href="./BookDetail?id=${report.bookO.id}">${report.bookO.title} - ID: ${report.bookO.id}</a></h4>
 
                                                 <c:if test="${report.bookO.author.userId !=0}">
                                                     <h6 class="card-subtitle">Creator: <a target="_blank" href="./Activities?id=${report.bookO.author.userId}">${report.bookO.author.user.name} - ID: ${report.bookO.author.userId}</a></h6>
