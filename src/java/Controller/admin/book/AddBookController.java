@@ -4,7 +4,6 @@
  */
 package Controller.admin.book;
 
-import Controller.product.BookDetail;
 import Model.product.Author;
 import Model.product.Book;
 import Model.product.Category;
@@ -18,15 +17,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import utils.MyUtil;
+import utils.Validator;
 
 /* @author ACER */
 @WebServlet(name = "AddBookController", urlPatterns = {"/Admin/AddBook"})
 public class AddBookController extends HttpServlet {
 
-    MyUtil mu = new MyUtil();
+    Validator mu = new Validator();
     BookDAO bd = new BookDAO();
     CategoryDAO cd = new CategoryDAO();
     AuthorDAO ad = new AuthorDAO();

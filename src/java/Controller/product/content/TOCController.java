@@ -8,12 +8,11 @@ import Model.auth.User;
 import Model.product.Book;
 import Model.product.content.Chapter;
 import context.product.BookDAO;
+import context.product.ProductDAO;
 import context.product.content.ChapterDAO;
 import context.product.content.VolumeDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,23 +22,21 @@ import java.util.logging.Logger;
 /* @author ACER */
 public class TOCController extends HttpServlet {
 
+    BookDAO bd = new BookDAO();
+    VolumeDAO vd = new VolumeDAO();
+    ChapterDAO cd = new ChapterDAO();
+    ProductDAO pd = new ProductDAO();
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
-        if (user == null) {
-            response.sendRedirect("../Login");
-            return;
-        }
         try {
             int bookId = Integer.parseInt(request.getParameter("id"));
-            BookDAO bd = new BookDAO();
+
             Book book = bd.getBookById(bookId);
             if (book.getAuthor().getUserId() != user.getId()) {
                 response.sendRedirect("../Login");
                 return;
             }
-
-            VolumeDAO vd = new VolumeDAO();
-            ChapterDAO cd = new ChapterDAO();
 
             request.setAttribute("volumes", vd.getVolumesByBookId(bookId));
             request.setAttribute("book", book);
@@ -50,9 +47,9 @@ public class TOCController extends HttpServlet {
                 int cid = Integer.parseInt(schapterId);
                 Chapter chapter = cd.getChapterById(cid);
                 request.setAttribute("chap", chapter);
-                String[] content = chapter.getContent().split("\n") ;
+                String[] content = chapter.getContent().split("\n");
                 request.setAttribute("content", content);
-                boolean issold = bd.checkNovelSold(bookId);
+                boolean issold = pd.countOwner(bookId) > 0;
                 request.setAttribute("issold", issold);
             }
             request.getRequestDispatcher("../../views/user/toc/view-toc.jsp").forward(request, response);
