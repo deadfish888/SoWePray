@@ -211,7 +211,7 @@
                                     </c:when>
                                 </c:choose>    
                                 <div style="color: red">
-                                    ${sessionScope.notEnoughBalance}
+                                    ${sessionScope.error}
                                 </div>
                             </div>
 
@@ -662,7 +662,7 @@
                     </ul>
                 </div>
             </footer>
-            <%request.getSession().removeAttribute("notEnoughBalance");%>
+            <%request.getSession().removeAttribute("error");%>
 
         </div>
 

@@ -56,41 +56,43 @@ public class PurchaseController extends HttpServlet {
                 if (amount > user.getPaymentAccount().getBalance()) {
                     request.getSession().setAttribute("error", "Your wallet have not enough coin to buy this book. Please deposit into wallet and try again.");
                 } else {
-                    float walletBalance = user.getPaymentAccount().getBalance() - amount;
-                    user.getPaymentAccount().setBalance(walletBalance);
-
-                    Transaction transaction = new Transaction();
-                    transaction.setUser(user);
-                    transaction.setAmount(amount);
-                    transaction.setBalanceAfter(walletBalance);
-                    transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-                    transaction.setType(3);
-                    transaction.setStatus(3);
-
                     ProductDAO productDAO = new ProductDAO();
                     Product product = new Product("B" + bookId);
                     product = productDAO.get(product);
-
-                    transaction.setProduct(product);
-                    transaction.setDescription("Buy " + product.toString() + ".");
-                    transDAO.insert(transaction);
-
-                    payAccDAO.update(user.getPaymentAccount());
                     User author = product.getBook().getAuthor().getUser();
-                    if (author != null) {
-                        Transaction auTransaction = new Transaction();
-                        auTransaction.setUser(author);
-                        auTransaction.setAmount(amount);
-                        auTransaction.setBalanceAfter(author.getPaymentAccount().getBalance() + amount);
-                        auTransaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-                        auTransaction.setType(4);
-                        auTransaction.setStatus(3);
-                        auTransaction.setProduct(product);
-                        auTransaction.setDescription("Sell " + product.toString() + ".");
-                        transDAO.insert(auTransaction);
 
-                        author.getPaymentAccount().setBalance(author.getPaymentAccount().getBalance() + amount);
-                        payAccDAO.update(author.getPaymentAccount());
+                    if (amount > 0) {
+                        float walletBalance = user.getPaymentAccount().getBalance() - amount;
+                        user.getPaymentAccount().setBalance(walletBalance);
+
+                        Transaction transaction = new Transaction();
+                        transaction.setUser(user);
+                        transaction.setAmount(amount);
+                        transaction.setBalanceAfter(walletBalance);
+                        transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+                        transaction.setType(3);
+                        transaction.setStatus(3);
+
+                        transaction.setProduct(product);
+                        transaction.setDescription("Buy " + product.toString() + ".");
+                        transDAO.insert(transaction);
+
+                        payAccDAO.update(user.getPaymentAccount());
+                        if (author != null) {
+                            Transaction auTransaction = new Transaction();
+                            auTransaction.setUser(author);
+                            auTransaction.setAmount(amount);
+                            auTransaction.setBalanceAfter(author.getPaymentAccount().getBalance() + amount);
+                            auTransaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+                            auTransaction.setType(4);
+                            auTransaction.setStatus(3);
+                            auTransaction.setProduct(product);
+                            auTransaction.setDescription("Sell " + product.toString() + ".");
+                            transDAO.insert(auTransaction);
+
+                            author.getPaymentAccount().setBalance(author.getPaymentAccount().getBalance() + amount);
+                            payAccDAO.update(author.getPaymentAccount());
+                        }
                     }
 
                     BookOwnDAO bookOwnDAO = new BookOwnDAO();
