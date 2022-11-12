@@ -37,7 +37,7 @@ public class ReportsController extends HttpServlet {
             } catch (NumberFormatException e) {
                 pageIndex = 1;
             }
-            if (reportType == null || (!reportType.equals("book") && !reportType.equals("comment"))) {
+            if (reportType == null || (!reportType.equals("book") && !reportType.equals("comment") && !reportType.equals("transaction"))) {
                 reportType = "";
             }
             if (status == null || status.trim().length() == 0) {

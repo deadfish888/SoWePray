@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [BOOKIE]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Database [BOOKIE]    Script Date: 11/12/2022 10:09:42 PM ******/
 IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'BOOKIE')
 BEGIN
 	ALTER DATABASE [BOOKIE] SET OFFLINE WITH ROLLBACK IMMEDIATE;
@@ -83,7 +83,7 @@ ALTER DATABASE [BOOKIE] SET QUERY_STORE = OFF
 GO
 USE [BOOKIE]
 GO
-/****** Object:  Table [dbo].[Author]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[Author]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -99,7 +99,7 @@ CREATE TABLE [dbo].[Author](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Book]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[Book]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -122,7 +122,7 @@ CREATE TABLE [dbo].[Book](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Book_Own]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[Book_Own]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -134,7 +134,7 @@ CREATE TABLE [dbo].[Book_Own](
 	[recentChapterId] [int] NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Category]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[Category]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -149,7 +149,7 @@ CREATE TABLE [dbo].[Category](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CategoryBook]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[CategoryBook]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -159,7 +159,7 @@ CREATE TABLE [dbo].[CategoryBook](
 	[categoryId] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Chapter]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[Chapter]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -177,7 +177,7 @@ CREATE TABLE [dbo].[Chapter](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Comment]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[Comment]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -198,7 +198,7 @@ CREATE TABLE [dbo].[Comment](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Favourite]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[Favourite]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -213,7 +213,7 @@ CREATE TABLE [dbo].[Favourite](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Payment_Account]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[Payment_Account]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -227,7 +227,7 @@ CREATE TABLE [dbo].[Payment_Account](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Payment_Method]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[Payment_Method]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -244,7 +244,7 @@ CREATE TABLE [dbo].[Payment_Method](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Product]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[Product]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -260,7 +260,7 @@ CREATE TABLE [dbo].[Product](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Product_Own]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[Product_Own]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -270,7 +270,7 @@ CREATE TABLE [dbo].[Product_Own](
 	[productId] [varchar](30) NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Report]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[Report]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -291,7 +291,7 @@ CREATE TABLE [dbo].[Report](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Report_Violation]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[Report_Violation]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -306,7 +306,7 @@ CREATE TABLE [dbo].[Report_Violation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Star]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[Star]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -322,7 +322,7 @@ CREATE TABLE [dbo].[Star](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Token]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[Token]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -333,7 +333,7 @@ CREATE TABLE [dbo].[Token](
 	[expiredDate] [datetime] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Transaction]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[Transaction]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -354,7 +354,7 @@ CREATE TABLE [dbo].[Transaction](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -377,7 +377,7 @@ CREATE TABLE [dbo].[User](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Violation]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[Violation]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -392,7 +392,7 @@ CREATE TABLE [dbo].[Violation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Volume]    Script Date: 11/12/2022 8:51:47 PM ******/
+/****** Object:  Table [dbo].[Volume]    Script Date: 11/12/2022 10:09:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -7670,6 +7670,8 @@ INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent],
 GO
 INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status], [action]) VALUES (7, 1, 109, 23, N'All hail Granny!!', CAST(N'2022-10-28T21:02:52.297' AS DateTime), NULL, NULL, NULL)
 GO
+INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status], [action]) VALUES (8, 5, 2, 3000114, N'Ora?', CAST(N'2022-11-12T21:40:23.223' AS DateTime), NULL, NULL, NULL)
+GO
 SET IDENTITY_INSERT [dbo].[Report] OFF
 GO
 INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (1, 2)
@@ -7701,6 +7703,10 @@ GO
 INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (7, 5)
 GO
 INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (7, 6)
+GO
+INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (8, 20)
+GO
+INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (8, 24)
 GO
 INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (1, 2, 2)
 GO
@@ -8022,6 +8028,8 @@ INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter],
 GO
 INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [productID]) VALUES (3000113, 2, CAST(5.00 AS Decimal(10, 2)), CAST(1526.47 AS Decimal(10, 2)), CAST(N'2022-10-17T10:25:39.513' AS DateTime), 3, 3, N'Buy One Piece, Volume 1: Romance Dawn.', N'B15')
 GO
+INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [productID]) VALUES (3000114, 2, CAST(1000.00 AS Decimal(10, 2)), CAST(0.00 AS Decimal(10, 2)), NULL, 1, 2, N'Deposit into wallet.', NULL)
+GO
 SET IDENTITY_INSERT [dbo].[Transaction] OFF
 GO
 SET IDENTITY_INSERT [dbo].[User] ON 
@@ -8277,6 +8285,18 @@ GO
 INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (18, 2, N'Hate speech')
 GO
 INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (19, 2, N'Personal attack')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (20, 5, N'Still not receive the money in the account')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (21, 5, N'Can''t withdraw money')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (22, 5, N'Can''t get access to transfer money')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (23, 5, N'Money received didn''t match with the transactions')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (24, 5, N'Error occurs while transaction is processing')
+GO
+INSERT [dbo].[Violation] ([id], [reportType], [title]) VALUES (25, 5, N'Others')
 GO
 SET IDENTITY_INSERT [dbo].[Violation] OFF
 GO

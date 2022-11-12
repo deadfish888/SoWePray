@@ -9,11 +9,6 @@
 <%@page import="Model.*"%>
 <%@page import="context.*"%>
 <%@page import="java.util.ArrayList"%>
-<c:if test="${empty sessionScope.admin}">
-    <%         
-          response.sendRedirect("/Bookie/Home");
-    %>
-</c:if>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -104,14 +99,42 @@
                                                     <a target="_blank" href="./Activities?id=${report.comO.userId}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
                                                     ${report.comO.user.name} - ID: ${report.comO.userId}
                                                 </h4>
-                                                    <h6 class="card-subtitle">
-                                                        <a target="_blank" href="../BookDetail?id=${report.bookO.id}&cmtId=${report.comO.id}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
-                                                        CommentID: ${report.comO.id}
-                                                    </h6>
-                                                
+                                                <h6 class="card-subtitle">
+                                                    <a target="_blank" href="../BookDetail?id=${report.bookO.id}&cmtId=${report.comO.id}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
+                                                    CommentID: ${report.comO.id}
+                                                </h6>
+
                                             </center>
                                         </c:when>
+                                        <c:when test="${report.reportType == 5}">
+                                            <h6 class="card-title mt-2">
+                                                <form action="./Transaction" method="post">
+                                                    <input type="hidden" name="transId" value="${report.transO.transactionId}">
+                                                    <button class="btn" type="submit"><i class="fa fa-external-link-alt" aria-hidden="true"></i></button>
+                                                    Transaction ID: ${report.transO.transactionId}
+                                                </form>
+                                            </h6>
+                                            <h6 class="card-title mt-2">
+                                                <a target="_blank" href="./Activities?id=${report.userId}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
+                                                User: ${report.userR.username} - ID: ${report.userId}
+                                            </h6>
+                                            <h6 class="card-subtitle">
+                                                Amount: ${report.transO.amount}
+                                            </h6>
+                                            <h6 class="card-subtitle">
+                                                Type:<c:if test="${report.transO.type eq 1}">Deposit</c:if> 
+                                                <c:if test="${report.transO.type eq 2}">Withdraw</c:if> 
+                                                <c:if test="${report.transO.type eq 3}">Purchase</c:if> 
+                                                <c:if test="${report.transO.type eq 4}">Selling</c:if> 
+                                                </h6>  
+                                                <h6 class="card-subtitle">
+                                                    Description: ${report.transO.description}
+                                            </h6>
+                                            <h6 class="card-subtitle">
+                                                Time: ${report.transO.transactionTime eq null? "Pending":report.transO.transactionTime}
+                                            </h6>
 
+                                        </c:when>
                                     </c:choose>
                                 </div>
                             </div>
@@ -145,9 +168,9 @@
                                                     </tr>
                                                     <c:if test="${report.reportType ==2 }">
                                                         <tr>
-                                                        <th>Content</th>
-                                                        <td style="white-space: pre-line; font-style: italic">${report.comO.comment}</td>
-                                                    </tr>
+                                                            <th>Content</th>
+                                                            <td style="white-space: pre-line; font-style: italic">${report.comO.comment}</td>
+                                                        </tr>
                                                     </c:if>
                                                     <tr>
                                                         <th>Reporter</th>
@@ -202,7 +225,60 @@
                                             </form>
                                         </c:when>
                                         <c:otherwise>
-
+                                            <form action="./ReportDetail" method="post">
+                                                <input type="hidden" name="id" value="${report.id}">
+                                                <table class="table">
+                                                    <tr>
+                                                        <th>Type</th>
+                                                        <td>${report.reportTypeName}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Problems</th>
+                                                        <td>
+                                                            <ul>
+                                                                <c:forEach var="ss" items="${report.violates}">
+                                                                    <li>${ss.title}</li>
+                                                                    </c:forEach>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Detail</th>
+                                                        <td style="white-space: pre-line">${report.note}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Sent</th>
+                                                        <td>${report.getSent()}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Status</th>
+                                                        <td>
+                                                            ${empty report.isStatus()?"Pending":(report.isStatus()?(report.getReceived()):"Rejected")}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Action</th>
+                                                        <td>
+                                                            <c:if test="${empty report.isStatus()}">
+                                                                <textarea class="form-control" style="white-space: pre-line" name="action" rows="5" required>${report.action}</textarea>
+                                                            </c:if>
+                                                            <c:if test="${!empty report.isStatus()}">
+                                                                <p style="white-space: pre-line">${report.action}</p>
+                                                            </c:if>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <c:if test="${empty report.isStatus()}">
+                                                    <div class="row mt-3">
+                                                        <div class="col-md-1">
+                                                            <button type="submit" name="service" value="close" class="btn btn-primary">Close</button>
+                                                        </div>
+                                                        <div class="col-md-1 m-l-10">
+                                                            <button type="submit" name="service" value="reject" class="btn btn-danger">Reject</button>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                            </form>
                                         </c:otherwise>
                                     </c:choose>
                                 </div>

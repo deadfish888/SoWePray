@@ -131,10 +131,10 @@
                                     </td>
                                     <td>
                                         <button name="report" style="border: 0; background: none" data-toggle="modal" 
-                                                data-target="#reporttrans">
+                                                data-target="#reporttrans${transaction.transactionId}">
                                             <a><i class="fa fa-warning"></i></a>
                                         </button></td>
-                                <div class="modal fade" id="reporttrans" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal fade" id="reporttrans${transaction.transactionId}" tabindex="-1" role="dialog" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <form action="ReportTrans" method="get" id="withdrawForm" name="withdrawForm" ">
@@ -144,17 +144,17 @@
                                                 <div class="modal-body">
                                                     <div class="wrapper row" >
                                                         <ul class="ks-cboxtags" style="list-style-type: none">
-                                                        <li><input type="checkbox" id="checkboxOne" name="report" value="22">
+                                                        <li><input type="checkbox" id="checkboxOne" name="report" value="20">
                                                             <label for="checkboxOne">Still not receive the money in the account</label></li>
-                                                        <li><input type="checkbox" id="checkboxTwo" name="report" value="23" >
+                                                        <li><input type="checkbox" id="checkboxTwo" name="report" value="21" >
                                                             <label for="checkboxTwo">Can't withdraw money</label></li>
-                                                        <li><input type="checkbox" id="checkboxThree" name="report" value="24" >
+                                                        <li><input type="checkbox" id="checkboxThree" name="report" value="22" >
                                                             <label for="checkboxThree">Can't get access to transfer money</label></li>
-                                                        <li><input type="checkbox" id="checkboxFour" name="report" value="25">
+                                                        <li><input type="checkbox" id="checkboxFour" name="report" value="23">
                                                             <label for="checkboxFour">Money received didn't match with the transactions</label></li>
-                                                        <li><input type="checkbox" id="checkboxFive" name="report" value="26">
+                                                        <li><input type="checkbox" id="checkboxFive" name="report" value="24">
                                                             <label for="checkboxFive">Error occurs while transaction is processing</label></li> 
-                                                        <li><input type="checkbox" id="checkboxSix" name="report" value="27"/>
+                                                        <li><input type="checkbox" id="checkboxSix" name="report" value="25"/>
                                                             <label for="checkboxSix">Others:</label>
                                                             <textarea id="id" name="note" style="min-height: 50px;" placeholder="Issue details..." required="false"></textarea></li>
                                                         </ul>

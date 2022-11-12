@@ -280,6 +280,9 @@ public class TransactionDAO {
                     + "      ,[productID]\n"
                     + "  FROM [Transaction]"
                     + "  WHERE 1 = 1";
+            if(transaction.getTransactionId() !=0){
+                sql += "\n  AND [transactionId] = " + transaction.getTransactionId();
+            }
             if (transaction.getUser() != null) {
                 sql += "\n  AND [userId] = " + transaction.getUser().getId();
             }
