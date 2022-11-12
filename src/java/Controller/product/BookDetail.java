@@ -81,14 +81,13 @@ public class BookDetail extends HttpServlet {
                 bookProduct = productDAO.get(bookProduct);
                 
                 ProductOwnDAO productOwnDAO = new ProductOwnDAO();
-                System.out.println(user.getId());
-                ArrayList<Product> productOwnList = productOwnDAO.getOwnChapterOfBook(user, thisbook);
+                ArrayList<Product> productOwnList = user!=null?productOwnDAO.getOwnChapterOfBook(user, thisbook): null;
                 
                 ArrayList<Product> chapterProductList = new ArrayList<>();
                 for (Chapter chapter : chaps) {
                     Product product = productDAO.getByChapter(chapter);
                     chapterProductList.add(product);
-                    if(productOwnList.contains(product)) {
+                    if(productOwnList!=null && productOwnList.contains(product)) {
                         bookProduct.setPrice(bookProduct.getPrice() - product.getPrice());
                     }
                 }
