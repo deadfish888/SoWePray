@@ -52,7 +52,7 @@ public class BookReading extends HttpServlet {
             ProductDAO productDAO = new ProductDAO();
             Chapter chapter;
 
-            if (thisbook.getAuthor().getUserId() != 0 && !thisbook.issale()) {
+            if (thisbook.getAuthor().getUserId() != 0 && (!thisbook.issale()||thisbook.getAuthor().getUserId()==user.getId())) {
                 chapter = chd.getChapterById(Integer.parseInt(cid));
             } else {
 
