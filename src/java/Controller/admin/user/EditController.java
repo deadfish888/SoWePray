@@ -55,7 +55,7 @@ public class EditController extends HttpServlet {
         }
        
         Boolean check = false;
-        if (!request.getParameter("email").equals(us.getEmail())) {
+        if (!request.getParameter("email").isEmpty()) {
             us.setEmail(request.getParameter("email"));
             check = true;
         }
@@ -63,15 +63,15 @@ public class EditController extends HttpServlet {
             us.setPassword(request.getParameter("password"));
             check = true;
         }
-        if (!request.getParameter("fullname").equalsIgnoreCase(us.getName())) {
+        if (!request.getParameter("fullname").isEmpty()) {
             us.setName(request.getParameter("fullname"));
             check = true;
         }
-        if (!request.getParameter("phone").equals(us.getPhone())) {
+        if (!request.getParameter("phone").isEmpty()) {
             us.setPhone(request.getParameter("phone"));
             check = true;
         }
-        if (!request.getParameter("address").equalsIgnoreCase(us.getAddress())) {
+        if (!request.getParameter("address").isEmpty()) {
             us.setAddress(request.getParameter("address"));
             check = true;
         }
