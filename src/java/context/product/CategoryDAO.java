@@ -36,9 +36,14 @@ public class CategoryDAO {
     public int addCategory(String name) {
         int n = 0;
         try {
-            String sql = "insert [Category] ([name]) values (?)";
+            String sql = "INSERT INTO [Category]\n"
+                    + "           ([name]\n"
+                    + "           ,[active])\n"
+                    + "     VALUES\n"
+                    + "           (?,?)";
             stm = cnn.prepareStatement(sql);
             stm.setString(1, name);
+            stm.setBoolean(2, true);
             n = stm.executeUpdate();
             return n;
         } catch (Exception e) {
@@ -89,6 +94,7 @@ public class CategoryDAO {
         try {
             String sql = "SELECT [id]\n"
                     + "      ,[name]\n"
+                    + "      ,[active]\n"
                     + "  FROM [Category]"
                     + " ORDER BY [name] ASC";
             stm = cnn.prepareStatement(sql);
@@ -96,7 +102,33 @@ public class CategoryDAO {
             while (rs.next()) {
                 int id = rs.getInt(1);
                 String name = rs.getString(2);
-                list.add(new Category(id, name));
+                Category cat = new Category(id, name);
+                cat.setActive(rs.getBoolean("active"));
+                list.add(cat);
+            }
+        } catch (Exception e) {
+            System.out.println("getCategories Error:" + e.getMessage());
+        }
+        return list;
+    }
+
+    public ArrayList<Category> getAllActiveCategory() {
+        ArrayList<Category> list = new ArrayList<>();
+        try {
+            String sql = "SELECT [id]\n"
+                    + "      ,[name]\n"
+                    + "      ,[active]\n"
+                    + "  FROM [Category]"
+                    + "  WHERE [active] = 1"
+                    + " ORDER BY [name] ASC";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                Category cat = new Category(id, name);
+                cat.setActive(rs.getBoolean("active"));
+                list.add(cat);
             }
         } catch (Exception e) {
             System.out.println("getCategories Error:" + e.getMessage());
@@ -109,6 +141,7 @@ public class CategoryDAO {
         try {
             String sql = "SELECT [id]\n"
                     + "      ,[name]\n"
+                    + "      ,[active]\n"
                     + "  FROM [Category]"
                     + " ORDER BY [id] ASC";
             stm = cnn.prepareStatement(sql);
@@ -116,7 +149,9 @@ public class CategoryDAO {
             while (rs.next()) {
                 int id = rs.getInt(1);
                 String name = rs.getString(2);
-                list.add(new Category(id, name));
+                Category cat = new Category(id, name);
+                cat.setActive(rs.getBoolean("active"));
+                list.add(cat);
             }
         } catch (Exception e) {
             System.out.println("getCategories Error:" + e.getMessage());
@@ -215,6 +250,21 @@ public class CategoryDAO {
         } catch (Exception e) {
             System.out.println("addCategoryBook Error:" + e.getMessage());
         }
+    }
+
+    public void updateActiveCategory(Category category, boolean active) {
+        try {
+            String sql = "UPDATE [Category]\n"
+                    + "   SET [active] = ?\n"
+                    + " WHERE id = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setBoolean(1, active);
+            stm.setInt(2, category.getId());
+            stm.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("addCategoryBook Error:" + e.getMessage());
+        }
+
     }
 
     public int countBook(Category category) {

@@ -81,6 +81,7 @@ public class BookDetail extends HttpServlet {
                 bookProduct = productDAO.get(bookProduct);
                 
                 ProductOwnDAO productOwnDAO = new ProductOwnDAO();
+                System.out.println(user.getId());
                 ArrayList<Product> productOwnList = productOwnDAO.getOwnChapterOfBook(user, thisbook);
                 
                 ArrayList<Product> chapterProductList = new ArrayList<>();

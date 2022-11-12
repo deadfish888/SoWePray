@@ -201,7 +201,7 @@ public class ChapterDAO {
                     + "     OUTPUT [Inserted].[id]"
                     + "     VALUES\n"
                     + "           ( ? "
-                    + "           , (SELECT COALESCE(MAX([no]), 0) FROM [dbo].[Chapter] WHERE [volumeId] = ?)+1 "
+                    + "           , (SELECT COALESCE(MAX([no]), 0) FROM [Chapter] WHERE [volumeId] = ?)+1 "
                     + "           , ? "
                     + "           , ? "
                     + "           , ? )";

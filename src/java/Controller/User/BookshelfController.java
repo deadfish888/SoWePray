@@ -38,18 +38,9 @@ public class BookshelfController extends HttpServlet {
         BookDAO bookDAO = new BookDAO();
         BookOwnDAO bookOwnDAO = new BookOwnDAO();
         FavouriteDAO favouriteDAO = new FavouriteDAO();
-//        CategoryDAO categoryDAO = new CategoryDAO();
         User user = (User) request.getSession().getAttribute("user");
-        
-//        if (request.getParameter("categoryId") != null) {
-//
-//        }
-//        ArrayList<Book> novelList = bookDAO.getNovels(user);
-//        ArrayList<Category> categoryList = categoryDAO.getAllCategory();
-//        bookList.size();
 
         int pageSize = 12;
-        
         
         String bookPage = request.getParameter("bookPage");
         if (bookPage == null) {
@@ -70,13 +61,8 @@ public class BookshelfController extends HttpServlet {
         int novelPageIndex = Integer.parseInt(novelPage);
         
         ArrayList<Book> bookList = bookOwnDAO.getOwnBooksPagging(user, pageSize, bookPageIndex);
-//        ArrayList<BookOwn> bookOwnList = new ArrayList<>();
-//        for (Book book : bookList) {
-//            bookOwnList.add(bookOwnDAO.get(user, book));
-//        }
         int bookCount = bookOwnDAO.count(user);
         int bookTotalPage = (bookCount % pageSize == 0) ? (bookCount / pageSize) : (bookCount / pageSize) + 1;
-//        System.out.println("TotalPage: " + bookTotalPage);
         
         ArrayList<Book> favorList = favouriteDAO.getFavorBooksPagging(user, pageSize, favorPageIndex);
         int favorCount = favouriteDAO.count(user);
@@ -86,7 +72,6 @@ public class BookshelfController extends HttpServlet {
         int novelCount = bookDAO.countNovel(user);
         int novelTotalPage = (novelCount % pageSize == 0) ? (novelCount / pageSize) : (novelCount / pageSize) + 1;
         
-//        request.setAttribute("categoryList", categoryList);
         request.setAttribute("bookTotalPage", bookTotalPage);
         request.setAttribute("favorTotalPage", favorTotalPage);
         request.setAttribute("novelTotalPage", novelTotalPage);
@@ -98,8 +83,6 @@ public class BookshelfController extends HttpServlet {
         request.setAttribute("bookList", bookList);
         request.setAttribute("favorList", favorList);
         request.setAttribute("novelList", novelList);
-        
-//        request.removeAttribute("");
 
         if(request.getParameter("novelPage") != null) {
             request.setAttribute("tab", "novels");
@@ -108,12 +91,11 @@ public class BookshelfController extends HttpServlet {
         } else {
             request.setAttribute("tab", "books");
         }
-
+        bookDAO.close();
         request.setAttribute("bookPageIndex", bookPageIndex);
         request.setAttribute("favorPageIndex", favorPageIndex);
         request.setAttribute("novelPageIndex", novelPageIndex);
         request.getRequestDispatcher("../views/book/Bookshelf.jsp").forward(request, response);
-        bookDAO.close();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

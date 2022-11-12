@@ -36,20 +36,20 @@ public class ChangePasswordController extends HttpServlet {
                 if (request.getParameter("newPassword").equals(request.getParameter("confirmPassword"))) {
                     user.setPassword(request.getParameter("newPassword"));
                     userDBC.changePassword(user.getId(), request.getParameter("newPassword"));
-                    request.setAttribute("processMessage", "Change password successfully.");
+                    request.getSession().setAttribute("processMessage", "Change password successfully.");
                 } else {
-                    request.setAttribute("error", "Confirm password is not match with new password.");
-                    request.setAttribute("processMessage", "Change password fail.");
+                    request.getSession().setAttribute("error", "Confirm password is not match with new password.");
+                    request.getSession().setAttribute("processMessage", "Change password fail.");
                 }
             } else {
-                request.setAttribute("error", "New password is invalid.");
-                request.setAttribute("processMessage", "Change password fail.");
+                request.getSession().setAttribute("error", "New password is invalid.");
+                request.getSession().setAttribute("processMessage", "Change password fail.");
             }
         } else {
-            request.setAttribute("error", "Old password is wrong.");
-            request.setAttribute("processMessage", "Change password fail.");
+            request.getSession().setAttribute("error", "Old password is wrong.");
+            request.getSession().setAttribute("processMessage", "Change password fail.");
         }
-        request.getRequestDispatcher("../views/user/Security.jsp").forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/User/Security");
     }
 
 }

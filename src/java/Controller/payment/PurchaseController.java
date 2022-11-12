@@ -22,6 +22,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -97,8 +98,18 @@ public class PurchaseController extends HttpServlet {
                 Book book = new Book();
                 book.setId(Integer.parseInt(bookId));
                 bookOwnDAO.insert(book, user);
+
                 ProductOwnDAO productOwnDAO = new ProductOwnDAO();
-                productOwnDAO.insert(product, user);
+                if (author != null) {
+                    ArrayList<Product> chapterProducts = productDAO.getChapterByBook(book);
+                    for (Product p : chapterProducts) {
+                        if (!user.isOwnProduct(p.getProductId())) {
+                            productOwnDAO.insert(p, user);
+                        }
+                    }
+                } else {
+                    productOwnDAO.insert(product, user);
+                }
 
                 response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + bookId);
             }

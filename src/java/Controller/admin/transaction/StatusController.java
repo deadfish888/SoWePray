@@ -49,21 +49,19 @@ public class StatusController extends HttpServlet {
             if (status == 3) {
                 if (transaction.getType() == 1) {
                     payAcc.setBalance(payAcc.getBalance() + transaction.getAmount());
-//                    transaction.setBalanceAfter(payAcc.getBalance());
                 } else {
                     //If amount in wallet is not enough to finish transaction, change to fail
                     if (transaction.getAmount() <= payAcc.getBalance()) {
                         payAcc.setBalance(payAcc.getBalance() - transaction.getAmount());
-//                        transaction.setBalanceAfter(payAcc.getBalance());
                     } else {
-//                        transaction.setBalanceAfter(payAcc.getBalance());
-
                         status = 1;
-                        transaction.setDescription(transaction.getDescription() + "\nReason: Balance in your wallet is not enough to finish this transaction.");
+                        transaction.setDescription(transaction.getDescription() + "\nCause of failure: Balance in your wallet is not enough to finish this transaction.");
                         request.getSession().setAttribute("error", "Balance in wallet of user " + transaction.getUser().getId() + " is not enough.");
                     }
                 }
                 payAccDAO.update(payAcc);
+            } else {
+                transaction.setDescription(transaction.getDescription() + "\nCause of failure: " + request.getParameter("rejectReason"));
             }
             transaction.setBalanceAfter(payAcc.getBalance());
             transaction.setStatus(status);
@@ -88,7 +86,6 @@ public class StatusController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**

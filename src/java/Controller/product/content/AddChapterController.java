@@ -79,7 +79,7 @@ public class AddChapterController extends HttpServlet {
             VolumeDAO vd = new VolumeDAO();
             ChapterDAO cd = new ChapterDAO();
             
-            int newChapterId = cd.addChapter(chapter);
+            int newChapterId = cd.addChapterNovel(chapter);
             request.setAttribute("book", book);
             if (newChapterId == 0) {
                 request.setAttribute("vol", vd.getVolumeById(volId));

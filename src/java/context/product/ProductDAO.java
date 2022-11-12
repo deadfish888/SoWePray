@@ -170,6 +170,34 @@ public class ProductDAO {
         return null;
     }
 
+    public ArrayList<Product> getChapterByBook(Book book) {
+        ArrayList<Product> products = new ArrayList<>();
+        try {
+            String sql = "SELECT [productId]\n"
+                    + "      ,[bookId]\n"
+                    + "      ,[chapterId]\n"
+                    + "      ,[price]\n"
+                    + "  FROM [Product]\n"
+                    + "  WHERE [bookId] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, book.getId());
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                ChapterDAO chapterDAO = new ChapterDAO();
+                Product product = new Product();
+                product.setProductId(rs.getString("productId"));
+                product.setBook(book);
+                product.setChapter(chapterDAO.getChapterById(rs.getInt("chapterId")));
+                product.setPrice(rs.getFloat("price"));
+                products.add(product);
+            }
+            return products;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     //Use to add price to product Book when edit price of each chapter
     public int updateBookPrice(Book book) {
         try {
@@ -206,7 +234,9 @@ public class ProductDAO {
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, bookId);
             rs = stm.executeQuery();
-            if (rs.next()) return rs.getInt(1);
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

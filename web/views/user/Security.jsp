@@ -105,7 +105,7 @@
                                                                 New email
                                                             </th>
                                                             <td>
-                                                                <input type="email" name="newEmail"/>
+                                                                <input type="email" name="newEmail" required/>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -113,7 +113,7 @@
                                                                 Password
                                                             </th>
                                                             <td>
-                                                                <input type="password" name="password"/>
+                                                                <input type="password" name="password" required/>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -155,7 +155,7 @@
                                                                     Password
                                                                 </th>
                                                                 <td>
-                                                                    <input type="password" name="currentPassword"/>
+                                                                    <input type="password" name="currentPassword" required/>
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -163,7 +163,7 @@
                                                                     New password
                                                                 </th>
                                                                 <td>
-                                                                    <input type="password" name="newPassword"/>
+                                                                    <input type="password" name="newPassword" required/>
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -171,7 +171,7 @@
                                                                     Confirm password
                                                                 </th>
                                                                 <td>
-                                                                    <input type="password" name="confirmPassword"/>
+                                                                    <input type="password" name="confirmPassword" required/>
                                                                 </td>
                                                             </tr>
                                                         </table>

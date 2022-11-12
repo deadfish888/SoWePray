@@ -19,20 +19,7 @@
         <link href="../../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 
         <script>
-            function editText(cateId, cateName) {
-                var cate = document.getElementById(cateId);
-                var content = "<form action=\"Update\" method=\"post\" name=\"update\">";
-                content += "<input type='text' name='categoryName' value=\"" + cateName + "\"/>";
-                content += "<input type='hidden' name='categoryId' value=\"" + cateId + "\"/>";
-                content += "<button style=\"border: 0; background: none\" type=\"button\" (click)=\"submitForm()\">";
-                content += "<i id=\"confirm" + cateId + "\" class='fa fa-check-circle' style=\"color: #09dd80\"></i>";
-                content += "</button>";
-                content += "<button style=\"border: 0; background: none\" type=\"reset\">";
-                content += "<i id=\"discard" + cateId + "\" class='fa fa-times-circle red' style=\"color: red\"></i>";
-                content += "</button>";
-                content += "</form>";
-                cate.innerHTML = content;
-            }
+            
             function edit(id) {
                 var a = "after" + id;
                 var b = "before" + id;
@@ -153,7 +140,7 @@
                                                 <th class="text-center">ID</th>
                                                 <th class="text-center" style="width: 40%">Name</th>
                                                 <th class="text-center">Number of books</th>
-                                                <th class="text-center">Remove</th>
+                                                <th class="text-center">Active</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -169,7 +156,7 @@
                                                         </div>
                                                         <div id="after${category.id}" style="display: none">
                                                             <form action="Update" method="post" name="remove">
-                                                                <input type="text" name="categoryName" value="${category.name}">
+                                                                <input type="text" name="categoryName" value="${category.name}" required>
                                                                 <input type="hidden" name="categoryId" value="${category.id}">
                                                                 <button style="border: 0; background: none" type="submit">
                                                                     <i id="confirm${category.id}" class="fa fa-check-circle" style="color: #09dd80"></i>
@@ -183,13 +170,20 @@
                                                     <td class="text-center">${categoryMap[category]}</td>
 
                                                     <td class="text-center">
-                                                        <form action="Remove?categoryId=${category.id}" method="post" name="remove" onsubmit="return confirm('Do you really want to remove this category?');">
-                                                            <button type="submit" style="border: 0; background: none">
-                                                                <i id="garbage-can" class='fa fa-trash-o'></i>
-                                                            </button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
+                                                        <form action="Remove?categoryId=${category.id}" method="post" name="remove" onsubmit="return confirm('Are you sure you want to change the active status of this category?');">
+                                                            <c:if test="${category.active}">
+                                                                <input type="hidden" name="active" value="1"/>
+                                                                <button type="submit" style="border: 0; background: none">
+                                                                    <i id="checkbox" class='fa fa-check-square'></i>
+                                                                </button></c:if>
+                                                            <c:if test="${!category.active}">
+                                                                <input type="hidden" name="active" value="0"/>
+                                                                <button type="submit" style="border: 0; background: none">
+                                                                    <i id="checkbox" class='fa fa-square-o'></i>
+                                                                </button></c:if>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
                                             </c:forEach>
                                         </tbody>
                                     </table>

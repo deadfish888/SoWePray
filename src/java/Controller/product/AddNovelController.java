@@ -35,7 +35,8 @@ public class AddNovelController extends HttpServlet {
             response.sendRedirect("../Login");
             return;
         }
-        ArrayList<Category> cates = cd.getAllCategory();
+        CategoryDAO cd = new CategoryDAO();
+        ArrayList<Category> cates = cd.getAllActiveCategory();
         request.setAttribute("categories", cates);
         request.setAttribute("service", "Create");
         request.getRequestDispatcher("../views/user/NovelDetail.jsp").forward(request, response);
