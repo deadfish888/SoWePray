@@ -20,7 +20,7 @@
         <title>Support</title>
     </head>
     <body>
-        <div class = "wrapper">
+        <div class = "wrapper" style="height: 100vh">
 
             <nav id="sidebar" class="bg-dark col-md-2 text-light" style="display: block; float: left; padding: 5px">
                 <div style="display: block; margin: auto; text-align: center; margin-top: 2em">
