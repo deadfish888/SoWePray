@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [BOOKIE]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Database [BOOKIE]    Script Date: 11/12/2022 8:51:47 PM ******/
 IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'BOOKIE')
 BEGIN
 	ALTER DATABASE [BOOKIE] SET OFFLINE WITH ROLLBACK IMMEDIATE;
@@ -83,7 +83,7 @@ ALTER DATABASE [BOOKIE] SET QUERY_STORE = OFF
 GO
 USE [BOOKIE]
 GO
-/****** Object:  Table [dbo].[Author]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[Author]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -99,7 +99,7 @@ CREATE TABLE [dbo].[Author](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Book]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[Book]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -122,7 +122,7 @@ CREATE TABLE [dbo].[Book](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Book_Own]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[Book_Own]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -134,7 +134,7 @@ CREATE TABLE [dbo].[Book_Own](
 	[recentChapterId] [int] NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Category]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[Category]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -142,13 +142,14 @@ GO
 CREATE TABLE [dbo].[Category](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[name] [nvarchar](100) NULL,
+	[active] [bit] NULL,
  CONSTRAINT [PK_category] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CategoryBook]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[CategoryBook]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -158,7 +159,7 @@ CREATE TABLE [dbo].[CategoryBook](
 	[categoryId] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Chapter]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[Chapter]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -176,7 +177,7 @@ CREATE TABLE [dbo].[Chapter](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Comment]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[Comment]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -197,7 +198,7 @@ CREATE TABLE [dbo].[Comment](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Favourite]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[Favourite]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -212,7 +213,7 @@ CREATE TABLE [dbo].[Favourite](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Payment_Account]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[Payment_Account]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -226,7 +227,7 @@ CREATE TABLE [dbo].[Payment_Account](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Payment_Method]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[Payment_Method]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -243,7 +244,7 @@ CREATE TABLE [dbo].[Payment_Method](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Product]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[Product]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -259,7 +260,7 @@ CREATE TABLE [dbo].[Product](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Product_Own]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[Product_Own]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -269,7 +270,7 @@ CREATE TABLE [dbo].[Product_Own](
 	[productId] [varchar](30) NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Report]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[Report]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -290,7 +291,7 @@ CREATE TABLE [dbo].[Report](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Report_Violation]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[Report_Violation]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -305,7 +306,7 @@ CREATE TABLE [dbo].[Report_Violation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Star]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[Star]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -321,7 +322,7 @@ CREATE TABLE [dbo].[Star](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Token]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[Token]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -332,7 +333,7 @@ CREATE TABLE [dbo].[Token](
 	[expiredDate] [datetime] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Transaction]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[Transaction]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -353,7 +354,7 @@ CREATE TABLE [dbo].[Transaction](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -376,7 +377,7 @@ CREATE TABLE [dbo].[User](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Violation]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[Violation]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -391,7 +392,7 @@ CREATE TABLE [dbo].[Violation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Volume]    Script Date: 11/12/2022 3:33:36 PM ******/
+/****** Object:  Table [dbo].[Volume]    Script Date: 11/12/2022 8:51:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -794,93 +795,93 @@ INSERT [dbo].[Book_Own] ([userId], [bookId], [recentTime], [recentChapterId]) VA
 GO
 SET IDENTITY_INSERT [dbo].[Category] ON 
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (1, N'Art')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (1, N'Art', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (2, N'Biography')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (2, N'Biography', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (3, N'Business')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (3, N'Business', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (4, N'Chick Lit')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (4, N'Chick Lit', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (5, N'Christian')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (5, N'Christian', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (6, N'Classics')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (6, N'Classics', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (7, N'Comics')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (7, N'Comics', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (8, N'Contemporary')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (8, N'Contemporary', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (9, N'Cookbooks')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (9, N'Cookbooks', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (10, N'Crime')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (10, N'Crime', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (12, N'Fantasy')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (12, N'Fantasy', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (13, N'Fiction')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (13, N'Fiction', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (14, N'Gay and Lesbian')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (14, N'Gay and Lesbian', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (15, N'Graphic Novels')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (15, N'Graphic Novels', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (16, N'Historical Fiction')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (16, N'Historical Fiction', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (17, N'History')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (17, N'History', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (18, N'Horror')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (18, N'Horror', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (19, N'Humor and Comedy')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (19, N'Humor and Comedy', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (20, N'Manga')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (20, N'Manga', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (21, N'Memoir')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (21, N'Memoir', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (22, N'Music')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (22, N'Music', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (23, N'Mystery')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (23, N'Mystery', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (24, N'Nonfiction')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (24, N'Nonfiction', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (25, N'Paranormal')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (25, N'Paranormal', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (26, N'Philosophy')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (26, N'Philosophy', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (27, N'Poetry')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (27, N'Poetry', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (28, N'Psychology')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (28, N'Psychology', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (29, N'Religion')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (29, N'Religion', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (30, N'Romance')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (30, N'Romance', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (31, N'Science')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (31, N'Science', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (32, N'Science Fiction')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (32, N'Science Fiction', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (33, N'Self Help')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (33, N'Self Help', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (34, N'Suspense')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (34, N'Suspense', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (35, N'Spirituality')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (35, N'Spirituality', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (36, N'Sports')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (36, N'Sports', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (37, N'Thriller')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (37, N'Thriller', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (38, N'Travel')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (38, N'Travel', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (39, N'Young Adult')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (39, N'Young Adult', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (40, N'Light Novel')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (40, N'Light Novel', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (41, N'Adventure')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (41, N'Adventure', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (42, N'Action')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (42, N'Action', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (43, N'Adult')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (43, N'Adult', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (44, N'Wars')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (44, N'Wars', 1)
 GO
-INSERT [dbo].[Category] ([id], [name]) VALUES (45, N'Slice of Life')
+INSERT [dbo].[Category] ([id], [name], [active]) VALUES (45, N'Slice of Life', 1)
 GO
 SET IDENTITY_INSERT [dbo].[Category] OFF
 GO
