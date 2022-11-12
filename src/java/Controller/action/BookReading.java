@@ -52,41 +52,37 @@ public class BookReading extends HttpServlet {
             ProductDAO productDAO = new ProductDAO();
             Chapter chapter;
 
-            if (thisbook.getAuthor().getUserId() != 0 && (!thisbook.issale()||thisbook.getAuthor().getUserId()==user.getId())) {
-                chapter = chd.getChapterById(Integer.parseInt(cid));
-            } else {
+            if (user == null) {
+                response.sendRedirect("./Login?origin=./BookDetail?id=" + request.getParameter("id"));
+                return;
+            }
 
-                if (user == null) {
-                    response.sendRedirect("./Login?origin=./BookDetail?id=" + request.getParameter("id"));
-                    return;
-                }
-
-                BookOwnDAO bookOwnDAO = new BookOwnDAO();
-                BookOwn bookOwn = bookOwnDAO.get(user, thisbook);
-                if (cid == null) {
-                    if (bookOwn != null && bookOwn.getRecentChapter() != null) {
-                        chapter = bookOwn.getRecentChapter();
-                        if (thisbook.getAuthor().getUser() != null) {
-                            product = productDAO.getByChapter(bookOwn.getRecentChapter());
-                        } else {
-                            product = productDAO.get(product);
-                        }
+            BookOwnDAO bookOwnDAO = new BookOwnDAO();
+            BookOwn bookOwn = bookOwnDAO.get(user, thisbook);
+            if (cid == null) {
+                if (bookOwn != null && bookOwn.getRecentChapter() != null) {
+                    chapter = bookOwn.getRecentChapter();
+                    if (thisbook.getAuthor().getUser() != null) {
+                        product = productDAO.getByChapter(bookOwn.getRecentChapter());
                     } else {
-                        chapter = chd.getFirstChapter(bookId);
-                        if (thisbook.getAuthor().getUser() != null) {
-                            product.setProductId(product.getProductId() + "-C1");
-                            product = productDAO.get(product);
-                        }
+                        product = productDAO.get(product);
                     }
                 } else {
-                    chapter = chd.getChapterById(Integer.parseInt(cid));
+                    chapter = chd.getFirstChapter(bookId);
                     if (thisbook.getAuthor().getUser() != null) {
-                        product.setProductId(product.getProductId() + "-C" + chapter.getNo());
+                        product.setProductId(product.getProductId() + "-C1");
+                        product = productDAO.get(product);
                     }
-                    product = productDAO.get(product);
                 }
+            } else {
+                chapter = chd.getChapterById(Integer.parseInt(cid));
+                if (thisbook.getAuthor().getUser() != null) {
+                    product.setProductId(product.getProductId() + "-C" + chapter.getNo());
+                }
+                product = productDAO.get(product);
+            }
 
-            if (!(user.isOwnProduct("B" + bookId) || user.isOwnProduct(product.getProductId()) || !thisbook.issale() || thisbook.getAuthor().getUser().equals(user)) && request.getSession().getAttribute("admin") == null) {
+            if (!(user.isOwnProduct("B" + bookId) || user.isOwnProduct(product.getProductId()) || (thisbook.getAuthor().getUser() != null && !thisbook.issale()) || thisbook.getAuthor().getUser().equals(user)) && request.getSession().getAttribute("admin") == null) {
                 response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("id"));
                 return;
             }
