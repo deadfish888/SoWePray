@@ -26,22 +26,13 @@ public class DeleteNovelController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        User user = (User) request.getSession().getAttribute("user");
-        if (user == null) {
-            response.sendRedirect("../Login");
-            return;
-        }
-        response.sendRedirect("./Novels");
+                    response.sendRedirect("./Novels");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
-        if (user == null) {
-            response.sendRedirect("../Login");
-            return;
-        }
         String page = request.getParameter("page");
         if (page == null || page.trim().length() == 0) {
             page = "1";
@@ -61,7 +52,7 @@ public class DeleteNovelController extends HttpServlet {
             BookDAO bd = new BookDAO();
             Book book = bd.getBookById(bookId);
             if (book.getAuthor().getUserId() != user.getId()) {
-                response.sendRedirect("../Login");
+                response.sendRedirect(request.getContextPath()+"/error.jsp");
                 return;
             }
 
@@ -69,6 +60,7 @@ public class DeleteNovelController extends HttpServlet {
             response.sendRedirect("./Novels?page=" + pageIndex);
         } catch (Exception ex) {
             Logger.getLogger(DeleteNovelController.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendRedirect(request.getContextPath()+"/error.jsp");
         }
     }
 

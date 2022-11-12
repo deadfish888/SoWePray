@@ -28,10 +28,6 @@ public class AddChapterController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
-        if (user == null) {
-            response.sendRedirect("../Login");
-            return;
-        }
         try {
             int bookId = Integer.parseInt(request.getParameter("id"));
              int volId = Integer.parseInt(request.getParameter("vid"));

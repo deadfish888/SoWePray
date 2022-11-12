@@ -11,7 +11,7 @@
         <title>Series of ${sessionScope.user.name}</title>
     </head>
     <body>
-        <div class="wrapper">
+        <div class="wrapper" style="height: 100vh">
             <nav id="sidebar" class="bg-dark col-md-2 text-light" style="display: block; float: left; padding: 5px">
                 <div style="display: block; margin: auto; text-align: center; margin-top: 2em">
                     <img src="${context}/images/default.png" width="100em" height="100em" class="rounded mx-auto d-block" alt="..." style="border:2px solid #fff; display: block; margin: auto">
@@ -81,6 +81,12 @@
                             </div>
 
                         </div>
+                        <style>
+                            a.disabled {
+                                pointer-events: none;
+                                cursor: default;
+                            }
+                        </style>
                         <div class="table-responsive">
                             <table class="table user-table " id="tablepro">
                                 <thead>
@@ -108,16 +114,7 @@
                                             <td><span class="fa ${book.issale()? "fa-check-square-o":"fa-times-circle"}"></span></td>
                                             <td><a class="btn btn-primary" href="./UpdateNovel?id=${book.id}"><i class="fa fa-pencil-square" aria-hidden="true"></i></a></td>
                                             <td><a class="btn btn-secondary" href="./Novels/TOC?id=${book.id}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
-                                            <td>
-                                                <form action="Disable" method="get">
-                                                    <label class="switch">
-                                                        <a href="./ChangeStatus?id=${book.id}" class="change-link" data="${book.id}">
-                                                            <input id="myButton"  type="checkbox" name="status" ${book.status() ? "checked": null}>
-                                                            <span class="slider"></span>
-                                                        </a>
-                                                    </label>
-                                                </form>
-                                            </td>
+                                            <td><a class="btn ${book.status()?"btn-primary":"btn-danger"}"><i class="fa ${book.status()? "fa-check-square-o":"fa-ban"}"></i></a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>

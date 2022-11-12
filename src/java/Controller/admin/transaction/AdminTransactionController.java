@@ -69,10 +69,14 @@ public class AdminTransactionController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Transaction tempTrans = new Transaction();
+        String transId = request.getParameter("transId");
         String userId = request.getParameter("userId");
         String type = request.getParameter("type");
         String status = request.getParameter("status");
         String productId = request.getParameter("productId");
+        if (transId != null && !transId.equals("")) {
+            tempTrans.setTransactionId(Long.parseLong(transId));
+        }
         if (userId != null && !userId.equals("")) {
             User user = new User();
             user.setId(Integer.parseInt(userId));

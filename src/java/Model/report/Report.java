@@ -7,6 +7,7 @@ package Model.report;
 
 import Model.action.Comment;
 import Model.auth.User;
+import Model.payment.Transaction;
 import Model.product.Book;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -23,11 +24,12 @@ public class Report {
     // 1. Book
     // 2. Comment
     // 3. Ticket
-    // 4. Transaction
+    // 5. Transaction
     private String reportTypeName;
     private User userR,userO;
     private Book bookO;
     private Comment comO;
+    private Transaction transO;
     private ArrayList<Violation> violates;
 
     public Report() {
@@ -47,13 +49,30 @@ public class Report {
 
     public void setReportType(int reportType) {
         this.reportType = reportType;
-        if (reportType == 1){
-            this.reportTypeName = "Book";
-        }else if(reportType ==2){
-            this.reportTypeName = "Comment";
+        switch (reportType) {
+            case 1:
+                this.reportTypeName = "Book";
+                break;
+            case 2:
+                this.reportTypeName = "Comment";
+                break;
+            case 5:
+                this.reportTypeName = "Transaction";
+                break;
+            default:
+                break;
         }
     }
 
+    public Transaction getTransO() {
+        return transO;
+    }
+
+    public void setTransO(Transaction transO) {
+        this.transO = transO;
+    }
+
+    
     public int getUserId() {
         return userId;
     }

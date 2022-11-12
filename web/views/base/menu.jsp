@@ -27,7 +27,6 @@
                 <c:when test="${!empty sessionScope.user.is_super()}">
                 <li><a href="${context}/User/Profile">My profile</a></li>
                 <li><a href="${context}/User/Bookshelf">Bookshelf</a></li>
-                <li><a href="${context}/Favourite">Favor</a></li>
                 </c:when>
             </c:choose>
 

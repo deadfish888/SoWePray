@@ -221,7 +221,7 @@ public class ChapterDAO {
                 Product product = new Product("B" + book.getId() + "-C" + cd.getChapterNo(rs.getInt(1)));
                 product.setBook(book);
                 chapter.setId(rs.getInt(1));
-                product.setChapter(chapter);
+                product.setChapter(chapter);product.caculatePrice();
                 productDAO.insert(product);
                 productDAO.updateBookPrice(book);
                 return rs.getInt(1);
@@ -303,7 +303,29 @@ public class ChapterDAO {
             stm.setString(3, chapter.getContent());
             stm.setInt(4, chapter.getId());
             int n = stm.executeUpdate();
-            if (n != 0) {
+            
+            return n;
+        } catch (SQLException ex) {
+            Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
+    public int editChapterNovel(Chapter chapter) {
+        try {
+            String sql = "UPDATE [dbo].[Chapter]\n"
+                    + "   SET [title] = ? "
+                    + "      ,[status] = ?"
+                    + "      ,[content] = ? "
+                    + " OUTPUT [deleted].[status]"
+                    + " WHERE [id] = ? ";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, chapter.getTitle());
+            stm.setBoolean(2, chapter.isStatus());
+            stm.setString(3, chapter.getContent());
+            stm.setInt(4, chapter.getId());
+            rs = stm.executeQuery();
+            if (rs.next() && !rs.getBoolean(1)) {
                 BookDAO bookDAO = new BookDAO();
                 Book book = bookDAO.getByVolume(chapter.getVolumeId());
 
@@ -315,7 +337,7 @@ public class ChapterDAO {
                 productDAO.update(product);
                 productDAO.updateBookPrice(book);
             }
-            return n;
+            return 1;
         } catch (SQLException ex) {
             Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -636,6 +658,21 @@ public class ChapterDAO {
             Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
+    }
+
+    private boolean checkChapterNovelDone(Chapter chapter) {
+        try {
+            String sql ="SELECT [status]"
+                    + "    FROM [Chapter]"
+                    + "   WHERE [id] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, chapter.getId());
+            rs = stm.executeQuery();
+            if (rs.next()) return rs.getBoolean(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
     }
 
 }

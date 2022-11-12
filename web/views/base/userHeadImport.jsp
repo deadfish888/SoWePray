@@ -37,6 +37,9 @@
                 text-transform: uppercase;
                 white-space: nowrap;
             }
+            .wrapper{
+                height: 100vh;
+            }
         </style>
     </head>
 </html>

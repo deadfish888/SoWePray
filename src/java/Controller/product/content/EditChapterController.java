@@ -79,7 +79,7 @@ public class EditChapterController extends HttpServlet {
         ChapterDAO cd = new ChapterDAO();
         chapter.setNo(cd.getChapterNo(id));
 
-        if (cd.editChapter(chapter) == 0) {
+        if (cd.editChapterNovel(chapter) == 0) {
             BookDAO bd = new BookDAO();
             VolumeDAO vd = new VolumeDAO();
 

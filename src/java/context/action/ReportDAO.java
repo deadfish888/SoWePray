@@ -6,9 +6,11 @@ package context.action;
 
 import Model.action.Comment;
 import Model.auth.User;
+import Model.payment.Transaction;
 import Model.report.Report;
 import Model.report.Violation;
 import context.DBContext;
+import context.payment.TransactionDAO;
 import context.product.BookDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -188,10 +190,18 @@ public class ReportDAO {
             }
             sql += " ORDER BY [sent] DESC";
             stm = cnn.prepareStatement(sql);
-            if (reportType.equals("book")) {
-                reportType = "1";
-            } else if (reportType.equals("comment")) {
-                reportType = "2";
+            switch (reportType) {
+                case "book":
+                    reportType = "1";
+                    break;
+                case "comment":
+                    reportType = "2";
+                    break;
+                case "transaction":
+                    reportType="5";
+                    break;
+                default:
+                    break;
             }
             stm.setString(1, "%" + reportType + "%");
             if (!status.equals("")) {
@@ -277,6 +287,13 @@ public class ReportDAO {
                     r.setComO(cm);
                     BookDAO bd = new BookDAO();
                     r.setBookO(bd.getBookById(cm.getBookId()));
+                }
+                if(r.getReportType() == 5){
+                    TransactionDAO trd = new TransactionDAO();
+                    Transaction trs = new Transaction();
+                    trs.setTransactionId(rs.getInt(5));
+                    trs = trd.get(trs);
+                    r.setTransO(trs);
                 }
                 r.setNote(rs.getString(6));
                 r.setSent(rs.getTimestamp(7));

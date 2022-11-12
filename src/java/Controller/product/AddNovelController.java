@@ -30,12 +30,6 @@ public class AddNovelController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        User user = (User) request.getSession().getAttribute("user");
-        if (user == null) {
-            response.sendRedirect("../Login");
-            return;
-        }
-        CategoryDAO cd = new CategoryDAO();
         ArrayList<Category> cates = cd.getAllActiveCategory();
         request.setAttribute("categories", cates);
         request.setAttribute("service", "Create");
@@ -46,10 +40,6 @@ public class AddNovelController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
-        if (user == null) {
-            response.sendRedirect("../Login");
-            return;
-        }
         try {
             String title = mu.fieldString(request.getParameter("title"), "Required Title!");
             String[] category = request.getParameterValues("categoryId");

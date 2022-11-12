@@ -17,7 +17,7 @@
         <title>Create Your Novel</title>
     </head>
     <body>
-        <div class="wrapper">
+        <div class="wrapper" style="height: 100vh">
             <nav id="sidebar" class="bg-dark col-md-2 text-light" style="display: block; float: left; padding: 5px;">
                 <div style="display: block; margin: auto; text-align: center; margin-top: 2em">
                     <img src="${context}/images/default.png" width="100em" height="100em" class="rounded mx-auto d-block" alt="..." style="border:2px solid #fff; display: block; margin: auto">
@@ -147,7 +147,7 @@
                                     </c:if>
                                 </div>
                             </form>
-                            <form action="./Status" method="get">
+                            <form action="./Delete" method="post">
                                 <input type="hidden" name="id" value="${book.id}">
                                 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
