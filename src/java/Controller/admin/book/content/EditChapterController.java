@@ -9,7 +9,6 @@ import context.product.BookDAO;
 import context.product.content.ChapterDAO;
 import context.product.content.VolumeDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,13 +16,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import utils.MyUtil;
+import utils.Validator;
 
 /* @author ACER */
 @WebServlet(name = "AdEditChapterController", urlPatterns = {"/Admin/Book/EditChapter"})
 public class EditChapterController extends HttpServlet {
 
-    MyUtil mu = new MyUtil();
+    Validator mu = new Validator();
     BookDAO bd = new BookDAO();
     VolumeDAO vd = new VolumeDAO();
     ChapterDAO cd = new ChapterDAO();

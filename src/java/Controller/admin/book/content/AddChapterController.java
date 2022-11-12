@@ -17,13 +17,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import utils.MyUtil;
+import utils.Validator;
 
 /* @author ACER */
 @WebServlet(name = "AdAddChapterController", urlPatterns = {"/Admin/Book/AddChapter"})
 public class AddChapterController extends HttpServlet {
 
-    MyUtil mu = new MyUtil();
+    Validator mu = new Validator();
     BookDAO bd = new BookDAO();
     VolumeDAO vd = new VolumeDAO();
     ChapterDAO cd = new ChapterDAO();

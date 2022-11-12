@@ -7,21 +7,28 @@ package Controller.product;
 import Model.auth.User;
 import Model.product.Book;
 import Model.product.Category;
+import context.product.AuthorDAO;
 import context.product.BookDAO;
 import context.product.CategoryDAO;
 import context.product.ProductDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import utils.Validator;
 
 /* @author ACER */
 @WebServlet(name = "UpdateNovelController", urlPatterns = {"/User/UpdateNovel"})
 public class UpdateNovelController extends HttpServlet {
+
+    Validator mu = new Validator();
+    BookDAO bd = new BookDAO();
+    CategoryDAO cd = new CategoryDAO();
+    AuthorDAO ad = new AuthorDAO();
+        ProductDAO pd = new ProductDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -32,17 +39,14 @@ public class UpdateNovelController extends HttpServlet {
             return;
         }
         int bookId = Integer.parseInt(request.getParameter("id"));
-        CategoryDAO cd = new CategoryDAO();
         ArrayList<Category> cates = cd.getAllCategory();
         request.setAttribute("categories", cates);
-        BookDAO bd = new BookDAO();
         Book book = bd.getBookById(bookId);
         if (book.getAuthor().getUserId() != user.getId()) {
             response.sendRedirect("../Login");
             return;
         }
-        ProductDAO pd = new ProductDAO();
-        boolean issold = pd.countOwner(bookId)>0;
+        boolean issold = pd.countOwner(bookId) > 0;
         request.setAttribute("issold", issold);
         request.setAttribute("book", book);
         request.setAttribute("service", "Update");
@@ -52,42 +56,57 @@ public class UpdateNovelController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String title = request.getParameter("title");
-        String[] category = request.getParameterValues("categoryId");
         User user = (User) request.getSession().getAttribute("user");
-        String description = request.getParameter("description");
-        String img = request.getParameter("image");
-
-        Book book = new Book();
-        book.setId(id);
-        book.setTitle(title);
-        book.setCategory(category);
-        book.setPrice(0);
-        book.setIssale(false);
-        book.setImage(img.trim().equals("") ? null : img);
-        book.setDescription(description);
-        if (user.is_super() >= 3) {
-            float price = Float.parseFloat(request.getParameter("price"));
-            boolean issale = (request.getParameter("issale") != null);
-            book.setPrice(price);
-            book.setIssale(issale);
+        if (user == null) {
+            response.sendRedirect("../Login");
+            return;
         }
+        int id = 0;
+        try {
+            id = Integer.parseInt(request.getParameter("id"));
+            Book old = bd.getBookById(id);
+            if (old.getAuthor().getUserId() != user.getId()) {
+                response.sendRedirect("../Login");
+                return;
+            }
+            String title = mu.fieldString(request.getParameter("title"), "Required Title!");
+            String[] category = request.getParameterValues("categoryId");
+            if (category == null) {
+                throw new Exception("Genre required!");
+            }
+            String description = mu.fieldString(request.getParameter("description"), "Required Description!");
+            String img = request.getParameter("image");
 
-        BookDAO bd = new BookDAO();
-        if (bd.editNovel(book) == 0) {
-            CategoryDAO cd = new CategoryDAO();
+            Book book = new Book();
+            book.setId(id);
+            book.setTitle(title);
+            book.setCategory(category);
+            book.setPrice(0);
+            book.setIssale(false);
+            book.setImage(img.trim().equals("") ? null : img);
+            book.setDescription(description);
+            if (user.is_super() >= 3) {
+                float price = (float) ( mu.fieldDouble(request.getParameter("price"), "Wrong format price!")>0.1?0.1:mu.fieldDouble(request.getParameter("price"), "Wrong format price!"));
+                boolean issale = (request.getParameter("issale") != null);
+                book.setPrice(price);
+                book.setIssale(issale);
+            }
+
+            bd.editNovel(book);
+            response.sendRedirect("./Novels");
+        } catch (NumberFormatException e) {
+            response.sendRedirect(request.getContextPath() + "/error.jsp");
+        } catch (Exception e) {
             ArrayList<Category> cates = cd.getAllCategory();
             request.setAttribute("categories", cates);
-            boolean issold = bd.checkNovelSold(id);
+            boolean issold = pd.countOwner(id)>0;
             request.setAttribute("issold", issold);
             request.setAttribute("service", "Update");
-            request.setAttribute("message", "Failed successfully!");
-            request.setAttribute("book", book);
+            request.setAttribute("message", e.getMessage());
+            request.setAttribute("book", bd.getBookById(id));
             request.getRequestDispatcher("../views/user/NovelDetail.jsp").forward(request, response);
-        } else {
-            response.sendRedirect("./Novels");
         }
+
     }
 
     @Override
