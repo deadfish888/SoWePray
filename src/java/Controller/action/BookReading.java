@@ -38,11 +38,6 @@ public class BookReading extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            if (request.getSession().getAttribute("user") == null) {
-                response.sendRedirect("./Login?origin=./BookDetail?id=" + request.getParameter("id"));
-                return;
-            }
-
             User user = (User) request.getSession().getAttribute("user");
 
             int bookId = Integer.parseInt(request.getParameter("id"));
@@ -57,40 +52,49 @@ public class BookReading extends HttpServlet {
             ProductDAO productDAO = new ProductDAO();
             Chapter chapter;
 
-            BookOwnDAO bookOwnDAO = new BookOwnDAO();
-            BookOwn bookOwn = bookOwnDAO.get(user, thisbook);
-            if (cid == null) {
-                if (bookOwn != null && bookOwn.getRecentChapter() != null) {
-                    chapter = bookOwn.getRecentChapter();
-                    if (thisbook.getAuthor().getUser() != null) {
-                        product = productDAO.getByChapter(bookOwn.getRecentChapter());
+            if (thisbook.getAuthor().getUserId() != 0 && !thisbook.issale()) {
+                chapter = chd.getChapterById(Integer.parseInt(cid));
+            } else {
+
+                if (user == null) {
+                    response.sendRedirect("./Login?origin=./BookDetail?id=" + request.getParameter("id"));
+                    return;
+                }
+
+                BookOwnDAO bookOwnDAO = new BookOwnDAO();
+                BookOwn bookOwn = bookOwnDAO.get(user, thisbook);
+                if (cid == null) {
+                    if (bookOwn != null && bookOwn.getRecentChapter() != null) {
+                        chapter = bookOwn.getRecentChapter();
+                        if (thisbook.getAuthor().getUser() != null) {
+                            product = productDAO.getByChapter(bookOwn.getRecentChapter());
+                        } else {
+                            product = productDAO.get(product);
+                        }
                     } else {
-                        product = productDAO.get(product);
+                        chapter = chd.getFirstChapter(bookId);
+                        if (thisbook.getAuthor().getUser() != null) {
+                            product.setProductId(product.getProductId() + "-C1");
+                            product = productDAO.get(product);
+                        }
                     }
                 } else {
-                    chapter = chd.getFirstChapter(bookId);
+                    chapter = chd.getChapterById(Integer.parseInt(cid));
                     if (thisbook.getAuthor().getUser() != null) {
-                        product.setProductId(product.getProductId() + "-C1");
-                        product = productDAO.get(product);
+                        product.setProductId(product.getProductId() + "-C" + chapter.getNo());
                     }
+                    product = productDAO.get(product);
                 }
-            } else {
-                chapter = chd.getChapterById(Integer.parseInt(cid));
-                if (thisbook.getAuthor().getUser() != null) {
-                    product.setProductId(product.getProductId() + "-C" + chapter.getNo());
-                }
-                product = productDAO.get(product);
-            }
 
-            bookOwnDAO.updateReadingStatus(user, thisbook, chapter);
-            if (!(user.isOwnProduct("B" + bookId) || user.isOwnProduct(product.getProductId())) && request.getSession().getAttribute("admin") == null) {
-                response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("id"));
-                return;
+                bookOwnDAO.updateReadingStatus(user, thisbook, chapter);
+                if (!(user.isOwnProduct("B" + bookId) || user.isOwnProduct(product.getProductId())) && request.getSession().getAttribute("admin") == null) {
+                    response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("id"));
+                    return;
+                }
+                request.setAttribute("product", product);
             }
 
             String[] listr = chapter.getContent().split("\n");
-            request.setAttribute("product", product);
-
 //        ArrayList<Chapter> chap = chd.getChapterByVolumeIDandBookID(id, thisbook.getId());
 //            request.setAttribute("bookProductId", "B" + bookId);
             request.setAttribute("listr", listr);

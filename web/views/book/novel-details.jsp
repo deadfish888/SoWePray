@@ -239,6 +239,11 @@
                                             <c:forEach items="${requestScope.chapterProductList}" var="chapProduct">
                                                 <c:if test="${chapProduct.chapter.volumeId == vol.id}">
                                                     <c:choose>
+                                                        <c:when test="${!book.issale()}">
+                                                            <a href="BookReading?id=${book.id}&cid=${chapProduct.chapter.id}">
+                                                                <p><i class="fa fa-unlock"></i> ${chapProduct.chapter.title}</p>
+                                                            </a>
+                                                        </c:when>
                                                         <c:when test="${!empty sessionScope.admin || (! empty sessionScope.user && (requestScope.own || productOwnList.contains(chapProduct) || !book.issale()) || sessionScope.user.id eq book.author.userId)}">
                                                             <a href="BookReading?id=${book.id}&cid=${chapProduct.chapter.id}">
                                                                 <p><i class="fa fa-unlock"></i> ${chapProduct.chapter.title}</p>

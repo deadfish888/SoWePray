@@ -21,7 +21,8 @@
                     <img src="${context}/images/default.png" width="100em" height="100em" class="rounded mx-auto d-block" alt="..." style="border:2px solid #fff; display: block; margin: auto">
                     <div class="sidebar-header">
                         <h3 class="" style="margin-bottom: 0">Hi, ${sessionScope.user.username}</h3>
-                        <p>UserID: ${sessionScope.user.id}</p>
+                        <p>UserID: ${sessionScope.user.id} ${sessionScope.user.is_super() eq 3?"- <i class=\"fa fa-dollar\"></i>":""}</p>
+                        
                     </div>
 
                 </div>
