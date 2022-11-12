@@ -86,16 +86,25 @@
                                             </div>
                                             <div class="row mb-3">
                                                 <label for="status" class="col-sm-2 col-form-label">Status <span style="color:red">*</span></label>
-                                                <div class="col-sm-10">
+                                                <c:if test="${chap.status}">
+                                                    <div class="col-sm-10">
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="status" id="status1" value="finished" ${requestScope.chap.status? "checked" : null}>
+                                                        Done
+                                                    </div>
+                                                </div>
+                                                </c:if>
+                                                <c:if test="${!chap.status}">
+                                                    <div class="col-sm-10">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="status" id="status1" value="finished" ${requestScope.chap.status? "checked" : null} >
                                                         <label class="form-check-label" for="status1">Finished</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="status" id="status2" value="unfinished" ${(!requestScope.chap.status)? "checked" : null}>
+                                                        <input class="form-check-input" type="radio" name="status" id="status2" value="unfinished" ${(!requestScope.chap.status)? "checked" : null} >
                                                         <label class="form-check-label" for="status2">Unfinished</label>
                                                     </div>
                                                 </div>
+                                                </c:if>
                                             </div>
                                             <div class="col-12">
                                                 <label for="content" class="form-label">Content<span style="color:red">*</span></label>
