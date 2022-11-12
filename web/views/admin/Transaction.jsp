@@ -430,7 +430,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="modal-footer" style="text-align: center">
-                                                                                <input name="rejectReason" type="text" value="Success" required style="display: none"/>
+                                                                                    <input name="rejectReason" type="text" value="Success" required style="display: none"/>
                                                                                     <input type="submit" class="primary text-center" value="Confirm"/>
                                                                                 </div>
                                                                             </div>

@@ -7,6 +7,7 @@ package Controller.payment;
 
 import Model.payment.Transaction;
 import Model.auth.User;
+import context.payment.PaymentAccountDAO;
 //import context.payment.PaymentMethodDAO;
 import context.payment.TransactionDAO;
 import java.io.IOException;
@@ -33,6 +34,9 @@ public class ViewWalletController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        User user = (User) request.getSession().getAttribute("user");
+        PaymentAccountDAO paymentAccountDAO = new PaymentAccountDAO();
+        user.setPaymentAccount(paymentAccountDAO.get(user.getPaymentAccount()));
         TransactionDAO transDAO = new TransactionDAO();
         ArrayList<Transaction> transactionList = transDAO.getTransactionList((User) request.getSession().getAttribute("user"));
         request.setAttribute("transList", transactionList);
