@@ -89,6 +89,7 @@ public class BookReading extends HttpServlet {
                 || (thisbook.getAuthor().getUser() != null
                 && thisbook.getAuthor().getUser().equals(user))))
                 && request.getSession().getAttribute("admin") == null)  {
+            request.getSession().setAttribute("error", "Please buy this book to continue reading.");
             response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("id"));
             return;
         }
