@@ -125,7 +125,7 @@
                                                     <div class="form-group">
                                                         
                                                         <div class="col-md-12">
-                                                            <input type="text" placeholder="${s.name}"
+                                                            <input type="text" placeholder="${s.name}" 
                                                                    class="form-control ps-0 form-control-line" name="fullname" style="border: none;background-color:  inherit">
                                                         </div>
                                                     </div>

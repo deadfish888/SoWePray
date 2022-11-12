@@ -103,9 +103,10 @@ public class AuthorController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("fullname") != null) {
+        if (!request.getParameter("fullname").isEmpty()) {
             int id = Integer.parseInt(request.getParameter("id_au"));
             String name = request.getParameter("fullname");
+            System.out.println(name);
             author.updateAu(id, name);
         }
 
