@@ -82,12 +82,12 @@ public class BookReading extends HttpServlet {
                 product = productDAO.get(product);
             }
 
-            bookOwnDAO.updateReadingStatus(user, thisbook, chapter);
-            if (!(user.isOwnProduct("B" + bookId) || user.isOwnProduct(product.getProductId())) && request.getSession().getAttribute("admin") == null) {
+            if (!(user.isOwnProduct("B" + bookId) || user.isOwnProduct(product.getProductId()) || !thisbook.issale() || thisbook.getAuthor().getUser().equals(user)) && request.getSession().getAttribute("admin") == null) {
                 response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("id"));
                 return;
             }
 
+            bookOwnDAO.updateReadingStatus(user, thisbook, chapter);
             String[] listr = chapter.getContent().split("\n");
             request.setAttribute("product", product);
 

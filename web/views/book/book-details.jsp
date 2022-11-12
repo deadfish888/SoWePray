@@ -230,8 +230,8 @@
                                     </c:when>
                                 </c:choose>    
                                 <div style="color: red">
-                                    ${sessionScope.notEnoughBalance}            
-                                    <%request.getSession().removeAttribute("notEnoughBalance");%>
+                                    ${sessionScope.error}            
+                                    <%request.getSession().removeAttribute("error");%>
                                 </div>
                             </div>
 
@@ -275,7 +275,7 @@
 
                         </div>  
                     </div>
-                   <div class="container-fluid mt-5">
+                    <div class="container-fluid mt-5">
                         <h3>${(! empty requestScope.comments)? requestScope.comments.size() : "0"} comment(s)</h3>
                         <div class="col-12">
                             <form role="form" action="Comment" method="get">
@@ -285,7 +285,7 @@
                                 </div>
                                 <input type="submit" value="Post">
                             </form> 
-                                <table class="table" style="margin-top: 10px">
+                            <table class="table" style="margin-top: 10px">
                                 <style>
                                     form {
                                         margin-bottom: 0px;
@@ -588,8 +588,8 @@
                                         <a href="BookDetail?id=${book.id}">
                                             <h2>${book.title}</h2>
                                             <h3 style="font-size: 0.85em;"><i>${book.author.name}</i></h3>
-                                            <c:if test="${book.author.userId==0}">
-                                                <c:if test="${book.issale()}">
+                                                    <c:if test="${book.author.userId==0}">
+                                                        <c:if test="${book.issale()}">
                                                     <p>
                                                         <del>$${book.getPrice()}</del> 
                                                         <strong>$${5.00}</strong>
@@ -638,14 +638,14 @@
         <script src="assets/js/jquery.scrollex.min.js"></script>
         <script src="assets/js/main.js"></script>
         <script>
-            const url_string = window.location.href;
-            const url = new URL(url_string);
-            var cmtId = url.searchParams.get("cmtId");
-            if (cmtId != null){
-                var id = document.getElementById("cmt"+cmtId);
-                        id.scrollIntoView({block: "center"});
-                        id.classList.add("current");
-            }
+                                                                    const url_string = window.location.href;
+                                                                    const url = new URL(url_string);
+                                                                    var cmtId = url.searchParams.get("cmtId");
+                                                                    if (cmtId != null) {
+                                                                        var id = document.getElementById("cmt" + cmtId);
+                                                                        id.scrollIntoView({block: "center"});
+                                                                        id.classList.add("current");
+                                                                    }
         </script>
 
     </body>

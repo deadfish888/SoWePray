@@ -11,6 +11,7 @@ import Model.product.Product;
 //import context.payment.PaymentMethodDAO;
 //import context.product.BookOwnDAO;
 import context.product.ProductOwnDAO;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -211,6 +212,17 @@ public class User {
             return user.getId() == this.id;
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash + this.id;
+        hash = 31 * hash + Objects.hashCode(this.name);
+        hash = 31 * hash + Objects.hashCode(this.email);
+        hash = 31 * hash + Objects.hashCode(this.phone);
+        hash = 31 * hash + Objects.hashCode(this.username);
+        return hash;
     }
     
 }

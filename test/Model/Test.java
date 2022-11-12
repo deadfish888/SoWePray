@@ -4,7 +4,9 @@
  */
 package Model;
 
+import Model.auth.User;
 import Model.product.Book;
+import Model.product.Product;
 import context.product.AuthorDAO;
 import context.product.BookDAO;
 import context.product.CategoryDAO;
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 public class Test {
 
     public static void main(String[] args) {
-//        BookDAO bd = new BookDAO();
+        BookDAO bd = new BookDAO();
 //        CategoryDAO cd = new CategoryDAO();
 //        ArrayList<Book> books = bd.getAllBook();
 //
@@ -73,11 +75,12 @@ public class Test {
 //            author.setAuthorName(t.getName());
 //            dao.add(author);
 //        });
-        System.out.println("INSERT INTO [Category]\n"
-                    + "           ([name]\n"
-                    + "           ,[active])\n"
-                    + "     VALUES\n"
-                    + "           (?,?)");
+        Product product = new Product("B33");
+        
+            Book thisbook = bd.getBookById(33);
+            User u = new User();
+            u.setId(110);
+            System.out.println(thisbook.getAuthor().getUser().equals(u));
 
     }
 }

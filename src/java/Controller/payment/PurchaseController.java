@@ -44,75 +44,76 @@ public class PurchaseController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-
-            PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
-            TransactionDAO transDAO = new TransactionDAO();
-
-            float amount = Float.parseFloat(request.getParameter("amount"));
-
             User user = (User) request.getSession().getAttribute("user");
+            String bookId = request.getParameter("bookId");
 
-            if (amount > user.getPaymentAccount().getBalance()) {
-                request.getSession().setAttribute("notEnoughBalance", "Your wallet have not enough coin to buy this book. Please deposit into wallet and try again.");
-                response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("bookId"));
-            } else {
-                float walletBalance = user.getPaymentAccount().getBalance() - amount;
-                user.getPaymentAccount().setBalance(walletBalance);
+            if (request.getParameter("password").equals(user.getPassword())) {
+                PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
+                TransactionDAO transDAO = new TransactionDAO();
 
-                Transaction transaction = new Transaction();
-                transaction.setUser(user);
-                transaction.setAmount(amount);
-                transaction.setBalanceAfter(walletBalance);
-                transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-                transaction.setType(3);
-                transaction.setStatus(3);
+                float amount = Float.parseFloat(request.getParameter("amount"));
 
-                String bookId = request.getParameter("bookId");
-                ProductDAO productDAO = new ProductDAO();
-                Product product = new Product("B" + bookId);
-                product = productDAO.get(product);
-
-                transaction.setProduct(product);
-                transaction.setDescription("Buy " + product.toString() + ".");
-                transDAO.insert(transaction);
-
-                payAccDAO.update(user.getPaymentAccount());
-                User author = product.getBook().getAuthor().getUser();
-                if (author != null) {
-                    Transaction auTransaction = new Transaction();
-                    auTransaction.setUser(author);
-                    auTransaction.setAmount(amount);
-                    auTransaction.setBalanceAfter(author.getPaymentAccount().getBalance() + amount);
-                    auTransaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-                    auTransaction.setType(4);
-                    auTransaction.setStatus(3);
-                    auTransaction.setProduct(product);
-                    auTransaction.setDescription("Sell " + product.toString() + ".");
-                    transDAO.insert(auTransaction);
-
-                    author.getPaymentAccount().setBalance(author.getPaymentAccount().getBalance() + amount);
-                    payAccDAO.update(author.getPaymentAccount());
-                }
-
-                BookOwnDAO bookOwnDAO = new BookOwnDAO();
-                Book book = new Book();
-                book.setId(Integer.parseInt(bookId));
-                bookOwnDAO.insert(book, user);
-
-                ProductOwnDAO productOwnDAO = new ProductOwnDAO();
-                if (author != null) {
-                    ArrayList<Product> chapterProducts = productDAO.getChapterByBook(book);
-                    for (Product p : chapterProducts) {
-                        if (!user.isOwnProduct(p.getProductId())) {
-                            productOwnDAO.insert(p, user);
-                        }
-                    }
+                if (amount > user.getPaymentAccount().getBalance()) {
+                    request.getSession().setAttribute("error", "Your wallet have not enough coin to buy this book. Please deposit into wallet and try again.");
                 } else {
-                    productOwnDAO.insert(product, user);
-                }
+                    float walletBalance = user.getPaymentAccount().getBalance() - amount;
+                    user.getPaymentAccount().setBalance(walletBalance);
 
-                response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + bookId);
+                    Transaction transaction = new Transaction();
+                    transaction.setUser(user);
+                    transaction.setAmount(amount);
+                    transaction.setBalanceAfter(walletBalance);
+                    transaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+                    transaction.setType(3);
+                    transaction.setStatus(3);
+
+                    ProductDAO productDAO = new ProductDAO();
+                    Product product = new Product("B" + bookId);
+                    product = productDAO.get(product);
+
+                    transaction.setProduct(product);
+                    transaction.setDescription("Buy " + product.toString() + ".");
+                    transDAO.insert(transaction);
+
+                    payAccDAO.update(user.getPaymentAccount());
+                    User author = product.getBook().getAuthor().getUser();
+                    if (author != null) {
+                        Transaction auTransaction = new Transaction();
+                        auTransaction.setUser(author);
+                        auTransaction.setAmount(amount);
+                        auTransaction.setBalanceAfter(author.getPaymentAccount().getBalance() + amount);
+                        auTransaction.setTransactionTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+                        auTransaction.setType(4);
+                        auTransaction.setStatus(3);
+                        auTransaction.setProduct(product);
+                        auTransaction.setDescription("Sell " + product.toString() + ".");
+                        transDAO.insert(auTransaction);
+
+                        author.getPaymentAccount().setBalance(author.getPaymentAccount().getBalance() + amount);
+                        payAccDAO.update(author.getPaymentAccount());
+                    }
+
+                    BookOwnDAO bookOwnDAO = new BookOwnDAO();
+                    Book book = new Book();
+                    book.setId(Integer.parseInt(bookId));
+                    bookOwnDAO.insert(book, user);
+
+                    ProductOwnDAO productOwnDAO = new ProductOwnDAO();
+                    if (author != null) {
+                        ArrayList<Product> chapterProducts = productDAO.getChapterByBook(book);
+                        for (Product p : chapterProducts) {
+                            if (!user.isOwnProduct(p.getProductId())) {
+                                productOwnDAO.insert(p, user);
+                            }
+                        }
+                    } else {
+                        productOwnDAO.insert(product, user);
+                    }
+                }
+            } else {
+                request.getSession().setAttribute("error", "Wrong password.");
             }
+            response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + bookId);
         } catch (IOException | NumberFormatException e) {
             response.sendRedirect(request.getContextPath() + "/Home");
         }

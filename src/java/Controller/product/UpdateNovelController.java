@@ -39,7 +39,7 @@ public class UpdateNovelController extends HttpServlet {
             return;
         }
         int bookId = Integer.parseInt(request.getParameter("id"));
-        ArrayList<Category> cates = cd.getAllCategory();
+        ArrayList<Category> cates = cd.getAllActiveCategory();
         request.setAttribute("categories", cates);
         Book book = bd.getBookById(bookId);
         if (book.getAuthor().getUserId() != user.getId()) {
@@ -97,7 +97,7 @@ public class UpdateNovelController extends HttpServlet {
         } catch (NumberFormatException e) {
             response.sendRedirect(request.getContextPath() + "/error.jsp");
         } catch (Exception e) {
-            ArrayList<Category> cates = cd.getAllCategory();
+            ArrayList<Category> cates = cd.getAllActiveCategory();
             request.setAttribute("categories", cates);
             boolean issold = pd.countOwner(id)>0;
             request.setAttribute("issold", issold);

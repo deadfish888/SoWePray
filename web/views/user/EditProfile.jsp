@@ -116,7 +116,7 @@
                                         Phone number<span style="color: red">*</span>
                                     </th>
                                     <td colspan="4">
-                                        <input type="tel" name="phone" value="${sessionScope.user.phone}" required/>
+                                        <input type="tel" name="phone" value="${sessionScope.user.phone}" pattern="^0[0-9]{9}$" required/>
                                     <div style="color: red">${sessionScope.phoneError}</div>
                                     <%request.getSession().removeAttribute("phoneError");%>
                                 </td>
