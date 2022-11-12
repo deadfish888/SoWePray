@@ -23,7 +23,7 @@ public class Validator {
         Pattern pattern = Pattern.compile(regex,
                 Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(phone);
-        return getString(phone) && !matcher.find() && !(phone.length() == 10);
+        return getString(phone) && !matcher.find() && phone.length() == 10;
     }
 
     public boolean getName(String name) {

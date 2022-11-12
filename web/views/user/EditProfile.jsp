@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="windows-1252"%>
+<c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -80,7 +81,7 @@
                                 <td colspan="4">
                                     <input type="text" name="name" value="${sessionScope.user.name}" required minlength="1" maxlength="40"/>
                                     <div style="color: red">${sessionScope.nameError}</div>
-                                    <%request.getSession().removeAttribute("nameError")%>
+                                    <%request.getSession().removeAttribute("nameError");%>
                                 </td>
                             </tr>
                             <tr>
@@ -96,7 +97,7 @@
                                     Birth<span style="color: red">*</span>
                                 </th>
                                 <td style="width: 27%; padding-right: 5%">
-                                    <input type="date" name="dob" value="${sessionScope.user.dob}" style="width: 100%"/>
+                                    <input type="date" name="dob" value="${sessionScope.user.dob}" style="width: 100%" id ="datePickerId" required/>
                                 </td>
                                 <th style="width: 20%">
                                     Gender
@@ -117,6 +118,7 @@
                                     <td colspan="4">
                                         <input type="tel" name="phone" value="${sessionScope.user.phone}" required/>
                                     <div style="color: red">${sessionScope.phoneError}</div>
+                                    <%request.getSession().removeAttribute("phoneError");%>
                                 </td>
                             </tr>
                             <tr>
@@ -146,5 +148,8 @@
         <script src="../assets/js/jquery.scrolly.min.js"></script>
         <script src="../assets/js/jquery.scrollex.min.js"></script>
         <script src="../assets/js/main.js"></script>
+        <script>
+            datePickerId.max = new Date().toISOString().split("T")[0];
+        </script>
     </body>
 </html>

@@ -48,11 +48,11 @@ public class ProfileController extends HttpServlet {
                 Validator validator = new Validator();
                 boolean error = false;
                 if (!validator.getName(name)) {
-                    request.setAttribute("nameError", "Name should have at least 1 character and less than 40 alphabetic characters or space characters.");
+                    request.getSession().setAttribute("nameError", "Name should have at least 1 character and less than 40 alphabetic characters or space characters.");
                     error = true;
                 }
                 if(!validator.getPhone(phoneNumber)){
-                    request.setAttribute("phoneError", "Phone number should have 10 digits.");
+                    request.getSession().setAttribute("phoneError", "Phone number should have 10 digits.");
                     error = true;
                 }
                 if (error) {
@@ -73,7 +73,11 @@ public class ProfileController extends HttpServlet {
             case "clear":
                 request.getRequestDispatcher("../views/user/Profile.jsp").forward(request, response);
                 break;
+            case "change email" :
+                response.sendRedirect(request.getContextPath() + "/User/Security");
+                break;
             default:
+                request.getRequestDispatcher("../views/user/Profile.jsp").forward(request, response);
                 break;
         }
     }

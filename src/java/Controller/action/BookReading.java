@@ -81,10 +81,10 @@ public class BookReading extends HttpServlet {
                 }
                 product = productDAO.get(product);
             }
-            
+
             bookOwnDAO.updateReadingStatus(user, thisbook, chapter);
             if (!(user.isOwnProduct("B" + bookId) || user.isOwnProduct(product.getProductId())) && request.getSession().getAttribute("admin") == null) {
-                response.sendRedirect("./Login?origin=./BookDetail?id=" + request.getParameter("id"));
+                response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("id"));
                 return;
             }
 

@@ -75,7 +75,7 @@ public class ChangeEmailController extends HttpServlet {
             request.getSession().setAttribute("error", "Password is wrong.");
             request.getSession().setAttribute("processMessage", "Change email fail.");
         }
-        request.getRequestDispatcher("../views/user/Security.jsp").forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/User/Security");
     }
 
     /**
