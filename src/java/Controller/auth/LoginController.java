@@ -43,7 +43,15 @@ public class LoginController extends HttpServlet {
         User user = ud.getUser(key, pass);
         if (user != null) {
             HttpSession session = request.getSession();
+            session.setAttribute("user", user);
 
+            Cookie name = new Cookie("name", key);
+            Cookie password = new Cookie("pass", pass);
+            name.setMaxAge(3600 * 24);
+            password.setMaxAge(3600 * 24);
+            response.addCookie(name);
+            response.addCookie(password);
+            
             if (user.is_super() >= 4) {
                 session.setAttribute("admin", user);
                 TicketDAO rp = new TicketDAO();
@@ -53,14 +61,6 @@ public class LoginController extends HttpServlet {
                 response.sendRedirect("Admin/DashBoard");
                 return;
             }
-            session.setAttribute("user", user);
-
-            Cookie name = new Cookie("name", key);
-            Cookie password = new Cookie("pass", pass);
-            name.setMaxAge(3600 * 24);
-            password.setMaxAge(3600 * 24);
-            response.addCookie(name);
-            response.addCookie(password);
             response.sendRedirect(origin);
         } else {
             request.setAttribute("origin", request.getParameter("origin"));
