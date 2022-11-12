@@ -20,12 +20,12 @@ public class Test {
     public static void main(String[] args) {
 
         //FavouriteDAO fd = new FavouriteDAO();
-        RatingDAO rd = new RatingDAO();
-        for(int i=0; i<50;i++){
-            int uid = (int) (Math.random()*50+1);
-        int bid = (int) (Math.random() * 20 + 1);
-        int star = (int) (Math.random() * 5 +1);
-            rd.addStar(bid, uid, star);
-        }
+//        RatingDAO rd = new RatingDAO();
+//        for(int i=0; i<50;i++){
+//            int uid = (int) (Math.random()*50+1);
+//        int bid = (int) (Math.random() * 20 + 1);
+//        int star = (int) (Math.random() * 5 +1);
+//            rd.addStar(bid, uid, star);
+//        }
     }
 }
