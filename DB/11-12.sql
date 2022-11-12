@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [BOOKIE]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Database [BOOKIE]    Script Date: 11/12/2022 3:33:36 PM ******/
 IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'BOOKIE')
 BEGIN
 	ALTER DATABASE [BOOKIE] SET OFFLINE WITH ROLLBACK IMMEDIATE;
@@ -83,7 +83,7 @@ ALTER DATABASE [BOOKIE] SET QUERY_STORE = OFF
 GO
 USE [BOOKIE]
 GO
-/****** Object:  Table [dbo].[Author]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[Author]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -99,7 +99,7 @@ CREATE TABLE [dbo].[Author](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Book]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[Book]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -122,7 +122,7 @@ CREATE TABLE [dbo].[Book](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Book_Own]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[Book_Own]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -134,7 +134,7 @@ CREATE TABLE [dbo].[Book_Own](
 	[recentChapterId] [int] NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Category]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[Category]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -148,7 +148,7 @@ CREATE TABLE [dbo].[Category](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CategoryBook]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[CategoryBook]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -158,7 +158,7 @@ CREATE TABLE [dbo].[CategoryBook](
 	[categoryId] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Chapter]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[Chapter]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -176,17 +176,7 @@ CREATE TABLE [dbo].[Chapter](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Chapter_Payment]    Script Date: 10/28/2022 9:57:30 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Chapter_Payment](
-	[chapterId] [int] NOT NULL,
-	[price] [decimal](10, 2) NOT NULL
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Comment]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[Comment]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -207,7 +197,7 @@ CREATE TABLE [dbo].[Comment](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Favourite]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[Favourite]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -222,7 +212,7 @@ CREATE TABLE [dbo].[Favourite](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Payment_Account]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[Payment_Account]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -236,7 +226,7 @@ CREATE TABLE [dbo].[Payment_Account](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Payment_Method]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[Payment_Method]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -253,7 +243,7 @@ CREATE TABLE [dbo].[Payment_Method](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Product]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[Product]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -269,7 +259,7 @@ CREATE TABLE [dbo].[Product](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Product_Own]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[Product_Own]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -279,7 +269,7 @@ CREATE TABLE [dbo].[Product_Own](
 	[productId] [varchar](30) NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Report]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[Report]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -300,7 +290,7 @@ CREATE TABLE [dbo].[Report](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Report_Violation]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[Report_Violation]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -315,7 +305,7 @@ CREATE TABLE [dbo].[Report_Violation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Star]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[Star]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -331,7 +321,7 @@ CREATE TABLE [dbo].[Star](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Token]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[Token]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -342,7 +332,7 @@ CREATE TABLE [dbo].[Token](
 	[expiredDate] [datetime] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Transaction]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[Transaction]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -363,7 +353,7 @@ CREATE TABLE [dbo].[Transaction](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -386,7 +376,7 @@ CREATE TABLE [dbo].[User](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Violation]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[Violation]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -401,7 +391,7 @@ CREATE TABLE [dbo].[Violation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Volume]    Script Date: 10/28/2022 9:57:30 PM ******/
+/****** Object:  Table [dbo].[Volume]    Script Date: 11/12/2022 3:33:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -662,73 +652,73 @@ SET IDENTITY_INSERT [dbo].[Author] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Book] ON 
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (1, N'Gone Girl ', 1, NULL, 0, CAST(11.99 AS Decimal(10, 2)), 1, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1554086139l/19288043.jpg', N'Marriage can be a real killer.<br>
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (1, N'Gone Girl ', 1, CAST(2.67 AS Decimal(10, 2)), 5, CAST(11.99 AS Decimal(10, 2)), 1, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1554086139l/19288043.jpg', N'Marriage can be a real killer.<br>
 On a warm summer morning in North Carthage, Missouri, it is Nick and Amy Dunne’s fifth wedding anniversary. Presents are being wrapped and reservations are being made when Nick’s clever and beautiful wife disappears from their rented McMansion on the Mississippi River. Husband-of-the-Year Nick isn’t doing himself any favors with cringe-worthy daydreams about the slope and shape of his wife’s head, but passages from Amy''s diary reveal the alpha-girl perfectionist could have put anyone dangerously on edge. Under mounting pressure from the police and the media—as well as Amy’s fiercely doting parents—the town golden boy parades an endless series of lies, deceits, and inappropriate behavior. Nick is oddly evasive, and he’s definitely bitter—but is he really a killer?<br>
-As the cops close in, every couple in town is soon wondering how well they know the one that they love. With his twin sister, Margo, at his side, Nick stands by his innocence. Trouble is, if Nick didn’t do it, where is that beautiful wife? And what was in that silvery gift box hidden in the back of her bedroom closet?', 0, 1)
+As the cops close in, every couple in town is soon wondering how well they know the one that they love. With his twin sister, Margo, at his side, Nick stands by his innocence. Trouble is, if Nick didn’t do it, where is that beautiful wife? And what was in that silvery gift box hidden in the back of her bedroom closet?', 31, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (2, N'And Then There Were None', 2, NULL, 0, CAST(12.99 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1638425885l/16299._SY475_.jpg', N'First, there were ten—a curious assortment of strangers summoned as weekend guests to a little private island off the coast of Devon. Their host, an eccentric millionaire unknown to all of them, is nowhere to be found. All that the guests have in common is a wicked past they''re unwilling to reveal—and a secret that will seal their fate. For each has been marked for murder. A famous nursery rhyme is framed and hung in every room of the mansion:<br>
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (2, N'And Then There Were None', 2, CAST(3.20 AS Decimal(10, 2)), 6, CAST(12.99 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1638425885l/16299._SY475_.jpg', N'First, there were ten—a curious assortment of strangers summoned as weekend guests to a little private island off the coast of Devon. Their host, an eccentric millionaire unknown to all of them, is nowhere to be found. All that the guests have in common is a wicked past they''re unwilling to reveal—and a secret that will seal their fate. For each has been marked for murder. A famous nursery rhyme is framed and hung in every room of the mansion:<br>
 "Ten little boys went out to dine; One choked his little self and then there were nine. Nine little boys sat up very late; One overslept himself and then there were eight. Eight little boys traveling in Devon; One said he''d stay there then there were seven. Seven little boys chopping up sticks; One chopped himself in half and then there were six. Six little boys playing with a hive; A bumblebee stung one and then there were five. Five little boys going in for law; One got in Chancery and then there were four. Four little boys going out to sea; A red herring swallowed one and then there were three. Three little boys walking in the zoo; A big bear hugged one and then there were two. Two little boys sitting in the sun; One got frizzled up and then there was one. One little boy left all alone; He went out and hanged himself and then there were none."<br>
-When they realize that murders are occurring as described in the rhyme, terror mounts. One by one they fall prey. Before the weekend is out, there will be none. Who has choreographed this dastardly scheme? And who will be left to tell the tale? Only the dead are above suspicion.', 0, 1)
+When they realize that murders are occurring as described in the rhyme, terror mounts. One by one they fall prey. Before the weekend is out, there will be none. Who has choreographed this dastardly scheme? And who will be left to tell the tale? Only the dead are above suspicion.', 79, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (3, N'The Silent Patient', 3, NULL, 0, CAST(10.50 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1582759969l/40097951._SX318_.jpg', N'Alicia Berenson’s life is seemingly perfect. A famous painter married to an in-demand fashion photographer, she lives in a grand house with big windows overlooking a park in one of London’s most desirable areas. One evening her husband Gabriel returns home late from a fashion shoot, and Alicia shoots him five times in the face, and then never speaks another word.<br>
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (3, N'The Silent Patient', 3, CAST(4.00 AS Decimal(10, 2)), 8, CAST(10.50 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1582759969l/40097951._SX318_.jpg', N'Alicia Berenson’s life is seemingly perfect. A famous painter married to an in-demand fashion photographer, she lives in a grand house with big windows overlooking a park in one of London’s most desirable areas. One evening her husband Gabriel returns home late from a fashion shoot, and Alicia shoots him five times in the face, and then never speaks another word.<br>
 Alicia’s refusal to talk, or give any kind of explanation, turns a domestic tragedy into something far grander, a mystery that captures the public imagination and casts Alicia into notoriety. The price of her art skyrockets, and she, the silent patient, is hidden away from the tabloids and spotlight at the Grove, a secure forensic unit in North London.<br>
-Theo Faber is a criminal psychotherapist who has waited a long time for the opportunity to work with Alicia. His determination to get her to talk and unravel the mystery of why she shot her husband takes him down a twisting path into his own motivations—a search for the truth that threatens to consume him....', 0, 1)
+Theo Faber is a criminal psychotherapist who has waited a long time for the opportunity to work with Alicia. His determination to get her to talk and unravel the mystery of why she shot her husband takes him down a twisting path into his own motivations—a search for the truth that threatens to consume him....', 14, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (4, N'The Girl on the Train', 4, NULL, 0, CAST(13.99 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1574805682l/22557272.jpg', N'Rachel catches the same commuter train every morning. She knows it will wait at the same signal each time, overlooking a row of back gardens. She’s even started to feel like she knows the people who live in one of the houses. “Jess and Jason,” she calls them. Their life—as she sees it—is perfect. If only Rachel could be that happy. And then she sees something shocking. It’s only a minute until the train moves on, but it’s enough. Now everything’s changed. Now Rachel has a chance to become a part of the lives she’s only watched from afar. Now they’ll see; she’s much more than just the girl on the train...', 0, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (4, N'The Girl on the Train', 4, CAST(3.50 AS Decimal(10, 2)), 6, CAST(13.99 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1574805682l/22557272.jpg', N'Rachel catches the same commuter train every morning. She knows it will wait at the same signal each time, overlooking a row of back gardens. She’s even started to feel like she knows the people who live in one of the houses. “Jess and Jason,” she calls them. Their life—as she sees it—is perfect. If only Rachel could be that happy. And then she sees something shocking. It’s only a minute until the train moves on, but it’s enough. Now everything’s changed. Now Rachel has a chance to become a part of the lives she’s only watched from afar. Now they’ll see; she’s much more than just the girl on the train...', 34, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (5, N'Lord of the Mysteries', 5, NULL, 0, CAST(11.99 AS Decimal(10, 2)), 1, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1598845986l/55176693._SX318_.jpg', N'Waking up to be faced with a string of mysteries, Zhou Mingrui finds himself reincarnated as Klein Moretti in an alternate Victorian era world where he sees a world filled with machinery, cannons, dreadnoughts, airships, difference machines, as well as Potions, Divination, Hexes, Tarot Cards, Sealed Artifacts… The Light continues to shine but the mystery has never gone far. Follow Klein as he finds himself entangled with the Churches of the world—both orthodox and unorthodox—while he slowly develops newfound powers thanks to the Beyonder potions.', 0, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (5, N'Lord of the Mysteries', 5, CAST(2.67 AS Decimal(10, 2)), 6, CAST(11.99 AS Decimal(10, 2)), 1, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1598845986l/55176693._SX318_.jpg', N'Waking up to be faced with a string of mysteries, Zhou Mingrui finds himself reincarnated as Klein Moretti in an alternate Victorian era world where he sees a world filled with machinery, cannons, dreadnoughts, airships, difference machines, as well as Potions, Divination, Hexes, Tarot Cards, Sealed Artifacts… The Light continues to shine but the mystery has never gone far. Follow Klein as he finds himself entangled with the Churches of the world—both orthodox and unorthodox—while he slowly develops newfound powers thanks to the Beyonder potions.', 61, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (6, N'The Shining', 6, NULL, 0, CAST(12.99 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1353277730l/11588.jpg', N'Jack Torrance''s new job at the Overlook Hotel is the perfect chance for a fresh start. As the off-season caretaker at the atmospheric old hotel, he''ll have plenty of time to spend reconnecting with his family and working on his writing. But as the harsh winter weather sets in, the idyllic location feels ever more remote...and more sinister. And the only one to notice the strange and terrible forces gathering around the Overlook is Danny Torrance, a uniquely gifted five-year-old.', 0, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (6, N'The Shining', 6, CAST(3.00 AS Decimal(10, 2)), 5, CAST(12.99 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1353277730l/11588.jpg', N'Jack Torrance''s new job at the Overlook Hotel is the perfect chance for a fresh start. As the off-season caretaker at the atmospheric old hotel, he''ll have plenty of time to spend reconnecting with his family and working on his writing. But as the harsh winter weather sets in, the idyllic location feels ever more remote...and more sinister. And the only one to notice the strange and terrible forces gathering around the Overlook is Danny Torrance, a uniquely gifted five-year-old.', 32, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (7, N'It', 6, NULL, 0, CAST(10.50 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1334416842l/830502.jpg', N'Welcome to Derry, Maine ...<br>
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (7, N'It', 6, CAST(2.50 AS Decimal(10, 2)), 3, CAST(10.50 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1334416842l/830502.jpg', N'Welcome to Derry, Maine ...<br>
 It’s a small city, a place as hauntingly familiar as your own hometown. Only in Derry the haunting is real ...<br>
-They were seven teenagers when they first stumbled upon the horror. Now they are grown-up men and women who have gone out into the big world to gain success and happiness. But none of them can withstand the force that has drawn them back to Derry to face the nightmare without an end, and the evil without a name.', 0, 1)
+They were seven teenagers when they first stumbled upon the horror. Now they are grown-up men and women who have gone out into the big world to gain success and happiness. But none of them can withstand the force that has drawn them back to Derry to face the nightmare without an end, and the evil without a name.', 98, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (8, N'A Game Of Thrones: A Song of Ice and Fire', 7, NULL, 0, CAST(13.99 AS Decimal(10, 2)), 0, N'https://m.media-amazon.com/images/P/0553386794.01._SCLZZZZZZZ_SX500_.jpg', N'Long ago, in a time forgotten, a preternatural event threw the seasons out of balance. In a land where summers can last decades and winters a lifetime, trouble is brewing. The cold is returning, and in the frozen wastes to the north of Winterfell, sinister and supernatural forces are massing beyond the kingdom’s protective Wall. At the center of the conflict lie the Starks of Winterfell, a family as harsh and unyielding as the land they were born to. Sweeping from a land of brutal cold to a distant summertime kingdom of epicurean plenty, here is a tale of lords and ladies, soldiers and sorcerers, assassins and bastards, who come together in a time of grim omens.
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (8, N'A Game Of Thrones: A Song of Ice and Fire', 7, CAST(3.00 AS Decimal(10, 2)), 6, CAST(13.99 AS Decimal(10, 2)), 0, N'https://m.media-amazon.com/images/P/0553386794.01._SCLZZZZZZZ_SX500_.jpg', N'Long ago, in a time forgotten, a preternatural event threw the seasons out of balance. In a land where summers can last decades and winters a lifetime, trouble is brewing. The cold is returning, and in the frozen wastes to the north of Winterfell, sinister and supernatural forces are massing beyond the kingdom’s protective Wall. At the center of the conflict lie the Starks of Winterfell, a family as harsh and unyielding as the land they were born to. Sweeping from a land of brutal cold to a distant summertime kingdom of epicurean plenty, here is a tale of lords and ladies, soldiers and sorcerers, assassins and bastards, who come together in a time of grim omens.
 <br>
-Here an enigmatic band of warriors bear swords of no human metal; a tribe of fierce wildlings carry men off into madness; a cruel young dragon prince barters his sister to win back his throne; and a determined woman undertakes the most treacherous of journeys. Amid plots and counterplots, tragedy and betrayal, victory and terror, the fate of the Starks, their allies, and their enemies hangs perilously in the balance, as each endeavors to win that deadliest of conflicts: the game of thrones.', 0, 1)
+Here an enigmatic band of warriors bear swords of no human metal; a tribe of fierce wildlings carry men off into madness; a cruel young dragon prince barters his sister to win back his throne; and a determined woman undertakes the most treacherous of journeys. Amid plots and counterplots, tragedy and betrayal, victory and terror, the fate of the Starks, their allies, and their enemies hangs perilously in the balance, as each endeavors to win that deadliest of conflicts: the game of thrones.', 98, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (9, N'The Hunger Games', 8, NULL, 0, CAST(15.00 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1586722975l/2767052.jpg', N'Could you survive on your own in the wild, with every one out to make sure you don''t live to see the morning?
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (9, N'The Hunger Games', 8, CAST(3.50 AS Decimal(10, 2)), 6, CAST(15.00 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1586722975l/2767052.jpg', N'Could you survive on your own in the wild, with every one out to make sure you don''t live to see the morning?
 <br>
 In the ruins of a place once known as North America lies the nation of Panem, a shining Capitol surrounded by twelve outlying districts. The Capitol is harsh and cruel and keeps the districts in line by forcing them all to send one boy and one girl between the ages of twelve and eighteen to participate in the annual Hunger Games, a fight to the death on live TV.
 <br>
-Sixteen-year-old Katniss Everdeen, who lives alone with her mother and younger sister, regards it as a death sentence when she steps forward to take her sister''s place in the Games. But Katniss has been close to dead before—and survival, for her, is second nature. Without really meaning to, she becomes a contender. But if she is to win, she will have to start making choices that weight survival against humanity and life against love.', 0, 1)
+Sixteen-year-old Katniss Everdeen, who lives alone with her mother and younger sister, regards it as a death sentence when she steps forward to take her sister''s place in the Games. But Katniss has been close to dead before—and survival, for her, is second nature. Without really meaning to, she becomes a contender. But if she is to win, she will have to start making choices that weight survival against humanity and life against love.', 88, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (10, N'The Time Machine', 9, NULL, 0, CAST(12.50 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1327942880l/2493.jpg', N'“I’ve had a most amazing time....”<br>
-So begins the Time Traveller’s astonishing firsthand account of his journey 800,000 years beyond his own era—and the story that launched H.G. Wells’s successful career and earned him his reputation as the father of science fiction. With a speculative leap that still fires the imagination, Wells sends his brave explorer to face a future burdened with our greatest hopes...and our darkest fears. A pull of the Time Machine’s lever propels him to the age of a slowly dying Earth.  There he discovers two bizarre races—the ethereal Eloi and the subterranean Morlocks—who not only symbolize the duality of human nature, but offer a terrifying portrait of the men of tomorrow as well.  Published in 1895, this masterpiece of invention captivated readers on the threshold of a new century.', 0, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (10, N'The Time Machine', 9, CAST(3.00 AS Decimal(10, 2)), 4, CAST(12.50 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1327942880l/2493.jpg', N'“I’ve had a most amazing time....”<br>
+So begins the Time Traveller’s astonishing firsthand account of his journey 800,000 years beyond his own era—and the story that launched H.G. Wells’s successful career and earned him his reputation as the father of science fiction. With a speculative leap that still fires the imagination, Wells sends his brave explorer to face a future burdened with our greatest hopes...and our darkest fears. A pull of the Time Machine’s lever propels him to the age of a slowly dying Earth.  There he discovers two bizarre races—the ethereal Eloi and the subterranean Morlocks—who not only symbolize the duality of human nature, but offer a terrifying portrait of the men of tomorrow as well.  Published in 1895, this masterpiece of invention captivated readers on the threshold of a new century.', 87, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (11, N'Outlander', 10, NULL, 0, CAST(13.99 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1529065012l/10964._SY475_.jpg', N'The year is 1945. Claire Randall, a former combat nurse, is just back from the war and reunited with her husband on a second honeymoon when she walks through a standing stone in one of the ancient circles that dot the British Isles. Suddenly she is a Sassenach—an “outlander”—in a Scotland torn by war and raiding border clans in the year of Our Lord...1743.
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (11, N'Outlander', 10, CAST(2.67 AS Decimal(10, 2)), 1, CAST(13.99 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1529065012l/10964._SY475_.jpg', N'The year is 1945. Claire Randall, a former combat nurse, is just back from the war and reunited with her husband on a second honeymoon when she walks through a standing stone in one of the ancient circles that dot the British Isles. Suddenly she is a Sassenach—an “outlander”—in a Scotland torn by war and raiding border clans in the year of Our Lord...1743.
 <br>
-Hurled back in time by forces she cannot understand, Claire is catapulted into the intrigues of lairds and spies that may threaten her life, and shatter her heart. For here James Fraser, a gallant young Scots warrior, shows her a love so absolute that Claire becomes a woman torn between fidelity and desire—and between two vastly different men in two irreconcilable lives.', 0, 1)
+Hurled back in time by forces she cannot understand, Claire is catapulted into the intrigues of lairds and spies that may threaten her life, and shatter her heart. For here James Fraser, a gallant young Scots warrior, shows her a love so absolute that Claire becomes a woman torn between fidelity and desire—and between two vastly different men in two irreconcilable lives.', 13, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (12, N'All the Light We Cannot See', 11, NULL, 0, CAST(10.99 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1451445646l/18143977.jpg', N'Marie-Laure lives in Paris near the Museum of Natural History, where her father works. When she is twelve, the Nazis occupy Paris and father and daughter flee to the walled citadel of Saint-Malo, where Marie-Laure’s reclusive great uncle lives in a tall house by the sea. With them they carry what might be the museum’s most valuable and dangerous jewel.
-<br>In a mining town in Germany, Werner Pfennig, an orphan, grows up with his younger sister, enchanted by a crude radio they find that brings them news and stories from places they have never seen or imagined. Werner becomes an expert at building and fixing these crucial new instruments and is enlisted to use his talent to track down the resistance. Deftly interweaving the lives of Marie-Laure and Werner, Doerr illuminates the ways, against all odds, people try to be good to one another.', 0, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (12, N'All the Light We Cannot See', 11, CAST(5.00 AS Decimal(10, 2)), 2, CAST(10.99 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1451445646l/18143977.jpg', N'Marie-Laure lives in Paris near the Museum of Natural History, where her father works. When she is twelve, the Nazis occupy Paris and father and daughter flee to the walled citadel of Saint-Malo, where Marie-Laure’s reclusive great uncle lives in a tall house by the sea. With them they carry what might be the museum’s most valuable and dangerous jewel.
+<br>In a mining town in Germany, Werner Pfennig, an orphan, grows up with his younger sister, enchanted by a crude radio they find that brings them news and stories from places they have never seen or imagined. Werner becomes an expert at building and fixing these crucial new instruments and is enlisted to use his talent to track down the resistance. Deftly interweaving the lives of Marie-Laure and Werner, Doerr illuminates the ways, against all odds, people try to be good to one another.', 71, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (13, N'Fullmetal Alchemist, Vol. 1', 12, NULL, 0, CAST(9.35 AS Decimal(10, 2)), 1, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388179331l/870.jpg', N'Breaking the laws of nature is a serious crime!
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (13, N'Fullmetal Alchemist, Vol. 1', 12, CAST(2.50 AS Decimal(10, 2)), 4, CAST(9.35 AS Decimal(10, 2)), 1, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388179331l/870.jpg', N'Breaking the laws of nature is a serious crime!
 <br>In an alchemical ritual gone wrong, Edward Elric lost his arm and his leg, and his brother Alphonse became nothing but a soul in a suit of armor. Equipped with mechanical “auto-mail” limbs, Edward becomes a state alchemist, seeking the one thing that can restore his and his brother’s bodies...the legendary Philosopher’s Stone.
-<br>Alchemy: the mystical power to alter the natural world; something between magic, art and science. When two brothers, Edward and Alphonse Elric, dabbled in this power to grant their dearest wish, one of them lost an arm and a leg…and the other became nothing but a soul locked into a body of living steel. Now Edward is an agent of the government, a slave of the military-alchemical complex, using his unique powers to obey orders…even to kill. Except his powers aren''t unique. The world has been ravaged by the abuse of alchemy. And in pursuit of the ultimate alchemical treasure, the Philosopher''s Stone, their enemies are even more ruthless than they are…', 0, 1)
+<br>Alchemy: the mystical power to alter the natural world; something between magic, art and science. When two brothers, Edward and Alphonse Elric, dabbled in this power to grant their dearest wish, one of them lost an arm and a leg…and the other became nothing but a soul locked into a body of living steel. Now Edward is an agent of the government, a slave of the military-alchemical complex, using his unique powers to obey orders…even to kill. Except his powers aren''t unique. The world has been ravaged by the abuse of alchemy. And in pursuit of the ultimate alchemical treasure, the Philosopher''s Stone, their enemies are even more ruthless than they are…', 85, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (14, N'Death Note, Vol. 1: Boredom', 13, NULL, 0, CAST(10.40 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1419952134l/13615.jpg', N'Light Yagami is an ace student with great prospects - and he''s bored out of his mind. But all that changes when he finds the Death Note, a notebook dropped by a rogue Shinigami, a death god. Any human whose name is written in the notebook dies, and now Light has vowed to use the power of the Death Note to rid the world of evil. But when criminals begin dropping dead, the authorities send the legendary detective L to track down the killer. With L hot on his heels, will Light lose sight of his noble goal... or his life?', 0, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (14, N'Death Note, Vol. 1: Boredom', 13, CAST(2.33 AS Decimal(10, 2)), 7, CAST(10.40 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1419952134l/13615.jpg', N'Light Yagami is an ace student with great prospects - and he''s bored out of his mind. But all that changes when he finds the Death Note, a notebook dropped by a rogue Shinigami, a death god. Any human whose name is written in the notebook dies, and now Light has vowed to use the power of the Death Note to rid the world of evil. But when criminals begin dropping dead, the authorities send the legendary detective L to track down the killer. With L hot on his heels, will Light lose sight of his noble goal... or his life?', 1, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (15, N'One Piece, Volume 1: Romance Dawn', 14, NULL, 0, CAST(11.00 AS Decimal(10, 2)), 1, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1318523719l/1237398.jpg', N'A new shonen sensation in Japan, this series features Monkey D. Luffy, whose main ambition is to become a pirate. Eating the Gum-Gum Fruit gives him strange powers but also invokes the fruit''s curse: anybody who consumes it can never learn to swim. Nevertheless, Monkey and his crewmate Roronoa Zoro, master of the three-sword fighting style, sail the Seven Seas of swashbuckling adventure in search of the elusive treasure "One Piece."', 0, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (15, N'One Piece, Volume 1: Romance Dawn', 14, CAST(2.25 AS Decimal(10, 2)), 5, CAST(11.00 AS Decimal(10, 2)), 1, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1318523719l/1237398.jpg', N'A new shonen sensation in Japan, this series features Monkey D. Luffy, whose main ambition is to become a pirate. Eating the Gum-Gum Fruit gives him strange powers but also invokes the fruit''s curse: anybody who consumes it can never learn to swim. Nevertheless, Monkey and his crewmate Roronoa Zoro, master of the three-sword fighting style, sail the Seven Seas of swashbuckling adventure in search of the elusive treasure "One Piece."', 60, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (16, N'Classroom of the Elite Vol. 1', 15, NULL, 0, CAST(9.69 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?', 0, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (16, N'Classroom of the Elite Vol. 1', 15, CAST(2.75 AS Decimal(10, 2)), 6, CAST(9.69 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?', 21, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (17, N'Lạc', 16, NULL, 0, CAST(0.10 AS Decimal(10, 2)), 1, NULL, N'Một đứa trẻ lạc lối giữa thế giới đầy kết nối...', 0, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (17, N'Lạc', 16, CAST(5.00 AS Decimal(10, 2)), 3, CAST(0.10 AS Decimal(10, 2)), 1, NULL, N'Một đứa trẻ lạc lối giữa thế giới đầy kết nối...', 36, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (18, N'Doraemon', 118, NULL, 0, CAST(11.00 AS Decimal(10, 2)), 0, N'https://i.ebayimg.com/images/g/LMYAAOSw8Zhib4cD/s-l640.jpg', N'Nobita''s failures in school and subsequently, his career, have left his family line with endless financial problems. Thus, his great-great-grandson, Sewashi (a clumsy and very unlucky fourth-grader), sends a blue robotic cat called Doraemon to Nobita''s generation to help improve Nobita''s circumstances. In doing so he hopes that Nobita and all of his descendants will be able to enjoy a better future.', 0, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (18, N'Doraemon', 118, CAST(3.40 AS Decimal(10, 2)), 3, CAST(0.10 AS Decimal(10, 2)), 0, N'https://i.ebayimg.com/images/g/LMYAAOSw8Zhib4cD/s-l640.jpg', N'Nobita''s failures in school and subsequently, his career, have left his family line with endless financial problems. Thus, his great-great-grandson, Sewashi (a clumsy and very unlucky fourth-grader), sends a blue robotic cat called Doraemon to Nobita''s generation to help improve Nobita''s circumstances. In doing so he hopes that Nobita and all of his descendants will be able to enjoy a better future.', 86, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (22, N'Detective Conan', 118, NULL, 0, CAST(11.00 AS Decimal(10, 2)), 0, N'https://www.detectiveconanworld.com/wiki/images/thumb/0/00/Volume_100.jpg/275px-Volume_100.jpg', N'Shinichi Kudo, a great mystery expert at only seventeen, is already well known for having solved several challenging cases. One day, when Shinichi sees two suspicious men and decides to follow them, he inadvertently becomes witness to a disturbing illegal activity. When the men catch Shinichi, they dose him with an Experimental Drug formulated by the Black Organization and abandon him to die. However, to his own astonishment, Shinichi is still alive and soon wakes up, but now, he has the body of a seven-year-old, perfectly preserving his original intelligence. He hides his real identity from everyone, including his childhood friend Ran Mouri and her father, private detective Kogoro Mouri. He eventually takes on the alias of Conan Edogawa, inspired by the mystery writers Arthur Conan Doyle and Ranpo Edogawa.', 0, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (22, N'Detective Conan', 118, NULL, 0, CAST(0.10 AS Decimal(10, 2)), 0, N'https://www.detectiveconanworld.com/wiki/images/thumb/0/00/Volume_100.jpg/275px-Volume_100.jpg', N'Shinichi Kudo, a great mystery expert at only seventeen, is already well known for having solved several challenging cases. One day, when Shinichi sees two suspicious men and decides to follow them, he inadvertently becomes witness to a disturbing illegal activity. When the men catch Shinichi, they dose him with an Experimental Drug formulated by the Black Organization and abandon him to die. However, to his own astonishment, Shinichi is still alive and soon wakes up, but now, he has the body of a seven-year-old, perfectly preserving his original intelligence. He hides his real identity from everyone, including his childhood friend Ran Mouri and her father, private detective Kogoro Mouri. He eventually takes on the alias of Conan Edogawa, inspired by the mystery writers Arthur Conan Doyle and Ranpo Edogawa.', 15, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (23, N'Gangsta Granny', 118, NULL, 0, CAST(25.00 AS Decimal(10, 2)), 0, N'https://m.media-amazon.com/images/I/81Jw7-+FtFL.jpg', N'Ben, a curious boy, hates having to stay with his old Granny every Friday because his parents go to see a dancing show named "Strictly Stars Dancing" (a parody of Strictly Come Dancing). He finds it boring and repetitive as his Granny always feeds him cabbage-related dishes, most commonly cabbage soup and cabbage chocolate, and they are constantly playing Scrabble, plus her television hasn''t been working since the 1990s. Ben loves plumbing and is a long-term subscriber to the magazine Plumbing Weekly, which he buys every week from Raj''s news-agency. Ben''s parents disapprove of him being a plumber, as their ambition for their only child was to be a professional ballet dancer like the one they used to watch every Friday.', 0, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (23, N'Gangsta Granny', 118, NULL, 0, CAST(0.10 AS Decimal(10, 2)), 0, N'https://m.media-amazon.com/images/I/81Jw7-+FtFL.jpg', N'Ben, a curious boy, hates having to stay with his old Granny every Friday because his parents go to see a dancing show named "Strictly Stars Dancing" (a parody of Strictly Come Dancing). He finds it boring and repetitive as his Granny always feeds him cabbage-related dishes, most commonly cabbage soup and cabbage chocolate, and they are constantly playing Scrabble, plus her television hasn''t been working since the 1990s. Ben loves plumbing and is a long-term subscriber to the magazine Plumbing Weekly, which he buys every week from Raj''s news-agency. Ben''s parents disapprove of him being a plumber, as their ambition for their only child was to be a professional ballet dancer like the one they used to watch every Friday.', 95, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (24, N'Demon Dentist', 118, NULL, 0, CAST(25.00 AS Decimal(10, 2)), 1, N'https://d3ddkgxe55ca6c.cloudfront.net/assets/t1496536687/a/86/b8/153606-ml-1144102.jpg', N'Walliams makes going to the dentist a wacky adventure with his signature humor—this is one dentist appointment you don’t want to miss.
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (24, N'Demon Dentist', 118, NULL, 0, CAST(0.10 AS Decimal(10, 2)), 1, N'https://d3ddkgxe55ca6c.cloudfront.net/assets/t1496536687/a/86/b8/153606-ml-1144102.jpg', N'Walliams makes going to the dentist a wacky adventure with his signature humor—this is one dentist appointment you don’t want to miss.
 
 Something strange is happening in Alfie''s town. Instead of shiny coins from the Tooth Fairy, kids are waking up to dead slugs, live spiders, and other dreadfully icky things under their pillows.
 
-Who would do something so horrific? Alfie is sure that Miss Root, the creepy new dentist in town, is behind it all. There''s nothing Alfie hates more than going to the dentist, but to solve this mystery, he may have to book a dreaded appointment….', 0, 1)
+Who would do something so horrific? Alfie is sure that Miss Root, the creepy new dentist in town, is behind it all. There''s nothing Alfie hates more than going to the dentist, but to solve this mystery, he may have to book a dreaded appointment….', 56, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (25, N'Lòng tốt của bạn cần thêm đôi phần sắc sảo', 118, NULL, 0, CAST(19.00 AS Decimal(10, 2)), 0, N'https://sach86.com/wp-content/uploads/2020/01/long-tot-cua-ban-can-them-doi-phan-sac-sao.jpg', N'Chúng ta không giây phút nào không bị thế giới bên ngoài chỉ trỏ, lâu dần sẽ quên mất tâm tư ban sơ, mất đi khả năng suy nghĩ độc lập và giữ vững cái tôi.
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (25, N'Lòng tốt của bạn cần thêm đôi phần sắc sảo', 118, NULL, 0, CAST(0.10 AS Decimal(10, 2)), 0, N'https://sach86.com/wp-content/uploads/2020/01/long-tot-cua-ban-can-them-doi-phan-sac-sao.jpg', N'Chúng ta không giây phút nào không bị thế giới bên ngoài chỉ trỏ, lâu dần sẽ quên mất tâm tư ban sơ, mất đi khả năng suy nghĩ độc lập và giữ vững cái tôi.
 
  
 
@@ -736,27 +726,29 @@ So với từng câu từng câu an ủi dịu dàng, tôi nghĩ chúng ta cần
 
  
 
-Khi bạn khốn đốn, hoang mang, nếu đọc được cuốn sách này, mong rằng bạn có thể rút ra sức mạnh từ trong câu chữ của nó, đừng nộp vũ khí đầu hàng thế giới này. Nguyện cho tất cả những người không hiểu và thấu hiểu trên đời không ngừng trưởng thành nhưng vẫn tốt bụng như xưa!', 0, 1)
+Khi bạn khốn đốn, hoang mang, nếu đọc được cuốn sách này, mong rằng bạn có thể rút ra sức mạnh từ trong câu chữ của nó, đừng nộp vũ khí đầu hàng thế giới này. Nguyện cho tất cả những người không hiểu và thấu hiểu trên đời không ngừng trưởng thành nhưng vẫn tốt bụng như xưa!', 58, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (26, N'Men are from Mars, Women from Venus', 118, NULL, 0, CAST(30.00 AS Decimal(10, 2)), 0, N'https://m.media-amazon.com/images/I/81RfW9mFkEL.jpg', N'Once upon a time Martians and Venusians met, fell in love, and had happy relationships together because they respected and accepted their differences. Then they came to Earth and amnesia set in: they forgot they were from different planets.
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (26, N'Men are from Mars, Women from Venus', 118, NULL, 0, CAST(0.10 AS Decimal(10, 2)), 0, N'https://m.media-amazon.com/images/I/81RfW9mFkEL.jpg', N'Once upon a time Martians and Venusians met, fell in love, and had happy relationships together because they respected and accepted their differences. Then they came to Earth and amnesia set in: they forgot they were from different planets.
 
-Based on years of successful counseling of couples and individuals, Men Are from Mars, Women Are from Venus has helped millions of couples transform their relationships. Now viewed as a modern classic, this timeless book has helped men and women realize how different they can be in their communication styles, their emotional needs, and their modes of behavior, and offers the secrets of communicating without conflicts, allowing couples to give intimacy every chance to grow. ', 0, 1)
+Based on years of successful counseling of couples and individuals, Men Are from Mars, Women Are from Venus has helped millions of couples transform their relationships. Now viewed as a modern classic, this timeless book has helped men and women realize how different they can be in their communication styles, their emotional needs, and their modes of behavior, and offers the secrets of communicating without conflicts, allowing couples to give intimacy every chance to grow. ', 97, 1)
 GO
 INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (27, N'The Miracles of the Namiya General Store
 
-', 118, NULL, 0, CAST(30.00 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1564085721l/44287550.jpg', N'When three delinquents hole up in an abandoned general store after their most recent robbery, to their great surprise, a letter drops through the mail slot in the store''s shutter. This seemingly simple request for advice sets the trio on a journey of discovery as, over the course of a single night, they step into the role of the kindhearted former shopkeeper who devoted his waning years to offering thoughtful counsel to his correspondents. Through the lens of time, they share insight with those seeking guidance, and by morning, none of their lives will ever be the same.', 0, 1)
+', 118, NULL, 0, CAST(0.10 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1564085721l/44287550.jpg', N'When three delinquents hole up in an abandoned general store after their most recent robbery, to their great surprise, a letter drops through the mail slot in the store''s shutter. This seemingly simple request for advice sets the trio on a journey of discovery as, over the course of a single night, they step into the role of the kindhearted former shopkeeper who devoted his waning years to offering thoughtful counsel to his correspondents. Through the lens of time, they share insight with those seeking guidance, and by morning, none of their lives will ever be the same.', 80, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (28, N'5cm per Second', 118, NULL, 0, CAST(25.00 AS Decimal(10, 2)), 0, N'https://cdn.verasia.eu/15367/byosoku-go-senchimetoru-5-centimeters-per-second-japanese-novel-written-by-shinkai.jpg', N'Love can move at the speed of terminal velocity, but as award-winning director Makoto Shinkai reveals in his latest comic, it can only be shared and embraced by those who refuse to see it stop.
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (28, N'5cm per Second', 118, NULL, 0, CAST(0.10 AS Decimal(10, 2)), 0, N'https://cdn.verasia.eu/15367/byosoku-go-senchimetoru-5-centimeters-per-second-japanese-novel-written-by-shinkai.jpg', N'Love can move at the speed of terminal velocity, but as award-winning director Makoto Shinkai reveals in his latest comic, it can only be shared and embraced by those who refuse to see it stop.
 
 Takaki Tohno quickly befriends Akari Shinohara when she transfers to his school. They grow closer to each other due to similar interests and attitudes; for instance, they both prefer to stay inside during recess due to their constitutions. As a result, they form a strong bond.
 
-Upon ending their school year, Akari moves to Tochigi, due to her parents'' jobs. The two keep in contact by writing letters, but eventually begin to drift apart.', 0, 1)
+Upon ending their school year, Akari moves to Tochigi, due to her parents'' jobs. The two keep in contact by writing letters, but eventually begin to drift apart.', 15, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (30, N'The Boy wear Striped Pyjamas', 118, NULL, 0, CAST(19.00 AS Decimal(10, 2)), 0, N'https://m.media-amazon.com/images/I/914nabSHOsL.jpg', N'John Boyne has described the conception of his novel as an idea popping into his head of "two boys, the mirror of each other, sitting either side of a wire fence". While the conception of the book came about fast, his inspiration for writing has a more lengthy foundation. Boyne has stated that his style and writing process has been influenced by Malcolm Bradbury at the University of East Anglia, who suggested he write every day without rest days.', 0, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (30, N'The Boy wear Striped Pyjamas', 118, NULL, 0, CAST(0.10 AS Decimal(10, 2)), 0, N'https://m.media-amazon.com/images/I/914nabSHOsL.jpg', N'John Boyne has described the conception of his novel as an idea popping into his head of "two boys, the mirror of each other, sitting either side of a wire fence". While the conception of the book came about fast, his inspiration for writing has a more lengthy foundation. Boyne has stated that his style and writing process has been influenced by Malcolm Bradbury at the University of East Anglia, who suggested he write every day without rest days.', 26, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (31, N'Weathering with you', 118, NULL, 0, CAST(19.00 AS Decimal(10, 2)), 0, N'https://cdn.verasia.eu/12673-big_default_2x/tenki-no-ko-weathering-with-you-japanese-novel-written-by-makoto-shinkai.jpg', N'Longing to escape his island home, a boy named Hodaka runs away during his first summer of high school to find a new life in Tokyo. As rain falls for days on end and Hodaka struggles to adjust, he meets a girl named Hina who holds a mysterious power: With a single prayer, she can part the clouds and bring back the sun. But her power comes at a price, and as the weather spirals further and further out of control, they must choose what future they truly want for themselves.', 0, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (31, N'Weathering with you', 118, NULL, 0, CAST(0.10 AS Decimal(10, 2)), 0, N'https://cdn.verasia.eu/12673-big_default_2x/tenki-no-ko-weathering-with-you-japanese-novel-written-by-makoto-shinkai.jpg', N'Longing to escape his island home, a boy named Hodaka runs away during his first summer of high school to find a new life in Tokyo. As rain falls for days on end and Hodaka struggles to adjust, he meets a girl named Hina who holds a mysterious power: With a single prayer, she can part the clouds and bring back the sun. But her power comes at a price, and as the weather spirals further and further out of control, they must choose what future they truly want for themselves.', 97, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (32, N'The After-Dinner Mysterie', 118, NULL, 0, CAST(25.00 AS Decimal(10, 2)), 0, N'https://japanesebooks.jp/wp-content/uploads/2021/09/4cbbd83b531db57c281b6790fdd0c987-400x581.jpg', N'Reiko is the only daughter to the CEO of a major enterprise, "Hosho Group," known worldwide. Hiding her true identity behind her day time job as a rookie police officer, Reiko comes home to her butler and driver, Kageyama whenever she is faced with a complex case, being a perfectionist, Kageyama is flawless when it comes to serving meals full course from hors d''oeuvre to dessert. He sharply points out the lack of reasoning on Reiko''s side, keeping the comment one fine line away from being offensive. The cutting remarks by Kageyama and appearances by unique characters, as well as the play on words and light tempo of witty conversations...and most of all, being referred to as the "Armchair detective" who solves mysteries without encountering the suspects together create a daring mystery solving roller-coaster ride.', 0, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (32, N'The After-Dinner Mysterie', 118, NULL, 0, CAST(0.10 AS Decimal(10, 2)), 0, N'https://japanesebooks.jp/wp-content/uploads/2021/09/4cbbd83b531db57c281b6790fdd0c987-400x581.jpg', N'Reiko is the only daughter to the CEO of a major enterprise, "Hosho Group," known worldwide. Hiding her true identity behind her day time job as a rookie police officer, Reiko comes home to her butler and driver, Kageyama whenever she is faced with a complex case, being a perfectionist, Kageyama is flawless when it comes to serving meals full course from hors d''oeuvre to dessert. He sharply points out the lack of reasoning on Reiko''s side, keeping the comment one fine line away from being offensive. The cutting remarks by Kageyama and appearances by unique characters, as well as the play on words and light tempo of witty conversations...and most of all, being referred to as the "Armchair detective" who solves mysteries without encountering the suspects together create a daring mystery solving roller-coaster ride.', 30, 1)
+GO
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (33, N'Sau khi gây thù với chủ thần', 118, NULL, 0, CAST(0.10 AS Decimal(10, 2)), 1, NULL, N'', 19, 1)
 GO
 SET IDENTITY_INSERT [dbo].[Book] OFF
 GO
@@ -1049,6 +1041,20 @@ GO
 INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (27, 30)
 GO
 INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (28, 30)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (33, 43)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (33, 41)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (33, 12)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (33, 14)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (33, 40)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (33, 23)
+GO
+INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (33, 30)
 GO
 SET IDENTITY_INSERT [dbo].[Chapter] ON 
 GO
@@ -2179,9 +2185,3917 @@ Men always say that as the defining compliment, don’t they? She’s a cool gir
 
 Men actually think this girl exists. Maybe they’re fooled because so many women are willing to pretend to be this girl. For a long time Cool Girl offended me. I used to see men – friends, coworkers, strangers – giddy over these awful pretender women, and I’d want to sit these men down and calmly say: You are not dating a woman, you are dating a woman who has watched too many movies written by socially awkward men who’d like to believe that this kind of woman exists and might kiss them. I’d want to grab the poor guy by his lapels or messenger bag and say: The bitch doesn’t really love chili dogs that much – no one loves chili dogs that much! And the Cool Girls are even more pathetic: They’re not even pretending to be the woman they want to be, they’re pretending to be the woman a man wants them to be. Oh, and if you’re not a Cool Girl, I beg you not to believe that your man doesn’t want the Cool Girl. It may be a slightly different version – maybe he’s a vegetarian, so Cool Girl loves seitan and is great with dogs; or maybe he’s a hipster artist, so Cool Girl is a tattooed, bespectacled nerd who loves comics. There are variations to the window dressing, but believe me, he wants Cool Girl, who is basically the girl who likes every fucking thing he likes and doesn’t ever complain. (How do you know you’re not Cool Girl? Because he says things like: “I like strong women.” If he says that to you, he will at some point fuck someone else. Because “I like strong women” is code for “I hate strong women.”')
 GO
-SET IDENTITY_INSERT [dbo].[Chapter] OFF
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (27, 16, 1, N'Mở đầu', 1, N'Mái xanh ngói đỏ, cột nhà chạm trổ. Cung điện Ma tộc nguy nga lộng lẫy, khắp nơi trang hoàng từng món đồ tinh xảo, chọn bừa một món cũng là bảo vật có giá trị liên thành. Minh châu được dùng làm đèn, ngọc phượng hoàng thì đúc thành bàn, thứ quý hiếm như lông chim Tước Tiên lại bị cắm trong bình để trang trí, da yêu thú Bạch hổ bị trải dài trêи đất mặc người đạp lên.
+
+Vàng ngọc lóa mắt, xa xỉ đến cùng cực, bất kỳ người nào nhìn thấy cũng phải đấm ngực dậm chân, tiếc hận than thở một câu phí của trời.
+
+Nhưng trong mắt vị Ma vương vang danh Tam giới thì những thứ này chẳng qua chỉ là đồ tầm thường.
+
+Mà bất kỳ món bảo bối nào trong cung điện này, vẻ đẹp đều không sánh bằng một phần triệu mỹ nhân đang nằm trêи tháp kia.
+
+Thanh niên lười biếng chống má, dựa vào tháp mềm, mái tóc tán loạn trước sau như vẩy mực, người khoác lớp áo đỏ. Môi như được thoa mật đỏ thắm của hải đường mùa xuân, nom mềm mại như hoa mùa hạ, sóng mắt tựa làn thu thủy, da trắng thắng tuyết đông. Ngay đuôi mắt lại điểm thêm nốt ruồi son nho nhỏ đầy duyên dáng.
+
+Ngón tay thon dài chơi đùa đèn lưu ly đang tỏa ánh sáng rực rỡ, nhất thời làm người ta không biết cái nào chói mắt hơn. Đèn lưu ly kia nghìn vạn cũng khó mà có được, nhưng rơi vào tay thanh niên thì cũng chỉ là món đồ chơi giải trí.
+
+Dung Dữ híp mắt, trông như đang cười, nhưng trêи môi lại không có ý cười, làm người ta chẳng phân biệt được.
+
+Phía dưới lụa là nhẹ bay, âm nhạc trụy lạc. Ở giữa là một thiếu niên đang múa, ánh mắt quyến rũ như tơ, hệt như một bảo vật trời ban.
+
+Tiết Lan Châu vừa múa, trong đầu lại đang hỏi hệ thống: Hệ thống, bây giờ độ hảo cảm của Dung Dữ đối với tôi là bao nhiêu?
+
+Hệ thống: Thưa ký chủ, là... -100.
+
+Tiết Lan Châu: Chấm hỏi?
+
+Có lầm không vậy? Đây là lần đầu hắn xuất hiện trước mặt Dung Dữ đấy, cái kỹ năng "Nhất vũ khuynh thành" này dù không thể kiếm điểm hảo cảm nhưng cũng không đến mức làm người ta ghét đến thế chứ?
+
+Tiết Lan Châu vô cùng sợ hãi: Vậy hắn cứ nhìn tôi chằm chằm nãy giờ, là không phải thấy hứng thú với tôi mà là muốn giết tôi đó hả?
+
+Hệ thống: Đúng vậy.
+
+Tiết Lan Châu gào thét: Chuyện này không khoa học!
+
+Tiết Lan Châu là một thần sử.
+
+Muôn vàn thế giới này, mỗi một thế giới đều có một người nhận hết may mắn của đất trời, gọi tắt là nhân vật chính. Cuộc đời của nhân vật chính đã được sắp đặt sẵn, giúp thế giới vận hành, sau khi sống hết một đời mới sinh ra một nhân vật chính khác. Một khi nhân vật chính phạm phải sai lầm, thì sẽ làm cho cả thế giới sụp đổ.
+
+Vì duy trì các thế giới nhỏ, vị Chủ thần trông coi hàng vạn thế giới lập ra cục Quản Lý Thời Không, rút các linh hồn đã chết ở các thế giới cho họ trở thành thần sử, ràng buộc với hệ thống chủ thần, đi tu sửa các tuyến thế giới xảy ra vấn đề.
+
+Dung Dữ chính là người nhận hết may mắn trong thế giới 6666. Theo lý mà nói thì hắn vốn là nam chính thế giới này, trong cuộc đời của hắn cũng đã được sắp đặt sẵn một tình yêu đích thực.
+
+Nhưng không biết chỗ nào có vấn đề, Dung Dữ lại không có một chút tình cảm đối với vị công chúa Thiên tộc, không chịu cùng nàng tu thành chánh quả.
+
+Tuyến tình cảm của đứa con số mệnh là một trong những tuyến quan trọng của vận mệnh, tình cảm không diễn ra theo kịch bản mà vận mệnh sắp đặt thì thế giới 6666 này rất có thể sẽ bị sụp đổ.
+
+Vì bảo vệ thế giới 6666, cục Quản Lý Thời Không đã phái rất nhiều thần sử đến giải quyết vấn đề này. Đầu tiên là Bộ Mai Mối phái người đến làm mai cho Dung Dữ và công chúa Thiên tộc, sau càng làm càng hỏng, cục Quản Lý Thời Không mới đổi biện pháp, lấy lùi làm tiến, để Bộ Công Lược phái người đi công lược Dung Dữ. Bạn đời là ai không quan trọng, dù sao Dung Dữ nhất định phải có một tình yêu đích thực.
+
+Sau đó tất cả quay về trong thất bại.
+
+Từ đầu chí cuối Dung Dữ vẫn là một Đại ma vương vô tình. Đến cuối cùng, hắn cũng phát hiện được mục đích của đám người ngoài thế giới này.
+
+Lúc đầu Dung Dữ còn chưa giết người bừa bãi như thế, càng về sau giống như hắn nhận ra chuyện gì, cứ phát hiện bất kỳ người công lược nào là thẳng tay giết chết. Thần sử mà chết trong thế giới nhỏ, linh hồn sẽ lập tức bị đuổi về không gian chủ thần, không để người khác phát hiện bí mật của muôn vàn thế giới.
+
+Mà đồng thời tất cả người trong thế giới nhỏ đều sẽ bị xóa sạch trí nhớ, quên đi thân phận mà thần sử sử dụng.
+
+Chỉ có Dung Dữ nhớ.
+
+Mỗi một người hắn đều nhớ.
+
+Trước Tiết Lan Châu, đã có 107 thần sử đã chết trong tay Dung Dữ.
+
+Cộng thêm Tiết Lan Châu nữa là 108 anh hùng.
+
+Tiết Lan Châu vừa nghĩ đến đây, suýt nữa té xỉu ngay tại chỗ.
+
+Hắn cũng đã hoàn thành khá nhiều nhiệm vụ thần sử, lúc nghe các tiền bối thất bại trở về nói Dung Dữ đáng sợ ra sao, hắn không để ý, xung phong nhận nhiệm vụ có độ khó cấp SSS này.
+
+Bây giờ hắn rất muốn xuyên về tát chết cái người không biết trời cao đất dày là mình trong quá khứ.
+
+Này thì khoe khoang! Cho mày chừa cái tội khoe khoang!
+
+Mới vào độ hảo cảm đã -100, còn chơi cái gì nữa!
+
+"Múa đi!" Giọng nói của thanh niên yêu dã lại hoa lệ như đàn Không đuôi phượng*, "Sao không múa nữa?"
+
+Tiết Lan Châu run lên, sợ hãi nhận ra lúc nãy mình thất thần, động tác cũng dừng theo.
+
+Cặp mắt đào hoa xinh đẹp lẳng lặng nhìn hắn, như đã biết rõ tất cả.
+
+Tiết Lan Châu không múa được nữa, run rẩy quỳ mọp xuống: "Vương..."
+
+Dung Dữ khẽ mỉm cười, ném đèn lưu ly trêи tay xuống, "choang" một tiếng vỡ tan tành, mảnh vỡ sắc bén văng tung tóe khắp nơi.
+
+Trêи mặt Tiết Lan Châu bị mảnh vỡ cắt một đường máu.
+
+"Múa!" Giọng nói này lạnh vô cùng.
+
+Tiết Lan Châu khóc không ra nước mắt, không thể không nhắm mắt múa tiếp, hai chân giẫm phải mảnh vỡ lưu ly, bàn chân bị cắt đến loang lổ máu.
+
+Mặc dù hệ thống mở che đậy cảm giác đau, nhưng Dung Dữ thật sự rất khủng bố, hắn không muốn đối mặt với tên biến thái này đâu!!!
+
+Vất vả lắm mới múa xong, Tiết Lan Châu đã sớm nhễ nhại mồ hôi lạnh, không phải đau, chỉ là bị Dung Dữ dọa.
+
+"Múa đẹp đấy." Dung Dữ cười lên, vừa dịu dàng lại xinh đẹp.
+
+"Thưởng cho ngươi được chết toàn thây."
+
+- --
+
+"Sau đó thì sao?" Tuyên Diệu tò mò hỏi.
+
+Cô nàng gia nhập cục Quản Lý Thời Không khá trễ, nên đây là lần đầu nghe chuyện về vị Đại ma vương này.
+
+"Sau đó hả? Đại ma vương đó thức tỉnh rồi trốn đi, quậy cho các thế giới gà chó không yên, công việc của chúng ta bận rộn như vậy, hơn một nửa đều do hắn gây ra." Nhắc tới Dung Dữ, Tiết Lan Châu hẵng còn sợ hãi, dù sao năm đó cũng để lại ám ảnh tâm lý cho hắn, nhưng sau đó vẻ mặt hắn lại chuyển thành sùng kính, "Nhưng mà Chủ thần đại nhân của tụi mình thần thông quảng đại, bắt Đại ma vương kia về quy án..."
+
+Nhớ năm đó Dung Dữ giết liên tiếp 108 thần sử, cuối cùng hoàn toàn thức tỉnh, trói thần bảo vệ thế giới 6666 lại, trốn khỏi thế giới 6666, cũng tạo thành vô số lỗ hổng không gian. Hàng vạn thế giới bị ảnh hưởng, rất nhiều thế giới nhỏ bị lệch tuyến. Lúc đó cục Quản Lý Thời Không chất đầy một đống việc, tất cả mọi người ai cũng bận đến tối tăm mặt mày.
+
+Vì thế Chủ thần đại nhân đích thân truy bắt, nhưng Dung Dữ âm hiểm xảo trá, quỷ kế đa đoan, chơi trò anh đuổi tôi chạy suốt mấy trăm thế giới mới bị tóm về quy án. Tội này vốn là nên giết, nhưng chẳng hiểu sao Chủ thần đại nhân lại rộng lượng cho hắn lấy công chuộc tội, ném hắn vào các thế giới BE để sửa lại tuyến thế giới.
+
+Đứa con số mệnh may mắn ở chỗ làm gì cũng thuận buồm xuôi gió, nhưng có một số thế giới bị sai sót, cuộc đời của đứa con số mệnh vô cùng lận đận, cái gọi là ngược văn BE chính là sống không yên chết không ổn. Loại thế giới bất thường này, không kéo dài được bao lâu, nên cần thần sử đến tu sửa. Dưới tình huống đứa con số mệnh không thể thay đổi vận mệnh bi thảm của mình, lúc đó thần sử sẽ thay thế họ vượt qua các khó khăn. Sau khi thành công sửa tuyến thế giới thành HE, thần sử đi khỏi, đứa con vận mệnh lại trở về, có thể tiếp tục sống theo tuyến thế giới mới, để các thế giới nhỏ không bị sụp đổ.
+
+Vì nhiệm vụ sửa tuyến BE này bình thường mới xuyên qua không què thì cũng hấp hối, xác suất sụp hố cực kỳ cao, nên đây cũng là nhiệm vụ độ khó cao và cực khổ nhất của cục Quản Lý Thời Không. Tỷ lệ thành công hầu như là 0 nên rất ít thần sử tình nguyện đi làm.
+
+Thân là tội phạm truy nã bị Chủ thần bắt về quy án, đương nhiên Dung Dữ bị ném vào cái ngành này làm cu li, còn không được nhận tiền lương.
+
+Tội phạm bị truy nã không có nhân quyền, càng không được nhận phúc lợi của nhân viên. Thường thì thần sử sẽ có một hệ thống chủ thần thông báo nhiệm vụ, có hệ thống cửa hàng cung cấp trợ giúp, sau khi hoàn thành nhiệm vụ còn được thưởng điểm để đổi lấy đồ ăn và đạo cụ. Nhưng Dung Dữ mang tội, cũng chẳng phải thần sử trong biên chế, nên sẽ không có hệ thống chủ thần, không được gọi trợ giúp từ bên ngoài, hoàn thành nhiệm vụ cũng không có điểm thưởng.
+
+Ma lực của Dung Dữ rất mạnh, khó mà quản được hắn, Chủ thần đại nhân bèn cho thần khí bản mệnh của mình là Xích Kim Diệu Nhật Hoàn hóa thành vòng Huyết Ngọc, đeo lên cổ tay Dung Dữ, phong ấn lại sức mạnh của Ma vương. Mà đồng thời Xích Kim Diệu Nhật Hoàn này cũng nhận việc thông báo nhiệm vụ, truyền tống qua các thế giới.
+
+Mỗi đứa con số mệnh đều có một ngọn đèn hồn, ánh nến càng rực rỡ, thân nến càng dài thì chứng tỏ vận may càng mạnh, tuổi thọ càng lâu. Đèn hồn của đứa con số mệnh ở các thế giới BE đều lờ mờ yếu ớt như sắp tắt, sinh mệnh và vận may dần bị cháy hết. Lực lượng của Chủ thần có thể thông qua đèn hồn để đứa con số mệnh trao đổi vận mệnh với Dung Dữ. Đứa con số mệnh chân chính tạm thời ở trong đèn nghỉ ngơi, còn Dung Dữ đi thay đổi vận mệnh của những người sắp chết này. Sau khi đổi thành kết HE, thì ngọn đèn hồn sẽ được thắp sáng. Nếu không thể sửa được kết BE, đèn hồn tắt, tức là nhiệm vụ thất bại.
+
+Chết trong thế giới nhỏ tất nhiên tương đương với nhiệm vụ thất bại, nhưng thoát được kiếp chết cũng không nhất định là nhiệm vụ thành công, đó cùng lắm là sống tạm bợ. Muốn có kết HE chân chính thì phải có được hạnh phúc viên mãn. Còn cuối cùng có thật sự hạnh phúc hay không thì phải tuỳ vào cảm nhận của đứa con số mệnh.
+
+Tuyên Diệu nghe xong cũng ngẩn tò te: "Nhiệm vụ này khó quá đi."
+
+Nhiệm vụ tu sửa cũng biến thái thật, có tiền bối vừa mới xuyên đến đã gặp ngay hiện trường tàn sát, chưa kịp đổi đạo cụ đã bị làm thịt. Đại ma vương lại bị phong ấn sức mạnh, còn không cho người ngoài giúp, thế thì chả khác gì người bình thường. Tuyên Diệu im lặng tưởng tượng cảnh mình gặp phải tình huống này, chắc chắn cô không sống nổi quá ba giây.
+
+Đây đúng thật là tuyệt địa cầu sinh mà. (Sống sót trong khốn cảnh, nơi cực kỳ nguy hiểm.)
+
+"Để Đại ma vương trải nghiệm cảm giác chưa đánh đã chết này cũng tốt đấy chứ." Tiết Lan Châu như đang cười trêи nỗi đau của người khác. Năm đó hắn cũng vừa mới xuất hiện trước mặt Dung Dữ đã bị Dung Dữ giết rồi, quả báo đâu chừa một ai.
+
+"Anh Tiết, tôi phải đi báo cáo nhiệm vụ với cấp trêи, xin lỗi không nói chuyện tiếp với anh được." Tuyên Diệu gật đầu chào.
+
+"Tôi nhớ cô mới từ thế giới 999 về, thế giới đó không phải vì lỗ hổng thời gian nên biến thành mạt thế rồi à? Thần bảo vệ thế giới 999 đã tự đi giải quyết, còn cần báo cáo với cấp trêи làm gì?" Tiết Lan Châu nghi ngờ.
+
+Bây giờ trêи dưới cục Quản Lý Thời Không đều bận bù đầu bù cổ, không phải chuyện gì lớn thì cũng không cần đến quấy rầy.
+
+Tuyên Diệu rầu rĩ nói: "Thế giới 999 tự nhiên xuất hiện hai người ngoài không rõ lai lịch, thực lực mạnh ngang hai vị thần địa phương đấy."
+
+Tiết Lan Châu lập tức biết chuyện này quan trọng: "Vậy cô mau đi đi."
+
+Cái mùa này thật sự là đủ thứ chuyện.
+
+Hắn lắc đầu ngán ngẩm, sau đó lật đật chạy đi làm nhiệm vụ tiếp theo.
+
+Hết chương 1.')
 GO
-INSERT [dbo].[Chapter_Payment] ([chapterId], [price]) VALUES (26, CAST(0.10 AS Decimal(10, 2)))
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (28, 16, 2, N'Cá chép vượt vũ môn - 1', 1, N'Dung Dữ đang nằm trong một cái thau lớn, nước chỉ đến nửa thau, ngay cả bơi đàng hoàng cũng khó. Mặt đất dơ dáy đầy nước, ruồi nhặng lượn khắp nơi. Phía đối diện là quầy bán thịt heo, người bán đang chặt thịt, âm thanh điếc tai nhức óc. Còn chỗ này chủ sạp đang giết cá, thuần thục bào vảy cá, tạp dề và ống tay áo bám đầy mùi cá chết. Các chủ sạp phía đông đang hô to rao hàng, còn chủ sạp phía tây lại đang trả giá với khách hàng.
+
+Đây là một khu chợ bán đồ ăn.
+
+Nơi này tràn đầy hơi thở cuộc sống, là nơi mà tất cả mọi người mỗi ngày đều sẽ đi qua, nhưng đối với Dung Dữ lại là một thế giới hoàn toàn khác.
+
+Trong lúc bị Chủ thần đuổi giết, hắn đã đi qua thế giới hiện đại, nhưng lại chưa bao giờ đến những chỗ thế này. Dung Dữ từ tấm bé đã sống trong nhung lụa, cuộc sống ngợp trong vàng son, dù có bỏ mạng nơi hoang vu thì hắn vẫn phải giữ vẻ đẹp đẽ thoải mái, bởi thế việc cho hắn ở trong thau cá thật sự là muốn lấy mạng hắn.
+
+May nhất chính là có lẽ hắn khá đáng tiền, nên Dung Dữ một mình một chậu. Không giống mấy chậu cá khác, mấy chục con cá nằm trong một cái thau nhỏ, vừa nhìn đã thấy ngộp rồi.
+
+Dung Dữ bị hoàn cảnh tồi tệ này xông đến mức suýt thì ngủm tại chỗ: Tao cần một lời giải thích.
+
+Vòng Huyết Ngọc: Bây giờ anh là một con cá.
+
+Dung Dữ: Tao không bị đui.
+
+Hắn dùng suy nghĩ trao đổi với vòng Huyết Ngọc: Mới thế giới đầu đã chơi kϊƈɦ thích vậy à? Đứa con số mệnh là một con cá chép đỏ?
+
+Vòng Huyết Ngọc: Còn có chuyện kϊƈɦ thích hơn nè, một tiếng đồng hồ sau anh sẽ biến thành cá chép kho tộ.
+
+Dung Dữ: Đủ ác.
+
+Vòng Huyết Ngọc không khỏi tiếc nuối: Điểm truyền tống là ngẫu nhiên, nếu không tôi đã tống anh vào nồi rồi.
+
+Dung Dữ không quan tâm giọng điệu quái dị của vòng Huyết Ngọc. Quan hệ của hai người họ là tội phạm đang cải tạo lao động và giám sát viên, đã định trước không thể giao lưu như thần sử và hệ thống bình thường, trở thành cộng sự hợp tác hài hòa ăn ý.
+
+Thực tế thì nếu linh hồn không bị hạn chế, Dung Dữ chắc chắn sẽ đập tan tành cái vòng này, còn muốn nghiền nát nó thành bột phấn.
+
+Dung Dữ: Bối cảnh thế giới và tư liệu nhân vật đâu?
+
+Vòng Huyết Ngọc: Không có, mời tự đi thăm dò.
+
+Giọng Dung Dữ lạnh lẽo: Này Vòng nhỏ, thế thì hết thú vị rồi đấy. Không cho hệ thống cửa hàng thì còn được, chứ đừng nói đến cả tin tức cơ bản mà cục Quản Lý Thời Không cũng không cho nhé, những tên thần sử trước kia ở chỗ tụi mày tao hiểu rõ như lòng bàn tay.
+
+Vòng Huyết Ngọc: Tôi tên Xích Kim Diệu Nhật Hoàn.
+
+Dung Dữ: Tao không muốn nghe mấy lời nhảm nhí.
+
+Vòng Huyết Ngọc: ...
+
+Tên của nó không nhảm xíu nào hết! Bây giờ mi đang là cá trêи thớt đấy mi to mồm cái gì!
+
+Vòng Huyết Ngọc giải thích: Hiện tại nguyên chủ đang trong trạng thái như cá chép bình thường, không có linh khí nên không thể tiếp thu trí nhớ, sau khi anh hóa thành người mới có thể truyền kịch bản qua.
+
+Thần sử của cục Quản Lý Thời Không sẽ không chiếm thân thể của bất kỳ người nào. Cơ thể mà bây giờ Dung Dữ dùng là được vòng Huyết Ngọc so sánh và sao chép dựa trêи số liệu cơ thể nguyên chủ, tạm thay thế thân phận nguyên chủ. Đứa con số mệnh chân chính đang nghỉ ngơi trong đèn hồn, đến khi đạt được kết HE thì mới quay lại.
+
+Mặc dù thân thể này không phải của nguyên chủ, nhưng trạng thái giống y chang nguyên chủ. Nguyên chủ bây giờ chỉ là một con cá chép bình thường đến chân cũng không có, nên Dung Dữ cũng phải đối mặt với tình cảnh này. Hoàn toàn đặt mình vào hoàn cảnh sắp phải đối mặt với cái chết của nguyên chủ, mà không phải tua ngược thời gian để cứu vãn tình thế, đây mới là độ khó của nhiệm vụ tu sửa.
+
+Dung Dữ đã hiểu: Vậy ý là đứa con số mệnh vốn là cá chép thành tinh, không biết đã trải qua chuyện bi thảm gì mà bị đánh trở về nguyên hình lại còn mất trí nhớ, bị kho tộ hay chiên xù gì đấy nên BE. Bây giờ tao phải tránh được chuyện một tiếng sau bị kho, rồi phải nghĩ cách biến lại thành người, gỡ rối kịch bản, làm thịt cái kẻ đã khiến hắn khổ như vậy.
+
+Vòng Huyết Ngọc: Chính xác.
+
+Dung Dữ không chút sợ hãi trình bày: Tao còn phát hiện mấy chuyện rất thú vị. Thứ nhất, cái thân thể này không có nội đan, không biết đã cho người khác hay bị cướp mất, không có nội đan sẽ không thể thành yêu. Thứ hai, thế giới này là thời đại không còn pháp lực, linh khí mỏng manh, không thể tu lại lần nữa. Thứ ba, tao không có hệ thống cửa hàng, không thể dùng đạo cụ của Thần sử để thay đổi. Cuối cùng, pháp lực của tao đã bị mày phong ấn, không thể dùng. Nói tóm lại, tao không thể biến lại thành người, càng không thể gỡ rối kịch bản, chỉ là một con cá chép bình thường, tao chỉ có thể giẫm lên vết xe đổ bị người ta ăn.
+
+Vòng Huyết Ngọc: Đúng là như vậy.
+
+Không hổ là Đại ma vương, IQ cao, suy nghĩ mạch lạc rõ ràng. Chuyện này mà cũng không chút hoảng hốt, chắc đã tính hết cả rồi...
+
+Dung Dữ: Hay lắm, thế giới tiếp theo.
+
+Vòng Huyết Ngọc: Chấm hỏi? . TruyenHD
+
+Dung Dữ: Nhiệm vụ này không làm, ai tới người đó chết, trừ phi mày bỏ phong ấn cho tao.
+
+Vòng Huyết Ngọc từ chối thẳng thừng: Không có vụ đó.
+
+Dung Dữ nằm ngang: Vậy chờ chết đi.
+
+Không bột đố gột nên hồ, dù hắn có bản lĩnh cỡ nào, mà bị kẹt trong cái xác của một con cá thì làm được trò trống gì?
+
+Còn không phải chỉ có thể nằm ngang chờ người mần thịt à.
+
+Vòng Huyết Ngọc khích hắn: Không phải ngươi nói "Mạng ta do ta không do trời" à?
+
+Dung Dữ: Này cũng chả phải mạng ta.
+
+Nói đúng quá vòng Huyết Ngọc cãi không lại.
+
+Đại ma vương tuyệt đối chẳng phải dân hiền lành gì, không đời nào hắn cảm thấy đồng cảm với số phận bi thảm của đứa con số mệnh.
+
+Thần sử được chọn vào làm trong cục Quản Lý Thời Không tính cách tuy khác nhau, nhưng không thể thiếu một đức tính quan trọng nhất --- Chính nghĩa.
+
+Cơ mà cái đức tính này, Dung Dữ chẳng có.
+
+Nếu hắn có, cũng sẽ không gây ra vô số lỗ hổng thời gian như thế, chỉ mình hắn đã phá sập thế giới 6666 rồi.
+
+Vòng Huyết Ngọc đe dọa: Chủ thần đại nhân cho anh đi tu sửa thế giới BE để lấy công chuộc tội, anh không hoàn thành nhiệm vụ, lập tức xóa sổ linh hồn. Ngọn lửa bản mệnh của Chủ thần đại nhân là Xích Kim Diệu Nhật Hỏa, thiêu đốt linh hồn vô cùng đau đớn, sẽ đốt anh thành tro, một sợi tóc cũng không chừa.
+
+Dung Dữ lành lạnh giễu cợt: Dọa nạt có ích gì, nhiệm vụ này còn đường sống à? Không chết sớm thì chết muộn, Chủ thần nhà mày đã máu lạnh còn giả nhân giả nghĩa.
+
+Vòng Huyết Ngọc không muốn tranh luận với hắn: Anh nghĩ cách tự cứu trước đi. Dựa theo kịch bản cũ, mười phút sau sẽ có một bác gái mua anh về làm cá kho tộ cho cháu trai bà ta đấy.
+
+Dung Dữ mất hứng: Tránh được bà đó thì cũng còn những người khác, ai mua về cũng làm thịt, có gì khác nhau à?
+
+Vòng Huyết Ngọc: Có, kho, hấp đường giấm, chiên khác nhau. Cách chế biến cá chép có rất nhiều, tôi sẽ không liệt kê từng cách cho anh. Nhắc nhở thân thiện, còn chín phút nữa bác gái đó sẽ đến chợ.
+
+Dung Dữ im lặng trong chốc lát, bỗng than nhẹ: Vòng nhỏ, mày thật vô tâm.
+
+Vòng Huyết Ngọc: Tôi tên Xích Kim Diệu Nhật Hoàn.
+
+Giọng Dung Dữ dịu dàng: Cái này không quan trọng, chúng ta thương lượng nhé, mày bỏ phong ấn cho tao, mười giây thôi.
+
+Dù không sợ chết, nhưng hắn đường đường là Đại ma vương lại bị làm thành đồ ăn, quá mất mặt, vẫn là nên tranh thủ một chút.
+
+Vòng Huyết Ngọc không hề bị thuyết phục: Không liên quan đến tôi. Còn sáu phút.
+
+Đùa à, một khi cởi phong ấn cho Đại ma vương, nó sẽ về với cát bụi liền.
+
+Dung Dữ bình tĩnh nói: Mày đừng có đếm ngược nữa, mày như vậy làm tao sợ, không thể tĩnh tâm suy nghĩ tìm cách được đâu.
+
+Vòng Huyết Ngọc: Năm phút.
+
+Dung Dữ quyết định lười biếng: Hy vọng tao bị làm thành món nào ngon ngon chút.
+
+Vòng Huyết Ngọc:...Anh là cá chép, không phải cá mặn. (cá mặn là chỉ những người lười biếng...)
+
+Dung Dữ vẫn lười, một lời hai nghĩa: Bây giờ tao lật còn không được nữa là.
+
+Chống lại vận mệnh cũng phải có vốn liếng, không có thực lực mà còn muốn chống với chả đối, đó gọi là mơ giữa ban ngày.
+
+Hắn không có chút ý chí chiến đấu nào, định ngồi chờ chết, say bye với thế giới này.
+
+Còn một phút nữa là bác gái ấy đến chợ.
+
+Ngay cả bầu không khí cũng trở nên nghiêm túc. Tiếng huyên náo trong chợ bỗng hoàn toàn im bặt. Tiếng chặt thịt, giết cá, trả giá, đẩy xe... Giờ phút này lại như một bức tranh tĩnh lặng.
+
+Tất cả cũng đều vì người đàn ông vừa mới bước vào chợ.
+
+Bộ tây trang vừa người ôm trọn bờ vai rộng eo hẹp, chiều cao xấp xỉ một mét chín, hai chân thon dài thẳng tắp, như được đúc từ một khuôn. Đôi giày da sáng bóng sạch sẽ, không một hạt bụi, vừa nhìn đã thấy tiếc cho đế giày vì phải giẫm lên mặt đất dơ bẩn. Khuôn mặt tuấn mỹ, ánh mắt thâm thúy, khí chất ưu nhã lạnh lùng, tướng mạo phải gọi là vô cùng xuất sắc. Bàn tay khớp xương rõ ràng, ngón út bên tay trái mang một chiếc nhẫn vàng, từ trêи xuống dưới hoàn toàn không ăn nhập gì với hoàn cảnh nơi đây.
+
+Ánh hoàng hôn buông xuống, xuyên qua những sợi tóc rũ trước trán người đàn ông, phơi bày vẻ gợi cảm đến cùng cực.
+
+Anh nên xuất hiện ở buổi biểu diễn thời trang hay các cuộc họp thương nghiệp, mà không phải ở khu chợ chiều.
+
+Người đi đường cũng dừng chân nhìn qua, các chủ sạp ven đường ngẩng đầu sửng sốt, một hồi cũng không thốt nên lời.
+
+Anh ta sẽ đến mua đồ ở gian hàng nào?
+
+Các chủ sạp đang âm thầm mong đợi, đều hy vọng anh có thể ghé vào sạp hàng của mình. Chưa nói đến cái khác, người ăn mặc như thế, chắc chắn rất hào phóng.
+
+Dưới ánh nhìn của mọi người, người đàn ông đi thẳng tới sạp bán cá, đứng trước thau sắt đựng Dung Dữ, đối với mấy gian hàng khác nhìn cũng chẳng nhìn lấy một cái.
+
+Mục đích khá rõ ràng.
+
+"Lấy cho tôi con cá chép này." Giọng người đàn ông trầm thấp, tràn ngập hương vị bá đạo tổng tài tiêu chuẩn.
+
+Ghép với gương mặt tuấn tú không cảm xúc, phải nói là lạnh chết người.
+
+Người bán cá lập tức nói: "Nửa kí mười đồng, con này hai kí rưỡi, tổng cộng là năm mươi đồng, tôi cân cho anh xem, đảm bảo không nói gian."
+
+Cái cân điện tử kia không biết đã cân bao nhiêu cá, trêи bàn cân ướt nhèm nhẹp, còn dính mấy miếng vảy cạy không ra, Dung Dữ vô cùng không tình nguyện.
+
+Xém chút là hắn đã nhảy cẫng lên kháng nghị rồi.
+
+"Không cần." Người đàn ông lấy từ trong ví da ra tờ 100 đồng. Một hàng thẻ bên trong sáng chói mù mắt, một xấp tiền mặt y chang nhau xếp gọn gàng bên trong giống như được chuẩn bị sẵn để mua cá.
+
+Người bán cá nhạnh nhẹn bỏ cá vào túi nilong, lấy một tờ năm mươi trong hộc tiền ra đưa, "Đây, thối anh năm mươi."
+
+Dung Dữ bị nhét vào túi nilong, không có nước làm hắn lập tức cảm thấy nghẹt thở, khó chịu muốn búng ra khỏi túi.
+
+Người đàn ông không nhận tờ tiền nhăn nhúm kia: "Không cần thối, cho thêm chút nước."
+
+Người bán cá hơi sửng sốt, sau đó mới hớn hở đổ thêm nước từ thau vào túi nilong, lúc này Dung Dữ mới thở được.
+
+Người đàn ông xách túi cá xoay người đi.
+
+"Lần sau quay lại nhé!" Người bán cá hô lên.
+
+Người có tiền chính là hào phóng, thêm chút nước đã kiếm thêm năm mươi đồng. Người bán cá mặt mày mãn nguyện, còn những chủ sạp khác nhìn hắn đầy hâm mộ ghen tị.
+
+Thấy vị khách này muốn đi, những người khác cũng gọi ầm lên.
+
+"Anh gì ơi muốn ghé sạp của tôi không? Cá chỗ tôi năm đồng một cân, còn rẻ hơn chỗ anh kia, tươi roi rói."
+
+"Anh gì ơi mua cua không?"
+
+Mà dù người ta có rao thế nào, người đàn ông vẫn đi thẳng không hề dừng lại.
+
+Giống như tới đây chỉ để mua một con cá chép.
+
+Trong túi nilong.
+
+Dung Dữ: Đây là bác gái mày nói đó hả?
+
+Vòng Huyết Ngọc: ...
+
+Dung Dữ: Tao chưa làm gì cả mà người mua nguyên chủ lại thay đổi, mày tạo bug đúng không?
+
+Vòng Huyết Ngọc: ... Từ chối trả lời.
+
+Đừng hỏi, nó cũng đang bối rối lắm đây.
+
+Tại sao Chủ thần đại nhân lại xuất hiện ở chỗ này???
+
+Hết chương 2.')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (29, 16, 3, N'Cá chép vượt vũ môn - 2', 1, N'Cho dù không phải khuôn mặt thật, nhưng là thần khí bản mệnh của Chủ thần đại nhân, sao vòng Huyết Ngọc lại không nhận ra thần hồn của vị kia chứ.
+
+Chủ thần đại nhân không phải nên trấn giữ ở Vạn Thần Giới ư?
+
+Vòng Huyết Ngọc tạm thời chẳng thể trả lời được câu hỏi của Dung Dữ. Để phong ấn pháp lực của Dung Dữ, Chủ thần chia pháp khí bản mệnh của mình ra làm hai, một nửa là chiếc nhẫn vàng trêи ngón út Chủ thần, nửa còn lại biến thành vòng ngọc đỏ trêи cổ tay Dung Dữ. Vòng Huyết Ngọc bị tách ra nên ở thế giới nhỏ nó không thể liên lạc được với Chủ thần.
+
+Vậy nên nó cũng không biết tình huống bây giờ là như nào.
+
+Vòng Huyết Ngọc im ỉm, nó đi tra thân phận Chủ thần ở thế giới này.
+
+Cố Minh Hoài, 28 tuổi, độc thân, chủ nghĩa ăn chay, dị ứng cá, mắc chứng sợ dơ nghiêm trọng. Đúng chuẩn tổng tài băng sơn, giá trị cả người một trăm tỉ, vị tai to mặt lớn giậm chân một cái cũng làm cả thành phố Chương Hoa chấn động.
+
+Hiển hách như thế, đúng là tiêu chuẩn của đứa con số mệnh.
+
+Nhưng thế giới 4082, vốn là không có nhân vật Cố Minh Hoài.
+
+Là Chủ thần đại nhân tự tạo bối cảnh cho thân phận này, tướng mạo tên họ, giờ đã mất đi trí nhớ và lực lượng của bản thể, hoàn toàn nhập vai Cố Minh Hoài.
+
+Chủ thần có quyền hạn được chế tạo thân phận ở thế giới nhỏ để nghỉ phép, hành động không phụ thuộc vào sự sắp đặt của số mệnh, có thể tự do phát huy. Nên Chủ thần đại nhân mới đến mua cá chép trước bác gái, làm thay đổi tuyến cũ của thế giới này.
+
+Nhưng vòng Huyết Ngọc vẫn không hiểu Chủ thần đại nhân đang làm gì, chẳng lẽ ngài rảnh rỗi nhàm chán nên phong ấn trí nhớ chạy đến đây trải nghiệm đời người à?
+
+Thân phận của Dung Dữ ở thế giới này là một con cá, Chủ thần đại nhân lại cố ý thêm thiết lập ăn chay, dị ứng cá... Chắc không phải tới vì Đại ma vương đâu nhỉ?
+
+Vòng Huyết Ngọc cẩn thận suy ngẫm.
+
+Lúc một vòng một cá đang bối rối, Cố Minh Hoài đã đi tới xe của mình. Một chiếc Bentley tiền triệu màu xám bạc đậu trước quầy ăn thử, thu hút vô số người đến chụp hình. Cố Minh Hoài ấn điều khiển từ xa, đèn xe nháy hai cái, anh bước vào trong xe dưới ánh mắt hâm mộ của mọi người, đặt túi nilong của Dung Dữ vào ghế phụ.
+
+Lúc chuẩn bị lái xe đi, tay cầm lái khựng một chút, anh cảm thấy hình như mình đã quên chuyện gì đấy.
+
+Cố Minh Hoài cụp mắt lạnh lùng nhìn về phía ghế phụ, như xuyên qua lớp nilong nhìn chú cá chép đỏ bên trong.
+
+Anh thắt dây an toàn cho cá chép, vậy mới hết băn khoăn, lúc này mới lái xe đi.
+
+Dung Dữ: Anh ta có bệnh đúng không?
+
+Vòng Huyết Ngọc nhìn chủ nhân nhà mình, theo phản xạ cãi lại: Không, ngài ấy đang nghĩ cho sự an toàn của anh thôi.
+
+Dung Dữ: Tao thấy mày cũng hơi bệnh rồi đấy.
+
+Vòng Huyết Ngọc: ...
+
+—
+
+Chiếc xe vững vàng chạy, hàng cây ngoài cửa dần bị bỏ lại phía sau.
+
+Trong kính chiếu hậu chiếu ra ánh mắt bình tĩnh của người đàn ông. Ngón tay thon dài khoác lên tay lái, ánh hoàng hôn xuyên qua cửa kính xe, rọi lên chiếc nhẫn trêи ngón út đến rực rỡ.
+
+Không phải kiểu nhẫn phô trương như nhà giàu mới nổi, chỉ đơn giản là một vòng vàng nhỏ trêи ngón út, tựa như vòng sáng bao quanh mặt trời. Phía trêи được khắc thành hình mặt trời, phong cách cổ xưa, như trang sức trêи tay Thần Mặt Trời trong thần thoại Hy lạp, rực rỡ xa hoa, tôn quý bất phàm, vừa nhìn đã biết giá không rẻ.
+
+Dung Dữ không thấy được phong cảnh ven đường, chỉ có thể nói chuyện phiếm với vòng Huyết Ngọc giết thời gian: Đây là xe tang tiễn tao đến thiên đường đúng không? Tối nay tao sẽ bị hấp đường giấm chiên kho à?
+
+Vòng Huyết Ngọc:... Không đâu.
+
+Dung Dữ: Sao lại không? Đây cũng chẳng phải khu cá cảnh, chẳng lẽ lại có người đến chợ đồ ăn mua cá cảnh à?
+
+Vòng Huyết Ngọc: Có đấy, Cố Minh Hoài nè.
+
+Dung Dữ: Hắn nhiều tiền.
+
+Vòng Huyết Ngọc: Nhà giàu nhất thành phố Chương Hoa, không nhiều tiền mới lạ.
+
+Dung Dữ biết được thân phận của người đàn ông, vẫn tỉnh bơ nói bóng nói gió: Sao mày chắc chắn Cố Minh Hoài không ăn cá?
+
+Vòng Huyết Ngọc hồn nhiên không biết mình sập bẫy: Anh ta dị ứng cá.
+
+Dung Dữ: Vậy tại sao anh ta lại đến chợ mua cá?
+
+Vòng Huyết Ngọc cũng không hiểu ý định của Chủ thần đại nhân: Tôi biết----
+
+Vòng Huyết Ngọc đột nhiên thấy rợn người, vội vàng ngậm miệng.
+
+Đại ma vương đang bẫy nó.
+
+Là một giám sát viên, nó không nên cung cấp bất kỳ trợ giúp nào cho Dung Dữ, bao gồm cả thân phận của người đàn ông. Nhưng bây giờ nó không chỉ nói cho Dung Dữ thân phận người đàn ông mà còn tiết lộ chuyện người này dị ứng cá.
+
+Bị dắt mũi dễ như trở bàn tay, Dung Dữ đã biết nó có thể tra thân phận của nhân vật trong thế giới này.
+
+So với thân phận thật sự của Chủ thần đại nhân, thông tin cá nhân của Cố Minh Hoài không có gì quan trọng, dù sao cũng là hư cấu. Vì bảo vệ bí mật lớn, trong lúc Dung Dữ như lơ đãng tán gẫu nó lại vì bảo vệ bí mật lớn mà tiết lộ bí mật nhỏ... Nhưng thế nào đi chăng nữa thì chuyện này nó cũng không nên nói ra, là nó đã thiếu cảnh giác.
+
+Đại ma vương đúng là đại ma vương, âm hiểm xảo trá, lơ là một chút thôi đã bị lừa.
+
+Chỉ mong Đại ma vương đừng phát hiện ra chuyện gì.
+
+Vòng Huyết Ngọc muốn nâng cao tinh thần, không thể bị lừa nữa. Đại ma vương mồm miệng cao siêu lắm.
+
+Dung Dữ thấy vòng ngọc cảnh giác, cũng không hỏi thêm, dù sao hắn đã biết được tin tức hắn muốn.
+
+Hắn tới thế giới này không làm chuyện gì cả, trong kịch bản cũ người mua cá nên là bác gái, nhưng cuối cùng lại là người đàn ông tên Cố Minh Hoài này.
+
+Tuyệt đối không phải vì hắn đến nên sinh ra hiệu ứng bươm bướm, hắn còn chưa kịp vỗ cánh kia kìa.
+
+Vậy biến số là người đàn ông này.
+
+Vòng Huyết Ngọc sẽ không cung cấp thông tin cho hắn, nhưng lại dễ dàng bị hắn lừa nói ra thân phận của Cố Minh Hoài, thần khí bản mệnh của Chủ thần sẽ không phạm phải lỗi cấp thấp như thế. Điều này cho thấy sâu trong tiềm thức của vòng Huyết Ngọc muốn che giấu một thân phận quan trọng hơn, mà so ra, thì vai Cố Minh Hoài này chỉ để tượng trưng, nói ra cũng được. Hơn nữa thân phận còn lại, vòng Huyết Ngọc cũng vừa mới biết, hình như nó không biết người này sẽ đến chợ mua hắn, mới kinh ngạc mà để lộ sơ hở.
+
+Vòng Huyết Ngọc biết thân phận thật sự của người đàn ông, tất nhiên sẽ không nói cho hắn.
+
+Là người của cục Quản Lý Thời Không đang làm nhiệm vụ à? Tới cứu đứa con số mệnh? Dung Dữ suy đoán.
+
+Không phải. Cục Quản Lý Thời Không có nhiều bộ khác nhau, các bộ này sẽ không phân nhiệm vụ xung đột nhau.
+
+Bộ Cứu Rỗi có nhiệm vụ xuyên vào người qua đường, cứu đứa con số mệnh, kéo bọn họ ra khỏi khó khăn. Còn nhiệm vụ của Bộ Tu Sửa là giả thành đứa con số mệnh, tìm đường sống trong ngõ chết, ngăn cản thế giới sụp đổ.
+
+Nhiệm vụ của người sau khó hơn, cần độ hoàn thiện cao hơn, điểm thưởng cũng phong phú hơn --- và tất nhiên Dung Dữ đang lấy công chuộc tội, nên không có điểm thưởng.
+
+Bản chất của hai bộ này đều là cứu rỗi đứa con số mệnh. Dung Dữ đã nhận nhiệm vụ, nên sẽ không còn người nào tới thế giới này cứu nguyên chủ nữa.
+
+Vậy là người xuyên không phi pháp?
+
+Cục Quản Lý Thời Không là bộ phận xuyên không hợp pháp, mà có hợp pháp thì sẽ có phi pháp. Bởi vì lỗ hổng thời không nên các thế giới xuất hiện bug, có người cố ý lợi dụng để xuyên không, trùng sinh, ràng buộc lộn xộn với các hệ thống, làm ảnh hưởng đến tuyến thế giới, đều là hành vi phạm pháp. Ví dụ như trùng sinh về để nghịch thiên sửa mệnh, lợi dụng hệ thống ngoài để giúp mấy vật hy sinh nghịch tập, công lược và cướp lấy vận may của đứa con số mệnh... Những hành động làm thay đổi tuyến thế giới cũ cũng có thể làm thế giới đó không ổn định, nghiêm trọng hơn nữa là sụp đổ.
+
+Dưới trướng Chủ thần, mỗi thế giới đều có thần bảo vệ riêng. Khi xuất hiện hiện tượng phi pháp, thần bảo vệ của thế giới nhỏ sẽ ra mặt chấp pháp, nếu thần bảo vệ bó tay hoặc giải quyết không ổn thì lúc này cục Quản Lý Thời Không sẽ phái người tới giúp.
+
+Thân là tội phạm bị truy nã, Dung Dữ không có tính giác ngộ mấy chuyện chính trị này. Hắn cảm thấy chuyện mà người phi pháp và thần sử hợp pháp làm xét từ mặt nào đó thì chả có gì khác nhau.
+
+Người phi pháp muốn ghép hai người không phải một đôi trời định lại với nhau, đấy gọi là chia rẽ uyên ương. Người phi pháp đi công lược một trong hai người đã có đôi có cặp, đó chính là lừa dối tình cảm, hủy hoại nhân duyên, nhiễu loạn số mệnh, tội vô cùng nặng.
+
+Dung Dữ không thích công chúa Thiên Tộc, nhưng vì vận mệnh muốn họ thành đôi, nên có một đám thần sử xuống cố gắng gán ghép hai người. Sau đó hắn lại bị một đám thần sử thay nhau công lược, giống như bị lừa gạt. Nếu không phải hắn biết rõ tất cả, thì chẳng phải trở thành thằng ngu bị người ta đùa giỡn à.
+
+Những thần sử kia đều vì chính nghĩa. Vì sắp đặt của vận mệnh mà Dung Dữ phải có tình cảm, bọn họ đang phấn đấu vì hòa bình thế giới.
+
+Dưới trật tự thế giới và an bài của vận mệnh, thì mong muốn cá nhân không đáng một đồng.
+
+Dung Dữ chống lại số mệnh, cũng là một người theo chủ nghĩa ích kỷ, không muốn vì cân bằng trật tự thế giới mà ép chính mình đi theo vận mệnh đã sắp đặt, không muốn trải qua một cuộc đời bị người dối gạt. Trong xương máu hắn không có hai chữ nhân nhượng.
+
+So với việc bị trói trong tấm lưới vận mệnh này, hắn chọn từ bỏ vận may của mình để đi tìm chân trời tự do.
+
+Quay lại chuyện chính, dù trong bất kỳ trường hợp nào, Cố Minh Hoài chắc chắn không phải người bình thường.
+
+- --
+
+Cố Minh Hoài dị ứng cá, anh chưa bao giờ ăn cá, nói chính xác thì, anh không ăn bất kỳ đồ ăn mặn nào.
+
+Ngại bẩn.
+
+Nửa tiếng trước, Cố Minh Hoài lái xe tan làm về nhà, công ty cách nhà không xa mấy, chỉ mười phút là tới, mỗi ngày anh đều chạy qua chạy lại con đường này. Cơm tối có người giúp việc làm, chuyện mua thức ăn cũng không cần anh lo.
+
+Hôm nay như bị cái gì hấp dẫn, anh chạy hai mươi phút, đến khu chợ mà từ trước đến giờ anh chưa từng đi, ai xui ai khiến thế nào mà lại mua một con cá chép.
+
+Chính là con đang nằm trêи ghế phụ này.
+
+Anh mua một con cá về làm gì nhỉ...
+
+Cố Minh Hoài rơi vào trầm tư. =)))))))))
+
+Thôi kệ đi, mua cũng mua rồi, về nuôi cũng được.
+
+Cố Minh Hoài lái xe về nhà, xách túi nilong đi vào một căn biệt thự kiểu Châu Âu sang trọng, bên trong được trang trí bằng những viên ngọc mắt cá rực rỡ, vô cùng xa hoa.
+
+Dung Dữ bắt bẻ: Cái nhà này nhỏ thế, chẳng lẽ tao phải ở đây?
+
+Hắn thích hoa hoè hoa sói, phong cách lại xa xỉ hoa lệ, căn biệt thự sang trọng này hoàn toàn hợp gu hắn. Tất nhiên còn kém xa cung điện trước kia của hắn, nhưng đang là người dưới mái hiên, thôi thì ở đỡ cũng được.
+
+Vòng Huyết Ngọc tạt cho gáo nước lạnh: Anh tỉnh lại đi, bây giờ anh là một con cá, cho anh cái hồ cá đã là tốt lắm rồi.
+
+Dung Dữ: Vậy tao muốn một hồ cá lớn bằng cái phòng này.
+
+Vòng Huyết Ngọc cười nhạo: Anh cho là ai cũng sống phô trương như anh hả?
+
+"Ông chủ." Người giúp việc ra đón, thấy Cố Minh Hoài xách túi cá chép, ánh mắt lộ vẻ kinh ngạc: "Tối nay có khách đến ạ? Ngài đưa cá cho tôi, tôi đem xuống bếp cho."
+
+Ông chủ kỵ cá, nên mua cá chép chắc là để đãi khách.
+
+Cố Minh Hoài cũng không đưa cá cho người giúp viêc: "Mua về nuôi."
+
+Người giúp việc lập tức nói: "Vậy để tôi đặt hồ cá."
+
+"Không cần." Cố Minh Hoài nhàn nhạt nói, "Cứ thả trong hồ bơi lầu bốn đi, nhớ thay nước với cho cá ăn."
+
+Người giúp việc hơi sửng sốt: "Ông chủ ngài nhất định muốn dùng hồ bơi để nuôi... một con cá chép ạ?"
+
+"Một cái không đủ à?" Cố Minh Hoài suy nghĩ một chút, "Vậy dùng luôn hồ bơi ngoài trời đi, thỉnh thoảng cho nó ra ngoài hóng mát cũng được."
+
+Người giúp việc: "..."
+
+Vòng Huyết Ngọc: ...
+
+Dung Dữ: Đúng là không giống thật, người này còn làm màu hơn tao.
+
+Hắn lại kɧօáϊ trá bổ sung: Cơ mà tao thích.
+
+Hết chương 3.')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (30, 16, 4, N'Cá chép vượt vũ môn - 3', 1, N'Ngay sau đó Dung Dữ đã tới nhà mới của mình.
+
+Hồ bơi dài 25 mét, rộng 12 mét, dùng để nuôi một con cá chép hai ký rưỡi, ở trong mắt người ngoài đây thật sự là phí của.
+
+Mà hắn không chỉ có một cái bất động sản này, ngoài hồ bơi trong nhà, hắn còn chiếm luôn cái hồ ngoài trời.
+
+Cố Minh Hoài xách túi nilong lên tầng 4, đứng ngay thành hồ thả cá chép xuống.
+
+Dung Dữ từ trong túi bơi ra, cách bàn tay của Cố Minh Hoài cực kỳ gần. Hắn giật mình, cảm thấy trêи người Cố Minh Hoài tràn ra một luồng linh khí dày đặc.
+
+Thật không tưởng tượng nổi.
+
+Thế giới này hầu như đã không còn pháp lực, linh khí trong đất trời ít đến mức không cảm nhận được, hoàn toàn không thể tu luyện lại. Những Thần sử khác được đổi đạo cụ trong hệ thống cửa hàng để biến thành người, còn Dung Dữ chỉ có thể ở trong xác cá chép chờ chết.
+
+Thế nhưng hắn lại cảm nhận linh khí tỏa ra từ tên người phàm Cố Minh Hoài.
+
+Để xác định lại lần nữa, Dung Dữ bơi qua dán sát vào lòng bàn tay Cố Minh Hoài, chứng minh đây chắc chắn không phải là ảo giác. Trêи người Cố Minh Hoài thật sự đang tỏa ra linh khí, còn dồi dào hơn thế giới Tiên hiệp của Dung Dữ, thậm chí có thể thông qua tiếp xúc thân thể mà cuồn cuộn truyền cho Dung Dữ.
+
+Dung Dữ vội vàng nhân cơ hội hút một hơi, bỗng cảm thấy trong cơ thể tràn đầy linh khí, còn hữu dụng hơn cả tinh hoa nhật nguyệt.
+
+Lai lịch của người này không tầm thường.
+
+Khi lòng bàn tay vừa chạm phải vảy cá Cố Minh Hoài lập tức rụt tay về, mới đụng đã tách ra. Hiển nhiên chạm phải vảy cá trơn nhớt làm bệnh sợ dơ của anh phát tác, nhanh chóng nhúng tay xuống hồ rửa.
+
+Dung Dữ còn chưa hút đủ, bơi theo qua, quấn lấy tay người đàn ông tiếp tục hút.
+
+Tiếp xúc thân thể mới hút được linh khí, mà có linh khí thì mới biến thành người được. Người bình thường sẽ chẳng ai đi ''tiếp xúc thân thể'' với một con cá cả, nên đây là cơ hội có một không hai, không thể bỏ qua được. . TruyenHD
+
+Cố Minh Hoài không nghĩ là cá chép cũng bơi tới, còn tiếp tục dán vào tay anh, chân mày anh căng thẳng, suýt nữa đã bóp chết con cá này.
+
+Chỉ nghĩ nhưng không làm là vì anh không muốn đụng vào nó.
+
+Cố Minh Hoài muốn rút tay lại chuẩn bị bỏ đi, ai ngờ cá chép lại đột nhiên ngậm lấy đầu ngón tay anh không cho anh đi.
+
+Nhìn bằng mắt thường cũng có thể thấy vẻ mặt Cố Minh Hoài dần u ám, một lần nữa anh hoài nghi bản thân bị khùng mà đi chợ mua một con cá.
+
+Anh nhìn đầu ngón tay đang trong miệng con cá: "Không nỡ rời xa tao à?"
+
+Dung Dữ thầm nghĩ: Không nỡ rời xa linh khí của anh.
+
+Cố Minh Hoài mặt không cảm xúc: "Này cá nhỏ, mày rất đẹp, nên phải quý trọng sinh mệnh, đừng chọc tao tức giận."
+
+Thân thể này của Dung Dữ có vảy hồng vô cùng diễm lệ, hiển nhiên là cực phẩm trong loài cá chép.
+
+Dung Dữ: Thế mà anh ta có thể xuyên qua bề ngoài nhìn thấu bên trong, phát hiện tao đẹp không ai sánh bằng kìa.
+
+Vòng Huyết Ngọc: Trọng điểm là nửa câu sau biết không.
+
+Dung Dữ không quan tâm nó, tranh thủ hấp thu linh khí.
+
+Cố Minh Hoài không có kiên nhẫn ngồi chơi với một con cá, lập tức đứng dậy bỏ đi. Bước chân dồn dập điệu bộ vội vã, đoán chừng là muốn vào nhà vệ sinh chà tróc ba lớp da tay.
+
+Dung Dữ bị ép nhả ngón tay ra, vẫn lưu luyến nhìn theo bóng lưng Cố Minh Hoài.
+
+Những linh khí kia vào trong cơ thể như đá chìm đáy hồ, như muối bỏ biển, muốn biến thành người thì còn lâu mới đủ. Dung Dữ vẫy đuôi, tính xem lúc nào mới có được cơ hội như này.
+
+Chó mèo có bộ lông dễ thương, còn vảy cá chép lại trơn nhớt như thế nên chỉ có thể ngắm, người bình thường cũng ít ai muốn sờ.
+
+Chứ đừng nói đến Cố Minh Hoài bị bệnh sợ dơ.
+
+Cứ tiếp tục như vậy không biết tháng nào năm nào mới có thể hút đủ linh khí, hóa thành người.
+
+Mọi chuyện không thể quá gấp gáp, có Cố Minh Hoài đã là một niềm vui bất ngờ rồi.
+
+Dung Dữ sung sướиɠ bơi mấy vòng, nghĩ cái thau nhỏ và túi nilong đúng là ngộp chết hắn.
+
+Hắn được Cố Minh Hoài nuôi trong hồ, đã thay đổi số mệnh làm cá chép kho tộ, sau này cũng không cần lo bị mất mạng. Nhưng đèn hồn của nguyên chủ vẫn chỉ dài thêm một chút xíu, ánh nến từ le lắt thành chợt sáng chợt tắt.
+
+Thoát khỏi cái chết không thể đạt được kết HE.
+
+Mà cũng phải, đối với một yêu đã có linh trí, biến được thành người, thì vĩnh viễn sống trong hình hài cá chép còn khó chịu hơn cả chết.
+
+Muốn HE, là phải lấy lại nội đan.
+
+Cả đời của yêu chỉ có thể tạo được một viên đan, có nội đan mới có pháp lực, có thể biến thành người lâu dài. Hút linh khí trêи người Cố Minh Hoài dù cũng hóa thành người được nhưng cũng chỉ là tạm thời, phải luôn dính chặt với Cố Minh Hoài, một khi rời khỏi anh ta thì sẽ lập tức biến lại nguyên hình.
+
+Bây giờ cũng không biết nội đan của nguyên chủ đang ở đâu, hắn phải biến thành người trước mới biết được kịch bản.
+
+Vậy nên muốn gỡ rối kịch bản thì phải tranh thủ cơ hội tiếp xúc với Cố Minh Hoài, hút thật nhiều linh khí.
+
+Dung Dữ: Ê Vòng nhỏ.
+
+Vòng Huyết Ngọc: Không online.
+
+Dung Dữ giọng điệu khẳng định: Cố Minh Hoài không phải người của thế giới này.
+
+Vòng Huyết Ngọc: ...
+
+Dung Dữ: Trong thế giới không còn pháp lực này thì linh khí trêи người anh ta không nên tồn tại.
+
+Cả cái thân vòng của Vòng Huyết Ngọc cũng ngơ luôn rồi.
+
+Chủ thần đại nhân đứng đầu vạn thần, là người mà chúng sanh phải vái chào. Đất đai mà ngài từng đi qua sẽ trở nên màu mỡ, những sinh linh sống trêи phiến đất đó cũng sẽ đắc đạo thành tiên, tất nhiên linh khí phải vô cùng dồi dào, bây giờ vì suy yếu nên linh khí mới ít như thế thôi.
+
+Nhưng mà đến thế giới nhỏ, Chủ thần đại nhân có thể đóng linh khí lại, nhưng ngài không làm thế. Ngài mở một cánh cửa thuận lợi cho Dung Dữ, là có mục đích gì?
+
+Vòng Huyết Ngọc nghĩ nát óc vẫn không hiểu được. Chính Chủ thần đại nhân đã từng nói, vì trừng phạt Dung Dữ, sẽ không cho hắn bất kỳ hệ thống nào, cũng không cho vòng Huyết Ngọc trợ giúp Dung Dữ bất cứ chuyện gì.
+
+Nó trăm triệu không ngờ rằng ý của Chủ thần đại nhân là tự mình tới làm ''phần mềm gian lận'' cho Dung Dữ.
+
+Vòng Huyết Ngọc giấu đầu hở đuôi: Tôi không biết.
+
+Dung Dữ: Thế à? Tao không tin.
+
+Vòng Huyết Ngọc câm như hến giả chết.
+
+May là Dung Dữ suy nghĩ một hồi, cũng không nghĩ đến Chủ thần. Vị kia công chính nghiêm minh, lãnh khốc vô tình, đuổi giết hắn cả mấy trăm thế giới, có thể nói là tử địch, Dung Dữ có thế nào cũng không nghĩ tới tử địch này lại đi theo giúp hắn gian lận.
+
+Điều này thật sự rất khó tin.
+
+Dung Dữ: Cho dù hắn là ai, có thể giúp tao thì đều là người tốt. Ai như chủ nhân nhà mày, chỉ biết bắt nạt tao.
+
+Vòng Huyết Ngọc:... Ò ò.
+
+Xu ghê, người bị anh phát thẻ người tốt chính là chủ nhân của tại hạ đấy.
+
+- --
+
+Dung Dữ ở dưới hồ bơi, trải qua cuộc đời của cá hết sức nhàn rỗi lại nhàm chán.
+
+Giám đốc Cố là người vô cùng bận rộn, tăng ca ngủ lại công ty là chuyện thường ngày, anh vừa về nhà đã vào phòng ngủ, hoặc làm việc trong phòng sách, ít khi đến lầu bốn ngắm cá.
+
+Dù có xinh đẹp cách mấy, nhưng cũng chỉ là một con cá chép, nhìn hoài cũng chán thôi.
+
+Việc cho Dung Dữ ăn đều là người giúp việc làm, thỉnh thoảng lại cho ra hồ bơi ngoài trời tắm nắng, muốn gặp Cố Minh Hoài còn khó hơn lên trời.
+
+Ngày nào hắn cũng bơi từ đầu này sang đầu kia, đầu kia về đầu này, bơi thẳng, bơi vòng, bơi lượn vẫy đuôi... Nhìn biểu diễn các kiểu bơi xinh đẹp sinh động cũng thấy được chú cá này đang chán đến mức nào.
+
+Cũng may cái hồ này lớn, chứ mà hồ nhỏ thì Dung Dữ đã qua đời vì khó chịu.
+
+Mặc dù bây giờ cũng chả dễ chịu gì mấy.
+
+Dung Dữ chán đến mức thổi bong bóng: Không thể tiếp tục như này được, sao Cố Minh Hoài không đến thăm tao?
+
+Vòng Huyết Ngọc sao có thể bỏ lỡ cơ hội giễu cợt Đại ma vương: Nhìn anh giống oán phụ nơi khuê phòng lắm biết không.
+
+Dung Dữ: Giờ tao tuyệt thực thì có tác dụng không? Hắn có quan tâm đến tao không?
+
+Vòng Huyết Ngọc: Này càng giống hơn.
+
+Dung Dữ: Hữu dụng đúng không? Cứ quyết định vậy đi.
+
+Vòng Huyết Ngọc: ...
+
+Nó với Đại ma vương có đang chung tần sóng não không thế???
+
+Vậy nên người giúp việc trong nhà bỗng phát hiện, chú cá mà ông chủ nuôi hình như đang tủi thân.
+
+Cụ thể là nó bỏ ăn, cũng lười bơi luôn, ai kêu cũng mặc kệ. Cho ra ngoài tắm nắng cũng mang vẻ thoi thóp, khác hẳn với bộ dáng vui vẻ hoạt bát mấy ngày trước.
+
+Tình huống này kéo dài mấy ngày, người giúp việc sợ cá chết, cuối cùng cũng báo chuyện này cho Cố Minh Hoài.
+
+"Ông chủ." Người giúp việc gõ cửa phòng sách.
+
+Cố Minh Hoài đang đọc văn kiện của công ty, không ngẩng đầu lên nói: "Vào đi."
+
+Người giúp việc đi vào: "Ông chủ, con cá ngài đem về mấy hôm trước tự nhiên không chịu ăn, cũng không bơi, tôi không biết nó có bị bệnh không."
+
+Cố Minh Hoài nhéo mi tâm. Mấy này nay quá bận, anh suýt thì quên nhà còn nuôi một con cá.
+
+Cá bị bệnh cũng chẳng phải chuyện to tát gì, rất nhiều người nuôi cá thấy cá chết thì kệ, mua con khác nuôi thôi. Cố Minh Hoài nhớ lại ngày đó con cá chép cứ bám theo anh, làm anh có chút ám ảnh.
+
+Nhưng nếu cá chết... không biết tại sao, lại thấy hơi khó chịu.
+
+Cố Minh Hoài đặt văn kiện xuống: "Để tôi đi xem."
+
+Dung Dữ đang lười biếng nằm phơi bụng trêи mặt nước, vừa thấy Cố Minh Hoài đi vào lập tức xoay mình, bơi thật nhanh tới thành hồ.
+
+Ây dô người anh em rốt cuộc anh cũng tới, anh không tới thì sao tôi làm nhiệm vụ được.
+
+Cố Minh Hoài nhìn chú cá chép đang vui sướиɠ bơi về phía mình, nghiêng đầu hỏi: "Này không phải vẫn khỏe mạnh à?"
+
+Người giúp việc: "...Hai ngày trước nó không như thế."
+
+Cố Minh Hoài cầm thức ăn cho cá, rải một chút lên mặt nước. Cá chép cũng không thèm quan tâm, chỉ ngửa đầu nhìn anh chăm chú.
+
+Cố Minh Hoài nhướng mày, ngồi xổm xuống nhìn nó, giọng điệu vẫn bình thường: "Này cá nhỏ, nghe nói hai ngày nay mày không chịu ăn?"
+
+Dung Dữ không ăn những thức ăn trêи mặt nước, "rào" một tiếng búng ra khỏi mặt nước, mổ lên mu bàn tay của Cố Minh Hoài.
+
+Chú cá nhảy ra văng hết nước lên người Cố Minh Hoài.
+
+"Ối ông chủ." Người giúp việc kêu lên, "Ngài đứng xa một chút."
+
+Gân xanh trêи trán Cố Minh Hoài giật giật, nhắm mắt nhẫn nhịn nói: "Không sao, cậu đi làm việc đi."
+
+Người giúp việc chần chừ: "Vâng."
+
+Trời đất ơi, ông chủ Cố có bệnh sợ dơ nghiêm trọng bị nước cá làm ướt nhèm nhẹp, còn bị mổ lên tay, thế mà không tức giận.
+
+Người giúp việc đi khỏi hồ bơi, bên trong chỉ còn lại một người một cá.
+
+Cố Minh Hoài căng môi: "Cá nhỏ mày thật biết chọn, không ăn thức ăn trêи mặt nước, nằng nặc đòi ăn trêи tay tao."
+
+Dung Dữ cố gắng muốn nhảy một lần nữa.
+
+Khi nãy chỉ vừa mới chạm vào mà hắn đã hút được một chút linh khí.
+
+Cố Minh Hoài nhướng mày, giơ tay cao lên: "Nhảy đi."
+
+Dung Dữ cười nhạt, này là đang huấn luyện chó à?
+
+Cơ mà chó thì chó, linh khí quan trọng nhất.
+
+Cố Minh Hoài nhìn cá chép nghe lời, nhảy ra khỏi mặt nước, có điều lần này quá cao, mới được một nửa đã bị rơi xuống.
+
+Vẻ mặt Cố Minh Hoài lộ ra chút hứng thú.
+
+Đây là trùng hợp, hay thật sự có thể nghe hiểu?
+
+Cố Minh Hoài hạ tay xuống, lúc này Dung Dữ mới thành công, thuận lợi hút được một hớp linh khí.
+
+Cố Minh Hoài lại bị miệng cá chạm vào, có thể vì đã bị một lần nên lần này cũng không còn mâu thuẫn như trước. Anh chuẩn bị tâm lý sẵn sàng, sau đó mới bất đắc dĩ xòe tay vào trong nước: "Này ăn đi."
+
+Dung Dữ bơi vào lòng bàn tay anh, nhìn như đang ăn thức ăn trong tay Cố Minh Hoài, nhưng thật ra là hấp thu linh khí.
+
+Cố Minh Hoài hơi cong khóe môi: "Bọn họ nói mày không chịu ăn, nay tao cho ăn lại vui như thế, cá bọn mày còn biết nhìn người cho ăn à?"
+
+Dung Dữ há mồm ngậm ngón tay Cố Minh Hoài.
+
+Độ cong bên môi Cố Minh Hoài ngừng lại: "Nhả ra."
+
+Dung Dữ nghe anh mới là lạ.
+
+Cố Minh Hoài mặt lạnh đe dọa: "Không nhả tao sẽ bắt mày làm cá kho."
+
+Dung Dữ vẫn trơ cái mặt cá, hù ai vậy.
+
+Cố Minh Hoài lại đổi câu khác: "Sau này tao không đút mày ăn nữa."
+
+Lần này Dung Dữ lập tức nhả ra.
+
+Vì để tính chuyện lâu dài, giờ cứ nhịn trước đã.
+
+Cố Minh Hoài cảm thấy thú vị: "Mày muốn tao đút mày ăn à?" Nếu không sao chịu nghe lời thế chứ.
+
+Hỏi xong anh cũng cảm thấy buồn cười, anh lại đang nghiêm túc nói chuyện với một con cá. Cố Minh Hoài lớn như vậy rồi, hôm nay mới biết mình vẫn còn tính trẻ con, làm chuyện ngây thơ như vậy.
+
+Thế nhưng không ngờ là, chú cá chép trong hồ lại gật đầu.
+
+Cố Minh Hoài khựng lại: "Mày có thể nghe hiểu lời tao nói à?"
+
+Dung Dữ lại chậm chạp gật thêm cái nữa.
+
+Vẻ mặt Cố Minh Hoài chăm chú, thử thăm dò hỏi: "Bơi ba vòng xem?"
+
+Lúc này Dung Dữ lại không chút phản ứng, chỉ nhìn chằm chằm Cố Minh Hoài.
+
+Mọi chuyện đều phải có chừng mực, hắn đã lộ ra nhiều chỗ khác biệt, đã đủ để thu hút sự chú ý, nếu thông minh thêm xíu nữa e sẽ làm người ta sợ.
+
+Nghi ngờ trong mắt Cố Minh Hoài dần biến mất, nghĩ đây chỉ lại là trùng hợp mà thôi.
+
+Anh là người theo chủ nghĩa duy vật, cùng lắm là cảm thấy chú cá chép này có chút thông minh.
+
+"Được." Cố Minh Hoài kìm lòng không đặng chọt chọt đầu chú cá, "Sau này tao sẽ thường xuyên tới đút mày ăn."
+
+Anh đứng dậy, cảm thấy hôm nay mình hơi kì quặc. Bệnh sạch sẽ khỏi rồi à? Nếu không sao lại đút cho cá ăn, còn đụng vào đầu nó. Bình thường anh sẽ không làm chuyện này.
+
+Một giây, hai giây, ba giây.
+
+...
+
+Cố Minh Hoài không giữ nổi vẻ bình tĩnh, chạy vọt vào nhà vệ sinh mở vòi nước, thoa xà bông lên đầy tay chà rửa liên tục.
+
+Quả nhiên vẫn rất dơ.
+
+Hết chương 4.')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (31, 16, 5, N'Cá chép vượt vũ môn - 4', 1, N'Cố Minh Hoài nói được làm được, từ đó về sau liền đảm nhiệm vai trò cho Dung Dữ ăn, mỗi tối đều tới rải thức ăn, trò chuyện với Dung Dữ.
+
+Anh vẫn mắc chứng sợ dơ nghiêm trọng, ghét xúc cảm trơn nhớt của cá chép. Nhưng rải thức ăn trêи mặt nước thì Dung Dữ nhất định không chịu ăn, phải ăn trêи tay Cố Minh Hoài, mang bao tay cũng không được, vô cùng khó chiều.
+
+Dưới kháng nghị tuyệt thực của Dung Dữ, bệnh sợ dơ của Cố Minh Hoài bị ép trở thành lúc ổn lúc phát tác. Khi cho cá ăn thì bình thường mà vừa ra khỏi hồ lại biến thành tên cuồng rửa tay.
+
+Mỗi lần dưới vòi nước chà tay đến trắng bệch Cố Minh Hoài đều không khỏi nhìn vào gương đặt tay lên ngực tự hỏi, tại sao anh phải để ý sống chết của một con cá làm gì? Để nó chết đói thì có sao đâu?
+
+Nhưng lần sau khi vào hồ bơi, thấy cá chép sung sướиɠ bơi về phía mình, tâm trạng Cố Minh Hoài lại khó hiểu mà thay đổi, vẫn cứ cam chịu đút nó ăn.
+
+Nhìn chú cá nhỏ vui mừng vì thấy mình, cứ ỷ lại vào mình như thế... Cố Minh Hoài cảm thấy anh có thể miễn cưỡng chịu đựng một chút.
+
+Chủ tịch Cố hồn nhiên không biết Dung Dữ chỉ là thèm linh khí của anh thôi, hắn còn chẳng để ý anh nghĩ gì nữa kìa.
+
+Cuộc sống của Cố Minh Hoài rất đơn điệu, đối với những người khác thì không gì ngoài trao đổi công việc, cũng không liên lạc với người nhà. Mỗi ngày Dung Dữ được ăn chút thức ăn, hút chút linh khí, cuộc sống vừa giản dị vừa vui vẻ.
+
+Không, hắn không vui chút nào hết, hắn rất muốn biến thành người, thề luôn.
+
+Đáng tiếc mỗi ngày chỉ được hút một chút linh khí, còn cần rất nhiều mới có thể biến thành người.
+
+Một ngày đẹp trời, Cố Minh Hoài đang đút Dung Dữ ăn, bỗng nói: "Này cá nhỏ, hình như mày mập lên."
+
+Dung Dữ vừa nghe đã không vui, hung hăng vẫy đuôi, hất nước đầy mặt anh.
+
+Mi mới mập lên! Chắng qua là do hắn hút nhiều linh khí nên có hơi trướng bụng thôi!
+
+Quần áo và mặt Cố Minh Hoài ướt sũng, nhưng không giận, chỉ cụp mắt dặn dò: "Bơi nhiều vào, ăn ít thôi, mày nên giảm cần rồi!"
+
+Đáp lại anh chính là một lần vẫy đuôi tạt nước nữa. Dung Dữ vẫn chưa hết giận, nhảy ra khỏi mặt nước, tát thẳng lên mặt Cố Minh Hoài.
+
+Cố Minh Hoài không kịp đề phòng bị cá chép dính lên mặt. Giọt nước trong suốt trượt xuống theo mi mắt anh tuấn của người đàn ông, đậu trêи lông mi. Cố Minh Hoài đen mặt, vội vã lấy khăn lông bên cạnh lau, một tay lại vớt cá chép từ dưới nước lên, nghiến răng nghiến lợi: "Gan lớn rồi nhỉ?"
+
+Cá chép bị ép ra khỏi nước lập tức giãy dụa, đây chỉ là phản xạ cơ thể. Dung Dữ lại mong Cố Minh Hoài đừng buông tay, cứ cầm lâu một chút, từng giây từng phút đều là linh khí.
+
+Tiếc là được cầm chút xíu đã bị quăng lại vào nước, Dung Dữ bất mãn nhảy ra, như ghiền trò này, lại bắn đầy nước lên mặt Cố Minh Hoài.
+
+Mi có gan thì cầm thêm lần nữa coi! Đầu cá ló ra khỏi mặt nước, không chút tiếng động ầm ĩ.
+
+Cố Minh Hoài nhìn nó: "Sao, không phục à?"
+
+Dù sao tay cũng chạm vào cá rồi, nên dơ thêm chút nữa cũng chả sao. Cố Minh Hoài dứt khoát ''lợn chết chả sợ nước sôi'', như Dung Dữ muốn, lại vớt hắn lên: "Quậy nữa sẽ ăn mày."
+
+Môi cá chép mấp máy.
+
+Đánh địch tám trăm tự tổn một ngàn, mi ăn ta, mi cũng dị ứng nhập viện.
+
+Cố Minh Hoài không nghe được Dung Dữ oán thầm, dạy dỗ xong, động tác nhẹ nhàng thả cá về: "Mày ngoan đi, tao không ăn mày."
+
+Dung Dữ lười để ý đến anh, nằm trêи mặt nước, phơi bụng giả chết.
+
+Cố Minh Hoài chọt chọt bụng cá: "Có nghe không?"
+
+Lần này chú cá lại bị ấn thẳng vào trong nước.
+
+Cố Minh Hoài hết hồn, chết rồi à?
+
+Anh có vớt cá ra quá lâu đâu nhỉ.
+
+Cố Minh Hoài vớt cá lên, mà đụng như thế nào chú cá chép vẫn không động đậy.
+
+... Chết thật rồi à?
+
+Cố Minh Hoài mím môi, ánh mắt lóe lên chút hối hận, lại hơi kinh ngạc bản thân vì một con cá mà đau buồn áy náy.
+
+Dù sao những ngày qua cá nhỏ đã đem đến cho anh rất nhiều niềm vui.
+
+"Tao sẽ chôn cất mày tử tế." Cố Minh Hoài lấy điện thoại chụp cho nó tấm hình.
+
+Dung Dữ:...
+
+Chấp nhận cũng nhanh ghê nhỉ, như mấy ngày vui vẻ sống chung đều là giả ấy.
+
+Đúng là loài người khó mà nảy sinh tình cảm thật lòng với một con cá.
+
+Thừa dịp Cố Minh Hoài đang lướt điện thoại, Dung Dữ ''sống lại'' nhảy ra khỏi nước, vả bay điện thoại của Cố Minh Hoài.
+
+Điện thoại ''tùm'' một tiếng rơi xuống nước.
+
+Cố Minh Hoài liếc nó: "Không chết à?"
+
+Dung Dữ: Ờ, làm mi thất vọng rồi.
+
+Cố Minh Hoài vớt điện thoại lên: "Vậy tao hủy đơn nghĩa trang cho thú cưng."
+
+Điện thoại chống nước, rơi xuống nước trong thời gian ngắn thì vẫn có thể dùng. Dung Dữ tinh mắt thấy đâu chỉ là mộ, đến cả vòng hoa Cố Minh Hoài cũng đặt xong cả rồi.
+
+Dung Dữ:...
+
+Đm, đồ bạc tình.
+
+"Còn học giả chết à?" Cố Minh Hoài thầm thở phào, vỗ nhẹ lên đầu cá, "Sau này không cho mày làm thế nữa, rất đáng sợ, biết không?"
+
+Dung Dữ: Mi có sợ à? Rõ ràng mi còn bình tĩnh sắp xếp dám tang cho ta kìa.
+
+Cố Minh Hoài quan sát nó: "Hay là mày ở một mình quá cô đơn, người ta thường nói cá chép thành đôi, tao mua cho mày thêm một chú cá nữa làm bạn nhé?"
+
+Dung Dữ lại dữ dằn ngậm ngón tay anh.
+
+Đừng có mơ!
+
+Ma vương thề không bao giờ ở chung với một con cá, toàn bộ cái hồ này, cả cái ngoài trời nữa, chỉ có thể là của hắn thôi!
+
+Nhân cơ hội hút chút linh khí.
+
+Cố Minh Hoài cau mày, ngón tay bị cá ngậm làm anh nổi da gà. Anh lắc lắc ngón tay: "Nhả ra."
+
+Dung Dữ không nhả, thân cá theo ngón tay của Cố Minh Hoài mà lắc qua lắc lại, còn rung đùi đắc ý. Cố Minh Hoài dứt khoát rút tay về, Dung Dữ cũng ngoi theo lên mặt nước.
+
+Cố Minh Hoài nhìn chú cá chép đỏ đã bị nhấc lên không trung mà vẫn không chịu nhả, đôi mắt tròn xoe của Dung Dữ cũng không chịu yếu thế trừng lại.
+
+Một người một cá trừng nhau hồi lâu, Cố Minh Hoài thở dài: "Được, không nuôi cá khác, chỉ nuôi mình mày thôi, được chưa."
+
+Lúc này Dung Dữ mới nhả ra, ''ùm'' một tiếng rơi thẳng vào trong nước.
+
+Hút no linh khí rồi, thật ra hắn cũng sắp không chịu được, lúc nãy cố cắn ngón tay quá mà.
+
+Cố Minh Hoài cười: "Còn ghen nữa chứ, đi làm cá hấp giấm được rồi đấy." (ghen là ''ăn giấm'')
+
+Dung Dữ thổi bong bóng, ợ, hút nhiều linh khí quá.
+
+Cố Minh Hoài: "Này cá nhỏ, thật hâm mộ mày không buồn không lo, tự do tự tại."
+
+Dung Dữ: Phắn.
+
+Đường đường là Đại ma vương, bị một cái vòng phong ấn pháp lực thì thôi đi, lại còn bị nhốt trong thân một con cá, mỗi ngày chỉ có thể bơi trong cái hồ này, bực bội muốn chết.
+
+Không buồn không lo, tự do tự tại?
+
+Xát muối vào tim cá.
+
+"Tối mai tao có tiệc xã giao, nên về rất trễ, người giúp việc sẽ cho mày ăn." Cố Minh Hoài mặc kệ cá chép có hiểu hay không, "Không được bỏ ăn."
+
+Dung Dữ không chút phản ứng.
+
+Cố Minh Hoài sờ vảy nó: "Cá nhỏ à, có nghe không?"
+
+Dung Dữ miễn cưỡng vẫy đuôi, tỏ ý biết rồi, nhanh lui ra đi.
+
+"Vậy tao đi nhé, ngủ ngon." Vẻ mặt Cố Minh Hoài bình tĩnh tạm biệt nó, sau đó chạy như ma đuổi vào phòng vệ sinh.
+
+Vòng Huyết Ngọc thấy toàn bộ quá trình: ....
+
+Nó cảm thấy đầu óc Chủ thần đại nhân với Đại ma vương như bị lùi về năm ba tuổi vậy á, đúng là không nỡ nhìn.
+
+- --
+
+Ngày hôm sau quả nhiên Cố Minh Hoài không vào hồ bơi, người giúp việc tới cho cá ăn.
+
+Dung Dữ hời hợt đớp vài miếng, sau đó núp trong góc hồ ngủ. Cuộc sống không có Cố Minh Hoài đúng là không có gì đáng mong đợi.
+
+Mười hai giờ khuya, màn đêm bao trùm tứ phía, trăng treo lơ lửng giữa trời.
+
+Ánh trăng xám trắng xuyên qua cửa sổ sát đất, chiếu xuống hồ bơi thành nửa sáng nửa tối, xung quanh yên tĩnh không một tiếng động.
+
+Đột nhiên cửa hồ bơi bị đẩy ra, Cố Minh Hoài bước chân lảo đảo đi tới, mùi rượu đầy người, sắc mặt đỏ ửng bất thường. Anh vội vàng cởi áo khoác tây trang, tháo cà vạt, nhảy thẳng vào trong hồ.
+
+Tiếng vật lớn rơi xuống hồ đánh thức Dung Dữ đang ngủ, chú cá chép vội vọt ra chỗ khác, tạo thành một gợn sóng nho nhỏ.
+
+Cố Minh Hoài dựa vào thành hồ, cả người ngâm trong nước lạnh lẽo, đỏ ửng trêи mặt mới giảm một chút. Anh cúi đầu vốc nước lên mặt, tiếng thở dốc dồn dập đầy gợi cảm. Áo sơ mi cởi hai nút trêи cùng, giọt nước dọc theo cần cổ thon dài lướt qua yết hầu, trượt vào cổ áo, một nửa đọng lại trêи xương quai xanh. Áo sơ mi ướt nhẹp dính sát vào người, ôm trọn cơ thể hoàn mỹ.
+
+Dung Dữ lúc này mới nhìn ra: Đây là bị bỏ thuốc à?
+
+Cố Minh Hoài là người đàn ông vàng trong làng độc thân, mỗi lần đi tiệc đều là đối tượng mà mọi người mơ ước được lên giường một lần, và luôn có những người gan lớn thích làm một vài chuyện thực tế giống vầy.
+
+Cố Minh Hoài rất có kinh nghiệm giải quyết mấy chuyện này, nhưng ai ngờ cẩn thận như thế mà tối nay vẫn dính. Đối phương cũng không dám làm quá mức, thuốc này chỉ trợ hứng, không phải loại không làm sẽ chết nên có thể về nhà ngâm nước lạnh.
+
+Anh lạnh mặt bỏ đối phương lại, lái xe về nhà, nhất thời đầu nóng lên, không vào phòng tắm mà nhảy thẳng vào hồ bơi.
+
+Cố Minh Hoài nhắm mắt, chờ cái nóng trêи người dịu xuống. Dung Dữ thấy vậy, liền vội vã bơi qua, dán vào eo Cố Minh Hoài.
+
+Còn chờ cái chi nữa? Đây chính là cơ hội để hút linh khí.
+
+Trước kia Dung Dữ cùng lắm là chạm tay Cố Minh Hoài thôi, đây là lần đầu tiên có thể tiếp xúc thân thể với Cố Minh Hoài.
+
+Dung Dữ chịu đủ cuộc sống trong hồ rồi, đêm nay hắn phải dính luôn trêи người Cố Minh Hoài mới được.
+
+Cố Minh Hoài cảm giác trêи bụng dính vào thứ gì đó lành lạnh, thân thể nóng ran lập tức thoải mái hơn nhiều, chân mày nhíu chặt cũng hơi giãn ra. Loại thuốc này cứ ráng mà chịu đựng thì không khó nhưng có tác dụng phụ, là sẽ ngủ như chết.
+
+Người đàn ông ngồi trong chỗ nước cạn, hai tay gác lên thành hồ. Nửa người trêи ướt nhẹp, trêи bụng còn có chú cá chép đỏ, từ eo trở xuống ngâm trong nước, hai chân duỗi thẳng.
+
+Anh nhắm mắt, hô hấp đều đều, hiển nhiên là đã ngủ.
+
+Dung Dữ: Ngủ trong hồ bơi, anh ta không sợ chết đuối à.
+
+Vòng Huyết Ngọc: Nước chỗ này chỉ có nửa mét.
+
+Dung Dữ: Thì sao, té xuống cũng chết như thường.
+
+Vòng Huyết Ngọc: Anh ta ngủ ngồi kìa.
+
+Dung Dữ: Tao còn trừng mắt mà ngủ đây.
+
+Vòng Huyết Ngọc: ... Anh còn tự hào ghê nhỉ.
+
+Qua một lúc sau, gương mặt nóng ran của Cố Minh Hoài mới tan hết đỏ ửng, biến thành tái nhợt lạnh lẽo.
+
+Dung Dữ: Thế này có lẽ thuốc hết tác dụng rồi đấy.
+
+Vòng Huyết Ngọc: Ừ.
+
+Dung Dữ: Thuốc này có lây không?
+
+Vòng Huyết Ngọc: Không biết.
+
+Dung Dữ: Tại sao tao cũng cảm thấy cơ thể hơi nóng?
+
+Vòng Huyết Ngọc: Anh muốn biến thành người đấy.
+
+Thời gian đã lâu như vậy, cứ đứt quãng hấp thu linh khí, cộng thêm tối nay tiếp xúc gần với Cố Minh Hoài, linh khí mà Dung Dữ tích góp được cũng đã tới mức biến thành người.
+
+Vòng Huyết Ngọc vừa nói xong, Dung Dữ đã cảm thấy toàn thân nóng lên, trong hồ bơi hiện ra một dải ánh sáng đỏ rực chói mắt.
+
+Chờ ánh sáng dần biến mất, chú cá chép bên cạnh Cố Minh Hoài đã không thấy nữa, thay vào đó là một thanh niên xinh đẹp nằm trêи người anh.
+
+Làm cá chép gần một tháng, đột nhiên biến về thành người, Dung Dữ còn hoi chưa thích ứng được. Hắn nương ánh trăng nhìn về ảnh ngược trêи mặt nước, nhìn thấy một gương mặt xa lạ xinh đẹp lạnh lùng.
+
+Đây là dung mạo của nguyên chủ.
+
+Người thanh niên có nước da trắng ngần, gương mặt tinh xảo, môi đỏ mọng, còn có một đầu tóc đen óng, hai bên tai là vảy cá mỏng như cánh ve. Tuyến nhân ngủ* trêи bụng rõ ràng, da mịn màng mềm mại, trêи cổ tay thon gầy đeo vòng Huyết Ngọc. Dung Dữ cụp mắt, thấy từng làn sóng gợn lăn tăn trêи mặt nước, che đi lớp vảy đỏ diễm lệ.
+
+Dung Dữ: "Đệt."
+
+Nửa người dưới của hắn là đuôi cá.
+
+Vòng Huyết Ngọc: Nói chuyện văn minh.
+
+Dung Dữ: Vòng nhỏ, sao chỉ biến được một nửa hả?
+
+Vòng Huyết Ngọc: Tao tên Xích Kim Diệu Nhật Hoàn.
+
+Dung Dữ: Trọng điểm.
+
+Vòng Huyết Ngọc: Trọng điểm chính là tôi tên Xích Kim Diệu Nhật Hoàn.
+
+Nó nhất định phải làm Đại ma vương gọi đúng tên, không thể để tên nó sai lãng nhách vậy được.
+
+Dung Dữ không nhìn nữa: Xem ra là không đủ linh khí.
+
+Vòng Huyết Ngọc:...
+
+Mi biết câu trả lời rồi mi còn hỏi làm gì!
+
+Dung Dữ nhìn về phía Cố Minh Hoài đang yên ổn ngủ: Tao ôm hắn cả đêm, không tin không biến được đôi chân.
+
+Vòng Huyết Ngọc: Anh có thể thử.
+
+Chủ thần đại nhân tự đưa đến cửa, nó còn có thể làm gì chứ?
+
+Dung Dữ lập tức quấn lên người Cố Minh Hoài. Hai tay ôm lấy bả vai người đàn ông, tựa hẳn vào ngực anh, ngay cả đuôi cá cũng vắt ngang qua đùi anh, dính không còn một chỗ hở.
+
+Chỉnh thành cái tư thế đó, linh khí truyền tới quả nhiên vô cùng nhiều.
+
+Dung Dữ hỏi: Giờ có thể truyền kịch bản chưa?
+
+Vòng Huyết Ngọc: Nguyên chủ tên Trì Ngư.
+
+Một hồi yên tĩnh.
+
+Dung Dữ: Sau đó đâu?
+
+Vòng Huyết Ngọc: Hết rồi.
+
+Dung Dữ nhìn chằm chằm vòng tay đỏ, đáy mắt hiện lên chút lạnh lẽo: Mày nói sau khi biến thành người sẽ biết kịch bản.
+
+Vòng Huyết Ngọc vặn lại: Bây giờ anh là người hả?
+
+Dung Dữ nhìn lướt qua đuôi cá.
+
+Thôi được, hắn không phải.
+
+Lạnh lẽo trong mắt tan đi, Dung Dữ lười biếng nằm nhoài trêи người Cố Minh Hoài, trong mắt sóng nước dập dờn, lộ ra chút uể oải. Toàn thân được bao phủ trong linh khí vô cùng ấm áp dễ chịu, rất nhanh hắn cũng buồn ngủ.
+
+Những linh khí này có thể giúp hắn duy trì hình người, nhưng không thể lấy lại pháp lực cho hắn, phải cần nội đan. Cho nên bây giờ Dung Dữ như người phàm vậy, sẽ cảm thấy đói bụng và mệt mỏi.
+
+Dung Dữ miễn cưỡng ngáp một cái: Tao ngủ đây, hy vọng sáng ra có thể làm người.
+
+- --
+
+Phía đông dần hiện lên ánh sáng trắng bạc.
+
+Cố Minh Hoài khó khăn mở mắt ra, vừa say rượu ngủ ở hồ bơi một đêm hậu quả là cả người choáng váng, đầu vừa nặng vừa mơ hồ, chắc chắn là bị cảm rồi.
+
+Cố Minh Hoài vừa tỉnh dậy đã bị sức nặng đè trêи người làm giật mình, cả người cứng ngắc, nhìn xuống thì thấy một thanh niên đang thân mật ngủ say trong ngực mình.
+
+Cố Minh Hoài: "..."
+
+Trải qua bao nhiêu sóng gió gặp qua đủ thứ chuyện vẫn tuyệt đối giữ được bình tĩnh, nên vẻ mặt Cố Minh Hoài vẫn không thay đổi gì mấy.
+
+Anh loáng thoáng nhớ lại tối hôm qua bị một người phụ nữ bỏ thuốc, vậy còn người thanh niên này là sao? Chẳng lẽ mới thoát được hang sói đã vào miệng cọp?
+
+Nếu thật là như vậy, ánh mắt Cố Minh Hoài lạnh lẽo.
+
+Anh sẽ không bỏ qua cho bất kỳ kẻ nào dám tính kế mình.
+
+Điều kiện Cố Minh Hoài xuất sắc, muốn leo lên giường anh trừ phụ nữ ra còn có gay, nên đối với chuyện này anh cũng chẳng ngạc nhiên mấy. Anh nhìn xung quanh, phát hiện hình như đây là hồ bơi nhà mình...
+
+Anh dẫn người về hồ bơi quậy à?
+
+Cứ cho là say rượu còn bị chuốc thuốc đi, nhưng Cố Minh Hoài tin chắc mình sẽ không làm chuyện hoang đường như vậy. Anh quan sát thanh niên trong ngực. Đúng lúc này, Dung Dữ cựa mình, tóc đen tuột xuống, lộ ra gương mặt trắng nõn diễm lệ cùng vảy trong suốt bên tai.
+
+Con ngươi Cố Minh Hoài co rút, toàn thân cứng ngắc.
+
+Lúc này anh mới để ý trêи đùi bị đè, không phải hai chân người mà là một đuôi cá màu đỏ rực xinh đẹp.
+
+Gối dựa đột nhiên động đậy, Dung Dữ cau có, bất mãn nhỏ giọng phàn nàn: "Đừng có động, ta còn chưa ngủ đủ."
+
+Cố Minh Hoài nhìn hắn chăm chú, trong đầu nảy ra một suy nghĩ không tưởng. Anh thăm dò hỏi -----
+
+"... Cá nhỏ à?"
+
+Dung Dữ nhắm hai mắt tựa vào ngực anh, giọng ầm ờ: "Ừm."
+
+Vẻ bình tĩnh trêи mặt Cố Minh Hoài nứt toạc.
+
+Anh cũng thốt một tiếng "Đệt".
+
+Hết chương 5.')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (32, 16, 6, N'Cá chép vượt vũ môn - 5', 1, N'Thứ bị sụp đổ còn sớm hơn nhân loại bị huỷ diệt, chính là thế giới quan của Cố Minh Hoài.
+
+Thử hỏi hai mươi tám năm kiên định theo chủ nghĩa duy vật, vừa tỉnh dậy đã thấy một chàng tiên cá nằm trêи người mình, bạn sẽ có cảm tưởng thế nào?
+
+Nghe thì lãng mạn giống truyện cổ tích thiếu nhi, nhưng thực tế cảnh này căn bản là chuyện kinh dị đêm khuya.
+
+Cố Minh Hoài bật mạnh dậy, Dung Dữ đang nằm trêи người anh bất ngờ bị tuột xuống, đầu đụng vào thành hồ.
+
+"Shhh---" Dung Dữ bị đau đến tỉnh, mở mắt nổi giận, "Lôi ra ngoài chém!"
+
+Hắn ngủ mơ thấy cuộc sống ca hát nhàn nhã mấy năm trước, chưa uống được ngụm rượu hắn yêu thích đã bị cơn đau làm tỉnh.
+
+Chuyện này mà ở trước kia, có kẻ dám làm phiền giấc ngủ của Ma vương bệ hạ, đừng hòng sống sót đi ra ngoài.
+
+Hắn có tính gắt ngủ.
+
+Dung Dữ rất tức giận, nhưng mới sáng sớm còn ngái ngủ lười biếng, giọng chú cá chép mềm mại êm tai, nghe hệt như đang làm nũng.
+
+Cố Minh Hoài nhìn hắn: "Cậu muốn chém ai?"
+
+Dung Dữ: "..."
+
+Cuối cùng hắn cũng tỉnh hoàn toàn.
+
+Hình như trong không trung có một đàn quạ bay qua.
+
+Dung Dữ cúi đầu nhìn nửa người dưới, sờ sờ vảy cá bên tai.
+
+Hắn vốc nước lên rửa mặt, nhìn kỹ lại lần nữa.
+
+Đuôi vẫn còn, vảy cá cũng thế.
+
+Được lắm, biến hình thất bại rồi.
+
+Dung Dữ bình tĩnh chấp nhận hiện thực: "Không, tôi vừa nằm mơ."
+
+Cố Minh Hoài chậm rãi nói: "Tôi cũng có cảm giác mình đang mơ."
+
+Dung Dữ nói: "Ảo giác thôi, anh không nằm mơ."
+
+Thanh niên gương mặt đẹp đẽ, sóng mắt dập dờn, nửa người tя͢ầи ͙ȶя͢υồиɠ, mái tóc dài xõa tung trêи mặt nước, nửa người dưới nước càng thêm yêu mị, lộ vẻ cám dỗ ướt át.
+
+Cố Minh Hoài nhìn chăm chú mấy giây, sau đó quay mặt sang chỗ khác: "Cậu để tôi yên tĩnh chốc lát."
+
+Dung Dữ kiên nhẫn chờ hắn tiêu hoá, một phút sau hỏi: "Tỉnh chưa?"
+
+Cố Minh Hoài tỏ vẻ còn chưa tỉnh lắm, hết sức bình tĩnh nói: "Trước tiên cậu xuống khỏi người tôi đã."
+
+Đuôi cá lớn như thế còn đang đặt trêи người anh, sao bình tĩnh nổi.
+
+Dung Dữ nhìn anh, thân thể mềm mại không xương lại sà tới, ôm lấy cổ Cố Minh Hoài, hơi thở nóng ấm làm người ta mặt đỏ tim đập dữ dội.
+
+Hắn làm động tác quyến rũ nhất, nhưng giọng điệu lại vô cùng chính trực: "Không, anh để tôi ôm một chút."
+
+Ôm cả đêm sao còn không mọc chân nhỉ?
+
+Nhất định là chưa đủ thời gian, phải ôm thêm chút nữa.
+
+Chàng tiên cá xinh đẹp chủ động muốn ôm, toàn thân Cố Minh Hoài cứng đờ, bên tai đầy giọng nói nũng nịu của cậu thanh niên.
+
+"Này cá nhỏ." Cố Minh Hoài ánh mắt né tránh, tần suất chớp mắt càng nhanh, biểu hiện của sự hốt hoảng: "Loài người có câu, nam nam thụ thụ bất thân."
+
+Anh hoài nghi thuốc chưa hết tác dụng, nếu không sao lại vì một cái ôm mà tim đập rộn ràng cả lên chứ.
+
+- -- Nhảm nhí đấy, người bình thường mà thấy cá chép biến thành người thì tim lại chả đập thình thịch lên.
+
+Dung Dữ ngước lên nhìn thẳng vào mắt anh: "Câu này anh tự nghĩ ra chứ gì." Hắn chỉ nghe nam nữ thụ thụ bất thân thôi.
+
+Hai thằng đàn ông ôm nhau xíu thì làm sao?
+
+Nếu không phải vì biến thành người nhanh thì còn lâu mới ôm, hắn cũng chả vui vẻ gì đây.
+
+Cố Minh Hoài cứng đờ hỏi: "Vậy cậu muốn ôm tới khi nào?"
+
+Dung Dữ nói: "Không biết." Sao hắn biết được khi nào sẽ mọc chân.
+
+"Tôi đứng không nổi." Dung Dữ bổ sung.
+
+Thì ra là thế. Cố Minh Hoài nhẹ nhõm: "Vậy cậu có thể nằm trong nước đợi."
+
+Dung Dữ ôm chặt anh: "Tôi cảm thấy trong ngực anh thoải mái hơn."
+
+Này là nói thật, được vây trong đống linh khí cảm giác sướиɠ vô cùng.
+
+Cố Minh Hoài nghẹn họng chớp mắt, có chút không chống đỡ nổi.
+
+"Cậu có thể biến ra hai chân không?" Cố Minh Hoài nhìn xuống đuôi cá xinh đẹp, "Bị người khác thấy... sẽ rất phiền."
+
+Dung Dữ: "Tạm thời không thể."
+
+Cố Minh Hoài: "Vậy biến về lại?"
+
+Dung Dữ thử rồi: "Cũng không thể. Tôi biến không được."
+
+Hắn không khống chế được trạng thái hiện giờ của mình, biến hình cũng bị động nốt. Không biết khi nào mới có thể biến hoàn toàn, cũng không biết khi nào sẽ biến về lại.
+
+Chuyện này có chút khó giải quyết.
+
+Cố Minh Hoài hít một hơi, mò tới di động trong túi áo khoác bên bờ, cho mấy người giúp việc nghỉ mấy ngày trước.
+
+Không thể để người thứ ba thấy Dung Dữ thế này.
+
+Dung Dữ nhìn anh bình tĩnh nói chuyện điện thoại xong, giọng điệu lạnh nhạt như cũ, gương mặt như núi băng không bao giờ biến sắc.
+
+Vừa cúp điện thoại anh mới lộ vẻ mặt nhức đầu.
+
+Cố Minh Hoài xoa xoa huyệt thái dương: "Tạm thời xuống khỏi người tôi đi, tôi đi thay quần áo đã."
+
+Ngâm nước lạnh một đêm, sáng dậy còn bị giật mình, cảm giác không ổn chút nào.
+
+Dung Dữ nghe vậy càng ôm chặt hơn, dùng hành động tỏ ý cự tuyệt.
+
+Ai cũng đừng hòng chia cắt hắn với linh khí.
+
+Cố Minh Hoài đúng là hết cách với chàng tiên cá dựa dẫm vào mình như thế, bất đắc dĩ nói: "Nghe lời nào."
+
+Dung Dữ tùy hứng nói: "Không nghe đấy."
+
+Cố Minh Hoài theo thói quen hù dọa: "Coi chừng tôi làm cậu thành cá kh----"
+
+"Anh cũng chịu ăn nhỉ." Đuôi mắt Dung Dữ cong cong, "Sao nào? Nửa thân trêи để lại còn nửa thân dưới gặm xương à?"
+
+Cố Minh Hoài: "..."
+
+Anh tưởng tượng một chút, hình ảnh đẹp quá, có hơi buồn nôn.
+
+Hơn nữa con cá này còn lớn như thế, đối với người bị dị ứng cá như Cố Minh Hoài thì lượng thịt này cũng đủ chết, ăn xong cưỡi hạc về Tây Thiên luôn.
+
+Nhưng cứ giằng co trong nước thế này cũng không phải chuyện hay.
+
+Cố Minh Hoài ôm ngang Dung Dữ. Vừa ra khỏi mặt nước, đuôi cá hiện ra, lớp vảy dưới ánh nắng trở nên rực rỡ lấp lánh, nước xuôi theo đuôi cá chảy xuống. Chàng tiên cá tóc dài ôm cổ người đàn ông, cụp mắt, góc nghiêng tinh xảo, cảnh tượng đẹp hết sức, kết hợp với BGM lãng mạn cũng có thể trở thành hình ảnh kinh điển của cả phim điện ảnh và truyền hình---
+
+Cố Minh Hoài lảo đảo, suýt nữa ôm không nổi, té lại vào nước.
+
+Dung Dữ sợ hãi ôm chặt cổ anh: "Anh cẩn thận chút coi!" Cố Minh Hoài té thì không sao, hắn chỉ sợ mình bị té dập đầu thôi.
+
+Cũng may Cố Minh Hoài kịp thời đứng vững.
+
+Dung Dữ thở phào, than phiền nói: "Sức yếu thế..." Người phàm nào cũng yếu vậy à?
+
+Cố Minh Hoài căng môi: "Tôi nói cậu giảm cân, cậu thì tăng hơn 50 kg trong một đêm, còn chê tôi sức yếu."
+
+Tôi cũng không chê cậu bẩn.
+
+Tất nhiên lời này Cố Minh Hoài biết điều không nói ra.
+
+Ai lại nghĩ đuôi cá nặng như vậy.
+
+Cố Minh Hoài vô cùng mâu thuẫn với vảy cá trơn nhớt, mà cái đuôi này nhiều vảy như thế làm anh suýt nữa quăng người đi luôn.
+
+Có thể nhịn mà ôm Dung Dữ đã tốt lắm rồi.
+
+Cố Minh Hoài bước lên bờ, ráng không nhìn xuống dưới, sợ vừa nhìn thấy vảy cá lại ném người trong ngực xuống.
+
+Chưa bao giờ Dung Dữ cảm thấy đất liền tuyệt vời như bây giờ --- Hắn thật sự không muốn ngâm trong nước nữa.
+
+Bản thể của hắn là lửa, nằm lâu trong nước không hẳn là khó chịu, nhưng tuyệt đối cũng chẳng thoải mái gì mấy.
+
+Lần này rời khỏi nước không có triệu chứng khó thở, bây giờ hắn có lỗ mũi, không còn phải hô hấp bằng mang nữa.
+
+Vòng Huyết Ngọc: Thanh tiến độ trạng thái đã mở, xin chú ý kiểm tra.
+
+Trong đầu Dung Dữ hiện thêm hai thanh tiến độ, một cái màu xanh lam một cái màu đỏ.
+
+Màu xanh lam đang 100%, màu đỏ 60%.
+
+Vòng Huyết Ngọc: Màu xanh lam là nguồn nước. Cá chép tinh không thể rời nước quá lâu, cần thường xuyên bổ sung nước mới có thể duy trì hình người. Hơn 50% là trạng thái an toàn, có thể duy trì hình người. Thấp hơn 50% là trạng thái thiếu nước, biến thành người cá, cần phải bổ sung nước. Dưới 20% là trở về nguyên hình. Về 0% là chết, đèn hồn tắt, nhiệm vụ thất bại. Xin chú ý bổ sung nước kịp thời. Bây giờ lượng nước của ký chủ là 100%.
+
+Dung Dữ ở trong nước đợi lâu như vậy, tất nhiên là thừa nước. Nhưng nghĩ đến ở thế giới này còn phải năm lần bảy lượt tiếp xúc với nước, hắn đã cảm thấy vô cùng nghẹt thở.
+
+Nước lửa bất dung, cái thế giới này chắc chắn đang chơi hắn.
+
+Vòng Huyết Ngọc tiếp tục giảng giải: Màu đỏ là linh khí. Linh khí hơn 80% có thể duy trì hình người, hơn 50% duy trì trạng thái người cá, thấp hơn 50% sẽ biến lại thành cá chép. Linh khí bây giờ của ký chủ là 60%. Lượng nước và linh khí phải cùng đạt tiêu chuẩn mới có thể biến thành người, mời tiếp tục cố gắng.
+
+Dung Dữ suy tư, cố gắng lâu như vậy mà chỉ mới được 60%.
+
+Vậy có nghĩa là bây giờ hắn không thể rời khỏi Cố Minh Hoài một giây một phút nào, nếu không bất cứ lúc nào cũng có thể bị biến lại thành cá chép.
+
+- -
+
+Đường cong cằm Cố Minh Hoài căng thẳng, mím môi ôm Dung Dữ xuống lầu ba, chạy thẳng tới phòng ngủ.
+
+Anh đá văng cửa phòng tắm, đi vào xong dùng lưng đóng lại, như bị phỏng mà vội vàng thả Dung Dữ xuống bồn tắm, mở vòi nước trong bồn ra.
+
+Cố Mình Hoài lấy khăn lông sạch trêи kệ xuống: "Biết tự tắm không?"
+
+Dung Dữ nói: "Không biết."
+
+Thật ra là biết, nhưng hắn sẽ không chừa bất kỳ cơ hội tiếp xúc với Cố Minh Hoài.
+
+Mà cơ hội là phải tự bản thân tạo ra.
+
+Cố Minh Hoài nhíu chặt mày, chuẩn bị lau người gội đầu cho Dung Dữ.
+
+Áo sơ mi ướt nhẹp dính vào người rất khó chịu, Cố Minh Hoài dứt khoát cởi ra, lộ ra cơ thể mặc vào thì gầy mà cởi ra thì múi không.
+
+Dung Dữ ''chậc'', tám múi cơ lận đấy.
+
+Hắn nằm trong bồn tắm, đầu tựa vào thành bồn, mái tóc dài rũ xuống gạch sứ sáng bóng.
+
+Cố Minh Hoài nhìn, tóc này ít nhất cũng dài đến eo.
+
+"Tóc này có thể cắt không?"
+
+Cái độ dài này, gội xong cũng làm anh choáng váng.
+
+Thực ra thì tóc do một phần của cá chép biến thành, cắt là Dung Dữ toi mạng.
+
+Dung Dữ nói: "Có thể."
+
+Dù sao thân thể này cũng không phải thân thể của Trì Ngư, do hệ thống sao chép mà thôi, xử lý thế nào là tùy hắn.
+
+Yêu tu luyện thành tinh cũng phải cần ít nhất trăm năm. Trì Ngư là một con cá từ thời cổ đại, nên mới nuôi tóc dài để nhập gia tùy tục, đến thời hiện đại rồi thì không cần nữa.
+
+Cố Minh Hoài được đồng ý, lanh lẹ cầm kéo lên, ''xoẹt xoẹt'' mái tóc dài liền rơi xuống. Anh lấy cái ghế nhỏ ngồi xuống, xịt một chút dầu gội lên tay gội đầu cho Dung Dữ.
+
+Cả đời này anh chưa phục vụ ai bao giờ, nên động tác không quá thành thạo, nhưng lực đạo mát xa rất thoải mái, linh khí từ đầu ngón tay không ngừng truyền vào da đầu để lại cảm giác vô cùng thoải mái. Dung Dữ nhắm mắt hưởng thụ phục vụ, rất muốn vote cho 5 sao khen ngợi.
+
+Cố Minh Hoài cảm thấy vừa quái dị vừa hoang đường.
+
+Đúng là hiện thực huyền huyễn.
+
+Bây giờ anh đang gội đầu cho một con cá chép.
+
+Dung Dữ không chịu ở trong hồ bơi, cũng không thể để hắn ra vẩy nước đầy nhà. Người giúp việc đã nghỉ, không ai dọn vệ sinh, nước khắp nơi thế này sẽ làm Cố Minh Hoài sợ dơ phát điên mất.
+
+Vì không để mình điên, anh chỉ có thể nhịn bệnh lại mà gội đầu cho Dung Dữ.
+
+Cố Minh Hoài gội đầu cho Dung Dữ xong, đỡ hắn ngồi dậy, lấy máy sấy sấy tóc cho hắn.
+
+Vừa mở máy sấy lên, Dung Dữ lập tức cảnh giác mở mắt ra: "Đây là thứ gì?"
+
+Mặc dù trước kia hắn đã đi qua khá nhiều thế giới, nhưng cũng chỉ cưỡi ngựa xem hoa, chủ yếu là chơi rượt bắt với Chủ thần. Nên Dung Dữ cũng không hẳn là biết mấy thứ đồ sinh hoạt này.
+
+Trước kia hắn còn pháp lực, một cái phất tay là giải quyết được rồi, làm gì cần thứ đồ chơi này.
+
+Cố Miinh Hoài giải thích: "Đây là máy sấy tóc, dùng để sấy tóc, làm tóc cậu nhanh khô hơn."
+
+Đường cong căng thẳng của Dung Dữ lúc này mới dịu lại.
+
+Chờ đến khi tóc gần khô, Cố Minh Hoài lại lau người cho hắn.
+
+Cố Minh Hoài siết chặt khăn lông lau người cho Dung Dữ, nói ưỡn ngực là ưỡn ngực, kêu giơ tay là giơ tay, rất ngoan đúng không.
+
+- -- Dĩ nhiên phải ngoan, tắm một lần mà linh khí đã tăng 5%.
+
+Dung Dữ phát hiện, chỗ tiếp xúc mà càng riêng tư càng thân mật thì linh khí lại tăng càng nhanh.
+
+Hắn còn phát hiện, hình như Cố Minh Hoài mất trí nhớ.
+
+Hành động của người này không phù hợp với tuyến cũ của thế giới này, hơn nữa trêи người còn có linh khí không nên tồn tại, điều này cho thấy Cố Minh Hoài không phải người ở đây.
+
+Nhưng nếu là người xuyên không, đã gặp được đủ loại chuyện kì lạ của muôn vàn thế giới rồi thì sao lại tỏ vẻ khϊế͙p͙ sợ khi biết còn có yêu tinh tồn tại chứ.
+
+Rung động trong mắt Cố Minh Hoài khi nhìn thấy hắn không phải giả, hoàn toàn là dáng vẻ của một người bình thường khi chứng kiến chuyện vượt qua hiểu biết nhân loại.
+
+Một người không bình thường, lại vì nguyên nhân nào đó mà trở thành người bình thường sống ở đây. Chuyện này rất thú vị.
+
+Dung Dữ: "Anh ta chắc không phải bị Thời Không Quản Lý bắt lại, xóa trí nhớ ném vào thế giới nhỏ để trừng phạt đấy chứ?"
+
+Vòng Huyết Ngọc: Anh đoán xem.
+
+Nó thông minh hơn rồi, sẽ không bỏ qua bất kỳ cơ hội nào để Đại ma vương ''đoán''.
+
+Dung Dữ: "Tao đoán không phải."
+
+Vòng Huyết Ngọc: Đúng hay sai tôi cũng không cho anh biết.
+
+Dung Dữ kinh ngạc: "Mày mới đi nạp thêm thông minh đúng không?"
+
+Vòng Huyết Ngọc: Ò ò.
+
+Không muốn để ý hắn.
+
+- --
+
+Vai lưng thanh niên trắng nõn, cẳng tay thon dài, Cố Minh Hoài lau qua, không còn chút bẩn nào.
+
+Nếu như bỏ qua đuôi cá dưới nước, thì hai người trông giống như một đôi vợ chồng già trong các gia đình bình thường.
+
+Lúc lau đến trước ngực, Cố Minh Hoài hỏi: "Cậu có tên không?"
+
+Dung Dữ ngước mắt lên: "Trì Ngư."
+
+"Ngư ở đây là cá trong ao à?" Cố Minh Hoài ngẫm một chút, "Đơn giản trực tiếp, vậy sau này tôi gọi cậu là Cá Nhỏ (Tiểu Ngư) nhé."
+
+Dung Dữ cũng không sửa cho hắn là Ngư này có chấm thủy.
+
+(Ngư mà CMH nói là cá (鱼), còn Ngư trong tên Trì Ngư là câu cá (渔) có chấm thuỷ (氵). Và cả hai đều đọc là yú.)
+
+Dù sao tên nào cũng không phải, hắn là ''Dữ'', đọc thanh ba*.
+
+(Dữ (与) có ba cách đọc là yú, yǔ, yù. Tên của Dung Dữ là Róngyǔ, yǔ thanh ba.)
+
+Cố Minh Hoài lau xuống eo Dung Dữ, xuống chút nữa là bộ phận khuất sau nước.
+
+Chỗ dưới eo Cố Minh Hoài không biết nên làm thế nào, cũng có ý tránh đi.
+
+"Đêm qua tôi uống say." Cố Minh Hoài nói giảm nói tránh, "Chắc là không làm gì cậu chứ?"
+
+Dung Dữ nâng cái đuôi đỏ chói của mình lên: "Anh cảm thấy anh có thể làm gì được tôi?"
+
+Chân còn không có, muốn làm cái gì thì cũng có chỗ đút vào đâu.
+
+Cố Minh Hoài: "...Coi như tôi chưa nói gì."
+
+Dung Dữ lại đập đuôi xuống, bắn nước đầy mặt Cố Minh Hoài.
+
+Khóe miệng Cố Minh Hoài giật một cái, lập tức nhắm mắt để không bị nước bắn vào.
+
+Anh lại nhớ tới lúc Dung Dữ còn là một chú cá chép, cũng rất thích đập đuôi bắn nước đầy mặt anh.
+
+Lúc đó anh còn có thể xách đuôi cá lên dạy dỗ một phen.
+
+Bây giờ... Cố Minh Hoài nhìn chàng tiên cá có thân hình xấp xỉ mình.
+
+Xách không nổi nữa.
+
+Bây giờ chỉ có thể ôm công chúa cá nhỏ thôi.
+
+Cố Minh Hoài suy nghĩ bậy bạ, động tác trêи tay cũng lộn xộn, lau sơ mấy cái rồi thôi. Anh xả nước trong bồn tắm ra, nhìn đuôi cá không biết đặt tay chỗ nào mới ổn.
+
+Lớp vảy kia có lấp lánh xinh đẹp đến cỡ nào, thì anh cũng chỉ thấy rợn tóc gáy.
+
+Dung Dữ cũng không làm khó anh: "Tôi tự làm."
+
+Cố Minh Hoài: "Chẳng phải cậu không biết lau người à?"
+
+Dung Dữ: "Nhìn một lần là nhớ."
+
+Cố Minh Hoài: "Tôi tưởng kí ức của cá có 7 giây thôi."
+
+Dung Dữ duỗi đuôi: "Vậy tôi không nhớ, anh làm đi."
+
+Cố Minh Hoài quả quyết ném khăn cho hắn.
+
+Dung Dữ chế nhạo một tiếng, lau khô nước trêи đuôi cá, ngồi trong bồn tắm dang hai tay: "Ôm."
+
+Cố Minh Hoài liếc đuôi cá, lại không dám nhìn thẳng vào: "Cậu có thể tự bò ra ngoài không?"
+
+Dung Dữa: "Anh đang nói tiếng người đấy à?"
+
+Cố Minh Hoài không biết làm sao, chỉ có thể cúi người bế Dung Dữ lên giường, sau đó lấy một cái áo sơ mi mặc cho hắn, cuối cùng lấy remote mở ti vi: "Cậu ngồi đây xem ti vi đi, tôi đi tắm."
+
+Dung Dữ: "Ờ."
+
+Cố Minh Hoài lập tức đi vào phòng tắm đóng cửa lại.
+
+Anh cảm giác toàn thân mình thật bẩn, rất cần một lễ rửa tội.
+
+Lần tắm này khá lâu, Dung Dữ xem xong ba tập phim rồi mà tiếng nước chảy trong phòng tắm vẫn chưa từng dừng lại.
+
+Dung Dữ vừa xem tivi vừa tán gẫu với vòng Huyết Ngọc: "Tiền nước nhà anh ta chắc cao lắm."
+
+Có chủ nhà sợ dơ kinh khủng, giờ còn thêm cá chép tinh cần thường xuyên bổ sung nước, tiền nước sẽ cao lắm đây.
+
+Vòng Huyết Ngọc: Không sao, anh ta nhiều tiền.
+
+Dung Dữ ngồi đợi trêи giường, nhìn thanh giá trị nước lại giảm 1%, còn 99%. Linh khí...
+
+Giá trị linh khí giảm còn 51%.
+
+Dung Dữ khϊế͙p͙ sợ: "Linh khí tiêu hao nhanh vậy à?"
+
+Dựa theo cái tốc độ này, e là chẳng bao lâu nữa hắn lại trở thành một con cá.
+
+Vòng Huyết Ngọc: Để duy trì trạng thái người cá sẽ tiêu hao một lượng lớn linh khí, biến thành người tiêu hao còn nhiều hơn. Ký chủ chú ý, nếu biến thành cá lúc không ở trong nước, giá trị nước sẽ giảm rất nhanh, nguy hiểm tính mạng.
+
+Chỉ có lúc là cá chép, linh khí tích được sẽ không giảm. Giá trị linh khí đạt 100% sẽ không thể tích thêm được nữa. Cho nên Dung Dữ phải đúng lúc hấp thu linh khí trêи người Cố Minh Hoài, tốt nhất là không được tách ra, như vậy mới bảo vệ được tính mạng.
+
+Nói đơn giản thì đây là trói buộc hoàn toàn.
+
+Thấy giá trị linh khí sắp giảm xuống 50%, mà cửa phòng tắm lại không có chút động tĩnh gì.
+
+Dung Dữ chẳng còn lòng dạ xem tivi, quay đầu nhìn chằm chằm cánh cửa như muốn xuyên qua cửa nhìn người bên trong: "Sao anh ta còn chưa tắm xong? Một lần tắm lâu vậy à?"
+
+Nếu không phải đuôi cá không tiện đi lại, hắn làm gì quan tâm có đang tắm không, cứ xông thẳng vào ôm hít linh khí là được.
+
+Lâu thêm xíu nữa hắn sẽ bị biến thành cá mất!
+
+Vòng Huyết Ngọc: Không hẳn.
+
+Dung Dữ không tin: "Nhưng anh ta đã tắm cả một tiếng đồng hồ rồi. Theo thời gian ở đây đổi ra, thì là hai tiếng rồi đấy."
+
+Vòng Huyết Ngọc: Anh ta đang tắm lần thứ bảy.
+
+Dung Dữ:...
+
+Đúng là tật sợ dơ trong truyền thuyết.
+
+Hên là lúc linh khí đang ở mức 50%, cửa phòng tắm mở.
+
+Cố Minh Hoài tắm suốt hai tiếng, cuối cùng cũng tỉnh táo lại. Anh thay quần áo ngủ, hít sâu một hơi, mở cửa ra, một tay giơ lên: "Chúng ta nói chuyện một chút------"
+
+Một bóng người nhào thẳng tới.
+
+"Không có gì để nói!" Dung Dữ gấp gáp ôm chặt cứng eo anh, "Cho tôi ôm chút."
+
+Tay Cố Minh Hoài đang giơ lên cứng đờ giữa không trung.
+
+Hết chương 6.')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (33, 17, 1, N'Đỏ rực', 1, N'Đau!
+
+Đau quá!
+
+Đầu đau quá!
+
+Hình ảnh trong giấc mơ đầy những tiếng thì thầm kỳ quái vỡ tan thành những mảnh nhỏ. Chu Minh Thuỵ đang say giấc chỉ thấy đầu đau đớn hệt như bị người ta lấy gậy đánh cho một cái thật mạnh, không, phải là bị một thứ sắc nhọn đâm thẳng vào huyệt Thái Dương rồi sau đó khuấy liên tục.
+
+Ôi... Trong cơn mơ màng, Chu Minh Thuỵ muốn xoay người, muốn giơ tay ôm chặt lấy đầu, muốn ngồi dậy nhưng hắn không thể cử động chân tay được, dường như không thể điều khiển được thân thể nữa.
+
+Xem ra là mình chưa tỉnh, vẫn còn đang mơ... Nói không chừng sẽ còn xảy ra hiện tượng cho là mình đã tỉnh, nhưng thực chất là còn đang ngủ say... Chu Minh Thuỵ không hề lạ lẫm gì với chuyện này, hắn cố gắng tập trung ý chí muốn thoát khỏi cái gông cùm của bóng tối và sự huyễn hoặc này.
+
+Nhưng trong lúc nửa tỉnh nửa mơ này, ý chí luôn mơ hồ như sương khói, khó mà tập trung được. Dù hắn có cố thế nào thì tư duy vẫn cứ tan rã, tạp niệm xuất hiện.
+
+Đang yên đang lành, nửa đêm nửa hôm, sao đột nhiên bị đau đầu? Còn đau đớn tới mức này?! Chẳng lẽ xuất huyết não?!
+
+Moá, chả lẽ ta sẽ chết sớm ư?
+
+Mau tỉnh! Mau tỉnh lại nào!
+
+Ồ, hình như không còn đau như nãy nữa? Nhưng đầu vẫn như bị một con dao nhỏ cắt từng miếng từng miếng ra một...
+
+Xem ra không thể ngủ tiếp, vậy thì mai đi làm thế nào được? Còn đi làm cái gì nữa? Bị đau đầu thật như này tất nhiên là phải xin nghỉ rồi! Khỏi sợ tay quản lý lải nhải!
+
+Nghĩ như vậy cảm thấy không tệ, khà khà, thế là được nhàn rỗi một hôm!
+
+Đầu lại đau nhói khiến Chu Minh Thuỵ tích được chút sức lực. Cuối cùng, hắn dốc sức động lưng mở choàng mắt, hoàn toàn thoát khỏi trạng thái nửa tỉnh nửa mơ.
+
+Tầm mắt ban đầu nhoà đi, sau đó bị phủ kín bởi một lớp đỏ rực. Nơi tầm mắt với tới, Chu Minh Thuỵ thấy trước mặt mình là một bàn học bằng gỗ thô sơ. Chính giữa bàn học có bày một quyển bút ký đang mở sẵn. Giấy của cuốn bút ký này thô ráp và ố vàng, bên trên là một câu được viết bởi thứ chữ kỳ quái, nét mực đen sậm, ướt và bắt mắt.
+
+Ở bên trái cuốn bút ký là một chồng sách được sắp xếp chỉnh tề, có tầm bảy, tám cuốn gì đó. Bức tường bên phải chúng thì được gắn bởi ống dẫn màu xám trắng nối tới một chiếc đèn treo tường.
+
+Chiếc đèn này mang phong cách phương Tây cổ điển, to bằng nửa đầu người trưởng thành. Bên trong là thuỷ tinh trong suốt, phần lồng bên ngoài được làm từ kim loại màu đen.
+
+Bên dưới chiếc đèn đã tắt đó là một lọ mực màu đen được bao phủ bởi ánh sáng màu đỏ nhạt, vẻ gồ ghề bên ngoài dưới lớp ánh sáng tạo nên thứ hoa văn trông giống thiên sứ.
+
+Một chiếc bút máy màu sậm với phần thân bóng mượt được đặt ở trước lọ mực, bên phải bút ký. Ngòi bút loé lên thứ ánh sáng nhạt. Nắp bút thì nằm ngay cạnh một chiếc súng lục ổ xoay.
+
+Súng? Súng lục?? Chu Minh Thuỵ ngây ngẩn. Những thứ hắn thấy trước mặt này xa lạ như thế, hoàn toàn khác xa phòng của hắn!
+
+Tronng khi kinh ngạc và ngỡ ngàng, hắn phát hiện rằng bàn học, bút ký, lọ mực và súng lục kia đều được phủ lên bởi một tầng "lụa mỏng" màu đỏ rực, chính là ánh sáng chiếu vào từ bên ngoài cửa sổ.
+
+Theo bản năng hắn ngẩng đầu lên, dời tầm mắt lên cao.
+
+Giữa không trung, bên trên lớp "vải nhung sân khấu thiên nga", một mặt trăng tròn màu đỏ rực như lửa treo cao, lặng lẽ toả ra ánh sáng.
+
+Đây... Chu Minh Thuỵ bỗng thấy sợ hãi, rồi hắn đứng bật dậy. Nhưng đôi chân còn chưa kịp đứng thẳng thì đầu hắn lại đau nhói ghê gớm khiến hắn như mất đi sức lực trong phút chốc, trọng tâm toàn thân tức thì rơi xuống, mông đập mạnh lên trên chiếc ghế dựa bằng gỗ.
+
+Bịch!
+
+Đau đớn không thể tạo nên ảnh hưởng gì, Chu Minh Thuỵ giơ tay đè lên bàn rồi lại đứng lên, bối rối quay người nhìn nơi mình đang đứng.
+
+Đây là một căn phòng không lớn, hai bên trái phải đều có cửa ra vào. Gần sát bức tường đối diện là một chiếc giường tầng làm từ gỗ. Giữa giường và cánh cửa phía bên trái là một chiếc tủ quầy, bên trên là tủ có cánh mở hai bên, bên dưới thì là ngăn kéo.
+
+Bên cạnh tủ quầy kia có một ống dẫn cao bằng một người, cũng màu xám trắng được lắp trên tường, nhưng nó nối với một thứ thiết bị kỳ lạ có bánh răng và ổ trục hiện ra bên ngoài.
+
+Góc tường phía bên phải bàn học có chất một đống thứ trông giống than, cùng với các vật dụng nhà bếp như nồi đun nước, chảo sắt...
+
+Qua cửa bên phải là một chiếc gương to đã rạn nứt hai vết, phần kệ để gương được làm từ gỗ với hoa văn khá đơn giản.
+
+Chu Minh Thuỵ đảo mắt qua gương, loáng thoáng thấy mình của bây giờ: Tóc đen, mắt nâu, mặc quần áo lót sợi đay, vóc dáng gầy gò, ngũ quan bình thường, đường nét góc cạnh...
+
+Đây là... Chu Minh Thuỵ tức thì giật mình, hít vào một hơi khí lạnh, lòng bỗng có một suy đoán lộn xộn mà bất lực.
+
+Súng lục ổ xoay, bố trí kiểu phương Tây cổ điển, cùng với mặt trăng đỏ rực khác hẳn với Trái Đất, không có thứ gì là không chứng tỏ rõ một chuyện!
+
+Chẳng lẽ mình... Mình xuyên việt rồi? Chu Minh Thuỵ dần há hốc mồm.
+
+Hắn đọc văn học mạng từ bé, cũng thường hay ảo tưởng về bản thân, nhưng tới khi gặp được thật thì lại khó mà chấp nhận được.
+
+Đây có lẽ chính là cái gọi là Diệp công thích rồng* ư? Qua mấy chục giây sau, Chu Minh Thuỵ thầm tự giễu mình một câu. Nếu không phải đau đầu vẫn còn, làm cho tư duy trở nên căng thẳng và rõ ràng, Chu Minh Thuỵ sẽ cho rằng mình đang mơ.
+
+Bình tĩnh... Bình tĩnh... Bình tĩnh nào... Chu Minh Thuỵ hít sâu vài cái, cố gắng làm cho bản thân đừng hoảng loạn nữa.
+
+Đúng lúc này, khi thể xác và tinh thần hắn được hoà hoãn lại, một đám trí nhớ đột nhiên nhảy vọt ra, chầm chậm hiện lên trong đầu hắn.
+
+Klein Moretti, một sinh viên vừa tốt nghiệp chuyên ngành lịch sử đại học Hoy, là người của thành phố Tingen quận Akhova thuộc Vương quốc Loen ở lục địa Bắc.
+
+Cha là thượng sĩ lục quân hoàng gia, đã hy sinh trong đợt tấn công thực dân lục địa Nam. Số tiền trợ cấp từ cái chết của ông làm cho Klein có cơ hội vào học ở trường văn pháp tư nhân, làm nền tảng cho hắn thi vào đại học... Mẹ là tín đồ của nữ thần Đêm Tối, mất khi Klein vừa thi đỗ vào đại học Hoy...
+
+Hắn có một anh trai và một em gái, sống ở căn hộ hai phòng ngủ của khu nhà trọ này...
+
+Nhà hắn không giàu, thậm chí phải nói là không đủ, hiện tại toàn bộ chi tiêu đều do người anh trai hiện đang làm thư ký cho một công ty xuất nhập khẩu lo cho...
+
+Là một sinh viên đã tốt nghiệp hệ lịch sử, Klein thông thạo ngôn ngữ Fusark cổ xưa của các nước lục địa Bắc, cùng với ngôn ngữ Hermes có liên quan tới việc thờ cúng, cầu nguyện thường xuyên xuất hiện trong các lăng mộ cổ đại...
+
+Ngôn ngữ Hermes? Nghĩ tới đây, Chu Minh Thuỵ giơ tay đè lên huyệt Thái Dương đang đau như xoắn lại, quăng mắt tới cuốn bút ký đã mở sẵn trên bàn. Hắn cảm thấy dòng chữ viết trên trang giấy ố vàng kia từ kỳ quái thành xa lạ, từ xa lạ thành quen thuộc, rồi từ quen thuộc trở nên đọc hiểu được.
+
+Đây là dòng chữ viết bằng tiếng Hermes!
+
+Nét bút sâu và đen ấy viết rằng: "Tất cả mọi người sẽ chết, kể cả ta."
+
+A! Chu Minh Thuỵ đột nhiên hoảng sợ, thân thể bỗng ngửa ra sau theo bản năng hòng kéo giãn khoảng cách với dòng chữ này.
+
+Hắn rất yếu nên suýt thì ngã rầm, bèn vội giơ tay vịn lấy bàn. Hắn cảm thấy không khí xung quanh như trở nên nóng nảy theo, dường như có tiếng thì thầm liên tục vang lên bên tai, hệt như hồi bé nghe người lớn kể chuyện kinh dị.
+
+Chu Minh Thuỵ lắc đầu, tất cả đều là ảo giác. Hắn đứng vững người, dời mắt khỏi cuốn bút ký kia, há mồm thở hổn hển.
+
+Lúc này hắn nhìn sang khẩu súng ổ xoay đang loé lên ánh sáng đồng thau, lòng bỗng có nghi vấn.
+
+"Với gia cảnh của mình, Klein lấy đâu ra tiền và cách mua súng?" Chu Minh Thuỵ nhíu mày lại.
+
+Trong lúc trầm tư, hắn thấy một nửa dấu tay màu đỏ ở góc của bàn học, màu còn đậm hơn cả màu của ánh trăng, dày hơn cả lớp "lụa mỏng" kia.
+
+Đó là một dấu tay máu!
+
+"Máu?" Chu Minh Thuỵ theo bản năng giơ bàn tay phải vừa đè lên bàn lên. Hắn cúi đầu nhìn, chỉ thấy lòng bàn tay và ngón tay hắn dính đầy máu.
+
+Cùng lúc đó, cơn đau vẫn kéo tới từ trong đầu hắn, nhưng đã yếu bớt đi, chỉ là cứ đau mãi không dứt.
+
+"Chẳng lẽ đụng rách đầu rồi?" Chu Minh Thuỵ đoán vậy. Hắn quay người lại, đi tới trước chiếc gương bị rạn.
+
+Sau vài bước, một bóng người có vóc dáng tầm trung, tóc đen, mắt nâu, trông rất trí thức đập vào mắt hắn.
+
+Đây là ta ở hiện tại, Klein Moretti?
+
+Chu Minh Thuỵ ngớ ra, sau đó vì nửa đêm nhìn không rõ nên hắn lại bước lên tiếp, cho tới khi chỉ còn chút xíu nữa là đụng vào gương.
+
+Dưới ánh trăng đỏ rực như lớp lụa mỏng, hắn nghiêng đầu nhìn thái dương của mình.
+
+Một hình ảnh ngược hiện lên rất chi tiết. Thái dương của hắn bị một vết thương trông rất dữ tợn chiếm cứ, phần rìa là dấu vết của việc bị bỏng, xung quanh đầy vết máu. Mà bên trong, phần óc màu xám trắng đang mấp máy.')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (34, 17, 2, N'Tình trạng', 1, N'Bịch bịch bịch!
+
+Nhìn hình ảnh trong gương, Chu Minh Thuỵ sợ tới mức lùi ra sau mấy bước liên tục, dường như kẻ ở trong gương không phải mình mà là một con zombie.
+
+Kẻ nào bị thương nghiêm trọng như vậy mà có thể còn sống được?!
+
+Hắn như không tin mà lại nghiêng đầu kiểm tra bên kia. Cho dù khoảng cách xa hơn và ánh sáng tù mù, hắn vẫn có thể thấy rõ miệng vết thương do đạn xuyên qua và vết máu đỏ rực đang tồn tại.
+
+"Đây..."
+
+Chu Minh Thuỵ hít một hơi thật sâu, cố gắng khiến cho mình bình tĩnh lại.
+
+Hắn giơ tay ấn lên ngực trái, cảm nhận trái tim đang đập rất mạnh, rất nhanh, hừng hực sức sống. Lại sờ làn da trần, bên dưới lạnh lẽo là ấm áp đang chảy xuôi.
+
+Hắn ngồi xuống một cái để nghiệm chứng đầu gối còn có thể gập lại, thế mới đứng lên, không còn hoảng loạn nữa.
+
+"Chuyện gì vậy nhỉ?" Hắn nhíu mày, thì thào, còn định kiểm tra lại miệng vết thương lại cho hẳn hoi.
+
+Hắn đi được hai bước thì đột nhiên dừng lại, bởi vì ánh trăng màu đỏ bên ngoài kia không đủ sáng để có thể "kiểm tra hẳn hoi" được.
+
+Một mảnh vỡ ký ức nhỏ bắn ra, Chu Minh Thuỵ quay đầu nhìn về phía chiếc đèn được bao quanh bởi một lớp lồng sắt trên tường gần sát bàn học, nơi có ống dẫn khí màu xám trắng.
+
+Đây là một loại đèn khí gas đang được ưa chuộng, lửa ổn định, phát ra ánh sáng khá tốt.
+
+Với tình hình gia đình của Klein Moretti thì đừng nói là đèn khí gas, cho dù là đèn dầu hoả cũng là vật xa xỉ, sử dụng nến mới phù hợp với thân phận và địa vị của gia đình họ. Nhưng bốn năm trước, khi hắn thức đêm học hành phấn đấu cho cuộc thi vào đại học Hoy, anh trai hắn là Benson cho rằng đây là chuyện rất quan trọng liên quan tới tương lai của gia đình, nên cho dù có phải vay tiền cũng muốn tạo điều kiện học tập tốt nhất cho hắn.
+
+Đương nhiên, một Benson được học hành, lại đã đi làm nhiều năm chắc chắn không phải kẻ lỗ mãng, thiếu năng lực và không cân nhắc hậu quả. Anh dùng lý do "lắp đặt ống dẫn khí gas rất có ích trong việc nâng cao cấp bậc của nhà trọ, hữu ích với việc cho thuê sau này" để dụ dỗ ông chủ nhà trọ chi tiền cải tạo hệ thống ống dẫn, còn bản thân anh thì tranh thủ chức vụ thư ký ở công ty xuất nhập khẩu kia mà mua được đèn khí gas kiểu mới với giá gần giá gốc. Cuối cùng là anh chỉ dùng tới tiền tiết kiệm chứ không hề phải đi vay ai.
+
+Mảnh ký ức vụt tắt, Chu Minh Thuỵ quay lại chỗ bàn học, mở ống dẫn rồi vặn chốt mở đèn.
+
+Tạch tạch tạch, tiếng ma sát đốt lửa vang lên, nhưng ánh sáng không bùng lên như Chu Minh Thuỵ tưởng.
+
+Tạch tạch tạch, hắn lại vặn vài cái nữa, nhưng chiếc đèn này vẫn tối om.
+
+"Ừm..." Chu Minh Thuỵ thu tay lại, đè huyệt thái dương bên trái, nặn óc tìm kiếm nguyên nhân từ các mảnh vỡ ký ức.
+
+Vài giây sau, hắn quay người đi tới trước thứ thiết bị nối với ống dẫn khí gas màu xám trắng được gắn vào tường ở bên cạnh cửa.
+
+Đây là một máy tính phí gas!
+
+Nhìn ổ trục và bánh răng lộ ra ngoài, Chu Minh Thuỵ móc một đồng xu ra từ trong túi quần.
+
+Đồng xu này màu ố vàng, loé lên màu đồng kim loại. Mặt trước có khác hình cái đầu của một người đàn ông đeo vương miện, mặt sau thì có lúa mạch bao quanh một số "1".
+
+Chu Minh Thuỵ biết đây là đơn vị tiền tệ cơ bản của vương quốc Ruen, gọi là đồng penny. Một penny có giá trị tương đương với ba, bốn đồng Nhân dân tệ ở nơi trước đây của hắn. Có ba loại đồng penny là đồng 5 penny, đồng nửa penny, và đồng một phần tư penny, nhưng vẫn chưa đủ chính xác. Trong cuộc sống hàng ngày, thi thoảng người ta vẫn phải gom cho đủ để mua được đồ.
+
+Làm cho đồng penny, được phát hành khi vua George III lên ngôi, lăn vài vòng giữa các ngón tay, Chu Minh Thuỵ mới nhét nó vào trong "cái miệng" dài và nhỏ nằm dọc máy tính phí gas.
+
+Leng keng!
+
+Khi đồng penny rơi xuống đáy của máy tính phí, tiếng bánh răng chuyển động răng rắc tức thì vang lên, tấu lên một giai điệu máy móc ngắn, nhỏ mà êm tai.
+
+Chu Minh Thuỵ nhìn chăm chú vài giây, rồi quay trở lại trước bàn học, giơ tay vặn chốt mở đèn.
+
+Tạch tạch tạch. Phụp!
+
+Một ngọn lửa bốc lên, nhanh chóng hoá lớn. Ánh sáng đầu tiên là toả khắp bên trong lồng đèn, sau đó xuyên qua lớp thuỷ tinh trong suốt mà phủ kín căn phòng với màu sắc ấm áp.
+
+Bóng tối lui đi, màu đỏ rực lùi ra ngoài cửa sổ. Chu Minh Thuỵ bỗng thấy yên tâm hơn hẳn, bèn nhanh chóng đi tới trước gương.
+
+Lúc này hắn nghiêm túc xem xét vị trí huyệt thái dương, không bỏ qua bất cứ chi tiết nào.
+
+Sau khi xem xét mấy lần, hắn phát hiện ngoài vệt máu ban đầu ra, miệng vết thương trông dữ tợn kia không còn chảy chất lỏng ra nữa, dường như đã được cầm máu và băng bó lại. Mà phần não đang mấp máy cùng với phần da thịt ở miệng vết thương đang khép lại với tốc độ mắt thường có thể thấy được rõ, có lẽ là chừng ba, bốn mươi phút nữa, hoặc có lẽ là hai đến ba giờ nữa, nơi đó chỉ còn lại dấu vết mờ.
+
+"Tác dụng chữa trị của việc xuyên việt ư?" Chu Minh Thụy nhếch khoé miệng bên phải, thì thào.
+
+Sau đó hắn thở dài một hơi. Mặc kệ là vì sao, chí ít hiện giờ hắn vẫn còn sống!
+
+Ổn định lại tinh thần, hắn kéo ngăn kéo lấy một mẩu xà phòng ra, rồi với lấy một chiếc khăn tắm trong cái mớ khăn có vẻ đã cũ ở cạnh tủ quầy, sau đó mở cửa và đi tới phòng tắm công cộng ở tầng hai.
+
+Chậc, phải xử lý vết máu trên đầu đã, kẻo cứ mang cái "hiện trường vụ án" này đi lại khắp nơi, mình bị doạ không sao, chứ cô em gái Melissa phải dậy sớm ngày mai mà thấy thì lại khó giải quyết!
+
+Hành lang ngoài cửa tối om, chỉ có ánh trăng đỏ rực vẩy vào từ ngoài cửa sổ là tạm phác thảo được hình dáng của những vật lồi ra, khiến chúng hệt như đôi mắt quái vật đang lặng lẽ nhìn chằm chằm người sống từ trong bóng đêm thâm trầm.
+
+Chu Minh Thụy bước thật nhẹ, cảm thấy kinh hồn táng đảm mà đi tới phòng tắm.
+
+Bước vào trong phòng tắm, ánh trăng soi tỏ mọi thứ. Chu Minh Thuỵ đứng trước bồn rửa mặt, vặn vòi nước.
+
+Rào rào rào, tiếng nước vang lên bên tai, hắn bỗng nhớ tới chủ nhà Frankie.
+
+Bởi vì tiền nước nằm trong cả tiền thuê nên vị chủ nhà vừa thấp bé lại vừa gầy gò chuyên đội mũ dạ, mặc áo ghile bên trong và khoác áo vest bên ngoài này luôn tích cực tới tuần tra mấy cái phòng tắm, rình nghe tiếng nước chảy bên trong.
+
+Nếu tiếng nước chảy to, ông bạn Frankie kia sẽ không thèm quan tâm tới phong độ của một vị thân sĩ mà vung cây gậy batoong gõ mạnh lên cửa phòng tắm, miệng thì la hét "A cái phường trộm cắp đáng chết!", "Lãng phí là hành vi đáng xấu hổ!", "Tao nhớ mày rồi đó!", "Để tao gặp phải lần nữa thì hãy mang theo đống hành lý dơ bẩn của mày mà cút đi đi!", "Tin tao đi, đây là nhà trọ có lời nhất toàn bộ cái thành phố Tingen này, mày có tìm nữa cũng không tìm được chủ nhà nào hào phóng hơn tao đâu!"
+
+Chu Minh Thuỵ thu hồi suy nghĩ, nhúng ướt khăn rồi lau sạch vết máu trên mặt, lần này tới lần khác.
+
+Tới khi soi bằng chiếc gương tồi tàn trong phòng tắm, xác nhận là chỉ còn miệng vết thương trông khá dữ tợn cùng với khuôn mặt tái nhợt, Chu Minh Thuỵ mới thấy thoải mái đôi chút. Sau đó hắn cởi áo lót sợi đay ra, lấy xà phòng chấm lên vết máu trên áo rồi vò sạch.
+
+Cùng lúc đó hắn nhướng mày, nghĩ rằng có lẽ còn có rắc rối khác: Vết thương này bắn ra nhiều máu, ngoài trên người mình ra thì hẳn là vẫn còn dấu vết ở trong phòng!
+
+Vài phút sau, Chu Minh Thuỵ vò sạch áo lót, bèn cầm khăn bước nhanh về phòng. Hắn lau sạch vết máu hình bàn tay trên bàn trước, sau đó nương theo ánh sáng của đèn khí gas tìm kiếm các dấu vết khác.
+
+Thế là hắn lập tức tìm thấy không ít máu rơi trên sàn nhà và bắn vào dưới gầm bàn học. Còn ở bức tường bên tay trái thì có một đầu đạn màu vàng óng ánh.
+
+"...Dùng súng nã một phát vào huyệt thái dương?" Manh mối trước sau tức thì trở nên mạch lạc, Chu Minh Thuỵ đã biết rõ hơn về cái chết của Klein.
+
+Hắn không vội nghiệm chứng mà chăm chú lau sạch vết máu, xử lý "hiện trường" trước rồi mới mang đầu đạn về bàn học, rồi vặn phần ổ xoay của súng, đổ số đạn ở trong ra.
+
+Lộc cộc, tổng cộng năm viên đạn, một vỏ đạn, cũng loé lên ánh sáng đồng thau.
+
+"Quả nhiên..." Chu Minh Thuỵ nhìn vỏ đạn rỗng kia, vừa lần lượt nhét các viên đạn vào trong ổ xoay, vừa khẽ gật đầu.
+
+Hắn liếc mắt tới câu "Tất cả mọi người sẽ chết, kể cả ta" ở trên trang sách của cuốn bút ký đang mở, lòng xuất hiện rất nhiều nghi vấn.
+
+Súng này lấy từ nơi nào?
+
+Tự sát? Hay nguỵ trang thành tự sát?
+
+Một sinh viên nhà bình dân tốt nghiệp chuyên ngành lịch sử thì có thể gặp được chuyện gì?
+
+Tự sát bằng cách nào mới để lại ít vết máu như vậy? Là vì ta xuyên tới đúng lúc nên nhận được phúc lợi chữa trị kịp thời?
+
+Chu Minh Thụy trầm ngâm một lát, rồi thay một chiếc áo lót sợi đay khác. Hắn ngồi lên ghế, suy nghĩ tới chuyện còn quan trọng hơn.
+
+Trọng điểm hiện tại cần quan tâm không phải là những gì Klein đã gặp được, mà là biết rõ tại sao mình lại xuyên việt, liệu có thể xuyên trở lại thế giới cũ không?!
+
+Cha mẹ, người thân, bạn bè, thế giới Internet muôn màu muôn vẻ cùng với đủ món ăn ngon... Những điều ấy khiến hắn bức thiết muốn quay trở về!
+
+Tạch, tạch, tạch... Tay phải Chu Minh Thụy vô ý thích vặn ổ xoay của súng ra, rồi lại lắp nó lại, cứ lặp đi lặp lại.
+
+"Hừm, khoảng thời gian này đâu có khác gì lúc trước mấy đâu, chỉ là hơi xui tí thôi, sao bỗng dưng lại xuyên việt được? Xui xẻo... Đúng rồi, tối hôm qua lúc ăn cơm mình có làm một nghi thức đổi vận!"
+
+Một tia chớp vụt lên trong đầu Chu Minh Thuỵ, chiếu sáng phần ký ức bị sương mù che phủ.
+
+Làm một chính trị gia online, nhà lịch sử học online, nhà kinh tế học online, nhà sinh vật học online cùng nhà dân tộc học online đủ tư cách, hắn luôn tự nhận mình là kẻ "cái gì cũng biết đôi chút". Đương nhiên bạn bè thường nhạo hắn là "cái gì cũng chỉ biết chút xíu".
+
+Mà phương thuật thì là một trong số đó.
+
+Năm ngoái hắn về nhà, phát hiện một cuốn sách khổ dọc buộc chỉ tên là "Tóm lược phương thuật bí truyền thời Tần Hán" ở trong một hiệu sách cũ. Thấy cuốn này có vẻ thú vị, lại giúp mình có thể chém gió chém bão trên mạng nên hắn mua về. Tiếc là, hứng thú tới nhanh, đi cũng nhanh. Loại sách viết dạng khổ dọc này khiến người ta không hứng đọc, nên hắn chỉ giở xem phần mở đầu là vứt xó.
+
+Tới mấy tháng gần đây hắn gặp vận xui liên tục, nào là mất điện thoại, rồi khách hàng bỏ trốn, hoặc là làm sai. Những chuyện xấu liên tục kéo tới khiến hắn mới ngẫu nhiên nhớ tới phần mở đầu của "Tóm lược phương thuật" kia có nghi thức đổi vận, mà yêu cầu rất đơn giản, không cần phải có phần căn bản gì:
+
+Chỉ cần chia món ăn đặc sắc của khu vực đang sống làm bốn phần đặt tới bốn góc của căn phòng, có thể để trên bàn, hoặc ngăn tủ. Sau đó đứng trung tâm của phòng, đi bốn bước theo chiều ngược kim đồng hồ tạo nên một hình vuông. Bước đầu tiên thì thành kính lẩm nhẩm "Phúc Sinh Huyền Hoàng Tiên Tôn", bước thứ hai thì nhẩm "Phúc Sinh Huyền Hoàng Thiên Quân", bước thứ ba là "Phúc Sinh Huyền Hoàng Thượng Đế", bước cuối cùng thì nhẩm "Phúc Sinh Huyền Hoàng Thiên Tôn". Sau khi bước xong thì nhắm mắt lại, chờ đợi năm phút là nghi thức được coi như thành công.
+
+Cứ nghĩ là dù sao cũng chả mất gì, nên hắn lục cuốn sách đó ra, dựa theo đó mà làm y hệt trước bữa tối, cơ mà, cơ mà lúc ấy chẳng xảy ra chuyện gì cả.
+
+Ai ngờ tới nửa đêm hắn lại tự dưng xuyên việt!
+
+Xuyên việt rồi!
+
+"Chắc chắn là do cái nghi thức đổi vận kia rồi... Hừm, ngày mai phải thử lại một lần. Nếu quả thật là vì nó, ta có hy vọng xuyên trở lại rồi!" Chu Minh Thụy dừng động tác vặn ổ xoay của súng, ngồi thẳng người dậy.
+
+Bất kể thế nào hắn cũng phải thử một lần!
+
+Phải liều một phen mới được!')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (35, 17, 3, N'Melissa', 1, N'Xác định kế hoạch, Chu Minh Thụy lập tức cảm thấy kiên định. Sợ hãi, bối rối và bất an đã bị dẹp vào một xó.
+
+Cho tới lúc này, hắn mới có tâm tư xem xét kỹ những mảnh vỡ ký ức mà Klein để lại.
+
+Chu Minh Thuỵ đứng dậy theo thói quen, khoá van ống dẫn lại. Nhìn đèn treo tường từ từ tối đi rồi tắt phụp, hắn mới ngồi xuống, vừa vô ý thức vuốt ve ổ xoay làm từ đồng thau của khẩu súng vừa giơ tay đè lên thái dương, lẳng lặng "hồi tưởng" trong bóng tối bị nhuộm màu ửng đỏ hệt như một khán giả đang tập trung nhất trong rạp chiếu phim.
+
+Có lẽ là bị ảnh hưởng từ viên đạn nên ký ức của Klein như mảnh thuỷ tinh vỡ vụn, không chỉ mất tính kết nối mà nhiều ký ức còn bị thiếu. Ví dụ như khẩu súng ổ xoay được chế tác tinh xảo này tới từ đâu? Là tự sát hay bị giết? Câu "Tất cả mọi người sẽ chết, kể cả ta" trên trang bút ký kia rốt cuộc có ý gì? Hai ngày trước khi xảy ra chuyện liệu có tham dự chuyện gì kỳ quái không?
+
+Không chỉ những ký ức cụ thể này đã vỡ thành mảnh nhỏ, bị khuyết thiếu, mà cho dù có biết nhiều tri thức như vậy thì với trạng thái hiện tại, Chu Minh Thuỵ tin rằng nếu Klein quay về đại học, sợ rằng sẽ không thể tốt nghiệp được. Cho dù thực tế là hắn mới tốt nghiệp được vài ngày, vả lại bản thân cũng không hề lơ là.
+
+“Hai ngày sau phải tham gia phỏng vấn vào hệ lịch sử của đại học Tingen... Các trường đại học ở vương quốc Ruen này không có truyền thống giữ sinh viên đã tốt nghiệp ở lại làm giảng viên... Giáo sư sẽ cho một thư đề cử tới đại học Tingen và một lá khác cho đại học Backlund...”
+
+...
+
+Trong khi Chu Minh Thuỵ lặng lẽ "quan sát", mặt trăng đỏ bên ngoài cửa sổ dần di chuyển về phía tây, rồi lặn xuống. Cho tới khi ánh sáng xuất hiện từ phía đông, một màu vàng nhiễm sáng đường chân trời.
+
+Lúc này, có tiếng động vang lên từ căn phòng bên cạnh. Rồi tiếng bước chân nhanh chóng tới gần cửa.
+
+“Melissa dậy rồi... Con bé đúng là luôn luôn đúng giờ.” Chu Minh Thuỵ mỉm cười. Bị ảnh hưởng từ ký ức của Klein nên hắn cảm thấy Melissa là em gái ruột của mình.
+
+Nhưng mà mình làm gì có em gái... Hắn tự giễu mình một câu.
+
+Melissa không giống Benson và Klein, con bé không hoàn thành chương trình vỡ lòng ở trường Chủ Nhật của giáo hội Nữ Thần Đêm Tối. Lúc con bé đến tuổi đi học, vương quốc Ruen ban hành "Phương pháp giáo dục tiểu học", thành lập uỷ ban giáo dục cấp thấp, chuyên cung cấp ngân sách, tăng vốn đầu tư.
+
+Nhưng ba năm đã qua, với tiền đề là hợp nhất không ít trường học của giáo hội, phần lớn trường công lập sơ cấp đã được thành lập, giữ vững nguyên tắc trung lập về tôn giáo, không dính líu tới sự phân tranh của ba giáo hội của chúa tể Bão Táp, Nữ Thần Đêm Tối và thần Hơi Nước và Máy Móc.
+
+So với trường học Chủ Nhật chỉ mất một penny cho một tuần, học phí ba penny cho một tuần của trường học công lập sơ cấp có vẻ đắt. Nhưng ở trường Chủ Nhật thì một tuần chỉ học vào một ngày Chủ nhật duy nhất, còn trường công lập thì học sinh sẽ đi học sáu ngày trong tuần. Tính ra thì học phí thấp tới mức gần như là miễn phí.
+
+Melissa khác với đám con gái khác, từ khi còn nhỏ con bé đã thích bánh răng, dây cót, ổ trục linh tinh. Con bé lập chí trở thành một kỹ sư máy hơi nước.
+
+Bản thân đã trải qua vất vả do học không đủ, lại hiểu được tầm quan trọng của giáo dục, Benson ủng hộ giấc mơ của cô em gái hệt như việc anh ủng hộ Klein học đại học. Dù sao trường kỹ thuật Tingen chỉ được coi là giáo dục trung cấp, không phải cần phải tới trường học văn pháp hoặc trường công để tích luỹ nữa.
+
+Tháng Bảy năm ngoái, lúc đó Melissa mười lăm tuổi, con bé đã thi đỗ kỳ thi đầu vào, trở thành một thành viên khoa Máy Hơi Nước và Cơ Khí của trường kỹ thuật Tingen. Học phí mỗi tuần cũng tăng lên tới chín penny.
+
+Mà cùng lúc đó, công ty xuất nhập khẩu nơi Benson làm việc bị ảnh hưởng bởi thời cuộc ở phía lục địa Nam nên cho dù là lợi nhuận hay lượng công việc đều sụt giảm nghiêm trọng, không thể không cắt giảm đi một phần ba biên chế. Vì giữ việc, vì duy trì sinh kế, Benson đành phải nhận những công việc nặng nề hơn, phải thường xuyên tăng ca hoặc đi công tác ở những nơi có điều kiện tồi tàn. Giống như mấy ngày nay vậy.
+
+Không phải là Klein không muốn đỡ đần cho anh trai mình, nhưng vốn thuộc tầng lớp bình dân nên khi thi vào từ một trường ngữ pháp bình thường lên đại học, hắn cảm thấy rất rõ sự thiếu sót của bản thân. Ví dụ như tiếng Feysac cổ, thứ ngôn ngữ cội nguồn của toàn bộ các quốc gia ở lục địa Bắc, với con cháu nhà quý tộc và đám học sinh nhà có tiền thì đó là những gì phải học từ bé, còn hắn phải tới khi lên đại học mới được tiếp xúc.
+
+Những chuyện tương tự còn rất nhiều. Klein gần như bỏ hết sức lực, thường xuyên thức từ đêm tới sáng mới tạm coi là đuổi kịp kẻ khác, lấy thành tích trung bình mà tốt nghiệp.
+
+Những ký ức liên qua tới anh trai và em gái toát lên trong đầu Chu Minh Thụy. Mãi đến khi tay nắm cửa chuyển động, cửa được mở ra, vang lên một tiếng kẹt, hắn mới tỉnh táo lại, nhớ ra rằng mình đang cầm một chiếc súng ổ xoay trong tay.
+
+Đây chính là vật phẩm bị bán quản chế!
+
+Sẽ khiến trẻ con sợ!
+
+Còn cả miệng vết thương trên đầu mình nữa!
+
+Thấy Melissa sắp đi ra, Chu Minh Thụy vừa tay đè huyệt thái dương, vừa cuống quít kéo ngăn bàn rồi quăng khẩu súng vào trong, vang lên một tiếng cộp.
+
+“Gì thế?” Nghe được tiếng động, Melissa quay sang nhìn, ánh mắt nghi hoặc.
+
+Con bé đang ở độ tuổi tươi trẻ nhất của cuộc đời, cho dù không được ăn ngon khiến khuôn mặt hơi gầy gò và yếu ớt, nhưng làn da vẫn sáng mịn toát ra hơi thở của thiếu nữ.
+
+Thấy cô em gái đang nhìn với ánh mắt dò xét, Chu Minh Thụy vờ trấn tĩnh, cầm lấy thứ ở gần tay mình nhất rồi thong dong đóng ngăn kéo lại để che đi sự tồn tại của khẩu súng kia, tay khác thì ấn lên huyệt thái dương. Cảm giác từ đầu ngón tay cho hắn biết miệng vết thương đã khép lại!
+
+Hắn lấy một chiếu đồng hồ bỏ túi mà trắng bạc với hoa văn cành lá từ trong ngăn kéo, ấn nhẹ một cái phần chóp là phần nắp sẽ mở ra.
+
+Chiếc đồng hồ này là kỷ vật đáng giá nhất trong số những gì mà người cha thượng sĩ lục quân hoàng gia để lại cho ba anh em, nhưng dù sao cũng là vật đã qua sử dụng nên mấy năm nay thường hay trục trặc. Cho dù đã tìm thợ đồng hồ sửa nhưng nó vẫn thế, điều này khiến Benson vốn thích mang nó theo để nâng thân phận mình lên liên tục bị xấu hổ, nên mới vứt nó ở nhà.
+
+Không thể không nói, Melissa quả thực có thiên phú về phương diện máy móc. Sau khi học được lý thuyết xong, con bé bắt đầu mượn dùng các công cụ của trường học về nghịch chiếc đồng hồ bỏ túi này, gần đây còn tuyên bố là đã sửa được nó!
+
+Chu Minh Thụy nhìn nắp đồng hồ bật lên, nhìn kim giây tạm ngừng, theo bản năng hắn xoay phần chóp định lên cót cho đồng hồ.
+
+Nhưng hắn vặn vài vòng mà chẳng thấy tiếng dây cót kêu lên, kim giây vẫn ở nguyên chỗ cũ.
+
+“Hình như lại hỏng rồi.” Hắn nhìn sang phía em gái.
+
+Melissa nhìn hắn với vẻ mặt vô cảm, bước tới gần rồi cầm lấy đồng hồ.
+
+Con bé đứng im tại chỗ, đầu tiên là rút phần chóp của đồng hồ lên, rồi vặn vài vòng, thế là tiếng kim giây chuyển động tạch tạch vang lên.
+
+Bình thường thì rút lên đâu phải để điều chỉnh thời gian... Chu Minh Thụy lập tức đờ mặt ra.
+
+Cùng lúc đó, tiếng chuông truyền tới từ nhà thờ xa xa, liên tiếp sáu hồi, xa xăm và kỳ ảo.
+
+Melissa vểnh tai nghe, sau đó lại kéo phần chóp lên một đoạn rồi tiếp tục vặn điều chỉnh thời gian.
+
+“Được rồi.” Con bé nói một câu cụt lủn và không cảm xúc, sau đó ấn phần chóp của chiếc đồng hồ xuống và trả lại cho Chu Minh Thuỵ.
+
+Chu Minh Thụy cười lại với con bé một nụ cười xấu hổ mà không mất lễ phép.
+
+Melissa nhìn ông anh trai của mình một cái thật kỹ, rồi quay người đi tới chỗ tủ quầy, lấy bàn chải và khăn mặt, sau đó mở cửa đi tới phòng tắm chung.
+
+“Vẻ mặt vừa rồi của con bé sao cứ như kiểu ghét bỏ mà không thể làm gì được nhỉ. Ánh mắt kia là thương hại ông anh đầu óc có vấn đề?” Chu Minh Thụy lắc đầu, khẽ cười, sau đó đóng nắp đồng hồ lại, rồi lại ấn cho nó mở ra, vang lên những tiếng cạch cạch.
+
+Cứ lặp đi lặp lại hành động đó, tư duy của hắn bắt đầu chuyển tới một vấn đề.
+
+Trong tình huống không có ống giảm thanh, Klein tự sát, tạm thời coi là tự sát đi, động tĩnh sẽ không hề nhỏ, mà Melissa chỉ ở cách một bức tường lại không hề phát hiện.
+
+Là con bé ngủ quá say? Hay là bản thân chuyện Klein tự sát hoàn toàn kỳ dị?
+
+Cạch, mở ra, cạch, đóng lại... Melissa rửa mặt xong quay lại thì thấy ông anh mình đang không ngừng làm cái động tác không có chủ đích là đóng mở nắp đồng hồ bỏ túi.
+
+Ánh mắt con bé lại nhiễm sự bất đắc dĩ, con bé cất tiếng nói ngọt ngào: “Klein, anh lấy hết số bánh mỳ còn lại ra đi. Hôm nay nhớ đi mua bánh mới, cả thịt và đậu Hà Lan nữa. Anh sắp tham gia phỏng vấn rồi, em sẽ hầm thịt dê đậu Hà Lan cho.”
+
+Khi nói, con bé kéo bếp lò từ trong góc ra, đốt số than còn lại, đun một bình nước ấm.
+
+Trước khi nước sắp sôi, con bé mở ngăn kéo ở dưới cùng của tủ bát, lấy ra một lon đựng lá trà hàng xấu nhất với động tác như mang bảo bối ra, đổ chừng mười lá vào trong bình nước, coi đó làm nước trà chân chính.
+
+Rót nước trà ra hai chén lớn, Melissa và Chu Minh Thụy uống nước trà, chia sẻ hai bánh mì lúa mạch đen với nhau.
+
+Không lẫn vụn gỗ, không quá nhiều trấu cám, nhưng vẫn không thể ăn được... Ngay lúc này cơ thể Chu Minh Thụy khá suy yếu, bụng đói khát, đành dựa vào nước trà mà vừa oán vừa cố nốc miếng bánh mì kia.
+
+Vài phút sau, Melissa ăn xong. Con bé bó phần tóc rủ xuống ngực lại, nhìn Chu Minh Thụy và nói: “Nhớ mua bánh mì mới, chỉ tám pound thôi. Trời nóng mua nhiều về thì hỏng mất. Còn cả thịt dê và đậu Hà Lan nữa. Nhớ ấy!”
+
+Quả nhiên là thương ông anh mọt sách, có khi còn hơn... Chu Minh Thụy mỉm cười, gật đầu: “Ok.”
+
+Về một pound của vương quốc Ruen này, dựa theo trí nhớ của Klein, Chu Minh Thụy đối chiếu với trí nhớ của mình thì cho rằng nó gần bằng một cân mà hắn biết, cũng chính là 0,5 kg.
+
+Melissa không nói gì thêm, đứng dậy thu dọn, gói gém chiếc bánh mì còn lại kia làm bữa trưa, đội chiếc mũ lụa cũ mà mẹ để lại, cầm túi xách có đựng sách vở bút biếc mà con bé tự may chuẩn bị ra ngoài.
+
+Hôm nay không phải Chủ nhật, con bé phải đi học cả ngày.
+
+Đi bộ từ nhà trọ này tới trường kỹ thuật Tingen mất chừng mười phút đồng hồ. Có xe ngựa công cộng, một penny cho một km, đi trong thành phố thì mất tối đa 4 penny, ngoại ô là 6 penny. Vì tiết kiệm nên Melissa luôn dậy sớm tự mình đi bộ.
+
+Vừa mở cửa ra, con bé dừng lại, quay người nói: “Klein, anh đừng mua nhiều thịt dê với đậu Hà Lan. Có lẽ phải tới Chủ nhật Benson mới về được. Ừm, nhớ là chỉ cần tám pound bánh mì thôi đấy.”
+
+“Ok, ok.” Chu Minh Thụy trả lời đầy bất đắc dĩ. Cùng lúc đó, hắn thầm lẩm nhẩm từ "Chủ Nhật" mấy lần trong lòng.
+
+Ở lục địa Bắc, một năm cũng chia làm mười hai tháng, mỗi năm có 365 ngày, hoặc 366 ngày. Một tuần cũng chia làm bảy ngày.
+
+Ở Trái Đất thì đây chính là thành quả của thiên văn học, làm cho Chu Minh Thụy hoài nghi rằng nơi này là thế giới song song với Trái Đất. Việc phân chia thời gian ở nơi này là do tôn giáo. Bởi vì lục địa Bắc có bảy vị thần linh chính thống: Mặt Trời Rực Chói Vĩnh Hằng, chúa tể Bão Táp, thần Tri Thức và Trí Tuệ, Nữ Thần Đêm Tối, Mẫu Thần Đại Địa, thần Chiến Tranh và thần Hơi Nước và Máy Móc.
+
+Nhìn cô em gái đóng cửa đi học, Chu Minh Thụy chợt thở dài, rồi tập trung tinh thần vào nghi thức đổi vận.
+
+Xin lỗi, anh thực sự muốn về nhà...')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (36, 17, 4, N'Bói toán', 1, N'Chu Minh Thụy lại ngồi trở lại ghế dựa. Mãi cho tới tiếng chuông vang lên bảy tiếng liên tục từ nhà thờ đằng xa, hắn mới chậm rãi đứng dậy, đi tới trước tủ rồi lấy quần áo ra.
+
+Áo gile màu đen cùng với áo vest cùng màu, chiếc quần hơi chật phần mắt cá chân cùng chiếc mũ phớt trên đầu tạo nên hơi thở của một người đàn ông trí thức nhàn nhạt, làm cho Chu Minh Thụy khi nhìn bản thân trong gương liền cảm thấy như đang xem một vở kịch nước Anh kể về chuyện ở thời Victoria.
+
+“Mình đi mua đồ ăn chứ có phải đi phỏng vấn đâu, chỉ là chuẩn bị nguyên liệu cho nghi thức đổi vận thôi mà...” Hắn bỗng khẽ than, lắc đầu bật cười.
+
+Klein ghi nhớ vụ phỏng vấn đến mức hoá thành bản năng của thân thể, nên khi bản thân mà không chú ý thì sẽ mặc bộ quần áo đẹp đẽ nhất và duy nhất này theo thói quen.
+
+Chu Minh Thụy thở phù một tiếng, sau đó cởi áo vest, áo gile, thay bằng một chiếc áo khoác cũ màu nâu nhạt, cũng đổi chiếc mũ nỉ viền tròn cùng màu.
+
+Sau khi mặc xong, hắn bước tới bên chiếc giường kia, nâng đệm lên, duỗi tay với tới một chỗ vỡ ở dưới đáy, sờ soạng một lúc rồi tìm được tường kép.
+
+Khi hắn rụt tay lại, tay hắn đã cầm một cuộn tiền giấy, có khoảng bảy, tám tờ gì đó, mang màu sắc xanh sẫm.
+
+Đây là số tiền tiết kiệm của Benson hiện tại, thậm chí là gồm cả phí sinh hoạt cho ba ngày. Trong đó chỉ có hai tờ năm Saule, còn lại đều là tờ một Saule.
+
+Trong hệ thống tiền tệ của vương quốc Loen, Saule nằm ở tầng thứ hai, bắt nguồn từ ngân tệ thời cổ. Một Saule tương đương với mười hai đồng penny, có cùng mệnh giá với năm lượng.
+
+Cao nhất trong hệ thống tiền tệ là Kim bảng, cũng là một loại tiền giấy. Vốn dĩ vàng có thể dùng làm vật đảm bảo, cũng là để móc nối trực tiếp. Một Kim bảng tương đương với hai mươi Saule. Kim bảng có ba mệnh giá là một, năm và mười.
+
+Chu Minh Thụy giở tờ tiền ra, ngửi thấy mùi mực in đặc thù rất nhạt.
+
+Đây là mùi của tiền.
+
+Có lẽ là do ảnh hưởng của ký ức của Klein, hoặc có lẽ là khát vọng tiền bạc chưa bao giờ thay đổi của bản thân, nên trong khoảnh khắc này Chu Minh Thụy cảm thấy mình yêu những tờ tiền này một cách sâu sắc.
+
+Hãy nhìn đi, hoa văn của chúng mới đẹp đẽ làm sao, làm cho vị George III để hai chòm râu dài, trông khá nghiêm túc cổ hủ cũng trở nên đáng yêu đến thế...
+
+Nhìn đi, hình in chìm dưới ánh mặt trời cũng trở nên quyến rũ như thế, phần nhãn được thiết kế để chống làm giả đầy tỉ mỉ kia khiến nó hoàn toàn khác hẳn với những thứ giả mạo khác!
+
+Sau mấy chục giây thưởng thức, Chu Minh Thuỵ rút hai tờ tiền một Saule, cuộn phần còn lại lại rồi nhét vào tường kép ở trong đệm.
+
+Chu Minh Thụy vỗ vỗ mảnh vải ở gần chỗ rách, gấp hai tờ tiền giấy thật ngay ngắn rồi bỏ vào trong túi áo bên trái của chiếc áo khoác màu nâu nhạt, cất riêng với mấy đồng penny trong túi quần.
+
+Xong xuôi, hắn cất chìa khoá vào túi bên phải, cầm một túi giấy màu nâu sậm rồi bước nhanh tới phía cửa.
+
+Cộp, cộp, cộp... Tiếng bước chân từ nhanh thành chậm, cuối cùng ngừng lại.
+
+Chu Minh Thụy đứng bên cửa, lông mày đã nhíu lại không biết từ lúc nào.
+
+Sự kiện Klein tự sát còn rất nhiều nghi hoặc, cứ đi ra ngoài như này liệu có gặp được "điều ngoài ý muốn" gì không?
+
+Chu Minh Thụy lặng im suy nghĩ một lát, rồi quay lại bàn học, kéo ngăn kéo lấy khẩu súng ổ xoay sáng bóng màu đồng thau kia ra. Đây là vũ khí phòng thân duy nhất mà hắn có thể nghĩ tới, đồng thời cũng là thứ đủ mạnh!
+
+Tuy hắn chưa luyện bắn súng bao giờ, nhưng chỉ cần giơ khẩu súng này ra thôi chắc cũng đủ để doạ kẻ khác rồi!
+
+Vuốt phần ổ xoay kim loại lạnh lẽo, Chu Minh Thụy nhét khẩu súng vào chiếc túi nơi để tiền giấy, lòng bàn tay thì nắm chặt tờ tiền, còn ngón tay lại đè lên khẩu súng, che giấu một cách hoàn mỹ.
+
+Cảm giác an toàn bỗng nảy sinh, khiến hắn, một kẻ "cái gì cũng biết đôi chút" chợt lo lắng: "Liệu có nhỡ tay bóp cò không?"
+
+Những ý tưởng ùn ùn kéo tới, Chu Minh Thụy nhanh chóng tìm được biện pháp. Hắn rút khẩu súng ra, mở phần ổ xoay rồi xoay phần ổ đạn trống sau khi người kia "tự sát" tới vị trí chờ bắn, rồi đóng lại.
+
+Như vậy thì dù có cướp cò thì cũng "bắn không ra"!
+
+Lại đút súng vào trong túi, Chu Minh Thụy cứ đút tay trái vào túi tiền, không hề rút ra.
+
+Hắn dùng tay phải đè mũ phớt, đẩy cửa vang ra tiếng kẹt, rồi đi ra ngoài.
+
+Hành lang vào ban ngày mà vẫn u ám, ánh sáng có thể chiếu vào từ chiếc cửa sổ ở cuối hành lang là có hạn. Chu Minh Thụy bước nhanh xuống cầu thang, rời khỏi nhà trọ, thế mới cảm nhận được sự sáng sủa và ấm áp.
+
+Lúc này tuy đã gần tháng Bảy, đã vào giữa hè, nhưng Tingen nằm ở phía bắc của vương quốc Loen nên có đặc điểm khí hậu khá độc đáo, đó là nhiệt độ cao nhất của một năm cũng chưa tới mức 30 độ C của Trái Đất. Sáng sớm lại càng mát mẻ. Mà nhiều chỗ trên đường phố đầy nước bẩn tràn ra, vứt đầy rác rưởi.
+
+Trong trí nhớ của Klein, nơi ở của những tầng lớp có thu nhập thấp này, cho dù có cống thoát nước thì cảnh tương tự là không hề hiếm thấy. Bởi vì nhiều người, bởi vì sinh hoạt.
+
+“Đến nào đến nào, cá tươi thơm ngon đây!”
+
+“Canh hàu vừa nóng lại vừa tươi, uống một bát buổi sáng là tỉnh táo cả ngày!”
+
+“Cá mới lấy từ cảng đây, một con chỉ năm penny!”
+
+“Bánh chà bông, canh lươn với bia nào!”
+
+“Ốc biển, ốc biển, ốc biển đê!”
+
+“Rau củ mới lấy từ nông trại ngoài thành đây, vừa tươi vừa rẻ!”
+
+...
+
+Tiếng rao bán rau củ, hoa quả và đồ ăn lưu động ồn ào khắp con phố, mời gọi những vị khách đang vội vã đi đường. Nơi này, thi thoảng lại có người dừng lại, cẩn thận mua hàng, có kẻ lại không kiên nhẫn vung tay vì hôm nay còn chưa có thông tin gì về công việc.
+
+Chu Minh Thụy ngửi mùi tanh tưởi và mùi thơm đan xen trong không khí, tay trái cầm chặt báng súng, nắm chặt tiền giấy, tay phải thì đè thấp chiếc mũ nỉ viền tròn, thoáng xoay người rồi cúi đầu đi qua con phố lộn xộn và ồn ào này.
+
+Nơi nhiều người ắt có trộm cắp. Hơn nữa khu phố này còn có không ít người dân nghèo làm công việc tạm thời đang sắp mất việc và lũ trẻ con đói khát bị người ta sai sử.
+
+Một mạch bước đi, tới khi mật độ người xung quanh bình thường trở lại, Chu Minh Thụy mới ưỡn thẳng ngực, ngẩng đầu nhìn về phía đầu đường.
+
+Nơi đó có một nhạc sĩ đàn phong cầm đang trình diễn. Giai điệu lúc thì du dương, lúc thì sôi động.
+
+Bên cạnh anh ta là không ít những đứa trẻ mặc quần áo lam lũ, sắc mặt vàng vọt vì không được ăn uống đầy đủ. Bọn chúng nghe âm nhạc, dựa theo nhịp điệu mà uốn éo cơ thể theo bản năng, tự mình sáng tạo ra điệu nhảy. Vẻ mặt bọn chúng đầy khoái hoạt, tựa như mình là một hoàng tử bé hay một thiên sứ nhỏ.
+
+Một người phụ nữ với vẻ mặt chết lặng đi qua, làn váy cô bẩn, da thịt sạm đi. Đôi mắt cô dại ra, chỉ khi nhìn tới lũ trẻ con kia thì đôi mắt ấy mới loé lên ánh sáng, dường như cô thấy được mình của ba mươi năm về trước.
+
+Chu Minh Thụy đi qua cô ta, rẽ vào một con phố khác, đứng trước tiệm bánh mì Slin.
+
+Chủ tiệm bánh này là một bà cụ đã hơn bảy mươi tuổi, tên là Wendy Slin. Tóc bà đã bạc trắng hết cả, khuôn mặt luôn nở một nụ cười ôn hoà. Từ khi Klein có ký ức, bà đã bán bánh mì và bánh ngọt ở nơi này.
+
+Ừm, bánh Tingen và bánh gato chanh mà bà nướng ăn rất ngon... Chu Minh Thụy nuốt ực một ngụm nước miếng, mỉm cười nói: “Bà Slin, cho 8 pound bánh mì mạch đen.”
+
+“Ồ, Klein nhỏ bé, Benson đâu rồi? Vẫn chưa về à?” Wendy cười tủm tỉm, hỏi.
+
+“Mấy ngày nữa.” Chu Minh Thụy trả lời hàm hồ.
+
+Wendy vừa lấy bánh mì mạch đen vừa cảm thán: “Thằng bé đúng là chăm chỉ, sẽ lấy được cô vợ tốt.”
+
+Nói tới đây, bà nhếch khoé miệng tạo ra nụ cười có vẻ bướng bỉnh, nói: “Giờ thì tốt rồi. Cháu đã tốt nghiệp, hệ lịch sự của đại học Hoy chúng ta cơ mà. Ừm, cháu sẽ kiếm được tiền nhanh thôi, và đừng có ở lại cái nhà trọ bây giờ nữa, chí ít phải kiếm chỗ nào có được phòng tắm cho riêng mình ấy.”
+
+“Bà Slin, hôm nay trông bà hệt như một quý cô trẻ tuổi và hoạt bát vậy.” Chu Minh Thụy chỉ có thể gượng cười đáp lại.
+
+Nếu Klein có thể phỏng vấn thuận lợi trở thành giảng viên của đại học Tingen, như vậy quả thực là kinh tế của cả gia đình sẽ leo lên bậc trung bình!
+
+Trong những mảnh vỡ ký ức, hắn thậm chí còn ảo tưởng tới việc thuê một toà nhà của riêng mình ở khu ngoại ô. Tầng hai thì có năm căn phòng, hai phòng rửa mặt, một ban công lớn. Tầng dưới thì có hai phòng, một nhà ăn, một phòng khách, một nhà bếp và một phòng tắm, kèm theo một tầng hầm nữa.
+
+Đây không phải là hy vọng xa vời. Kể cả giảng viên thực tập ở đại học Tingen thì lương một tuần cũng đã được hai kim bảng, khi thành giảng viên chính thức thì sẽ là 3 kim bảng 10 Saule. Nên biết rằng Benson đi làm đã nhiều năm, lương một tuần mới được 1 bảng 10 Saule. Còn công nhân bình thường ở trong nhà máy thì thậm chí còn không đến 1 bảng hoặc hơn 1 bảng một chút. Mà một toà nhà riêng như vậy thì tiền thuê phải từ 19 Saule tới 1 bảng 18 Saule.
+
+“Đây là sự khác biệt giữa thu nhập ba, bốn nghìn một tháng và mười bốn, mười lăm nghìn một tháng...” Chu Minh Thụy thầm nói một câu.
+
+Nhưng điều kiện tiên quyết cho tất cả đó là có thể thông qua phỏng vấn vào đại học Tingen hoặc đại học Backlund.
+
+Về phần con đường khác, người không có gia thế không thể được đề cử trở thành nhân viên chính phủ, mà học lịch sử thì phạm vi tìm việc lại càng hẹp bởi các vị quý tộc, ngân hàng hoặc trùm công nghiệp không có nhiều nhu cầu tìm cố vấn riêng.
+
+Nghĩ đến việc những tri thức mà Klein nắm được cũng trở thành "mảnh vỡ", không được hoàn chỉnh, Chu Minh Thụy cảm thấy rất xấu hổ và chột dạ trước sự chờ mong của bà Slin.
+
+“Không, bà lúc nào mà chẳng trẻ như vậy.” Wendy trả lời hóm hỉnh.
+
+Lúc nói chuyện, bà cho mười sáu chiếc bánh mì mạch đen đã được ước lượng sẵn vào trong chiếc túi giấy lớn màu nâu sậm mà Chu Minh Thụy mang tới, chìa tay phải ra: “Chín penny.”
+
+Mỗi một chiếc bánh mì mạch đen nặng khoảng nửa pound, mà sai lệch là điều không thể né tránh.
+
+“Chín penny, không phải hai ngày trước là 11 penny sao?” Chu Minh Thụy hỏi theo bản năng.
+
+Mà tháng trước thì phải mất 15 penny.
+
+“Cháu phải cảm ơn việc Dự luật Ngũ cốc đã bị huỷ bỏ, cảm ơn đám người biểu tình ấy.” Wendy giang hai tay, cười nói.
+
+Chu Minh Thụy gật đầu, cái hiểu cái không. Trí nhớ của hắn về chuyện này không được hoàn chỉnh, chỉ nhớ rõ điều cốt lõi của Dự luật Ngũ cốc là bảo vệ giá nông sản của quốc gia, khi giá cả tăng lên tới một mức nhất định thì không nhập lương thực của các nước ở phía nam như Feynapotter, Masin hay Renburg.
+
+Vì sao người ta phải biểu tình phản đối dự luật này?
+
+Chu Minh Thuỵ không nói gì thêm. Vì sợ rút cả khẩu súng lục ổ xoay ra, hắn chỉ có thể cẩn thận móc tiền giấy, lấy một tờ rồi đưa cho bà Slin.
+
+Nhận được ba đồng penny tiền thừa, hắn nhét vào túi quần rồi ôm túi giấy đựng bánh đi tới chợ "Rau diếp và thịt" ở cách nơi này một con phố để mua thịt dê hầm đậu Hà Lan mà cô em gái đã dặn.
+
+Nơi giao nhau giữa phố Chữ Thập Sắt và phố Hoa Thuỷ Tiên là một quảng trường thị chính. Rất nhiều lều trại được dựng lên ở nơi đây, có những tên hề ăn mặc kỳ quái buồn cười đang phát tờ rơi ở xung quanh.
+
+“Tối ngày mai, biểu diễn xiếc?" Chu Minh Thụy liếc tờ rơi trong tay người khác, thì thào đọc nội dung sơ lược.
+
+Melissa sẽ thích lắm đây. Không biết giá vé vào cửa như nào? Nghĩ thế, Chu Minh Thuỵ đi tới bên đó.
+
+Hắn đang định hỏi một tên hề mặc bộ đồ đỏ vàng đan xen, bỗng một giọng nữ khàn khàn vang lên bên cạnh: “Muốn xem bói không?”
+
+Chu Minh Thụy quay đầu lại nhìn theo bản năng thì thấy một người phụ nữ mặc váy dài màu đen, đội một chiếc mũ nhọn đang đứng cạnh một cái lều thấp bé. Mặt cô ta bôi những vệt màu đỏ và vàng, đôi mắt màu lam sậm sâu sắc.
+
+“Không.” Chu Minh Thụy lắc đầu trả lời. Hắn làm gì có tiền mà đi xem bói.
+
+Người phụ nữ này cười nói: “Tôi bói bài Tarot chuẩn lắm.”
+
+“Tarot...” Chu Minh Thụy sửng sốt. Từ này nghe phát âm thì giống với bài Tarot ở Trái Đất vậy nhỉ!
+
+Ở Trái Đất, bài Tarot chính là một loại tú lơ khơ của thầy bói, chính là những lá bài có hình vẽ tượng trưng riêng.
+
+Chờ chút... Hắn bỗng nhớ tới sự tồn tại của bói bài Tarot ở thế giới này.
+
+Nó không bắt nguồn từ bảy vị thần chính thống, cũng không lưu truyền từ thời xa xưa, mà là do quan chấp chính nước cộng hoà Intis là Rossell Gustav phát minh ra từ hơn một trăm bảy mươi năm trước.
+
+Vị Rossell này phát minh ra máy hơi nước, cải tiến thuyền buồm, lật đổ sự thống trị của vương quốc Intis, cũng được giáo hội "Thần Công Tượng" thừa nhận, trở thành vị quan chấp chính đầu tiên của nước cộng hoà mới.
+
+Sau đó ông nam chinh bắc chiến, đưa các nước như Renburg vào vòng bảo hộ, làm cho các cường quốc bắc lục địa như vương quốc Loen, Feynapotter,Feysak phải cúi đầu thần phục. Sau đó ông đổi nước cộng hoà thành đế quốc, và tự xưng là "Caesar Đại đế".
+
+Đúng là trong thời kỳ Rossell thống trị, giáo hội thần Công Tượng nhận được phần lời dặn dò từ Thần công khai đầu tiên trong Kỷ thứ năm, đổi danh xưng thần Công Tượng thành thần Hơi Nước và Máy Móc.
+
+Rossell còn phát minh ra bói bài Tarot, cũng thiết lập cấu trúc quân bài và cách chơi. Nơi này còn có vài loại hình mà Chu Minh Thụy quen thuộc, ví dụ như thăng cấp, đấu địa chủ, Texas, Quint...
+
+Mặt khác, ông còn phái đội tàu tìm được con đường an toàn thông với Nam lục địa trong bão táp và dòng nước hỗn loạn, mở ra thời đại thực dân.
+
+Đáng tiếc là khi ông ta về già thì bị phản bội, cho tới năm 1198 ở Kỷ thứ năm thì bị giáo hội Mặt Trời Vĩnh Hằng, gia tộc Sauron, kẻ đã lập nên vương quốc Intis, liên hợp với các quý tộc khác ám sát, chết ở cung Bạch Phong.
+
+Nhớ tới những kiến thức thông thường này, Chu Minh Thụy bỗng thấy tê răng.
+
+Chẳng lẽ vị này là tiền bối xuyên việt ư?
+
+Nghĩ tới đây, Chu Minh Thụy muốn xem những lá bài Tarot ở nơi này trông như thế nào, bèn gật đầu nói với người phụ nữ đầu đội mũ nhọn, mặt bôi vệt sáng kia: “Nếu mà, ừm, giá cả hợp lý thì tôi sẽ thử xem sao.”
+
+Cô ta lập tức cười nói: “Hôm nay anh là người đầu tiên tới bói nên được miễn phí.”')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (37, 17, 5, N'Nghi thức', 1, N'Miễn phí? Thứ gì mà miễn phí mới là thứ đắt nhất! Chu Minh Thụy ngầm nói, nghĩ rằng chút nữa mà có phục vụ thêm gì thì phải kiên định từ chối.
+
+Có giỏi thì cô bói ra là tôi xuyên qua đi!
+
+Nghĩ tới đây, Chu Minh Thụy đi theo người phụ nữ mặt bôi vệt sáng kia bước vào trong chiếc lều thấp bé.
+
+Lều này khá tối, chỉ có chút ít ánh sáng rót vào, mơ hồ soi sáng một cái bàn đầy những lá bài.
+
+Người phụ nữ đội mũ nhọn lại không hề bị ảnh hưởng bởi sự u tối đó, vòng qua chiếc bàn, làn váy dài đen kia như bồng bềnh trên nước. Cô ta ngồi vào phía đối điện, rồi đốt ngọn nến lên.
+
+Ánh sáng mờ mờ lay lắt, khiến lều vải này lúc sáng lúc tối, trông khá thần bí.
+
+Chu Minh Thụy bình tĩnh ngồi xuống, đảo mắt qua những quân bài Tarot trên bàn, phát hiện ra đều là những lá bài chính mà mình biết, như là "Ma Thuật Sư", "Hoàng Đế", "Người Treo Ngược", hoặc "Cân Bằng"...
+
+Chẳng lẽ đồng chí Russel thật là tiền bối của mình... Không biết có phải là đồng hương của đế quốc ăn tham của ta không... Chu Minh Thụy giật giật khoé miệng, lòng hốt hoảng.
+
+Hắn còn chưa kịp nhìn hết tất cả các lá bài được lật ra trên bàn thì người phụ nữ tự gọi mình là "bói toán rất linh nghiệm" đã gom hết tất cả các lá bài Tarot lại, xếp chồng và đặt ra trước mặt hắn.
+
+“Anh hãy xào bài và chia bài đi.” Vị thầy bói rạp xiếc này nói với giọng khàn khàn.
+
+“Tôi xào bài hở?” Chu Minh Thụy hỏi theo bản năng.
+
+Vệt đỏ vệt vàng trên mặt vị thầy bói này mấp máy, cô ta cười khẽ, nói: “Đương nhiên, chỉ có bản thân người muốn xem bói mới bói ra được vận mệnh của mình, tôi chỉ là kẻ giải đọc mà thôi.”
+
+Chu Minh Thụy tức thì cảnh giác, hỏi tiếp: “Có thu phí giải đọc không?”
+
+Là một nhà dân tộc học online, mấy cái chiêu trò tương tự này tôi gặp nhiều lắm rồi!
+
+Thầy bói sửng sốt, rồi lúc sau mới rầu rĩ đáp: “Miễn phí.”
+
+Chu Minh Thụy yên tâm, lại nhét khẩu súng lục ổ xoay vào trong túi tiền, sau đó thản nhiên giơ hai tay mà thuần thục xáo bài, chia bài.
+
+“Xong rồi.” Hắn đặt những bài Tarot đã xào xong vào chính giữa bàn.
+
+Thầy bói nắm chặt hai tay, nhìn những lá bài ấy một lúc, trông có vẻ rất nghiêm túc. Bỗng nhiên cô ta nói: “Xin lỗi, quên hỏi anh định bói cái gì?”
+
+Năm đó khi theo đuổi mối tình đầu, Chu Minh Thụy có nghiên cứu qua về bài Tarot nên hắn đáp không chút do dự: “Quá khứ, hiện tại và tương lai.”
+
+Đây là một cách thức bói toán bài Tarot, lấy ra ba quân bài, theo thứ tự tượng trưng cho quá khứ, hiện tại và tương lai.
+
+Thầy bói đầu tiên là gật đầu, sau đó nhếch khoé miệng tạo ra một nụ cười mỉm: “Vậy anh hãy xào bài lại lần nữa, biết được mình muốn hỏi về cái gì thì mới có thể bốc được những quân bài tượng trưng chân chính được.”
+
+Cô vừa đùa tôi đó à??? Có cần phải nhỏ mọn vậy không? Không phải là tôi cứ nhấn mạnh vào việc miễn phí ấy chứ? Phần cơ trên khuôn mặt Chu Minh Thuỵ giật giật, hắn hít vào một hơi thật sâu, lại cầm lấy bộ bài Tarot rồi xào bài, rút bài.
+
+“Lần này chắc là không còn vấn đề gì rồi chứ?” Hắn đặt những quân bài đã được chia xong lên trên bàn.
+
+“Không còn rồi.” Thầy bói duỗi ngón tay ra, cầm lấy lá bài trên đỉnh rồi đặt ở bên tay trái Chu Minh Thuỵ, giọng lại càng khàn hơn: “Lá này tượng trưng cho quá khứ. Lá này tượng trưng cho hiện tại.”
+
+Thầy bói đặt lá bài thứ hai vào ngay trước mặt Chu Minh Thuỵ.
+
+Sau đó cô ta đặt lá bài thứ ba vào bên tay phải Chu Minh Thụy:
+
+“Lá này tượng trưng cho tương lai. Được rồi, anh muốn xem lá bài nào trước?” Làm xong tất cả, thầy bói ngẩng đầu lên, dùng đôi mắt màu lam xám nhìn chăm chú vào Chu Minh Thụy.
+
+“Xem hiện tại trước đi.” Chu Minh Thuỵ khẽ suy nghĩ rồi nói.
+
+Thầy bói chậm rãi gật đầu, lật lá bài ở chính giữa lên.
+
+Lá bài này mang số 0, vẽ một thanh niên mặc quần áo đẹp đẽ, đeo đồ trang sức sáng rực, vai đeo một chiếc gậy, phần đầu của gậy là một bọc hành lý, phía sau là một con chó nhỏ.
+
+“Kẻ Khờ.” Thầy bói khẽ đọc tên lá bài này, dùng đôi mắt lam xám bình tĩnh nhìn Chu Minh Thuỵ.
+
+Kẻ Khờ? Lá bài Tarot số 0? Bắt đầu? Bắt đầu của tất cả những khả năng? Chu Minh Thụy vốn không được coi là một kẻ yêu thích Tarot sơ cấp, chỉ có thể dựa theo ấn tượng mà nghĩ như vậy.
+
+Ngay khi thầy bói chuẩn bị nói thì màn vải của lều bị xốc lên đột ngột. Ánh nắng chói loá bỗng trào vào, khiến Chu Minh Thuỵ vốn quay lưng lại với cửa cũng phải nheo mắt lại.
+
+“Sao cô lại giả làm tôi thế! Bói toán cho người khác là việc của tôi cơ mà!” Một giọng nữ gầm lên đầy phẫn nộ: “Mau về đi! Cô phải nhớ rằng cô chỉ là một kẻ thuần thú mà thôi!”
+
+Thuần thú? Chu Minh Thụy thích ứng với ánh sáng, thấy người ở cửa cũng mặc váy dài đen, đầu đội mũ nhọn và mặt bôi vệt đỏ vàng, chỉ là người này cao hơn, vóc dáng gầy hơn thôi.
+
+Người phụ nữ ngồi trước mặt hắn vội vàng đứng lên, ấm ức nói:
+
+“Xin đừng để ý, chỉ là tôi thích cái này nên không thể không nói. Đôi khi tôi bói toán và giải đọc rất chuẩn đấy, thật đấy...”
+
+Cô ta vừa nói vừa nhấc váy vòng qua bàn, nhanh chóng rời khỏi lều.
+
+“Này anh, có cần tôi giải đọc giúp anh không?” Vị thầy bói thật sự nhìn Chu Minh Thuỵ, mỉm cười hỏi.
+
+Chu Minh Thuỵ giật giật khoé miệng, hỏi đầy thành khẩn:
+
+“Có miễn phí không?”
+
+“... Không.” Vị thầy bói thật đáp.
+
+“Vậy thì thôi.” Chu Minh Thuỵ đút tay vào túi tiền, đè khẩu súng với tiền giấy lại, quay người ra khỏi lều.
+
+Đúng thật là, thế mà tìm một kẻ thuần thú bói Tarot cho mình! Người thuần thú không muốn làm thầy bói thì chẳng phải là tên hề sao?
+
+Chu Minh Thụy nhanh chóng quẳng chuyện này ra sau đầu, hắn tiêu 7 đồng penny mua 1 pound thịt dê không được ngon cho lắm ở chợ "Rau diếp và thịt", lại mua đậu Hà Lan, cải bắp, cà rốt và khoai tây nữa. Thêm bánh mì ban nãy, hắn đã tiêu hết 25 đồng penny, cũng chính là 2 Saule 1 penny.
+
+“Đúng là cứ có tiền là phải tiêu, thương Benson quá...”
+
+Chu Minh Thuỵ không chỉ tiêu hai tờ tiền giấy mà còn tiêu thêm một đồng penny trong túi quần lúc trước. Hắn thuận miệng cảm thán một câu, không nghĩ gì thêm nữa mà vội vã về nhà.
+
+Có món chính là có thể tiến hành nghi thức đổi vận rồi!
+
+...
+
+Chờ khi khách thuê tầng hai đều đi hết, Chu Minh Thuỵ không vội vàng tiến hành nghi thức mà phiên dịch những từ trong "Phúc Sinh Huyền Hoàng Tiên Tôn" thành tiếng Feysac cổ và tiếng Loen, dự định là nếu thần chú ban đầu mà không hiệu quả thì thử ngôn ngữ bản địa xem sao!
+
+Dù sao cũng phải nghĩ tới sự khác biệt của hai thế giới và vấn đề nhập gia tuỳ tục chứ!
+
+Về chuyện phiên dịch sang tiếng Hermes vốn dùng cho việc cầu nguyện và thờ cúng thời cổ, vì không đủ vốn từ vựng nên Chu Minh Thuỵ không thể làm được.
+
+Làm xong tất cả, hắn mới lấy bốn chiếc bánh mì mạch đen ra khỏi túi giấy, đặt một chiếc lên góc vốn để bếp lò than đá, một chiếc khác thì trong phần kệ của chiếc gương, chiếc bánh mì thứ ba thì đặt lên nóc tủ quầy, nơi hai bức tường giao nhau, chiếc bánh cuối cùng thì đặt lên cái đống đồ vật lẫn lộn bên phải bàn học.
+
+Chu Minh Thụy hít sâu một hơi, rồi bước tới chính giữa căn phòng. Hắn làm cho bản thân bình tĩnh, sau đó mới nghiêm túc cất bước, đi theo hình vuông ngược chiều kim đồng hồ.
+
+Bước ra bước đầu tiên, hắn thì thầm:
+
+“Phúc Sinh Huyền Hoàng Tiên Tôn.”
+
+Bước thứ hai, hắn thành khẩn nhẩm:
+
+“Phúc Sinh Huyền Hoàng Thiên Quân.”
+
+Bước thứ ba, hắn nín hơi nói nhỏ:
+
+“Phúc Sinh Huyền Hoàng Thượng Đế.”
+
+Tới bước thứ tư, hắn thở ra một hơi, chăm chú mặc niệm:
+
+“Phúc Sinh Huyền Hoàng Thiên Tôn.”
+
+Sau khi đi tới vị trí ban đầu, Chu Minh Thuỵ nhắm mắt lại chờ kết quả, lòng hắn vừa mong đợi, vừa bất an, vừa sợ hãi.
+
+Có về được không?
+
+Sẽ có hiệu quả chứ?
+
+Sẽ không xuất hiện bất cứ điều gì ngoài ý muốn chứ?
+
+Bóng tối trước mặt bị nhuộm với màu đỏ rực tới từ ánh sáng bên ngoài, những dòng suy nghĩ cứ tuôn trào trong đầu Chu Minh Thuỵ, khó mà lắng lại được.
+
+Đúng lúc này, hắn bỗng cảm thấy không khí xung quanh như ngừng chảy, trở nên sền sệt và kỳ quái.
+
+Ngay sau đó, bên tai hắn vang lên tiếng thì thầm lúc thì nhỏ bé, lúc thì chói tai, khi thì hư ảo, khi thì mê người, lúc thì nóng nảy, lúc thì điên cuồng.
+
+Chu Minh Thụy rõ ràng là không hiểu những tiếng thì thầm nỉ non ấy đang nói cái gì, nhưng hắn vẫn không nhịn được mà vểnh tai lắng nghe, từ đó phân biệt.
+
+Đầu của hắn lại đau dữ dội, như là bị một chiếc khoan đang khoan sâu vào.
+
+Chu Minh Thụy chỉ cảm thấy đầu mình như sắp nổ tung, mọi suy nghĩ đều bị nhiễm màu sắc của mê huyễn.
+
+Hắn biết là không đúng nên cố gắng mở mắt ra, nhưng dù có cố thế nào hắn vẫn không thể làm được động tác đơn giản này.
+
+Toàn thân căng thẳng, dường như có thể đứt ra bất cứ lúc nào. Bỗng dưng một ý nghĩ tự giễu nảy lên trong đầu Chu Minh Thuỵ: “Không tự tìm đường chết thì sẽ không chết...”
+
+Khi hắn không thể chịu được nữa, sợi dây trong đầu như sắp bị kéo đứt thì vô số tiếng thì thầm ấy bỗng lùi đi, xung quanh trở nên vô cùng yên tĩnh, bầu không khí như lơ lửng.
+
+Không chỉ bầu không khí, Chu Minh Thuỵ cảm thấy cả thân thể mình cũng đang lơ lửng.
+
+Hắn lại thử mở mắt ra, lúc này lại có thể mở mắt một cách vô cùng thoải mái.
+
+Một màn sương mù màu xám ngập tràn khắp nơi đập vào mắt hắn, mông lung, mơ hồ, không có giới hạn.
+
+“Đây là thế nào?”
+
+Chu Minh Thuỵ ngạc nhiên nhìn xung quanh, rồi khi hắn cúi đầu xuống thì phát hiện mình đang lơ lửng ở bên rìa màn sương mù mênh mông vô ngần kia.
+
+Sương mù xám này như dòng nước đang chảy. Điểm xuyết cho dòng nước ấy là vô số những "ngôi sao" đỏ rực, có to có nhỏ. Có cái giấu kín ở sâu trong màn sương xám, có cái lại nổi lên ngay bề ngoài.
+
+Nhìn cảnh tượng như trong tranh vẽ này, Chu Minh Thuỵ nửa mê hoặc nửa thăm dò mà giơ tay phải ra hòng chạm vào một "ngôi sao" đỏ rực đang lơ lửng bên ngoài sương xám nhằm tìm cách rời khỏi nơi này.
+
+Khi ngón tay hắn vừa chạm vào bề mặt ngôi sao này, vằn nước bỗng nhiên trào ra từ trên người hắn, kích thích cho "đỏ rực" bùng lên hệt như pháo hoa đầy mộng ảo.
+
+Chu Minh Thuỵ hoảng sợ, bối rối thu tay phải lại, nào ngờ lại bất cẩn đụng vào một ngôi sao đỏ rực khác.
+
+Vì vậy "ngôi sao" này cũng toả ra ánh sáng.
+
+Thế là Chu Minh Thuỵ cảm thấy đầu óc trống rỗng, tinh thần tan rã.
+
+...
+
+Trong một biệt thự xa hoa nằm ở khu Hoàng Hậu ở thủ đô Backlund của vương quốc Loen, Audrey Hall ngồi trước bàn trang điểm, tay vuốt ve một chiếc gương đồng có hoa văn cổ xưa, bề mặt đã bị nứt.
+
+“Ma kính, ma kính, mau thức tỉnh... Ta lấy danh nghĩa gia tộc Hall lệnh cho mi thức tỉnh.”
+
+...
+
+Cô ta đổi đủ mọi cách nói, nhưng chiếc gương kia vẫn không hề phản ứng chút nào.
+
+Mười mấy phút đồng hồ sau, cô quyết định từ bỏ, ấm ức lầm bầm:
+
+“Đúng là cha lừa mình mà, lần nào cũng kể cho mình rằng chiếc gương này là món bảo vật quý báu của Hắc hoàng đế của đế quốc Solomon cổ đại, là vật phi phàm...”
+
+Cô còn chưa nói xong, chiếc gương đồng trên bàn bỗng phóng ra thứ ánh sáng đỏ rực, lập tức bao trùm lấy cô ta.
+
+...
+
+Trên biển Sonia, một con thuyền buồm với ba cột buồm, trông rõ là lạc hậu so với thời đại, đang đi xuyên qua cơn bão.
+
+Alger Wilson đứng trên boong tàu, thân thể nhấp nhô theo chiếc thuyền tròng trành, thoải mái duy trì được sự cân bằng.
+
+Anh ta mặc một áo choàng dài có thêu hình tia chớp, một tay thì giơ một bình thuỷ tinh có hình dáng kỳ quái. Trong bình là bọt khí lúc thì quay cuồng, lúc thì tụ lại thành tuyết, khi thì có gió thổi qua cạo ra dấu vết.
+
+“Còn thiếu máu của cá mập quỷ nữa...” Alger thì thào.
+
+Đúng lúc này, bình thuỷ tinh và lòng bàn tay anh bỗng trào ra màu đỏ rực, chỉ giây lát đã che phủ mọi thứ xung quanh.
+
+...
+
+Trên một mảng sương mù xám trắng, Audrey Hall khôi phục tầm nhìn, vừa khiếp sợ vừa mê mang quan sát xung quanh. Cô thấy bóng một người đàn ông mơ hồ ở phía đối diện cũng hành động tương tự mình.
+
+Sau đó, hai người bọn họ gần như đồng thời phát hiện còn có một người thần bí được sương mù xám trắng bao phủ quanh thân đứng cách đó không xa.
+
+"Người thần bí" Chu Minh Thuỵ cũng ngạc nhiên không thôi.
+
+“Thưa ngài, đây là nơi nào?”
+
+“Ngài muốn làm gì?”
+
+Audrey và Alger đầu tiên là ngẩn ra, cùng im lặng, và không hẹn mà lại cùng mở miệng.')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (38, 18, 1, N'Vùng đất hy vọng', 1, N'Ô... ô...
+
+Tiếng còi hơi vang vọng khắp không gian, đầu tàu hơi nước như một con quái vật to lớn kéo theo hơn hai mươi khoang tàu, chậm rãi ngừng lại.
+
+Trên người gọn gàng quần áo đuôi tôm, đầu đội mũ phớt tơ lụa cao một nửa. Klein xách theo chiếc vali to lớn không cân xứng với vóc dáng của chính mình, đi lại trên đường phố Backlund thủ đô của vương quốc Ruen.
+
+Thành phố này bị chia đôi bởi dòng sông Torquack chảy theo hướng Đông Nam, nhờ vào cây cầu Backlund cùng với thuyền đò kết nối. Nơi đây có hơn năm trăm triệu dân và là đô thị phồn hoa nhất ở Nam Bắc đại lục này.
+
+Klein từ xa chỉ nhìn thấy khắp nơi đều bao phủ bởi sương mù vàng nhạt, khiến cho tầm nhìn cũng bị thu hẹp lại. Mấy ngọn đèn trên sân ga dần dần sáng lên, xua tan đi phần nào mịt mờ u ám.
+
+“Bây giờ chắc khoảng sáu rưỡi! Vậy mà cứ như đã mười giờ rồi….’’ Klein không nhìn thấy gì, bèn bất đắc dĩ lắc đầu. Hắn chợt nhớ tới ngày trước nhìn thấy một đoạn truyện cười ở trên “báo Torquack”:
+
+Một hành khách vừa đặt chân đến Backlund bởi vì nồng đậm hơi sương mà lạc đường. Gã đành hỏi thăm một người đàn ông ướt nhẹp đi qua: ”Đi đến sông Torquack như thế nào?” Người đàn ông kia rất thân thiện trả lời: ”Đi thẳng, không cần dừng lại đâu nhé, ta mới vừa bơi lên từ đó xong”
+
+Mỗi lần đọc báo hoặc tạp chí Backlund, có thể thấy rõ đám nhà báo và biên tập đều mỉa mai không khí ô nhiễm của nơi này, mỉa mai sương mù ngày càng dày đặc… Trước đây “Báo sáng Backlund” còn đặc biệt làm thống kê, thời tiết trong khoảng 60 ngày ở 30 năm trước so với hiện tại trong khoảng 75 ngày… Vì thế không ít nhà trí thức thành lập mấy cái tổ chức như: “Hiệp Hội Giảm Hàng Than Khói”, “Hiệp Hội Giảm Hàng Hơi Khói”…. Nghe nói vào tháng chín tới, sẽ có một chương trình nghị sự nhằm tái cơ cấu “Uỷ Ban Điều Tra Ô Nhiễm Khí Quyển Vương Quốc”… Klein bỏ xuống cặp da to lớn, đưa tay bóp bóp cái mũi làm dịu đi phần nào mùi hôi thối.
+
+Sau đấy, hắn kéo nhẹ sợi dây bằng vàng, từ trong túi áo lấy ra một cái đồng hồ vàng, ấn mở ra nhìn qua xác định thời gian.
+
+Sau khi rời khỏi anh trai và cô em gái. Klein tạt qua cửa hàng bách hoá, tiêu 4 bảng 10 saule mua lấy cái đồng hồ và thêm 1 bảng 5 saule cho cái dây vàng này.
+
+Đối với bản thân, nếu hắn không có nhìn thấy thời gian chính xác thì sẽ nảy sinh ra cái cảm giác hoang mang và sợ hãi.
+
+Ban đầu Klein định mua đồng hồ bỏ túi bạc, vì cảm thấy như vậy phù hợp với khả năng của mình. Nhưng khi nghĩ tới chân lý của “Tên Hề’’, hắn đành phải lựa chọn càng khoe khoang càng tốt đồng hồ vàng.
+
+“6 giờ 39 phút… Không có sai lệch bao nhiêu….” Klein cất kỹ đồng hồ bỏ túi, tay cằm cặp da. Hắn hoà mình vào biển người, nhàn nhã đi ra khỏi trạm tàu hơi nước.
+
+Bất thình lình, Klein ngoặt một cái, làm cho kẻ nào đó đang lặng lẽ bám sau lưng hắn, vừa mới vươn ra bàn tay lại bị hụt chỗ túi áo của hắn.
+
+Klein cũng không có để ý mấy chuyện cỏn con này. Hắn tiếp tục dọc theo con đường xi măng, chen chúc trong đám người đi về phía ngã tư đường ở ngay trước mặt.
+
+Giữa đoạn đường này còn có mặt cỏ cùng vườn hoa, bọn nó được bao quanh bởi những cây cột giống như ống khói.
+
+“Không, khả năng nó chính là ống khói…’’ Klein nhìn rõ đỉnh mấy cây cột kia phun ra khói đặc.
+
+Hơi khói này một ít bay lên trên trời, một ít lại hoá thành hơi nước rơi vãi lung tung.
+
+Klein lại một lần nữa đứng lại, bỏ xuống cặp da, một tay khác thì cầm lấy tờ báo cùng với bản đồ.
+
+Lúc trên tàu hơi nước, hắn đã lập sẵn kế hoạch phải đi đâu và làm gì.
+
+Trải qua đoạn thời gian này và trải qua tính cách của tên hề hàng ngày. Cuối cùng Klein cũng hiểu ra ý nghĩa thực sự của “Tên Hề”, đó chính là “Dù cho có thể đoán được số phận, nhưng vẫn cảm thấy bất lực trước số phận, nên đành phải dùng nụ cười che giấu tất cả nỗi buồn, đớn đau, hoang mang và sợ hãi.
+
+Ngay thời khắc đó, Klein cảm nhận được rõ ràng ma dược “Tên Hề” tiêu hoá. Hắn tràn đầy lòng tin cứ đóng vai như vậy, rất nhanh thôi liền có thể tấn thăng.
+
+Nhưng vấn đề ở chỗ, hắn cũng không biết ma dược kế tiếp của danh sách 7. Ngay cả tên gọi là cái gì, chứ đừng nói là cụ thể phối phương.
+
+“Nên thu hoạch phối phương như thế nào đây? Hội Mật Tu rất ít xuất hiện, bọn này dường như chỉ cảm thấy hứng thú với vật phẩm đến từ gia tộc Antigenus… Đó cũng là vì sao không có ai biết rõ bọn họ. Aizz… Cân nhắc có hai cách, một là tiếp xúc giới phi phàm giả bản địa xem có thể tìm ra được chút manh mối nào không? Hai là chủ động gài bẫy, dùng bảo tàng của gia tộc Antigenus làm mồi câu, câu đám người của hội Mật Tu đi ra. Dù sao ta biết rất nhiều ký hiệu thần bí khác nhau đây.”
+
+“Nhưng làm vậy nguy hiểm quá lớn, phải cực kỳ cẩn thận. Mồi câu không thể tốt quá, cũng không thể kém quá. Kém quá kẻ khác sẽ chẳng có hứng thú, tốt quá thì lại dễ câu ra con ‘Cá Mập’, một cú đớp cũng để mình xương cốt không còn á… Thủ lĩnh Zarathu của hội Mật Tu là kẻ đã từng chỉ đạo qua đại đế Russel, rất có thể gã còn nhận được lớn nhất trái ngọt của cuộc cải cách ở thời đại kia…. Đương nhiên, chưa chắc gã có thể sống đến hiện tại, đến giờ cũng đã trôi qua gần 200 năm rồi…”
+
+Đang rơi vào trầm tư, Klein bỗng bị cái lạnh thấu xương ở Backlund này, làm cho hắn nhịn không nổi mà run rẩy. Hắn bèn nhanh chóng đi tìm chỗ ở.
+
+Hắn lật tới lật lui tờ báo, coi tới coi lui mục cho thuê nhà ở, nhìn thấy trước đây đánh dấu căn phòng kia:
+
+"Số 15 đường Minsk, quận Jowod. . . Khu phố. . . Mỗi tuần tiền thuê 18 saule. . ."
+
+Cái vấn đề chỗ ở này, Klein đã suy nghĩ kỹ càng. Dù Backlund có hơn năm trăm triệu dân số, nhưng hắn vẫn phải đề phòng khả năng đụng phải địa bàn kẻ gác đêm. Mặc kệ là mới điều tới đây Daly, hay là ngày trước ở Backlund như: Lorota, Ayr Harson và Borgia đều có thể nhận ra hắn.
+
+Cho nên, Klein loại bỏ khu phía Bắc nơi toạ lạc của nhà thờ nữ thần Đêm Tối ”Giáo đường St. Samuel” thuộc giáo xứ Backlund. Hắn cũng loại bỏ khu trị an tốt nhất và giám thị nghiêm khắc nhất, quận Hoàng Hậu cùng với quận Tây. Hai khu vực này là nơi ở của đám quý tộc và các doanh nhân giàu có bậc nhất, mà đám quý tộc càng tập trung ở quận Hoàng Hậu.
+
+Lại loại trừ mấy chỗ nhà máy, bến tàu, nơi dân nghèo tụ tập quận Đông và khu vực cầu Backlund.
+
+Còn lại cho Klein lựa chọn cũng không nhiều lắm. Một là có sở giao dịch chứng khoán Backlund, sở trao đổi hoá đơn, trung tâm tài chính, trụ sở của bảy ngân hàng lớn, các loại quỹ tín dụng, các công ty đường sắt, các công ty thương mại mậu dịch quận Hilston, nơi đó còn được gọi là trung tâm thương mại và tài chính của vương quốc Ruen. Hai là công ty nhỏ san sát, chỗ ở đông đúc quận Jowod.
+
+Hai khu dân cư đều đông đúc, trị an lại tương đối tốt, nên dễ dàng cho việc che giấu. Sau khi suy nghĩ cẩn thận, Klein liền chọn nơi có giá tiền thuê phòng rẻ hơn quận Jowod.
+
+Hắn không tìm đến mấy cái công ty, tổ chức như: "Hiệp hội cải thiện nhà ở đô thị hay tổng công ty cải thiện nhà ở của tầng lớp lao động". Bởi vì mấy chỗ này đều cần giấy chứng minh nhân dân, mà trước mắt hắn không có thứ này.
+
+“Nếu hôm nay không thể thuê được phòng ở, vậy thì tìm nhà trọ không cần chứng minh nhân dân ở lại tạm thời…’’ Klein xếp lại tờ báo, xách lên cặp da, dựa vào chỉ dẫn của bàn đồ, nhìn về một nơi nhìn như cánh cửa của cửa hàng bách hoá.
+
+Đó là lối vào tàu điện ngầm Backlund.
+
+Đúng vậy, tàu điện ngầm!
+
+Mới đầu khi Klein đọc báo nhìn thấy ba chữ “Tàu điện ngầm” này, hắn giật cả mình. Hắn nghĩ không ra chưa tiến vào thời kỳ đồ điện thế nhưng loại phương tiện giao thông này vẫn có thể xuất hiện.
+
+Nó được phát minh vào cách đây hai mươi lăm năm, đầu tiên chỉ là phương tiện giao thông ở hai bên bờ sông Torquack. Đến ngày nay nó đã mở rộng ra các khu đô thị lớn, tuy nhiên cũng chưa có phổ biến lắm.
+
+Đi qua cửa chính, Klein lẫn vào đám người trước mặt, từng bước đi về nơi bán vé.
+
+Sau vài phút xếp hàng, hắn cuối cùng cũng nhìn thấy cô bán vé có một mái tóc vàng xinh xắn.
+
+Cô gái này không có ngẩng đầu lên, mà chỉ sang bên cạnh một tấm bảng gỗ treo gần ô cửa:
+
+"Thời gian cao điểm (7:00 sáng đến 9:00 sáng, 6:00 tối đến 8:00 tối) 10 phút một chuyến, còn lại thì 15 phút, ghế hạng nhất 6 penny, ghế hạng hai 4 penny, ghế hạng ba 3 penny, vé khứ hồi, lần lượt là 9, 6, 5 penny.Vé năm của ghế hạng nhất 8 bảng, ghế hạng hai 5 bảng 10 saule và ghế hạng ba không bán vé năm. "
+
+Nó rẻ hơn so với ta tưởng tượng… vậy mà không có hạn chế khoảng cách… Melissa nhất định sẽ rất thích cái này, ăn đứt xe ngựa. Chính là thành tựu của máy móc… Nghĩ tới đây, hắn bỗng có chút bứt rứt khó chịu.
+
+Hắn nở một nụ cười rạng rỡ, tay móc ra 4 đồng penny rồi đưa cho người bán vé:
+
+“Ghế hạng hai”
+
+Cạch! Người bán vé xé ra tấm vé, đóng dấu, đưa cho Klein
+
+Hắn tìm được tuyến đường đi quận Jowod. Sau khi Klein thông qua kiểm tra sơ bộ, hắn liền dọc theo bậc thang đi xuống, nhanh chóng đến sân ga. Theo chỉ dẫn dưới mặt đất, hắn tìm đến toa ghế hạng hai.
+
+Ô ô ô!
+
+Chẳng bao lâu, Klein liền nghe thấy âm thanh vang vọng như tiếng sấm của tiếng còi hơi. Hắn nhìn thấy một con tàu hơi nước khổng lồ, ánh đèn khí ga treo ở hai bên khi chiếu rọi cũng tăng thêm mấy phần uy nghiêm, xình xịch ngừng lại tại chỗ.
+
+Kích thước to lớn cùng uốn lượn của nó, còn mang theo màu sắt đen trộn lẫn tinh xảo máy móc, tạo ra một vẻ đẹp độc đáo.
+
+Tàu điện ngầm Backlund vẫn sử dụng tàu chạy bằng hơi nước, phun ra khói sương. Nhờ vào thiết kế đặc biệt qua đường ống đi vào ống khói phun ra bên ngoài.
+
+Cái này hẳn cũng chính là tác dụng của vườn hoa bãi cỏ nằm giữa mặt đường.
+
+Trong tiếng động ma sát của kim loại, Klein chờ đợi hành khách trên tàu đi xuống, rồi hắn mới xách cặp da và cây gậy batong nhẩn nha bước đi, cũng trải qua nhân viên phục vụ kiểm vé.
+
+Toa này cùng toa ghế hạng ba khác biệt, ghế hạng hai là một người một toa, cũng không cần lo lắng bị kẻ khác chiếm chỗ ngồi. Klein vừa mới đặt mông xuống ghế, đặt cặp da xuống ngay ngắn bênh cạnh cây gậy batong, hắn liền nghe thấy dồn dập tiếng bước chân
+
+Hắn vô ý nhìn về phía cánh cửa, bèn nhìn thấy một cậu nhóc vóc dáng mảnh khảnh, khuôn mặt búng ra sữa. Cậu vội vã chạy vào toa xe.
+
+Cậu nhóc này ăn mặc chẳng hợp với tuổi tác tý nào, trên thân khoác áo người già, đầu đội mũ vòm, tay cầm một cái tay nải cũ nát, mặt cúi gầm xuống đất.
+
+“Xin lỗi, em lên nhầm toa xe, em đi toa ghế hạng ba…” Cậu nhóc chìa ra vé xe, nói lời xin lỗi với nhân viên phục vụ, rồi chạy nhanh về hướng toa xe hạng ba.
+
+Klein thu hồi ánh mắt, xác nhận lại địa chỉ cần đến và đợi cánh cửa đóng lại.
+
+Đúng lúc này, hắn lại nghe thấy dồn dập tiếng bước chân, rồi lại nhìn thấy mấy gã đàn ông mặc áo đen, đầu đội mũ phớt cao xông vào toa xe.
+
+Bọn hắn đuổi bắt thằng nhóc mười năm mười sáu tuổi cơ nãy hả? Trực giác Klein nảy ra một ý nghĩ như vậy.
+
+Hắn lắc đầu nhè nhẹ, tiếp tục nhìn vào tấm bản đồ và tờ báo của mình, chẳng có chút khác biệt nào với mấy vị hành khách khác trong toa xe này.')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (39, 18, 2, N'Phu nhân Sammer', 1, N'“Mày có nhìn thấy một thằng bé mười mấy tuổi không? Nó mặc một cái áo khoác cũ kỹ!” Một kẻ trong mấy gã xông vào toa xe trợn mắt nhìn nhân viên phục vụ hỏi.
+
+Qua khóe mắt, Klein liếc thấy đối phương là một kẻ thân hình gầy còm, xốc vác. Anh ta có nước da nâu giống như phơi nắng lâu ngày, hốc mắt cũng sâu hơn người dân của vương quốc Ruen rất nhiều.
+
+Người cao nguyên à? Hay là con lai? Klein gật gù suy tư.
+
+Trung tâm bắc đại lục tính từ dãy Hornaces trở đi là một cao nguyên có khí hậu khô ráo. Đa phần cao nguyên thuộc về vương quốc Finnebot, phía tây là của nước cộng hòa Entis, đến gần phía đông thì bị vương quốc Ruen chiếm giữ. Dân bản địa tuy gầy gò nhưng lại rất dũng mãnh thiện chiến. Trong quá khứ xa xưa, bọn họ là một vấn nạn nhức nhối của cả ba quốc gia, nhưng sau khi vũ khí và thuốc nổ được cải tiến, khiến phương thức chiến tranh thay đổi thì mấy người cao nguyên này mới nhận rõ hiện thực, hoàn toàn khuất phục.
+
+Phần lớn bọn họ rời cao nguyên rồi tiến vào Backlund, Trier, thành Finnebot hoặc tiến vào các đô thị phồn hoa và bến cảng của bắc đại lục. Có người làm công nhân, có người lại trở thành lưu manh cho đám hắc bang bản xứ, dám đánh dám giết, không sợ phiền phức lớn.
+
+Nhân viên phục vụ là một chàng trai khoảng hai mươi tuổi, nghe vậy liền co rúm người lại, rồi chỉ hướng toa xe hạng ba nói:
+
+“Tôi thấy... cậu ta đi về hướng đó.”
+
+Người cầm đầu mặc áo khoác đen đội mũ phớt thoáng gật đầu, dẫn theo đồng bọn xông vào toa xe hạng ba, cũng không hề kiêng kỵ ánh mắt của những hành khách xung quanh.
+
+Nếu mình là cậu nhóc kia thì lúc này mình đã xuống khỏi toa xe hạng ba rồi... Klein vừa xem báo vừa nghĩ linh tinh.
+
+Hơn một phút đồng hồ sau, “Ò” còi tàu vang lên, cửa khoang xe chậm rãi khép lại.
+
+Xình xịch xình xịch, tàu hơi nước lúc đầu còn chậm rãi giờ bắt đầu lao đi vùn vụt, nhưng ngay lúc này Klein chợt ngẩng đầu nhìn cửa toa xe hạng hai.
+
+Cậu bé mười lăm mười sáu tuổi mặc áo khoác cũ và đội mũ chóp tròn mang túi hành lý cũ nát kia chậm rãi đi vào khoang xe này.
+
+Cậu có khuôn mặt trẻ trung, ngũ quan thanh tú, hai mắt đỏ tươi uể oải nhưng nghiêm túc.
+
+“... Lợi hại, xuống ở toa xe hạng ba lại đi vòng qua toa xe hạng nhất rồi mới tới đây? Sợ kẻ đuổi theo mình còn có đồng bọn chờ ở trạm tàu cao tốc chăng?” Klein kinh ngạc cảm thấy cậu nhóc này xử lý khá cẩn thận và thành thục, giỏi hơn mấy người cỡ hai mươi tuổi không ít.
+
+Klein gõ nhẹ răng bên trái, yên lặng mở ra linh thị quét cậu bé một chút, chỉ thấy thân thể cậu bé đang ở trạng thái mỏi mệt. Tuy cảm xúc suy sụp nhưng vẫn duy trì suy nghĩ tỉnh táo màu lam.
+
+Xét theo tuổi tác mà nói... không hề đơn giản tẹo nào... Klein lẩm bẩm một câu rồi lại cúi đầu tiếp tục đọc báo.
+
+Cậu nhóc kia hoàn toàn không hề phát hiện mình đã bị người phi phàm dò xét một lần, cậu ta lại bước đến toa xe hạng ba một lần nữa.
+
+Lộ trình tiếp theo an ổn và yên bình, sau hai mươi phút thì Klein đã tới một trong ba trạm tàu ngầm ở quận Jowod.
+
+Hắn ngồi gần mười phút xe ngựa chon thuê, rốt cuộc cũng tìm thấy phố Minsk. Sau đó Klein dựa theo báo chỉ dẫn mà đi tới căn nhà số 17, cạnh nhà số 15, rồi kéo vang chuông cửa.
+
+Cúc cu! Cúc cu!
+
+Từ trong phòng vọng ra tiếng chuông, trên cửa lại xuất hiện một con chim máy không đẹp lắm, lớn khoảng một bàn tay, do bánh răng và linh kiện tạo thành. Chú chim nhỏ không ngừng gật đầu, phát ra thanh âm cùng loại với chim quốc.
+
+Món đồ chơi này rất không tệ, chỉ là hình dạng hơi thô ráp một chút... Klein đánh giá một câu rất đúng trọng tâm.
+
+Mười mấy giây sau, cửa lớn màu nâu sẫm được kéo ra, một cô hầu gái trẻ tuổi mặc váy đen trắng có chút cảnh giác nhìn Klein hỏi:
+
+“Xin hỏi ngài có việc gì?”
+
+Klein mỉm cười lấy tay chỉ vào tờ báo.
+
+“Tôi tới tìm phu nhân Sammer để thuê phòng, hy vọng căn phòng đó vẫn chưa được cho thuê?”
+
+Tên đầy đủ của phu nhân Sammer trên báo chí là Sammer Stalin.
+
+“Không có. Xin ngài chờ một chút.” Hầu gái lễ phép cúi gập người.
+
+Cô vội vàng đi vào thông báo cho vị nữ chủ nhân, rồi lần nữa quay lại dẫn Klein vào. Cô đặt gậy và cặp da đặt ở cửa ra vào, rồi treo áo khoác và mũ phớt trên kệ để áo mũ giùm hắn.
+
+Trong phòng ấm áp hẳn, xua đi cái lạnh mà Klein đưa vào. Ánh mắt hắn nhìn một lượt, đầu tiên nhìn thấy lò sưởi trong tường có kết cấu đặc biệt, bên trong có từng khối than củi không khói màu đỏ đang được thiêu đốt.
+
+Phòng khách của nhà Sammer khá lớn, có lẽ phải bằng cả một tầng của nhà Moretti. Một số chỗ còn được trải thảm trang trí tinh xảo, trong phòng còn treo rất nhiều tranh sơn dầu vẽ phong cảnh.
+
+Hầu gái đưa Klein tới khu vực ghế sô pha rồi nói với nữ chủ nhân mặc váy màu vàng nhạt đang ngồi đối diện:
+
+“Thưa phu nhân, khách đã tới rồi.”
+
+Vị phu nhân này ước chừng ba mươi tuổi, tóc vàng mắt xanh. Dung mạo xinh đẹp, bảo dưỡng thỏa đáng, tay cầm chiếc quạt lông vũ đen khảm họa tiết cung điện.
+
+Có lẽ bởi vì trong phòng có lò sưởi nên cô ta không mặc áo có cổ, làm lộ ra bộ ngực trắng ngần, cổ thon dài và mịn màng.
+
+“Phu nhân Sammer mạnh khỏe.” Klein đặt tay lên ngực hành lễ.
+
+Phu nhân Sammer ngượng ngùng cười nói:
+
+“Chào buổi tối! Mời ngồi! Cậu muốn uống cà phê hay hồng trà?”
+
+Klein bền ngồi lên ghế sô pha dài, thản nhiên đáp:
+
+“Hồng trà, cảm ơn.”
+
+“Julian, hồng trà Marquis.” Phu nhân Sammer phân phó hầu gái một câu rồi nói với Klein. “Xin hỏi nên xưng hô cậu như thế nào?”
+
+“Sherlock Moriarty, phu nhân có thể gọi tôi là Sherlock.” Klein sớm đã nghĩ kỹ tên giả cho chính mình.
+
+Lúc này hắn bỗng ngửi thấy mùi hương từ phòng bếp truyền đến và nhìn thấy đường ống phức tạp ở nơi đó.
+
+“Ha ha, đó là do chồng tôi thiết kế. Dù anh đang làm quản lý công ty Qaim nhưng lại là một kẻ yêu thích máy móc nghiệp dư, đồng thời cũng là thành viên hiệp hội giảm khói than của vương quốc.” Phu nhân Sammer chú ý tới ánh mắt của Klein liền mỉm cười giải thích.
+
+Phu nhân cần giới thiệu cặn kẽ như vậy không, tôi không phải đến để xem mắt chồng cô... Klein âm thầm nói đùa một câu, nhưng nụ cười vẫn giữ nguyên trên mặt.
+
+“Phu nhân, tôi muốn thuê căn hộ số 15 kia.”
+
+Lưng phu nhân Sammer thẳng tắp, tư thế ngồi duyên dáng cười đáp.
+
+“Vậy tôi nhất định phải nhắc nhở trước cho cậu, căn hộ số 15 kia không có đường ống như này, cũng không có ghế bành, không bàn đánh bài, không tủ đựng đồ ăn làm bằng gỗ đào, không có khay ăn bằng gốm sứ tốt nhất, không dao nĩa bạc, không có đồ uống trà mạ vàng, không có thảm có thể tháo rời...”
+
+Chị ta giới thiệu, tay chỉ từng vật trong phòng, cuối cùng bổ sung:
+
+“Nó vốn thuộc về chị gái tôi và chồng chị ấy, nhưng anh rể làm ăn thất bại, chỉ có thể dọn nhà tới đại lục phía Nam. Bọn họ còn có vườn ươm ở Balam, nhưng tôi không đồng ý lựa chọn của hai người. Lựa chọn này không công bằng cho cháu trai, cháu gái đáng thương của tôi chút nào. Nơi đó không có trường học văn pháp tốt nhất, thậm chí cũng không có gia sư tốt nữa.”
+
+Phu nhân à, những điều này tôi không muốn biết đâu... Klein thành khẩn gật đầu nói:
+
+“Ngoài khí hậu ra thì đại lục phía Nam hoàn toàn không thể so sánh được với Backlund.”
+
+Hắn phụ họa làm phu nhân Sammer rất hài lòng, con ngươi chị ta khẽ đảo:
+
+“Tòa nhà kia còn có ba năm hợp đồng cho thuê, tôi hy vọng cậu có thể thanh toán tiền thuê một năm một lần. Mỗi tuần 18 saule, phí sử dụng đồ đạc 1 saule. Tôi sẽ chỉ lấy cậu một chút tiền thế chấp thôi, tổng cộng là 50 bảng.”
+
+Klein lắc đầu cười nói:
+
+“Phu nhân Sammer à, chị hẳn là thấy được tôi vừa đến Backlund. Tôi cũng không biết thời gian tới sẽ gặp phải những chuyện gì. Một lần thanh toán 50 bảng sẽ khiến cho khả năng vượt qua khó khăn của tôi giảm xuống. Cực hạn là nửa năm 25 bảng thôi.”
+
+Hắn còn có ý định thuê một gian phòng khác ở phía Đông Backlund, dùng để thay đổi quần áo, tiến hành ngụy trang, thoát khỏi điều tra là sự chuẩn bị không thể thiếu nếu hắn muốn làm những chuyện kia.
+
+Stalin Sammer nhẹ nhàng gật đầu, chị ta đổi chủ đề:
+
+“Cậu đã học qua trường văn pháp chưa?”
+
+Klein khẽ cười nói:
+
+“Rồi. Sau này tôi còn tự học lịch sử nữa.”
+
+“Cậu có giấy chứng minh thân phận chứ?” Stalin thuận miệng hỏi một câu.
+
+“Rất xin lỗi, tôi vội vàng rời nhà cũng quên mang theo. Ha ha, vừa rồi quên giới thiệu, tôi đến từ quận Gian Hải.” Klein cố ý dùng khẩu âm giống bạn học Welch.
+
+Mới thốt ra từ ‘quên’ này hắn liền nghĩ tới đội trưởng Dunn Smith, nụ cười trên mặt càng thêm tươi rói.
+
+Lúc này cô hầu gái Julian bưng ly hồng trà đến. Ly sứ trắng toát, hoa văn cổ điển còn được mạ vàng.
+
+Klein nhận nhấp một ngụm, chỉ cảm thấy mùi thơm lan tỏa, chua ngọt vừa phải, rõ ràng ngon hơn hồng trà Sibo mình từng uống rất nhiều.
+
+“Vô cùng thuần hồng trà Marquis.” Hắn khen một câu.
+
+Phu nhân Stalin Sammer nhếch khóe miệng, nói:
+
+“Vậy trước tiên cho cậu thuê nửa năm, 25 bảng.”
+
+Klein cảm ơn rồi cùng đối phương nói chuyện phiếm mấy phút, tới khi một vị hầu gái khác mang tờ hợp đồng từ trong thư phòng đi ra.
+
+Ký tên xong, Klein đau lòng đếm 25 bảng tiền mặt giao cho phu nhân Sammer.
+
+Stalin xòe ra đếm lại một lượt, rồi chợt hất cằm nói:
+
+“Moriarty! Tiên sinh muốn tìm công việc ở Backlund chăng?”
+
+“Đúng thế.” Klein ngỡ ngàng đáp.
+
+Khóe miệng Stalin vểnh lên nói:
+
+“Vậy tôi có thể đề nghị cậu, lương một tuần thấp hơn ba bảng thì rất khó ở tại quận Jowod này. Tiền thuê nhà của cậu, tiền đồ ăn, tiền nước máy, khí ga, than củi, tiền phí giao thông tất cả cộng lại ít nhất mất 2 bảng 5 saule. Tin tôi đi, nơi này là Backlund, còn lại cần phải cân nhắc tới tiền quần áo mới nhất, tiền mua bộ đồ uống trà, bộ đồ ăn. . . Lương một tuần ba bảng thuộc về loại thấp nhất, miễn cưỡng sống đủ.”
+
+“Nếu như lương một tuần tới 5 bảng, cậu có thể thuê thêm một cô hầu gái, 6 bảng cân nhắc thuê đầu bếp, 7 bảng thuê thêm một người hầu nam, 8 bảng có thể thuê thêm một hầu gái nữa. . .”
+
+Phu nhân Sammer à, sao tôi lại cảm thấy chị đang khoe khoang nhỉ... Tôi đã từng có lương mười bảng một tuần đó... Klein giữ nguyên nụ cười, thái độ chăm chú lắng nghe.
+
+Lúc này cửa phòng bỗng nhiên mở ra, một người đàn ông dáng người khôi ngô đi vào, anh ta mặc một bộ lễ phục dài màu đen có hai hàng cúc áo, tay đeo bao tay da, ria mép được tỉa tót cẩn thận.
+
+“Luke! Đây là Moriarty tiên sinh. Bây giờ anh ta đã là hàng xóm của vợ chồng mình.” Stalin Sammer tiến lên giới thiệu.
+
+Vị nam chủ nhân này vừa cởi áo khoác đưa cho người hầu ở phía sau, vừa lễ phép cười hỏi:
+
+“Ngài có vui lòng ăn tối cùng chúng tôi không?”
+
+Đây chính là quản lý công ty Kaom kiêm thành viên hiệp hội giảm khói than của vương quốc Ruen đấy hả. . . Klein lại cười nói:
+
+“Rất xin lỗi ngài Sammer, tôi đã ăn tối trên tàu hơi nước rồi, mặc dù hương vị đồ ăn kia khiến người ta khắc sâu ấn tượng.”
+
+Sau khi hàn huyên vài câu, dưới sự dẫn dắt của cô hầu gái Julian, Klein rời khỏi nhà Sammer để tiến vào căn hộ số 15.
+
+Bố cục căn nhà này rất giống nhà bên cạnh, lầu một có phòng khách lớn, phòng ăn có ánh sáng không tồi, hai phòng ngủ cho khách, một phòng rửa mặt, một cái tầng hầm, đằng sau một cái phòng bếp dọc theo đường đi. Lầu hai có bốn gian phòng ngủ, một phòng khách, một phòng phơi nắng, một phòng đọc sách, hai phòng rửa mặt và một cái ban công lớn.
+
+“Phu nhân bảo rằng ngài có thể cho thuê nhưng không thể cho những người công nhân kia thuê lại, cũng không thể để chỗ này quá ồn ào và chen chúc... Một lát nữa tôi sẽ đưa tới chăn mền, ga giường và vỏ gối sạch sẽ.” Cô hầu gái Julian sau khi bàn giao xong liền quay về nhà Sammer.
+
+Sau khi thu dọn, Klein cuối cùng cũng dàn xếp xong chỗ ở tại Backlund.
+
+Klein ngồi trong phòng khách trống rỗng, chợt có cảm giác cô đơn, hắn liền ép buộc bản thân suy nghĩ xem tiếp theo nên làm gì.
+
+Dù có nguyện ý hay không, báo thù và thăng cấp đều là những chuyện không thể chớp mắt liền hoàn thành được. Nên hắn nhất định phải làm việc kiếm tiền, để đề phòng khủng hoảng về tài chính.
+
+Nhưng việc làm không thể quá trói buộc, ảnh hưởng tới hành động và bố trí của hắn, nói theo cách khác, nghề này nhất định phải tự do.
+
+Trải qua đắn đo cân nhắc, loại bỏ những nghề nghiệp không phù hợp, Klein chỉ còn ba lựa chọn:
+
+Một là sáng tác, trở thành nhà văn, nhưng thân phận của hắn qúa nhạy cảm, càng nổi tiếng càng nguy hiểm, chỉ có thể bỏ qua.
+
+Hai là trở thành phóng viên, đây là công việc khá vinh dự ở thời đại này, nhưng muốn xin việc lại cần chứng nhận các loại giấy tờ, Klein cũng đành phải từ bỏ.
+
+Cuối cùng, hắn lựa chọn công việc thứ ba:
+
+Thám tử tư!
+
+Đó chính là lý do Klein dùng cái tên giả kia.')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (40, 18, 3, N'Tụ hội không thay đổi', 1, N'Sáng sớm đầu tiên của Klein ở Backlund là khung cảnh bầu trời tràn ngập sương mù màu nhạt, tầm nhìn rất thấp, hoàn cảnh thì ẩm ướt lạnh lẽo. Hắn ăn hai miếng bánh mì nướng kẹp mỡ bò loại kém và uống nước trà giá rẻ 1 penny 1 lít.
+
+Klein bận rộn suốt một buổi sáng. Đầu tiên, hắn đi đến tổng bộ “Bưu báo Backlund” ở quận Jowod mua một quảng cáo nhỏ mất 3 bảng trong một tháng.
+
+Bắt đầu từ thứ ba, các vị độc giả trung thành của “Bưu báo Backlund” sẽ nhìn thấy một bố cáo nho nhỏ ở vị trí khe gấp giữa tờ thứ bảy và tờ thứ tám:
+
+“Sherlock Moriaty, thám tử tư am hiểu xử lý các loại sự vụ, thu phí hợp lý, nghiêm chỉnh tuân thủ nguyên tắc bảo mật, địa chỉ tại nhà số 15 đường Minsk quận Jowod.”
+
+Sở dĩ lý do mà Klein không chọn những tờ báo lớn bao trùm toàn bộ vương quốc Ruen như “Báo Torquack”, “Nhật báo Backlund” là bởi vì nghiệp vụ của hắn tạm thời chỉ giới hạn trong tòa thành thị Backlund này. Hơn nữa, hắn cũng không hy vọng mình sẽ trở nên nổi tiếng.
+
+Thế nên, lựa chọn đầu tiên của hắn là “Bưu báo Backlund” vì nó có giá quảng cáo không đắt và rất được hoan nghênh tại địa phương.
+
+Sau khi rời khỏi tổng bộ “Bưu báo Backlund”, Klein tay cầm bản đồ, đến từng cửa hàng thảo dược, cửa hàng hoa cỏ, tiệm châu báu, cửa hàng trang sức, chia ra mua các loại bột phấn thực vật, phiến kim loại mỏng làm bằng bạc để chuẩn bị kỹ càng cho việc cử hành nghi thức--- trừ vật phẩm liên quan đến linh tính, đại đa số các vật liệu thần bí học đều có thể mua được tại các cửa hàng bình thường, chỉ có điều không bán tập trung mà cần đi tới rất nhiều nơi mới có thể gom góp đủ.
+
+Vì thế Klein dùng trọn vẹn 5 bảng, số tiền kếch xù 200 bảng rút ra hơn 100 bảng, giờ chỉ còn lại 92 bảng.
+“Đúng là tiêu tiền như nước…” Klein tìm một nhà hàng nhỏ ở phụ cận, gọi một miếng bít tết sốt tiêu đen giá 8 penny, thêm 2.5 penny súp khoai tây ăn kèm với lạp xưởng thịt heo, 1 penny cà phê, 1 penny rau quả. Bởi vì tổng số tiền vượt quá 1 saule nên hắn được tặng thêm một phần bánh mì phết mỡ bò giá trị 1 penny nữa.
+
+Một giờ chiều, hắn trở lại số 15 đường Minsk, chưa kịp nghỉ ngơi đã dùng bột phấn thảo dược của hoa thâm miên, cỏ máu rồng, đàn hương đỏ và bạc hà đắng để điều chế ra “phấn Thánh Dạ”. Đây là vật liệu để chế tạo bức tường linh tính.
+
+Trước khi chân chính mua được muỗng bạc, hắn chỉ có thể miễn cưỡng dùng loại phương thức này.
+
+Klein suy đoán có lẽ chính mình phải tấn thăng danh sách 7 mới có thể thoát khỏi hạn chế của phương diện này.
+
+“Chà, tiểu thư Chính Nghĩa, Người Treo Ngược, Thái Dương đều không xin nghỉ, nên tụ hội đúng hẹn triệu tập hôm nay… Không biết Người Treo Ngược sẽ mang đến bất ngờ nào cho mình, không biết anh ta có thể cung cấp bao nhiêu trang nhật ký Russel nhỉ…” Klein nằm trên giường trong phòng ngủ lan man nghĩ ngợi đến mọi chuyện.
+
+Đối với hắn mà nói, thám tử tư là một nghề nghiệp hành động và kiếm thêm tiền. Nghề này có thể giúp hắn tiếp xúc đủ loại người, chậm rãi phát hiện giới người phi phàm ở Backlund, dần dần tìm được manh mối của Hội Mật tu.
+
+Đương nhiên, nếu vận khí tốt thì hắn có thể trực tiếp từ bên trong giới người phi phàm tìm được đối ứng danh sách 7 của “Tên hề”, cũng như mua được phối phương ma dược tương ứng và các loại vật liệu chủ yếu.
+
+Về phần hành tung của Ince Zangwill, Klein tạm thời sẽ không chủ động tìm kiếm, thậm chí có chút tránh né đối phương nữa. Nhưng nếu như có thể ngẫu nhiên phát hiện hành tung kẻ thù này mà không bại lộ bản thân, hắn không ngại làm người tốt việc tốt, nặc danh gửi thư đến giáo hội nữ thần Đêm Tối.
+
+“Tiền lời của thám tử tư nhiều lắm cũng chỉ trang trải được sinh hoạt phí của trung sản, nếu muốn có đủ tiền để mua được phối phương ma dược và tài liệu phi phàm thì một là phải xem tiểu thư Chính Nghĩa, hai là đầu tư, dùng 100 bảng còn lại trong tài khoản ẩn danh. Ừ, không thể động đến 92 bảng trên người được, không chừng một thời gian rất dài nữa, mình cũng không kiếm ra tiền đâu…” Nghĩ tới đây, Klein đột nhiên xoay người ngồi dậy, đi đến lầu 1 bắt đầu đọc các loại báo chí mà trước đó hắn thuận tay mua về.
+
+Trên báo chí thường sẽ đăng một ít tin tức, ví như ai đó phát minh ra vật phẩm gì, hoặc tìm kiếm đầu tư, kiểu như người ta muốn tìm người cùng hùn vốn, làm ra sự nghiệp.
+
+Klein dựa vào kiến thức lúc còn ở trái đất và lý giải của thời đại này để chăm chú tuyển chọn các hạng mục, nhưng đáng tiếc, hôm nay không có hạng mục nào đáng tin cậy.
+
+2 giờ 45 phút chiều, hắn trở lại phòng ngủ, khóa trái cửa, kéo rèm, dùng “phấn Thánh Dạ” chế tạo bức tường linh tính.
+
+Đi ngược 4 bước, tới phía trên sương mù xám, Klein ngồi ngay ngắn ở cái ghế lưng cao dành cho Kẻ Khờ, kéo dài linh tính, dùng phương thức đáp lại khẩn cầu đụng vào biểu tượng ngôi sao đỏ thẫm tượng trưng cho Thái Dương.
+Đây là sự việc không thay đổi trong sinh hoạt hoàn toàn thay đổi của mình… Hắn đột nhiên cảm thán một câu.
+
+***************
+
+Nơi nào đó bên ngoài thành Bạch Ngân, trong tòa tháp cao màu đen xám đã đổ sụp một nửa, chín thành viên của đội tuần tra vây quanh đống lửa đang cháy hừng hực, tán gẫu về những chuyện đã trải qua trong thời gian này.
+
+Ngoài ra còn có mấy vị đội viên canh giữ bên ngoài, đề phòng trong bóng tối đột nhiên có tập kích bất ngờ.
+
+Không biết bao nhiêu người phi phàm của thành Bạch Ngân đã dùng máu giáo huấn cho bọn họ:
+Không bao giờ buông lỏng cảnh giác, bởi vì quái vật trong bóng tối rất có thể ở sau lưng ngươi!
+
+Vào ban đêm tần suất của thiểm điện thấp, nhất định phải giữ lửa cháy, giữ cho ánh sáng chiếu rọi, một khi đã hoàn toàn sa vào bóng tối thì cũng có thể xảy ra chuyện toàn đội mất tích —ai cũng không nói được trong bóng tối sẽ phát sinh chuyện kinh khủng cỡ nào, bởi vì sự thật mỗi lần đều phá bỏ cực hạn tưởng tượng của họ.
+
+Dereck Berg vẫn duy trì im lặng, an tĩnh nghe các đồng bạn nhớ lại lần gặp quái vật hình người trên thân mọc đầy con mắt.
+
+Vì giải quyết quái vật này nên đội tuần tra của họ đã có 5 người bị thương, hai người đã trả giá đắt.
+Đột nhiên, Dereck thấy hoa mắt, cậu cảm giác như mình bị bao vây bởi màn sương xám dày đặc.
+
+Ở phương xa không cách nào miêu tả, ở chỗ sâu nhất trong màn sương xám có một thân ảnh mờ ảo ngồi ngay ngắn trên chiếc ghế dựa lưng cao cổ xưa, dùng tư thái trên cao nhìn xuống cậu ta.
+
+“Chuẩn bị tụ hội.”
+
+Bên tai Dereck vang lên âm thanh của Kẻ Khờ, nhưng các đồng đội xung quanh cậu không một ai phát hiện ra.
+
+Cậu thu hồi tầm mắt, quan sát hoàn cảnh xung quanh mười mấy giây. Cuối cùng, Dereck dời về phía xa tít ở rìa đống lửa, lưng tựa vào bức tường đổ, đối diện với mọi người, giả vờ ngủ.
+
+Từ khi phát hiện ra thành viên của “Nghị sự đoàn sáu người” và trưởng lão Lorwaya đều không thể phát hiện ra sự tồn tại của ngài Kẻ Khờ, cậu ta dần dần tin tưởng rằng chỉ cần mình không lơ là, sơ suất bộc lộ một số vấn đề ra ngoài, vậy thì dưới các loại ánh mắt cậu cũng có thể yên lặng tham gia Tarot tụ hội ở phía trên màn sương xám.
+
+*******************
+Backlund, quận Hoàng Hậu.
+
+Audrey lấy cớ mỏi mệt, về phòng ngủ của mình.
+
+Cô nàng kiềm chế sự kích động, không bước qua bước lại mà lặng yên ngồi trên giường chờ đợi triệu hoán của ngài Kẻ Khờ.
+
+Cha mình đang bận rộn cùng với các nghị viên khác đưa ra chương trình nghị sự kia, vệ sĩ người phi phàm cũng không còn ở cạnh mình mọi lúc nữa, cảm tạ nữ thần, cuối cùng cuộc sống của mình cũng khôi phục lại bình thường! Hai tuần qua rồi, anh Người Treo Ngược chắc chắn đã chuẩn bị xong tuyến yên của thằn lằn bảy màu, mình có thể tấn thăng danh sách 8 rồi! Audrey chớp mắt suy nghĩ.
+
+Đối với cô nàng mà nói, so với việc được 3 vạn bảng tiền treo thưởng và vườn ươm giá trị ít nhất 8000 bảng, điều này càng làm cô kích động và chờ mong hơn!
+Cuối cùng cô cũng trông thấy ánh sáng đỏ thẫm hư ảo tuôn ra như thủy triều, nhấn chìm chính mình.
+
+******************
+Trên một chiếc thuyền buồm tạo hình xưa cũ.
+
+Arges Wilson khóa lại cửa phòng thuyền trưởng, ngồi dưới kính lục phân phía sau bút ký hàng hải, anh ta không ngừng ghi nhớ nội dung trên những trang giấy xếp chồng dày kia.
+
+Sau khi thông qua cuộc điều tra và được phía trên ca ngợi, anh ta cũng không lưu luyến Backlund phồn hoa mà chủ động rời khỏi tòa thành thị ấy, quay trở về biển, và mang theo một vài tờ ghi chép nhật ký của Russel.
+
+“Chờ tiêu hóa xong ma dược “Nhà Hàng Hải” mình có thể bình thường tấn thăng, công lao của mình đã đủ đổi lấy phối phương và vật liệu rồi. Nhưng lúc này lại bại lộ chuyện mình biết vụ “đóng vai”, có điểm lợi cũng có mặt hại…” Arges lắc đầu, đột nhiên thất thần.
+
+Đúng lúc này, anh ta cảm nhận được triệu hoán của ngài Kẻ Khờ, trong đầu bỗng hiện ra gương mặt của Cụ Phong trung tướng Zellingoes, máu thịt nhanh chóng hư thối, từng khúc từng khúc rớt xuống.
+
+Theo bản năng Arges cúi thấp đầu, mặc cho thủy triều đỏ thẫm nuốt lấy bản thân.
+
+********************
+
+Phía trên sương xám, trong cung điện như chỗ ở của Cự Nhân.
+
+Klein mở linh thị, nhìn Chính Nghĩa, Người Treo Ngược và Thái Dương, xác nhận trạng thái hôm nay của bọn họ.
+
+Audrey đang muốn vui vẻ chào hỏi, đột nhiên thấy Người Treo Ngược làm thủ thế, vượt lên trước mở miệng nói:
+
+“Ngài Kẻ Khờ, lần này tôi thu thập được 19 trang Russel nhật ký.”
+
+“Tôi nhất định phải cảm tạ ngài đã điều động thân tín giúp tôi trừ đi Zellingoes, mấy tờ nhật ký này là thù lao tôi trả giá!”
+
+19 trang? Không tệ lắm… Klein không nói nhiều về thân tín mà chỉ lạnh nhạt cười:
+
+“Đây chính là nguyên tắc trao đổi đồng giá.”
+
+Không hổ là ngài Kẻ Khờ… Một vị hải tặc tướng quân mang theo thần kỳ vật phẩm căn bản không được Thần để tâm tới… Xem ra mình không nên nhắc tới tiền thưởng… Không biết ngài Kẻ Khờ có mấy vị thân tín danh sách cao nhỉ?... Audrey bất tri bất giác cũng bắt đầu quen với việc xưng Kẻ Khờ là Thần.
+
+Nghe thấy câu trả lời của Kẻ Khờ, Người Treo Ngược Arges khiêm tốn nói:
+
+“Ký ức cực hạn của tôi là 6 trang, xin phép cho tôi chia làm mấy lần dâng cho ngài.”
+
+“Không có vấn đề.” Klein bị bao phủ trong làn sương xám nồng đậm, nhẹ gật đầu.
+
+Thái Dương Dereck nhìn từng tờ nhật ký được Người Treo Ngược hiện ra, vô cùng tò mò về nội dung của nó.
+
+Có kinh nghiệm mấy lần tụ hội trước, cậu ta tin tưởng rằng những vật phẩm mà ngài Kẻ Khờ thấy hứng thú chắc chắn bao hàm rất nhiều huyền bí.
+
+Cậu ta nhìn tiểu thư Chính Nghĩa, thấy đối phương cũng không hỏi thăm nên lại cẩn thận bảo trì yên lặng.
+
+6 trang nhật ký rất nhanh đã hoàn thành, đưa tới tay Klein.
+
+Đám Audrey bắt đầu yên tĩnh chờ đợi, chuyện này đã thành thói quen.
+Klein dời tầm mắt xuống, đọc nội dung tờ thứ nhất:
+
+“Ngày 16 tháng 12, lại liên lạc với vị đáng thương kia đang bị vây khốn trong chỗ sâu phong bạo, bị lạc lối trong bóng đêm.”
+
+Rốt cuộc có hậu tục phía trước của bút ký… Klein trong lòng vui mừng, thái độ càng thêm chăm chú:
+
+“Hắn tự xưng là “Cửa” tiên sinh, có ý đồ dạy cho ta một nghi thức khó khăn phức tạp, để ta giúp hắn quay về thế giới hiện thực, và hứa hẹn sẽ thỏa mãn ba yêu cầu của ta.”
+
+“Hắn cho rằng ta là đồ ngốc sao? Ta sống hai đời cộng lại hơn sáu mươi năm mà không nhìn ra đây là biểu hiện của ác ma và tà thần sao?”
+
+“Nhưng hắn miêu tả một số lịch sử của niên kỷ thứ 4 thực sự làm người ta hứng thú đấy.”')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (41, 18, 4, N'Ngài ''Cửa''', 1, N'"Cửa" tiên sinh… phong cách đặt tên của gã giống mình quá đi… Không biết tên của gia hoả đáng thương bị vây khốn ở phong bạo chỗ sâu, và mê man trong bóng đêm này là gì nhỉ, cỡ danh sách mấy hay giống như đại đế Russel dự đoán chính là một vị Tà Thần… Klein vừa oán lại vừa cười giễu, cũng rất có hứng thú với một ít lịch sử của kỷ thứ tư
+
+“Ta biết kỷ thứ 4 nổi danh nhất ‘Tứ hoàng chi chiến’, nhưng đối với các nhân vật chủ chốt và tình tiết cụ thể lại bị giới hạn ở lý giải của các giáo hội lưu truyền xuống. Như ‘Hắc hoàng đế’ của đế quốc Solomon.”
+
+“Mãi cho tới hôm nay, vị ‘Cửa’ tiên sinh kia mới giải khai nghi ngờ của ta, giúp ta viết rõ ba vị còn lại ở bên trong Tứ Hoàng, ‘Huyết Hoàng Đế’ của vương triều nửa điên Tudor, ‘Dạ Hoàng’ đế quốc Tromsjost và ‘Minh Hoàng’ hay còn được gọi là Tử Thần ở lục địa Nam.”
+
+“Dựa vào miêu tả của ‘Cửa’ tiên sinh, trận chiến này cải biến toàn bộ thế cục của chiến tranh thế giới. Hắc hoàng đế, Huyết hoàng đế và Dạ hoàng từng người ngã xuống nhưng Minh hoàng lại cướp được chỗ tốt nhất”
+
+“Nói đến đây, ‘Cửa’ tiên sinh ý vị thâm thường bồi thêm một câu. Qua hơn một trăm năm sau, Tử Thần phát điên nhưng cũng trở lên mạnh mẽ, thế mà liên thủ với Nguyên Sơ Ma Nữ. Vì thế mang đến một trận ‘Thương Bạch tai nạn’ cho Bắc đại lục. Đương nhiên, điều này không phải do gã tận mắt trứng kiến và trải qua, mà vào thời điểm gã tới gần thế giới hiện thực ở mỗi tháng, mà nghe trộm được.”
+
+“Tử Thần phát điên nhưng càng mạnh!”
+
+“Thần cũng sẽ bị điên mất hả?”
+
+“Câu nói này làm cho người người đều khiếp sợ đây!”
+
+“Bất quá, nó cũng xác nhận một suy đoán của ta, chính là trước kỷ thứ năm, thần sẽ thường xuyên giáng lâm ở thế giới hiện thực. Thần sẽ can thiệp trực tiếp vào thế cục của Nam Bắc đại lục, thậm chí có thể tự mình ra trận như Tử Thần vậy.”
+
+“Ta hỏi ‘Cửa’ tiên sinh rằng gã có tham dự ''Tứ Hoàng Chi Chiến'' không? Nếu có gã đóng vai trò gì? Mà bảy vị thần lại bảo trì lập trường và phát huy tác dụng gì trong cuộc chiến này?”
+
+“Cửa tiên sinh không trả lời câu hỏi của ta, chỉ nghiền ngẫm nói một câu kỷ thứ tư đỉnh cấp cường giả nhiều hơn so với dự đoán của ta cũng không ít”
+
+“Mặt khác, gã còn nhắc tới hai định luật. Một là Định Luật Đặc Tính Phi Phàm Bất Diệt, hai là danh sách gần bên trong Định Luật Bảo Toàn Đặc Tính Phi Phàm. Chuyện này cùng ta biết đến một ít sự tình, từ tổ chức bí ẩn cổ xưa nhất kia ăn khớp, cũng tương xứng với một ít hiện tượng mà ta quan sát được. A! Điều này có thể suy ra rất nhiều kết luận thú vị, làm cho một số vấn đến không cách nào giải thích đều sơ bộ có căn cứ nhưng cũng làm cho mọi người sợ hãi run rẩy á. Ví dụ như: Cùng một đường tắt, cao danh sách nhiều, thấp danh sách liền sẽ biến ít, ngược lại cũng như thế.”
+
+“… Đặc tính phi phàm liền có cố định tổng số từ cội nguồn, sẽ không tăng thêm và giảm xuống. Đây có phải nói rõ ràng có một vị chúa tể sáng tạo tất cả, Thần toàn trí toàn năng, mà tất cả đều bắt nguồn từ Thần đúng hay không?”
+
+Đó là Klein nhìn qua lần nhật ký của Russel dài nhất, nó chiếm trọn hai trang giấy. Có thể tưởng tượng rằng, nó vốn là lấy hình thức chính phản tồn tại nhưng ở sau các lần sao chép liền biến thành hai trang riêng lẻ
+
+“Lượng tin tức to lớn thật…” Klein thầm cảm khái.
+
+Là một sinh viên tốt nghiệp hệ lịch sử, hắn vẫn cho là đế quốc Solomon, vương triều Tudor, đế quốc Tromsjost là thay thế lẫn nhau ở từng thời điểm, ở giữa nhất định có tranh đấu. Ai ngờ được! Vị ‘Cửa’ tiên sinh kia diễn tả “Tứ Hoàng Chi Chiến” rõ ràng không để lộ ra một điểm sai lầm, đó chính là ba vương triều lớn này song song cùng tồn tại
+
+“Nếu chuyện này là thật, chắc hẳn sẽ phá vỡ trước mắt rất nhiều nghiên cứu về lịch sử ở kỷ thứ tư.” Klein bỗng nhớ tới nguyên chủ, anh ta rất có hứng thú với việc khảo cổ và thăm dò lịch sử kỷ thứ tư
+
+Hôm nay, coi như mình giúp anh ta hoàn thành một cọc tâm nguyện… Không rõ “Tứ Hoàng Chi Chiến” phải chăng Tử Thần đã trở thành chân Thần, dựa vào lời kể của ‘Cửa’ tiên sinh quá khó phán đoán, chỉ có thể đặt giả thuyết. Bấy giờ “Minh Hoàng" nhờ vào "Tứ Hoàng Chi Chiến” mà cướp được chỗ tốt, đột phá hạn chế, trở thành Thần nhưng cũng vì thế mà điên mất….”
+
+Thần cũng sẽ nổi điên, thật là đáng sợ quá đi, nghĩ tới liền làm cho trái tim người ta run rẩy mà! Khó trách dù cho uyên bác như đại đế Russel cũng phải kinh hãi vì chuyện này..
+
+Lẽ nào Tà Thần chính là Thần bị phát điên chăng?
+
+Có phải vào một ngày nào đó, cả thế giới chỉ còn lại Tà Thần hay không?
+
+Phù... phù... Có phải tận thế đến mà cũng chẳng thể nào nghịch chuyển được?
+
+Nụ cười của Klein vẫn che dấu đi cảm xúc nặng trĩu trong lòng, cảm thấy tưởng tượng của chính mình về tương lai xa xôi kia tràn ngập màu sắc u tối.
+
+Cùng đó, hắn đánh giá cao với “Hắc hoàng đế”, “Huyết hoàng đế” và “Dạ hoàng”, có lẽ bọn họ đã là đỉnh cấp cường giả tiệm cận với Thần.
+
+“Có lẽ là danh sách 1, nằm ở đỉnh phong đường tắt, dựa theo logic này. “Hắc hoàng đế” sống mấy trăm năm hay hơn nghìn năm cũng không có gì lạ lùng. Coi như một khúc mắc của nguyên chủ trước đây cũng đã có lời giải. Hắn từ nội dung cuốn bút ký của gia tộc Antigenus suy luận ra, dưới cái nhìn đầy rẫy mâu thuẫn của bản thân, bèn cho rằng “Hắc hoàng đế” chính là tước vị chung của các đời hoàng đế ở đế quốc Solomon… Có lẽ, Hắc hoàng đế vẫn luôn là một người… Đương nhiên không thể bỏ qua khả năng khác, ví dụ như thay đổi qua hai ba lần, nhưng danh sách 1 của con đường tắt này liền gọi ‘Hắc hoàng đế’?”
+
+“Không biết ’Cửa‘ tiên sinh sẽ là ai trong mấy vị kia… Đại đế Russel không hề miêu tả tỉ mỉ sai lầm thí nghiệm và sự trùng hợp này, làm ta muốn đối thoại với vị ‘Cửa’ tiên sinh kia cũng không thể nào làm được.’’
+
+“Đặc tính bất diệt định luật, đặc tính bảo toàn định luật trong danh sách gần đường tắt, cái này giống với cảm thụ của đội trưởng, có lẽ anh ta dùng từ ngữ chính là từ đại đế Russel lưu truyền xuống.’’
+
+“Dựa vào miêu tả của ‘Cửa’ tiên sinh hai định luật này. Quả thật có thể suy đoán ra rất nhiều thứ. Ví dụ như, có nhiều thánh vật và danh sách cao cường giả ở bảy đại giáo hội như vậy, cũng tồn tại không ít danh sách thấp người phi phàm. Cái này khác biệt với hiện thực lớn như vậy, giải thích hợp lý nhất chính là do thần ban ân?”
+
+“Như Dạ chi quốc diệt vong có phải chính là bởi vì đặc tính bảo toàn, hoài bích có tội? Hoặc là do bọn họ tồn tại làm suy yếu nghiêm trọng lực lượng của đường tắt ‘Đêm Tối’, có thể uy hiếp đến vị trí của nữ thần.”
+
+“Trên lý thuyết mà nói, một số vật phong ấn cũng có thể làm tài liệu chính của ma dược, thậm chí còn không khác nào ma dược, đương nhiên điều kiện cần thiết là phải loại trừ hết tai họa ngầm trong đó.”
+
+“Khó trách khai quật ra một ít tư liệu gọi kỷ thứ tư là ‘Chúng Thần Kỷ Nguyên’, nguyên lai ở kỷ nguyên này, còn ghi chép rất nhiều lần thần linh giáng lâm.”
+
+“Là do nguyên nhân nào làm cho các Thần không còn giáng lâm, đến ngay cả thần dụ cũng gần như đoạn tuyệt nhỉ?”
+
+“Nếu không phải nghi thức ma pháp vẫn có thể thu được đáp lại, chỉ sợ có không ít người phi phàm sẽ hoài nghi sự tồn tại của thần linh đây… “
+
+Klein thoáng nghĩ tới nhiều vấn đề, cảm thấy bản thân mình lại minh bạch hơn một chút về lĩnh vực thần bí của thế giới này.
+
+Hắn nhanh tay lật ra phía sau bốn trang nhật ký còn lại, cũng phát hiện nội dung không còn liên quan tới ‘Cửa’ tiên sinh nữa. Nội tâm Klein liền có chút thất vọng .
+
+Klein nhờ vào năng lực của Tên Hề để che giấu đi cảm xúc, hơn nữa có sương xám cản trở. Nên dù cho tiểu thư ‘Chính Nghĩa’ Audrey vụng trộm dò xét cũng không thể phát hiện điều bất thường gì từ hắn.
+
+Hắn lấy lại tinh thần, rồi đọc tiếp trang nhật ký thứ ba:
+
+“Ngày 10 tháng 9. Nhịn rất lâu nhưng vẫn nhịn không nổi, đành phàn nàn vài câu.’’
+
+"Ban đầu ta là não nhúng nước mới chọn đường tắt ‘Nhà thông thái’ đi"
+
+“Đương nhiên, nhờ vậy ta có thể phát huy ra được thế mạnh lớn nhất của bản thân, để giáo hội coi trọng ta. Nhưng vấn đề ở chỗ, trước mắt mấy danh sách của nó đều thiếu khuyết năng lực cách đấu, chỉ có thể dựa vào vật phẩm thần kỳ hỗ trợ, quá ỷ vào ngoại vật á.”
+
+“Như danh sách 9 ‘Nhà thông thái’, chỉ có khả năng ghi nhớ, học tập cùng năng lực thực hành. Như danh sách 8 ‘Nhà khảo cổ học’, có thể nhận được cường đại thể phách và tri thức cổ đại, miễn cưỡng ứng dụng được chút nghi thức ma pháp. Như danh sách 7 ‘Giám định sư’, nhận được năng lực là nhanh chóng phân biệt vật thần kỳ, lúc sử dụng có trình độ tránh thoát tai họa ngầm lớn nhất. Như danh sách 6 ‘Công tượng’ có thể chế tạo máy móc, kỳ vật và vật phẩm phi phàm không mạnh lắm, ngoài những thứ đó ra, thì nghi thức ma pháp cũng được tăng cường đôi chút, khó trách hiện đại danh xưng là ‘Chuyên gia máy móc’.
+
+“So sánh với danh sách 7 ’Vu sư’ và danh sách 6 ’Quyển trục giáo sư‘ của đường tắt ‘Người dòm ngó bí ẩn’ mà nói, đều đủ mê hoặc lòng người. Nếu như giáo hội nắm giữ danh sách này hoàn chỉnh và không tồn tại Ẩn Nặc Hiền Giả, vậy thì tốt quá.’’
+
+“Bất quá, cuối cùng cũng nhận được một tin tốt. Sau khi ta tấn thăng danh sách 5 ‘Tinh thuật sư’, bản thân liền đạt được năng lực phi phàm cách đấu!”
+
+“Tên gọi hiện đại của nó để ta có chút sợ hãi, dĩ nhiên gọi ’Nhà thiên văn học…”
+
+“Chẳng lẽ ta sẽ trở thành một nhà khoa học toàn năng điên sao?”
+
+“Ông trời có mắt, ta thi đậu trường đại học hạng hai nha!’’
+
+Không thể bỏ qua, đại đế Russel có thiên phú khôi hài kỳ lạ. Cho dù cảm xúc nặng nề Klein cũng nhịn không được mà giật giật nơi khóe môi, rất muốn đốt nến cho vị tiền bối này đây.
+
+Học cho giỏi, ngày ngày phấn đấu, quả thật rất đạo lý… Klein lẩm bẩm, cũng ghi nhớ đặc điểm chính của người phi phàm ở giáo hội Thần Hơi Nước và Máy Móc.
+
+Bản thân thiếu năng lực phi phàm thực chiến, nhưng lại giỏi chế tác và sử dụng vật phẩm.
+
+Klein lật qua đoạn ngắn của trang nhật ký thứ ba, rồi tiếp tục đọc nhẩm:
+
+“Ngày 2 tháng 6, Vương quốc nhiều lần nổi loạn, xảy ra chiến tranh, cũng không thể làm sụp đổ đế quốc Fusak, Ruen và Finnebot. Không thể không gánh một khoản nợ lớn, kinh tế đi vào biên giới của khủng hoảng.’’
+
+“Từ cái nhìn của ta, dân chúng, thương nhân và các binh sĩ đều cực kỳ bất mãn, bạo loạn cũng chỉ thiếu một đốm lửa nhỏ mà thôi! Cơ hội của ta đến rồi.’’
+
+"Nhưng ta nhất định phải cẩn thận, gia tộc Sauron từng trải qua lịch sử của kỷ thứ tư, là một gia tộc cổ xưa, rất có thể có danh sách cao cường giả. Ta muốn đạt được giáo hội ủng hộ, cũng muốn hợp tác với giáo hội Mặt Trời Vĩnh Hằng.”
+
+“Ta không thể trực tiếp ra mặt, trước nhất cứ để đám phản loạn phá hư trận tự đã. Sau đó ta lại ra mặt với tâm thế của kẻ bảo hộ, để kết thúc hết thảy. Russel Gustave Chấp Chính Quan! Ta thích được xưng hô như vậy.”')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (42, 18, 5, N'Thường thức miễn phí', 1, N'"Ngày 3 tháng 6, sau khi ta thương lượng với bọn Edwards, đành vứt bỏ ý tưởng hợp tác với giáo hội Mặt Trời Vĩnh Hằng. Điều này rất có khả năng sẽ làm bại lộ ý đồ của ta, khiến gia tộc Sauron và quý tộc cũ ủng hộ gia tộc này sớm phát giác, tiến hành bố trí nhắm vào ta. Vậy thì mọi chuyện sẽ trở nên cực kỳ khó khăn và nguy hiểm."
+
+"Đáng tiếc, Green đã chết trong biển sương mù, anh ta là người thông minh nhất trong bọn ta."
+
+"Hỗn loạn, hỗn loạn hơn nữa đi! Chỉ có hỗn loạn triệt để thì ta mới có được cơ hội đục nước béo cò! Chỉ có vậy thì gia tộc Sauron mới không thể thu xếp nổi cục diện này, giáo hội Mặt Trời Vĩnh Hằng mới có thể vuốt mũi thừa nhận ta!"
+
+"Có lẽ ta nên giúp đỡ cho đám phản đảng đó, nhưng phải làm thế nào để nó thật bí mật, khiến người khác không thể nào phát hiện được đây?"
+
+"Ngày 4 tháng 6, Zarathu của hội Mật Tu đột ngột bí mật tới thăm ta."
+
+...
+
+Sau đó đâu? Klein đang tò mò mục đích Zarathu thủ lĩnh của hội Mật Tu đến tìm Russel trước trận phản loạn và chính biến. Kết quả trên hai trang bút ký tiếp theo lại không liên quan đến nó.
+
+Điều này khiến hắn sinh ra tâm trạng chán nản khó mà kìm nén được.
+
+Tuy ba trang nhật ký này không miêu tả quá nhiều tình tiết tỉ mỉ, chỉ là mấy chuyện bình dị của người trong cuộc. Nhưng vẫn khiến Klein cảm nhận được vào năm 1173, cũng chính là hơn một trăm năm trước, trận biến cố ở Entis gió nổi mây phun thế nào.
+
+Trên tài liệu lịch sử có ghi rõ kết quả, Russel với thân phận thượng tá dẹp yên phản loạn, thuận thế cải cách, biến vương quốc Entis thành nước cộng hòa, tự đảm nhiệm quan chấp chính.
+
+Trong 9 năm sau đó, ông cải cách bộ luật, khuyến khích phát minh, bảo đảm cho công cuộc cải cách, khiến sức mạnh quốc gia tăng lên rất lớn. Hơn nữa ông còn nam chính bắc chiến, nhét các quốc gia như Grunberg, Masik, Segal vào trong sự bảo hộ của mình. Khiến cho ba cường quốc như đế quốc Fusak, vương quốc Ruen, vương quốc Finnebot ở lục địa Bắc phải lần lượt cúi đầu.
+
+Vào lúc đảm nhiệm quan chấp chính sắp tròn 20 năm, vào cuối năm 1192, Russel đổi nước cộng hòa thành đế quốc, tự xưng là Caesar.
+
+Sau đó không đến 6 năm, ông vẫn lạc ở cung Bạch Phong, kết thúc một đoạn lịch sử truyền kỳ nhất từ kỷ thứ 5 đến nay.
+
+Klein nhớ lại những tài liệu đã từng đọc, phát hiện cái chết của Russel tuyệt đối không đơn giản như vẻ bề ngoài. Giống như đằng sau biến cố này khẳng định có sự tranh đấu của người phi phàm, có thế lực siêu phàm tham gia, có nghĩa nó sẽ không giống với miêu tả trên tài liệu.
+
+"Green mà Russel nhắc tới hẳn là một trong "Tứ kỵ sĩ Thiên Khải", quả nhiên anh ta chết ở trong biển Sương Mù... Trong mấy tờ nhật ký lúc trước, Russel đã ghi vị kỵ sĩ này hơi bất thường. Điều này hình như liên quan đến hòn đảo nhỏ có rất nhiều sinh vật siêu phàm sinh sống mà bọn họ phát hiện được... Không chỉ có kỳ ngộ, mà còn rất nhiều nguy hiểm nữa..." Klein nhớ lại một trang nhật ký nào đó, hắn cảm khái lật đến tờ nhật ký thứ 5.
+
+Nội dung ghi chép trên tờ này không hề có giá trị, phân biệt là đánh giá của Russel sau khi uống rượu nho Ormill năm 1128. Nhìn thấy đối tượng mình yêu thích lúc niên thiếu, kết quả phát hiện dáng vóc của vị phu nhân đó biến dạng, khuôn mặt thì lão hóa nên ảo tưởng tan vỡ. Cùng với tổng kết đoạn thời gian nào đó trầm mê sa đọa bài bạc.
+
+Trang thứ 6 cũng đều là nhật ký ngày thường, nhưng dòng cuối lại khiến mắt Klein sáng lên:
+
+"Ngày 8 tháng 4, ta phải phái người đi điều tra hội Mật Tu. Nắm giữ càng nhiều tin tức, không thể lại bị động như lúc trước, không thể để Zarathu nắm mũi dắt đi nữa."
+
+Cho nên ông điều tra ra được chuyện gì, đồng chí Russel? Klein không thể tìm được nội dung phía sau, đành phải cưỡng ép bản thân bình tĩnh lại. Chờ đợi buổi tụ hội sau Người Treo Ngược sẽ đưa nhật ký tiếp.
+
+Hắn biết dù có điều tra tư liệu của hơn một trăm năm trước, cũng sẽ không thể giúp mình tìm được đầu mối liên quan đến hội Mật Tu. Dù sao thời gian trôi qua đã lâu, ngoài những tồn tại đặc thù, thì chỉ sợ không ít kẻ mạnh ở danh sách cao đều đã chết già, chứ đừng nói đến thành viên ở tầng thấp. Nhưng Klein tin tưởng, điều này có thể giúp mình tìm được linh cảm, hiểu biết thân phận bên ngoài và quy luật hoạt động mà hội Mật Tu thường hay dùng.
+
+Klein buông tờ nhật ký thứ 6 xuống, ngón trỏ tay phải gõ nhẹ lên mép chiếc bàn đồng đen dài. Ánh mắt hắn chậm rãi từ trên người tiểu thư Chính Nghĩa dời đến Người Treo Ngược, rồi đến Mặt Trời.
+
+Đúng rồi, vừa nãy trong nhật ký Russel đại đế có miêu tả một câu: "Chúa Sáng Thế… Thần Toàn Trí Toàn Năng…", cách gọi này rất gần với thần linh của thành Bạch Ngân, ông ta nghe được ở đâu chứ? Tổ chức xa xưa nhất bí ẩn nhất đó đang âm thầm thao túng thế cục của thế giới này? Tổ chức này ra đời trước cả Vùng đất bị Thần bỏ rơi sao?
+
+Ừm... Đột nhiên Klein có một ý nghĩ mới, thế là hắn dùng giọng trầm thấp bình thản cười nói:
+
+"Trong nhật ký của Russel có nhắc đến một vài lịch sử bị che giấu, nhắc đến một ít thường thức bình thường, nó nhắc nhở ta hình như ta chưa nói cho các ngươi."
+
+Audrey giật mình, lập tức quay nửa người, vui mừng nhìn về vị trí cao nhất bên chiếc bàn dài cổ xưa.
+
+Ngài Kẻ Khờ chủ động nhắc đến nội dung trong nhật ký của Russel? Bên trong sẽ ghi chép những gì đây? Cô vừa kích động lại vừa hưng phấn, hoàn toàn quên mất bản thân là một Khán Giả.
+
+So sánh với cô nàng thì Người Treo Ngược Arges chững chạc hơn rất nhiều, nhưng động tác không tự chủ ngồi thẳng lưng đã vô tình bán đứng anh ta.
+
+Chỉ có duy nhất Dereck tuy vẫn cho rằng vật phẩm mà ngài Kẻ Khờ hứng thú sẽ bao gồm rất nhiều điều huyền bí. Nhưng cậu không hề biết đại đế Russel, không biết cái tên này ở đại lục Bắc rốt cuộc đại biểu cho điều gì. Bởi vậy cậu chỉ khó kìm được tò mò, chứ không hề có biểu hiện quá khác thường.
+
+"Ngài Kẻ Khờ, đại đế Russel nhắc đến thường thức gì? Tôi có thể trả thù lao, đổi lấy tin tức này." Audrey nhịn không được liền lên tiếng hỏi.
+
+Nhưng tôi yêu cầu trao đổi riêng! Cô nàng lặng lẽ bổ sung một câu trong lòng.
+
+Klein cười khẽ nói:
+
+"Không cần, đây đều là thường thức bình thường."
+
+"Xem mấy phần nhật ký này, là người triệu tập hội Tarot, ta cho rằng nên để cho mọi người đều biết. Tất nhiên, ta biết rất rõ bên trong mấy vị có người đã sớm nắm giữ rồi."
+
+Người hắn ám chỉ chính là Mặt Trời. Thành Bạch Ngân có lịch sử hai ba ngàn năm, không thể nào không phát hiện định luật đặc tính phi phàm bất diệt được.
+
+Hơn nữa, bọn họ nằm trong hoàn cảnh khá cực đoan, cho dù khu vực xung quanh không thiếu quái vật trong bóng tối. Nhưng đôi khi, vẫn không nhất định có thể đạt được tài liệu đối ứng, vì để truyền thừa, vì để kéo dài cả tòa thành, dùng đặc tính phi phàm ngưng tụ ra từ di cốt của người trước để chế tạo ma dược, đây không phải là chuyện rất khó khiến mọi người tiếp nhận.
+
+Đối với bọn họ điều này có lẽ còn là một nghi thức quang vinh thần thánh.
+
+Tất nhiên thông qua các lần tụ hội trước, Klein có thể thấy được Người Treo Ngược cũng biết điều này.
+
+Tiếc quá, không thể cứ để tiểu thư Chính Nghĩa trả tiền mãi được, chuyển tiền cho bề tôi của ta... Bề tôi của ta cũng cần hình tượng... Không thể phá hỏng hình tượng kẻ mạnh mà thầy Azcot tạo dựng nên được... Ừ, có cơ hội phải thử lại mới được, dù sao mấy tồn tại mạnh mẽ đều sẽ có kẻ tôi tớ tầng thấp chạy chân. Giống như Kẻ Không Ngủ của Nữ Thần Đêm Tối... chưa từng có người nào bởi vì Kẻ Gác Đêm ở tầng dưới nhỏ yếu, mà nghi ngờ Nữ Thần Đêm Đối không phải Chân Thần... Klein khẽ than thở vài câu.
+
+"Rất cảm ơn ngài! Ngài đúng là quá rộng rãi!" Audrey mừng rỡ trả lời.
+
+Cô nàng sám hối 3 giây vì sự dung tục muốn dùng tiền mua tin tức vừa nãy của mình.
+
+Klein dừng gõ tay, giọng điệu bình thản nói:
+
+"Thường thức thứ nhất, đặc tính phi phàm có định luật bất diệt, đặc tính phi phàm sẽ không biến mất, sẽ không giảm bớt, nó sẽ chỉ chuyển từ vật này sang vật khác."
+
+Bất tri bất giác mình lại dùng giọng điệu của đội trưởng... Khóe miệng Klein vô thức nhếch lên.
+
+Sẽ không biến mất, sẽ không giảm bớt, chỉ chuyển từ vật này qua một vật khác... Audrey suy ngẫm câu nói của ngài Kẻ Khờ, cảm giác trong câu nói tuy khá đơn giản này nhưng lại bao hàm quá nhiều ý nghĩa.
+
+Tròng mắt xanh biếc như ngọc bính của cô xoay tròn, nhìn thấy Người Treo Ngược và Mặt Trời đều không có biểu hiện kinh ngạc và trầm tư. Cô lập tức hiểu hai vị thành viên của hội Tarot đã sớm biết định luật này.
+
+Chỉ có tôi không biết... Cô uất ức thầm nghĩ. Nhưng lại nhanh chóng ca ngợi lòng tốt của ngài Kẻ Khờ.
+
+Lúc này Klein lại bổ sung:
+
+"Cho nên sau khi người phi phàm mất khống chế chết đi sẽ để lại vật phẩm ngưng tụ đặc tính phi phàm. Nó có thể là tài liệu chính của ma dược, cũng có thể là vật phẩm thần kỳ cần phong ấn. Người phi phàm bình thường sau khi chết cũng giống vậy, nhưng nó chỉ cùng cấp với tài liệu phụ trợ trong ma dược tương ứng. Tất nhiên bản thân nó cũng có năng lực phi phàm nhất định, có thể xem như nửa vật phẩm thần kỳ để sử dụng."
+
+Mấy câu bình thường đó chỉ chớp mắt cứ vang vọng trong đầu của Audrey, chồng chéo lên nhau, không ngừng lên cao, cuối cùng tụ thành một tia sấm to lớn.
+
+Audrey liên tưởng đến việc ăn người, liên tưởng tới một vấn đề mà lúc trước Người Treo Ngược từng nhắc đến. Chính là nếu như nguồn tài liệu bị cắt đứt thì danh sách con đường có bị gián đoạn hay không.
+
+Bây giờ thì cô đã biết đáp án, nhưng cô ước gì thà bản thân đừng nghe thấy thì hơn, cảm giác cứ như một cơn ác mộng vậy!
+
+Sao lại có thể tàn nhẫn đến thế? Sao lại thối nát như vậy? Lúc trước Audrey cũng được xem như từng chứng kiến đến một vài chuyện không tốt liên quan đến thế lực phi phàm, nhưng đó đều là sự hèn mọn và gian ác của một cá nhân. Ví dụ như ngài A, ví dụ như Zilingus. Nó không hề ảnh hưởng đến yêu thích và sự hướng tới của cô đối với lĩnh vực thần bí và thế giới phi phàm.
+
+Nhưng lần này, cô lại phát hiện thế giới tràn đầy thần bí đó lại đầy rẫy bóng tối.
+
+Tỉnh lại đi Audrey, mày không thể cứ ngây thơ mãi được! Mới chỉ suy nghĩ thôi đã mất khống chế rồi, tàn nhẫn và bóng tối mà ngài Kẻ Khờ miêu tả có thể đoán được... Nếu đã lựa chọn con đường này, thì phải dũng cảm đi tiếp! Audrey tự khuyên nhủ bản thân hai câu, tâm trạng mới dần bình tĩnh lại.
+
+Cô nhìn thấy Người Treo Ngược và Mặt Trời chỉ có mấy động tác theo thói quen, hình như hiểu rất rõ nội dung vừa nãy.
+
+Hừ! Người Treo Ngược xấu quá. Lúc trước còn muốn dùng tin tức này để trao đổi với tôi! À... Tin tức này đúng là đáng để được trả thù lao cao. Nó khá quan trọng, nhưng chỉ là đối với tôi mà thôi, ở trong mắt của ngài Kẻ Khờ, nó chỉ là một thường thức bình thường... Audrey đột nhiên rất muốn cười to, tâm trạng bắt đầu tốt hơn, từ từ ném hết mấy suy nghĩ cực đoan vừa nãy qua một bên.
+
+Klein không hề bất ngờ với phản ứng của ba thành viên, giọng điệu hắn không hề dao động nói tiếp:
+
+"Thường thức thứ hai, trong danh sách gần nhau đặc tính phi phàm có định luật bảo toàn."
+
+Đặc tính phi phàm được bảo toàn... Người Treo Ngược hơi thay đổi tư thế ngồi. Anh ta cảm giác được như đã hiểu ra vài chuyện, nhưng lại không cách nào hiểu rõ hoàn toàn được định luật này rốt cuộc đại biểu cho cái gì, ẩn chứa điều gì.
+
+Chính Nghĩa và Mặt Trời đều có cảm giác giống anh ta, không thể nào hiểu được một cách trực quan ý nghĩa chân chính của định luật này.
+
+"Tại sao là danh sách gần nhau?" Arges nhịn không được mở miệng hỏi.
+
+Klein cười trả lời:
+
+"Anh muốn trả thứ gì để đổi lấy đáp án?"
+
+Một trong những ý nghĩ hồi nãy của hắn chính là thường thức thì miễn phí, giải thích sẽ thu phí. Điều này vừa phù hợp với thân phận của mình, sẽ không lãng phí tin tức.
+
+Miễn phí mới là quý nhất.')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (43, 19, 1, N'Mộng tưởng', 1, N'"Ngày 3 tháng 6, sau khi ta thương lượng với bọn Edwards, đành vứt bỏ ý tưởng hợp tác với giáo hội Mặt Trời Vĩnh Hằng. Điều này rất có khả năng sẽ làm bại lộ ý đồ của ta, khiến gia tộc Sauron và quý tộc cũ ủng hộ gia tộc này sớm phát giác, tiến hành bố trí nhắm vào ta. Vậy thì mọi chuyện sẽ trở nên cực kỳ khó khăn và nguy hiểm."
+
+"Đáng tiếc, Green đã chết trong biển sương mù, anh ta là người thông minh nhất trong bọn ta."
+
+"Hỗn loạn, hỗn loạn hơn nữa đi! Chỉ có hỗn loạn triệt để thì ta mới có được cơ hội đục nước béo cò! Chỉ có vậy thì gia tộc Sauron mới không thể thu xếp nổi cục diện này, giáo hội Mặt Trời Vĩnh Hằng mới có thể vuốt mũi thừa nhận ta!"
+
+"Có lẽ ta nên giúp đỡ cho đám phản đảng đó, nhưng phải làm thế nào để nó thật bí mật, khiến người khác không thể nào phát hiện được đây?"
+
+"Ngày 4 tháng 6, Zarathu của hội Mật Tu đột ngột bí mật tới thăm ta."
+
+...
+
+Sau đó đâu? Klein đang tò mò mục đích Zarathu thủ lĩnh của hội Mật Tu đến tìm Russel trước trận phản loạn và chính biến. Kết quả trên hai trang bút ký tiếp theo lại không liên quan đến nó.
+
+Điều này khiến hắn sinh ra tâm trạng chán nản khó mà kìm nén được.
+
+Tuy ba trang nhật ký này không miêu tả quá nhiều tình tiết tỉ mỉ, chỉ là mấy chuyện bình dị của người trong cuộc. Nhưng vẫn khiến Klein cảm nhận được vào năm 1173, cũng chính là hơn một trăm năm trước, trận biến cố ở Entis gió nổi mây phun thế nào.
+
+Trên tài liệu lịch sử có ghi rõ kết quả, Russel với thân phận thượng tá dẹp yên phản loạn, thuận thế cải cách, biến vương quốc Entis thành nước cộng hòa, tự đảm nhiệm quan chấp chính.
+
+Trong 9 năm sau đó, ông cải cách bộ luật, khuyến khích phát minh, bảo đảm cho công cuộc cải cách, khiến sức mạnh quốc gia tăng lên rất lớn. Hơn nữa ông còn nam chính bắc chiến, nhét các quốc gia như Grunberg, Masik, Segal vào trong sự bảo hộ của mình. Khiến cho ba cường quốc như đế quốc Fusak, vương quốc Ruen, vương quốc Finnebot ở lục địa Bắc phải lần lượt cúi đầu.
+
+Vào lúc đảm nhiệm quan chấp chính sắp tròn 20 năm, vào cuối năm 1192, Russel đổi nước cộng hòa thành đế quốc, tự xưng là Caesar.
+
+Sau đó không đến 6 năm, ông vẫn lạc ở cung Bạch Phong, kết thúc một đoạn lịch sử truyền kỳ nhất từ kỷ thứ 5 đến nay.
+
+Klein nhớ lại những tài liệu đã từng đọc, phát hiện cái chết của Russel tuyệt đối không đơn giản như vẻ bề ngoài. Giống như đằng sau biến cố này khẳng định có sự tranh đấu của người phi phàm, có thế lực siêu phàm tham gia, có nghĩa nó sẽ không giống với miêu tả trên tài liệu.
+
+"Green mà Russel nhắc tới hẳn là một trong "Tứ kỵ sĩ Thiên Khải", quả nhiên anh ta chết ở trong biển Sương Mù... Trong mấy tờ nhật ký lúc trước, Russel đã ghi vị kỵ sĩ này hơi bất thường. Điều này hình như liên quan đến hòn đảo nhỏ có rất nhiều sinh vật siêu phàm sinh sống mà bọn họ phát hiện được... Không chỉ có kỳ ngộ, mà còn rất nhiều nguy hiểm nữa..." Klein nhớ lại một trang nhật ký nào đó, hắn cảm khái lật đến tờ nhật ký thứ 5.
+
+Nội dung ghi chép trên tờ này không hề có giá trị, phân biệt là đánh giá của Russel sau khi uống rượu nho Ormill năm 1128. Nhìn thấy đối tượng mình yêu thích lúc niên thiếu, kết quả phát hiện dáng vóc của vị phu nhân đó biến dạng, khuôn mặt thì lão hóa nên ảo tưởng tan vỡ. Cùng với tổng kết đoạn thời gian nào đó trầm mê sa đọa bài bạc.
+
+Trang thứ 6 cũng đều là nhật ký ngày thường, nhưng dòng cuối lại khiến mắt Klein sáng lên:
+
+"Ngày 8 tháng 4, ta phải phái người đi điều tra hội Mật Tu. Nắm giữ càng nhiều tin tức, không thể lại bị động như lúc trước, không thể để Zarathu nắm mũi dắt đi nữa."
+
+Cho nên ông điều tra ra được chuyện gì, đồng chí Russel? Klein không thể tìm được nội dung phía sau, đành phải cưỡng ép bản thân bình tĩnh lại. Chờ đợi buổi tụ hội sau Người Treo Ngược sẽ đưa nhật ký tiếp.
+
+Hắn biết dù có điều tra tư liệu của hơn một trăm năm trước, cũng sẽ không thể giúp mình tìm được đầu mối liên quan đến hội Mật Tu. Dù sao thời gian trôi qua đã lâu, ngoài những tồn tại đặc thù, thì chỉ sợ không ít kẻ mạnh ở danh sách cao đều đã chết già, chứ đừng nói đến thành viên ở tầng thấp. Nhưng Klein tin tưởng, điều này có thể giúp mình tìm được linh cảm, hiểu biết thân phận bên ngoài và quy luật hoạt động mà hội Mật Tu thường hay dùng.
+
+Klein buông tờ nhật ký thứ 6 xuống, ngón trỏ tay phải gõ nhẹ lên mép chiếc bàn đồng đen dài. Ánh mắt hắn chậm rãi từ trên người tiểu thư Chính Nghĩa dời đến Người Treo Ngược, rồi đến Mặt Trời.
+
+Đúng rồi, vừa nãy trong nhật ký Russel đại đế có miêu tả một câu: "Chúa Sáng Thế… Thần Toàn Trí Toàn Năng…", cách gọi này rất gần với thần linh của thành Bạch Ngân, ông ta nghe được ở đâu chứ? Tổ chức xa xưa nhất bí ẩn nhất đó đang âm thầm thao túng thế cục của thế giới này? Tổ chức này ra đời trước cả Vùng đất bị Thần bỏ rơi sao?
+
+Ừm... Đột nhiên Klein có một ý nghĩ mới, thế là hắn dùng giọng trầm thấp bình thản cười nói:
+
+"Trong nhật ký của Russel có nhắc đến một vài lịch sử bị che giấu, nhắc đến một ít thường thức bình thường, nó nhắc nhở ta hình như ta chưa nói cho các ngươi."
+
+Audrey giật mình, lập tức quay nửa người, vui mừng nhìn về vị trí cao nhất bên chiếc bàn dài cổ xưa.
+
+Ngài Kẻ Khờ chủ động nhắc đến nội dung trong nhật ký của Russel? Bên trong sẽ ghi chép những gì đây? Cô vừa kích động lại vừa hưng phấn, hoàn toàn quên mất bản thân là một Khán Giả.
+
+So sánh với cô nàng thì Người Treo Ngược Arges chững chạc hơn rất nhiều, nhưng động tác không tự chủ ngồi thẳng lưng đã vô tình bán đứng anh ta.
+
+Chỉ có duy nhất Dereck tuy vẫn cho rằng vật phẩm mà ngài Kẻ Khờ hứng thú sẽ bao gồm rất nhiều điều huyền bí. Nhưng cậu không hề biết đại đế Russel, không biết cái tên này ở đại lục Bắc rốt cuộc đại biểu cho điều gì. Bởi vậy cậu chỉ khó kìm được tò mò, chứ không hề có biểu hiện quá khác thường.
+
+"Ngài Kẻ Khờ, đại đế Russel nhắc đến thường thức gì? Tôi có thể trả thù lao, đổi lấy tin tức này." Audrey nhịn không được liền lên tiếng hỏi.
+
+Nhưng tôi yêu cầu trao đổi riêng! Cô nàng lặng lẽ bổ sung một câu trong lòng.
+
+Klein cười khẽ nói:
+
+"Không cần, đây đều là thường thức bình thường."
+
+"Xem mấy phần nhật ký này, là người triệu tập hội Tarot, ta cho rằng nên để cho mọi người đều biết. Tất nhiên, ta biết rất rõ bên trong mấy vị có người đã sớm nắm giữ rồi."
+
+Người hắn ám chỉ chính là Mặt Trời. Thành Bạch Ngân có lịch sử hai ba ngàn năm, không thể nào không phát hiện định luật đặc tính phi phàm bất diệt được.
+
+Hơn nữa, bọn họ nằm trong hoàn cảnh khá cực đoan, cho dù khu vực xung quanh không thiếu quái vật trong bóng tối. Nhưng đôi khi, vẫn không nhất định có thể đạt được tài liệu đối ứng, vì để truyền thừa, vì để kéo dài cả tòa thành, dùng đặc tính phi phàm ngưng tụ ra từ di cốt của người trước để chế tạo ma dược, đây không phải là chuyện rất khó khiến mọi người tiếp nhận.
+
+Đối với bọn họ điều này có lẽ còn là một nghi thức quang vinh thần thánh.
+
+Tất nhiên thông qua các lần tụ hội trước, Klein có thể thấy được Người Treo Ngược cũng biết điều này.
+
+Tiếc quá, không thể cứ để tiểu thư Chính Nghĩa trả tiền mãi được, chuyển tiền cho bề tôi của ta... Bề tôi của ta cũng cần hình tượng... Không thể phá hỏng hình tượng kẻ mạnh mà thầy Azcot tạo dựng nên được... Ừ, có cơ hội phải thử lại mới được, dù sao mấy tồn tại mạnh mẽ đều sẽ có kẻ tôi tớ tầng thấp chạy chân. Giống như Kẻ Không Ngủ của Nữ Thần Đêm Tối... chưa từng có người nào bởi vì Kẻ Gác Đêm ở tầng dưới nhỏ yếu, mà nghi ngờ Nữ Thần Đêm Đối không phải Chân Thần... Klein khẽ than thở vài câu.
+
+"Rất cảm ơn ngài! Ngài đúng là quá rộng rãi!" Audrey mừng rỡ trả lời.
+
+Cô nàng sám hối 3 giây vì sự dung tục muốn dùng tiền mua tin tức vừa nãy của mình.
+
+Klein dừng gõ tay, giọng điệu bình thản nói:
+
+"Thường thức thứ nhất, đặc tính phi phàm có định luật bất diệt, đặc tính phi phàm sẽ không biến mất, sẽ không giảm bớt, nó sẽ chỉ chuyển từ vật này sang vật khác."
+
+Bất tri bất giác mình lại dùng giọng điệu của đội trưởng... Khóe miệng Klein vô thức nhếch lên.
+
+Sẽ không biến mất, sẽ không giảm bớt, chỉ chuyển từ vật này qua một vật khác... Audrey suy ngẫm câu nói của ngài Kẻ Khờ, cảm giác trong câu nói tuy khá đơn giản này nhưng lại bao hàm quá nhiều ý nghĩa.
+
+Tròng mắt xanh biếc như ngọc bính của cô xoay tròn, nhìn thấy Người Treo Ngược và Mặt Trời đều không có biểu hiện kinh ngạc và trầm tư. Cô lập tức hiểu hai vị thành viên của hội Tarot đã sớm biết định luật này.
+
+Chỉ có tôi không biết... Cô uất ức thầm nghĩ. Nhưng lại nhanh chóng ca ngợi lòng tốt của ngài Kẻ Khờ.
+
+Lúc này Klein lại bổ sung:
+
+"Cho nên sau khi người phi phàm mất khống chế chết đi sẽ để lại vật phẩm ngưng tụ đặc tính phi phàm. Nó có thể là tài liệu chính của ma dược, cũng có thể là vật phẩm thần kỳ cần phong ấn. Người phi phàm bình thường sau khi chết cũng giống vậy, nhưng nó chỉ cùng cấp với tài liệu phụ trợ trong ma dược tương ứng. Tất nhiên bản thân nó cũng có năng lực phi phàm nhất định, có thể xem như nửa vật phẩm thần kỳ để sử dụng."
+
+Mấy câu bình thường đó chỉ chớp mắt cứ vang vọng trong đầu của Audrey, chồng chéo lên nhau, không ngừng lên cao, cuối cùng tụ thành một tia sấm to lớn.
+
+Audrey liên tưởng đến việc ăn người, liên tưởng tới một vấn đề mà lúc trước Người Treo Ngược từng nhắc đến. Chính là nếu như nguồn tài liệu bị cắt đứt thì danh sách con đường có bị gián đoạn hay không.
+
+Bây giờ thì cô đã biết đáp án, nhưng cô ước gì thà bản thân đừng nghe thấy thì hơn, cảm giác cứ như một cơn ác mộng vậy!
+
+Sao lại có thể tàn nhẫn đến thế? Sao lại thối nát như vậy? Lúc trước Audrey cũng được xem như từng chứng kiến đến một vài chuyện không tốt liên quan đến thế lực phi phàm, nhưng đó đều là sự hèn mọn và gian ác của một cá nhân. Ví dụ như ngài A, ví dụ như Zilingus. Nó không hề ảnh hưởng đến yêu thích và sự hướng tới của cô đối với lĩnh vực thần bí và thế giới phi phàm.
+
+Nhưng lần này, cô lại phát hiện thế giới tràn đầy thần bí đó lại đầy rẫy bóng tối.
+
+Tỉnh lại đi Audrey, mày không thể cứ ngây thơ mãi được! Mới chỉ suy nghĩ thôi đã mất khống chế rồi, tàn nhẫn và bóng tối mà ngài Kẻ Khờ miêu tả có thể đoán được... Nếu đã lựa chọn con đường này, thì phải dũng cảm đi tiếp! Audrey tự khuyên nhủ bản thân hai câu, tâm trạng mới dần bình tĩnh lại.
+
+Cô nhìn thấy Người Treo Ngược và Mặt Trời chỉ có mấy động tác theo thói quen, hình như hiểu rất rõ nội dung vừa nãy.
+
+Hừ! Người Treo Ngược xấu quá. Lúc trước còn muốn dùng tin tức này để trao đổi với tôi! À... Tin tức này đúng là đáng để được trả thù lao cao. Nó khá quan trọng, nhưng chỉ là đối với tôi mà thôi, ở trong mắt của ngài Kẻ Khờ, nó chỉ là một thường thức bình thường... Audrey đột nhiên rất muốn cười to, tâm trạng bắt đầu tốt hơn, từ từ ném hết mấy suy nghĩ cực đoan vừa nãy qua một bên.
+
+Klein không hề bất ngờ với phản ứng của ba thành viên, giọng điệu hắn không hề dao động nói tiếp:
+
+"Thường thức thứ hai, trong danh sách gần nhau đặc tính phi phàm có định luật bảo toàn."
+
+Đặc tính phi phàm được bảo toàn... Người Treo Ngược hơi thay đổi tư thế ngồi. Anh ta cảm giác được như đã hiểu ra vài chuyện, nhưng lại không cách nào hiểu rõ hoàn toàn được định luật này rốt cuộc đại biểu cho cái gì, ẩn chứa điều gì.
+
+Chính Nghĩa và Mặt Trời đều có cảm giác giống anh ta, không thể nào hiểu được một cách trực quan ý nghĩa chân chính của định luật này.
+
+"Tại sao là danh sách gần nhau?" Arges nhịn không được mở miệng hỏi.
+
+Klein cười trả lời:
+
+"Anh muốn trả thứ gì để đổi lấy đáp án?"
+
+Một trong những ý nghĩ hồi nãy của hắn chính là thường thức thì miễn phí, giải thích sẽ thu phí. Điều này vừa phù hợp với thân phận của mình, sẽ không lãng phí tin tức.
+
+Miễn phí mới là quý nhất.')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (44, 20, 1, N'Vô', 1, N'"Ngày 3 tháng 6, sau khi ta thương lượng với bọn Edwards, đành vứt bỏ ý tưởng hợp tác với giáo hội Mặt Trời Vĩnh Hằng. Điều này rất có khả năng sẽ làm bại lộ ý đồ của ta, khiến gia tộc Sauron và quý tộc cũ ủng hộ gia tộc này sớm phát giác, tiến hành bố trí nhắm vào ta. Vậy thì mọi chuyện sẽ trở nên cực kỳ khó khăn và nguy hiểm."
+
+"Đáng tiếc, Green đã chết trong biển sương mù, anh ta là người thông minh nhất trong bọn ta."
+
+"Hỗn loạn, hỗn loạn hơn nữa đi! Chỉ có hỗn loạn triệt để thì ta mới có được cơ hội đục nước béo cò! Chỉ có vậy thì gia tộc Sauron mới không thể thu xếp nổi cục diện này, giáo hội Mặt Trời Vĩnh Hằng mới có thể vuốt mũi thừa nhận ta!"
+
+"Có lẽ ta nên giúp đỡ cho đám phản đảng đó, nhưng phải làm thế nào để nó thật bí mật, khiến người khác không thể nào phát hiện được đây?"
+
+"Ngày 4 tháng 6, Zarathu của hội Mật Tu đột ngột bí mật tới thăm ta."
+
+...
+
+Sau đó đâu? Klein đang tò mò mục đích Zarathu thủ lĩnh của hội Mật Tu đến tìm Russel trước trận phản loạn và chính biến. Kết quả trên hai trang bút ký tiếp theo lại không liên quan đến nó.
+
+Điều này khiến hắn sinh ra tâm trạng chán nản khó mà kìm nén được.
+
+Tuy ba trang nhật ký này không miêu tả quá nhiều tình tiết tỉ mỉ, chỉ là mấy chuyện bình dị của người trong cuộc. Nhưng vẫn khiến Klein cảm nhận được vào năm 1173, cũng chính là hơn một trăm năm trước, trận biến cố ở Entis gió nổi mây phun thế nào.
+
+Trên tài liệu lịch sử có ghi rõ kết quả, Russel với thân phận thượng tá dẹp yên phản loạn, thuận thế cải cách, biến vương quốc Entis thành nước cộng hòa, tự đảm nhiệm quan chấp chính.
+
+Trong 9 năm sau đó, ông cải cách bộ luật, khuyến khích phát minh, bảo đảm cho công cuộc cải cách, khiến sức mạnh quốc gia tăng lên rất lớn. Hơn nữa ông còn nam chính bắc chiến, nhét các quốc gia như Grunberg, Masik, Segal vào trong sự bảo hộ của mình. Khiến cho ba cường quốc như đế quốc Fusak, vương quốc Ruen, vương quốc Finnebot ở lục địa Bắc phải lần lượt cúi đầu.
+
+Vào lúc đảm nhiệm quan chấp chính sắp tròn 20 năm, vào cuối năm 1192, Russel đổi nước cộng hòa thành đế quốc, tự xưng là Caesar.
+
+Sau đó không đến 6 năm, ông vẫn lạc ở cung Bạch Phong, kết thúc một đoạn lịch sử truyền kỳ nhất từ kỷ thứ 5 đến nay.
+
+Klein nhớ lại những tài liệu đã từng đọc, phát hiện cái chết của Russel tuyệt đối không đơn giản như vẻ bề ngoài. Giống như đằng sau biến cố này khẳng định có sự tranh đấu của người phi phàm, có thế lực siêu phàm tham gia, có nghĩa nó sẽ không giống với miêu tả trên tài liệu.
+
+"Green mà Russel nhắc tới hẳn là một trong "Tứ kỵ sĩ Thiên Khải", quả nhiên anh ta chết ở trong biển Sương Mù... Trong mấy tờ nhật ký lúc trước, Russel đã ghi vị kỵ sĩ này hơi bất thường. Điều này hình như liên quan đến hòn đảo nhỏ có rất nhiều sinh vật siêu phàm sinh sống mà bọn họ phát hiện được... Không chỉ có kỳ ngộ, mà còn rất nhiều nguy hiểm nữa..." Klein nhớ lại một trang nhật ký nào đó, hắn cảm khái lật đến tờ nhật ký thứ 5.
+
+Nội dung ghi chép trên tờ này không hề có giá trị, phân biệt là đánh giá của Russel sau khi uống rượu nho Ormill năm 1128. Nhìn thấy đối tượng mình yêu thích lúc niên thiếu, kết quả phát hiện dáng vóc của vị phu nhân đó biến dạng, khuôn mặt thì lão hóa nên ảo tưởng tan vỡ. Cùng với tổng kết đoạn thời gian nào đó trầm mê sa đọa bài bạc.
+
+Trang thứ 6 cũng đều là nhật ký ngày thường, nhưng dòng cuối lại khiến mắt Klein sáng lên:
+
+"Ngày 8 tháng 4, ta phải phái người đi điều tra hội Mật Tu. Nắm giữ càng nhiều tin tức, không thể lại bị động như lúc trước, không thể để Zarathu nắm mũi dắt đi nữa."
+
+Cho nên ông điều tra ra được chuyện gì, đồng chí Russel? Klein không thể tìm được nội dung phía sau, đành phải cưỡng ép bản thân bình tĩnh lại. Chờ đợi buổi tụ hội sau Người Treo Ngược sẽ đưa nhật ký tiếp.
+
+Hắn biết dù có điều tra tư liệu của hơn một trăm năm trước, cũng sẽ không thể giúp mình tìm được đầu mối liên quan đến hội Mật Tu. Dù sao thời gian trôi qua đã lâu, ngoài những tồn tại đặc thù, thì chỉ sợ không ít kẻ mạnh ở danh sách cao đều đã chết già, chứ đừng nói đến thành viên ở tầng thấp. Nhưng Klein tin tưởng, điều này có thể giúp mình tìm được linh cảm, hiểu biết thân phận bên ngoài và quy luật hoạt động mà hội Mật Tu thường hay dùng.
+
+Klein buông tờ nhật ký thứ 6 xuống, ngón trỏ tay phải gõ nhẹ lên mép chiếc bàn đồng đen dài. Ánh mắt hắn chậm rãi từ trên người tiểu thư Chính Nghĩa dời đến Người Treo Ngược, rồi đến Mặt Trời.
+
+Đúng rồi, vừa nãy trong nhật ký Russel đại đế có miêu tả một câu: "Chúa Sáng Thế… Thần Toàn Trí Toàn Năng…", cách gọi này rất gần với thần linh của thành Bạch Ngân, ông ta nghe được ở đâu chứ? Tổ chức xa xưa nhất bí ẩn nhất đó đang âm thầm thao túng thế cục của thế giới này? Tổ chức này ra đời trước cả Vùng đất bị Thần bỏ rơi sao?
+
+Ừm... Đột nhiên Klein có một ý nghĩ mới, thế là hắn dùng giọng trầm thấp bình thản cười nói:
+
+"Trong nhật ký của Russel có nhắc đến một vài lịch sử bị che giấu, nhắc đến một ít thường thức bình thường, nó nhắc nhở ta hình như ta chưa nói cho các ngươi."
+
+Audrey giật mình, lập tức quay nửa người, vui mừng nhìn về vị trí cao nhất bên chiếc bàn dài cổ xưa.
+
+Ngài Kẻ Khờ chủ động nhắc đến nội dung trong nhật ký của Russel? Bên trong sẽ ghi chép những gì đây? Cô vừa kích động lại vừa hưng phấn, hoàn toàn quên mất bản thân là một Khán Giả.
+
+So sánh với cô nàng thì Người Treo Ngược Arges chững chạc hơn rất nhiều, nhưng động tác không tự chủ ngồi thẳng lưng đã vô tình bán đứng anh ta.
+
+Chỉ có duy nhất Dereck tuy vẫn cho rằng vật phẩm mà ngài Kẻ Khờ hứng thú sẽ bao gồm rất nhiều điều huyền bí. Nhưng cậu không hề biết đại đế Russel, không biết cái tên này ở đại lục Bắc rốt cuộc đại biểu cho điều gì. Bởi vậy cậu chỉ khó kìm được tò mò, chứ không hề có biểu hiện quá khác thường.
+
+"Ngài Kẻ Khờ, đại đế Russel nhắc đến thường thức gì? Tôi có thể trả thù lao, đổi lấy tin tức này." Audrey nhịn không được liền lên tiếng hỏi.
+
+Nhưng tôi yêu cầu trao đổi riêng! Cô nàng lặng lẽ bổ sung một câu trong lòng.
+
+Klein cười khẽ nói:
+
+"Không cần, đây đều là thường thức bình thường."
+
+"Xem mấy phần nhật ký này, là người triệu tập hội Tarot, ta cho rằng nên để cho mọi người đều biết. Tất nhiên, ta biết rất rõ bên trong mấy vị có người đã sớm nắm giữ rồi."
+
+Người hắn ám chỉ chính là Mặt Trời. Thành Bạch Ngân có lịch sử hai ba ngàn năm, không thể nào không phát hiện định luật đặc tính phi phàm bất diệt được.
+
+Hơn nữa, bọn họ nằm trong hoàn cảnh khá cực đoan, cho dù khu vực xung quanh không thiếu quái vật trong bóng tối. Nhưng đôi khi, vẫn không nhất định có thể đạt được tài liệu đối ứng, vì để truyền thừa, vì để kéo dài cả tòa thành, dùng đặc tính phi phàm ngưng tụ ra từ di cốt của người trước để chế tạo ma dược, đây không phải là chuyện rất khó khiến mọi người tiếp nhận.
+
+Đối với bọn họ điều này có lẽ còn là một nghi thức quang vinh thần thánh.
+
+Tất nhiên thông qua các lần tụ hội trước, Klein có thể thấy được Người Treo Ngược cũng biết điều này.
+
+Tiếc quá, không thể cứ để tiểu thư Chính Nghĩa trả tiền mãi được, chuyển tiền cho bề tôi của ta... Bề tôi của ta cũng cần hình tượng... Không thể phá hỏng hình tượng kẻ mạnh mà thầy Azcot tạo dựng nên được... Ừ, có cơ hội phải thử lại mới được, dù sao mấy tồn tại mạnh mẽ đều sẽ có kẻ tôi tớ tầng thấp chạy chân. Giống như Kẻ Không Ngủ của Nữ Thần Đêm Tối... chưa từng có người nào bởi vì Kẻ Gác Đêm ở tầng dưới nhỏ yếu, mà nghi ngờ Nữ Thần Đêm Đối không phải Chân Thần... Klein khẽ than thở vài câu.
+
+"Rất cảm ơn ngài! Ngài đúng là quá rộng rãi!" Audrey mừng rỡ trả lời.
+
+Cô nàng sám hối 3 giây vì sự dung tục muốn dùng tiền mua tin tức vừa nãy của mình.
+
+Klein dừng gõ tay, giọng điệu bình thản nói:
+
+"Thường thức thứ nhất, đặc tính phi phàm có định luật bất diệt, đặc tính phi phàm sẽ không biến mất, sẽ không giảm bớt, nó sẽ chỉ chuyển từ vật này sang vật khác."
+
+Bất tri bất giác mình lại dùng giọng điệu của đội trưởng... Khóe miệng Klein vô thức nhếch lên.
+
+Sẽ không biến mất, sẽ không giảm bớt, chỉ chuyển từ vật này qua một vật khác... Audrey suy ngẫm câu nói của ngài Kẻ Khờ, cảm giác trong câu nói tuy khá đơn giản này nhưng lại bao hàm quá nhiều ý nghĩa.
+
+Tròng mắt xanh biếc như ngọc bính của cô xoay tròn, nhìn thấy Người Treo Ngược và Mặt Trời đều không có biểu hiện kinh ngạc và trầm tư. Cô lập tức hiểu hai vị thành viên của hội Tarot đã sớm biết định luật này.
+
+Chỉ có tôi không biết... Cô uất ức thầm nghĩ. Nhưng lại nhanh chóng ca ngợi lòng tốt của ngài Kẻ Khờ.
+
+Lúc này Klein lại bổ sung:
+
+"Cho nên sau khi người phi phàm mất khống chế chết đi sẽ để lại vật phẩm ngưng tụ đặc tính phi phàm. Nó có thể là tài liệu chính của ma dược, cũng có thể là vật phẩm thần kỳ cần phong ấn. Người phi phàm bình thường sau khi chết cũng giống vậy, nhưng nó chỉ cùng cấp với tài liệu phụ trợ trong ma dược tương ứng. Tất nhiên bản thân nó cũng có năng lực phi phàm nhất định, có thể xem như nửa vật phẩm thần kỳ để sử dụng."
+
+Mấy câu bình thường đó chỉ chớp mắt cứ vang vọng trong đầu của Audrey, chồng chéo lên nhau, không ngừng lên cao, cuối cùng tụ thành một tia sấm to lớn.
+
+Audrey liên tưởng đến việc ăn người, liên tưởng tới một vấn đề mà lúc trước Người Treo Ngược từng nhắc đến. Chính là nếu như nguồn tài liệu bị cắt đứt thì danh sách con đường có bị gián đoạn hay không.
+
+Bây giờ thì cô đã biết đáp án, nhưng cô ước gì thà bản thân đừng nghe thấy thì hơn, cảm giác cứ như một cơn ác mộng vậy!
+
+Sao lại có thể tàn nhẫn đến thế? Sao lại thối nát như vậy? Lúc trước Audrey cũng được xem như từng chứng kiến đến một vài chuyện không tốt liên quan đến thế lực phi phàm, nhưng đó đều là sự hèn mọn và gian ác của một cá nhân. Ví dụ như ngài A, ví dụ như Zilingus. Nó không hề ảnh hưởng đến yêu thích và sự hướng tới của cô đối với lĩnh vực thần bí và thế giới phi phàm.
+
+Nhưng lần này, cô lại phát hiện thế giới tràn đầy thần bí đó lại đầy rẫy bóng tối.
+
+Tỉnh lại đi Audrey, mày không thể cứ ngây thơ mãi được! Mới chỉ suy nghĩ thôi đã mất khống chế rồi, tàn nhẫn và bóng tối mà ngài Kẻ Khờ miêu tả có thể đoán được... Nếu đã lựa chọn con đường này, thì phải dũng cảm đi tiếp! Audrey tự khuyên nhủ bản thân hai câu, tâm trạng mới dần bình tĩnh lại.
+
+Cô nhìn thấy Người Treo Ngược và Mặt Trời chỉ có mấy động tác theo thói quen, hình như hiểu rất rõ nội dung vừa nãy.
+
+Hừ! Người Treo Ngược xấu quá. Lúc trước còn muốn dùng tin tức này để trao đổi với tôi! À... Tin tức này đúng là đáng để được trả thù lao cao. Nó khá quan trọng, nhưng chỉ là đối với tôi mà thôi, ở trong mắt của ngài Kẻ Khờ, nó chỉ là một thường thức bình thường... Audrey đột nhiên rất muốn cười to, tâm trạng bắt đầu tốt hơn, từ từ ném hết mấy suy nghĩ cực đoan vừa nãy qua một bên.
+
+Klein không hề bất ngờ với phản ứng của ba thành viên, giọng điệu hắn không hề dao động nói tiếp:
+
+"Thường thức thứ hai, trong danh sách gần nhau đặc tính phi phàm có định luật bảo toàn."
+
+Đặc tính phi phàm được bảo toàn... Người Treo Ngược hơi thay đổi tư thế ngồi. Anh ta cảm giác được như đã hiểu ra vài chuyện, nhưng lại không cách nào hiểu rõ hoàn toàn được định luật này rốt cuộc đại biểu cho cái gì, ẩn chứa điều gì.
+
+Chính Nghĩa và Mặt Trời đều có cảm giác giống anh ta, không thể nào hiểu được một cách trực quan ý nghĩa chân chính của định luật này.
+
+"Tại sao là danh sách gần nhau?" Arges nhịn không được mở miệng hỏi.
+
+Klein cười trả lời:
+
+"Anh muốn trả thứ gì để đổi lấy đáp án?"
+
+Một trong những ý nghĩ hồi nãy của hắn chính là thường thức thì miễn phí, giải thích sẽ thu phí. Điều này vừa phù hợp với thân phận của mình, sẽ không lãng phí tin tức.
+
+Miễn phí mới là quý nhất.')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (45, 21, 1, N'Vị khách không mời', 1, N'"Ngày 3 tháng 6, sau khi ta thương lượng với bọn Edwards, đành vứt bỏ ý tưởng hợp tác với giáo hội Mặt Trời Vĩnh Hằng. Điều này rất có khả năng sẽ làm bại lộ ý đồ của ta, khiến gia tộc Sauron và quý tộc cũ ủng hộ gia tộc này sớm phát giác, tiến hành bố trí nhắm vào ta. Vậy thì mọi chuyện sẽ trở nên cực kỳ khó khăn và nguy hiểm."
+
+"Đáng tiếc, Green đã chết trong biển sương mù, anh ta là người thông minh nhất trong bọn ta."
+
+"Hỗn loạn, hỗn loạn hơn nữa đi! Chỉ có hỗn loạn triệt để thì ta mới có được cơ hội đục nước béo cò! Chỉ có vậy thì gia tộc Sauron mới không thể thu xếp nổi cục diện này, giáo hội Mặt Trời Vĩnh Hằng mới có thể vuốt mũi thừa nhận ta!"
+
+"Có lẽ ta nên giúp đỡ cho đám phản đảng đó, nhưng phải làm thế nào để nó thật bí mật, khiến người khác không thể nào phát hiện được đây?"
+
+"Ngày 4 tháng 6, Zarathu của hội Mật Tu đột ngột bí mật tới thăm ta."
+
+...
+
+Sau đó đâu? Klein đang tò mò mục đích Zarathu thủ lĩnh của hội Mật Tu đến tìm Russel trước trận phản loạn và chính biến. Kết quả trên hai trang bút ký tiếp theo lại không liên quan đến nó.
+
+Điều này khiến hắn sinh ra tâm trạng chán nản khó mà kìm nén được.
+
+Tuy ba trang nhật ký này không miêu tả quá nhiều tình tiết tỉ mỉ, chỉ là mấy chuyện bình dị của người trong cuộc. Nhưng vẫn khiến Klein cảm nhận được vào năm 1173, cũng chính là hơn một trăm năm trước, trận biến cố ở Entis gió nổi mây phun thế nào.
+
+Trên tài liệu lịch sử có ghi rõ kết quả, Russel với thân phận thượng tá dẹp yên phản loạn, thuận thế cải cách, biến vương quốc Entis thành nước cộng hòa, tự đảm nhiệm quan chấp chính.
+
+Trong 9 năm sau đó, ông cải cách bộ luật, khuyến khích phát minh, bảo đảm cho công cuộc cải cách, khiến sức mạnh quốc gia tăng lên rất lớn. Hơn nữa ông còn nam chính bắc chiến, nhét các quốc gia như Grunberg, Masik, Segal vào trong sự bảo hộ của mình. Khiến cho ba cường quốc như đế quốc Fusak, vương quốc Ruen, vương quốc Finnebot ở lục địa Bắc phải lần lượt cúi đầu.
+
+Vào lúc đảm nhiệm quan chấp chính sắp tròn 20 năm, vào cuối năm 1192, Russel đổi nước cộng hòa thành đế quốc, tự xưng là Caesar.
+
+Sau đó không đến 6 năm, ông vẫn lạc ở cung Bạch Phong, kết thúc một đoạn lịch sử truyền kỳ nhất từ kỷ thứ 5 đến nay.
+
+Klein nhớ lại những tài liệu đã từng đọc, phát hiện cái chết của Russel tuyệt đối không đơn giản như vẻ bề ngoài. Giống như đằng sau biến cố này khẳng định có sự tranh đấu của người phi phàm, có thế lực siêu phàm tham gia, có nghĩa nó sẽ không giống với miêu tả trên tài liệu.
+
+"Green mà Russel nhắc tới hẳn là một trong "Tứ kỵ sĩ Thiên Khải", quả nhiên anh ta chết ở trong biển Sương Mù... Trong mấy tờ nhật ký lúc trước, Russel đã ghi vị kỵ sĩ này hơi bất thường. Điều này hình như liên quan đến hòn đảo nhỏ có rất nhiều sinh vật siêu phàm sinh sống mà bọn họ phát hiện được... Không chỉ có kỳ ngộ, mà còn rất nhiều nguy hiểm nữa..." Klein nhớ lại một trang nhật ký nào đó, hắn cảm khái lật đến tờ nhật ký thứ 5.
+
+Nội dung ghi chép trên tờ này không hề có giá trị, phân biệt là đánh giá của Russel sau khi uống rượu nho Ormill năm 1128. Nhìn thấy đối tượng mình yêu thích lúc niên thiếu, kết quả phát hiện dáng vóc của vị phu nhân đó biến dạng, khuôn mặt thì lão hóa nên ảo tưởng tan vỡ. Cùng với tổng kết đoạn thời gian nào đó trầm mê sa đọa bài bạc.
+
+Trang thứ 6 cũng đều là nhật ký ngày thường, nhưng dòng cuối lại khiến mắt Klein sáng lên:
+
+"Ngày 8 tháng 4, ta phải phái người đi điều tra hội Mật Tu. Nắm giữ càng nhiều tin tức, không thể lại bị động như lúc trước, không thể để Zarathu nắm mũi dắt đi nữa."
+
+Cho nên ông điều tra ra được chuyện gì, đồng chí Russel? Klein không thể tìm được nội dung phía sau, đành phải cưỡng ép bản thân bình tĩnh lại. Chờ đợi buổi tụ hội sau Người Treo Ngược sẽ đưa nhật ký tiếp.
+
+Hắn biết dù có điều tra tư liệu của hơn một trăm năm trước, cũng sẽ không thể giúp mình tìm được đầu mối liên quan đến hội Mật Tu. Dù sao thời gian trôi qua đã lâu, ngoài những tồn tại đặc thù, thì chỉ sợ không ít kẻ mạnh ở danh sách cao đều đã chết già, chứ đừng nói đến thành viên ở tầng thấp. Nhưng Klein tin tưởng, điều này có thể giúp mình tìm được linh cảm, hiểu biết thân phận bên ngoài và quy luật hoạt động mà hội Mật Tu thường hay dùng.
+
+Klein buông tờ nhật ký thứ 6 xuống, ngón trỏ tay phải gõ nhẹ lên mép chiếc bàn đồng đen dài. Ánh mắt hắn chậm rãi từ trên người tiểu thư Chính Nghĩa dời đến Người Treo Ngược, rồi đến Mặt Trời.
+
+Đúng rồi, vừa nãy trong nhật ký Russel đại đế có miêu tả một câu: "Chúa Sáng Thế… Thần Toàn Trí Toàn Năng…", cách gọi này rất gần với thần linh của thành Bạch Ngân, ông ta nghe được ở đâu chứ? Tổ chức xa xưa nhất bí ẩn nhất đó đang âm thầm thao túng thế cục của thế giới này? Tổ chức này ra đời trước cả Vùng đất bị Thần bỏ rơi sao?
+
+Ừm... Đột nhiên Klein có một ý nghĩ mới, thế là hắn dùng giọng trầm thấp bình thản cười nói:
+
+"Trong nhật ký của Russel có nhắc đến một vài lịch sử bị che giấu, nhắc đến một ít thường thức bình thường, nó nhắc nhở ta hình như ta chưa nói cho các ngươi."
+
+Audrey giật mình, lập tức quay nửa người, vui mừng nhìn về vị trí cao nhất bên chiếc bàn dài cổ xưa.
+
+Ngài Kẻ Khờ chủ động nhắc đến nội dung trong nhật ký của Russel? Bên trong sẽ ghi chép những gì đây? Cô vừa kích động lại vừa hưng phấn, hoàn toàn quên mất bản thân là một Khán Giả.
+
+So sánh với cô nàng thì Người Treo Ngược Arges chững chạc hơn rất nhiều, nhưng động tác không tự chủ ngồi thẳng lưng đã vô tình bán đứng anh ta.
+
+Chỉ có duy nhất Dereck tuy vẫn cho rằng vật phẩm mà ngài Kẻ Khờ hứng thú sẽ bao gồm rất nhiều điều huyền bí. Nhưng cậu không hề biết đại đế Russel, không biết cái tên này ở đại lục Bắc rốt cuộc đại biểu cho điều gì. Bởi vậy cậu chỉ khó kìm được tò mò, chứ không hề có biểu hiện quá khác thường.
+
+"Ngài Kẻ Khờ, đại đế Russel nhắc đến thường thức gì? Tôi có thể trả thù lao, đổi lấy tin tức này." Audrey nhịn không được liền lên tiếng hỏi.
+
+Nhưng tôi yêu cầu trao đổi riêng! Cô nàng lặng lẽ bổ sung một câu trong lòng.
+
+Klein cười khẽ nói:
+
+"Không cần, đây đều là thường thức bình thường."
+
+"Xem mấy phần nhật ký này, là người triệu tập hội Tarot, ta cho rằng nên để cho mọi người đều biết. Tất nhiên, ta biết rất rõ bên trong mấy vị có người đã sớm nắm giữ rồi."
+
+Người hắn ám chỉ chính là Mặt Trời. Thành Bạch Ngân có lịch sử hai ba ngàn năm, không thể nào không phát hiện định luật đặc tính phi phàm bất diệt được.
+
+Hơn nữa, bọn họ nằm trong hoàn cảnh khá cực đoan, cho dù khu vực xung quanh không thiếu quái vật trong bóng tối. Nhưng đôi khi, vẫn không nhất định có thể đạt được tài liệu đối ứng, vì để truyền thừa, vì để kéo dài cả tòa thành, dùng đặc tính phi phàm ngưng tụ ra từ di cốt của người trước để chế tạo ma dược, đây không phải là chuyện rất khó khiến mọi người tiếp nhận.
+
+Đối với bọn họ điều này có lẽ còn là một nghi thức quang vinh thần thánh.
+
+Tất nhiên thông qua các lần tụ hội trước, Klein có thể thấy được Người Treo Ngược cũng biết điều này.
+
+Tiếc quá, không thể cứ để tiểu thư Chính Nghĩa trả tiền mãi được, chuyển tiền cho bề tôi của ta... Bề tôi của ta cũng cần hình tượng... Không thể phá hỏng hình tượng kẻ mạnh mà thầy Azcot tạo dựng nên được... Ừ, có cơ hội phải thử lại mới được, dù sao mấy tồn tại mạnh mẽ đều sẽ có kẻ tôi tớ tầng thấp chạy chân. Giống như Kẻ Không Ngủ của Nữ Thần Đêm Tối... chưa từng có người nào bởi vì Kẻ Gác Đêm ở tầng dưới nhỏ yếu, mà nghi ngờ Nữ Thần Đêm Đối không phải Chân Thần... Klein khẽ than thở vài câu.
+
+"Rất cảm ơn ngài! Ngài đúng là quá rộng rãi!" Audrey mừng rỡ trả lời.
+
+Cô nàng sám hối 3 giây vì sự dung tục muốn dùng tiền mua tin tức vừa nãy của mình.
+
+Klein dừng gõ tay, giọng điệu bình thản nói:
+
+"Thường thức thứ nhất, đặc tính phi phàm có định luật bất diệt, đặc tính phi phàm sẽ không biến mất, sẽ không giảm bớt, nó sẽ chỉ chuyển từ vật này sang vật khác."
+
+Bất tri bất giác mình lại dùng giọng điệu của đội trưởng... Khóe miệng Klein vô thức nhếch lên.
+
+Sẽ không biến mất, sẽ không giảm bớt, chỉ chuyển từ vật này qua một vật khác... Audrey suy ngẫm câu nói của ngài Kẻ Khờ, cảm giác trong câu nói tuy khá đơn giản này nhưng lại bao hàm quá nhiều ý nghĩa.
+
+Tròng mắt xanh biếc như ngọc bính của cô xoay tròn, nhìn thấy Người Treo Ngược và Mặt Trời đều không có biểu hiện kinh ngạc và trầm tư. Cô lập tức hiểu hai vị thành viên của hội Tarot đã sớm biết định luật này.
+
+Chỉ có tôi không biết... Cô uất ức thầm nghĩ. Nhưng lại nhanh chóng ca ngợi lòng tốt của ngài Kẻ Khờ.
+
+Lúc này Klein lại bổ sung:
+
+"Cho nên sau khi người phi phàm mất khống chế chết đi sẽ để lại vật phẩm ngưng tụ đặc tính phi phàm. Nó có thể là tài liệu chính của ma dược, cũng có thể là vật phẩm thần kỳ cần phong ấn. Người phi phàm bình thường sau khi chết cũng giống vậy, nhưng nó chỉ cùng cấp với tài liệu phụ trợ trong ma dược tương ứng. Tất nhiên bản thân nó cũng có năng lực phi phàm nhất định, có thể xem như nửa vật phẩm thần kỳ để sử dụng."
+
+Mấy câu bình thường đó chỉ chớp mắt cứ vang vọng trong đầu của Audrey, chồng chéo lên nhau, không ngừng lên cao, cuối cùng tụ thành một tia sấm to lớn.
+
+Audrey liên tưởng đến việc ăn người, liên tưởng tới một vấn đề mà lúc trước Người Treo Ngược từng nhắc đến. Chính là nếu như nguồn tài liệu bị cắt đứt thì danh sách con đường có bị gián đoạn hay không.
+
+Bây giờ thì cô đã biết đáp án, nhưng cô ước gì thà bản thân đừng nghe thấy thì hơn, cảm giác cứ như một cơn ác mộng vậy!
+
+Sao lại có thể tàn nhẫn đến thế? Sao lại thối nát như vậy? Lúc trước Audrey cũng được xem như từng chứng kiến đến một vài chuyện không tốt liên quan đến thế lực phi phàm, nhưng đó đều là sự hèn mọn và gian ác của một cá nhân. Ví dụ như ngài A, ví dụ như Zilingus. Nó không hề ảnh hưởng đến yêu thích và sự hướng tới của cô đối với lĩnh vực thần bí và thế giới phi phàm.
+
+Nhưng lần này, cô lại phát hiện thế giới tràn đầy thần bí đó lại đầy rẫy bóng tối.
+
+Tỉnh lại đi Audrey, mày không thể cứ ngây thơ mãi được! Mới chỉ suy nghĩ thôi đã mất khống chế rồi, tàn nhẫn và bóng tối mà ngài Kẻ Khờ miêu tả có thể đoán được... Nếu đã lựa chọn con đường này, thì phải dũng cảm đi tiếp! Audrey tự khuyên nhủ bản thân hai câu, tâm trạng mới dần bình tĩnh lại.
+
+Cô nhìn thấy Người Treo Ngược và Mặt Trời chỉ có mấy động tác theo thói quen, hình như hiểu rất rõ nội dung vừa nãy.
+
+Hừ! Người Treo Ngược xấu quá. Lúc trước còn muốn dùng tin tức này để trao đổi với tôi! À... Tin tức này đúng là đáng để được trả thù lao cao. Nó khá quan trọng, nhưng chỉ là đối với tôi mà thôi, ở trong mắt của ngài Kẻ Khờ, nó chỉ là một thường thức bình thường... Audrey đột nhiên rất muốn cười to, tâm trạng bắt đầu tốt hơn, từ từ ném hết mấy suy nghĩ cực đoan vừa nãy qua một bên.
+
+Klein không hề bất ngờ với phản ứng của ba thành viên, giọng điệu hắn không hề dao động nói tiếp:
+
+"Thường thức thứ hai, trong danh sách gần nhau đặc tính phi phàm có định luật bảo toàn."
+
+Đặc tính phi phàm được bảo toàn... Người Treo Ngược hơi thay đổi tư thế ngồi. Anh ta cảm giác được như đã hiểu ra vài chuyện, nhưng lại không cách nào hiểu rõ hoàn toàn được định luật này rốt cuộc đại biểu cho cái gì, ẩn chứa điều gì.
+
+Chính Nghĩa và Mặt Trời đều có cảm giác giống anh ta, không thể nào hiểu được một cách trực quan ý nghĩa chân chính của định luật này.
+
+"Tại sao là danh sách gần nhau?" Arges nhịn không được mở miệng hỏi.
+
+Klein cười trả lời:
+
+"Anh muốn trả thứ gì để đổi lấy đáp án?"
+
+Một trong những ý nghĩ hồi nãy của hắn chính là thường thức thì miễn phí, giải thích sẽ thu phí. Điều này vừa phù hợp với thân phận của mình, sẽ không lãng phí tin tức.
+
+Miễn phí mới là quý nhất.')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (46, 22, 1, N'Dị thường', 1, N'"Ngày 3 tháng 6, sau khi ta thương lượng với bọn Edwards, đành vứt bỏ ý tưởng hợp tác với giáo hội Mặt Trời Vĩnh Hằng. Điều này rất có khả năng sẽ làm bại lộ ý đồ của ta, khiến gia tộc Sauron và quý tộc cũ ủng hộ gia tộc này sớm phát giác, tiến hành bố trí nhắm vào ta. Vậy thì mọi chuyện sẽ trở nên cực kỳ khó khăn và nguy hiểm."
+
+"Đáng tiếc, Green đã chết trong biển sương mù, anh ta là người thông minh nhất trong bọn ta."
+
+"Hỗn loạn, hỗn loạn hơn nữa đi! Chỉ có hỗn loạn triệt để thì ta mới có được cơ hội đục nước béo cò! Chỉ có vậy thì gia tộc Sauron mới không thể thu xếp nổi cục diện này, giáo hội Mặt Trời Vĩnh Hằng mới có thể vuốt mũi thừa nhận ta!"
+
+"Có lẽ ta nên giúp đỡ cho đám phản đảng đó, nhưng phải làm thế nào để nó thật bí mật, khiến người khác không thể nào phát hiện được đây?"
+
+"Ngày 4 tháng 6, Zarathu của hội Mật Tu đột ngột bí mật tới thăm ta."
+
+...
+
+Sau đó đâu? Klein đang tò mò mục đích Zarathu thủ lĩnh của hội Mật Tu đến tìm Russel trước trận phản loạn và chính biến. Kết quả trên hai trang bút ký tiếp theo lại không liên quan đến nó.
+
+Điều này khiến hắn sinh ra tâm trạng chán nản khó mà kìm nén được.
+
+Tuy ba trang nhật ký này không miêu tả quá nhiều tình tiết tỉ mỉ, chỉ là mấy chuyện bình dị của người trong cuộc. Nhưng vẫn khiến Klein cảm nhận được vào năm 1173, cũng chính là hơn một trăm năm trước, trận biến cố ở Entis gió nổi mây phun thế nào.
+
+Trên tài liệu lịch sử có ghi rõ kết quả, Russel với thân phận thượng tá dẹp yên phản loạn, thuận thế cải cách, biến vương quốc Entis thành nước cộng hòa, tự đảm nhiệm quan chấp chính.
+
+Trong 9 năm sau đó, ông cải cách bộ luật, khuyến khích phát minh, bảo đảm cho công cuộc cải cách, khiến sức mạnh quốc gia tăng lên rất lớn. Hơn nữa ông còn nam chính bắc chiến, nhét các quốc gia như Grunberg, Masik, Segal vào trong sự bảo hộ của mình. Khiến cho ba cường quốc như đế quốc Fusak, vương quốc Ruen, vương quốc Finnebot ở lục địa Bắc phải lần lượt cúi đầu.
+
+Vào lúc đảm nhiệm quan chấp chính sắp tròn 20 năm, vào cuối năm 1192, Russel đổi nước cộng hòa thành đế quốc, tự xưng là Caesar.
+
+Sau đó không đến 6 năm, ông vẫn lạc ở cung Bạch Phong, kết thúc một đoạn lịch sử truyền kỳ nhất từ kỷ thứ 5 đến nay.
+
+Klein nhớ lại những tài liệu đã từng đọc, phát hiện cái chết của Russel tuyệt đối không đơn giản như vẻ bề ngoài. Giống như đằng sau biến cố này khẳng định có sự tranh đấu của người phi phàm, có thế lực siêu phàm tham gia, có nghĩa nó sẽ không giống với miêu tả trên tài liệu.
+
+"Green mà Russel nhắc tới hẳn là một trong "Tứ kỵ sĩ Thiên Khải", quả nhiên anh ta chết ở trong biển Sương Mù... Trong mấy tờ nhật ký lúc trước, Russel đã ghi vị kỵ sĩ này hơi bất thường. Điều này hình như liên quan đến hòn đảo nhỏ có rất nhiều sinh vật siêu phàm sinh sống mà bọn họ phát hiện được... Không chỉ có kỳ ngộ, mà còn rất nhiều nguy hiểm nữa..." Klein nhớ lại một trang nhật ký nào đó, hắn cảm khái lật đến tờ nhật ký thứ 5.
+
+Nội dung ghi chép trên tờ này không hề có giá trị, phân biệt là đánh giá của Russel sau khi uống rượu nho Ormill năm 1128. Nhìn thấy đối tượng mình yêu thích lúc niên thiếu, kết quả phát hiện dáng vóc của vị phu nhân đó biến dạng, khuôn mặt thì lão hóa nên ảo tưởng tan vỡ. Cùng với tổng kết đoạn thời gian nào đó trầm mê sa đọa bài bạc.
+
+Trang thứ 6 cũng đều là nhật ký ngày thường, nhưng dòng cuối lại khiến mắt Klein sáng lên:
+
+"Ngày 8 tháng 4, ta phải phái người đi điều tra hội Mật Tu. Nắm giữ càng nhiều tin tức, không thể lại bị động như lúc trước, không thể để Zarathu nắm mũi dắt đi nữa."
+
+Cho nên ông điều tra ra được chuyện gì, đồng chí Russel? Klein không thể tìm được nội dung phía sau, đành phải cưỡng ép bản thân bình tĩnh lại. Chờ đợi buổi tụ hội sau Người Treo Ngược sẽ đưa nhật ký tiếp.
+
+Hắn biết dù có điều tra tư liệu của hơn một trăm năm trước, cũng sẽ không thể giúp mình tìm được đầu mối liên quan đến hội Mật Tu. Dù sao thời gian trôi qua đã lâu, ngoài những tồn tại đặc thù, thì chỉ sợ không ít kẻ mạnh ở danh sách cao đều đã chết già, chứ đừng nói đến thành viên ở tầng thấp. Nhưng Klein tin tưởng, điều này có thể giúp mình tìm được linh cảm, hiểu biết thân phận bên ngoài và quy luật hoạt động mà hội Mật Tu thường hay dùng.
+
+Klein buông tờ nhật ký thứ 6 xuống, ngón trỏ tay phải gõ nhẹ lên mép chiếc bàn đồng đen dài. Ánh mắt hắn chậm rãi từ trên người tiểu thư Chính Nghĩa dời đến Người Treo Ngược, rồi đến Mặt Trời.
+
+Đúng rồi, vừa nãy trong nhật ký Russel đại đế có miêu tả một câu: "Chúa Sáng Thế… Thần Toàn Trí Toàn Năng…", cách gọi này rất gần với thần linh của thành Bạch Ngân, ông ta nghe được ở đâu chứ? Tổ chức xa xưa nhất bí ẩn nhất đó đang âm thầm thao túng thế cục của thế giới này? Tổ chức này ra đời trước cả Vùng đất bị Thần bỏ rơi sao?
+
+Ừm... Đột nhiên Klein có một ý nghĩ mới, thế là hắn dùng giọng trầm thấp bình thản cười nói:
+
+"Trong nhật ký của Russel có nhắc đến một vài lịch sử bị che giấu, nhắc đến một ít thường thức bình thường, nó nhắc nhở ta hình như ta chưa nói cho các ngươi."
+
+Audrey giật mình, lập tức quay nửa người, vui mừng nhìn về vị trí cao nhất bên chiếc bàn dài cổ xưa.
+
+Ngài Kẻ Khờ chủ động nhắc đến nội dung trong nhật ký của Russel? Bên trong sẽ ghi chép những gì đây? Cô vừa kích động lại vừa hưng phấn, hoàn toàn quên mất bản thân là một Khán Giả.
+
+So sánh với cô nàng thì Người Treo Ngược Arges chững chạc hơn rất nhiều, nhưng động tác không tự chủ ngồi thẳng lưng đã vô tình bán đứng anh ta.
+
+Chỉ có duy nhất Dereck tuy vẫn cho rằng vật phẩm mà ngài Kẻ Khờ hứng thú sẽ bao gồm rất nhiều điều huyền bí. Nhưng cậu không hề biết đại đế Russel, không biết cái tên này ở đại lục Bắc rốt cuộc đại biểu cho điều gì. Bởi vậy cậu chỉ khó kìm được tò mò, chứ không hề có biểu hiện quá khác thường.
+
+"Ngài Kẻ Khờ, đại đế Russel nhắc đến thường thức gì? Tôi có thể trả thù lao, đổi lấy tin tức này." Audrey nhịn không được liền lên tiếng hỏi.
+
+Nhưng tôi yêu cầu trao đổi riêng! Cô nàng lặng lẽ bổ sung một câu trong lòng.
+
+Klein cười khẽ nói:
+
+"Không cần, đây đều là thường thức bình thường."
+
+"Xem mấy phần nhật ký này, là người triệu tập hội Tarot, ta cho rằng nên để cho mọi người đều biết. Tất nhiên, ta biết rất rõ bên trong mấy vị có người đã sớm nắm giữ rồi."
+
+Người hắn ám chỉ chính là Mặt Trời. Thành Bạch Ngân có lịch sử hai ba ngàn năm, không thể nào không phát hiện định luật đặc tính phi phàm bất diệt được.
+
+Hơn nữa, bọn họ nằm trong hoàn cảnh khá cực đoan, cho dù khu vực xung quanh không thiếu quái vật trong bóng tối. Nhưng đôi khi, vẫn không nhất định có thể đạt được tài liệu đối ứng, vì để truyền thừa, vì để kéo dài cả tòa thành, dùng đặc tính phi phàm ngưng tụ ra từ di cốt của người trước để chế tạo ma dược, đây không phải là chuyện rất khó khiến mọi người tiếp nhận.
+
+Đối với bọn họ điều này có lẽ còn là một nghi thức quang vinh thần thánh.
+
+Tất nhiên thông qua các lần tụ hội trước, Klein có thể thấy được Người Treo Ngược cũng biết điều này.
+
+Tiếc quá, không thể cứ để tiểu thư Chính Nghĩa trả tiền mãi được, chuyển tiền cho bề tôi của ta... Bề tôi của ta cũng cần hình tượng... Không thể phá hỏng hình tượng kẻ mạnh mà thầy Azcot tạo dựng nên được... Ừ, có cơ hội phải thử lại mới được, dù sao mấy tồn tại mạnh mẽ đều sẽ có kẻ tôi tớ tầng thấp chạy chân. Giống như Kẻ Không Ngủ của Nữ Thần Đêm Tối... chưa từng có người nào bởi vì Kẻ Gác Đêm ở tầng dưới nhỏ yếu, mà nghi ngờ Nữ Thần Đêm Đối không phải Chân Thần... Klein khẽ than thở vài câu.
+
+"Rất cảm ơn ngài! Ngài đúng là quá rộng rãi!" Audrey mừng rỡ trả lời.
+
+Cô nàng sám hối 3 giây vì sự dung tục muốn dùng tiền mua tin tức vừa nãy của mình.
+
+Klein dừng gõ tay, giọng điệu bình thản nói:
+
+"Thường thức thứ nhất, đặc tính phi phàm có định luật bất diệt, đặc tính phi phàm sẽ không biến mất, sẽ không giảm bớt, nó sẽ chỉ chuyển từ vật này sang vật khác."
+
+Bất tri bất giác mình lại dùng giọng điệu của đội trưởng... Khóe miệng Klein vô thức nhếch lên.
+
+Sẽ không biến mất, sẽ không giảm bớt, chỉ chuyển từ vật này qua một vật khác... Audrey suy ngẫm câu nói của ngài Kẻ Khờ, cảm giác trong câu nói tuy khá đơn giản này nhưng lại bao hàm quá nhiều ý nghĩa.
+
+Tròng mắt xanh biếc như ngọc bính của cô xoay tròn, nhìn thấy Người Treo Ngược và Mặt Trời đều không có biểu hiện kinh ngạc và trầm tư. Cô lập tức hiểu hai vị thành viên của hội Tarot đã sớm biết định luật này.
+
+Chỉ có tôi không biết... Cô uất ức thầm nghĩ. Nhưng lại nhanh chóng ca ngợi lòng tốt của ngài Kẻ Khờ.
+
+Lúc này Klein lại bổ sung:
+
+"Cho nên sau khi người phi phàm mất khống chế chết đi sẽ để lại vật phẩm ngưng tụ đặc tính phi phàm. Nó có thể là tài liệu chính của ma dược, cũng có thể là vật phẩm thần kỳ cần phong ấn. Người phi phàm bình thường sau khi chết cũng giống vậy, nhưng nó chỉ cùng cấp với tài liệu phụ trợ trong ma dược tương ứng. Tất nhiên bản thân nó cũng có năng lực phi phàm nhất định, có thể xem như nửa vật phẩm thần kỳ để sử dụng."
+
+Mấy câu bình thường đó chỉ chớp mắt cứ vang vọng trong đầu của Audrey, chồng chéo lên nhau, không ngừng lên cao, cuối cùng tụ thành một tia sấm to lớn.
+
+Audrey liên tưởng đến việc ăn người, liên tưởng tới một vấn đề mà lúc trước Người Treo Ngược từng nhắc đến. Chính là nếu như nguồn tài liệu bị cắt đứt thì danh sách con đường có bị gián đoạn hay không.
+
+Bây giờ thì cô đã biết đáp án, nhưng cô ước gì thà bản thân đừng nghe thấy thì hơn, cảm giác cứ như một cơn ác mộng vậy!
+
+Sao lại có thể tàn nhẫn đến thế? Sao lại thối nát như vậy? Lúc trước Audrey cũng được xem như từng chứng kiến đến một vài chuyện không tốt liên quan đến thế lực phi phàm, nhưng đó đều là sự hèn mọn và gian ác của một cá nhân. Ví dụ như ngài A, ví dụ như Zilingus. Nó không hề ảnh hưởng đến yêu thích và sự hướng tới của cô đối với lĩnh vực thần bí và thế giới phi phàm.
+
+Nhưng lần này, cô lại phát hiện thế giới tràn đầy thần bí đó lại đầy rẫy bóng tối.
+
+Tỉnh lại đi Audrey, mày không thể cứ ngây thơ mãi được! Mới chỉ suy nghĩ thôi đã mất khống chế rồi, tàn nhẫn và bóng tối mà ngài Kẻ Khờ miêu tả có thể đoán được... Nếu đã lựa chọn con đường này, thì phải dũng cảm đi tiếp! Audrey tự khuyên nhủ bản thân hai câu, tâm trạng mới dần bình tĩnh lại.
+
+Cô nhìn thấy Người Treo Ngược và Mặt Trời chỉ có mấy động tác theo thói quen, hình như hiểu rất rõ nội dung vừa nãy.
+
+Hừ! Người Treo Ngược xấu quá. Lúc trước còn muốn dùng tin tức này để trao đổi với tôi! À... Tin tức này đúng là đáng để được trả thù lao cao. Nó khá quan trọng, nhưng chỉ là đối với tôi mà thôi, ở trong mắt của ngài Kẻ Khờ, nó chỉ là một thường thức bình thường... Audrey đột nhiên rất muốn cười to, tâm trạng bắt đầu tốt hơn, từ từ ném hết mấy suy nghĩ cực đoan vừa nãy qua một bên.
+
+Klein không hề bất ngờ với phản ứng của ba thành viên, giọng điệu hắn không hề dao động nói tiếp:
+
+"Thường thức thứ hai, trong danh sách gần nhau đặc tính phi phàm có định luật bảo toàn."
+
+Đặc tính phi phàm được bảo toàn... Người Treo Ngược hơi thay đổi tư thế ngồi. Anh ta cảm giác được như đã hiểu ra vài chuyện, nhưng lại không cách nào hiểu rõ hoàn toàn được định luật này rốt cuộc đại biểu cho cái gì, ẩn chứa điều gì.
+
+Chính Nghĩa và Mặt Trời đều có cảm giác giống anh ta, không thể nào hiểu được một cách trực quan ý nghĩa chân chính của định luật này.
+
+"Tại sao là danh sách gần nhau?" Arges nhịn không được mở miệng hỏi.
+
+Klein cười trả lời:
+
+"Anh muốn trả thứ gì để đổi lấy đáp án?"
+
+Một trong những ý nghĩ hồi nãy của hắn chính là thường thức thì miễn phí, giải thích sẽ thu phí. Điều này vừa phù hợp với thân phận của mình, sẽ không lãng phí tin tức.
+
+Miễn phí mới là quý nhất.')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (47, 23, 1, N'Mặt nạ', 1, N'"Ngày 3 tháng 6, sau khi ta thương lượng với bọn Edwards, đành vứt bỏ ý tưởng hợp tác với giáo hội Mặt Trời Vĩnh Hằng. Điều này rất có khả năng sẽ làm bại lộ ý đồ của ta, khiến gia tộc Sauron và quý tộc cũ ủng hộ gia tộc này sớm phát giác, tiến hành bố trí nhắm vào ta. Vậy thì mọi chuyện sẽ trở nên cực kỳ khó khăn và nguy hiểm."
+
+"Đáng tiếc, Green đã chết trong biển sương mù, anh ta là người thông minh nhất trong bọn ta."
+
+"Hỗn loạn, hỗn loạn hơn nữa đi! Chỉ có hỗn loạn triệt để thì ta mới có được cơ hội đục nước béo cò! Chỉ có vậy thì gia tộc Sauron mới không thể thu xếp nổi cục diện này, giáo hội Mặt Trời Vĩnh Hằng mới có thể vuốt mũi thừa nhận ta!"
+
+"Có lẽ ta nên giúp đỡ cho đám phản đảng đó, nhưng phải làm thế nào để nó thật bí mật, khiến người khác không thể nào phát hiện được đây?"
+
+"Ngày 4 tháng 6, Zarathu của hội Mật Tu đột ngột bí mật tới thăm ta."
+
+...
+
+Sau đó đâu? Klein đang tò mò mục đích Zarathu thủ lĩnh của hội Mật Tu đến tìm Russel trước trận phản loạn và chính biến. Kết quả trên hai trang bút ký tiếp theo lại không liên quan đến nó.
+
+Điều này khiến hắn sinh ra tâm trạng chán nản khó mà kìm nén được.
+
+Tuy ba trang nhật ký này không miêu tả quá nhiều tình tiết tỉ mỉ, chỉ là mấy chuyện bình dị của người trong cuộc. Nhưng vẫn khiến Klein cảm nhận được vào năm 1173, cũng chính là hơn một trăm năm trước, trận biến cố ở Entis gió nổi mây phun thế nào.
+
+Trên tài liệu lịch sử có ghi rõ kết quả, Russel với thân phận thượng tá dẹp yên phản loạn, thuận thế cải cách, biến vương quốc Entis thành nước cộng hòa, tự đảm nhiệm quan chấp chính.
+
+Trong 9 năm sau đó, ông cải cách bộ luật, khuyến khích phát minh, bảo đảm cho công cuộc cải cách, khiến sức mạnh quốc gia tăng lên rất lớn. Hơn nữa ông còn nam chính bắc chiến, nhét các quốc gia như Grunberg, Masik, Segal vào trong sự bảo hộ của mình. Khiến cho ba cường quốc như đế quốc Fusak, vương quốc Ruen, vương quốc Finnebot ở lục địa Bắc phải lần lượt cúi đầu.
+
+Vào lúc đảm nhiệm quan chấp chính sắp tròn 20 năm, vào cuối năm 1192, Russel đổi nước cộng hòa thành đế quốc, tự xưng là Caesar.
+
+Sau đó không đến 6 năm, ông vẫn lạc ở cung Bạch Phong, kết thúc một đoạn lịch sử truyền kỳ nhất từ kỷ thứ 5 đến nay.
+
+Klein nhớ lại những tài liệu đã từng đọc, phát hiện cái chết của Russel tuyệt đối không đơn giản như vẻ bề ngoài. Giống như đằng sau biến cố này khẳng định có sự tranh đấu của người phi phàm, có thế lực siêu phàm tham gia, có nghĩa nó sẽ không giống với miêu tả trên tài liệu.
+
+"Green mà Russel nhắc tới hẳn là một trong "Tứ kỵ sĩ Thiên Khải", quả nhiên anh ta chết ở trong biển Sương Mù... Trong mấy tờ nhật ký lúc trước, Russel đã ghi vị kỵ sĩ này hơi bất thường. Điều này hình như liên quan đến hòn đảo nhỏ có rất nhiều sinh vật siêu phàm sinh sống mà bọn họ phát hiện được... Không chỉ có kỳ ngộ, mà còn rất nhiều nguy hiểm nữa..." Klein nhớ lại một trang nhật ký nào đó, hắn cảm khái lật đến tờ nhật ký thứ 5.
+
+Nội dung ghi chép trên tờ này không hề có giá trị, phân biệt là đánh giá của Russel sau khi uống rượu nho Ormill năm 1128. Nhìn thấy đối tượng mình yêu thích lúc niên thiếu, kết quả phát hiện dáng vóc của vị phu nhân đó biến dạng, khuôn mặt thì lão hóa nên ảo tưởng tan vỡ. Cùng với tổng kết đoạn thời gian nào đó trầm mê sa đọa bài bạc.
+
+Trang thứ 6 cũng đều là nhật ký ngày thường, nhưng dòng cuối lại khiến mắt Klein sáng lên:
+
+"Ngày 8 tháng 4, ta phải phái người đi điều tra hội Mật Tu. Nắm giữ càng nhiều tin tức, không thể lại bị động như lúc trước, không thể để Zarathu nắm mũi dắt đi nữa."
+
+Cho nên ông điều tra ra được chuyện gì, đồng chí Russel? Klein không thể tìm được nội dung phía sau, đành phải cưỡng ép bản thân bình tĩnh lại. Chờ đợi buổi tụ hội sau Người Treo Ngược sẽ đưa nhật ký tiếp.
+
+Hắn biết dù có điều tra tư liệu của hơn một trăm năm trước, cũng sẽ không thể giúp mình tìm được đầu mối liên quan đến hội Mật Tu. Dù sao thời gian trôi qua đã lâu, ngoài những tồn tại đặc thù, thì chỉ sợ không ít kẻ mạnh ở danh sách cao đều đã chết già, chứ đừng nói đến thành viên ở tầng thấp. Nhưng Klein tin tưởng, điều này có thể giúp mình tìm được linh cảm, hiểu biết thân phận bên ngoài và quy luật hoạt động mà hội Mật Tu thường hay dùng.
+
+Klein buông tờ nhật ký thứ 6 xuống, ngón trỏ tay phải gõ nhẹ lên mép chiếc bàn đồng đen dài. Ánh mắt hắn chậm rãi từ trên người tiểu thư Chính Nghĩa dời đến Người Treo Ngược, rồi đến Mặt Trời.
+
+Đúng rồi, vừa nãy trong nhật ký Russel đại đế có miêu tả một câu: "Chúa Sáng Thế… Thần Toàn Trí Toàn Năng…", cách gọi này rất gần với thần linh của thành Bạch Ngân, ông ta nghe được ở đâu chứ? Tổ chức xa xưa nhất bí ẩn nhất đó đang âm thầm thao túng thế cục của thế giới này? Tổ chức này ra đời trước cả Vùng đất bị Thần bỏ rơi sao?
+
+Ừm... Đột nhiên Klein có một ý nghĩ mới, thế là hắn dùng giọng trầm thấp bình thản cười nói:
+
+"Trong nhật ký của Russel có nhắc đến một vài lịch sử bị che giấu, nhắc đến một ít thường thức bình thường, nó nhắc nhở ta hình như ta chưa nói cho các ngươi."
+
+Audrey giật mình, lập tức quay nửa người, vui mừng nhìn về vị trí cao nhất bên chiếc bàn dài cổ xưa.
+
+Ngài Kẻ Khờ chủ động nhắc đến nội dung trong nhật ký của Russel? Bên trong sẽ ghi chép những gì đây? Cô vừa kích động lại vừa hưng phấn, hoàn toàn quên mất bản thân là một Khán Giả.
+
+So sánh với cô nàng thì Người Treo Ngược Arges chững chạc hơn rất nhiều, nhưng động tác không tự chủ ngồi thẳng lưng đã vô tình bán đứng anh ta.
+
+Chỉ có duy nhất Dereck tuy vẫn cho rằng vật phẩm mà ngài Kẻ Khờ hứng thú sẽ bao gồm rất nhiều điều huyền bí. Nhưng cậu không hề biết đại đế Russel, không biết cái tên này ở đại lục Bắc rốt cuộc đại biểu cho điều gì. Bởi vậy cậu chỉ khó kìm được tò mò, chứ không hề có biểu hiện quá khác thường.
+
+"Ngài Kẻ Khờ, đại đế Russel nhắc đến thường thức gì? Tôi có thể trả thù lao, đổi lấy tin tức này." Audrey nhịn không được liền lên tiếng hỏi.
+
+Nhưng tôi yêu cầu trao đổi riêng! Cô nàng lặng lẽ bổ sung một câu trong lòng.
+
+Klein cười khẽ nói:
+
+"Không cần, đây đều là thường thức bình thường."
+
+"Xem mấy phần nhật ký này, là người triệu tập hội Tarot, ta cho rằng nên để cho mọi người đều biết. Tất nhiên, ta biết rất rõ bên trong mấy vị có người đã sớm nắm giữ rồi."
+
+Người hắn ám chỉ chính là Mặt Trời. Thành Bạch Ngân có lịch sử hai ba ngàn năm, không thể nào không phát hiện định luật đặc tính phi phàm bất diệt được.
+
+Hơn nữa, bọn họ nằm trong hoàn cảnh khá cực đoan, cho dù khu vực xung quanh không thiếu quái vật trong bóng tối. Nhưng đôi khi, vẫn không nhất định có thể đạt được tài liệu đối ứng, vì để truyền thừa, vì để kéo dài cả tòa thành, dùng đặc tính phi phàm ngưng tụ ra từ di cốt của người trước để chế tạo ma dược, đây không phải là chuyện rất khó khiến mọi người tiếp nhận.
+
+Đối với bọn họ điều này có lẽ còn là một nghi thức quang vinh thần thánh.
+
+Tất nhiên thông qua các lần tụ hội trước, Klein có thể thấy được Người Treo Ngược cũng biết điều này.
+
+Tiếc quá, không thể cứ để tiểu thư Chính Nghĩa trả tiền mãi được, chuyển tiền cho bề tôi của ta... Bề tôi của ta cũng cần hình tượng... Không thể phá hỏng hình tượng kẻ mạnh mà thầy Azcot tạo dựng nên được... Ừ, có cơ hội phải thử lại mới được, dù sao mấy tồn tại mạnh mẽ đều sẽ có kẻ tôi tớ tầng thấp chạy chân. Giống như Kẻ Không Ngủ của Nữ Thần Đêm Tối... chưa từng có người nào bởi vì Kẻ Gác Đêm ở tầng dưới nhỏ yếu, mà nghi ngờ Nữ Thần Đêm Đối không phải Chân Thần... Klein khẽ than thở vài câu.
+
+"Rất cảm ơn ngài! Ngài đúng là quá rộng rãi!" Audrey mừng rỡ trả lời.
+
+Cô nàng sám hối 3 giây vì sự dung tục muốn dùng tiền mua tin tức vừa nãy của mình.
+
+Klein dừng gõ tay, giọng điệu bình thản nói:
+
+"Thường thức thứ nhất, đặc tính phi phàm có định luật bất diệt, đặc tính phi phàm sẽ không biến mất, sẽ không giảm bớt, nó sẽ chỉ chuyển từ vật này sang vật khác."
+
+Bất tri bất giác mình lại dùng giọng điệu của đội trưởng... Khóe miệng Klein vô thức nhếch lên.
+
+Sẽ không biến mất, sẽ không giảm bớt, chỉ chuyển từ vật này qua một vật khác... Audrey suy ngẫm câu nói của ngài Kẻ Khờ, cảm giác trong câu nói tuy khá đơn giản này nhưng lại bao hàm quá nhiều ý nghĩa.
+
+Tròng mắt xanh biếc như ngọc bính của cô xoay tròn, nhìn thấy Người Treo Ngược và Mặt Trời đều không có biểu hiện kinh ngạc và trầm tư. Cô lập tức hiểu hai vị thành viên của hội Tarot đã sớm biết định luật này.
+
+Chỉ có tôi không biết... Cô uất ức thầm nghĩ. Nhưng lại nhanh chóng ca ngợi lòng tốt của ngài Kẻ Khờ.
+
+Lúc này Klein lại bổ sung:
+
+"Cho nên sau khi người phi phàm mất khống chế chết đi sẽ để lại vật phẩm ngưng tụ đặc tính phi phàm. Nó có thể là tài liệu chính của ma dược, cũng có thể là vật phẩm thần kỳ cần phong ấn. Người phi phàm bình thường sau khi chết cũng giống vậy, nhưng nó chỉ cùng cấp với tài liệu phụ trợ trong ma dược tương ứng. Tất nhiên bản thân nó cũng có năng lực phi phàm nhất định, có thể xem như nửa vật phẩm thần kỳ để sử dụng."
+
+Mấy câu bình thường đó chỉ chớp mắt cứ vang vọng trong đầu của Audrey, chồng chéo lên nhau, không ngừng lên cao, cuối cùng tụ thành một tia sấm to lớn.
+
+Audrey liên tưởng đến việc ăn người, liên tưởng tới một vấn đề mà lúc trước Người Treo Ngược từng nhắc đến. Chính là nếu như nguồn tài liệu bị cắt đứt thì danh sách con đường có bị gián đoạn hay không.
+
+Bây giờ thì cô đã biết đáp án, nhưng cô ước gì thà bản thân đừng nghe thấy thì hơn, cảm giác cứ như một cơn ác mộng vậy!
+
+Sao lại có thể tàn nhẫn đến thế? Sao lại thối nát như vậy? Lúc trước Audrey cũng được xem như từng chứng kiến đến một vài chuyện không tốt liên quan đến thế lực phi phàm, nhưng đó đều là sự hèn mọn và gian ác của một cá nhân. Ví dụ như ngài A, ví dụ như Zilingus. Nó không hề ảnh hưởng đến yêu thích và sự hướng tới của cô đối với lĩnh vực thần bí và thế giới phi phàm.
+
+Nhưng lần này, cô lại phát hiện thế giới tràn đầy thần bí đó lại đầy rẫy bóng tối.
+
+Tỉnh lại đi Audrey, mày không thể cứ ngây thơ mãi được! Mới chỉ suy nghĩ thôi đã mất khống chế rồi, tàn nhẫn và bóng tối mà ngài Kẻ Khờ miêu tả có thể đoán được... Nếu đã lựa chọn con đường này, thì phải dũng cảm đi tiếp! Audrey tự khuyên nhủ bản thân hai câu, tâm trạng mới dần bình tĩnh lại.
+
+Cô nhìn thấy Người Treo Ngược và Mặt Trời chỉ có mấy động tác theo thói quen, hình như hiểu rất rõ nội dung vừa nãy.
+
+Hừ! Người Treo Ngược xấu quá. Lúc trước còn muốn dùng tin tức này để trao đổi với tôi! À... Tin tức này đúng là đáng để được trả thù lao cao. Nó khá quan trọng, nhưng chỉ là đối với tôi mà thôi, ở trong mắt của ngài Kẻ Khờ, nó chỉ là một thường thức bình thường... Audrey đột nhiên rất muốn cười to, tâm trạng bắt đầu tốt hơn, từ từ ném hết mấy suy nghĩ cực đoan vừa nãy qua một bên.
+
+Klein không hề bất ngờ với phản ứng của ba thành viên, giọng điệu hắn không hề dao động nói tiếp:
+
+"Thường thức thứ hai, trong danh sách gần nhau đặc tính phi phàm có định luật bảo toàn."
+
+Đặc tính phi phàm được bảo toàn... Người Treo Ngược hơi thay đổi tư thế ngồi. Anh ta cảm giác được như đã hiểu ra vài chuyện, nhưng lại không cách nào hiểu rõ hoàn toàn được định luật này rốt cuộc đại biểu cho cái gì, ẩn chứa điều gì.
+
+Chính Nghĩa và Mặt Trời đều có cảm giác giống anh ta, không thể nào hiểu được một cách trực quan ý nghĩa chân chính của định luật này.
+
+"Tại sao là danh sách gần nhau?" Arges nhịn không được mở miệng hỏi.
+
+Klein cười trả lời:
+
+"Anh muốn trả thứ gì để đổi lấy đáp án?"
+
+Một trong những ý nghĩ hồi nãy của hắn chính là thường thức thì miễn phí, giải thích sẽ thu phí. Điều này vừa phù hợp với thân phận của mình, sẽ không lãng phí tin tức.
+
+Miễn phí mới là quý nhất.')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (48, 24, 1, N'Cấm kỵ', 1, N'"Ngày 3 tháng 6, sau khi ta thương lượng với bọn Edwards, đành vứt bỏ ý tưởng hợp tác với giáo hội Mặt Trời Vĩnh Hằng. Điều này rất có khả năng sẽ làm bại lộ ý đồ của ta, khiến gia tộc Sauron và quý tộc cũ ủng hộ gia tộc này sớm phát giác, tiến hành bố trí nhắm vào ta. Vậy thì mọi chuyện sẽ trở nên cực kỳ khó khăn và nguy hiểm."
+
+"Đáng tiếc, Green đã chết trong biển sương mù, anh ta là người thông minh nhất trong bọn ta."
+
+"Hỗn loạn, hỗn loạn hơn nữa đi! Chỉ có hỗn loạn triệt để thì ta mới có được cơ hội đục nước béo cò! Chỉ có vậy thì gia tộc Sauron mới không thể thu xếp nổi cục diện này, giáo hội Mặt Trời Vĩnh Hằng mới có thể vuốt mũi thừa nhận ta!"
+
+"Có lẽ ta nên giúp đỡ cho đám phản đảng đó, nhưng phải làm thế nào để nó thật bí mật, khiến người khác không thể nào phát hiện được đây?"
+
+"Ngày 4 tháng 6, Zarathu của hội Mật Tu đột ngột bí mật tới thăm ta."
+
+...
+
+Sau đó đâu? Klein đang tò mò mục đích Zarathu thủ lĩnh của hội Mật Tu đến tìm Russel trước trận phản loạn và chính biến. Kết quả trên hai trang bút ký tiếp theo lại không liên quan đến nó.
+
+Điều này khiến hắn sinh ra tâm trạng chán nản khó mà kìm nén được.
+
+Tuy ba trang nhật ký này không miêu tả quá nhiều tình tiết tỉ mỉ, chỉ là mấy chuyện bình dị của người trong cuộc. Nhưng vẫn khiến Klein cảm nhận được vào năm 1173, cũng chính là hơn một trăm năm trước, trận biến cố ở Entis gió nổi mây phun thế nào.
+
+Trên tài liệu lịch sử có ghi rõ kết quả, Russel với thân phận thượng tá dẹp yên phản loạn, thuận thế cải cách, biến vương quốc Entis thành nước cộng hòa, tự đảm nhiệm quan chấp chính.
+
+Trong 9 năm sau đó, ông cải cách bộ luật, khuyến khích phát minh, bảo đảm cho công cuộc cải cách, khiến sức mạnh quốc gia tăng lên rất lớn. Hơn nữa ông còn nam chính bắc chiến, nhét các quốc gia như Grunberg, Masik, Segal vào trong sự bảo hộ của mình. Khiến cho ba cường quốc như đế quốc Fusak, vương quốc Ruen, vương quốc Finnebot ở lục địa Bắc phải lần lượt cúi đầu.
+
+Vào lúc đảm nhiệm quan chấp chính sắp tròn 20 năm, vào cuối năm 1192, Russel đổi nước cộng hòa thành đế quốc, tự xưng là Caesar.
+
+Sau đó không đến 6 năm, ông vẫn lạc ở cung Bạch Phong, kết thúc một đoạn lịch sử truyền kỳ nhất từ kỷ thứ 5 đến nay.
+
+Klein nhớ lại những tài liệu đã từng đọc, phát hiện cái chết của Russel tuyệt đối không đơn giản như vẻ bề ngoài. Giống như đằng sau biến cố này khẳng định có sự tranh đấu của người phi phàm, có thế lực siêu phàm tham gia, có nghĩa nó sẽ không giống với miêu tả trên tài liệu.
+
+"Green mà Russel nhắc tới hẳn là một trong "Tứ kỵ sĩ Thiên Khải", quả nhiên anh ta chết ở trong biển Sương Mù... Trong mấy tờ nhật ký lúc trước, Russel đã ghi vị kỵ sĩ này hơi bất thường. Điều này hình như liên quan đến hòn đảo nhỏ có rất nhiều sinh vật siêu phàm sinh sống mà bọn họ phát hiện được... Không chỉ có kỳ ngộ, mà còn rất nhiều nguy hiểm nữa..." Klein nhớ lại một trang nhật ký nào đó, hắn cảm khái lật đến tờ nhật ký thứ 5.
+
+Nội dung ghi chép trên tờ này không hề có giá trị, phân biệt là đánh giá của Russel sau khi uống rượu nho Ormill năm 1128. Nhìn thấy đối tượng mình yêu thích lúc niên thiếu, kết quả phát hiện dáng vóc của vị phu nhân đó biến dạng, khuôn mặt thì lão hóa nên ảo tưởng tan vỡ. Cùng với tổng kết đoạn thời gian nào đó trầm mê sa đọa bài bạc.
+
+Trang thứ 6 cũng đều là nhật ký ngày thường, nhưng dòng cuối lại khiến mắt Klein sáng lên:
+
+"Ngày 8 tháng 4, ta phải phái người đi điều tra hội Mật Tu. Nắm giữ càng nhiều tin tức, không thể lại bị động như lúc trước, không thể để Zarathu nắm mũi dắt đi nữa."
+
+Cho nên ông điều tra ra được chuyện gì, đồng chí Russel? Klein không thể tìm được nội dung phía sau, đành phải cưỡng ép bản thân bình tĩnh lại. Chờ đợi buổi tụ hội sau Người Treo Ngược sẽ đưa nhật ký tiếp.
+
+Hắn biết dù có điều tra tư liệu của hơn một trăm năm trước, cũng sẽ không thể giúp mình tìm được đầu mối liên quan đến hội Mật Tu. Dù sao thời gian trôi qua đã lâu, ngoài những tồn tại đặc thù, thì chỉ sợ không ít kẻ mạnh ở danh sách cao đều đã chết già, chứ đừng nói đến thành viên ở tầng thấp. Nhưng Klein tin tưởng, điều này có thể giúp mình tìm được linh cảm, hiểu biết thân phận bên ngoài và quy luật hoạt động mà hội Mật Tu thường hay dùng.
+
+Klein buông tờ nhật ký thứ 6 xuống, ngón trỏ tay phải gõ nhẹ lên mép chiếc bàn đồng đen dài. Ánh mắt hắn chậm rãi từ trên người tiểu thư Chính Nghĩa dời đến Người Treo Ngược, rồi đến Mặt Trời.
+
+Đúng rồi, vừa nãy trong nhật ký Russel đại đế có miêu tả một câu: "Chúa Sáng Thế… Thần Toàn Trí Toàn Năng…", cách gọi này rất gần với thần linh của thành Bạch Ngân, ông ta nghe được ở đâu chứ? Tổ chức xa xưa nhất bí ẩn nhất đó đang âm thầm thao túng thế cục của thế giới này? Tổ chức này ra đời trước cả Vùng đất bị Thần bỏ rơi sao?
+
+Ừm... Đột nhiên Klein có một ý nghĩ mới, thế là hắn dùng giọng trầm thấp bình thản cười nói:
+
+"Trong nhật ký của Russel có nhắc đến một vài lịch sử bị che giấu, nhắc đến một ít thường thức bình thường, nó nhắc nhở ta hình như ta chưa nói cho các ngươi."
+
+Audrey giật mình, lập tức quay nửa người, vui mừng nhìn về vị trí cao nhất bên chiếc bàn dài cổ xưa.
+
+Ngài Kẻ Khờ chủ động nhắc đến nội dung trong nhật ký của Russel? Bên trong sẽ ghi chép những gì đây? Cô vừa kích động lại vừa hưng phấn, hoàn toàn quên mất bản thân là một Khán Giả.
+
+So sánh với cô nàng thì Người Treo Ngược Arges chững chạc hơn rất nhiều, nhưng động tác không tự chủ ngồi thẳng lưng đã vô tình bán đứng anh ta.
+
+Chỉ có duy nhất Dereck tuy vẫn cho rằng vật phẩm mà ngài Kẻ Khờ hứng thú sẽ bao gồm rất nhiều điều huyền bí. Nhưng cậu không hề biết đại đế Russel, không biết cái tên này ở đại lục Bắc rốt cuộc đại biểu cho điều gì. Bởi vậy cậu chỉ khó kìm được tò mò, chứ không hề có biểu hiện quá khác thường.
+
+"Ngài Kẻ Khờ, đại đế Russel nhắc đến thường thức gì? Tôi có thể trả thù lao, đổi lấy tin tức này." Audrey nhịn không được liền lên tiếng hỏi.
+
+Nhưng tôi yêu cầu trao đổi riêng! Cô nàng lặng lẽ bổ sung một câu trong lòng.
+
+Klein cười khẽ nói:
+
+"Không cần, đây đều là thường thức bình thường."
+
+"Xem mấy phần nhật ký này, là người triệu tập hội Tarot, ta cho rằng nên để cho mọi người đều biết. Tất nhiên, ta biết rất rõ bên trong mấy vị có người đã sớm nắm giữ rồi."
+
+Người hắn ám chỉ chính là Mặt Trời. Thành Bạch Ngân có lịch sử hai ba ngàn năm, không thể nào không phát hiện định luật đặc tính phi phàm bất diệt được.
+
+Hơn nữa, bọn họ nằm trong hoàn cảnh khá cực đoan, cho dù khu vực xung quanh không thiếu quái vật trong bóng tối. Nhưng đôi khi, vẫn không nhất định có thể đạt được tài liệu đối ứng, vì để truyền thừa, vì để kéo dài cả tòa thành, dùng đặc tính phi phàm ngưng tụ ra từ di cốt của người trước để chế tạo ma dược, đây không phải là chuyện rất khó khiến mọi người tiếp nhận.
+
+Đối với bọn họ điều này có lẽ còn là một nghi thức quang vinh thần thánh.
+
+Tất nhiên thông qua các lần tụ hội trước, Klein có thể thấy được Người Treo Ngược cũng biết điều này.
+
+Tiếc quá, không thể cứ để tiểu thư Chính Nghĩa trả tiền mãi được, chuyển tiền cho bề tôi của ta... Bề tôi của ta cũng cần hình tượng... Không thể phá hỏng hình tượng kẻ mạnh mà thầy Azcot tạo dựng nên được... Ừ, có cơ hội phải thử lại mới được, dù sao mấy tồn tại mạnh mẽ đều sẽ có kẻ tôi tớ tầng thấp chạy chân. Giống như Kẻ Không Ngủ của Nữ Thần Đêm Tối... chưa từng có người nào bởi vì Kẻ Gác Đêm ở tầng dưới nhỏ yếu, mà nghi ngờ Nữ Thần Đêm Đối không phải Chân Thần... Klein khẽ than thở vài câu.
+
+"Rất cảm ơn ngài! Ngài đúng là quá rộng rãi!" Audrey mừng rỡ trả lời.
+
+Cô nàng sám hối 3 giây vì sự dung tục muốn dùng tiền mua tin tức vừa nãy của mình.
+
+Klein dừng gõ tay, giọng điệu bình thản nói:
+
+"Thường thức thứ nhất, đặc tính phi phàm có định luật bất diệt, đặc tính phi phàm sẽ không biến mất, sẽ không giảm bớt, nó sẽ chỉ chuyển từ vật này sang vật khác."
+
+Bất tri bất giác mình lại dùng giọng điệu của đội trưởng... Khóe miệng Klein vô thức nhếch lên.
+
+Sẽ không biến mất, sẽ không giảm bớt, chỉ chuyển từ vật này qua một vật khác... Audrey suy ngẫm câu nói của ngài Kẻ Khờ, cảm giác trong câu nói tuy khá đơn giản này nhưng lại bao hàm quá nhiều ý nghĩa.
+
+Tròng mắt xanh biếc như ngọc bính của cô xoay tròn, nhìn thấy Người Treo Ngược và Mặt Trời đều không có biểu hiện kinh ngạc và trầm tư. Cô lập tức hiểu hai vị thành viên của hội Tarot đã sớm biết định luật này.
+
+Chỉ có tôi không biết... Cô uất ức thầm nghĩ. Nhưng lại nhanh chóng ca ngợi lòng tốt của ngài Kẻ Khờ.
+
+Lúc này Klein lại bổ sung:
+
+"Cho nên sau khi người phi phàm mất khống chế chết đi sẽ để lại vật phẩm ngưng tụ đặc tính phi phàm. Nó có thể là tài liệu chính của ma dược, cũng có thể là vật phẩm thần kỳ cần phong ấn. Người phi phàm bình thường sau khi chết cũng giống vậy, nhưng nó chỉ cùng cấp với tài liệu phụ trợ trong ma dược tương ứng. Tất nhiên bản thân nó cũng có năng lực phi phàm nhất định, có thể xem như nửa vật phẩm thần kỳ để sử dụng."
+
+Mấy câu bình thường đó chỉ chớp mắt cứ vang vọng trong đầu của Audrey, chồng chéo lên nhau, không ngừng lên cao, cuối cùng tụ thành một tia sấm to lớn.
+
+Audrey liên tưởng đến việc ăn người, liên tưởng tới một vấn đề mà lúc trước Người Treo Ngược từng nhắc đến. Chính là nếu như nguồn tài liệu bị cắt đứt thì danh sách con đường có bị gián đoạn hay không.
+
+Bây giờ thì cô đã biết đáp án, nhưng cô ước gì thà bản thân đừng nghe thấy thì hơn, cảm giác cứ như một cơn ác mộng vậy!
+
+Sao lại có thể tàn nhẫn đến thế? Sao lại thối nát như vậy? Lúc trước Audrey cũng được xem như từng chứng kiến đến một vài chuyện không tốt liên quan đến thế lực phi phàm, nhưng đó đều là sự hèn mọn và gian ác của một cá nhân. Ví dụ như ngài A, ví dụ như Zilingus. Nó không hề ảnh hưởng đến yêu thích và sự hướng tới của cô đối với lĩnh vực thần bí và thế giới phi phàm.
+
+Nhưng lần này, cô lại phát hiện thế giới tràn đầy thần bí đó lại đầy rẫy bóng tối.
+
+Tỉnh lại đi Audrey, mày không thể cứ ngây thơ mãi được! Mới chỉ suy nghĩ thôi đã mất khống chế rồi, tàn nhẫn và bóng tối mà ngài Kẻ Khờ miêu tả có thể đoán được... Nếu đã lựa chọn con đường này, thì phải dũng cảm đi tiếp! Audrey tự khuyên nhủ bản thân hai câu, tâm trạng mới dần bình tĩnh lại.
+
+Cô nhìn thấy Người Treo Ngược và Mặt Trời chỉ có mấy động tác theo thói quen, hình như hiểu rất rõ nội dung vừa nãy.
+
+Hừ! Người Treo Ngược xấu quá. Lúc trước còn muốn dùng tin tức này để trao đổi với tôi! À... Tin tức này đúng là đáng để được trả thù lao cao. Nó khá quan trọng, nhưng chỉ là đối với tôi mà thôi, ở trong mắt của ngài Kẻ Khờ, nó chỉ là một thường thức bình thường... Audrey đột nhiên rất muốn cười to, tâm trạng bắt đầu tốt hơn, từ từ ném hết mấy suy nghĩ cực đoan vừa nãy qua một bên.
+
+Klein không hề bất ngờ với phản ứng của ba thành viên, giọng điệu hắn không hề dao động nói tiếp:
+
+"Thường thức thứ hai, trong danh sách gần nhau đặc tính phi phàm có định luật bảo toàn."
+
+Đặc tính phi phàm được bảo toàn... Người Treo Ngược hơi thay đổi tư thế ngồi. Anh ta cảm giác được như đã hiểu ra vài chuyện, nhưng lại không cách nào hiểu rõ hoàn toàn được định luật này rốt cuộc đại biểu cho cái gì, ẩn chứa điều gì.
+
+Chính Nghĩa và Mặt Trời đều có cảm giác giống anh ta, không thể nào hiểu được một cách trực quan ý nghĩa chân chính của định luật này.
+
+"Tại sao là danh sách gần nhau?" Arges nhịn không được mở miệng hỏi.
+
+Klein cười trả lời:
+
+"Anh muốn trả thứ gì để đổi lấy đáp án?"
+
+Một trong những ý nghĩ hồi nãy của hắn chính là thường thức thì miễn phí, giải thích sẽ thu phí. Điều này vừa phù hợp với thân phận của mình, sẽ không lãng phí tin tức.
+
+Miễn phí mới là quý nhất.')
+GO
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (49, 25, 1, N'Những ngày bình thường kết thúc', 1, N'"Ngày 3 tháng 6, sau khi ta thương lượng với bọn Edwards, đành vứt bỏ ý tưởng hợp tác với giáo hội Mặt Trời Vĩnh Hằng. Điều này rất có khả năng sẽ làm bại lộ ý đồ của ta, khiến gia tộc Sauron và quý tộc cũ ủng hộ gia tộc này sớm phát giác, tiến hành bố trí nhắm vào ta. Vậy thì mọi chuyện sẽ trở nên cực kỳ khó khăn và nguy hiểm."
+
+"Đáng tiếc, Green đã chết trong biển sương mù, anh ta là người thông minh nhất trong bọn ta."
+
+"Hỗn loạn, hỗn loạn hơn nữa đi! Chỉ có hỗn loạn triệt để thì ta mới có được cơ hội đục nước béo cò! Chỉ có vậy thì gia tộc Sauron mới không thể thu xếp nổi cục diện này, giáo hội Mặt Trời Vĩnh Hằng mới có thể vuốt mũi thừa nhận ta!"
+
+"Có lẽ ta nên giúp đỡ cho đám phản đảng đó, nhưng phải làm thế nào để nó thật bí mật, khiến người khác không thể nào phát hiện được đây?"
+
+"Ngày 4 tháng 6, Zarathu của hội Mật Tu đột ngột bí mật tới thăm ta."
+
+...
+
+Sau đó đâu? Klein đang tò mò mục đích Zarathu thủ lĩnh của hội Mật Tu đến tìm Russel trước trận phản loạn và chính biến. Kết quả trên hai trang bút ký tiếp theo lại không liên quan đến nó.
+
+Điều này khiến hắn sinh ra tâm trạng chán nản khó mà kìm nén được.
+
+Tuy ba trang nhật ký này không miêu tả quá nhiều tình tiết tỉ mỉ, chỉ là mấy chuyện bình dị của người trong cuộc. Nhưng vẫn khiến Klein cảm nhận được vào năm 1173, cũng chính là hơn một trăm năm trước, trận biến cố ở Entis gió nổi mây phun thế nào.
+
+Trên tài liệu lịch sử có ghi rõ kết quả, Russel với thân phận thượng tá dẹp yên phản loạn, thuận thế cải cách, biến vương quốc Entis thành nước cộng hòa, tự đảm nhiệm quan chấp chính.
+
+Trong 9 năm sau đó, ông cải cách bộ luật, khuyến khích phát minh, bảo đảm cho công cuộc cải cách, khiến sức mạnh quốc gia tăng lên rất lớn. Hơn nữa ông còn nam chính bắc chiến, nhét các quốc gia như Grunberg, Masik, Segal vào trong sự bảo hộ của mình. Khiến cho ba cường quốc như đế quốc Fusak, vương quốc Ruen, vương quốc Finnebot ở lục địa Bắc phải lần lượt cúi đầu.
+
+Vào lúc đảm nhiệm quan chấp chính sắp tròn 20 năm, vào cuối năm 1192, Russel đổi nước cộng hòa thành đế quốc, tự xưng là Caesar.
+
+Sau đó không đến 6 năm, ông vẫn lạc ở cung Bạch Phong, kết thúc một đoạn lịch sử truyền kỳ nhất từ kỷ thứ 5 đến nay.
+
+Klein nhớ lại những tài liệu đã từng đọc, phát hiện cái chết của Russel tuyệt đối không đơn giản như vẻ bề ngoài. Giống như đằng sau biến cố này khẳng định có sự tranh đấu của người phi phàm, có thế lực siêu phàm tham gia, có nghĩa nó sẽ không giống với miêu tả trên tài liệu.
+
+"Green mà Russel nhắc tới hẳn là một trong "Tứ kỵ sĩ Thiên Khải", quả nhiên anh ta chết ở trong biển Sương Mù... Trong mấy tờ nhật ký lúc trước, Russel đã ghi vị kỵ sĩ này hơi bất thường. Điều này hình như liên quan đến hòn đảo nhỏ có rất nhiều sinh vật siêu phàm sinh sống mà bọn họ phát hiện được... Không chỉ có kỳ ngộ, mà còn rất nhiều nguy hiểm nữa..." Klein nhớ lại một trang nhật ký nào đó, hắn cảm khái lật đến tờ nhật ký thứ 5.
+
+Nội dung ghi chép trên tờ này không hề có giá trị, phân biệt là đánh giá của Russel sau khi uống rượu nho Ormill năm 1128. Nhìn thấy đối tượng mình yêu thích lúc niên thiếu, kết quả phát hiện dáng vóc của vị phu nhân đó biến dạng, khuôn mặt thì lão hóa nên ảo tưởng tan vỡ. Cùng với tổng kết đoạn thời gian nào đó trầm mê sa đọa bài bạc.
+
+Trang thứ 6 cũng đều là nhật ký ngày thường, nhưng dòng cuối lại khiến mắt Klein sáng lên:
+
+"Ngày 8 tháng 4, ta phải phái người đi điều tra hội Mật Tu. Nắm giữ càng nhiều tin tức, không thể lại bị động như lúc trước, không thể để Zarathu nắm mũi dắt đi nữa."
+
+Cho nên ông điều tra ra được chuyện gì, đồng chí Russel? Klein không thể tìm được nội dung phía sau, đành phải cưỡng ép bản thân bình tĩnh lại. Chờ đợi buổi tụ hội sau Người Treo Ngược sẽ đưa nhật ký tiếp.
+
+Hắn biết dù có điều tra tư liệu của hơn một trăm năm trước, cũng sẽ không thể giúp mình tìm được đầu mối liên quan đến hội Mật Tu. Dù sao thời gian trôi qua đã lâu, ngoài những tồn tại đặc thù, thì chỉ sợ không ít kẻ mạnh ở danh sách cao đều đã chết già, chứ đừng nói đến thành viên ở tầng thấp. Nhưng Klein tin tưởng, điều này có thể giúp mình tìm được linh cảm, hiểu biết thân phận bên ngoài và quy luật hoạt động mà hội Mật Tu thường hay dùng.
+
+Klein buông tờ nhật ký thứ 6 xuống, ngón trỏ tay phải gõ nhẹ lên mép chiếc bàn đồng đen dài. Ánh mắt hắn chậm rãi từ trên người tiểu thư Chính Nghĩa dời đến Người Treo Ngược, rồi đến Mặt Trời.
+
+Đúng rồi, vừa nãy trong nhật ký Russel đại đế có miêu tả một câu: "Chúa Sáng Thế… Thần Toàn Trí Toàn Năng…", cách gọi này rất gần với thần linh của thành Bạch Ngân, ông ta nghe được ở đâu chứ? Tổ chức xa xưa nhất bí ẩn nhất đó đang âm thầm thao túng thế cục của thế giới này? Tổ chức này ra đời trước cả Vùng đất bị Thần bỏ rơi sao?
+
+Ừm... Đột nhiên Klein có một ý nghĩ mới, thế là hắn dùng giọng trầm thấp bình thản cười nói:
+
+"Trong nhật ký của Russel có nhắc đến một vài lịch sử bị che giấu, nhắc đến một ít thường thức bình thường, nó nhắc nhở ta hình như ta chưa nói cho các ngươi."
+
+Audrey giật mình, lập tức quay nửa người, vui mừng nhìn về vị trí cao nhất bên chiếc bàn dài cổ xưa.
+
+Ngài Kẻ Khờ chủ động nhắc đến nội dung trong nhật ký của Russel? Bên trong sẽ ghi chép những gì đây? Cô vừa kích động lại vừa hưng phấn, hoàn toàn quên mất bản thân là một Khán Giả.
+
+So sánh với cô nàng thì Người Treo Ngược Arges chững chạc hơn rất nhiều, nhưng động tác không tự chủ ngồi thẳng lưng đã vô tình bán đứng anh ta.
+
+Chỉ có duy nhất Dereck tuy vẫn cho rằng vật phẩm mà ngài Kẻ Khờ hứng thú sẽ bao gồm rất nhiều điều huyền bí. Nhưng cậu không hề biết đại đế Russel, không biết cái tên này ở đại lục Bắc rốt cuộc đại biểu cho điều gì. Bởi vậy cậu chỉ khó kìm được tò mò, chứ không hề có biểu hiện quá khác thường.
+
+"Ngài Kẻ Khờ, đại đế Russel nhắc đến thường thức gì? Tôi có thể trả thù lao, đổi lấy tin tức này." Audrey nhịn không được liền lên tiếng hỏi.
+
+Nhưng tôi yêu cầu trao đổi riêng! Cô nàng lặng lẽ bổ sung một câu trong lòng.
+
+Klein cười khẽ nói:
+
+"Không cần, đây đều là thường thức bình thường."
+
+"Xem mấy phần nhật ký này, là người triệu tập hội Tarot, ta cho rằng nên để cho mọi người đều biết. Tất nhiên, ta biết rất rõ bên trong mấy vị có người đã sớm nắm giữ rồi."
+
+Người hắn ám chỉ chính là Mặt Trời. Thành Bạch Ngân có lịch sử hai ba ngàn năm, không thể nào không phát hiện định luật đặc tính phi phàm bất diệt được.
+
+Hơn nữa, bọn họ nằm trong hoàn cảnh khá cực đoan, cho dù khu vực xung quanh không thiếu quái vật trong bóng tối. Nhưng đôi khi, vẫn không nhất định có thể đạt được tài liệu đối ứng, vì để truyền thừa, vì để kéo dài cả tòa thành, dùng đặc tính phi phàm ngưng tụ ra từ di cốt của người trước để chế tạo ma dược, đây không phải là chuyện rất khó khiến mọi người tiếp nhận.
+
+Đối với bọn họ điều này có lẽ còn là một nghi thức quang vinh thần thánh.
+
+Tất nhiên thông qua các lần tụ hội trước, Klein có thể thấy được Người Treo Ngược cũng biết điều này.
+
+Tiếc quá, không thể cứ để tiểu thư Chính Nghĩa trả tiền mãi được, chuyển tiền cho bề tôi của ta... Bề tôi của ta cũng cần hình tượng... Không thể phá hỏng hình tượng kẻ mạnh mà thầy Azcot tạo dựng nên được... Ừ, có cơ hội phải thử lại mới được, dù sao mấy tồn tại mạnh mẽ đều sẽ có kẻ tôi tớ tầng thấp chạy chân. Giống như Kẻ Không Ngủ của Nữ Thần Đêm Tối... chưa từng có người nào bởi vì Kẻ Gác Đêm ở tầng dưới nhỏ yếu, mà nghi ngờ Nữ Thần Đêm Đối không phải Chân Thần... Klein khẽ than thở vài câu.
+
+"Rất cảm ơn ngài! Ngài đúng là quá rộng rãi!" Audrey mừng rỡ trả lời.
+
+Cô nàng sám hối 3 giây vì sự dung tục muốn dùng tiền mua tin tức vừa nãy của mình.
+
+Klein dừng gõ tay, giọng điệu bình thản nói:
+
+"Thường thức thứ nhất, đặc tính phi phàm có định luật bất diệt, đặc tính phi phàm sẽ không biến mất, sẽ không giảm bớt, nó sẽ chỉ chuyển từ vật này sang vật khác."
+
+Bất tri bất giác mình lại dùng giọng điệu của đội trưởng... Khóe miệng Klein vô thức nhếch lên.
+
+Sẽ không biến mất, sẽ không giảm bớt, chỉ chuyển từ vật này qua một vật khác... Audrey suy ngẫm câu nói của ngài Kẻ Khờ, cảm giác trong câu nói tuy khá đơn giản này nhưng lại bao hàm quá nhiều ý nghĩa.
+
+Tròng mắt xanh biếc như ngọc bính của cô xoay tròn, nhìn thấy Người Treo Ngược và Mặt Trời đều không có biểu hiện kinh ngạc và trầm tư. Cô lập tức hiểu hai vị thành viên của hội Tarot đã sớm biết định luật này.
+
+Chỉ có tôi không biết... Cô uất ức thầm nghĩ. Nhưng lại nhanh chóng ca ngợi lòng tốt của ngài Kẻ Khờ.
+
+Lúc này Klein lại bổ sung:
+
+"Cho nên sau khi người phi phàm mất khống chế chết đi sẽ để lại vật phẩm ngưng tụ đặc tính phi phàm. Nó có thể là tài liệu chính của ma dược, cũng có thể là vật phẩm thần kỳ cần phong ấn. Người phi phàm bình thường sau khi chết cũng giống vậy, nhưng nó chỉ cùng cấp với tài liệu phụ trợ trong ma dược tương ứng. Tất nhiên bản thân nó cũng có năng lực phi phàm nhất định, có thể xem như nửa vật phẩm thần kỳ để sử dụng."
+
+Mấy câu bình thường đó chỉ chớp mắt cứ vang vọng trong đầu của Audrey, chồng chéo lên nhau, không ngừng lên cao, cuối cùng tụ thành một tia sấm to lớn.
+
+Audrey liên tưởng đến việc ăn người, liên tưởng tới một vấn đề mà lúc trước Người Treo Ngược từng nhắc đến. Chính là nếu như nguồn tài liệu bị cắt đứt thì danh sách con đường có bị gián đoạn hay không.
+
+Bây giờ thì cô đã biết đáp án, nhưng cô ước gì thà bản thân đừng nghe thấy thì hơn, cảm giác cứ như một cơn ác mộng vậy!
+
+Sao lại có thể tàn nhẫn đến thế? Sao lại thối nát như vậy? Lúc trước Audrey cũng được xem như từng chứng kiến đến một vài chuyện không tốt liên quan đến thế lực phi phàm, nhưng đó đều là sự hèn mọn và gian ác của một cá nhân. Ví dụ như ngài A, ví dụ như Zilingus. Nó không hề ảnh hưởng đến yêu thích và sự hướng tới của cô đối với lĩnh vực thần bí và thế giới phi phàm.
+
+Nhưng lần này, cô lại phát hiện thế giới tràn đầy thần bí đó lại đầy rẫy bóng tối.
+
+Tỉnh lại đi Audrey, mày không thể cứ ngây thơ mãi được! Mới chỉ suy nghĩ thôi đã mất khống chế rồi, tàn nhẫn và bóng tối mà ngài Kẻ Khờ miêu tả có thể đoán được... Nếu đã lựa chọn con đường này, thì phải dũng cảm đi tiếp! Audrey tự khuyên nhủ bản thân hai câu, tâm trạng mới dần bình tĩnh lại.
+
+Cô nhìn thấy Người Treo Ngược và Mặt Trời chỉ có mấy động tác theo thói quen, hình như hiểu rất rõ nội dung vừa nãy.
+
+Hừ! Người Treo Ngược xấu quá. Lúc trước còn muốn dùng tin tức này để trao đổi với tôi! À... Tin tức này đúng là đáng để được trả thù lao cao. Nó khá quan trọng, nhưng chỉ là đối với tôi mà thôi, ở trong mắt của ngài Kẻ Khờ, nó chỉ là một thường thức bình thường... Audrey đột nhiên rất muốn cười to, tâm trạng bắt đầu tốt hơn, từ từ ném hết mấy suy nghĩ cực đoan vừa nãy qua một bên.
+
+Klein không hề bất ngờ với phản ứng của ba thành viên, giọng điệu hắn không hề dao động nói tiếp:
+
+"Thường thức thứ hai, trong danh sách gần nhau đặc tính phi phàm có định luật bảo toàn."
+
+Đặc tính phi phàm được bảo toàn... Người Treo Ngược hơi thay đổi tư thế ngồi. Anh ta cảm giác được như đã hiểu ra vài chuyện, nhưng lại không cách nào hiểu rõ hoàn toàn được định luật này rốt cuộc đại biểu cho cái gì, ẩn chứa điều gì.
+
+Chính Nghĩa và Mặt Trời đều có cảm giác giống anh ta, không thể nào hiểu được một cách trực quan ý nghĩa chân chính của định luật này.
+
+"Tại sao là danh sách gần nhau?" Arges nhịn không được mở miệng hỏi.
+
+Klein cười trả lời:
+
+"Anh muốn trả thứ gì để đổi lấy đáp án?"
+
+Một trong những ý nghĩ hồi nãy của hắn chính là thường thức thì miễn phí, giải thích sẽ thu phí. Điều này vừa phù hợp với thân phận của mình, sẽ không lãng phí tin tức.
+
+Miễn phí mới là quý nhất.')
+GO
+SET IDENTITY_INSERT [dbo].[Chapter] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Comment] ON 
 GO
@@ -2197,9 +6111,177 @@ INSERT [dbo].[Comment] ([id], [bookId], [userId], [comment], [sonOf], [replyTo],
 GO
 SET IDENTITY_INSERT [dbo].[Comment] OFF
 GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (1, 1)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (1, 2)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (1, 3)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (1, 6)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (1, 7)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (1, 8)
+GO
 INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (2, 1)
 GO
 INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (2, 5)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (2, 18)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (3, 10)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (5, 4)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (5, 16)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (6, 10)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (6, 14)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (7, 9)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (7, 12)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (7, 13)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (8, 5)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (8, 6)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (9, 3)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (10, 4)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (10, 5)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (10, 14)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (11, 8)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (11, 13)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (11, 14)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (13, 7)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (14, 16)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (15, 18)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (16, 13)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (17, 14)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (18, 3)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (18, 5)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (18, 9)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (19, 12)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (20, 10)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (20, 15)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (23, 2)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (23, 4)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (23, 9)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (24, 2)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (24, 13)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (25, 9)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (25, 16)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (26, 4)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (27, 8)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (28, 2)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (30, 6)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (30, 9)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (31, 9)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (31, 15)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (33, 5)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (34, 2)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (34, 8)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (34, 15)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (35, 6)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (35, 14)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (35, 15)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (35, 17)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (37, 3)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (38, 1)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (39, 7)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (39, 16)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (40, 1)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (40, 8)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (40, 11)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (40, 14)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (41, 1)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (41, 17)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (41, 18)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (42, 3)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (42, 15)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (42, 16)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (43, 3)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (43, 5)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (44, 3)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (44, 4)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (44, 14)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (45, 8)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (45, 10)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (47, 17)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (48, 16)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (49, 6)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (50, 2)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (50, 3)
+GO
+INSERT [dbo].[Favourite] ([uid], [bid]) VALUES (50, 4)
 GO
 INSERT [dbo].[Payment_Account] ([accountNumber], [balance]) VALUES (0, CAST(0.00 AS Decimal(10, 2)))
 GO
@@ -3467,13 +7549,53 @@ INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B
 GO
 INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B16', 16, NULL, CAST(9.69 AS Decimal(10, 2)))
 GO
-INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B17', 17, NULL, CAST(0.00 AS Decimal(10, 2)))
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B17', 17, NULL, CAST(0.16 AS Decimal(10, 2)))
 GO
 INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B17-C1', 17, 21, CAST(0.00 AS Decimal(10, 2)))
 GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B17-C2', 17, 22, CAST(0.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B17-C3', 17, 26, CAST(0.16 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B18', 18, NULL, CAST(0.00 AS Decimal(10, 2)))
+GO
 INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B2', 2, NULL, CAST(12.99 AS Decimal(10, 2)))
 GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B22', 22, NULL, CAST(0.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B23', 23, NULL, CAST(0.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B24', 24, NULL, CAST(0.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B25', 25, NULL, CAST(0.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B26', 26, NULL, CAST(0.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B27', 27, NULL, CAST(0.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B28', 28, NULL, CAST(0.00 AS Decimal(10, 2)))
+GO
 INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B3', 3, NULL, CAST(10.50 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B30', 30, NULL, CAST(0.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B31', 31, NULL, CAST(0.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B32', 32, NULL, CAST(0.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B33', 33, NULL, CAST(1.74 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B33-C1', 33, 27, CAST(0.25 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B33-C2', 33, 28, CAST(0.25 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B33-C3', 33, 29, CAST(0.25 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B33-C4', 33, 30, CAST(0.29 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B33-C5', 33, 31, CAST(0.32 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B33-C6', 33, 32, CAST(0.38 AS Decimal(10, 2)))
 GO
 INSERT [dbo].[Product] ([productId], [bookId], [chapterId], [price]) VALUES (N'B4', 4, NULL, CAST(13.99 AS Decimal(10, 2)))
 GO
@@ -3527,6 +7649,12 @@ INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (111, N'B16')
 GO
 INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (109, N'B17-C1')
 GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (2, N'B1')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (2, N'B5')
+GO
+INSERT [dbo].[Product_Own] ([userId], [productId]) VALUES (2, N'B15')
+GO
 SET IDENTITY_INSERT [dbo].[Report] ON 
 GO
 INSERT [dbo].[Report] ([id], [reportType], [userId], [objectId], [note], [sent], [received], [status], [action]) VALUES (1, 1, 2, 1, N'Hate', CAST(N'2022-10-25T21:41:00.603' AS DateTime), CAST(N'2022-10-26T00:00:00.000' AS DateTime), 1, NULL)
@@ -3574,6 +7702,100 @@ GO
 INSERT [dbo].[Report_Violation] ([reportId], [violationId]) VALUES (7, 6)
 GO
 INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (1, 2, 2)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (5, 6, 3)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (18, 6, 3)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (16, 9, 3)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (9, 10, 4)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (18, 10, 5)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (4, 12, 5)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (15, 14, 2)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (16, 14, 2)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (9, 15, 3)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (15, 15, 2)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (15, 17, 3)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (16, 17, 3)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (1, 19, 1)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (2, 20, 4)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (12, 20, 5)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (6, 21, 3)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (2, 22, 1)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (4, 22, 5)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (13, 22, 3)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (16, 22, 3)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (18, 23, 5)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (3, 25, 3)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (14, 27, 4)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (11, 28, 3)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (18, 28, 1)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (2, 29, 2)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (7, 29, 3)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (5, 30, 2)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (13, 31, 2)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (14, 32, 1)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (14, 33, 2)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (4, 34, 2)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (15, 35, 2)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (18, 35, 3)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (5, 36, 3)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (7, 36, 2)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (2, 38, 4)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (17, 38, 5)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (8, 41, 3)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (3, 42, 5)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (10, 42, 3)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (11, 43, 3)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (4, 46, 2)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (8, 46, 2)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (11, 46, 2)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (8, 47, 4)
+GO
+INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (2, 48, 5)
 GO
 INSERT [dbo].[Star] ([bid], [uid], [star]) VALUES (1, 109, 5)
 GO
@@ -3799,10 +8021,6 @@ INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter],
 GO
 INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [productID]) VALUES (3000113, 2, CAST(5.00 AS Decimal(10, 2)), CAST(1526.47 AS Decimal(10, 2)), CAST(N'2022-10-17T10:25:39.513' AS DateTime), 3, 3, N'Buy One Piece, Volume 1: Romance Dawn.', N'B15')
 GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [productID]) VALUES (3000114, 2, CAST(25.00 AS Decimal(10, 2)), CAST(1501.47 AS Decimal(10, 2)), CAST(N'2022-10-23T15:43:12.647' AS DateTime), 3, 3, N'Buy 5cm per Second.', NULL)
-GO
-INSERT [dbo].[Transaction] ([transactionId], [userId], [amount], [balanceAfter], [transactionTime], [type], [status], [description], [productID]) VALUES (3000115, 2, CAST(5.00 AS Decimal(10, 2)), CAST(1496.47 AS Decimal(10, 2)), CAST(N'2022-10-23T21:16:32.677' AS DateTime), 3, 3, N'Buy Gone Girl .', NULL)
-GO
 SET IDENTITY_INSERT [dbo].[Transaction] OFF
 GO
 SET IDENTITY_INSERT [dbo].[User] ON 
@@ -4013,9 +8231,9 @@ INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [addre
 GO
 INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (109, N'I Am Tester', 1, CAST(N'2002-01-01' AS Date), N'Bookie_User200@qa.team', N'0987654321', NULL, N'tester', N'test', 1, 109)
 GO
-INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (110, N'Test Author', 0, CAST(N'2011-12-13' AS Date), N'Bookie_Author1@qa.team', N'0963852741', NULL, N'autester', N'test_author1', 2, 110)
+INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (110, N'Test Author', 0, CAST(N'2011-12-13' AS Date), N'Bookie_Author1@qa.team', N'0963852741', NULL, N'autester', N'test_author1', 3, 110)
 GO
-INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (111, N'Thanh Hien', 0, CAST(N'2022-10-04' AS Date), N'thanhienee@123.com', N'0123456789', NULL, N'thanhienee', N'123456789', 1, 111)
+INSERT [dbo].[User] ([id], [fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super], [walletNumber]) VALUES (111, N'Thanh Hien', 0, CAST(N'2022-10-04' AS Date), N'thanhienee@123.com', N'0123456789', NULL, N'thanhienee', N'123456789', 2, 111)
 GO
 SET IDENTITY_INSERT [dbo].[User] OFF
 GO
@@ -4093,6 +8311,26 @@ INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (14, 31,
 GO
 INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (15, 32, 1, N'Lạc', NULL)
 GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (16, 33, 1, N'Sau khi gây thù với chủ thần', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (17, 5, 1, N'Clown', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (18, 5, 2, N'Faceless', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (19, 10, 1, N'Faceless', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (20, 2, 1, N'Traveler', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (21, 3, 1, N'Undying', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (22, 4, 1, N'Abnormal', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (23, 7, 1, N'Masked', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (24, 13, 1, N'2 brothers', NULL)
+GO
+INSERT [dbo].[Volume] ([id], [bookId], [no], [title], [summary]) VALUES (25, 14, 1, N'Vol 1', NULL)
+GO
 SET IDENTITY_INSERT [dbo].[Volume] OFF
 GO
 ALTER TABLE [dbo].[Book] ADD  DEFAULT ((0)) FOR [favourite]
@@ -4136,9 +8374,6 @@ GO
 ALTER TABLE [dbo].[Chapter]  WITH CHECK ADD FOREIGN KEY([volumeId])
 REFERENCES [dbo].[Volume] ([id])
 ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[Chapter_Payment]  WITH CHECK ADD FOREIGN KEY([chapterId])
-REFERENCES [dbo].[Chapter] ([id])
 GO
 ALTER TABLE [dbo].[Comment]  WITH CHECK ADD FOREIGN KEY([bookId])
 REFERENCES [dbo].[Book] ([id])

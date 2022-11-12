@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /* @author ACER */
 @WebServlet(name="AdReportDetail", urlPatterns={"/Admin/ReportDetail"})
-public class ReportDetail extends HttpServlet {
+public class ReportDetailController extends HttpServlet {
  
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
