@@ -21,7 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /* @author ACER */
-@WebServlet(name = "AdBookAnalysisController", urlPatterns = {"/Admin/BookAnalysis"})
+@WebServlet(name = "AdBookDetailController", urlPatterns = {"/Admin/BookDetail"})
 public class BookDetailController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -36,7 +36,7 @@ public class UpdateBookController extends HttpServlet {
         try {
             int bookId = Integer.parseInt(request.getParameter("id"));
             Book book = bd.getBookById(bookId);
-            if (book == null){
+            if (book == null) {
                 throw new Exception();
             }
                     ArrayList<Category> cates = cd.getAllActiveCategory();
@@ -48,7 +48,7 @@ public class UpdateBookController extends HttpServlet {
             request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(UpdateBookController.class.getName()).log(Level.SEVERE, null, ex);
-            response.sendRedirect(request.getContextPath()+"/error.jsp");
+            response.sendRedirect(request.getContextPath() + "/error.jsp");
         }
     }
 
@@ -60,8 +60,9 @@ public class UpdateBookController extends HttpServlet {
         request.setAttribute("authors", authors);
         request.setAttribute("categories", cates);
         request.setAttribute("service", "Update");
+        int id = 0;
         try {
-            int id = Integer.parseInt(request.getParameter("id"));
+            id = Integer.parseInt(request.getParameter("id"));
             request.setAttribute("book", bd.getBookById(id));
             String title = mu.fieldString(request.getParameter("title"), "Required field!");
             String author = request.getParameter("authorId");

@@ -115,7 +115,7 @@
 
                                             <c:forEach var="book" items="${books}">
                                                 <tr>
-                                                    <td><a href="./BookAnalysis?id=${book.id}">${book.id}</a></td>
+                                                    <td><a href="./BookDetail?id=${book.id}">${book.id}</a></td>
                                                     <td>${book.title}</td>
                                                     <td>${book.author.name}</td>
                                                     <td style="width: 150px;"><img  src="${!empty book.image?book.image:"../images/novel-sample.png"}" width="100px"></td>

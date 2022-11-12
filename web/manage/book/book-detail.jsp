@@ -107,7 +107,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleSelect1" class="control-label">Title</label>
-                                                <input class="form-control" type="text" name="title" required value="${book.title}">
+                                                <input class="form-control" type="text" name="title" required value="${book.title}" maxlength="200">
                                             </div>
                                             <div class="form-group col-3">
                                                 <label for="exampleSelect1" class="control-label">Author</label>
@@ -123,12 +123,12 @@
                                                         <option value="${author.id}" ${author.id==book.authorId?"selected":""}>${author.name}</option>
                                                     </c:forEach>
                                                 </select>
-                                                <input class="form-control" type="text" name="author" style="display:none;" disabled="disabled" onblur="if ($(this).val() == '') {
+                                                <input class="form-control" type="text" name="author" style="display:none;" maxlength="100" disabled="disabled" onblur="if ($(this).val() == '') {
                                                             $(this).hide().prop('disabled', true);$('select[name=authorId]').show().prop('disabled', false).focus();
                                                         }">
                                             </div>
                                             <div class="col-12">
-                                                <label class="control-label">Category</label>
+                                                <label class="control-label">Genre</label>
                                                 <div class="row col-11" style="margin-left:0px">
                                                     <c:forEach items="${categories}" var="category">
                                                         <div class="form-check form-check-inline col-3 mx-0" >
@@ -144,7 +144,7 @@
 
                                             <div class="form-group col-md-4">
                                                 <label class="control-label ">Price</label>
-                                                $<input class="form-control" type="text" name="price" pattern="[+-]?([0-9]*[.])?[0-9]+" required value="${book.getPrice()}">
+                                                $<input class="form-control" type="text" name="price" pattern="[+-]?([0-9]*[.])?[0-9]+" maxlength="6" required value="${book.getPrice()}">
 
                                             </div>
                                             <div class="form-group">
@@ -153,11 +153,11 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">Summary</label>
-                                                <textarea class="form-control" name="description" style="height: 95px;">${book.getDescription()}</textarea>
+                                                <textarea class="form-control" name="description" style="height: 95px;" required="" maxlength="2000">${book.getDescription()}</textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label" >Image (Enter Link)</label>
-                                                <input class="form-control" type="text" name="image" required value="${book.getImage()}">
+                                                <input class="form-control" type="text" name="image" required value="${book.getImage()}" maxlength="2000">
                                                 <!--                                                <input class="form-control" id="img" onchange="changeimg()" name="image" type="file" -->
                                                 <input name="proimage" id="image" value="${book.getImage()}" type="hidden" >
                                                 <img  src="${book.getImage()}" id="demoimg${book.id}" style="margin-top: 5px;" height="100">

@@ -40,7 +40,7 @@ public class AddBookController extends HttpServlet {
             request.setAttribute("authors", authors);
             request.setAttribute("categories", cates);
             request.setAttribute("service", "Add");
-            request.setAttribute("newId", bd.countBookNumber() + 1);
+            request.setAttribute("newId", bd.currentId() + 1);
             request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
         } catch (Exception e) {
                 response.sendRedirect(request.getContextPath()+"/error.jsp");
@@ -57,7 +57,6 @@ public class AddBookController extends HttpServlet {
         request.setAttribute("authors", authors);
         request.setAttribute("service", "Add");
         try {
-            int id = mu.fieldInt(request.getParameter("id"), "Wrong format!");
             String title = mu.fieldString(request.getParameter("title"), "Required field!");
             String author = request.getParameter("authorId");
             String[] category = request.getParameterValues("categoryId");
@@ -70,7 +69,6 @@ public class AddBookController extends HttpServlet {
             String img = mu.fieldString(request.getParameter("image"), "Required field!");
 
             Book book = new Book();
-            book.setId(id);
             book.setTitle(title);
 
             if (author != null) {
@@ -87,18 +85,12 @@ public class AddBookController extends HttpServlet {
             book.setIssale(issale);
             book.setImage(img);
             book.setDescription(description);
-
-            if (bd.addBook(book) == 0) {
-                request.setAttribute("message", "Add Failed! Please try again!");
-                request.setAttribute("book", book);
-                request.setAttribute("newId", bd.countBookNumber() + 1);
-                request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
-            } else {
-                response.sendRedirect("./Book");
-            }
+            
+            int newID = bd.addBook(book);
+            response.sendRedirect("./BookDetail?id="+newID);
         } catch (Exception e) {
             request.setAttribute("message", e.getMessage());
-            request.setAttribute("newId", bd.countBookNumber() + 1);
+            request.setAttribute("newId", bd.currentId() + 1);
             request.getRequestDispatcher("/manage/book/book-detail.jsp").forward(request, response);
         }
 

@@ -226,10 +226,11 @@ public class ProductDAO {
 
     public int countOwner(int bookId) {
         try {
-            String sql = "SELECT COUNT( po.[userId])\n"
+            String sql = "SELECT COUNT(*) "
+                    + "FROM (SELECT DISTINCT po.[userId]"
                     + "  FROM [Product_Own] po\n"
-                    + " INNER JOIN [Product] p ON po.productId = p.[productId]\n"
-                    + " WHERE p.bookId = ?";
+                    +" INNER JOIN [Product] p ON po.productId = p.[productId]"
+                    +" WHERE p.bookId = ? ) p";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, bookId);
             rs = stm.executeQuery();
