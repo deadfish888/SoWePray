@@ -8,13 +8,16 @@ import Model.product.Book;
 import Model.auth.User;
 import Model.product.Author;
 import Model.product.BookOwn;
+import Model.product.content.Chapter;
 import context.DBContext;
 import context.product.content.ChapterDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -64,7 +67,6 @@ public class BookOwnDAO {
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, user.getId());
             rs = stm.executeQuery();
-            CategoryDAO categoryDAO = new CategoryDAO();
             while (rs.next()) {
 //                int id = rs.getInt("bookId");
                 Book book = new Book();
@@ -177,7 +179,7 @@ public class BookOwnDAO {
     }
 
     public BookOwn get(User user, Book book) {
-        BookOwn bookOwn = new BookOwn();
+        BookOwn bookOwn = null;
         ChapterDAO chapterDAO = new ChapterDAO();
         try {
             String sql = "SELECT [userId]\n"
@@ -192,18 +194,36 @@ public class BookOwnDAO {
             stm.setInt(2, book.getId());
             rs = stm.executeQuery();
             if (rs.next()) {
+                bookOwn = new BookOwn();
                 bookOwn.setBook(book);
                 bookOwn.setUser(user);
                 if (rs.getTimestamp("recentTime") != null && rs.getObject("recentChapterId") != null) {
                     bookOwn.setRecentTime(rs.getTimestamp("recentTime"));
                     bookOwn.setRecentChapter(chapterDAO.getChapterById(rs.getInt("recentChapterId")));
                 }
-                return bookOwn;
             }
         } catch (SQLException ex) {
             Logger.getLogger(BookOwnDAO.class.getName()).log(Level.SEVERE, null, ex);
             bookOwn = null;
         }
         return bookOwn;
+    }
+
+    public void updateReadingStatus(User user, Book book, Chapter chapter) {
+        try {
+            String sql = "UPDATE [Book_Own]\n"
+                    + "      SET [recentTime] = ?\n"
+                    + "      ,[recentChapterId] = ?\n"
+                    + " WHERE [userId] = ?"
+                    + " AND [bookId] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setTimestamp(1, new Timestamp(Calendar.getInstance().getTimeInMillis()));
+            stm.setInt(2, chapter.getId());
+            stm.setInt(3, user.getId());
+            stm.setInt(4, book.getId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BookOwnDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

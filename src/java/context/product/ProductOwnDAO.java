@@ -5,6 +5,7 @@
 package context.product;
 
 import Model.auth.User;
+import Model.product.Book;
 import Model.product.Product;
 import Model.product.ProductOwn;
 import context.DBContext;
@@ -55,6 +56,41 @@ public class ProductOwnDAO {
                     + "  where u.id = ?";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, user.getId());
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                BookDAO bookDAO = new BookDAO();
+                ChapterDAO chapterDAO = new ChapterDAO();
+                Product product = new Product();
+                product.setProductId(rs.getString("productId"));
+                product.setBook(bookDAO.getBookById(rs.getInt("bookId")));
+                product.setChapter(chapterDAO.getChapterById(rs.getInt("chapterId")));
+                product.setPrice(rs.getFloat("price"));
+                list.add(product);
+            }
+        } catch (Exception e) {
+            Logger.getLogger(BookOwnDAO.class.getName()).log(Level.SEVERE, null, e);
+            System.out.println("getProductOwn Error:" + e.getMessage());
+        }
+        return list;
+    }
+
+    public ArrayList<Product> getOwnChapterOfBook(User user, Book book) {
+        ArrayList<Product> list = new ArrayList<>();
+        try {
+            String sql = "SELECT p.[productId]\n"
+                    + "      ,[bookId]\n"
+                    + "      ,[chapterId]\n"
+                    + "      ,[price]\n"
+                    + "  FROM [Product] p"
+                    + "  INNER JOIN [Product_Own] po\n"
+                    + "  on po.productId = p.productId\n"
+                    + "  INNER JOIN [User] u \n"
+                    + "  on po.userId = u.id\n"
+                    + "  where u.id = ?"
+                    + "  and bookId = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, user.getId());
+            stm.setInt(2, book.getId());
             rs = stm.executeQuery();
             while (rs.next()) {
                 BookDAO bookDAO = new BookDAO();

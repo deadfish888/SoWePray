@@ -5,7 +5,6 @@
 package Model.product;
 
 import Model.product.content.Chapter;
-import context.product.AuthorDAO;
 import context.product.ProductDAO;
 import context.product.content.ChapterDAO;
 import java.util.ArrayList;

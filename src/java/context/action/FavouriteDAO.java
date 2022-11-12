@@ -15,7 +15,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -242,16 +241,15 @@ public class FavouriteDAO {
         return list;
     }
 
-    public void sendFavtoBook(int count) {
+    public void sendFavtoBook(int count,int bookId) {
         try {
 
-            String sql = "INSERT INTO [dbo].[Book]\n"
-                    + "           (\n"
-                    + "           [favourite])\n"
-                    + "     VALUES\n"
-                    + "           ('" + count + "'"
-                    + "           )";
+            String sql = "UPDATE [dbo].[Book]\n"
+                    + "      SET\n" 
+                    + "           [favourite]=" + count + ""
+                    + " WHERE [id] = ?";
             stm =cnn.prepareStatement(sql);
+            stm.setInt(1, bookId);
             stm.executeUpdate();
         } catch (Exception e) {
             System.out.println("edit Error:" + e.getMessage());

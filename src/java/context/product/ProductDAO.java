@@ -195,4 +195,20 @@ public class ProductDAO {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public int countOwner(int bookId) {
+        try {
+            String sql = "SELECT COUNT( po.[userId])\n" +
+                    "  FROM [Product_Own] po\n" +
+                    " INNER JOIN [Product] p ON po.productId = p.[productId]\n" +
+                    " WHERE p.bookId = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, bookId);
+            rs = stm.executeQuery();
+            if (rs.next()) return rs.getInt(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
 }

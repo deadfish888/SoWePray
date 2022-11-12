@@ -581,4 +581,27 @@ public class ChapterDAO {
         }
     }
 
+    public int countWordsByBookId(int bookId) {
+        int total=0;
+        try {
+            String sql = "SELECT [content]"
+                    + "  FROM [Chapter] c "
+                    + " INNER JOIN [Volume] v ON c.[volumeId] = v.[id] "
+                    + " INNER JOIN [Book] b ON v.[bookId] = b.[id]"
+                    + " WHERE b.[id] = ?";
+            stm = cnn.prepareStatement(sql);
+            stm.setInt(1, bookId);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String content = rs.getString(1);
+                int number = content.split("\\s+").length;
+                total += number;
+            }
+            return total;
+        } catch (SQLException ex) {
+            Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
 }

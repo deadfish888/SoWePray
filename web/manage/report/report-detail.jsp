@@ -87,7 +87,7 @@
                                                                        width="150" />
                                                 <h4 class="card-title mt-2">
                                                     <a target="_blank" href="../BookDetail?id=${report.bookO.id}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
-                                                    <a href="">${report.bookO.title} - ID: ${report.bookO.id}</a></h4>
+                                                    <a target="_blank" href="./BookAnalysis?id=${report.bookO.id}">${report.bookO.title} - ID: ${report.bookO.id}</a></h4>
 
                                                 <c:if test="${report.bookO.author.userId !=0}">
                                                     <h6 class="card-subtitle">Creator: <a target="_blank" href="./Activities?id=${report.bookO.author.userId}">${report.bookO.author.user.name} - ID: ${report.bookO.author.userId}</a></h6>
@@ -105,7 +105,7 @@
                                                     ${report.comO.user.name} - ID: ${report.comO.userId}
                                                 </h4>
                                                     <h6 class="card-subtitle">
-                                                        <a  href="../BookDetail?id=${report.bookO.id}&cmtId=${report.comO.id}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
+                                                        <a target="_blank" href="../BookDetail?id=${report.bookO.id}&cmtId=${report.comO.id}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
                                                         CommentID: ${report.comO.id}
                                                     </h6>
                                                 
@@ -151,7 +151,7 @@
                                                     </c:if>
                                                     <tr>
                                                         <th>Reporter</th>
-                                                        <td><a href="./Activities?id=${report.userId}">${report.userR.username}</a> - ID: ${report.userId}</td>
+                                                        <td><a target="_blank" href="./Activities?id=${report.userId}">${report.userR.username}</a> - ID: ${report.userId}</td>
                                                     </tr>
                                                     <tr>
                                                         <th>Violations</th>
