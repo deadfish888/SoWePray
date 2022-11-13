@@ -62,8 +62,10 @@
                         <c:if test = "${author.userId != 0}">
                             <div class="col-md-2">
                                 <img
-                                    src="/images/default.png"
+                                    src="images/default.png"
                                     alt="avatar"
+                                    width="100"
+                                    height="100"
                                     />
                             </div>
                             <div class="col-md-10">
@@ -117,15 +119,24 @@
                                     <a href="BookDetail?id=${bookau.id}">
                                         <h2>${bookau.title}</h2>
 
-                                        <c:if test="${bookau.issale()}">
-                                            <p>
-                                                <del>$${bookau.price}</del> 
-                                                <strong>$5.00</strong>
-                                            </p>
-                                        </c:if>
-                                        <c:if test="${!bookau.issale()}">
-                                            <p><strong>$${bookau.price}</strong></p>
-                                        </c:if>
+                                        <c:if test="${bookau.author.userId == 0}">
+                                                        <c:if test="${bookau.issale()}">
+                                                    <p>
+                                                        <del>$${bookau.getPrice()}</del> 
+                                                        <strong>$5.0</strong>
+                                                    </p>
+                                                </c:if>
+                                                <c:if test="${!bookau.issale()}">
+                                                    <p><strong>$${bookau.getPrice()}</strong></p>
+                                                </c:if>
+                                            </c:if>
+                                            <c:if test="${ bookau.author.userId != 0}">
+                                                <c:if test="${bookau.issale()}">
+                                                    <p>
+                                                        <strong>$${bookau.getPrice()}</strong>
+                                                    </p>
+                                                </c:if>
+                                            </c:if>
                                     </a>
                                 </article>
                             </c:forEach>

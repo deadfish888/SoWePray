@@ -73,32 +73,32 @@
 
                                     </div>
                                 </form>
-                                        <div class="text-center">
+                                <div class="text-center">
                                     <span class="fa fa-eye"></span>
                                     <span class="title">${book.views}</span><br><!-- comment -->
                                     <span class="fa fa-star"></span><span class="title"> ${book.rating} </span>
                                     /<span class="title"> ${numrate} </span>ratings
                                     <c:choose >
-                                    <c:when test="${sessionScope.user.is_super()>0}" > 
-                                        <div class="row" style="margin:auto">
-                                            <form id="ratingfrm" action="Rating" method="POST">        
-                                                <div class="rate">
-                                                    <input type="hidden" name="bId" value="${book.id}">
-                                                    <input type="radio" id="star5" name="getRate" value="5" required/>
-                                                    <label for="star5" title="text">5</label>
-                                                    <input type="radio" id="star4" name="getRate" value="4" />
-                                                    <label for="star4" title="text">4</label>
-                                                    <input type="radio" id="star3" name="getRate" value="3" />
-                                                    <label for="star3" title="text">3</label>
-                                                    <input type="radio" id="star2" name="getRate" value="2" />
-                                                    <label for="star2" title="text">2</label>
-                                                    <input type="radio" id="star1" name="getRate" value="1" />
-                                                    <label for="star1" title="text">1</label>
-                                                </div>
-                                            </form>   
-                                        </div>
-                                    </c:when>
-                                </c:choose> 
+                                        <c:when test="${sessionScope.user.is_super()>0}" > 
+                                            <div class="row" style="margin:auto">
+                                                <form id="ratingfrm" action="Rating" method="POST">        
+                                                    <div class="rate">
+                                                        <input type="hidden" name="bId" value="${book.id}">
+                                                        <input type="radio" id="star5" name="getRate" value="5" required/>
+                                                        <label for="star5" title="text">5</label>
+                                                        <input type="radio" id="star4" name="getRate" value="4" />
+                                                        <label for="star4" title="text">4</label>
+                                                        <input type="radio" id="star3" name="getRate" value="3" />
+                                                        <label for="star3" title="text">3</label>
+                                                        <input type="radio" id="star2" name="getRate" value="2" />
+                                                        <label for="star2" title="text">2</label>
+                                                        <input type="radio" id="star1" name="getRate" value="1" />
+                                                        <label for="star1" title="text">1</label>
+                                                    </div>
+                                                </form>   
+                                            </div>
+                                        </c:when>
+                                    </c:choose> 
                                 </div>
 
                             </div>
@@ -228,7 +228,7 @@
                                     </div>        
                                 </div>
 
-                                   
+
                                 <div style="color: red">
                                     ${sessionScope.error}            
                                     <%request.getSession().removeAttribute("error");%>
@@ -578,32 +578,29 @@
 
                     <div class="container-fluid mt-5">
                         <h2 class="h2">Similar Products</h2>
-                        <section class="tiles" style="margin-right: 30px">
-                            <div class= "" style = "display: flex ">
-                                <c:forEach items="${sames}" var="book">
-                                    <article class="style1">
-                                        <span class="image">
-                                            <img src="${(! empty book.image)?book.image:("images/novel-sample.png")}" alt="" style="height: 281px"/>
-                                        </span>
-                                        <a href="BookDetail?id=${book.id}">
-                                            <h2>${book.title}</h2>
-                                            <h3 style="font-size: 0.85em;"><i>${book.author.name}</i></h3>
-                                                    <c:if test="${book.author.userId==0}">
-                                                        <c:if test="${book.issale()}">
-                                                    <p>
-                                                        <del>$${book.getPrice()}</del> 
-                                                        <strong>$${5.00}</strong>
-                                                    </p>
-                                                </c:if>
-                                                <c:if test="${!book.issale()}">
-                                                    <p><strong>$${book.getPrice()}</strong></p>
-                                                </c:if>
+                        <section class="tiles">
+                            <c:forEach items="${sames}" var="book">
+                                <article class="style1" style="width: calc(20% - 2.5em);margin: 4em 0 0 4em;">
+                                    <span class="image">
+                                        <img src="${(!empty book.image)?book.image:"images/novel-sample.png"}" alt="" style="height: 281px;"/>
+                                    </span>
+                                    <a href="BookDetail?id=${book.id}" alt="${book.title}">
+                                        <h2 style="overflow: hidden;text-overflow: ellipsis;font-size: 0.85em;">${book.title}</h2>
+                                        <h3 style="font-size: 0.7em;"><i>${book.author.name}</i></h3>
+                                                <c:if test="${book.author.userId == 0}">
+                                                    <c:if test="${book.issale()}">
+                                                <p>
+                                                    <del>$${book.getPrice()}</del> 
+                                                    <strong>$${5.00}</strong>
+                                                </p>
                                             </c:if>
-                                        </a>
-
-                                    </article>
-                                </c:forEach>
-                            </div> 
+                                            <c:if test="${!book.issale()}">
+                                                <p><strong>$${book.getPrice()}</strong></p>
+                                            </c:if>
+                                        </c:if>
+                                    </a>
+                                </article>
+                            </c:forEach>
                         </section>
                     </div>
                 </div>
