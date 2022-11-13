@@ -686,6 +686,29 @@
                                                                             return false;
                                                                         }
                                                                     }
+                                                                    const url_string = window.location.href;
+                                                                    const url = new URL(url_string);
+                                                                    var cmtId = url.searchParams.get("cmtId");
+                                                                    if (cmtId != null) {
+                                                                        var id = document.getElementById("cmt" + cmtId);
+                                                                        id.scrollIntoView({block: "center"});
+                                                                        id.classList.add("current");
+                                                                    }
+                                                                    $("#fav").on('click', function () {
+                                                                        $("#favfrm").submit();
+                                                                    });
+                                                                    $("#refav").on('click', function () {
+                                                                        $("#reportfrm").submit();
+                                                                    });
+                                                                    $("#buy").on('click', function () {
+                                                                        $("#getfrm").submit();
+                                                                    });
+                                                                    $("#read").on('click', function () {
+                                                                        $("#readfrm").submit();
+                                                                    });
+                                                                    $("#ratingfrm").on('click', function () {
+                                                                        $("#ratingfrm").submit();
+                                                                    });
         </script>
     </body>
 </html>
