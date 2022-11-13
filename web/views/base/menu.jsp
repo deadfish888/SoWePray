@@ -32,7 +32,7 @@
 
 
 
-        <li><a href="${context}/about.jsp">About</a></li>
+        <li><a href="${context}/about.jsp">Rule</a></li>
 
         <c:if test="${!empty sessionScope.user && empty sessionScope.admin}">
             <li><a href="${context}/Logout"><i class="fa fa-sign-out"></i>Logout</a></li>
