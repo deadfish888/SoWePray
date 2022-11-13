@@ -102,7 +102,7 @@
                                                     <td rowspan="5" style="white-space: pre-line">${(vol.summary == null) ? "No summary" : vol.summary}</td>
                                                 </tr>
                                             </table>
-                                            <div class="row mt-3">
+                                            <div class="row mt-3" ${book.author.userId!=0? "hidden":""}>
 
                                                 <div class="col-md-1">
                                                     <form method="get" action="./EditVolume" >
@@ -189,7 +189,7 @@
                                                     </td>
                                                 </tr>
                                             </table>
-                                            <div class="row mt-3">
+                                            <div class="row mt-3" ${book.author.userId!=0? "hidden":""}>
                                                 <div class="col-md-1">
                                                     <form method="get" action="./EditChapter" >
                                                         <input type="hidden" name="id" value="${chap.id}">

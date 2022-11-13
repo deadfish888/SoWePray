@@ -34,10 +34,6 @@ public class UpdateNovelController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
-        if (user == null) {
-            response.sendRedirect("../Login");
-            return;
-        }
         int bookId = Integer.parseInt(request.getParameter("id"));
         ArrayList<Category> cates = cd.getAllActiveCategory();
         request.setAttribute("categories", cates);
@@ -57,10 +53,6 @@ public class UpdateNovelController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
-        if (user == null) {
-            response.sendRedirect("../Login");
-            return;
-        }
         int id = 0;
         try {
             id = Integer.parseInt(request.getParameter("id"));

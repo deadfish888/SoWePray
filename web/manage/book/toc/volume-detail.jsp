@@ -97,7 +97,7 @@
 In most cases it is not necessary and can be left blank" aria-label="With textarea">${(requestScope.vol.summary==null)? null: requestScope.vol.summary}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-auto">
+                                        <div class="col-auto" ${book.author.userId!=0? "hidden":""}>
                                             <button type="submit" name="service" class="btn btn-primary">${service} Volume</button>
                                         </div>
                                         <div class="col-md-4">

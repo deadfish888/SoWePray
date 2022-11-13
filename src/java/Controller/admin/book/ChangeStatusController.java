@@ -22,18 +22,11 @@ public class ChangeStatusController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String xpage = request.getParameter("page");
-        int page;
-        if (xpage==null) {
-            page = 1;
-        } else {
-            page = Integer.parseInt(xpage);
-        }
         try {
             int bookId = Integer.parseInt(request.getParameter("id"));
             BookDAO bd = new BookDAO();
             bd.changeStatus(bookId);
-            response.sendRedirect("./Book?page="+page);
+            response.sendRedirect(request.getHeader("referer"));
         } catch (Exception ex) {
             Logger.getLogger(ChangeStatusController.class.getName()).log(Level.SEVERE, null, ex);
             response.sendRedirect(request.getContextPath()+"/error.jsp");

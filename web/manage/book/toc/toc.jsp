@@ -6,13 +6,13 @@
             <h4 class="card-title mt-2"> 
                 <a target="_blank" href="../../BookDetail?id=${book.id}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
                     ${book.title}
-                <a href="./AddVolume?id=${book.id}"><i class="fa fa-plus-square" aria-hidden="true"></i></a>
+                <a href="./AddVolume?id=${book.id}"><i class="fa fa-plus-square" aria-hidden="true" ${book.author.userId!=0? "hidden":""}></i></a>
             </h4>
 
             <c:forEach items="${requestScope.volumes}" var="volume">
                 <h5  class="card-subtitle">
                     <a id="vol${volume.id}" href="./TOC?id=${book.id}&vid=${volume.id}">${volume.title}</a>
-                    <a href="./AddChapter?id=${book.id}&vid=${volume.id}"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                    <a href="./AddChapter?id=${book.id}&vid=${volume.id}" ${book.author.userId!=0? "hidden":""}><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
                 </h5>
                 <h5 class="card-subtitle">
                     <ul class="list-group list-group-flush">

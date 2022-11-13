@@ -138,8 +138,7 @@
                                                 <th style="width: 150px;">Image</th>
                                                 <th>Genre</th>
                                                 <th>View</th>
-                                                <th>Price</th>
-                                                <th>Sale</th>
+                                                <th style="width: 100px;">Price</th>
                                                 <th>Update</th>
                                                 <th>TOC</th>
                                                 <th>Enable</th>
@@ -150,7 +149,10 @@
                                             <c:forEach var="book" items="${books}">
                                                 <tr>
                                                     <td><a href="./BookDetail?id=${book.id}">${book.id}</a></td>
-                                                    <td>${book.title}</td>
+                                                    <td>${book.title}
+                                                        <br><i class="fa fa-star"></i>${book.rating}
+                                                        <br><i class="fa fa-eye"></i>${book.views}
+                                                    </td>
                                                     <td>${book.author.name}</td>
                                                     <td style="width: 150px;"><img  src="${!empty book.image?book.image:"../images/novel-sample.png"}" width="100px"></td>
                                                     <td>
@@ -159,14 +161,14 @@
                                                         </c:forEach>
                                                     </td>
                                                     <td>${book.views}</td>
-                                                    <td>$${book.getPrice()}</td>
-                                                    <td><input class="checkbox-inline" type="checkbox" ${book.issale()?"checked":""} disabled></td>
-                                                    <td><a class="btn btn-primary" href="./UpdateBook?id=${book.id}"><i class="fa fa-pen-square" aria-hidden="true"></i></a></td>
+                                                    <td>$${book.getPrice()}<br>${book.issale()?"In sale":""}</td>
+                                                    <td>
+                                                            <a class="btn btn-primary" href="./UpdateBook?id=${book.id}" ${book.author.userId!=0? "hidden":""}><i class="fa fa-pen-square" aria-hidden="true"></i></a>
+                                                        </td>
                                                     <td><a class="btn btn-secondary" href="./Book/TOC?id=${book.id}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
                                                     <td>
                                                         <form action="./ChangeStatus" method="get">
                                                             <input  type="hidden" name="id" value="${book.id}">
-                                                            <input  type="hidden" name="page" value="${page}">
                                                             <a><button class="btn ${book.status()?"btn-danger":"btn-primary"}" type="submit">
                                                                     <i class="fa-solid ${book.status()?"fa-ban":"fa-up-long"}"></i>
                                                                 </button>

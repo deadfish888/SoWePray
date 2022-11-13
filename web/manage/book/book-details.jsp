@@ -178,7 +178,13 @@
     <script src="/Bookie/manage/html/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="/Bookie/manage/html/js/custom.js"></script>
-
+<script>
+                                                    var element = document.getElementById("book-management");
+                                                    element.classList.add("selected");
+                                                    element = document.getElementById("book-management-a");
+                                                    element.classList.add("active");
+                                                    
+    </script>
 </body>
 
 </html>
