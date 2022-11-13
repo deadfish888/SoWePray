@@ -8,7 +8,6 @@
                     <a target="_blank" href="../../BookDetail?id=${book.id}"><i class="fa fa-external-link-square" aria-hidden="true"></i></a>
                         ${book.title}
                     <a href="./AddChapter?id=${book.id}&vid=${volume.id}"><i class="fa fa-plus-square" aria-hidden="true"></i></a>
-                    <a href="./ArrangeChapter?id=${book.id}&vid=${volume.id}"><i class="fa fa-random" aria-hidden="true"></i></a>
                 </h3>
                 <h5 class="card-subtitle">
                     <ul class="list-group list-group-flush">

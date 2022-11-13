@@ -14,6 +14,7 @@ import context.product.BookDAO;
 import context.product.content.ChapterDAO;
 import context.action.CommentDAO;
 import context.action.FavouriteDAO;
+import context.action.RatingDAO;
 import context.product.ProductDAO;
 import context.product.ProductOwnDAO;
 import context.product.content.VolumeDAO;
@@ -55,7 +56,10 @@ public class BookDetail extends HttpServlet {
             VolumeDAO vd = new VolumeDAO();
             CommentDAO cmd = new CommentDAO();
             ProductDAO productDAO = new ProductDAO();
-
+            RatingDAO ratingdao = new RatingDAO();
+            int num_rate = ratingdao.countBook(id);
+            int numfav=fdao.getAllFav(id).size();
+            
             Book thisbook = b.getBookById(id);
             User user = (User) request.getSession().getAttribute("user");
             if (user != null) {
@@ -73,6 +77,8 @@ public class BookDetail extends HttpServlet {
             request.setAttribute("vols", vols);
             request.setAttribute("comments", coms);
             request.setAttribute("check", check);
+            request.setAttribute("numrate", num_rate);
+            request.setAttribute("numfav", numfav);
             
             if (thisbook.getAuthor().getUserId() == 0) {
                 request.getRequestDispatcher("/views/book/book-details.jsp").forward(request, response);

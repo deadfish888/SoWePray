@@ -8,6 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
         <link rel="stylesheet" href="assets/css/StarRating.css" />
         <link rel="stylesheet" href="assets/css/rateButton.css" />
         <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
@@ -72,10 +73,32 @@
 
                                     </div>
                                 </form>
-                                <div style="text-align: center;">
+                                        <div class="text-center">
                                     <span class="fa fa-eye"></span>
                                     <span class="title">${book.views}</span><br><!-- comment -->
-                                    <span class="fa fa-star"></span><span class="title"> ${book.rating}</span>
+                                    <span class="fa fa-star"></span><span class="title"> ${book.rating} </span>
+                                    /<span class="title"> ${numrate} </span>ratings
+                                    <c:choose >
+                                    <c:when test="${sessionScope.user.is_super()>0}" > 
+                                        <div class="row" style="margin:auto">
+                                            <form id="ratingfrm" action="Rating" method="POST">        
+                                                <div class="rate">
+                                                    <input type="hidden" name="bId" value="${book.id}">
+                                                    <input type="radio" id="star5" name="getRate" value="5" required/>
+                                                    <label for="star5" title="text">5</label>
+                                                    <input type="radio" id="star4" name="getRate" value="4" />
+                                                    <label for="star4" title="text">4</label>
+                                                    <input type="radio" id="star3" name="getRate" value="3" />
+                                                    <label for="star3" title="text">3</label>
+                                                    <input type="radio" id="star2" name="getRate" value="2" />
+                                                    <label for="star2" title="text">2</label>
+                                                    <input type="radio" id="star1" name="getRate" value="1" />
+                                                    <label for="star1" title="text">1</label>
+                                                </div>
+                                            </form>   
+                                        </div>
+                                    </c:when>
+                                </c:choose> 
                                 </div>
 
                             </div>
@@ -85,41 +108,34 @@
                                     ${book.description}
                                 </p>
 
-                                <div class="row">        
-                                    <c:if test="${sessionScope.user != null}">
-                                        <c:if test="${requestScope.own}">
-                                            <form action="BookReading" method="get">
-                                                <div class="col-sm-4">
+                                <div class="row m-3 text-center">       
+                                    <div class="col-sm-3">
+                                        <c:if test="${sessionScope.user != null}">
+                                            <c:if test="${requestScope.own}">
+                                                <form action="BookReading" method="get">
                                                     <input type="hidden" name="id" value="${book.id}">
                                                     <input type="submit" class="primary" value="Read">
-                                                </div>
-                                            </form>
-                                        </c:if>
-                                        <c:if test="${!own && (book.price ne 0) && sessionScope.user.is_super()!=0}">
-                                            <div class="col-sm-2">
+                                                </form>
+                                            </c:if>
+                                            <c:if test="${!own && (book.price ne 0) && sessionScope.user.is_super()!=0}">
                                                 <input type="button" class="primary btn-primary" data-toggle="modal" data-target="#purchase" value="Buy"/>
-                                            </div>
-                                        </c:if>
-                                        <c:if test="${!own && (book.price eq 0)}">
-                                            <form action="User/Purchase" method="get">
-                                                <div class="col-sm-4">
+                                            </c:if>
+                                            <c:if test="${!own && (book.price eq 0)}">
+                                                <form action="User/Purchase" method="get">
                                                     <input type="hidden" name="bookId" value="${book.id}">
                                                     <input type="hidden" name="amount" value="${book.price}">
                                                     <input type="hidden" name="bookTitle" value="${book.title}"/>
                                                     <input type="submit" class="primary" value="Get">
-                                                </div>
-                                            </form>
+                                                </form>
+                                            </c:if>
                                         </c:if>
-                                    </c:if>
-                                    <c:if test="${sessionScope.user == null}">
-                                        <form action="Login" method="GET">
-                                            <div class="col-sm-4">
+                                        <c:if test="${sessionScope.user == null}">
+                                            <form action="Login" method="GET">
                                                 <input type="hidden" name="origin" value="./BookDetail?id=${book.id}">
                                                 <input type="submit" class="primary" value="Buy">
-                                            </div>
-                                        </form>
-                                    </c:if>
-
+                                            </form>
+                                        </c:if>
+                                    </div>
                                     <div class="modal fade" id="purchase" tabindex="-1" role="dialog" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
@@ -181,54 +197,38 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-sm-3" style="padding: 10px 0">
+                                        <c:if test="${check==true}">
+                                            <form id="favfrm" action="Fav" method="POST">
+                                                <a>
+                                                    <i id="fav" class="fa fa-heart" style="font-size: xx-large" ></i>
+                                                </a>
+                                                <span> ${numfav}</span>                                
+                                                <input type="hidden" name="bId" value="${book.getId()}">
+                                            </form>
+                                        </c:if> 
+                                        <c:if test="${check==false}">
+                                            <form id="favfrm" action="Favourite" method="POST">
+                                                <!--                                                <input type="submit" class="far " value="Add to Favorite">-->
+                                                <a>
+                                                    <i id="fav" class="fa fa-heart-o " style="font-size: xx-large" ></i>
+                                                </a><span> ${numfav}</span>  
+                                                <input type="hidden" name="bId" value="${book.getId()}">
+                                            </form>
+                                        </c:if>
+                                    </div>
+                                    <div class="col-sm-1" style="padding: 10px 0">                    
+                                        <form id="reportfrm" action="Report" method="POST">
 
-                                    <c:if test="${check==true}">
-                                        <form action="Fav" method="POST">
-                                            <div class="col-sm-4">
-                                                <input type="submit" class="primary" value="Delete Favourite">                                 
-                                                <input type="hidden" name="bId" value="${book.getId()}">
-                                            </div>
-                                        </form>
-                                    </c:if> 
-                                    <c:if test="${check==false}">
-                                        <form action="Favourite" method="POST">
-                                            <div class="col-sm-4">
-                                                <input type="submit" class="primary" value="Add to Favorite">                                 
-                                                <input type="hidden" name="bId" value="${book.getId()}">
-                                            </div>
-                                        </form>
-                                    </c:if>
-                                    <form action="Report" method="POST">
-                                        <div class="col-sm-4"> 
-                                            <input type="submit" class="primary" value="Report">                                 
+                                            <a>
+                                                <i id="refav" class="fa fa-warning" style="font-size: xx-large" ></i>
+                                            </a>
                                             <input type="hidden" name="bId" value="${book.id}">
-                                        </div>   
-                                    </form>      
+                                        </form> 
+                                    </div>        
                                 </div>
 
-                                <c:choose >
-                                    <c:when test="${sessionScope.user.is_super()>0}" > 
-                                        <div class="row">
-                                            <form action="Rating" method="POST">        
-                                                <div class="rate">
-                                                    <input type="hidden" name="bId" value="${book.id}">
-                                                    <input type="radio" id="star5" name="getRate" value="5" />
-                                                    <label for="star5" title="text">5</label>
-                                                    <input type="radio" id="star4" name="getRate" value="4" />
-                                                    <label for="star4" title="text">4</label>
-                                                    <input type="radio" id="star3" name="getRate" value="3" />
-                                                    <label for="star3" title="text">3</label>
-                                                    <input type="radio" id="star2" name="getRate" value="2" />
-                                                    <label for="star2" title="text">2</label>
-                                                    <input type="radio" id="star1" name="getRate" value="1" />
-                                                    <label for="star1" title="text">1</label>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <input type="submit" class="primary" value="Rate"></div>
-                                            </form>   
-                                        </div>
-                                    </c:when>
-                                </c:choose>    
+                                   
                                 <div style="color: red">
                                     ${sessionScope.error}            
                                     <%request.getSession().removeAttribute("error");%>
@@ -646,6 +646,21 @@
                                                                         id.scrollIntoView({block: "center"});
                                                                         id.classList.add("current");
                                                                     }
+                                                                    $("#fav").on('click', function () {
+                                                                        $("#favfrm").submit();
+                                                                    });
+                                                                    $("#refav").on('click', function () {
+                                                                        $("#reportfrm").submit();
+                                                                    });
+                                                                    $("#buy").on('click', function () {
+                                                                        $("#getfrm").submit();
+                                                                    });
+                                                                    $("#read").on('click', function () {
+                                                                        $("#readfrm").submit();
+                                                                    });
+                                                                    $("#ratingfrm").on('click', function () {
+                                                                        $("#ratingfrm").submit();
+                                                                    });
         </script>
 
     </body>

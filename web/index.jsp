@@ -143,7 +143,7 @@
                         </c:forEach>
                     </section>
                     <p class="text-center">
-                        <a href="./Book"
+                        <a href="./Book?order=fav"
                            >More Books &nbsp;<i class="fa fa-long-arrow-right"></i
                             ></a>
                     </p>
@@ -177,7 +177,7 @@
                         </div> 
                     </section>
                     <p class="text-center">
-                        <a href="./Book"
+                        <a href="./Sale"
                            >More Books &nbsp;<i class="fa fa-long-arrow-right"></i
                             ></a>
                     </p>
