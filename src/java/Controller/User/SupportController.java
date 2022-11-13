@@ -84,8 +84,8 @@ public class SupportController extends HttpServlet {
             }
             Author check = auDao.getAuthorByUserId(user.getId());
             boolean valid = rpDao.hasSent(user.getId());
-            if (user.is_super() == 0 && !valid || auDao.getViews(check.getId()) >= 5000 && !valid &&user.is_super()<3) {
-               
+            if (user.is_super() == 0 && !valid || auDao.getViews(check.getId()) >= 5000 && !valid && user.is_super() < 3) {
+
                 request.setAttribute("forTick", "oke");
             }
             request.setAttribute("reads", listRead);
@@ -107,22 +107,28 @@ public class SupportController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+        request.removeAttribute("forTick");
         User user = (User) request.getSession().getAttribute("user");
         String txt = request.getParameter("txt").toString();
+
         if (user.is_super() == 0) {
             if (uDao.isVIP(user.getId())) {
                 rpDao.passReport(3, user.getId(), "Your request has been apporved", true);
                 uDao.editRank(user.getId(), 1);
+                response.sendRedirect("../Logout");
+                return;
             } else {
                 rpDao.senndReport(3, user.getId(), txt);
-                 uDao.editRank(user.getId(), (3-user.is_super()));
             }
             response.sendRedirect("Support");
+
             return;
         }
         if (uDao.isVIP(user.getId())) {
             rpDao.passReport(4, user.getId(), "Your request has been apporved", true);
             uDao.editRank(user.getId(), (3 - user.is_super()));
+            response.sendRedirect("../Logout");
+            return;
         } else {
             rpDao.senndReport(4, user.getId(), txt);
         }
