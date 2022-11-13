@@ -26,19 +26,26 @@ public class RatingController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RatingDAO rdao = new RatingDAO();
-        int bid = Integer.parseInt(request.getParameter("bId"));
-        int rate = Integer.parseInt(request.getParameter("getRate"));
-        User user = (User) request.getSession().getAttribute("user");
-        int uid = user.getId();
-        if (rdao.checkExist(bid, uid) == false) {
-            rdao.addStar(bid, uid, rate);
-        }else{
-            rdao.updateStar(bid, uid, rate);
+        try {
+            RatingDAO rdao = new RatingDAO();
+            int bid = Integer.parseInt(request.getParameter("bId"));
+            if (request.getParameter("getRate") == null) {
+                response.sendRedirect("./BookDetail?id=" + bid);
+            }
+            int rate = Integer.parseInt(request.getParameter("getRate"));
+            User user = (User) request.getSession().getAttribute("user");
+            int uid = user.getId();
+            if (rdao.checkExist(bid, uid) == false) {
+                rdao.addStar(bid, uid, rate);
+            } else {
+                rdao.updateStar(bid, uid, rate);
+            }
+            float aveRate = rdao.getAverageStar(bid);
+            rdao.sendRatetoBook(bid, aveRate);
+            response.sendRedirect("./BookDetail?id=" + bid);
+        } catch (Exception e) {
+
         }
-        float aveRate = rdao.getAverageStar(bid);
-        rdao.sendRatetoBook(bid, aveRate);
-        response.sendRedirect("./BookDetail?id="+bid);
     }
 
     @Override
