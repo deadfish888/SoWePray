@@ -48,6 +48,7 @@ public class PurchaseChapterController extends HttpServlet {
             if (request.getParameter("password").equals(user.getPassword())) {
                 PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
                 TransactionDAO transDAO = new TransactionDAO();
+                user.setPaymentAccount(payAccDAO.get(user.getPaymentAccount()));
 
                 float amount = Float.parseFloat(request.getParameter("amount"));
 
@@ -97,7 +98,7 @@ public class PurchaseChapterController extends HttpServlet {
             } else {
                 request.getSession().setAttribute("error", "Wrong password.");
             }
-                response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + product.getBook().getId());
+            response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + product.getBook().getId());
         } catch (Exception e) {
             response.sendRedirect(request.getContextPath() + "/error.jsp");
         }

@@ -34,7 +34,7 @@
 
         <li><a href="${context}/about.jsp">About</a></li>
 
-        <c:if test="${!empty sessionScope.user}">
+        <c:if test="${!empty sessionScope.user && empty sessionScope.admin}">
             <li><a href="${context}/Logout"><i class="fa fa-sign-out"></i>Logout</a></li>
             </c:if>
             <c:if test="${!empty sessionScope.admin}">

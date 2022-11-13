@@ -7,6 +7,7 @@ package Controller.payment;
 //import Model.payment.PaymentMethod;
 import Model.payment.Transaction;
 import Model.auth.User;
+import context.payment.PaymentAccountDAO;
 //import context.payment.PaymentMethodDAO;
 import context.payment.TransactionDAO;
 import java.io.IOException;
@@ -34,7 +35,9 @@ public class WithdrawController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        User user = (User) request.getSession().getAttribute("user");
+        PaymentAccountDAO paymentAccountDAO = new PaymentAccountDAO();
+        user.setPaymentAccount(paymentAccountDAO.get(user.getPaymentAccount()));
         request.getRequestDispatcher("../views/user/Withdraw.jsp").forward(request, response);
     }
 

@@ -49,6 +49,7 @@ public class PurchaseController extends HttpServlet {
 
             if (request.getParameter("password").equals(user.getPassword())) {
                 PaymentAccountDAO payAccDAO = new PaymentAccountDAO();
+                user.setPaymentAccount(payAccDAO.get(user.getPaymentAccount()));
                 TransactionDAO transDAO = new TransactionDAO();
 
                 float amount = Float.parseFloat(request.getParameter("amount"));
