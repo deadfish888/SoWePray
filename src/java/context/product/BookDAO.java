@@ -318,8 +318,8 @@ public class BookDAO {
         }
         return -1;
     }
-    
-    public int currentId(){
+
+    public int currentId() {
         try {
             String sql = "select max([id]) from [Book]";
             stm = cnn.prepareStatement(sql);
@@ -611,7 +611,7 @@ public class BookDAO {
     public ArrayList<Book> getBooks(String type, String search, String authorname, int[] idCategory) {
         try {
             ArrayList<Book> list = new ArrayList<>();
-            
+
             String sql = "SELECT b.[id]\n"
                     + "      ,b.[title]\n"
                     + "      ,b.[authorId]\n"
@@ -679,7 +679,7 @@ public class BookDAO {
                         + "      ,b.[views]\n"
                         + "      ,b.[status]\n";
             }
-            sql+= " ORDER BY MAX(c.[id]) DESC";
+            sql += " ORDER BY MAX(c.[id]) DESC";
             stm = cnn.prepareStatement(sql);
             stm.setString(1, "%" + search.trim() + "%");
             stm.setString(2, "%" + authorname + "%");
@@ -703,10 +703,10 @@ public class BookDAO {
 
                 book.setRating(rs.getFloat(6));
                 book.setFavourite(rs.getInt(7));
-                
+
                 ProductDAO pd = new ProductDAO();
-                Product p = pd.get(new Product("B"+rs.getInt(1)));
-                
+                Product p = pd.get(new Product("B" + rs.getInt(1)));
+
                 book.setPrice(p.getPrice());
                 book.setIssale(rs.getBoolean(9));
                 book.setImage(rs.getString(10));
@@ -1225,6 +1225,97 @@ public class BookDAO {
                 book.setStatus(rs.getBoolean(11));
                 return book;
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<Book> getBooks(String type, String search, int authorId, int genreId) {
+        try {
+            ArrayList<Book> list = new ArrayList<>();
+
+            String sql = "SELECT b.[id]\n"
+                    + "      ,b.[title]\n"
+                    + "      ,b.[authorId]\n"
+                    + "       ,a.[userId]\n"
+                    + "      ,a.[name]\n"
+                    + "      ,b.[rating]\n"
+                    + "      ,b.[favourite]\n"
+                    + "      ,b.[price]\n"
+                    + "      ,b.[is_sale]\n"
+                    + "      ,b.[image]\n"
+                    + "      ,b.[description]\n"
+                    + "      ,b.[views]\n"
+                    + "      ,b.[status]\n"
+                    + "      ,MAX(c.id)"
+                    + "  FROM [Book] b"
+                    + " INNER JOIN [Author] a ON b.[authorId] = a.[id]"
+                    + " INNER JOIN [CategoryBook] cb ON b.[id] = cb.[bookId]"
+                    + " LEFT JOIN [Volume] v ON b.[id] = v.[bookId] "
+                    + " LEFT JOIN [Chapter] c ON v.[id] = c.[volumeId]"
+                    + " WHERE b.[title] LIKE ? ";
+            switch (type) {
+                case "book":
+                    sql += "   AND a.[userId] IS NULL ";
+                    break;
+                case "novel":
+                    sql += "   AND a.[userId] IS NOT NULL ";
+                    break;
+                default:
+                    break;
+            }
+            if (authorId != 0) {
+                sql += " AND b.[authorId] = " + authorId;
+            }
+            if (genreId != 0) {
+                sql += " AND cb.[categoryId] = " + genreId;
+            }
+            sql += " GROUP BY b.[id]\n"
+                    + "      ,b.[title]\n"
+                    + "      ,[authorId]\n"
+                    + "       ,a.[userId]\n"
+                    + "      ,a.[name]\n"
+                    + "      ,b.[rating]\n"
+                    + "      ,b.[favourite]\n"
+                    + "      ,b.[price]\n"
+                    + "      ,b.[is_sale]\n"
+                    + "      ,b.[image]\n"
+                    + "      ,b.[description]\n"
+                    + "      ,b.[views]\n"
+                    + "      ,b.[status]\n";
+
+            sql += " ORDER BY MAX(c.[id]) DESC";
+            stm = cnn.prepareStatement(sql);
+            stm.setString(1, "%" + search.trim() + "%");
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Book book = new Book();
+                book.setId(rs.getInt(1));
+                book.setTitle(rs.getString(2));
+                book.setAuthorId(rs.getInt(3));
+                Author author = new Author();
+                author.setId(rs.getInt(3));
+                author.setUserId(rs.getInt(4));
+                author.setName(rs.getString(5));
+                book.setAuthor(author);
+
+                book.setRating(rs.getFloat(6));
+                book.setFavourite(rs.getInt(7));
+
+                ProductDAO pd = new ProductDAO();
+                Product p = pd.get(new Product("B" + rs.getInt(1)));
+
+                book.setPrice(p.getPrice());
+                book.setIssale(rs.getBoolean(9));
+                book.setImage(rs.getString(10));
+                book.setDescription(rs.getString(11));
+                book.setViews(rs.getInt(12));
+                book.setStatus(rs.getBoolean(13));
+                book.setCategory(new CategoryDAO().getCategoriesByBookId(rs.getInt(1)));
+                list.add(book);
+            }
+            return list;
         } catch (SQLException ex) {
             Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

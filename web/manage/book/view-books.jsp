@@ -9,11 +9,6 @@
 <%@page import="Model.*"%>
 <%@page import="context.*"%>
 <%@page import="java.util.ArrayList"%>
-<c:if test="${empty sessionScope.admin}">
-    <%         
-          response.sendRedirect("/Bookie/Home");
-    %>
-</c:if>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -23,6 +18,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Book Management</title>
         <link rel="stylesheet" href="/Bookie/manage/html/css/style.min.css">
+
 
     </head>
 
@@ -91,8 +87,46 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Books List</h4>
-                                <div class="left-filter">
-                                    <a class="btn btn-purple" href="./AddBook">Add Book</a>
+                                <div class="col-12">	
+                                    <form id="frm" action="./Book" method="get">
+                                        <div class="row col-12">
+                                            <div class="col-2"><!-- comment -->
+                                                <div class="left-filter">
+                                                    <a class="btn btn-purple" href="./AddBook">Add Book</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-2 ms-auto">
+                                                <select class="form-select" name="genreId" style="display: inline; width: 150px;" onchange="genre()">
+                                                    <option id="opt1" value="">All</option>
+                                                    <c:forEach items="${categories}" var="item">
+                                                        <option value="${item.id}">${item.name}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <div class="col-4">
+                                                <input name="search" class="form-control" type="text" placeholder="Search by Title" aria-label="Search">
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="btn-group" role="group" onclick="typeB()">
+                                                    <input type="radio" class="btn-check" name="type" id="btnradio1" autocomplete="off" value="book" checked>
+                                                    <label class="btn btn-outline-primary" for="btnradio1">Book</label>
+
+                                                    <input type="radio" class="btn-check" name="type" id="btnradio2" autocomplete="off" value="novel">
+                                                    <label class="btn btn-outline-primary" for="btnradio2">Novel</label>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-3" style="z-index: 1; position: relative; display: inline-block">
+                                    <select id="sapxep" onchange="sapxep(this)">
+                                        <option value="latest">Latest Updated</option>
+                                        <option value="fav">Favorite</option>
+                                        <option value="view">View</option>
+                                        <option value="rate">Rating</option>
+                                        <option value="price">Price</option>
+                                    </select>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table user-table " id="tablepro">
@@ -132,7 +166,7 @@
                                                     <td>
                                                         <form action="./ChangeStatus" method="get">
                                                             <input  type="hidden" name="id" value="${book.id}">
-                                                            <input  type="hidden" name="xpage" value="${xpage}">
+                                                            <input  type="hidden" name="page" value="${page}">
                                                             <a><button class="btn ${book.status()?"btn-danger":"btn-primary"}" type="submit">
                                                                     <i class="fa-solid ${book.status()?"fa-ban":"fa-up-long"}"></i>
                                                                 </button>
@@ -148,21 +182,35 @@
                                 <div id="sp" class="pagination-arena " style="margin-left: 40%">
                                     <ul class="pagination">
                                         <li class="page-item" >
-                                            <a href="Book?xpage=${xpage-1}" class="page-link" style="${xpage<3?"display:none":""}">
+                                            <a href="Book?page=${1}" class="page-link" data="${1}"
+                                               style="${page<3?"display:none":""}">
+                                                <i class="fa fa-angle-double-left" aria-hidden="true" ></i>
+                                            </a>
+                                        </li>
+                                        <li class="page-item" >
+                                            <a href="Book?page=${page-1}" class="page-link" style="${page<3?"display:none":""}"
+                                               data="${page-1}">
                                                 <i class="fa fa-angle-left" aria-hidden="true" ></i>
                                             </a>
                                         </li>
                                         <c:forEach begin="${1}" end="${numPage}" var="item">
-                                            <li class="page-item ${item==xpage?"active":""}">
-                                                <a href="Book?xpage=${item}" 
-                                                   class="page-link " style="${(xpage-1>item || xpage+1<item ) ?"display:none;":""}"
+                                            <li class="page-item ${item==page?"active":""}">
+                                                <a href="Book?page=${item}" data="${item}"
+                                                   class="page-link " style="${(page-1>item || page+1<item ) ?"display:none;":""}"
                                                    >${item}</a></li>
                                             </c:forEach>
                                         <li >
-                                            <a href="Book?xpage=${xpage+1}" class="page-link" style="${xpage+2>numPage?"display:none":""}">
+                                            <a href="Book?xpage=${page+1}" data="${page+1}"
+                                               class="page-link" style="${page+2>numPage?"display:none":""}">
                                                 <i class="fa fa-angle-right" aria-hidden="true"  ></i>
                                             </a>
                                         </li>
+                                        <li class="page-item" >
+                                        <a href="Book?page=${numPage}" class="page-link" data="${numPage}"
+                                           style="${page+2>numPage?"display:none":""}">
+                                            <i class="fa fa-angle-double-right" aria-hidden="true" ></i>
+                                        </a>
+                                    </li>
                                     </ul>
                                 </div> 
                             </div>
@@ -196,11 +244,43 @@
     <!--Custom JavaScript -->
     <script src="/Bookie/manage/html/js/custom.js"></script>
     <script>
-                                                    var element = document.getElementById("book-management");
-                                                    element.classList.add("selected");
-                                                    element = document.getElementById("book-management-a");
-                                                    element.classList.add("active");
-                                                    
+                                        var element = document.getElementById("book-management");
+                                        element.classList.add("selected");
+                                        element = document.getElementById("book-management-a");
+                                        element.classList.add("active");
+                                        const url_string = window.location.href;
+                                        const url = new URL(url_string);
+                                        var search = location.search.substring(1);
+                                        var type = url.searchParams.get("type");
+                                        if (type == "novel") {
+                                            document.getElementById("btnradio2").checked = true;
+                                        }
+                                        function typeB() {
+                                            $("#frm").submit();
+                                        }
+                                        function sapxep(elm) {
+                                            const params = new URLSearchParams(search);
+                                            const type = elm.value;
+                                            params.set('order', type);
+                                            const href = new URLSearchParams(params).toString();
+                                            window.location = "Book?" + href;
+                                        }
+                                        var sapxep_t = url.searchParams.get("order");
+                                        if (sapxep_t != null) {
+                                            $('#sapxep option').filter(function () {
+                                                return $(this).val().indexOf(sapxep_t) != -1;
+                                            }).attr('selected', true);
+                                        }
+                                        const paginationLinks = document.querySelectorAll(".page-link");
+                                        if (paginationLinks) {
+                                            paginationLinks.forEach(item => {
+                                                const params = new URLSearchParams(search);
+                                                const page = item.getAttribute("data");
+                                                params.set('page', page);
+                                                const href = new URLSearchParams(params).toString();
+                                                item.setAttribute("href", "?" + href);
+                                            });
+                                        }
     </script>
 </body>
 

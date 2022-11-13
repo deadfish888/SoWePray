@@ -9,11 +9,6 @@
 <%@page import="Model.*"%>
 <%@page import="context.*"%>
 <%@page import="java.util.ArrayList"%>
-<c:if test="${empty sessionScope.admin}">
-    <%         
-          response.sendRedirect("/Bookie/Home");
-    %>
-</c:if>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -93,6 +88,7 @@
                                                     <option id="opt1" value="">All</option>
                                                     <option id="opt2" value="book">Book</option>
                                                     <option id="opt3" value="comment">Comment</option>
+                                                    <option id="opt4" value="transaction">Transaction</option>
                                                 </select>
                                             </div>
                                             <div class="col-2 ms-auto">
@@ -243,6 +239,8 @@
                 document.getElementById("opt2").selected = true;
             }else if(type == "comment"){
                 document.getElementById("opt3").selected = true;
+            }else if(type == "transaction"){
+                document.getElementById("opt4").selected = true;
             }
             console.log(type);
             const paginationLinks = document.querySelectorAll(".page-link");

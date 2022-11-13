@@ -9,11 +9,6 @@
 <%@page import="Model.*"%>
 <%@page import="context.*"%>
 <%@page import="java.util.ArrayList"%>
-<c:if test="${empty sessionScope.admin}">
-    <%         
-          response.sendRedirect("/Bookie/Home");
-    %>
-</c:if>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -98,7 +93,7 @@
                         <div class="col-4">
                             <div class="card">
                                 <div class="card-body profile-card">
-                                    <center class="mt-4"> <img src="${book.image}" class="rounded"
+                                    <center class="mt-4"> <img src="${!empty book.image? book.image:"../images/novel-sample.png"}" class="rounded"
                                                                width="150" />
                                         <h4 class="card-title mt-2">
                                             <a target="_blank" href="../BookDetail?id=${book.id}"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
@@ -106,7 +101,8 @@
                                         </h4>
                                         <c:if test="${book.author.userId !=0}">
                                             <h6 class="card-subtitle">Creator: <a target="_blank" href="./Activities?id=${book.author.userId}">${book.author.user.name} - ID: ${book.author.userId}</a></h6>
-                                            <h6 class="card-subtitle">${book.price}$/chapter</h6>
+                                            <h6 class="card-subtitle">${book.price}$/thousand words</h6>
+                                            <h6 class="card-subtitle">${book.issale()?"In paid":""}</h6>
                                         </c:if>
                                         <c:if test="${book.author.userId ==0}">
                                             <h6 class="card-subtitle">Author: ${book.author.name}</h6>

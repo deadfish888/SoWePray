@@ -22,7 +22,7 @@ public class ChangeStatusController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String xpage = request.getParameter("xpage");
+        String xpage = request.getParameter("page");
         int page;
         if (xpage==null) {
             page = 1;
@@ -33,7 +33,7 @@ public class ChangeStatusController extends HttpServlet {
             int bookId = Integer.parseInt(request.getParameter("id"));
             BookDAO bd = new BookDAO();
             bd.changeStatus(bookId);
-            response.sendRedirect("./Book?xpage="+page);
+            response.sendRedirect("./Book?page="+page);
         } catch (Exception ex) {
             Logger.getLogger(ChangeStatusController.class.getName()).log(Level.SEVERE, null, ex);
             response.sendRedirect(request.getContextPath()+"/error.jsp");

@@ -37,7 +37,7 @@ public class ReportDAO {
     private void connectDB() {
         try {
             cnn = (new DBContext().getConnection());
-            System.out.println("Connect successfully!");
+            
         } catch (Exception e) {
             System.out.println("Connect error:" + e.getMessage());
         }
