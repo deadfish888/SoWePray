@@ -9,11 +9,6 @@
 <%@page import="Model.*"%>
 <%@page import="context.*"%>
 <%@page import="java.util.ArrayList"%>
-<c:if test="${empty sessionScope.admin}">
-    <%         
-          response.sendRedirect("/Bookie/Home");
-    %>
-</c:if>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -84,7 +79,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title mt-2"> 
-                                        ${requestScope.vol.title} - Chapter ${requestScope.chap.id}
+                                        ${requestScope.vol.title} - Chapter ${requestScope.chap.no}
                                     </h5>
                                     <form action="./${service}Chapter" method="post">
                                         <input type="hidden" name="id" value="${requestScope.chap.id}">
