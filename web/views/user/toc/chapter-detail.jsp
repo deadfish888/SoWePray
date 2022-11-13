@@ -90,6 +90,7 @@
                                                     <div class="col-sm-10">
                                                     <div class="form-check form-check-inline">
                                                         Done
+                                                        <input type="hidden" name="status" value="finished">
                                                     </div>
                                                 </div>
                                                 </c:if>

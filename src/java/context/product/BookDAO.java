@@ -960,26 +960,6 @@ public class BookDAO {
         return bookList;
     }
 
-    public boolean checkNovelSold(int bookId) {
-//        try {
-//            String sql = "SELECT DISTINCT [co].[userId] "
-//                    + "          FROM [Book] b"
-//                    + "    INNER JOIN [Volume] v       ON b.[id] = v.[bookId] "
-//                    + "    INNER JOIN [Chapter] c      ON v.[id] = c.[volumeId] "
-//                    + "    INNER JOIN [Chapter_Own] co ON c.[id] = co.[chapterId] "
-//                    + "    WHERE [b].[id] = ? ";
-//            stm = cnn.prepareStatement(sql);
-//            stm.setInt(1, bookId);
-//            rs = stm.executeQuery();
-//            if (rs.next()) {
-//                return true;
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        return false;
-    }
-
     public void deleteBook(int bookId) {
         try {
             String sql = "DELETE FROM [Book]\n"
@@ -1075,6 +1055,7 @@ public class BookDAO {
                     + "      ,[description]\n"
                     + "      ,[views]\n"
                     + "      ,[status]\n"
+                    + "      ,[userId]"
                     + "  FROM [Book]"
                     + " INNER JOIN [Author] ON [Book].[authorId] = [Author].[id]"
                     + " WHERE [authorId] = ?\n"
@@ -1090,12 +1071,16 @@ public class BookDAO {
 
                 Author author = new Author();
                 author.setId(rs.getInt(3));
+                author.setUserId(rs.getInt(13));
                 author.setName(rs.getString(4));
                 book.setAuthor(author);
 
                 book.setRating(rs.getFloat(5));
                 book.setFavourite(rs.getInt(6));
-                book.setPrice(rs.getFloat(7));
+                
+                ProductDAO pd = new ProductDAO();
+                Product p = pd.get(new Product("B" + rs.getInt(1)));
+                book.setPrice(p.getPrice());
                 book.setIssale(rs.getBoolean(8));
                 book.setImage(rs.getString(9));
                 book.setDescription(rs.getString(10));

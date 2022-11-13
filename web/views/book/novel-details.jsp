@@ -623,27 +623,28 @@
 
                         <!-- Products -->
                         <section class="tiles">
-                            <div class= "" style = "display: flex ">
-                                <c:forEach items="${requestScope.sames}" var="same">
-                                    <article class="style1">
-                                        <span class="image">
-                                            <img src="${same.image}" alt="${same.image}" style="height: 290px;" />
-                                        </span>
-                                        <a href="BookDetail?id=${same.id}">
-                                            <h2>${same.title}</h2>
-
-                                            <c:if test="${same.issale()}">
+                            <c:forEach items="${sames}" var="book">
+                                <article class="style1" style="width: calc(20% - 2.5em);margin: 4em 0 0 4em;">
+                                    <span class="image">
+                                        <img src="${(!empty book.image)?book.image:"images/novel-sample.png"}" alt="" style="height: 281px;"/>
+                                    </span>
+                                    <a href="BookDetail?id=${book.id}" alt="${book.title}">
+                                        <h2 style="overflow: hidden;text-overflow: ellipsis;font-size: 0.85em;">${book.title}</h2>
+                                        <h3 style="font-size: 0.7em;"><i>${book.author.name}</i></h3>
+                                                <c:if test="${book.author.userId == 0}">
+                                                    <c:if test="${book.issale()}">
                                                 <p>
-                                                    <del>$${same.price}</del> 
-                                                    <strong>$5.00</strong>
+                                                    <del>$${book.getPrice()}</del> 
+                                                    <strong>$${5.00}</strong>
                                                 </p>
                                             </c:if>
-                                            <c:if test="${!same.issale()}">
-                                                <p><strong>$${same.price}</strong></p>
+                                            <c:if test="${!book.issale()}">
+                                                <p><strong>$${book.getPrice()}</strong></p>
                                             </c:if>
-                                        </a>
-                                    </article>
-                                </c:forEach></div>
+                                        </c:if>
+                                    </a>
+                                </article>
+                            </c:forEach>
                         </section>
                     </div>
 

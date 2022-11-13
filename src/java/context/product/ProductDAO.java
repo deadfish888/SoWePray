@@ -34,7 +34,6 @@ public class ProductDAO {
     private void connectDB() {
         try {
             cnn = (new DBContext().getConnection());
-            System.out.println("Connect successfully CategoryDAO!");
         } catch (Exception e) {
             System.out.println("Connect error:" + e.getMessage());
         }
