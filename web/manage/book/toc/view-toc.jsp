@@ -124,7 +124,18 @@
                                                                 <h5 class="modal-title" id="staticBackdropLabel">ALERT</h5>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
-                                                            
+                                                            <div class="modal-body">
+                                                                <h6>Are you sure to delete the volume - <i>${vol.title}</i> and its chapters: </h6>
+                                                                <c:forEach items="${requestScope.chapters}" var="chapter">
+                                                                    <c:if test="${chapter.volumeId==vol.id}">
+                                                                        <li class="list-group-item">
+                                                                            <a target="_blank" href="#"><i class="fa fa-external-link-alt" aria-hidden="true"></i></a>
+                                                                            <a href="./TOC?id=${book.id}&cid=${chapter.id}">   ${chapter.title}</a>
+                                                                        </li>
+                                                                    </c:if>
+
+                                                                </c:forEach>
+                                                            </div>
                                                             <div class="modal-footer">
                                                                 <form method="Post" action="./DeleteVolume">
                                                                     <input type="hidden" name="id" value="${vol.id}">
@@ -210,11 +221,13 @@
                                                                 <h5 class="modal-title" id="staticBackdropLabel">ALERT</h5>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
-                                                            
+                                                            <div class="modal-body">
+                                                                    Delete this chapter?
+                                                                </div>
                                                             <div class="modal-footer">
                                                                 <form method="Post" action="./DeleteChapter">
-                                                                    <input type="hidden" name="id" value="${vol.id}">
-                                                                    <input type="hidden" name="bid" value="${book.id}">
+                                                                    <input type="hidden" name="id" value="${book.id}">
+                                                                    <input type="hidden" name="cid" value="${chap.id}">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                     <button type="submit" class="btn btn-danger">YES, DELETE</button>
                                                                 </form>

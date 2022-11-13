@@ -5966,7 +5966,7 @@ Một trong những ý nghĩ hồi nãy của hắn chính là thường thức 
 
 Miễn phí mới là quý nhất.')
 GO
-INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (49, 25, 1, N'Những ngày bình thường kết thúc', 1, N'"Ngày 3 tháng 6, sau khi ta thương lượng với bọn Edwards, đành vứt bỏ ý tưởng hợp tác với giáo hội Mặt Trời Vĩnh Hằng. Điều này rất có khả năng sẽ làm bại lộ ý đồ của ta, khiến gia tộc Sauron và quý tộc cũ ủng hộ gia tộc này sớm phát giác, tiến hành bố trí nhắm vào ta. Vậy thì mọi chuyện sẽ trở nên cực kỳ khó khăn và nguy hiểm."
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (49, 25, 1, N'Chuỗi ngày thường lệ chấm dứt', 1, N'"Ngày 3 tháng 6, sau khi ta thương lượng với bọn Edwards, đành vứt bỏ ý tưởng hợp tác với giáo hội Mặt Trời Vĩnh Hằng. Điều này rất có khả năng sẽ làm bại lộ ý đồ của ta, khiến gia tộc Sauron và quý tộc cũ ủng hộ gia tộc này sớm phát giác, tiến hành bố trí nhắm vào ta. Vậy thì mọi chuyện sẽ trở nên cực kỳ khó khăn và nguy hiểm."
 
 "Đáng tiếc, Green đã chết trong biển sương mù, anh ta là người thông minh nhất trong bọn ta."
 
