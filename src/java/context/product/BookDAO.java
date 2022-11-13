@@ -1319,4 +1319,52 @@ public class BookDAO {
             Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public ArrayList<Book> getAllSales() {
+        ArrayList<Book> list = new ArrayList<>();
+        try {
+            String sql = "SELECT [Book].[id]\n"
+                    + "      ,[title]\n"
+                    + "      ,[authorId]\n"
+                    + "      ,[Author].[name]\n"
+                    + "      ,[rating]\n"
+                    + "      ,[favourite]\n"
+                    + "      ,[price]\n"
+                    + "      ,[is_sale]\n"
+                    + "      ,[image]\n"
+                    + "      ,[description]\n"
+                    + "      ,[views]\n"
+                    + "      ,[status]\n"
+                    + "  FROM [Book]"
+                    + " INNER JOIN [Author] ON [Book].[authorId] = [Author].[id]"
+                    + " WHERE [is_sale] = 1 AND [Author].[userId] is NULL"
+                    + "   AND [status] != 0 ";
+            stm = cnn.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Book book = new Book();
+                book.setId(rs.getInt(1));
+                book.setTitle(rs.getString(2));
+                book.setAuthorId(rs.getInt(3));
+                Author author = new Author();
+                author.setId(rs.getInt(3));
+                author.setName(rs.getString(4));
+                book.setAuthor(author);
+
+                book.setRating(rs.getFloat(5));
+                book.setFavourite(rs.getInt(6));
+                book.setPrice(rs.getFloat(7));
+                book.setIssale(rs.getBoolean(8));
+                book.setImage(rs.getString(9));
+                book.setDescription(rs.getString(10));
+                book.setViews(rs.getInt(11));
+                book.setStatus(rs.getBoolean(12));
+                list.add(book);
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

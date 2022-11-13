@@ -5,16 +5,11 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<c:if test="${empty sessionScope.user}">
-    <%         
-          response.sendRedirect("/Bookie/Home");
-    %>
-</c:if>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Favourite</title>
+        <title>Special Price</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="assets/css/main.css" />
@@ -49,7 +44,7 @@
             <!-- Main -->
             <div id="main">
                 <div class="inner">
-                    <h1>My Favourite</h1>
+                    <h1>Special Price</h1>
                     <div class="image main">
                         <img
                             src="images/banner-image-6-1920x500.jpg"
@@ -57,29 +52,6 @@
                             alt=""
                             />
                     </div>
-                    <form action="Favourite" method="GET">
-                        <input type="hidden" name="category" value="${category!=null?category:"0"}"> 
-                        <!--                    <div class="md-form active-pink active-pink-2 mb-3 mt-0 col-md-10" style="margin:0 auto;">
-                                                <input name="search" class="form-control" type="text" placeholder="Search by Title" aria-label="Search">
-                                            </div>-->
-
-                        <!--                        <div class="grid_column-10">
-                                                    <div class="home-filter">
-                                                        <h2>Category</h2>
-                                                    </div>
-                                                    <div class="home-filter">
-                                                        <button name="category"  type="submit" class="primary" value="0" style="overflow:initial;">All</button>
-                        
-                                                        
-                        <c:forEach items="${category}" var="category">
-                                                            <button name="category" type="submit" class="primary" value="${category.id}">${category.getName()}</button>
-                        </c:forEach>
-                    </div>
-                </div>-->
-
-                        
-                       
-                    </form>
                     <style>
                         .home-filter{
                             text-align: center;
@@ -98,10 +70,10 @@
 
                     <!-- Products -->
                     <section class="tiles">
-                        <c:forEach items="${books}" var="book">
-                            <article id="bootstrap-overrides" class="style1" style="">
+                        <c:forEach items="${sales}" var="book">
+                            <article class="style1" style="width: calc(20% - 2.5em);margin: 5em 0 0 5em;">
                                 <span class="image">
-                                    <img src="${book.getImage()}" alt="" style="height: 250px;"/>
+                                    <img src="${book.getImage()}" alt="" style="height: 281px;"/>
                                 </span>
                                 <a href="BookDetail?id=${book.id}" alt="${book.title}">
                                     <h2 style="overflow: hidden;text-overflow: ellipsis;">${book.title}</h2>
