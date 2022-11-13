@@ -257,7 +257,7 @@
                                     <div id="collapse${vol.id}" class="collapse" aria-labelledby="heading${vol.id}" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <c:forEach items="${requestScope.chaps}" var="chap">
-                                                <c:if test="${chap.volumeId == vol.id}">
+                                                <c:if test="${chap.volumeId == vol.id && chap.isStatus()}">
                                                     <c:choose>
                                                         <c:when test="${(! empty sessionScope.user && requestScope.own) || !empty sessionScope.admin}">
                                                             <a href="BookReading?id=${book.id}&cid=${chap.id}"><p><i class="fa fa-unlock"></i> ${chap.title}</p></a>

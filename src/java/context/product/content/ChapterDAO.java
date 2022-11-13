@@ -57,7 +57,7 @@ public class ChapterDAO {
                     + " INNER JOIN [Volume] v ON c.[volumeId] = v.[id] "
                     + " INNER JOIN [Book] b ON v.[bookId] = b.[id]"
                     + " INNER JOIN [Author] a ON b.[authorId] = a.[id] "
-                    + " WHERE [bookId] = ?"
+                    + " WHERE [bookId] = ? "
                     + " ORDER BY v.[no], c.[no] ASC";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, bookId);

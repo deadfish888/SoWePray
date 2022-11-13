@@ -236,7 +236,7 @@
                                     <div id="collapse${vol.id}" class="collapse" aria-labelledby="heading${vol.id}" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <c:forEach items="${requestScope.chapterProductList}" var="chapProduct">
-                                                <c:if test="${chapProduct.chapter.volumeId == vol.id}">
+                                                <c:if test="${chapProduct.chapter.volumeId == vol.id && chapProduct.chapter.isStatus()}">
                                                     <c:choose>
                                                         <c:when test="${!book.issale()}">
                                                             <a href="BookReading?id=${book.id}&cid=${chapProduct.chapter.id}">
