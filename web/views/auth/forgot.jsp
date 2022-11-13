@@ -1,6 +1,8 @@
 <%@ page session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="net.tanesha.recaptcha.ReCaptchaImpl" %>
+<%@ page import="net.tanesha.recaptcha.ReCaptchaResponse" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,6 +15,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <link rel="stylesheet" href="assets/css/style.css">
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <script src="https://www.google.com/recaptcha/api.js"></script>
 
     </head>
     <body>
@@ -39,17 +43,17 @@
                                             <input type="text" name="newpass" id="myInput" class="form-control" required value="${requestScope.newpassword}">
                                             <label class="form-control-placeholder" for="newpass" >Your new password</label>
                                         </div>
-                                            <c:if test="${requestScope.Message != null}">
-                                                <div class="w-100">
-                                                    <c:out value="${requestScope.Message}"/>
-                                                </div>
-                                            </c:if>
+                                        <c:if test="${requestScope.Message != null}">
+                                            <div class="w-100">
+                                                <c:out value="${requestScope.Message}"/>
+                                            </div>
+                                        </c:if>
                                         <div class="form-group">
                                             <button type="submit" class="form-control btn btn-primary rounded submit px-3" onclick="copyToClipboard()"><span class="fa fa-copy"></span>Copy to Clipboard</button>
                                         </div>
                                     </c:when>
                                     <c:otherwise>
-                                        <form action="Forgot" method="POST" class="signin-form">
+                                        <form id="frm" action="Forgot" method="POST" class="signin-form">
                                             <input type="hidden" name="origin" value="${origin}">
                                             <div class="form-group mt-3">
                                                 <input type="text" name="email" class="form-control" required value="">
@@ -60,8 +64,11 @@
                                                     <c:out value="${requestScope.Message}"/>
                                                 </div>
                                             </c:if>
+                                            <div class="">
+                                                <div class="g-recaptcha" data-sitekey="6Lf8_AEjAAAAAPAvmbUZ3NmUrXZgBUR_lHrWgUEJ"></div>
+                                            </div>
                                             <div class="form-group">
-                                                <button type="submit" class="form-control btn btn-primary rounded submit px-3">Reset Password</button>
+                                                <button type="submit" class="form-control btn btn-primary rounded submit px-3">Process</button>
                                             </div>
                                         </form>
                                     </c:otherwise>
@@ -78,7 +85,16 @@
         <script src="js/popper.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
         <script src="assets/js/main.js"></script>
-
+           <script>
+      function onClick(e) {
+        e.preventDefault();
+        grecaptcha.ready(function() {
+          grecaptcha.execute('reCAPTCHA_site_key', {action: 'submit'}).then(function(token) {
+              // Add your logic to submit to your backend server here.
+          });
+        });
+      }
+  </script>
     </body>
 </html>
 

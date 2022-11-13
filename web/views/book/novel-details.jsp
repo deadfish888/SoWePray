@@ -455,9 +455,9 @@
                                                                 <c:if test="${reply.isStatus() == true}">
                                                                     <p style="white-space: pre-line">@${reply.replyName} ${reply.comment}</p>
                                                                     <div class="row">
-                                                                        <div class="col-md-3 small">
+                                                                        <div class="col-md-4 small">
                                                                             <c:if test="${reply.getEditedAt()==null}">${reply.getCreatedAt()}</c:if>
-                                                                            <c:if test="${reply.getEditedAt()!=null}">${reply.getEditedAt()}</c:if>
+                                                                            <c:if test="${reply.getEditedAt()!=null}">Edited ${reply.getEditedAt()}</c:if>
                                                                             </div>                                
                                                                         <c:if test="${reply.getUserId()!=sessionScope.user.getId()}">
                                                                             <div class ="col-md-3 small">

@@ -1321,4 +1321,17 @@ public class BookDAO {
         }
         return null;
     }
+
+    public void updateView(int bookId) {
+        try {
+            String sql = "UPDATE [Book]"
+                    + "     SET [views] = [views]+1 "
+                    + "   WHERE [id] = ?";
+            stm=cnn.prepareStatement(sql);
+            stm.setInt(1, bookId);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

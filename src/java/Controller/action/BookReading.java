@@ -18,6 +18,7 @@ import context.product.content.VolumeDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -93,7 +94,22 @@ public class BookReading extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/BookDetail?id=" + request.getParameter("id"));
             return;
         }
-
+        Cookie cookie =null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie1 : cookies) {
+                if (cookie1.getName().equals("cid")) {
+                    cookie = cookie1;
+                    break;
+                }
+            }
+        }
+        if (cookie ==null || (!cookie.getValue().equals(cid))){
+            cookie = new Cookie("cid",cid);
+            cookie.setMaxAge(5*60);
+            response.addCookie(cookie);
+            b.updateView(bookId);
+        }
         bookOwnDAO.updateReadingStatus(user, thisbook, chapter);
         String[] listr = chapter.getContent().split("\n");
 //        ArrayList<Chapter> chap = chd.getChapterByVolumeIDandBookID(id, thisbook.getId());

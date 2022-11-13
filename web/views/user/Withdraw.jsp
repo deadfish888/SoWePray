@@ -25,13 +25,13 @@
         <title>Withdraw</title>
     </head>
     <body>
-        <div class="wrapper" style="height: 100vh">
+        <div class="wrapper">
             <nav id="sidebar" class="bg-dark col-md-2 text-light" style="display: block; float: left; padding: 5px">
                 <div style="display: block; margin: auto; text-align: center; margin-top: 2em">
                     <img src="${context}/images/default.png" width="100em" height="100em" class="rounded mx-auto d-block" alt="..." style="border:2px solid #fff; display: block; margin: auto">
                     <div class="sidebar-header">
                         <h3 class="" style="margin-bottom: 0">Hi, ${sessionScope.user.username}</h3>
-                        <p>UserID: ${sessionScope.user.id}</p>
+                        <p>UserID: ${sessionScope.user.id} ${sessionScope.user.is_super() eq 3?"- <i class=\"fa fa-dollar\"></i>":""}</p>
                     </div>
 
                 </div>

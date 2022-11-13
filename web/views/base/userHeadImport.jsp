@@ -38,7 +38,7 @@
                 white-space: nowrap;
             }
             .wrapper{
-                height: 100vh;
+                min-height: 100vh;
             }
         </style>
     </head>

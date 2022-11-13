@@ -47,6 +47,7 @@ public class VolumeDAO {
                     + "      , b.[title] as [bookTitle] "
                     + "      , a.[name] as [author]"
                     + "      , b.[image]"
+                    + "      , a.[id]"
                     + "  FROM [Volume] v "
                     + " INNER JOIN [Book] b ON v.[bookId] = b.[id] "
                     + " INNER JOIN [Author] a ON b.[authorId] = a.[id] "
@@ -72,6 +73,7 @@ public class VolumeDAO {
                 book.setImage(rs.getString(7));
                 Author author = new Author();
                 author.setName(rs.getString(6));
+                author.setId(rs.getInt(8));
                 book.setAuthor(author);
                 volume.setBook(book);
                 ChapterDAO cd = new ChapterDAO();

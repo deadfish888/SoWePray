@@ -11,13 +11,13 @@
         <title>Series of ${sessionScope.user.name}</title>
     </head>
     <body>
-        <div class="wrapper" style="height: 100vh">
+        <div class="wrapper">
             <nav id="sidebar" class="bg-dark col-md-2 text-light" style="display: block; float: left; padding: 5px">
                 <div style="display: block; margin: auto; text-align: center; margin-top: 2em">
                     <img src="${context}/images/default.png" width="100em" height="100em" class="rounded mx-auto d-block" alt="..." style="border:2px solid #fff; display: block; margin: auto">
                     <div class="sidebar-header">
                         <h3 class="" style="margin-bottom: 0">Hi, ${sessionScope.user.username}</h3>
-                        <p>UserID: ${sessionScope.user.id}</p>
+                        <p>UserID: ${sessionScope.user.id} ${sessionScope.user.is_super() eq 3?"- <i class=\"fa fa-dollar\"></i>":""}</p>
                     </div>
 
                 </div>
@@ -94,7 +94,7 @@
                                         <th>Title</th>
                                         <th style="width: 150px;">Image</th>
                                         <th>Genres</th>
-                                        <th style="width: 30px;">Paid</th>
+                                        <th style="width: 100px;" ${user.is_super()!=3?"hidden":""}>Price</th>
                                         <th style="width: 30px;">Update</th>
                                         <th style="width: 30px;">TOC</th>
                                         <th style="width: 30px;">Status</th>
@@ -111,7 +111,7 @@
                                                     <span class="badge rounded-pill bg-secondary" style="font-size: 80%;font-weight: 400;color: whitesmoke;">${category.name}</span>
                                                 </c:forEach>
                                             </td>
-                                            <td><span class="fa ${book.issale()? "fa-check-square-o":"fa-times-circle"}"></span></td>
+                                            <td ${user.is_super()!=3?"hidden":""}>$${book.price}<br>${book.issale()?"In sale":""}</td>
                                             <td><a class="btn btn-primary" href="./UpdateNovel?id=${book.id}"><i class="fa fa-pencil-square" aria-hidden="true"></i></a></td>
                                             <td><a class="btn btn-secondary" href="./Novels/TOC?id=${book.id}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
                                             <td><a class="btn ${book.status()?"btn-primary":"btn-danger"}"><i class="fa ${book.status()? "fa-check-square-o":"fa-ban"}"></i></a></td>

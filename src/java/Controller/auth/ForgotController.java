@@ -21,9 +21,17 @@ import utils.MyUtil;
 @WebServlet("/Forgot")
 public class ForgotController extends HttpServlet {
 
-    private String user="";
-    private String pass="";
-
+    private String user;
+    private String pass;
+    
+    @Override
+    public void init() {
+        // reads SMTP server setting from web.xml file
+        ServletContext context = getServletContext();
+        user = context.getInitParameter("user");
+        pass = context.getInitParameter("pass");
+    }
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -74,14 +82,6 @@ public class ForgotController extends HttpServlet {
         }
     }
 
-    //    @Override
-    public void init() {
-        // reads SMTP server setting from web.xml file
-        ServletContext context = getServletContext();
-        user = context.getInitParameter("user");
-        pass = context.getInitParameter("pass");
-    }
-    
     private void forward(HttpServletRequest request, HttpServletResponse response, String path) throws ServletException, IOException {
         RequestDispatcher rd = request.getRequestDispatcher(path);
         rd.forward(request, response);

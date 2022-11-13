@@ -51,8 +51,8 @@
                             <img src="${!empty listV.get(0).book.image?listV.get(0).book.image:"images/novel-sample.png"}" class="rounded" width="60" />
                         </div>
                         <div class="col-8 p-0">
-                            <h6 class="m-0">${listV.get(0).book.title}</h6>
-                            <p style="font-size: 13px"><i class="fa fa-pencil"></i><strong>${listV.get(0).book.author.name}</strong></p>
+                            <h6 class="m-0"><a href="./BookDetail?id=${listV.get(0).book.id}">${listV.get(0).book.title}</a></h6>
+                            <p style="font-size: 13px"><a href="./Author?id=${listV.get(0).book.author.id}"><i class="fa fa-pencil"></i><strong>${listV.get(0).book.author.name}</a></strong></p>
                         </div>
                     </div>
 
@@ -76,7 +76,7 @@
                 <c:if test="${!empty chapter.prev}">
                     <a href="./BookReading?id=${chapter.volume.bookId}&cid=${chapter.prev.id}" class="rd_sd-button_item"><i class='bx bu bx-chevrons-left bx-sm btm '></i></a><br>
                     </c:if>
-                <a class="rd_sd-button_item" href="BookDetail?id=${product.book.id}"><i class='bx bu bxs-home bx-sm btm'></i></a><br>
+                <a class="rd_sd-button_item" href="BookDetail?id=${listV.get(0).book.id}"><i class='bx bu bxs-home bx-sm btm'></i></a><br>
                 <a id="rd-setting_icon" data-affect="#" class="rd_sd-button_item" onclick="rdtoggle('setting', 'fade-in-down')"><i class='bx bu bx-font-family bx-sm'></i></a><br>
                 <a id="info" href="#menu" data="${chapter.id}" class="rd_sd-button_item"><i class='bx bu bx-info-circle bx-sm'></i></a><br>
                     <c:if test="${!empty chapter.next}">
