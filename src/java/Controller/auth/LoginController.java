@@ -50,7 +50,7 @@ public class LoginController extends HttpServlet {
                 if (rp.count() > 0) {
                     session.setAttribute("number", rp.count());
                 }
-                response.sendRedirect("Admin/DashBoard");
+                response.sendRedirect("Edit");
                 return;
             }
             session.setAttribute("user", user);
