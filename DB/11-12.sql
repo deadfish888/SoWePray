@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [BOOKIE]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Database [BOOKIE]    Script Date: 11/14/2022 12:45:06 PM ******/
 IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'BOOKIE')
 BEGIN
 	ALTER DATABASE [BOOKIE] SET OFFLINE WITH ROLLBACK IMMEDIATE;
@@ -83,7 +83,7 @@ ALTER DATABASE [BOOKIE] SET QUERY_STORE = OFF
 GO
 USE [BOOKIE]
 GO
-/****** Object:  Table [dbo].[Author]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[Author]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -99,7 +99,7 @@ CREATE TABLE [dbo].[Author](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Book]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[Book]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -122,7 +122,7 @@ CREATE TABLE [dbo].[Book](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Book_Own]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[Book_Own]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -134,7 +134,7 @@ CREATE TABLE [dbo].[Book_Own](
 	[recentChapterId] [int] NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Category]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[Category]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -149,7 +149,7 @@ CREATE TABLE [dbo].[Category](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CategoryBook]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[CategoryBook]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -159,7 +159,7 @@ CREATE TABLE [dbo].[CategoryBook](
 	[categoryId] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Chapter]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[Chapter]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -177,7 +177,7 @@ CREATE TABLE [dbo].[Chapter](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Comment]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[Comment]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -198,7 +198,7 @@ CREATE TABLE [dbo].[Comment](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Favourite]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[Favourite]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -213,7 +213,7 @@ CREATE TABLE [dbo].[Favourite](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Payment_Account]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[Payment_Account]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -227,7 +227,7 @@ CREATE TABLE [dbo].[Payment_Account](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Payment_Method]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[Payment_Method]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -244,7 +244,7 @@ CREATE TABLE [dbo].[Payment_Method](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Product]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[Product]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -260,7 +260,7 @@ CREATE TABLE [dbo].[Product](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Product_Own]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[Product_Own]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -270,7 +270,7 @@ CREATE TABLE [dbo].[Product_Own](
 	[productId] [varchar](30) NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Report]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[Report]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -291,7 +291,7 @@ CREATE TABLE [dbo].[Report](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Report_Violation]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[Report_Violation]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -306,7 +306,7 @@ CREATE TABLE [dbo].[Report_Violation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Star]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[Star]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -322,7 +322,7 @@ CREATE TABLE [dbo].[Star](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Token]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[Token]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -333,7 +333,7 @@ CREATE TABLE [dbo].[Token](
 	[expiredDate] [datetime] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Transaction]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[Transaction]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -354,7 +354,7 @@ CREATE TABLE [dbo].[Transaction](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -377,7 +377,7 @@ CREATE TABLE [dbo].[User](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Violation]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[Violation]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -392,7 +392,7 @@ CREATE TABLE [dbo].[Violation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Volume]    Script Date: 11/12/2022 10:09:42 PM ******/
+/****** Object:  Table [dbo].[Volume]    Script Date: 11/14/2022 12:45:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -655,7 +655,7 @@ SET IDENTITY_INSERT [dbo].[Book] ON
 GO
 INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (1, N'Gone Girl ', 1, CAST(2.67 AS Decimal(10, 2)), 5, CAST(11.99 AS Decimal(10, 2)), 1, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1554086139l/19288043.jpg', N'Marriage can be a real killer.<br>
 On a warm summer morning in North Carthage, Missouri, it is Nick and Amy Dunne’s fifth wedding anniversary. Presents are being wrapped and reservations are being made when Nick’s clever and beautiful wife disappears from their rented McMansion on the Mississippi River. Husband-of-the-Year Nick isn’t doing himself any favors with cringe-worthy daydreams about the slope and shape of his wife’s head, but passages from Amy''s diary reveal the alpha-girl perfectionist could have put anyone dangerously on edge. Under mounting pressure from the police and the media—as well as Amy’s fiercely doting parents—the town golden boy parades an endless series of lies, deceits, and inappropriate behavior. Nick is oddly evasive, and he’s definitely bitter—but is he really a killer?<br>
-As the cops close in, every couple in town is soon wondering how well they know the one that they love. With his twin sister, Margo, at his side, Nick stands by his innocence. Trouble is, if Nick didn’t do it, where is that beautiful wife? And what was in that silvery gift box hidden in the back of her bedroom closet?', 31, 1)
+As the cops close in, every couple in town is soon wondering how well they know the one that they love. With his twin sister, Margo, at his side, Nick stands by his innocence. Trouble is, if Nick didn’t do it, where is that beautiful wife? And what was in that silvery gift box hidden in the back of her bedroom closet?', 34, 1)
 GO
 INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (2, N'And Then There Were None', 2, CAST(3.20 AS Decimal(10, 2)), 6, CAST(12.99 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1638425885l/16299._SY475_.jpg', N'First, there were ten—a curious assortment of strangers summoned as weekend guests to a little private island off the coast of Devon. Their host, an eccentric millionaire unknown to all of them, is nowhere to be found. All that the guests have in common is a wicked past they''re unwilling to reveal—and a secret that will seal their fate. For each has been marked for murder. A famous nursery rhyme is framed and hung in every room of the mansion:<br>
 "Ten little boys went out to dine; One choked his little self and then there were nine. Nine little boys sat up very late; One overslept himself and then there were eight. Eight little boys traveling in Devon; One said he''d stay there then there were seven. Seven little boys chopping up sticks; One chopped himself in half and then there were six. Six little boys playing with a hive; A bumblebee stung one and then there were five. Five little boys going in for law; One got in Chancery and then there were four. Four little boys going out to sea; A red herring swallowed one and then there were three. Three little boys walking in the zoo; A big bear hugged one and then there were two. Two little boys sitting in the sun; One got frizzled up and then there was one. One little boy left all alone; He went out and hanged himself and then there were none."<br>
@@ -667,7 +667,7 @@ Theo Faber is a criminal psychotherapist who has waited a long time for the oppo
 GO
 INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (4, N'The Girl on the Train', 4, CAST(3.50 AS Decimal(10, 2)), 6, CAST(13.99 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1574805682l/22557272.jpg', N'Rachel catches the same commuter train every morning. She knows it will wait at the same signal each time, overlooking a row of back gardens. She’s even started to feel like she knows the people who live in one of the houses. “Jess and Jason,” she calls them. Their life—as she sees it—is perfect. If only Rachel could be that happy. And then she sees something shocking. It’s only a minute until the train moves on, but it’s enough. Now everything’s changed. Now Rachel has a chance to become a part of the lives she’s only watched from afar. Now they’ll see; she’s much more than just the girl on the train...', 34, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (5, N'Lord of the Mysteries', 5, CAST(2.67 AS Decimal(10, 2)), 6, CAST(11.99 AS Decimal(10, 2)), 1, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1598845986l/55176693._SX318_.jpg', N'Waking up to be faced with a string of mysteries, Zhou Mingrui finds himself reincarnated as Klein Moretti in an alternate Victorian era world where he sees a world filled with machinery, cannons, dreadnoughts, airships, difference machines, as well as Potions, Divination, Hexes, Tarot Cards, Sealed Artifacts… The Light continues to shine but the mystery has never gone far. Follow Klein as he finds himself entangled with the Churches of the world—both orthodox and unorthodox—while he slowly develops newfound powers thanks to the Beyonder potions.', 61, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (5, N'Lord of the Mysteries', 5, CAST(2.67 AS Decimal(10, 2)), 6, CAST(11.99 AS Decimal(10, 2)), 1, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1598845986l/55176693._SX318_.jpg', N'Waking up to be faced with a string of mysteries, Zhou Mingrui finds himself reincarnated as Klein Moretti in an alternate Victorian era world where he sees a world filled with machinery, cannons, dreadnoughts, airships, difference machines, as well as Potions, Divination, Hexes, Tarot Cards, Sealed Artifacts… The Light continues to shine but the mystery has never gone far. Follow Klein as he finds himself entangled with the Churches of the world—both orthodox and unorthodox—while he slowly develops newfound powers thanks to the Beyonder potions.', 63, 1)
 GO
 INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (6, N'The Shining', 6, CAST(3.00 AS Decimal(10, 2)), 5, CAST(12.99 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1353277730l/11588.jpg', N'Jack Torrance''s new job at the Overlook Hotel is the perfect chance for a fresh start. As the off-season caretaker at the atmospheric old hotel, he''ll have plenty of time to spend reconnecting with his family and working on his writing. But as the harsh winter weather sets in, the idyllic location feels ever more remote...and more sinister. And the only one to notice the strange and terrible forces gathering around the Overlook is Danny Torrance, a uniquely gifted five-year-old.', 32, 1)
 GO
@@ -705,7 +705,7 @@ INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], 
 GO
 INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (16, N'Classroom of the Elite Vol. 1', 15, CAST(2.75 AS Decimal(10, 2)), 6, CAST(9.69 AS Decimal(10, 2)), 0, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?', 21, 1)
 GO
-INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (17, N'Lạc', 16, CAST(5.00 AS Decimal(10, 2)), 3, CAST(0.10 AS Decimal(10, 2)), 1, NULL, N'Một đứa trẻ lạc lối giữa thế giới đầy kết nối...', 36, 1)
+INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (17, N'Lạc', 16, CAST(5.00 AS Decimal(10, 2)), 3, CAST(0.10 AS Decimal(10, 2)), 1, NULL, N'Một đứa trẻ lạc lối giữa thế giới đầy kết nối...', 37, 1)
 GO
 INSERT [dbo].[Book] ([id], [title], [authorId], [rating], [favourite], [price], [is_sale], [image], [description], [views], [status]) VALUES (18, N'Doraemon', 118, CAST(3.40 AS Decimal(10, 2)), 3, CAST(0.10 AS Decimal(10, 2)), 0, N'https://i.ebayimg.com/images/g/LMYAAOSw8Zhib4cD/s-l640.jpg', N'Nobita''s failures in school and subsequently, his career, have left his family line with endless financial problems. Thus, his great-great-grandson, Sewashi (a clumsy and very unlucky fourth-grader), sends a blue robotic cat called Doraemon to Nobita''s generation to help improve Nobita''s circumstances. In doing so he hopes that Nobita and all of his descendants will be able to enjoy a better future.', 86, 1)
 GO
@@ -1059,45 +1059,45 @@ INSERT [dbo].[CategoryBook] ([bookId], [categoryId]) VALUES (33, 30)
 GO
 SET IDENTITY_INSERT [dbo].[Chapter] ON 
 GO
-INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (1, 1, 1, N'Nick Dunne', 1, N'When I think of my wife, I always think of her head. The shape of it, to begin with. The very first time I saw her, it was the back of the head I saw, and there was something lovely about it, the angles of it. Like a shiny, hard corn kernel or a riverbed fossil. She had what the Victorians would call a finely shaped head. You could imagine the skull quite easily.
-I’d know her head anywhere.
-And what’s inside it. I think of that, too: her mind. Her brain, all those coils, and her thoughts shuttling through those coils like fast, frantic centipedes. Like a child, I picture opening her skull, unspooling her brain and sifting through it, trying to catch and pin down her thoughts. What are you thinking, Amy? The question I’ve asked most often during our marriage, if not out loud, if not to the person who could answer. I suppose these questions stormcloud over every marriage: What are you thinking? How are you feeling? Who are you? What have we done to each other? What will we do?
-My eyes flipped open at exactly six a.m. This was no avian fluttering of the lashes, no gentle blink toward consciousness. The awakening was mechanical. A spooky ventriloquist-dummy click of the lids: The world is black and then, showtime! 6-0-0 the clock said – in my face, first thing I saw. 6-0-0. It felt different. I rarely woke at such a rounded time. I was a man of jagged risings: 8:43, 11:51, 9:26. My life was alarmless.
-At that exact moment, 6-0-0, the sun climbed over the skyline of oaks, revealing its full summer angry-God self. Its reflection flared across the river toward our house, a long, blaring finger aimed at me through our frail bedroom curtains. Accusing: You have been seen. You will be seen.
-I wallowed in bed, which was our New York bed in our new house, which we still called the new house, even though we’d been back here for two years. It’s a rented house right along the Mississippi River, a house that screams Suburban Nouveau Riche, the kind of place I aspired to as a kid from my split-level, shag-carpet side of town. The kind of house that is immediately familiar: a generically grand, unchallenging, new, new, new house that my wife would – and did – detest.
-‘Should I remove my soul before I come inside?’ Her first line upon arrival. It had been a compromise: Amy demanded we rent, not buy, in my little Missouri hometown, in her firm hope that we wouldn’t be stuck here long. But the only houses for rent were clustered in this failed development: a miniature ghost town of bank-owned, recession-busted, price-reduced mansions, a neighborhood that closed before it ever opened. It was a compromise, but Amy didn’t see it that way, not in the least. To Amy, it was a punishing whim on my part, a nasty, selfish twist of the knife. I would drag her, caveman-style, to a town she had aggressively avoided, and make her live in the kind of house she used to mock. I suppose it’s not a compromise if only one of you considers it such, but that was what our compromises tended to look like. One of us was always angry. Amy, usually.
-Do not blame me for this particular grievance, Amy. The Missouri Grievance. Blame the economy, blame bad luck, blame my parents, blame your parents, blame the Internet, blame people who use the Internet. I used to be a writer. I was a writer who wrote about TV and movies and books. Back when people read things on paper, back when anyone cared about what I thought. I’d arrived in New York in the late ’90s, the last gasp of the glory days, although no one knew it then. New York was packed with writers, real writers, because there were magazines, real magazines, loads of them. This was back when the Internet was still some exotic pet kept in the corner of the publishing world – throw some kibble at it, watch it dance on its little leash, oh quite cute, it definitely won’t kill us in the night. Think about it: a time when newly graduated college kids could come to New York and get paid to write. We had no clue that we were embarking on careers that would vanish within a decade.
-I had a job for eleven years and then I didn’t, it was that fast. All around the country, magazines began shuttering, succumbing to a sudden infection brought on by the busted economy. Writers (my kind of writers: aspiring novelists, ruminative thinkers, people whose brains don’t work quick enough to blog or link or tweet, basically old, stubborn blowhards) were through. We were like women’s hat makers or buggy-whip manufacturers: Our time was done. Three weeks after I got cut loose, Amy lost her job, such as it was. (Now I can feel Amy looking over my shoulder, smirking at the time I’ve spent discussing my career, my misfortune, and dismissing her experience in one sentence. That, she would tell you, is typical. Just like Nick, she would say. It was a refrain of hers: Just like Nick to … and whatever followed, whatever was just like me, was bad.) Two jobless grown-ups, we spent weeks wandering around our Brooklyn brownstone in socks and pajamas, ignoring the future, strewing unopened mail across tables and sofas, eating ice cream at ten a.m. and taking thick afternoon naps.
-Then one day the phone rang. My twin sister was on the other end. Margo had moved back home after her own New York layoff a year before – the girl is one step ahead of me in everything, even shitty luck. Margo, calling from good ole North Carthage, Missouri, from the house where we grew up, and as I listened to her voice, I saw her at age ten, with a dark cap of hair and overall shorts, sitting on our grandparents’ back dock, her body slouched over like an old pillow, her skinny legs dangling in the water, watching the river flow over fish-white feet, so intently, utterly self-possessed even as a child.
-Go’s voice was warm and crinkly even as she gave this cold news: Our indomitable mother was dying. Our dad was nearly gone – his (nasty) mind, his (miserable) heart, both murky as he meandered toward the great gray beyond. But it looked like our mother would beat him there. About six months, maybe a year, she had. I could tell that Go had gone to meet with the doctor by herself, taken her studious notes in her slovenly handwriting, and she was teary as she tried to decipher what she’d written. Dates and doses.
-‘Well, fuck, I have no idea what this says, is it a nine? Does that even make sense?’ she said, and I interrupted. Here was a task, a purpose, held out on my sister’s palm like a plum. I almost cried with relief.
-‘I’ll come back, Go. We’ll move back home. You shouldn’t have to do this all by yourself.’
-She didn’t believe me. I could hear her breathing on the other end.
-‘I’m serious, Go. Why not? There’s nothing here.’
-A long exhale. ‘What about Amy?’
-That is what I didn’t take long enough to consider. I simply assumed I would bundle up my New York wife with her New York interests, her New York pride, and remove her from her New York parents – leave the frantic, thrilling futureland of Manhattan behind – and transplant her to a little town on the river in Missouri, and all would be fine.
-I did not yet understand how foolish, how optimistic, how, yes, just like Nick I was for thinking this. The misery it would lead to.
-‘Amy will be fine. Amy …’ Here was where I should have said, ‘Amy loves Mom.’ But I couldn’t tell Go that Amy loved our mother, because after all that time, Amy still barely knew our mother. Their few meetings had left them both baffled. Amy would dissect the conversations for days after – ‘And what did she mean by …,’ – as if my mother were some ancient peasant tribeswoman arriving from the tundra with an armful of raw yak meat and some buttons for bartering, trying to get something from Amy that wasn’t on offer.
-Amy didn’t care to know my family, didn’t want to know my birthplace, and yet for some reason, I thought moving home would be a good idea.
-My morning breath warmed the pillow, and I changed the subject in my mind. Today was not a day for second-guessing or regret, it was a day for doing. Downstairs, I could hear the return of a long-lost sound: Amy making breakfast. Banging wooden cupboards (rump-thump!), rattling containers of tin and glass (ding-ring!), shuffling and sorting a collection of metal pots and iron pans (ruzz-shuzz!). A culinary orchestra tuning up, clattering vigorously toward the finale, a cake pan drumrolling along the floor, hitting the wall with a cymballic crash. Something impressive was being created, probably a crepe, because crepes are special, and today Amy would want to cook something special.
-It was our five-year anniversary.
-I walked barefoot to the edge of the steps and stood listening, working my toes into the plush wall-to-wall carpet Amy detested on principle, as I tried to decide whether I was ready to join my wife. Amy was in the kitchen, oblivious to my hesitation. She was humming something melancholy and familiar. I strained to make it out – a folk song? a lullabye? – and then realized it was the theme to M.A.S.H. Suicide is painless. I went downstairs.
-I hovered in the doorway, watching my wife. Her yellow-butter hair was pulled up, the hank of ponytail swinging cheerful as a jumprope, and she was sucking distractedly on a burnt fingertip, humming around it. She hummed to herself because she was an unrivaled botcher of lyrics. When we were first dating, a Genesis song came on the radio: ‘She seems to have an invisible touch, yeah.’ And Amy crooned instead, ‘She takes my hat and puts it on the top shelf.’ When I asked her why she’d ever think her lyrics were remotely, possibly, vaguely right, she told me she always thought the woman in the song truly loved the man because she put his hat on the top shelf. I knew I liked her then, really liked her, this girl with an explanation for everything.
-There’s something disturbing about recalling a warm memory and feeling utterly cold.
-Amy peered at the crepe sizzling in the pan and licked something off her wrist. She looked triumphant, wifely. If I took her in my arms, she would smell like berries and powdered sugar.
-When she spied me lurking there in grubby boxers, my hair in full Heat Miser spike, she leaned against the kitchen counter and said, ‘Well, hello, handsome.’
-Bile and dread inched up my throat. I thought to myself: Okay, go.
-I was very late getting to work. My sister and I had done a foolish thing when we both moved back home. We had done what we always talked about doing. We opened a bar. We borrowed money from Amy to do this, eighty thousand dollars, which was once nothing to Amy but by then was almost everything. I swore I would pay her back, with interest. I would not be a man who borrowed from his wife – I could feel my dad twisting his lips at the very idea. Well, there are all kinds of men, his most damning phrase, the second half left unsaid, and you are the wrong kind.
-But truly, it was a practical decision, a smart business move. Amy and I both needed new careers; this would be mine. She would pick one someday, or not, but in the meantime, here was an income, made possible by the last of Amy’s trust fund. Like the McMansion I rented, the bar featured symbolically in my childhood memories – a place where only grown-ups go, and do whatever grown-ups do. Maybe that’s why I was so insistent on buying it after being stripped of my livelihood. It’s a reminder that I am, after all, an adult, a grown man, a useful human being, even though I lost the career that made me all these things. I won’t make that mistake again: The once plentiful herds of magazine writers would continue to be culled – by the Internet, by the recession, by the American public, who would rather watch TV or play video games or electronically inform friends that, like, rain sucks! But there’s no app for a bourbon buzz on a warm day in a cool, dark bar. The world will always want a drink.
-Our bar is a corner bar with a haphazard, patchwork aesthetic. Its best feature is a massive Victorian backbar, dragon heads and angel faces emerging from the oak – an extravagant work of wood in these shitty plastic days. The remainder of the bar is, in fact, shitty, a showcase of the shabbiest design offerings of every decade: an Eisenhower-era linoleum floor, the edges turned up like burnt toast; dubious wood-paneled walls straight from a ’70s home-porn video; halogen floor lamps, an accidental tribute to my 1990s dorm room. The ultimate effect is strangely homey – it looks less like a bar than someone’s benignly neglected fixer-upper. And jovial: We share a parking lot with the local bowling alley, and when our door swings wide, the clatter of strikes applauds the customer’s entrance.
-We named the bar The Bar. ‘People will think we’re ironic instead of creatively bankrupt,’ my sister reasoned.
-Yes, we thought we were being clever New Yorkers – that the name was a joke no one else would really get, not get like we did. Not meta-get. We pictured the locals scrunching their noses: Why’d you name it The Bar? But our first customer, a gray-haired woman in bifocals and a pink jogging suit, said, ‘I like the name. Like in Breakfast at Tiffany’s and Audrey Hepburn’s cat was named Cat.’
-We felt much less superior after that, which was a good thing.
-I pulled into the parking lot. I waited until a strike erupted from the bowling alley – thank you, thank you, friends – then stepped out of the car. I admired the surroundings, still not bored with the broken-in view: the squatty blond-brick post office across the street (now closed on Saturdays), the unassuming beige office building just down the way (now closed, period). The town wasn’t prosperous, not anymore, not by a long shot. Hell, it wasn’t even original, being one of two Carthage, Missouris – ours is technically North Carthage, which makes it sound like a twin city, although it’s hundreds of miles from the other and the lesser of the two: a quaint little 1950s town that bloated itself into a basic midsize suburb and dubbed it progress. Still, it was where my mom grew up and where she raised me and Go, so it had some history. Mine, at least.
-As I walked toward the bar across the concrete-and-weed parking lot, I looked straight down the road and saw the river. That’s what I’ve always loved about our town: We aren’t built on some safe bluff overlooking the Mississippi – we are on the Mississippi. I could walk down the road and step right into the sucker, an easy three-foot drop, and be on my way to Tennessee. Every building downtown bears hand-drawn lines from where the river hit during the Flood of ’61, ’75, ’84, ’93, ’07, ’08, ’11. And so on.
-The river wasn’t swollen now, but it was running urgently, in strong ropy currents. Moving apace with the river was a long single-file line of men, eyes aimed at their feet, shoulders tense, walking steadfastly nowhere. As I watched them, one suddenly looked up at me, his face in shadow, an oval blackness. I turned away.
-I felt an immediate, intense need to get inside. By the time I’d gone twenty feet, my neck bubbled with sweat. The sun was still an angry eye in the sky. You have been seen.
-My gut twisted, and I moved quicker. I needed a drink.')
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (1, 1, 1, N'Nick Dunne', 1, N'<p><span style="font-size: 24pt;"><em><strong>W</strong></em></span>hen I think of my wife, I always think of her head. The shape of it, to begin with. The very first time I saw her, it was the back of the head I saw, and there was something lovely about it, the angles of it. Like a shiny, hard corn kernel or a riverbed fossil. She had what the Victorians would call a finely shaped head. You could imagine the skull quite easily.</p>
+<p>I&rsquo;d know her head anywhere.</p>
+<p>And what&rsquo;s inside it. I think of that, too: her mind. Her brain, all those coils, and her thoughts shuttling through those coils like fast, frantic centipedes. Like a child, I picture opening her skull, unspooling her brain and sifting through it, trying to catch and pin down her thoughts. What are you thinking, Amy? The question I&rsquo;ve asked most often during our marriage, if not out loud, if not to the person who could answer. I suppose these questions stormcloud over every marriage: What are you thinking? How are you feeling? Who are you? What have we done to each other? What will we do?</p>
+<p>My eyes flipped open at exactly six a.m. This was no avian fluttering of the lashes, no gentle blink toward consciousness. The awakening was mechanical. A spooky ventriloquist-dummy click of the lids: The world is black and then, showtime! 6-0-0 the clock said &ndash; in my face, first thing I saw. 6-0-0. It felt different. I rarely woke at such a rounded time. I was a man of jagged risings: 8:43, 11:51, 9:26. My life was alarmless.</p>
+<p>At that exact moment, 6-0-0, the sun climbed over the skyline of oaks, revealing its full summer angry-God self. Its reflection flared across the river toward our house, a long, blaring finger aimed at me through our frail bedroom curtains. Accusing: You have been seen. You will be seen.</p>
+<p>I wallowed in bed, which was our New York bed in our new house, which we still called the new house, even though we&rsquo;d been back here for two years. It&rsquo;s a rented house right along the Mississippi River, a house that screams Suburban Nouveau Riche, the kind of place I aspired to as a kid from my split-level, shag-carpet side of town. The kind of house that is immediately familiar: a generically grand, unchallenging, new, new, new house that my wife would &ndash; and did &ndash; detest.</p>
+<p>&lsquo;Should I remove my soul before I come inside?&rsquo; Her first line upon arrival. It had been a compromise: Amy demanded we rent, not buy, in my little Missouri hometown, in her firm hope that we wouldn&rsquo;t be stuck here long. But the only houses for rent were clustered in this failed development: a miniature ghost town of bank-owned, recession-busted, price-reduced mansions, a neighborhood that closed before it ever opened. It was a compromise, but Amy didn&rsquo;t see it that way, not in the least. To Amy, it was a punishing whim on my part, a nasty, selfish twist of the knife. I would drag her, caveman-style, to a town she had aggressively avoided, and make her live in the kind of house she used to mock. I suppose it&rsquo;s not a compromise if only one of you considers it such, but that was what our compromises tended to look like. One of us was always angry. Amy, usually.</p>
+<p>Do not blame me for this particular grievance, Amy. The Missouri Grievance. Blame the economy, blame bad luck, blame my parents, blame your parents, blame the Internet, blame people who use the Internet. I used to be a writer. I was a writer who wrote about TV and movies and books. Back when people read things on paper, back when anyone cared about what I thought. I&rsquo;d arrived in New York in the late &rsquo;90s, the last gasp of the glory days, although no one knew it then. New York was packed with writers, real writers, because there were magazines, real magazines, loads of them. This was back when the Internet was still some exotic pet kept in the corner of the publishing world &ndash; throw some kibble at it, watch it dance on its little leash, oh quite cute, it definitely won&rsquo;t kill us in the night. Think about it: a time when newly graduated college kids could come to New York and get paid to write. We had no clue that we were embarking on careers that would vanish within a decade.</p>
+<p>I had a job for eleven years and then I didn&rsquo;t, it was that fast. All around the country, magazines began shuttering, succumbing to a sudden infection brought on by the busted economy. Writers (my kind of writers: aspiring novelists, ruminative thinkers, people whose brains don&rsquo;t work quick enough to blog or link or tweet, basically old, stubborn blowhards) were through. We were like women&rsquo;s hat makers or buggy-whip manufacturers: Our time was done. Three weeks after I got cut loose, Amy lost her job, such as it was. (Now I can feel Amy looking over my shoulder, smirking at the time I&rsquo;ve spent discussing my career, my misfortune, and dismissing her experience in one sentence. That, she would tell you, is typical. Just like Nick, she would say. It was a refrain of hers: Just like Nick to &hellip; and whatever followed, whatever was just like me, was bad.) Two jobless grown-ups, we spent weeks wandering around our Brooklyn brownstone in socks and pajamas, ignoring the future, strewing unopened mail across tables and sofas, eating ice cream at ten a.m. and taking thick afternoon naps.</p>
+<p>Then one day the phone rang. My twin sister was on the other end. Margo had moved back home after her own New York layoff a year before &ndash; the girl is one step ahead of me in everything, even shitty luck. Margo, calling from good ole North Carthage, Missouri, from the house where we grew up, and as I listened to her voice, I saw her at age ten, with a dark cap of hair and overall shorts, sitting on our grandparents&rsquo; back dock, her body slouched over like an old pillow, her skinny legs dangling in the water, watching the river flow over fish-white feet, so intently, utterly self-possessed even as a child.</p>
+<p>Go&rsquo;s voice was warm and crinkly even as she gave this cold news: Our indomitable mother was dying. Our dad was nearly gone &ndash; his (nasty) mind, his (miserable) heart, both murky as he meandered toward the great gray beyond. But it looked like our mother would beat him there. About six months, maybe a year, she had. I could tell that Go had gone to meet with the doctor by herself, taken her studious notes in her slovenly handwriting, and she was teary as she tried to decipher what she&rsquo;d written. Dates and doses.</p>
+<p>&lsquo;Well, fuck, I have no idea what this says, is it a nine? Does that even make sense?&rsquo; she said, and I interrupted. Here was a task, a purpose, held out on my sister&rsquo;s palm like a plum. I almost cried with relief.</p>
+<p>&lsquo;I&rsquo;ll come back, Go. We&rsquo;ll move back home. You shouldn&rsquo;t have to do this all by yourself.&rsquo;</p>
+<p>She didn&rsquo;t believe me. I could hear her breathing on the other end.</p>
+<p>&lsquo;I&rsquo;m serious, Go. Why not? There&rsquo;s nothing here.&rsquo;</p>
+<p>A long exhale. &lsquo;What about Amy?&rsquo;</p>
+<p>That is what I didn&rsquo;t take long enough to consider. I simply assumed I would bundle up my New York wife with her New York interests, her New York pride, and remove her from her New York parents &ndash; leave the frantic, thrilling futureland of Manhattan behind &ndash; and transplant her to a little town on the river in Missouri, and all would be fine.</p>
+<p>I did not yet understand how foolish, how optimistic, how, yes, just like Nick I was for thinking this. The misery it would lead to.</p>
+<p>&lsquo;Amy will be fine. Amy &hellip;&rsquo; Here was where I should have said, &lsquo;Amy loves Mom.&rsquo; But I couldn&rsquo;t tell Go that Amy loved our mother, because after all that time, Amy still barely knew our mother. Their few meetings had left them both baffled. Amy would dissect the conversations for days after &ndash; &lsquo;And what did she mean by &hellip;,&rsquo; &ndash; as if my mother were some ancient peasant tribeswoman arriving from the tundra with an armful of raw yak meat and some buttons for bartering, trying to get something from Amy that wasn&rsquo;t on offer.</p>
+<p>Amy didn&rsquo;t care to know my family, didn&rsquo;t want to know my birthplace, and yet for some reason, I thought moving home would be a good idea.</p>
+<p>My morning breath warmed the pillow, and I changed the subject in my mind. Today was not a day for second-guessing or regret, it was a day for doing. Downstairs, I could hear the return of a long-lost sound: Amy making breakfast. Banging wooden cupboards (rump-thump!), rattling containers of tin and glass (ding-ring!), shuffling and sorting a collection of metal pots and iron pans (ruzz-shuzz!). A culinary orchestra tuning up, clattering vigorously toward the finale, a cake pan drumrolling along the floor, hitting the wall with a cymballic crash. Something impressive was being created, probably a crepe, because crepes are special, and today Amy would want to cook something special.</p>
+<p>It was our five-year anniversary.</p>
+<p>I walked barefoot to the edge of the steps and stood listening, working my toes into the plush wall-to-wall carpet Amy detested on principle, as I tried to decide whether I was ready to join my wife. Amy was in the kitchen, oblivious to my hesitation. She was humming something melancholy and familiar. I strained to make it out &ndash; a folk song? a lullabye? &ndash; and then realized it was the theme to M.A.S.H. Suicide is painless. I went downstairs.</p>
+<p>I hovered in the doorway, watching my wife. Her yellow-butter hair was pulled up, the hank of ponytail swinging cheerful as a jumprope, and she was sucking distractedly on a burnt fingertip, humming around it. She hummed to herself because she was an unrivaled botcher of lyrics. When we were first dating, a Genesis song came on the radio: &lsquo;She seems to have an invisible touch, yeah.&rsquo; And Amy crooned instead, &lsquo;She takes my hat and puts it on the top shelf.&rsquo; When I asked her why she&rsquo;d ever think her lyrics were remotely, possibly, vaguely right, she told me she always thought the woman in the song truly loved the man because she put his hat on the top shelf. I knew I liked her then, really liked her, this girl with an explanation for everything.</p>
+<p>There&rsquo;s something disturbing about recalling a warm memory and feeling utterly cold.</p>
+<p>Amy peered at the crepe sizzling in the pan and licked something off her wrist. She looked triumphant, wifely. If I took her in my arms, she would smell like berries and powdered sugar.</p>
+<p>When she spied me lurking there in grubby boxers, my hair in full Heat Miser spike, she leaned against the kitchen counter and said, &lsquo;Well, hello, handsome.&rsquo;</p>
+<p>Bile and dread inched up my throat. I thought to myself: Okay, go.</p>
+<p>I was very late getting to work. My sister and I had done a foolish thing when we both moved back home. We had done what we always talked about doing. We opened a bar. We borrowed money from Amy to do this, eighty thousand dollars, which was once nothing to Amy but by then was almost everything. I swore I would pay her back, with interest. I would not be a man who borrowed from his wife &ndash; I could feel my dad twisting his lips at the very idea. Well, there are all kinds of men, his most damning phrase, the second half left unsaid, and you are the wrong kind.</p>
+<p>But truly, it was a practical decision, a smart business move. Amy and I both needed new careers; this would be mine. She would pick one someday, or not, but in the meantime, here was an income, made possible by the last of Amy&rsquo;s trust fund. Like the McMansion I rented, the bar featured symbolically in my childhood memories &ndash; a place where only grown-ups go, and do whatever grown-ups do. Maybe that&rsquo;s why I was so insistent on buying it after being stripped of my livelihood. It&rsquo;s a reminder that I am, after all, an adult, a grown man, a useful human being, even though I lost the career that made me all these things. I won&rsquo;t make that mistake again: The once plentiful herds of magazine writers would continue to be culled &ndash; by the Internet, by the recession, by the American public, who would rather watch TV or play video games or electronically inform friends that, like, rain sucks! But there&rsquo;s no app for a bourbon buzz on a warm day in a cool, dark bar. The world will always want a drink.</p>
+<p>Our bar is a corner bar with a haphazard, patchwork aesthetic. Its best feature is a massive Victorian backbar, dragon heads and angel faces emerging from the oak &ndash; an extravagant work of wood in these shitty plastic days. The remainder of the bar is, in fact, shitty, a showcase of the shabbiest design offerings of every decade: an Eisenhower-era linoleum floor, the edges turned up like burnt toast; dubious wood-paneled walls straight from a &rsquo;70s home-porn video; halogen floor lamps, an accidental tribute to my 1990s dorm room. The ultimate effect is strangely homey &ndash; it looks less like a bar than someone&rsquo;s benignly neglected fixer-upper. And jovial: We share a parking lot with the local bowling alley, and when our door swings wide, the clatter of strikes applauds the customer&rsquo;s entrance.</p>
+<p>We named the bar The Bar. &lsquo;People will think we&rsquo;re ironic instead of creatively bankrupt,&rsquo; my sister reasoned.</p>
+<p>Yes, we thought we were being clever New Yorkers &ndash; that the name was a joke no one else would really get, not get like we did. Not meta-get. We pictured the locals scrunching their noses: Why&rsquo;d you name it The Bar? But our first customer, a gray-haired woman in bifocals and a pink jogging suit, said, &lsquo;I like the name. Like in Breakfast at Tiffany&rsquo;s and Audrey Hepburn&rsquo;s cat was named Cat.&rsquo;</p>
+<p>We felt much less superior after that, which was a good thing.</p>
+<p>I pulled into the parking lot. I waited until a strike erupted from the bowling alley &ndash; thank you, thank you, friends &ndash; then stepped out of the car. I admired the surroundings, still not bored with the broken-in view: the squatty blond-brick post office across the street (now closed on Saturdays), the unassuming beige office building just down the way (now closed, period). The town wasn&rsquo;t prosperous, not anymore, not by a long shot. Hell, it wasn&rsquo;t even original, being one of two Carthage, Missouris &ndash; ours is technically North Carthage, which makes it sound like a twin city, although it&rsquo;s hundreds of miles from the other and the lesser of the two: a quaint little 1950s town that bloated itself into a basic midsize suburb and dubbed it progress. Still, it was where my mom grew up and where she raised me and Go, so it had some history. Mine, at least.</p>
+<p>As I walked toward the bar across the concrete-and-weed parking lot, I looked straight down the road and saw the river. That&rsquo;s what I&rsquo;ve always loved about our town: We aren&rsquo;t built on some safe bluff overlooking the Mississippi &ndash; we are on the Mississippi. I could walk down the road and step right into the sucker, an easy three-foot drop, and be on my way to Tennessee. Every building downtown bears hand-drawn lines from where the river hit during the Flood of &rsquo;61, &rsquo;75, &rsquo;84, &rsquo;93, &rsquo;07, &rsquo;08, &rsquo;11. And so on.</p>
+<p>The river wasn&rsquo;t swollen now, but it was running urgently, in strong ropy currents. Moving apace with the river was a long single-file line of men, eyes aimed at their feet, shoulders tense, walking steadfastly nowhere. As I watched them, one suddenly looked up at me, his face in shadow, an oval blackness. I turned away.</p>
+<p>I felt an immediate, intense need to get inside. By the time I&rsquo;d gone twenty feet, my neck bubbled with sweat. The sun was still an angry eye in the sky. You have been seen.</p>
+<p>My gut twisted, and I moved quicker. I needed a drink.</p>')
 GO
 INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (2, 1, 2, N'AMY ELLIOTT JANUARY 8, 2005', 1, N'– Diary entry –
 Tra and la! I am smiling a big adopted-orphan smile as I write this. I am embarrassed at how happy I am, like some Technicolor comic of a teenage girl talking on the phone with my hair in a ponytail, the bubble above my head saying: I met a boy!
@@ -2172,19 +2172,20 @@ INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VA
 GO
 INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (22, 4, 2, N'Nhật ký 2020', 0, N'Đó là một cuốn nhật ký nhàu nát và bám đầy bụi.')
 GO
-INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (26, 4, 3, N'Nandayo', 1, N'Men always say that as the defining compliment, don’t they? She’s a cool girl. Being the Cool Girl means I am a hot, brilliant, funny woman who adores football, poker, dirty jokes, and burping, who plays video games, drinks cheap beer, loves threesomes and anal sex, and jams hot dogs and hamburgers into her mouth like she’s hosting the world’s biggest culinary gang bang while somehow maintaining a size 2, because Cool Girls are above all hot. Hot and understanding. Cool Girls never get angry; they only smile in a chagrined, loving manner and let their men do whatever they want. Go ahead, shit on me, I don’t mind, I’m the Cool Girl.
-
-Men actually think this girl exists. Maybe they’re fooled because so many women are willing to pretend to be this girl. For a long time Cool Girl offended me. I used to see men – friends, coworkers, strangers – giddy over these awful pretender women, and I’d want to sit these men down and calmly say: You are not dating a woman, you are dating a woman who has watched too many movies written by socially awkward men who’d like to believe that this kind of woman exists and might kiss them. I’d want to grab the poor guy by his lapels or messenger bag and say: The bitch doesn’t really love chili dogs that much – no one loves chili dogs that much! And the Cool Girls are even more pathetic: They’re not even pretending to be the woman they want to be, they’re pretending to be the woman a man wants them to be. Oh, and if you’re not a Cool Girl, I beg you not to believe that your man doesn’t want the Cool Girl. It may be a slightly different version – maybe he’s a vegetarian, so Cool Girl loves seitan and is great with dogs; or maybe he’s a hipster artist, so Cool Girl is a tattooed, bespectacled nerd who loves comics. There are variations to the window dressing, but believe me, he wants Cool Girl, who is basically the girl who likes every fucking thing he likes and doesn’t ever complain. (How do you know you’re not Cool Girl? Because he says things like: “I like strong women.” If he says that to you, he will at some point fuck someone else. Because “I like strong women” is code for “I hate strong women.”
-Men always say that as the defining compliment, don’t they? She’s a cool girl. Being the Cool Girl means I am a hot, brilliant, funny woman who adores football, poker, dirty jokes, and burping, who plays video games, drinks cheap beer, loves threesomes and anal sex, and jams hot dogs and hamburgers into her mouth like she’s hosting the world’s biggest culinary gang bang while somehow maintaining a size 2, because Cool Girls are above all hot. Hot and understanding. Cool Girls never get angry; they only smile in a chagrined, loving manner and let their men do whatever they want. Go ahead, shit on me, I don’t mind, I’m the Cool Girl.
-
-Men actually think this girl exists. Maybe they’re fooled because so many women are willing to pretend to be this girl. For a long time Cool Girl offended me. I used to see men – friends, coworkers, strangers – giddy over these awful pretender women, and I’d want to sit these men down and calmly say: You are not dating a woman, you are dating a woman who has watched too many movies written by socially awkward men who’d like to believe that this kind of woman exists and might kiss them. I’d want to grab the poor guy by his lapels or messenger bag and say: The bitch doesn’t really love chili dogs that much – no one loves chili dogs that much! And the Cool Girls are even more pathetic: They’re not even pretending to be the woman they want to be, they’re pretending to be the woman a man wants them to be. Oh, and if you’re not a Cool Girl, I beg you not to believe that your man doesn’t want the Cool Girl. It may be a slightly different version – maybe he’s a vegetarian, so Cool Girl loves seitan and is great with dogs; or maybe he’s a hipster artist, so Cool Girl is a tattooed, bespectacled nerd who loves comics. There are variations to the window dressing, but believe me, he wants Cool Girl, who is basically the girl who likes every fucking thing he likes and doesn’t ever complain. (How do you know you’re not Cool Girl? Because he says things like: “I like strong women.” If he says that to you, he will at some point fuck someone else. Because “I like strong women” is code for “I hate strong women.”
-Men always say that as the defining compliment, don’t they? She’s a cool girl. Being the Cool Girl means I am a hot, brilliant, funny woman who adores football, poker, dirty jokes, and burping, who plays video games, drinks cheap beer, loves threesomes and anal sex, and jams hot dogs and hamburgers into her mouth like she’s hosting the world’s biggest culinary gang bang while somehow maintaining a size 2, because Cool Girls are above all hot. Hot and understanding. Cool Girls never get angry; they only smile in a chagrined, loving manner and let their men do whatever they want. Go ahead, shit on me, I don’t mind, I’m the Cool Girl.
-
-Men actually think this girl exists. Maybe they’re fooled because so many women are willing to pretend to be this girl. For a long time Cool Girl offended me. I used to see men – friends, coworkers, strangers – giddy over these awful pretender women, and I’d want to sit these men down and calmly say: You are not dating a woman, you are dating a woman who has watched too many movies written by socially awkward men who’d like to believe that this kind of woman exists and might kiss them. I’d want to grab the poor guy by his lapels or messenger bag and say: The bitch doesn’t really love chili dogs that much – no one loves chili dogs that much! And the Cool Girls are even more pathetic: They’re not even pretending to be the woman they want to be, they’re pretending to be the woman a man wants them to be. Oh, and if you’re not a Cool Girl, I beg you not to believe that your man doesn’t want the Cool Girl. It may be a slightly different version – maybe he’s a vegetarian, so Cool Girl loves seitan and is great with dogs; or maybe he’s a hipster artist, so Cool Girl is a tattooed, bespectacled nerd who loves comics. There are variations to the window dressing, but believe me, he wants Cool Girl, who is basically the girl who likes every fucking thing he likes and doesn’t ever complain. (How do you know you’re not Cool Girl? Because he says things like: “I like strong women.” If he says that to you, he will at some point fuck someone else. Because “I like strong women” is code for “I hate strong women.”
-
-Men always say that as the defining compliment, don’t they? She’s a cool girl. Being the Cool Girl means I am a hot, brilliant, funny woman who adores football, poker, dirty jokes, and burping, who plays video games, drinks cheap beer, loves threesomes and anal sex, and jams hot dogs and hamburgers into her mouth like she’s hosting the world’s biggest culinary gang bang while somehow maintaining a size 2, because Cool Girls are above all hot. Hot and understanding. Cool Girls never get angry; they only smile in a chagrined, loving manner and let their men do whatever they want. Go ahead, shit on me, I don’t mind, I’m the Cool Girl.
-
-Men actually think this girl exists. Maybe they’re fooled because so many women are willing to pretend to be this girl. For a long time Cool Girl offended me. I used to see men – friends, coworkers, strangers – giddy over these awful pretender women, and I’d want to sit these men down and calmly say: You are not dating a woman, you are dating a woman who has watched too many movies written by socially awkward men who’d like to believe that this kind of woman exists and might kiss them. I’d want to grab the poor guy by his lapels or messenger bag and say: The bitch doesn’t really love chili dogs that much – no one loves chili dogs that much! And the Cool Girls are even more pathetic: They’re not even pretending to be the woman they want to be, they’re pretending to be the woman a man wants them to be. Oh, and if you’re not a Cool Girl, I beg you not to believe that your man doesn’t want the Cool Girl. It may be a slightly different version – maybe he’s a vegetarian, so Cool Girl loves seitan and is great with dogs; or maybe he’s a hipster artist, so Cool Girl is a tattooed, bespectacled nerd who loves comics. There are variations to the window dressing, but believe me, he wants Cool Girl, who is basically the girl who likes every fucking thing he likes and doesn’t ever complain. (How do you know you’re not Cool Girl? Because he says things like: “I like strong women.” If he says that to you, he will at some point fuck someone else. Because “I like strong women” is code for “I hate strong women.”')
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (26, 4, 3, N'Nandayo', 1, N'<h3><em><span style="font-size: 18pt;">Men always say that as the defining compliment, don&rsquo;t they? </span></em></h3>
+<p>She&rsquo;s a cool girl. Being the Cool Girl means I am a hot, brilliant, funny woman who adores football, poker, dirty jokes, and burping, who plays video games, drinks cheap beer, loves threesomes and anal sex, and jams hot dogs and hamburgers into her mouth like she&rsquo;s hosting the world&rsquo;s biggest culinary gang bang while somehow maintaining a size 2, because Cool Girls are above all hot. Hot and understanding. Cool Girls never get angry; they only smile in a chagrined, loving manner and let their men do whatever they want. Go ahead, shit on me, I don&rsquo;t mind, I&rsquo;m the Cool Girl.</p>
+<p>&nbsp;</p>
+<p>Men actually think this girl exists. Maybe they&rsquo;re fooled because so many women are willing to pretend to be this girl. For a long time Cool Girl offended me. I used to see men &ndash; friends, coworkers, strangers &ndash; giddy over these awful pretender women, and I&rsquo;d want to sit these men down and calmly say: You are not dating a woman, you are dating a woman who has watched too many movies written by socially awkward men who&rsquo;d like to believe that this kind of woman exists and might kiss them. I&rsquo;d want to grab the poor guy by his lapels or messenger bag and say: The bitch doesn&rsquo;t really love chili dogs that much &ndash; no one loves chili dogs that much! And the Cool Girls are even more pathetic: They&rsquo;re not even pretending to be the woman they want to be, they&rsquo;re pretending to be the woman a man wants them to be. Oh, and if you&rsquo;re not a Cool Girl, I beg you not to believe that your man doesn&rsquo;t want the Cool Girl. It may be a slightly different version &ndash; maybe he&rsquo;s a vegetarian, so Cool Girl loves seitan and is great with dogs; or maybe he&rsquo;s a hipster artist, so Cool Girl is a tattooed, bespectacled nerd who loves comics. There are variations to the window dressing, but believe me, he wants Cool Girl, who is basically the girl who likes every fucking thing he likes and doesn&rsquo;t ever complain. (How do you know you&rsquo;re not Cool Girl? Because he says things like: &ldquo;I like strong women.&rdquo; If he says that to you, he will at some point fuck someone else. Because &ldquo;I like strong women&rdquo; is code for &ldquo;I hate strong women.&rdquo;</p>
+<p>Men always say that as the defining compliment, don&rsquo;t they? She&rsquo;s a cool girl. Being the Cool Girl means I am a hot, brilliant, funny woman who adores football, poker, dirty jokes, and burping, who plays video games, drinks cheap beer, loves threesomes and anal sex, and jams hot dogs and hamburgers into her mouth like she&rsquo;s hosting the world&rsquo;s biggest culinary gang bang while somehow maintaining a size 2, because Cool Girls are above all hot. Hot and understanding. Cool Girls never get angry; they only smile in a chagrined, loving manner and let their men do whatever they want. Go ahead, shit on me, I don&rsquo;t mind, I&rsquo;m the Cool Girl.</p>
+<p>&nbsp;</p>
+<p>Men actually think this girl exists. Maybe they&rsquo;re fooled because so many women are willing to pretend to be this girl. For a long time Cool Girl offended me. I used to see men &ndash; friends, coworkers, strangers &ndash; giddy over these awful pretender women, and I&rsquo;d want to sit these men down and calmly say: You are not dating a woman, you are dating a woman who has watched too many movies written by socially awkward men who&rsquo;d like to believe that this kind of woman exists and might kiss them. I&rsquo;d want to grab the poor guy by his lapels or messenger bag and say: The bitch doesn&rsquo;t really love chili dogs that much &ndash; no one loves chili dogs that much! And the Cool Girls are even more pathetic: They&rsquo;re not even pretending to be the woman they want to be, they&rsquo;re pretending to be the woman a man wants them to be. Oh, and if you&rsquo;re not a Cool Girl, I beg you not to believe that your man doesn&rsquo;t want the Cool Girl. It may be a slightly different version &ndash; maybe he&rsquo;s a vegetarian, so Cool Girl loves seitan and is great with dogs; or maybe he&rsquo;s a hipster artist, so Cool Girl is a tattooed, bespectacled nerd who loves comics. There are variations to the window dressing, but believe me, he wants Cool Girl, who is basically the girl who likes every fucking thing he likes and doesn&rsquo;t ever complain. (How do you know you&rsquo;re not Cool Girl? Because he says things like: &ldquo;I like strong women.&rdquo; If he says that to you, he will at some point fuck someone else. Because &ldquo;I like strong women&rdquo; is code for &ldquo;I hate strong women.&rdquo;</p>
+<p>Men always say that as the defining compliment, don&rsquo;t they? She&rsquo;s a cool girl. Being the Cool Girl means I am a hot, brilliant, funny woman who adores football, poker, dirty jokes, and burping, who plays video games, drinks cheap beer, loves threesomes and anal sex, and jams hot dogs and hamburgers into her mouth like she&rsquo;s hosting the world&rsquo;s biggest culinary gang bang while somehow maintaining a size 2, because Cool Girls are above all hot. Hot and understanding. Cool Girls never get angry; they only smile in a chagrined, loving manner and let their men do whatever they want. Go ahead, shit on me, I don&rsquo;t mind, I&rsquo;m the Cool Girl.</p>
+<p>&nbsp;</p>
+<p>Men actually think this girl exists. Maybe they&rsquo;re fooled because so many women are willing to pretend to be this girl. For a long time Cool Girl offended me. I used to see men &ndash; friends, coworkers, strangers &ndash; giddy over these awful pretender women, and I&rsquo;d want to sit these men down and calmly say: You are not dating a woman, you are dating a woman who has watched too many movies written by socially awkward men who&rsquo;d like to believe that this kind of woman exists and might kiss them. I&rsquo;d want to grab the poor guy by his lapels or messenger bag and say: The bitch doesn&rsquo;t really love chili dogs that much &ndash; no one loves chili dogs that much! And the Cool Girls are even more pathetic: They&rsquo;re not even pretending to be the woman they want to be, they&rsquo;re pretending to be the woman a man wants them to be. Oh, and if you&rsquo;re not a Cool Girl, I beg you not to believe that your man doesn&rsquo;t want the Cool Girl. It may be a slightly different version &ndash; maybe he&rsquo;s a vegetarian, so Cool Girl loves seitan and is great with dogs; or maybe he&rsquo;s a hipster artist, so Cool Girl is a tattooed, bespectacled nerd who loves comics. There are variations to the window dressing, but believe me, he wants Cool Girl, who is basically the girl who likes every fucking thing he likes and doesn&rsquo;t ever complain. (How do you know you&rsquo;re not Cool Girl? Because he says things like: &ldquo;I like strong women.&rdquo; If he says that to you, he will at some point fuck someone else. Because &ldquo;I like strong women&rdquo; is code for &ldquo;I hate strong women.&rdquo;</p>
+<p>&nbsp;</p>
+<p>Men always say that as the defining compliment, don&rsquo;t they? She&rsquo;s a cool girl. Being the Cool Girl means I am a hot, brilliant, funny woman who adores football, poker, dirty jokes, and burping, who plays video games, drinks cheap beer, loves threesomes and anal sex, and jams hot dogs and hamburgers into her mouth like she&rsquo;s hosting the world&rsquo;s biggest culinary gang bang while somehow maintaining a size 2, because Cool Girls are above all hot. Hot and understanding. Cool Girls never get angry; they only smile in a chagrined, loving manner and let their men do whatever they want. Go ahead, shit on me, I don&rsquo;t mind, I&rsquo;m the Cool Girl.</p>
+<p>&nbsp;</p>
+<p>Men actually think this girl exists. Maybe they&rsquo;re fooled because so many women are willing to pretend to be this girl. For a long time Cool Girl offended me. I used to see men &ndash; friends, coworkers, strangers &ndash; giddy over these awful pretender women, and I&rsquo;d want to sit these men down and calmly say: You are not dating a woman, you are dating a woman who has watched too many movies written by socially awkward men who&rsquo;d like to believe that this kind of woman exists and might kiss them. I&rsquo;d want to grab the poor guy by his lapels or messenger bag and say: The bitch doesn&rsquo;t really love chili dogs that much &ndash; no one loves chili dogs that much! And the Cool Girls are even more pathetic: They&rsquo;re not even pretending to be the woman they want to be, they&rsquo;re pretending to be the woman a man wants them to be. Oh, and if you&rsquo;re not a Cool Girl, I beg you not to believe that your man doesn&rsquo;t want the Cool Girl. It may be a slightly different version &ndash; maybe he&rsquo;s a vegetarian, so Cool Girl loves seitan and is great with dogs; or maybe he&rsquo;s a hipster artist, so Cool Girl is a tattooed, bespectacled nerd who loves comics. There are variations to the window dressing, but believe me, he wants Cool Girl, who is basically the girl who likes every fucking thing he likes and doesn&rsquo;t ever complain. (How do you know you&rsquo;re not Cool Girl? Because he says things like: &ldquo;I like strong women.&rdquo; If he says that to you, he will at some point fuck someone else. Because &ldquo;I like strong women&rdquo; is code for &ldquo;I hate strong women.&rdquo;</p>')
 GO
 INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (27, 16, 1, N'Mở đầu', 1, N'Mái xanh ngói đỏ, cột nhà chạm trổ. Cung điện Ma tộc nguy nga lộng lẫy, khắp nơi trang hoàng từng món đồ tinh xảo, chọn bừa một món cũng là bảo vật có giá trị liên thành. Minh châu được dùng làm đèn, ngọc phượng hoàng thì đúc thành bàn, thứ quý hiếm như lông chim Tước Tiên lại bị cắm trong bình để trang trí, da yêu thú Bạch hổ bị trải dài trêи đất mặc người đạp lên.
 
@@ -3698,127 +3699,68 @@ Tay Cố Minh Hoài đang giơ lên cứng đờ giữa không trung.
 
 Hết chương 6.')
 GO
-INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (33, 17, 1, N'Đỏ rực', 1, N'Đau!
-
-Đau quá!
-
-Đầu đau quá!
-
-Hình ảnh trong giấc mơ đầy những tiếng thì thầm kỳ quái vỡ tan thành những mảnh nhỏ. Chu Minh Thuỵ đang say giấc chỉ thấy đầu đau đớn hệt như bị người ta lấy gậy đánh cho một cái thật mạnh, không, phải là bị một thứ sắc nhọn đâm thẳng vào huyệt Thái Dương rồi sau đó khuấy liên tục.
-
-Ôi... Trong cơn mơ màng, Chu Minh Thuỵ muốn xoay người, muốn giơ tay ôm chặt lấy đầu, muốn ngồi dậy nhưng hắn không thể cử động chân tay được, dường như không thể điều khiển được thân thể nữa.
-
-Xem ra là mình chưa tỉnh, vẫn còn đang mơ... Nói không chừng sẽ còn xảy ra hiện tượng cho là mình đã tỉnh, nhưng thực chất là còn đang ngủ say... Chu Minh Thuỵ không hề lạ lẫm gì với chuyện này, hắn cố gắng tập trung ý chí muốn thoát khỏi cái gông cùm của bóng tối và sự huyễn hoặc này.
-
-Nhưng trong lúc nửa tỉnh nửa mơ này, ý chí luôn mơ hồ như sương khói, khó mà tập trung được. Dù hắn có cố thế nào thì tư duy vẫn cứ tan rã, tạp niệm xuất hiện.
-
-Đang yên đang lành, nửa đêm nửa hôm, sao đột nhiên bị đau đầu? Còn đau đớn tới mức này?! Chẳng lẽ xuất huyết não?!
-
-Moá, chả lẽ ta sẽ chết sớm ư?
-
-Mau tỉnh! Mau tỉnh lại nào!
-
-Ồ, hình như không còn đau như nãy nữa? Nhưng đầu vẫn như bị một con dao nhỏ cắt từng miếng từng miếng ra một...
-
-Xem ra không thể ngủ tiếp, vậy thì mai đi làm thế nào được? Còn đi làm cái gì nữa? Bị đau đầu thật như này tất nhiên là phải xin nghỉ rồi! Khỏi sợ tay quản lý lải nhải!
-
-Nghĩ như vậy cảm thấy không tệ, khà khà, thế là được nhàn rỗi một hôm!
-
-Đầu lại đau nhói khiến Chu Minh Thuỵ tích được chút sức lực. Cuối cùng, hắn dốc sức động lưng mở choàng mắt, hoàn toàn thoát khỏi trạng thái nửa tỉnh nửa mơ.
-
-Tầm mắt ban đầu nhoà đi, sau đó bị phủ kín bởi một lớp đỏ rực. Nơi tầm mắt với tới, Chu Minh Thuỵ thấy trước mặt mình là một bàn học bằng gỗ thô sơ. Chính giữa bàn học có bày một quyển bút ký đang mở sẵn. Giấy của cuốn bút ký này thô ráp và ố vàng, bên trên là một câu được viết bởi thứ chữ kỳ quái, nét mực đen sậm, ướt và bắt mắt.
-
-Ở bên trái cuốn bút ký là một chồng sách được sắp xếp chỉnh tề, có tầm bảy, tám cuốn gì đó. Bức tường bên phải chúng thì được gắn bởi ống dẫn màu xám trắng nối tới một chiếc đèn treo tường.
-
-Chiếc đèn này mang phong cách phương Tây cổ điển, to bằng nửa đầu người trưởng thành. Bên trong là thuỷ tinh trong suốt, phần lồng bên ngoài được làm từ kim loại màu đen.
-
-Bên dưới chiếc đèn đã tắt đó là một lọ mực màu đen được bao phủ bởi ánh sáng màu đỏ nhạt, vẻ gồ ghề bên ngoài dưới lớp ánh sáng tạo nên thứ hoa văn trông giống thiên sứ.
-
-Một chiếc bút máy màu sậm với phần thân bóng mượt được đặt ở trước lọ mực, bên phải bút ký. Ngòi bút loé lên thứ ánh sáng nhạt. Nắp bút thì nằm ngay cạnh một chiếc súng lục ổ xoay.
-
-Súng? Súng lục?? Chu Minh Thuỵ ngây ngẩn. Những thứ hắn thấy trước mặt này xa lạ như thế, hoàn toàn khác xa phòng của hắn!
-
-Tronng khi kinh ngạc và ngỡ ngàng, hắn phát hiện rằng bàn học, bút ký, lọ mực và súng lục kia đều được phủ lên bởi một tầng "lụa mỏng" màu đỏ rực, chính là ánh sáng chiếu vào từ bên ngoài cửa sổ.
-
-Theo bản năng hắn ngẩng đầu lên, dời tầm mắt lên cao.
-
-Giữa không trung, bên trên lớp "vải nhung sân khấu thiên nga", một mặt trăng tròn màu đỏ rực như lửa treo cao, lặng lẽ toả ra ánh sáng.
-
-Đây... Chu Minh Thuỵ bỗng thấy sợ hãi, rồi hắn đứng bật dậy. Nhưng đôi chân còn chưa kịp đứng thẳng thì đầu hắn lại đau nhói ghê gớm khiến hắn như mất đi sức lực trong phút chốc, trọng tâm toàn thân tức thì rơi xuống, mông đập mạnh lên trên chiếc ghế dựa bằng gỗ.
-
-Bịch!
-
-Đau đớn không thể tạo nên ảnh hưởng gì, Chu Minh Thuỵ giơ tay đè lên bàn rồi lại đứng lên, bối rối quay người nhìn nơi mình đang đứng.
-
-Đây là một căn phòng không lớn, hai bên trái phải đều có cửa ra vào. Gần sát bức tường đối diện là một chiếc giường tầng làm từ gỗ. Giữa giường và cánh cửa phía bên trái là một chiếc tủ quầy, bên trên là tủ có cánh mở hai bên, bên dưới thì là ngăn kéo.
-
-Bên cạnh tủ quầy kia có một ống dẫn cao bằng một người, cũng màu xám trắng được lắp trên tường, nhưng nó nối với một thứ thiết bị kỳ lạ có bánh răng và ổ trục hiện ra bên ngoài.
-
-Góc tường phía bên phải bàn học có chất một đống thứ trông giống than, cùng với các vật dụng nhà bếp như nồi đun nước, chảo sắt...
-
-Qua cửa bên phải là một chiếc gương to đã rạn nứt hai vết, phần kệ để gương được làm từ gỗ với hoa văn khá đơn giản.
-
-Chu Minh Thuỵ đảo mắt qua gương, loáng thoáng thấy mình của bây giờ: Tóc đen, mắt nâu, mặc quần áo lót sợi đay, vóc dáng gầy gò, ngũ quan bình thường, đường nét góc cạnh...
-
-Đây là... Chu Minh Thuỵ tức thì giật mình, hít vào một hơi khí lạnh, lòng bỗng có một suy đoán lộn xộn mà bất lực.
-
-Súng lục ổ xoay, bố trí kiểu phương Tây cổ điển, cùng với mặt trăng đỏ rực khác hẳn với Trái Đất, không có thứ gì là không chứng tỏ rõ một chuyện!
-
-Chẳng lẽ mình... Mình xuyên việt rồi? Chu Minh Thuỵ dần há hốc mồm.
-
-Hắn đọc văn học mạng từ bé, cũng thường hay ảo tưởng về bản thân, nhưng tới khi gặp được thật thì lại khó mà chấp nhận được.
-
-Đây có lẽ chính là cái gọi là Diệp công thích rồng* ư? Qua mấy chục giây sau, Chu Minh Thuỵ thầm tự giễu mình một câu. Nếu không phải đau đầu vẫn còn, làm cho tư duy trở nên căng thẳng và rõ ràng, Chu Minh Thuỵ sẽ cho rằng mình đang mơ.
-
-Bình tĩnh... Bình tĩnh... Bình tĩnh nào... Chu Minh Thuỵ hít sâu vài cái, cố gắng làm cho bản thân đừng hoảng loạn nữa.
-
-Đúng lúc này, khi thể xác và tinh thần hắn được hoà hoãn lại, một đám trí nhớ đột nhiên nhảy vọt ra, chầm chậm hiện lên trong đầu hắn.
-
-Klein Moretti, một sinh viên vừa tốt nghiệp chuyên ngành lịch sử đại học Hoy, là người của thành phố Tingen quận Akhova thuộc Vương quốc Loen ở lục địa Bắc.
-
-Cha là thượng sĩ lục quân hoàng gia, đã hy sinh trong đợt tấn công thực dân lục địa Nam. Số tiền trợ cấp từ cái chết của ông làm cho Klein có cơ hội vào học ở trường văn pháp tư nhân, làm nền tảng cho hắn thi vào đại học... Mẹ là tín đồ của nữ thần Đêm Tối, mất khi Klein vừa thi đỗ vào đại học Hoy...
-
-Hắn có một anh trai và một em gái, sống ở căn hộ hai phòng ngủ của khu nhà trọ này...
-
-Nhà hắn không giàu, thậm chí phải nói là không đủ, hiện tại toàn bộ chi tiêu đều do người anh trai hiện đang làm thư ký cho một công ty xuất nhập khẩu lo cho...
-
-Là một sinh viên đã tốt nghiệp hệ lịch sử, Klein thông thạo ngôn ngữ Fusark cổ xưa của các nước lục địa Bắc, cùng với ngôn ngữ Hermes có liên quan tới việc thờ cúng, cầu nguyện thường xuyên xuất hiện trong các lăng mộ cổ đại...
-
-Ngôn ngữ Hermes? Nghĩ tới đây, Chu Minh Thuỵ giơ tay đè lên huyệt Thái Dương đang đau như xoắn lại, quăng mắt tới cuốn bút ký đã mở sẵn trên bàn. Hắn cảm thấy dòng chữ viết trên trang giấy ố vàng kia từ kỳ quái thành xa lạ, từ xa lạ thành quen thuộc, rồi từ quen thuộc trở nên đọc hiểu được.
-
-Đây là dòng chữ viết bằng tiếng Hermes!
-
-Nét bút sâu và đen ấy viết rằng: "Tất cả mọi người sẽ chết, kể cả ta."
-
-A! Chu Minh Thuỵ đột nhiên hoảng sợ, thân thể bỗng ngửa ra sau theo bản năng hòng kéo giãn khoảng cách với dòng chữ này.
-
-Hắn rất yếu nên suýt thì ngã rầm, bèn vội giơ tay vịn lấy bàn. Hắn cảm thấy không khí xung quanh như trở nên nóng nảy theo, dường như có tiếng thì thầm liên tục vang lên bên tai, hệt như hồi bé nghe người lớn kể chuyện kinh dị.
-
-Chu Minh Thuỵ lắc đầu, tất cả đều là ảo giác. Hắn đứng vững người, dời mắt khỏi cuốn bút ký kia, há mồm thở hổn hển.
-
-Lúc này hắn nhìn sang khẩu súng ổ xoay đang loé lên ánh sáng đồng thau, lòng bỗng có nghi vấn.
-
-"Với gia cảnh của mình, Klein lấy đâu ra tiền và cách mua súng?" Chu Minh Thuỵ nhíu mày lại.
-
-Trong lúc trầm tư, hắn thấy một nửa dấu tay màu đỏ ở góc của bàn học, màu còn đậm hơn cả màu của ánh trăng, dày hơn cả lớp "lụa mỏng" kia.
-
-Đó là một dấu tay máu!
-
-"Máu?" Chu Minh Thuỵ theo bản năng giơ bàn tay phải vừa đè lên bàn lên. Hắn cúi đầu nhìn, chỉ thấy lòng bàn tay và ngón tay hắn dính đầy máu.
-
-Cùng lúc đó, cơn đau vẫn kéo tới từ trong đầu hắn, nhưng đã yếu bớt đi, chỉ là cứ đau mãi không dứt.
-
-"Chẳng lẽ đụng rách đầu rồi?" Chu Minh Thuỵ đoán vậy. Hắn quay người lại, đi tới trước chiếc gương bị rạn.
-
-Sau vài bước, một bóng người có vóc dáng tầm trung, tóc đen, mắt nâu, trông rất trí thức đập vào mắt hắn.
-
-Đây là ta ở hiện tại, Klein Moretti?
-
-Chu Minh Thuỵ ngớ ra, sau đó vì nửa đêm nhìn không rõ nên hắn lại bước lên tiếp, cho tới khi chỉ còn chút xíu nữa là đụng vào gương.
-
-Dưới ánh trăng đỏ rực như lớp lụa mỏng, hắn nghiêng đầu nhìn thái dương của mình.
-
-Một hình ảnh ngược hiện lên rất chi tiết. Thái dương của hắn bị một vết thương trông rất dữ tợn chiếm cứ, phần rìa là dấu vết của việc bị bỏng, xung quanh đầy vết máu. Mà bên trong, phần óc màu xám trắng đang mấp máy.')
+INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (33, 17, 1, N'Đỏ rực', 1, N'<p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://cdn.donmai.us/sample/0a/97/__klein_moretti_lord_of_the_mysteries_drawn_by_blackwww938__sample-0a97ed4600e607be7f9209ea84239690.jpg" alt="" width="297" height="419"></p>
+<p>Đau!</p>
+<p>Đau qu&aacute;!</p>
+<p>Đầu đau qu&aacute;!</p>
+<p>H&igrave;nh ảnh trong giấc mơ đầy những tiếng th&igrave; thầm kỳ qu&aacute;i vỡ tan th&agrave;nh những mảnh nhỏ. Chu Minh Thuỵ đang say giấc chỉ thấy đầu đau đớn hệt như bị người ta lấy gậy đ&aacute;nh cho một c&aacute;i thật mạnh, kh&ocirc;ng, phải l&agrave; bị một thứ sắc nhọn đ&acirc;m thẳng v&agrave;o huyệt Th&aacute;i Dương rồi sau đ&oacute; khuấy li&ecirc;n tục.</p>
+<p>&Ocirc;i... Trong cơn mơ m&agrave;ng, Chu Minh Thuỵ muốn xoay người, muốn giơ tay &ocirc;m chặt lấy đầu, muốn ngồi dậy nhưng hắn kh&ocirc;ng thể cử động ch&acirc;n tay được, dường như kh&ocirc;ng thể điều khiển được th&acirc;n thể nữa.</p>
+<p>Xem ra l&agrave; m&igrave;nh chưa tỉnh, vẫn c&ograve;n đang mơ... N&oacute;i kh&ocirc;ng chừng sẽ c&ograve;n xảy ra hiện tượng cho l&agrave; m&igrave;nh đ&atilde; tỉnh, nhưng thực chất l&agrave; c&ograve;n đang ngủ say... Chu Minh Thuỵ kh&ocirc;ng hề lạ lẫm g&igrave; với chuyện n&agrave;y, hắn cố gắng tập trung &yacute; ch&iacute; muốn tho&aacute;t khỏi c&aacute;i g&ocirc;ng c&ugrave;m của b&oacute;ng tối v&agrave; sự huyễn hoặc n&agrave;y.</p>
+<p>Nhưng trong l&uacute;c nửa tỉnh nửa mơ n&agrave;y, &yacute; ch&iacute; lu&ocirc;n mơ hồ như sương kh&oacute;i, kh&oacute; m&agrave; tập trung được. D&ugrave; hắn c&oacute; cố thế n&agrave;o th&igrave; tư duy vẫn cứ tan r&atilde;, tạp niệm xuất hiện.</p>
+<p>Đang y&ecirc;n đang l&agrave;nh, nửa đ&ecirc;m nửa h&ocirc;m, sao đột nhi&ecirc;n bị đau đầu? C&ograve;n đau đớn tới mức n&agrave;y?! Chẳng lẽ xuất huyết n&atilde;o?!</p>
+<p>Mo&aacute;, chả lẽ ta sẽ chết sớm ư?</p>
+<p>Mau tỉnh! Mau tỉnh lại n&agrave;o!</p>
+<p>Ồ, h&igrave;nh như kh&ocirc;ng c&ograve;n đau như n&atilde;y nữa? Nhưng đầu vẫn như bị một con dao nhỏ cắt từng miếng từng miếng ra một...</p>
+<p>Xem ra kh&ocirc;ng thể ngủ tiếp, vậy th&igrave; mai đi l&agrave;m thế n&agrave;o được? C&ograve;n đi l&agrave;m c&aacute;i g&igrave; nữa? Bị đau đầu thật như n&agrave;y tất nhi&ecirc;n l&agrave; phải xin nghỉ rồi! Khỏi sợ tay quản l&yacute; lải nhải!</p>
+<p>Nghĩ như vậy cảm thấy kh&ocirc;ng tệ, kh&agrave; kh&agrave;, thế l&agrave; được nh&agrave;n rỗi một h&ocirc;m!</p>
+<p>Đầu lại đau nh&oacute;i khiến Chu Minh Thuỵ t&iacute;ch được ch&uacute;t sức lực. Cuối c&ugrave;ng, hắn dốc sức động lưng mở cho&agrave;ng mắt, ho&agrave;n to&agrave;n tho&aacute;t khỏi trạng th&aacute;i nửa tỉnh nửa mơ.</p>
+<p>Tầm mắt ban đầu nho&agrave; đi, sau đ&oacute; bị phủ k&iacute;n bởi một lớp đỏ rực. Nơi tầm mắt với tới, Chu Minh Thuỵ thấy trước mặt m&igrave;nh l&agrave; một b&agrave;n học bằng gỗ th&ocirc; sơ. Ch&iacute;nh giữa b&agrave;n học c&oacute; b&agrave;y một quyển b&uacute;t k&yacute; đang mở sẵn. Giấy của cuốn b&uacute;t k&yacute; n&agrave;y th&ocirc; r&aacute;p v&agrave; ố v&agrave;ng, b&ecirc;n tr&ecirc;n l&agrave; một c&acirc;u được viết bởi thứ chữ kỳ qu&aacute;i, n&eacute;t mực đen sậm, ướt v&agrave; bắt mắt.</p>
+<p>Ở b&ecirc;n tr&aacute;i cuốn b&uacute;t k&yacute; l&agrave; một chồng s&aacute;ch được sắp xếp chỉnh tề, c&oacute; tầm bảy, t&aacute;m cuốn g&igrave; đ&oacute;. Bức tường b&ecirc;n phải ch&uacute;ng th&igrave; được gắn bởi ống dẫn m&agrave;u x&aacute;m trắng nối tới một chiếc đ&egrave;n treo tường.</p>
+<p>Chiếc đ&egrave;n n&agrave;y mang phong c&aacute;ch phương T&acirc;y cổ điển, to bằng nửa đầu người trưởng th&agrave;nh. B&ecirc;n trong l&agrave; thuỷ tinh trong suốt, phần lồng b&ecirc;n ngo&agrave;i được l&agrave;m từ kim loại m&agrave;u đen.</p>
+<p>B&ecirc;n dưới chiếc đ&egrave;n đ&atilde; tắt đ&oacute; l&agrave; một lọ mực m&agrave;u đen được bao phủ bởi &aacute;nh s&aacute;ng m&agrave;u đỏ nhạt, vẻ gồ ghề b&ecirc;n ngo&agrave;i dưới lớp &aacute;nh s&aacute;ng tạo n&ecirc;n thứ hoa văn tr&ocirc;ng giống thi&ecirc;n sứ.</p>
+<p>Một chiếc b&uacute;t m&aacute;y m&agrave;u sậm với phần th&acirc;n b&oacute;ng mượt được đặt ở trước lọ mực, b&ecirc;n phải b&uacute;t k&yacute;. Ng&ograve;i b&uacute;t lo&eacute; l&ecirc;n thứ &aacute;nh s&aacute;ng nhạt. Nắp b&uacute;t th&igrave; nằm ngay cạnh một chiếc s&uacute;ng lục ổ xoay.</p>
+<p>S&uacute;ng? S&uacute;ng lục?? Chu Minh Thuỵ ng&acirc;y ngẩn. Những thứ hắn thấy trước mặt n&agrave;y xa lạ như thế, ho&agrave;n to&agrave;n kh&aacute;c xa ph&ograve;ng của hắn!</p>
+<p>Tronng khi kinh ngạc v&agrave; ngỡ ng&agrave;ng, hắn ph&aacute;t hiện rằng b&agrave;n học, b&uacute;t k&yacute;, lọ mực v&agrave; s&uacute;ng lục kia đều được phủ l&ecirc;n bởi một tầng "lụa mỏng" m&agrave;u đỏ rực, ch&iacute;nh l&agrave; &aacute;nh s&aacute;ng chiếu v&agrave;o từ b&ecirc;n ngo&agrave;i cửa sổ.</p>
+<p>Theo bản năng hắn ngẩng đầu l&ecirc;n, dời tầm mắt l&ecirc;n cao.</p>
+<p>Giữa kh&ocirc;ng trung, b&ecirc;n tr&ecirc;n lớp "vải nhung s&acirc;n khấu thi&ecirc;n nga", một mặt trăng tr&ograve;n m&agrave;u đỏ rực như lửa treo cao, lặng lẽ toả ra &aacute;nh s&aacute;ng.</p>
+<p>Đ&acirc;y... Chu Minh Thuỵ bỗng thấy sợ h&atilde;i, rồi hắn đứng bật dậy. Nhưng đ&ocirc;i ch&acirc;n c&ograve;n chưa kịp đứng thẳng th&igrave; đầu hắn lại đau nh&oacute;i gh&ecirc; gớm khiến hắn như mất đi sức lực trong ph&uacute;t chốc, trọng t&acirc;m to&agrave;n th&acirc;n tức th&igrave; rơi xuống, m&ocirc;ng đập mạnh l&ecirc;n tr&ecirc;n chiếc ghế dựa bằng gỗ.</p>
+<p>Bịch!</p>
+<p>Đau đớn kh&ocirc;ng thể tạo n&ecirc;n ảnh hưởng g&igrave;, Chu Minh Thuỵ giơ tay đ&egrave; l&ecirc;n b&agrave;n rồi lại đứng l&ecirc;n, bối rối quay người nh&igrave;n nơi m&igrave;nh đang đứng.</p>
+<p>Đ&acirc;y l&agrave; một căn ph&ograve;ng kh&ocirc;ng lớn, hai b&ecirc;n tr&aacute;i phải đều c&oacute; cửa ra v&agrave;o. Gần s&aacute;t bức tường đối diện l&agrave; một chiếc giường tầng l&agrave;m từ gỗ. Giữa giường v&agrave; c&aacute;nh cửa ph&iacute;a b&ecirc;n tr&aacute;i l&agrave; một chiếc tủ quầy, b&ecirc;n tr&ecirc;n l&agrave; tủ c&oacute; c&aacute;nh mở hai b&ecirc;n, b&ecirc;n dưới th&igrave; l&agrave; ngăn k&eacute;o.</p>
+<p>B&ecirc;n cạnh tủ quầy kia c&oacute; một ống dẫn cao bằng một người, cũng m&agrave;u x&aacute;m trắng được lắp tr&ecirc;n tường, nhưng n&oacute; nối với một thứ thiết bị kỳ lạ c&oacute; b&aacute;nh răng v&agrave; ổ trục hiện ra b&ecirc;n ngo&agrave;i.</p>
+<p>G&oacute;c tường ph&iacute;a b&ecirc;n phải b&agrave;n học c&oacute; chất một đống thứ tr&ocirc;ng giống than, c&ugrave;ng với c&aacute;c vật dụng nh&agrave; bếp như nồi đun nước, chảo sắt...</p>
+<p>Qua cửa b&ecirc;n phải l&agrave; một chiếc gương to đ&atilde; rạn nứt hai vết, phần kệ để gương được l&agrave;m từ gỗ với hoa văn kh&aacute; đơn giản.</p>
+<p>Chu Minh Thuỵ đảo mắt qua gương, lo&aacute;ng tho&aacute;ng thấy m&igrave;nh của b&acirc;y giờ: T&oacute;c đen, mắt n&acirc;u, mặc quần &aacute;o l&oacute;t sợi đay, v&oacute;c d&aacute;ng gầy g&ograve;, ngũ quan b&igrave;nh thường, đường n&eacute;t g&oacute;c cạnh...</p>
+<p>Đ&acirc;y l&agrave;... Chu Minh Thuỵ tức th&igrave; giật m&igrave;nh, h&iacute;t v&agrave;o một hơi kh&iacute; lạnh, l&ograve;ng bỗng c&oacute; một suy đo&aacute;n lộn xộn m&agrave; bất lực.</p>
+<p>S&uacute;ng lục ổ xoay, bố tr&iacute; kiểu phương T&acirc;y cổ điển, c&ugrave;ng với mặt trăng đỏ rực kh&aacute;c hẳn với Tr&aacute;i Đất, kh&ocirc;ng c&oacute; thứ g&igrave; l&agrave; kh&ocirc;ng chứng tỏ r&otilde; một chuyện!</p>
+<p>Chẳng lẽ m&igrave;nh... M&igrave;nh xuy&ecirc;n việt rồi? Chu Minh Thuỵ dần h&aacute; hốc mồm.</p>
+<p>Hắn đọc văn học mạng từ b&eacute;, cũng thường hay ảo tưởng về bản th&acirc;n, nhưng tới khi gặp được thật th&igrave; lại kh&oacute; m&agrave; chấp nhận được.</p>
+<p>Đ&acirc;y c&oacute; lẽ ch&iacute;nh l&agrave; c&aacute;i gọi l&agrave; Diệp c&ocirc;ng th&iacute;ch rồng* ư? Qua mấy chục gi&acirc;y sau, Chu Minh Thuỵ thầm tự giễu m&igrave;nh một c&acirc;u. Nếu kh&ocirc;ng phải đau đầu vẫn c&ograve;n, l&agrave;m cho tư duy trở n&ecirc;n căng thẳng v&agrave; r&otilde; r&agrave;ng, Chu Minh Thuỵ sẽ cho rằng m&igrave;nh đang mơ.</p>
+<p>B&igrave;nh tĩnh... B&igrave;nh tĩnh... B&igrave;nh tĩnh n&agrave;o... Chu Minh Thuỵ h&iacute;t s&acirc;u v&agrave;i c&aacute;i, cố gắng l&agrave;m cho bản th&acirc;n đừng hoảng loạn nữa.</p>
+<p>Đ&uacute;ng l&uacute;c n&agrave;y, khi thể x&aacute;c v&agrave; tinh thần hắn được ho&agrave; ho&atilde;n lại, một đ&aacute;m tr&iacute; nhớ đột nhi&ecirc;n nhảy vọt ra, chầm chậm hiện l&ecirc;n trong đầu hắn.</p>
+<p>Klein Moretti, một sinh vi&ecirc;n vừa tốt nghiệp chuy&ecirc;n ng&agrave;nh lịch sử đại học Hoy, l&agrave; người của th&agrave;nh phố Tingen quận Akhova thuộc Vương quốc Loen ở lục địa Bắc.</p>
+<p>Cha l&agrave; thượng sĩ lục qu&acirc;n ho&agrave;ng gia, đ&atilde; hy sinh trong đợt tấn c&ocirc;ng thực d&acirc;n lục địa Nam. Số tiền trợ cấp từ c&aacute;i chết của &ocirc;ng l&agrave;m cho Klein c&oacute; cơ hội v&agrave;o học ở trường văn ph&aacute;p tư nh&acirc;n, l&agrave;m nền tảng cho hắn thi v&agrave;o đại học... Mẹ l&agrave; t&iacute;n đồ của nữ thần Đ&ecirc;m Tối, mất khi Klein vừa thi đỗ v&agrave;o đại học Hoy...</p>
+<p>Hắn c&oacute; một anh trai v&agrave; một em g&aacute;i, sống ở căn hộ hai ph&ograve;ng ngủ của khu nh&agrave; trọ n&agrave;y...</p>
+<p>Nh&agrave; hắn kh&ocirc;ng gi&agrave;u, thậm ch&iacute; phải n&oacute;i l&agrave; kh&ocirc;ng đủ, hiện tại to&agrave;n bộ chi ti&ecirc;u đều do người anh trai hiện đang l&agrave;m thư k&yacute; cho một c&ocirc;ng ty xuất nhập khẩu lo cho...</p>
+<p>L&agrave; một sinh vi&ecirc;n đ&atilde; tốt nghiệp hệ lịch sử, Klein th&ocirc;ng thạo ng&ocirc;n ngữ Fusark cổ xưa của c&aacute;c nước lục địa Bắc, c&ugrave;ng với ng&ocirc;n ngữ Hermes c&oacute; li&ecirc;n quan tới việc thờ c&uacute;ng, cầu nguyện thường xuy&ecirc;n xuất hiện trong c&aacute;c lăng mộ cổ đại...</p>
+<p>Ng&ocirc;n ngữ Hermes? Nghĩ tới đ&acirc;y, Chu Minh Thuỵ giơ tay đ&egrave; l&ecirc;n huyệt Th&aacute;i Dương đang đau như xoắn lại, quăng mắt tới cuốn b&uacute;t k&yacute; đ&atilde; mở sẵn tr&ecirc;n b&agrave;n. Hắn cảm thấy d&ograve;ng chữ viết tr&ecirc;n trang giấy ố v&agrave;ng kia từ kỳ qu&aacute;i th&agrave;nh xa lạ, từ xa lạ th&agrave;nh quen thuộc, rồi từ quen thuộc trở n&ecirc;n đọc hiểu được.</p>
+<p>Đ&acirc;y l&agrave; d&ograve;ng chữ viết bằng tiếng Hermes!</p>
+<p>N&eacute;t b&uacute;t s&acirc;u v&agrave; đen ấy viết rằng: "Tất cả mọi người sẽ chết, kể cả ta."</p>
+<p>A! Chu Minh Thuỵ đột nhi&ecirc;n hoảng sợ, th&acirc;n thể bỗng ngửa ra sau theo bản năng h&ograve;ng k&eacute;o gi&atilde;n khoảng c&aacute;ch với d&ograve;ng chữ n&agrave;y.</p>
+<p>Hắn rất yếu n&ecirc;n su&yacute;t th&igrave; ng&atilde; rầm, b&egrave;n vội giơ tay vịn lấy b&agrave;n. Hắn cảm thấy kh&ocirc;ng kh&iacute; xung quanh như trở n&ecirc;n n&oacute;ng nảy theo, dường như c&oacute; tiếng th&igrave; thầm li&ecirc;n tục vang l&ecirc;n b&ecirc;n tai, hệt như hồi b&eacute; nghe người lớn kể chuyện kinh dị.</p>
+<p>Chu Minh Thuỵ lắc đầu, tất cả đều l&agrave; ảo gi&aacute;c. Hắn đứng vững người, dời mắt khỏi cuốn b&uacute;t k&yacute; kia, h&aacute; mồm thở hổn hển.</p>
+<p>L&uacute;c n&agrave;y hắn nh&igrave;n sang khẩu s&uacute;ng ổ xoay đang lo&eacute; l&ecirc;n &aacute;nh s&aacute;ng đồng thau, l&ograve;ng bỗng c&oacute; nghi vấn.</p>
+<p>"Với gia cảnh của m&igrave;nh, Klein lấy đ&acirc;u ra tiền v&agrave; c&aacute;ch mua s&uacute;ng?" Chu Minh Thuỵ nh&iacute;u m&agrave;y lại.</p>
+<p>Trong l&uacute;c trầm tư, hắn thấy một nửa dấu tay m&agrave;u đỏ ở g&oacute;c của b&agrave;n học, m&agrave;u c&ograve;n đậm hơn cả m&agrave;u của &aacute;nh trăng, d&agrave;y hơn cả lớp "lụa mỏng" kia.</p>
+<p>Đ&oacute; l&agrave; một dấu tay m&aacute;u!</p>
+<p>"M&aacute;u?" Chu Minh Thuỵ theo bản năng giơ b&agrave;n tay phải vừa đ&egrave; l&ecirc;n b&agrave;n l&ecirc;n. Hắn c&uacute;i đầu nh&igrave;n, chỉ thấy l&ograve;ng b&agrave;n tay v&agrave; ng&oacute;n tay hắn d&iacute;nh đầy m&aacute;u.</p>
+<p>C&ugrave;ng l&uacute;c đ&oacute;, cơn đau vẫn k&eacute;o tới từ trong đầu hắn, nhưng đ&atilde; yếu bớt đi, chỉ l&agrave; cứ đau m&atilde;i kh&ocirc;ng dứt.</p>
+<p>"Chẳng lẽ đụng r&aacute;ch đầu rồi?" Chu Minh Thuỵ đo&aacute;n vậy. Hắn quay người lại, đi tới trước chiếc gương bị rạn.</p>
+<p>Sau v&agrave;i bước, một b&oacute;ng người c&oacute; v&oacute;c d&aacute;ng tầm trung, t&oacute;c đen, mắt n&acirc;u, tr&ocirc;ng rất tr&iacute; thức đập v&agrave;o mắt hắn.</p>
+<p>Đ&acirc;y l&agrave; ta ở hiện tại, Klein Moretti?</p>
+<p>Chu Minh Thuỵ ngớ ra, sau đ&oacute; v&igrave; nửa đ&ecirc;m nh&igrave;n kh&ocirc;ng r&otilde; n&ecirc;n hắn lại bước l&ecirc;n tiếp, cho tới khi chỉ c&ograve;n ch&uacute;t x&iacute;u nữa l&agrave; đụng v&agrave;o gương.</p>
+<p>Dưới &aacute;nh trăng đỏ rực như lớp lụa mỏng, hắn nghi&ecirc;ng đầu nh&igrave;n th&aacute;i dương của m&igrave;nh.</p>
+<p>Một h&igrave;nh ảnh ngược hiện l&ecirc;n rất chi tiết. Th&aacute;i dương của hắn bị một vết thương tr&ocirc;ng rất dữ tợn chiếm cứ, phần r&igrave;a l&agrave; dấu vết của việc bị bỏng, xung quanh đầy vết m&aacute;u. M&agrave; b&ecirc;n trong, phần &oacute;c m&agrave;u x&aacute;m trắng đang mấp m&aacute;y.</p>')
 GO
 INSERT [dbo].[Chapter] ([id], [volumeId], [no], [title], [status], [content]) VALUES (34, 17, 2, N'Tình trạng', 1, N'Bịch bịch bịch!
 

@@ -125,15 +125,18 @@
                 <h2 style="text-align: center">${chapter.title}</h2>
                 <h4 class="h5" style="text-align: right;margin-right: 8%;font-style: italic; ">${words} words</h4>
                 <div id="chapter-content" class="long-text no-select" style="font-family: Times New Romans,Times New Roman, Georgia, serif;">
-                    <c:forEach items="${listr}" var="listr">
-                        <p style="margin-left: 80px; margin-right: 100px; text-align: justify">${listr}</p>
-                    </c:forEach>
+                    ${chapter.getContent()}
                 </div>
 
             </div>
 
         </div>
         <style>
+            div#chapter-content{
+                margin-left: 80px; margin-right: 100px;
+                
+            }
+            
             .animation {
                 -webkit-animation-duration: 1s;
                 animation-duration: 1s;

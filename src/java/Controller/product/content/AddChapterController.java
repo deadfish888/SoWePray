@@ -8,6 +8,7 @@ package Controller.product.content;
 import Model.auth.User;
 import Model.product.Book;
 import Model.product.content.Chapter;
+import Model.product.content.Volume;
 import context.product.BookDAO;
 import context.product.content.ChapterDAO;
 import context.product.content.VolumeDAO;
@@ -19,11 +20,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import utils.Validator;
 
 /* @author ACER */
 @WebServlet(name="AddChapterController", urlPatterns={"/User/Novels/AddChapter"})
 public class AddChapterController extends HttpServlet {
-   
+   Validator mu =new Validator();
+    BookDAO bd = new BookDAO();
+    VolumeDAO vd = new VolumeDAO();
+    ChapterDAO cd = new ChapterDAO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
@@ -56,12 +61,13 @@ public class AddChapterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        int volId=0;
         try {
             int bookId = Integer.parseInt(request.getParameter("bookId"));
-            int volId = Integer.parseInt(request.getParameter("volumeId"));
+            volId = Integer.parseInt(request.getParameter("volumeId"));
             boolean status = (request.getParameter("status").equals("finished"));
-            String name = request.getParameter("title");
-            String content = request.getParameter("content");
+           String name = mu.fieldString(request.getParameter("title"), "Required Title!");
+            String content = mu.fieldString(request.getParameter("content"), "Required Content!");
 
             Chapter chapter = new Chapter();
             chapter.setVolumeId(volId);
@@ -69,28 +75,22 @@ public class AddChapterController extends HttpServlet {
             chapter.setStatus(status);
             chapter.setContent(content);
 
-            BookDAO bd = new BookDAO();
-            Book book = bd.getBookById(bookId);
-
-            VolumeDAO vd = new VolumeDAO();
-            ChapterDAO cd = new ChapterDAO();
             
             int newChapterId = cd.addChapterNovel(chapter);
-            request.setAttribute("book", book);
-            if (newChapterId == 0) {
-                request.setAttribute("vol", vd.getVolumeById(volId));
-                request.setAttribute("volumes", vd.getVolumesByBookId(bookId));
-                request.setAttribute("chapters", cd.getChaptersByBookId(bookId));
-                request.setAttribute("message", "Add Failed! Please try again!");
-                request.setAttribute("chap", chapter);
-                request.setAttribute("service", "Add");
-
-                request.getRequestDispatcher("/manage/book/toc/volume-detail.jsp").forward(request, response);
-            } else {
-                response.sendRedirect("./TOC?id=" + bookId + "&cid=" + newChapterId);
-            }
-        } catch (Exception ex) {
+            response.sendRedirect("./TOC?id=" + bookId + "&cid=" + newChapterId);
+        } catch (NumberFormatException ex) {
             Logger.getLogger(AddChapterController.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendRedirect(request.getContextPath() + "/error.jsp");
+        } catch (Exception e) {
+            Volume vol = vd.getVolumeById(volId);
+            request.setAttribute("vol", vol);
+            request.setAttribute("book", bd.getBookById(vol.getBookId()));
+            request.setAttribute("volumes", vd.getVolumesByBookId(vol.getBookId()));
+            request.setAttribute("chapters", cd.getChaptersByBookId(vol.getBookId()));
+            request.setAttribute("message", e.getMessage());
+            request.setAttribute("service", "Add");
+
+            request.getRequestDispatcher("../../views/user/toc/chapter-detail.jsp").forward(request, response);
         }
     }
 

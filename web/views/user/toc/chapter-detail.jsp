@@ -7,6 +7,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="/views/base/userHeadImport.jsp"/>
+                <script src="https://cdn.tiny.cloud/1/izyaj8jmwovw4l5rpdwzaikjwkm00f6sg4wd6v8cffj4h7y3/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
         <title>Series ${book.title}</title>
     </head>
     <body>
@@ -110,7 +112,7 @@
                                             <div class="col-12">
                                                 <label for="content" class="form-label">Content<span style="color:red">*</span></label>
                                                 <div class="col-12">
-                                                    <textarea class="form-control" style="white-space: pre-line;min-height: 20em;resize: vertical" id="content" name="content" rows="20" aria-label="With textarea" required>${requestScope.chap.content}</textarea>
+                                                    <textarea class="form-control" style="white-space: pre-line;min-height: 20em;resize: vertical" id="content" name="content" rows="20" aria-label="With textarea">${requestScope.chap.content}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-auto mt-5">
@@ -137,7 +139,19 @@
         </div>
         <!-- Scripts -->
         <jsp:include page="/views/base/userFootImport.jsp"/>
-
+        <script>
+            tinymce.init({
+      selector: 'textarea',
+      plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+      toolbar: 'undo redo | blocks | bold italic underline strikethrough | link image media table mergetags | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+      tinycomments_mode: 'embedded',
+      tinycomments_author: 'Author name',
+      mergetags_list: [
+        { value: 'First.Name', title: 'First Name' },
+        { value: 'Email', title: 'Email' },
+      ]
+    });
+        </script>
     </body>
 </html>
 

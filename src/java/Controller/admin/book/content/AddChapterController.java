@@ -79,7 +79,7 @@ public class AddChapterController extends HttpServlet {
             request.setAttribute("message", e.getMessage());
             request.setAttribute("service", "Add");
 
-            request.getRequestDispatcher("/manage/book/toc/volume-detail.jsp").forward(request, response);
+            request.getRequestDispatcher("/manage/book/toc/chapter-detail.jsp").forward(request, response);
         }
     }
 

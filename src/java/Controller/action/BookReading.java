@@ -111,10 +111,8 @@ public class BookReading extends HttpServlet {
                 b.updateView(bookId);
             }
             bookOwnDAO.updateReadingStatus(user, thisbook, chapter);
-            String[] listr = chapter.getContent().split("\n");
 //        ArrayList<Chapter> chap = chd.getChapterByVolumeIDandBookID(id, thisbook.getId());
 //            request.setAttribute("bookProductId", "B" + bookId);
-            request.setAttribute("listr", listr);
             request.setAttribute("listV", listV);
             request.setAttribute("words", chapter.getContent().split("\\s+").length);
             request.setAttribute("chapter", chapter);

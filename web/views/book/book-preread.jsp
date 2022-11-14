@@ -40,16 +40,23 @@
             <!-- Main -->
             <div id="main">
                 <h1 style="text-align: center">${book.title}</h2>
-                <h2 style="text-align: center">${thischapter.title}</h2>
-                <c:forEach items="${content}" var="lit">
-                    <p style="margin-left: 80px; margin-right: 100px; text-align: justify">${lit}</p>
-                </c:forEach>
+                    <h2 style="text-align: center">${thischapter.title}</h2>
+                    <div id="chapter-content" class="long-text no-select" style="font-family: Times New Romans,Times New Roman, Georgia, serif;">
+                        ${thischapter.getContent()}
+                    </div>
             </div>
 
             <!-- Footer -->
 
         </div>
 
+        <style>
+            div#chapter-content{
+                margin-left: 80px;
+                margin-right: 100px;
+
+            }
+        </style>
         <!-- Scripts -->
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
