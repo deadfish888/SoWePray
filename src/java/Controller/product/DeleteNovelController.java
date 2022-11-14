@@ -33,19 +33,7 @@ public class DeleteNovelController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
-        String page = request.getParameter("page");
-        if (page == null || page.trim().length() == 0) {
-            page = "1";
-        }
-        int pageIndex;
-        try {
-            pageIndex = Integer.parseInt(page);
-            if (pageIndex <= 0) {
-                pageIndex = 1;
-            }
-        } catch (NumberFormatException e) {
-            pageIndex = 1;
-        }
+        
         try {
             int bookId = Integer.parseInt(request.getParameter("id"));
 
@@ -57,7 +45,7 @@ public class DeleteNovelController extends HttpServlet {
             }
 
             bd.deleteBook(bookId);
-            response.sendRedirect("./Novels?page=" + pageIndex);
+            response.sendRedirect("./Novels");
         } catch (Exception ex) {
             Logger.getLogger(DeleteNovelController.class.getName()).log(Level.SEVERE, null, ex);
             response.sendRedirect(request.getContextPath()+"/error.jsp");

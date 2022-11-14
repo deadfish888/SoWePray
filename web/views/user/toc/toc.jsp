@@ -9,18 +9,17 @@
                         ${book.title}
                     <a href="./AddChapter?id=${book.id}&vid=${volume.id}"><i class="fa fa-plus-square" aria-hidden="true"></i></a>
                 </h3>
-                <h5 class="card-subtitle">
+                <h4 class="card-subtitle">
                     <ul class="list-group list-group-flush">
                         <c:forEach items="${requestScope.chapters}" var="chapter">
                             <c:if test="${chapter.volumeId==volume.id}">
                                 <li class="list-group-item">
-                                    <a target="_blank" href=""><i class="fa fa-external-link-square" aria-hidden="true"></i></a>
                                     <a href="./TOC?id=${book.id}&cid=${chapter.id}">   ${chapter.title}</a>
                                 </li>
                             </c:if>
                         </c:forEach>
                     </ul>
-                </h5>
+                </h4>
             </c:forEach>
         </div>
     </div>

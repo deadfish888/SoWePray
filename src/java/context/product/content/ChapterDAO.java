@@ -347,12 +347,23 @@ public class ChapterDAO {
     public int deleteChapter(int chapterId) {
         try {
             String sql = "DELETE FROM [dbo].[Chapter]\n"
+                    + "     OUTPUT [deleted].[volumeId], [deleted].[no] "
                     + "      WHERE [id] = ? ";
             ProductDAO productDAO = new ProductDAO();
             productDAO.deleteByChapter(chapterId);
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, chapterId);
-            return stm.executeUpdate();
+            rs = stm.executeQuery();
+            if(rs.next()){
+                sql = "UPDATE [Chapter]"
+                        + "SET [no] = [no] -1 "
+                        + "WHERE [volumeId] = "+rs.getInt(1)
+                        +"   AND [no] > "+rs.getInt(2);
+                stm.close();
+                stm = cnn.prepareStatement(sql);
+                stm.executeUpdate();
+            }
+            return 1;
         } catch (SQLException ex) {
             Logger.getLogger(ChapterDAO.class.getName()).log(Level.SEVERE, null, ex);
             

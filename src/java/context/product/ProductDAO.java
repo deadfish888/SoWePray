@@ -113,7 +113,8 @@ public class ProductDAO {
                     + "      [chapterId] = ?\n";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, chapterId);
-            return stm.executeUpdate();
+            stm.execute();
+            return 1;
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
             return 0;

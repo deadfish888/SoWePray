@@ -220,10 +220,21 @@ public class VolumeDAO {
     public int deleteVolumeAndItsChapter(int volumeId) {
         try {
             String sql = "DELETE FROM [dbo].[Volume]\n"
+                    + "      OUTPUT [deleted].[bookId], [deleted].[no]"
                     + "      WHERE [id] = ? ";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, volumeId);
-            return stm.executeUpdate();
+            rs = stm.executeQuery();
+            if(rs.next()){
+                sql = "UPDATE [Volume] "
+                        + " SET [no] = [no]-1"
+                        + " WHERE [bookId] = "+rs.getInt(1)
+                        +"    AND [no] > "+rs.getInt(2);
+                stm.close();
+                stm = cnn.prepareStatement(sql);
+                stm.executeUpdate();
+            }
+            return 1;
         } catch (SQLException ex) {
             Logger.getLogger(VolumeDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

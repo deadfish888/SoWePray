@@ -962,10 +962,13 @@ public class BookDAO {
 
     public void deleteBook(int bookId) {
         try {
-            String sql = "DELETE FROM [Book]\n"
-                    + "      WHERE [id] = ?";
+            String sql = "DELETE FROM [Product] "
+                    + "         WHERE [bookId] = ? "
+                    + "     DELETE FROM [Book]\n"
+                    + "      WHERE [id] = ? ";
             stm = cnn.prepareStatement(sql);
             stm.setInt(1, bookId);
+            stm.setInt(2, bookId);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);

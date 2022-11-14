@@ -8435,6 +8435,7 @@ ALTER TABLE [dbo].[Product] CHECK CONSTRAINT [FK_Product_Book]
 GO
 ALTER TABLE [dbo].[Product]  WITH CHECK ADD  CONSTRAINT [FK_Product_Chapter] FOREIGN KEY([chapterId])
 REFERENCES [dbo].[Chapter] ([id])
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Product] CHECK CONSTRAINT [FK_Product_Chapter]
 GO
